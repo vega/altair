@@ -40,6 +40,26 @@ HEADER: Final = """\
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/" "{library}/{version}.json"
 
+PARAMETER_PROTOCOL: Final = """
+class _ParameterProtocol(Protocol):
+    # This protocol represents a Parameter as defined in api.py
+    # It would be better if we could directly use the Parameter class,
+    # but that would create a circular import.
+    # The protocol does not need to have all the attributes and methods of this
+    # class but a Parameter needs to pass a type check as a ParameterProtocol.
+
+    _counter: int
+
+    def _get_name(cls) -> str:
+        ...
+
+    def to_dict(self) -> TypingDict[str, Union[str, dict]]:
+        ...
+
+    def _to_expr(self) -> str:
+        ...
+"""
+
 BASE_SCHEMA: Final = """
 class {basename}(SchemaBase):
     _rootschema = load_schema()
@@ -392,11 +412,13 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     contents = [
         HEADER,
-        "from typing import Any, Literal, Union, List",
+        "from typing import Any, List, Literal, Union, Protocol",
+        "from typing import Dict as TypingDict",
         "",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
     ]
+    contents.append(PARAMETER_PROTOCOL)
     contents.append(BASE_SCHEMA.format(basename=basename))
     contents.append(
         schema_class(

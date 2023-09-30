@@ -185,6 +185,9 @@ def _get_channels_mapping():
 # Tools for working with parameters
 class Parameter(expr.core.OperatorMixin, object):
     """A Parameter object"""
+    
+    # NOTE: If you change this class, make sure that the protocol in
+    # altair/vegalite/v5/schema/core.py is updated accordingly if needed.
 
     _counter: int = 0
 

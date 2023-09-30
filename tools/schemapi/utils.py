@@ -190,13 +190,25 @@ class SchemaInfo:
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
                 )
-                class_name = f'{prefix}{self.title}'
+                class_names = [f'{prefix}{self.title}']
+                if self.title == "ExprRef":
+                    # In these cases, a value parameter is also always accepted.
+                    # We use the _ParameterProtocol to indicate this although this
+                    # protocol would also pass for selection parameters but
+                    # due to how the Parameter class is defined, it would be quite
+                    # complex to further differentiate between a value and
+                    # a selection parameter based on the type system (one could
+                    # try to check for the type of the Parameter.param attribute
+                    # but then we would need to write some overload signatures for
+                    # api.param).
+                    class_names.append(f'{prefix}_ParameterProtocol')
+                    
                 # If there is no prefix, it might be that the class is defined
                 # in the same script and potentially after this line -> We use
                 # deferred type annotations using quotation marks.
                 if not prefix:
-                    class_name = '"' + class_name + '"'
-                return class_name
+                    class_names = [f'"{n}"' for n in class_names]
+                return ", ".join(class_names)
             else:
                 # use RST syntax for generated sphinx docs
                 return ":class:`{}`".format(self.title)

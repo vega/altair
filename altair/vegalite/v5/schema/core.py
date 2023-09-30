@@ -1,7 +1,8 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-from typing import Any, Literal, Union, List
+from typing import Any, List, Literal, Union, Protocol
+from typing import Dict as TypingDict
 
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
 
@@ -14,6 +15,25 @@ def load_schema():
     return json.loads(
         pkgutil.get_data(__name__, "vega-lite-schema.json").decode("utf-8")
     )
+
+
+class _ParameterProtocol(Protocol):
+    # This protocol represents a Parameter as defined in api.py
+    # It would be better if we could directly use the Parameter class,
+    # but that would create a circular import.
+    # The protocol does not need to have all the attributes and methods of this
+    # class but a Parameter needs to pass a type check as a ParameterProtocol.
+
+    _counter: int
+
+    def _get_name(cls) -> str:
+        ...
+
+    def to_dict(self) -> TypingDict[str, Union[str, dict]]:
+        ...
+
+    def _to_expr(self) -> str:
+        ...
 
 
 class VegaLiteSchema(SchemaBase):
@@ -554,89 +574,215 @@ class AreaConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         line: Union[Union[bool, "OverlayMarkDef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         point: Union[Union[bool, "OverlayMarkDef", str], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(AreaConfig, self).__init__(
@@ -1191,148 +1337,290 @@ class Axis(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        bandPosition: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        domain: Union[bool, UndefinedType] = Undefined,
-        domainCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        domainColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        domainDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        domainDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        domainOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        domainWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        bandPosition: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
-        gridCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        gridCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         gridColor: Union[
-            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            Union[
+                Union[None, "Color"],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisColor",
+            ],
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+            Union[
+                List[float],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisNumberArray",
+            ],
+            UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         gridOpacity: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         gridWidth: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelAlign: Union[
-            Union["Align", "ExprRef", "ConditionalAxisLabelAlign"], UndefinedType
+            Union[
+                "Align", "ExprRef", "_ParameterProtocol", "ConditionalAxisLabelAlign"
+            ],
+            UndefinedType,
         ] = Undefined,
-        labelAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef", "ConditionalAxisLabelBaseline"],
+            Union[
+                "TextBaseline",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisLabelBaseline",
+            ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union[float, bool], "ExprRef"], UndefinedType
+            Union[Union[float, bool], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            Union[
+                Union[None, "Color"],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisColor",
+            ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
-        labelFlushOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFlushOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelFont: Union[
-            Union[str, "ExprRef", "ConditionalAxisString"], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", "ConditionalAxisString"],
+            UndefinedType,
         ] = Undefined,
         labelFontSize: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelFontStyle: Union[
-            Union["FontStyle", "ExprRef", "ConditionalAxisLabelFontStyle"],
+            Union[
+                "FontStyle",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisLabelFontStyle",
+            ],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
-            Union["FontWeight", "ExprRef", "ConditionalAxisLabelFontWeight"],
+            Union[
+                "FontWeight",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisLabelFontWeight",
+            ],
             UndefinedType,
         ] = Undefined,
-        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelOffset: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelOpacity: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef"], UndefinedType
+            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
-        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelSeparation: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
-        maxExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        minExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        orient: Union[Union["AxisOrient", "ExprRef"], UndefinedType] = Undefined,
-        position: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        maxExtent: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        minExtent: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        orient: Union[
+            Union["AxisOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        position: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[Literal["center", "extent"], "ExprRef"], UndefinedType
+            Union[Literal["center", "extent"], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        tickCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        tickCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         tickColor: Union[
-            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            Union[
+                Union[None, "Color"],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisColor",
+            ],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
-            Union[float, "TimeInterval", "TimeIntervalStep", "ExprRef"], UndefinedType
+            Union[
+                float,
+                "TimeInterval",
+                "TimeIntervalStep",
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
+            UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+            Union[
+                List[float],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisNumberArray",
+            ],
+            UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
-        tickMinStep: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tickOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tickMinStep: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tickOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         tickOpacity: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         tickWidth: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
-        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
-        titleAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleAnchor: Union[
+            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        translate: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleX: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleY: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        translate: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         values: Union[
-            Union[List[float], List[str], List[bool], List["DateTime"], "ExprRef"],
+            Union[
+                List[float],
+                List[str],
+                List[bool],
+                List["DateTime"],
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
@@ -1804,149 +2092,291 @@ class AxisConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        bandPosition: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
-        domainCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        domainColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        domainCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        domainDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        domainDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        domainOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        domainWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        domainWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
-        gridCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        gridCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         gridColor: Union[
-            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            Union[
+                Union[None, "Color"],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisColor",
+            ],
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+            Union[
+                List[float],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisNumberArray",
+            ],
+            UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         gridOpacity: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         gridWidth: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelAlign: Union[
-            Union["Align", "ExprRef", "ConditionalAxisLabelAlign"], UndefinedType
+            Union[
+                "Align", "ExprRef", "_ParameterProtocol", "ConditionalAxisLabelAlign"
+            ],
+            UndefinedType,
         ] = Undefined,
-        labelAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef", "ConditionalAxisLabelBaseline"],
+            Union[
+                "TextBaseline",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisLabelBaseline",
+            ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union[float, bool], "ExprRef"], UndefinedType
+            Union[Union[float, bool], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            Union[
+                Union[None, "Color"],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisColor",
+            ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
-        labelFlushOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFlushOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelFont: Union[
-            Union[str, "ExprRef", "ConditionalAxisString"], UndefinedType
+            Union[str, "ExprRef", "_ParameterProtocol", "ConditionalAxisString"],
+            UndefinedType,
         ] = Undefined,
         labelFontSize: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelFontStyle: Union[
-            Union["FontStyle", "ExprRef", "ConditionalAxisLabelFontStyle"],
+            Union[
+                "FontStyle",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisLabelFontStyle",
+            ],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
-            Union["FontWeight", "ExprRef", "ConditionalAxisLabelFontWeight"],
+            Union[
+                "FontWeight",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisLabelFontWeight",
+            ],
             UndefinedType,
         ] = Undefined,
-        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelOffset: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelOpacity: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef"], UndefinedType
+            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
-        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelSeparation: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
-        maxExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        minExtent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        orient: Union[Union["AxisOrient", "ExprRef"], UndefinedType] = Undefined,
-        position: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        maxExtent: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        minExtent: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        orient: Union[
+            Union["AxisOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        position: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[Literal["center", "extent"], "ExprRef"], UndefinedType
+            Union[Literal["center", "extent"], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        tickCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
+        tickCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         tickColor: Union[
-            Union[Union[None, "Color"], "ExprRef", "ConditionalAxisColor"],
+            Union[
+                Union[None, "Color"],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisColor",
+            ],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
-            Union[float, "TimeInterval", "TimeIntervalStep", "ExprRef"], UndefinedType
+            Union[
+                float,
+                "TimeInterval",
+                "TimeIntervalStep",
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
+            UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            Union[List[float], "ExprRef", "ConditionalAxisNumberArray"], UndefinedType
+            Union[
+                List[float],
+                "ExprRef",
+                "_ParameterProtocol",
+                "ConditionalAxisNumberArray",
+            ],
+            UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
-        tickMinStep: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tickOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tickMinStep: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tickOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         tickOpacity: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         tickWidth: Union[
-            Union[float, "ExprRef", "ConditionalAxisNumber"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "ConditionalAxisNumber"],
+            UndefinedType,
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
-        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
-        titleAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleAnchor: Union[
+            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        translate: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleX: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleY: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        translate: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         values: Union[
-            Union[List[float], List[str], List[bool], List["DateTime"], "ExprRef"],
+            Union[
+                List[float],
+                List[str],
+                List[bool],
+                List["DateTime"],
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
@@ -2472,94 +2902,224 @@ class BarConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusEnd: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusEnd: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         discreteBandSize: Union[
             Union[float, "RelativeBandSize"], UndefinedType
         ] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        minBandSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        minBandSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(BarConfig, self).__init__(
@@ -2729,38 +3289,77 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
     def __init__(
         self,
         align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
-        anchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        anchor: Union[
+            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
-        color: Union[Union[Union[None, "Color"], "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         frame: Union[
-            Union[Union["TitleFrame", str], "ExprRef"], UndefinedType
+            Union[Union["TitleFrame", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        orient: Union[Union["TitleOrient", "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        orient: Union[
+            Union["TitleOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         subtitleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        subtitleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        subtitleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        subtitleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         subtitleFontStyle: Union[
-            Union["FontStyle", "ExprRef"], UndefinedType
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        subtitleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        subtitlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        zindex: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        subtitlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        zindex: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(BaseTitleNoValueRefs, self).__init__(
@@ -3528,7 +4127,9 @@ class BoxPlotDef(CompositeMarkDef):
         type: Union[str, UndefinedType] = Undefined,
         box: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         extent: Union[Union[str, float], UndefinedType] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         median: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
@@ -4525,7 +5126,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
         self,
         param: Union[str, UndefinedType] = Undefined,
         value: Union[
-            Union["Gradient", str, None, "ExprRef"], UndefinedType
+            Union["Gradient", str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
@@ -4569,7 +5170,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["Gradient", str, None, "ExprRef"], UndefinedType
+            Union["Gradient", str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -4615,7 +5216,9 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
     def __init__(
         self,
         param: Union[str, UndefinedType] = Undefined,
-        value: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
     ):
@@ -4653,7 +5256,9 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ConditionalPredicateValueDefTextExprRef, self).__init__(
@@ -4785,7 +5390,9 @@ class ConditionalParameterValueDefnumberArrayExprRef(
     def __init__(
         self,
         param: Union[str, UndefinedType] = Undefined,
-        value: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
     ):
@@ -4827,7 +5434,9 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ConditionalPredicateValueDefnumberArrayExprRef, self).__init__(
@@ -4872,7 +5481,9 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
     def __init__(
         self,
         param: Union[str, UndefinedType] = Undefined,
-        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
     ):
@@ -4910,7 +5521,9 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ConditionalPredicateValueDefnumberExprRef, self).__init__(
@@ -4955,7 +5568,9 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
     def __init__(
         self,
         param: Union[str, UndefinedType] = Undefined,
-        value: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
     ):
@@ -4993,7 +5608,9 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ConditionalPredicateValueDefstringExprRef, self).__init__(
@@ -5042,7 +5659,9 @@ class ConditionalParameterValueDefstringnullExprRef(
     def __init__(
         self,
         param: Union[str, UndefinedType] = Undefined,
-        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds
     ):
@@ -5084,7 +5703,9 @@ class ConditionalPredicateValueDefstringnullExprRef(
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ConditionalPredicateValueDefstringnullExprRef, self).__init__(
@@ -5402,7 +6023,9 @@ class Config(VegaLiteSchema):
         axisYPoint: Union[dict, UndefinedType] = Undefined,
         axisYQuantitative: Union[dict, UndefinedType] = Undefined,
         axisYTemporal: Union[dict, UndefinedType] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bar: Union[dict, UndefinedType] = Undefined,
         boxplot: Union[dict, UndefinedType] = Undefined,
         circle: Union[dict, UndefinedType] = Undefined,
@@ -5424,14 +6047,18 @@ class Config(VegaLiteSchema):
         image: Union[dict, UndefinedType] = Undefined,
         legend: Union[dict, UndefinedType] = Undefined,
         line: Union[dict, UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         locale: Union[dict, UndefinedType] = Undefined,
         mark: Union[dict, UndefinedType] = Undefined,
         normalizedNumberFormat: Union[str, UndefinedType] = Undefined,
         normalizedNumberFormatType: Union[str, UndefinedType] = Undefined,
         numberFormat: Union[str, UndefinedType] = Undefined,
         numberFormatType: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -6450,7 +7077,9 @@ class ErrorBandDef(CompositeMarkDef):
         band: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
         borders: Union[Union[bool, "AnyMarkConfig"], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         extent: Union[
             Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
         ] = Undefined,
@@ -6620,7 +7249,9 @@ class ErrorBarDef(CompositeMarkDef):
         self,
         type: Union[str, UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         extent: Union[
             Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
         ] = Undefined,
@@ -8968,54 +9599,86 @@ class Header(VegaLiteSchema):
         self,
         format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
-        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        labelAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelAnchor: Union[
             Literal[None, "start", "middle", "end"], UndefinedType
         ] = Undefined,
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        labelColor: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
-        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        labelFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+        labelFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelOrient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
-        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
-        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleAnchor: Union[
             Literal[None, "start", "middle", "end"], UndefinedType
         ] = Undefined,
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
-        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleColor: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleOrient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
-        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(Header, self).__init__(
@@ -9206,54 +9869,86 @@ class HeaderConfig(VegaLiteSchema):
         self,
         format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
-        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        labelAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelAnchor: Union[
             Literal[None, "start", "middle", "end"], UndefinedType
         ] = Undefined,
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        labelColor: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
-        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        labelFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+        labelFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelOrient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
-        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         title: Union[None, UndefinedType] = Undefined,
-        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        titleAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleAnchor: Union[
             Literal[None, "start", "middle", "end"], UndefinedType
         ] = Undefined,
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleColor: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
-        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleColor: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleOrient: Union[
             Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
-        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(HeaderConfig, self).__init__(
@@ -10438,51 +11133,97 @@ class Legend(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        clipHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        columnPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        columns: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        clipHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        columnPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        columns: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         fillColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
-        gradientLength: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientStrokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        gradientLength: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        gradientStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientThickness: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gridAlign: Union[Union["LayoutAlign", "ExprRef"], UndefinedType] = Undefined,
-        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        gradientOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gridAlign: Union[
+            Union["LayoutAlign", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
-        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef"], UndefinedType
+            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        legendX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        legendY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        legendX: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        legendY: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         orient: Union[
             Literal[
                 "none",
@@ -10497,50 +11238,101 @@ class Legend(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        padding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        rowPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        rowPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         strokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        symbolDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        symbolDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         symbolFillColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        symbolLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         symbolStrokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        symbolStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolType: Union[Union["SymbolShape", "ExprRef"], UndefinedType] = Undefined,
-        tickCount: Union[Union["TickCount", "ExprRef"], UndefinedType] = Undefined,
-        tickMinStep: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolStrokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolType: Union[
+            Union["SymbolShape", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union["TickCount", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
-        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        titleAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleAnchor: Union[
+            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleOrient: Union[Union["Orient", "ExprRef"], UndefinedType] = Undefined,
-        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleOrient: Union[
+            Union["Orient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
-            Union[List[float], List[str], List[bool], List["DateTime"], "ExprRef"],
+            Union[
+                List[float],
+                List[str],
+                List[bool],
+                List["DateTime"],
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
@@ -10914,59 +11706,109 @@ class LegendConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        clipHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        columnPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        columns: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        clipHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        columnPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        columns: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         fillColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         gradientDirection: Union[
-            Union["Orientation", "ExprRef"], UndefinedType
+            Union["Orientation", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         gradientHorizontalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientHorizontalMinLength: Union[float, UndefinedType] = Undefined,
-        gradientLabelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientLabelOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientLength: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientStrokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        gradientLabelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        gradientStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        gradientThickness: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        gradientLabelOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientLength: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         gradientVerticalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientVerticalMinLength: Union[float, UndefinedType] = Undefined,
-        gridAlign: Union[Union["LayoutAlign", "ExprRef"], UndefinedType] = Undefined,
-        labelAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union["LayoutAlign", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         labelColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        labelFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         labelOverlap: Union[
-            Union["LabelOverlap", "ExprRef"], UndefinedType
+            Union["LabelOverlap", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        labelPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        labelSeparation: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        labelPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         layout: Union[dict, UndefinedType] = Undefined,
-        legendX: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        legendY: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        legendX: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        legendY: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         orient: Union[
             Literal[
                 "none",
@@ -10981,59 +11823,107 @@ class LegendConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        padding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        rowPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+        padding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        rowPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         symbolBaseFillColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolBaseStrokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        symbolDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        symbolDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         symbolDirection: Union[
-            Union["Orientation", "ExprRef"], UndefinedType
+            Union["Orientation", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        symbolLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        symbolLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         symbolStrokeColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        symbolStrokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        symbolType: Union[Union["SymbolShape", "ExprRef"], UndefinedType] = Undefined,
-        tickCount: Union[Union["TickCount", "ExprRef"], UndefinedType] = Undefined,
+        symbolStrokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        symbolType: Union[
+            Union["SymbolShape", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union["TickCount", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         title: Union[None, UndefinedType] = Undefined,
-        titleAlign: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        titleAnchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
+        titleAlign: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleAnchor: Union[
+            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleBaseline: Union[
-            Union["TextBaseline", "ExprRef"], UndefinedType
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         titleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        titleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleFontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
+        titleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleFontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         titleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        titleLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        titleOrient: Union[Union["Orient", "ExprRef"], UndefinedType] = Undefined,
-        titlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        titleLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titleOrient: Union[
+            Union["Orient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         unselectedOpacity: Union[float, UndefinedType] = Undefined,
-        zindex: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        zindex: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(LegendConfig, self).__init__(
@@ -11599,88 +12489,214 @@ class LineConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         point: Union[Union[bool, "OverlayMarkDef", str], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(LineConfig, self).__init__(
@@ -12307,87 +13323,213 @@ class MarkConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(MarkConfig, self).__init__(
@@ -12947,110 +14089,250 @@ class MarkDef(AnyMark):
             ],
             UndefinedType,
         ] = Undefined,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusEnd: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusEnd: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         discreteBandSize: Union[
             Union[float, "RelativeBandSize"], UndefinedType
         ] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[
-            Union[float, "ExprRef", "RelativeBandSize"], UndefinedType
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol", "RelativeBandSize"],
+            UndefinedType,
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         line: Union[Union[bool, "OverlayMarkDef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        minBandSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        minBandSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         point: Union[Union[bool, "OverlayMarkDef", str], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radiusOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radiusOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         style: Union[Union[str, List[str]], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        thetaOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        thetaOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         width: Union[
-            Union[float, "ExprRef", "RelativeBandSize"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol", "RelativeBandSize"],
+            UndefinedType,
         ] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        xOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        yOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        xOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        yOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(MarkDef, self).__init__(
@@ -13288,7 +14570,14 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
             UndefinedType,
         ] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
         type: Union[
@@ -14011,7 +15300,14 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
             UndefinedType,
         ] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
         type: Union[
@@ -14451,7 +15747,14 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
             UndefinedType,
         ] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
         type: Union[
@@ -15002,7 +16305,9 @@ class OrderValueDef(VegaLiteSchema):
 
     def __init__(
         self,
-        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         condition: Union[
             Union["ConditionalValueDefnumber", List["ConditionalValueDefnumber"]],
             UndefinedType,
@@ -15436,97 +16741,239 @@ class OverlayMarkDef(VegaLiteSchema):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radiusOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radiusOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         style: Union[Union[str, List[str]], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        thetaOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        thetaOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        xOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2Offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        yOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        xOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2Offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        yOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(OverlayMarkDef, self).__init__(
@@ -16219,7 +17666,14 @@ class DatumDef(LatLongDef, Position2Def):
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
         type: Union[
@@ -16388,7 +17842,14 @@ class PositionDatumDefBase(PolarDef):
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         stack: Union[Union["StackOffset", None, bool], UndefinedType] = Undefined,
@@ -16595,7 +18056,14 @@ class PositionDatumDef(PositionDef):
         axis: Union[Union["Axis", None], UndefinedType] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         impute: Union[Union["ImputeParams", None], UndefinedType] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
@@ -17231,7 +18699,9 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
 
     def __init__(
         self,
-        value: Union[Union[float, str, str, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[float, str, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(PositionValueDef, self).__init__(value=value, **kwds)
@@ -17340,7 +18810,8 @@ class FieldEqualPredicate(Predicate):
     def __init__(
         self,
         equal: Union[
-            Union[str, float, bool, "DateTime", "ExprRef"], UndefinedType
+            Union[str, float, bool, "DateTime", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
         field: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
@@ -17374,7 +18845,10 @@ class FieldGTEPredicate(Predicate):
     def __init__(
         self,
         field: Union[str, UndefinedType] = Undefined,
-        gte: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        gte: Union[
+            Union[str, float, "DateTime", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
         timeUnit: Union[
             Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
@@ -17406,7 +18880,10 @@ class FieldGTPredicate(Predicate):
     def __init__(
         self,
         field: Union[str, UndefinedType] = Undefined,
-        gt: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        gt: Union[
+            Union[str, float, "DateTime", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
         timeUnit: Union[
             Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
@@ -17438,7 +18915,10 @@ class FieldLTEPredicate(Predicate):
     def __init__(
         self,
         field: Union[str, UndefinedType] = Undefined,
-        lte: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        lte: Union[
+            Union[str, float, "DateTime", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
         timeUnit: Union[
             Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
@@ -17470,7 +18950,10 @@ class FieldLTPredicate(Predicate):
     def __init__(
         self,
         field: Union[str, UndefinedType] = Undefined,
-        lt: Union[Union[str, float, "DateTime", "ExprRef"], UndefinedType] = Undefined,
+        lt: Union[
+            Union[str, float, "DateTime", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
         timeUnit: Union[
             Union["TimeUnit", "BinnedTimeUnit", "TimeUnitParams"], UndefinedType
         ] = Undefined,
@@ -17539,7 +19022,11 @@ class FieldRangePredicate(Predicate):
         self,
         field: Union[str, UndefinedType] = Undefined,
         range: Union[
-            Union[List[Union[float, "DateTime", None, "ExprRef"]], "ExprRef"],
+            Union[
+                List[Union[float, "DateTime", None, "ExprRef", "_ParameterProtocol"]],
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
@@ -17726,36 +19213,83 @@ class Projection(VegaLiteSchema):
 
     def __init__(
         self,
-        center: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
-        clipAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        center: Union[
+            Union["Vector2number", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        clipAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         clipExtent: Union[
-            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+            Union["Vector2Vector2number", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        coefficient: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        distance: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        coefficient: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        distance: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         extent: Union[
-            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+            Union["Vector2Vector2number", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fit: Union[Union["Fit", List["Fit"], "ExprRef"], UndefinedType] = Undefined,
-        fraction: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lobes: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        parallel: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        parallels: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        pointRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        precision: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ratio: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        reflectX: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        reflectY: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        fit: Union[
+            Union["Fit", List["Fit"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fraction: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lobes: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        parallel: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        parallels: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        pointRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        precision: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ratio: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        reflectX: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        reflectY: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         rotate: Union[
-            Union[Union["Vector2number", "Vector3number"], "ExprRef"], UndefinedType
+            Union[
+                Union["Vector2number", "Vector3number"], "ExprRef", "_ParameterProtocol"
+            ],
+            UndefinedType,
         ] = Undefined,
-        scale: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        size: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
-        spacing: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tilt: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        translate: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
-        type: Union[Union["ProjectionType", "ExprRef"], UndefinedType] = Undefined,
+        scale: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        size: Union[
+            Union["Vector2number", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        spacing: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tilt: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        translate: Union[
+            Union["Vector2number", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Union["ProjectionType", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(Projection, self).__init__(
@@ -17901,36 +19435,83 @@ class ProjectionConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        center: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
-        clipAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        center: Union[
+            Union["Vector2number", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        clipAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         clipExtent: Union[
-            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+            Union["Vector2Vector2number", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        coefficient: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        distance: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        coefficient: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        distance: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         extent: Union[
-            Union["Vector2Vector2number", "ExprRef"], UndefinedType
+            Union["Vector2Vector2number", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fit: Union[Union["Fit", List["Fit"], "ExprRef"], UndefinedType] = Undefined,
-        fraction: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lobes: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        parallel: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        parallels: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        pointRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        precision: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ratio: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        reflectX: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        reflectY: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        fit: Union[
+            Union["Fit", List["Fit"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fraction: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lobes: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        parallel: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        parallels: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        pointRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        precision: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ratio: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        reflectX: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        reflectY: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         rotate: Union[
-            Union[Union["Vector2number", "Vector3number"], "ExprRef"], UndefinedType
+            Union[
+                Union["Vector2number", "Vector3number"], "ExprRef", "_ParameterProtocol"
+            ],
+            UndefinedType,
         ] = Undefined,
-        scale: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        size: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
-        spacing: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tilt: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        translate: Union[Union["Vector2number", "ExprRef"], UndefinedType] = Undefined,
-        type: Union[Union["ProjectionType", "ExprRef"], UndefinedType] = Undefined,
+        scale: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        size: Union[
+            Union["Vector2number", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        spacing: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tilt: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        translate: Union[
+            Union["Vector2number", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Union["ProjectionType", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ProjectionConfig, self).__init__(
@@ -18535,93 +20116,221 @@ class RectConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         discreteBandSize: Union[
             Union[float, "RelativeBandSize"], UndefinedType
         ] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fill: Union[
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        minBandSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        minBandSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(RectConfig, self).__init__(
@@ -19410,55 +21119,105 @@ class Scale(VegaLiteSchema):
 
     def __init__(
         self,
-        align: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        base: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        base: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bins: Union[Union[List[float], "ScaleBinParams"], UndefinedType] = Undefined,
-        clamp: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        constant: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        clamp: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        constant: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         domain: Union[
             Union[
-                List[Union[None, str, float, bool, "DateTime", "ExprRef"]],
+                List[
+                    Union[
+                        None,
+                        str,
+                        float,
+                        bool,
+                        "DateTime",
+                        "ExprRef",
+                        "_ParameterProtocol",
+                    ]
+                ],
                 str,
                 "ParameterExtent",
                 "DomainUnionWith",
                 "ExprRef",
+                "_ParameterProtocol",
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            Union[float, "DateTime", "ExprRef"], UndefinedType
+            Union[float, "DateTime", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        domainMid: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        domainMid: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         domainMin: Union[
-            Union[float, "DateTime", "ExprRef"], UndefinedType
+            Union[float, "DateTime", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         domainRaw: Union[dict, UndefinedType] = Undefined,
-        exponent: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        exponent: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         interpolate: Union[
-            Union["ScaleInterpolateEnum", "ExprRef", "ScaleInterpolateParams"],
+            Union[
+                "ScaleInterpolateEnum",
+                "ExprRef",
+                "_ParameterProtocol",
+                "ScaleInterpolateParams",
+            ],
             UndefinedType,
         ] = Undefined,
         nice: Union[
-            Union[bool, float, "TimeInterval", "TimeIntervalStep", "ExprRef"],
+            Union[
+                bool,
+                float,
+                "TimeInterval",
+                "TimeIntervalStep",
+                "ExprRef",
+                "_ParameterProtocol",
+            ],
             UndefinedType,
         ] = Undefined,
-        padding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        paddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        paddingOuter: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        paddingInner: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        paddingOuter: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         range: Union[
             Union[
                 "RangeEnum",
-                List[Union[float, str, List[float], "ExprRef"]],
+                List[Union[float, str, List[float], "ExprRef", "_ParameterProtocol"]],
                 "FieldRange",
             ],
             UndefinedType,
         ] = Undefined,
-        rangeMax: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        rangeMin: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        reverse: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        round: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        rangeMax: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        rangeMin: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        reverse: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        round: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         scheme: Union[
-            Union["ColorScheme", "SchemeParams", "ExprRef"], UndefinedType
+            Union["ColorScheme", "SchemeParams", "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
         type: Union[
             Literal[
@@ -19481,7 +21240,9 @@ class Scale(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        zero: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        zero: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(Scale, self).__init__(
@@ -19700,17 +21461,27 @@ class ScaleConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        bandPaddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        bandPaddingOuter: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        bandPaddingInner: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        bandPaddingOuter: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bandWithNestedOffsetPaddingInner: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingOuter: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        barBandPaddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        clamp: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        continuousPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        barBandPaddingInner: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        clamp: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        continuousPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         maxBandSize: Union[float, UndefinedType] = Undefined,
         maxFontSize: Union[float, UndefinedType] = Undefined,
         maxOpacity: Union[float, UndefinedType] = Undefined,
@@ -19722,18 +21493,26 @@ class ScaleConfig(VegaLiteSchema):
         minSize: Union[float, UndefinedType] = Undefined,
         minStrokeWidth: Union[float, UndefinedType] = Undefined,
         offsetBandPaddingInner: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         offsetBandPaddingOuter: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        pointPadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        pointPadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         quantileCount: Union[float, UndefinedType] = Undefined,
         quantizeCount: Union[float, UndefinedType] = Undefined,
-        rectBandPaddingInner: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        round: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        rectBandPaddingInner: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        round: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         useUnaggregatedDomain: Union[bool, UndefinedType] = Undefined,
-        xReverse: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        xReverse: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         zero: Union[bool, UndefinedType] = Undefined,
         **kwds
     ):
@@ -19893,7 +21672,14 @@ class ScaleDatumDef(OffsetDef):
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         scale: Union[Union["Scale", None], UndefinedType] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
@@ -21002,7 +22788,14 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
             UndefinedType,
         ] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         title: Union[Union["Text", None], UndefinedType] = Undefined,
         type: Union[
@@ -23624,7 +25417,9 @@ class StringValueDefWithCondition(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(StringValueDefWithCondition, self).__init__(
@@ -23967,7 +25762,14 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
             UndefinedType,
         ] = Undefined,
         datum: Union[
-            Union["PrimitiveValue", "DateTime", "ExprRef", "RepeatRef"], UndefinedType
+            Union[
+                "PrimitiveValue",
+                "DateTime",
+                "ExprRef",
+                "_ParameterProtocol",
+                "RepeatRef",
+            ],
+            UndefinedType,
         ] = Undefined,
         format: Union[Union[str, "Dict"], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
@@ -24620,89 +26422,215 @@ class TickConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Union[Union["Align", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        ariaRole: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        ariaRoleDescription: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        aspect: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        align: Union[
+            Union["Align", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRole: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ariaRoleDescription: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aspect: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[Union["TextBaseline", "ExprRef"], UndefinedType] = Undefined,
-        blend: Union[Union["Blend", "ExprRef"], UndefinedType] = Undefined,
-        color: Union[Union["Color", "Gradient", "ExprRef"], UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        baseline: Union[
+            Union["TextBaseline", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        blend: Union[
+            Union["Blend", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        color: Union[
+            Union["Color", "Gradient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, "ExprRef"], UndefinedType
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        cornerRadiusTopLeft: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cornerRadiusTopRight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        cursor: Union[Union["Cursor", "ExprRef"], UndefinedType] = Undefined,
-        description: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        dir: Union[Union["TextDirection", "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        ellipsis: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        endAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadiusTopLeft: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cornerRadiusTopRight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        cursor: Union[
+            Union["Cursor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        description: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dir: Union[
+            Union["TextDirection", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        ellipsis: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        endAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         fill: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        height: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        href: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        innerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        interpolate: Union[Union["Interpolate", "ExprRef"], UndefinedType] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        height: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        href: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        innerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        interpolate: Union[
+            Union["Interpolate", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineBreak: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineBreak: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        padAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        radius2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        outerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        padAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        radius2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         shape: Union[
-            Union[Union["SymbolShape", str], "ExprRef"], UndefinedType
+            Union[Union["SymbolShape", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        size: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        smooth: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        startAngle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        size: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        smooth: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        startAngle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         stroke: Union[
-            Union["Color", "Gradient", None, "ExprRef"], UndefinedType
+            Union["Color", "Gradient", None, "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        tension: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
-        theta: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        theta2: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        tension: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        theta2: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[float, str, bool, "TooltipContent", "ExprRef", None], UndefinedType
+            Union[
+                float,
+                str,
+                bool,
+                "TooltipContent",
+                "ExprRef",
+                "_ParameterProtocol",
+                None,
+            ],
+            UndefinedType,
         ] = Undefined,
-        url: Union[Union["URI", "ExprRef"], UndefinedType] = Undefined,
-        width: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        x: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        x2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
-        y2: Union[Union[float, str, "ExprRef"], UndefinedType] = Undefined,
+        url: Union[
+            Union["URI", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        width: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        x2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        y2: Union[
+            Union[float, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(TickConfig, self).__init__(
@@ -25141,38 +27069,77 @@ class TitleConfig(VegaLiteSchema):
     def __init__(
         self,
         align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
-        anchor: Union[Union["TitleAnchor", "ExprRef"], UndefinedType] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
+        anchor: Union[
+            Union["TitleAnchor", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
-        color: Union[Union[Union[None, "Color"], "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
+        color: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         frame: Union[
-            Union[Union["TitleFrame", str], "ExprRef"], UndefinedType
+            Union[Union["TitleFrame", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
         ] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        orient: Union[Union["TitleOrient", "ExprRef"], UndefinedType] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        orient: Union[
+            Union["TitleOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         subtitleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        subtitleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        subtitleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        subtitleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         subtitleFontStyle: Union[
-            Union["FontStyle", "ExprRef"], UndefinedType
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        subtitleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        subtitlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        zindex: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        subtitlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        zindex: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(TitleConfig, self).__init__(
@@ -25336,43 +27303,80 @@ class TitleParams(VegaLiteSchema):
 
     def __init__(
         self,
-        text: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        text: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         align: Union[Literal["left", "center", "right"], UndefinedType] = Undefined,
         anchor: Union[
             Literal[None, "start", "middle", "end"], UndefinedType
         ] = Undefined,
-        angle: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        aria: Union[Union[bool, "ExprRef"], UndefinedType] = Undefined,
-        baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
-        color: Union[Union[Union[None, "Color"], "ExprRef"], UndefinedType] = Undefined,
-        dx: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        dy: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        font: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        fontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        fontStyle: Union[Union["FontStyle", "ExprRef"], UndefinedType] = Undefined,
-        fontWeight: Union[Union["FontWeight", "ExprRef"], UndefinedType] = Undefined,
-        frame: Union[
-            Union[Union["TitleFrame", str], "ExprRef"], UndefinedType
+        angle: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        limit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        lineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        offset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        orient: Union[Union["TitleOrient", "ExprRef"], UndefinedType] = Undefined,
+        aria: Union[
+            Union[bool, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        baseline: Union[Union[str, "Baseline", str, str], UndefinedType] = Undefined,
+        color: Union[
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dx: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        dy: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        font: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontStyle: Union[
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fontWeight: Union[
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        frame: Union[
+            Union[Union["TitleFrame", str], "ExprRef", "_ParameterProtocol"],
+            UndefinedType,
+        ] = Undefined,
+        limit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        lineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        offset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        orient: Union[
+            Union["TitleOrient", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         subtitle: Union[Union[str, List[str]], UndefinedType] = Undefined,
         subtitleColor: Union[
-            Union[Union[None, "Color"], "ExprRef"], UndefinedType
+            Union[Union[None, "Color"], "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        subtitleFont: Union[Union[str, "ExprRef"], UndefinedType] = Undefined,
-        subtitleFontSize: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleFont: Union[
+            Union[str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        subtitleFontSize: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         subtitleFontStyle: Union[
-            Union["FontStyle", "ExprRef"], UndefinedType
+            Union["FontStyle", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
-            Union["FontWeight", "ExprRef"], UndefinedType
+            Union["FontWeight", "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
-        subtitleLineHeight: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        subtitlePadding: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        subtitleLineHeight: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        subtitlePadding: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ):
@@ -25684,7 +27688,9 @@ class TopLevelConcatSpec(TopLevelSpec):
         autosize: Union[
             Union["AutosizeType", "AutoSizeParams"], UndefinedType
         ] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
@@ -25693,7 +27699,9 @@ class TopLevelConcatSpec(TopLevelSpec):
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -25896,7 +27904,9 @@ class TopLevelFacetSpec(TopLevelSpec):
         autosize: Union[
             Union["AutosizeType", "AutoSizeParams"], UndefinedType
         ] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
@@ -25904,7 +27914,9 @@ class TopLevelFacetSpec(TopLevelSpec):
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -26068,7 +28080,9 @@ class TopLevelHConcatSpec(TopLevelSpec):
         autosize: Union[
             Union["AutosizeType", "AutoSizeParams"], UndefinedType
         ] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
@@ -26076,7 +28090,9 @@ class TopLevelHConcatSpec(TopLevelSpec):
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -26258,7 +28274,9 @@ class TopLevelLayerSpec(TopLevelSpec):
         autosize: Union[
             Union["AutosizeType", "AutoSizeParams"], UndefinedType
         ] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
         data: Union[Union["Data", None], UndefinedType] = Undefined,
         datasets: Union[dict, UndefinedType] = Undefined,
@@ -26266,7 +28284,9 @@ class TopLevelLayerSpec(TopLevelSpec):
         encoding: Union[dict, UndefinedType] = Undefined,
         height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -26514,7 +28534,9 @@ class TopLevelUnitSpec(TopLevelSpec):
         autosize: Union[
             Union["AutosizeType", "AutoSizeParams"], UndefinedType
         ] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[Union[bool, "RowColboolean"], UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
@@ -26523,7 +28545,9 @@ class TopLevelUnitSpec(TopLevelSpec):
         encoding: Union[dict, UndefinedType] = Undefined,
         height: Union[Union[float, str, "Step"], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -26693,7 +28717,9 @@ class TopLevelVConcatSpec(TopLevelSpec):
         autosize: Union[
             Union["AutosizeType", "AutoSizeParams"], UndefinedType
         ] = Undefined,
-        background: Union[Union["Color", "ExprRef"], UndefinedType] = Undefined,
+        background: Union[
+            Union["Color", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
         config: Union[dict, UndefinedType] = Undefined,
@@ -26701,7 +28727,9 @@ class TopLevelVConcatSpec(TopLevelSpec):
         datasets: Union[dict, UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        padding: Union[Union["Padding", "ExprRef"], UndefinedType] = Undefined,
+        padding: Union[
+            Union["Padding", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         params: Union[
             List[Union["VariableParameter", "TopLevelSelectionParameter"]],
             UndefinedType,
@@ -28250,7 +30278,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union["Gradient", str, None, "ExprRef"], UndefinedType
+            Union["Gradient", str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
         ] = Undefined,
         **kwds
     ):
@@ -28291,7 +30319,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(
@@ -28331,7 +30361,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefnumber, self).__init__(
@@ -28371,7 +30403,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray, self).__init__(
@@ -28409,7 +30443,9 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union[str, None, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[str, None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefstringnull, self).__init__(
@@ -28445,7 +30481,9 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
             ],
             UndefinedType,
         ] = Undefined,
-        value: Union[Union["Text", "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union["Text", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ValueDefWithConditionStringFieldDefText, self).__init__(
@@ -28495,7 +30533,9 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
 
     def __init__(
         self,
-        value: Union[Union[float, str, str, "ExprRef"], UndefinedType] = Undefined,
+        value: Union[
+            Union[float, str, str, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ValueDefnumberwidthheightExprRef, self).__init__(value=value, **kwds)
@@ -28728,7 +30768,9 @@ class ViewBackground(VegaLiteSchema):
 
     def __init__(
         self,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cursor: Union[
             Literal[
                 "auto",
@@ -28770,17 +30812,39 @@ class ViewBackground(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        fill: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        stroke: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        stroke: Union[
+            Union["Color", None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         style: Union[Union[str, List[str]], UndefinedType] = Undefined,
         **kwds
     ):
@@ -28891,7 +30955,9 @@ class ViewConfig(VegaLiteSchema):
         clip: Union[bool, UndefinedType] = Undefined,
         continuousHeight: Union[float, UndefinedType] = Undefined,
         continuousWidth: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        cornerRadius: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         cursor: Union[
             Literal[
                 "auto",
@@ -28935,18 +31001,40 @@ class ViewConfig(VegaLiteSchema):
         ] = Undefined,
         discreteHeight: Union[Union[float, dict], UndefinedType] = Undefined,
         discreteWidth: Union[Union[float, dict], UndefinedType] = Undefined,
-        fill: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
-        fillOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        opacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        fill: Union[
+            Union["Color", None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        fillOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        opacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        stroke: Union[Union["Color", None, "ExprRef"], UndefinedType] = Undefined,
-        strokeCap: Union[Union["StrokeCap", "ExprRef"], UndefinedType] = Undefined,
-        strokeDash: Union[Union[List[float], "ExprRef"], UndefinedType] = Undefined,
-        strokeDashOffset: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeJoin: Union[Union["StrokeJoin", "ExprRef"], UndefinedType] = Undefined,
-        strokeMiterLimit: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeOpacity: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
-        strokeWidth: Union[Union[float, "ExprRef"], UndefinedType] = Undefined,
+        stroke: Union[
+            Union["Color", None, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeCap: Union[
+            Union["StrokeCap", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDash: Union[
+            Union[List[float], "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeDashOffset: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeJoin: Union[
+            Union["StrokeJoin", "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeMiterLimit: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeOpacity: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
+        strokeWidth: Union[
+            Union[float, "ExprRef", "_ParameterProtocol"], UndefinedType
+        ] = Undefined,
         **kwds
     ):
         super(ViewConfig, self).__init__(
