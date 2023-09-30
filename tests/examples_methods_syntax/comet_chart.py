@@ -24,8 +24,8 @@ alt.Chart(
     alt.Color('delta:Q')
         .scale(domainMid=0)
         .title('Yield Delta (%)'),
-    alt.Column('site:N').title('Site'),
-    tooltip=[alt.Tooltip('year:O'), alt.Tooltip('yield:Q')],
+    alt.Tooltip(['year:O', 'yield:Q']),
+    alt.Column('site:N').title('Site')
 ).transform_pivot(
     "year",
     value="yield",
