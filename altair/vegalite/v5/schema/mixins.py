@@ -22,256 +22,256 @@ class MarkMethodMixin:
     def mark_arc(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -375,256 +375,256 @@ class MarkMethodMixin:
     def mark_area(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -728,256 +728,256 @@ class MarkMethodMixin:
     def mark_bar(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -1081,256 +1081,256 @@ class MarkMethodMixin:
     def mark_image(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -1434,256 +1434,256 @@ class MarkMethodMixin:
     def mark_line(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -1787,256 +1787,256 @@ class MarkMethodMixin:
     def mark_point(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -2140,256 +2140,256 @@ class MarkMethodMixin:
     def mark_rect(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -2493,256 +2493,256 @@ class MarkMethodMixin:
     def mark_rule(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -2846,256 +2846,256 @@ class MarkMethodMixin:
     def mark_text(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -3199,256 +3199,256 @@ class MarkMethodMixin:
     def mark_tick(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -3552,256 +3552,256 @@ class MarkMethodMixin:
     def mark_trail(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -3905,256 +3905,256 @@ class MarkMethodMixin:
     def mark_circle(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -4258,256 +4258,256 @@ class MarkMethodMixin:
     def mark_square(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -4611,256 +4611,256 @@ class MarkMethodMixin:
     def mark_geoshape(
         self,
         align: Union[
-            Union[core.Align, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Align], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
-            Union[core.TextBaseline, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextBaseline],
             UndefinedType,
         ] = Undefined,
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
-            Union[core.Blend, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Blend], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         cursor: Union[
-            Union[core.Cursor, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Cursor], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[core.TextDirection, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.TextDirection],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[float, core.RelativeBandSize], UndefinedType
+            Union[core.RelativeBandSize, float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[core.FontStyle, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.FontStyle], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[core.FontWeight, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         height: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         interpolate: Union[
-            Union[core.Interpolate, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Interpolate],
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         line: Union[Union[bool, core.OverlayMarkDef], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        order: Union[Union[None, bool], UndefinedType] = Undefined,
+        order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
         outerRadius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         point: Union[Union[bool, core.OverlayMarkDef, str], UndefinedType] = Undefined,
         radius: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[Union[core.SymbolShape, str], core.ExprRef, core._ParameterProtocol],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[bool, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
-                core.Color, core.Gradient, None, core.ExprRef, core._ParameterProtocol
+                core.ExprRef, core._ParameterProtocol, None, core.Color, core.Gradient
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
-            Union[core.StrokeCap, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.StrokeCap], UndefinedType
         ] = Undefined,
         strokeDash: Union[
             Union[List[float], core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[core.StrokeJoin, core.ExprRef, core._ParameterProtocol], UndefinedType
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
-        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        style: Union[Union[List[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[core.Text, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.Text], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
-                float,
-                str,
-                bool,
-                core.TooltipContent,
+                None,
                 core.ExprRef,
                 core._ParameterProtocol,
-                None,
+                core.TooltipContent,
+                float,
+                bool,
+                str,
             ],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[core.URI, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, core.URI], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol, core.RelativeBandSize],
+            Union[core.RelativeBandSize, core.ExprRef, core._ParameterProtocol, float],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[float, str, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, str, float], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[float, core.ExprRef, core._ParameterProtocol], UndefinedType
+            Union[core.ExprRef, core._ParameterProtocol, float], UndefinedType
         ] = Undefined,
         **kwds
     ) -> Self:
@@ -4963,21 +4963,21 @@ class MarkMethodMixin:
 
     def mark_boxplot(
         self,
-        box: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        box: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
-        extent: Union[Union[str, float], UndefinedType] = Undefined,
+        extent: Union[Union[float, str], UndefinedType] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        median: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        median: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        outliers: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
-        rule: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        outliers: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
+        rule: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        ticks: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         **kwds
     ) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)"""
@@ -5007,7 +5007,7 @@ class MarkMethodMixin:
         self,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         extent: Union[
@@ -5015,10 +5015,10 @@ class MarkMethodMixin:
         ] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
-        rule: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        rule: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        ticks: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         **kwds
     ) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)"""
@@ -5043,11 +5043,11 @@ class MarkMethodMixin:
 
     def mark_errorband(
         self,
-        band: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
-        borders: Union[Union[bool, core.AnyMarkConfig], UndefinedType] = Undefined,
+        band: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
+        borders: Union[Union[core.AnyMarkConfig, bool], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
-            Union[core.Color, core.Gradient, core.ExprRef, core._ParameterProtocol],
+            Union[core.ExprRef, core._ParameterProtocol, core.Color, core.Gradient],
             UndefinedType,
         ] = Undefined,
         extent: Union[

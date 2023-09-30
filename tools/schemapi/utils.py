@@ -190,7 +190,7 @@ class SchemaInfo:
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
                 )
-                class_names = [f'{prefix}{self.title}']
+                class_names = [f"{prefix}{self.title}"]
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
                     # We use the _ParameterProtocol to indicate this although this
@@ -201,8 +201,8 @@ class SchemaInfo:
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
-                    class_names.append(f'{prefix}_ParameterProtocol')
-                    
+                    class_names.append(f"{prefix}_ParameterProtocol")
+
                 # If there is no prefix, it might be that the class is defined
                 # in the same script and potentially after this line -> We use
                 # deferred type annotations using quotation marks.
@@ -219,13 +219,15 @@ class SchemaInfo:
         elif self.is_anyOf():
             return "Union[{}]".format(
                 ", ".join(
-                    s.get_python_type_representation(
-                        # We always use title if possible for nested objects
-                        strictly_valid=strictly_valid,
-                        use_title=True,
-                        altair_classes_prefix=altair_classes_prefix,
-                    )
-                    for s in self.anyOf
+                    {
+                        s.get_python_type_representation(
+                            # We always use title if possible for nested objects
+                            strictly_valid=strictly_valid,
+                            use_title=True,
+                            altair_classes_prefix=altair_classes_prefix,
+                        )
+                        for s in self.anyOf
+                    }
                 )
             )
         elif isinstance(self.type, list):
@@ -241,7 +243,7 @@ class SchemaInfo:
                         altair_classes_prefix=altair_classes_prefix,
                     )
                 )
-            return "Union[{}]".format(", ".join(options))
+            return "Union[{}]".format(", ".join(set(options)))
         elif self.is_object():
             if strictly_valid:
                 return "dict"
@@ -258,7 +260,7 @@ class SchemaInfo:
         elif self.type in jsonschema_to_python_types:
             return jsonschema_to_python_types[self.type]
         else:
-            raise ValueError("No medium_description available for this schema")
+            raise ValueError("No python type representation available for this schema")
 
     @property
     def properties(self) -> SchemaProperties:
