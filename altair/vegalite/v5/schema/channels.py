@@ -1,6 +1,14 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
+# These errors need to be ignored as they come from the overload methods
+# which trigger two kind of errors in mypy:
+# * all of them do not have an implementation in this file
+# * some of them are the only overload methods -> overloads usually only make
+#   sense if there are multiple ones
+# However, we need these overloads due to how the propertysetter works
+# mypy: disable-error-code="no-overload-impl, empty-body, misc"
+
 import sys
 from . import core
 import pandas as pd

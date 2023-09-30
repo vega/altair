@@ -40,6 +40,16 @@ HEADER: Final = """\
 
 SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/" "{library}/{version}.json"
 
+CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
+# These errors need to be ignored as they come from the overload methods
+# which trigger two kind of errors in mypy:
+# * all of them do not have an implementation in this file 
+# * some of them are the only overload methods -> overloads usually only make
+#   sense if there are multiple ones
+# However, we need these overloads due to how the propertysetter works
+# mypy: disable-error-code="no-overload-impl, empty-body, misc"
+"""
+
 PARAMETER_PROTOCOL: Final = """
 class _ParameterProtocol(Protocol):
     # This protocol represents a Parameter as defined in api.py
@@ -452,6 +462,7 @@ def generate_vegalite_channel_wrappers(
             "from typing import Any, overload, Sequence, List, Literal, Union",
         ]
     contents = [HEADER]
+    contents.append(CHANNEL_MYPY_IGNORE_STATEMENTS)
     contents.extend(imports)
     contents.append("")
 
@@ -630,7 +641,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     print("Writing {}".format(outfile))
     content = [
         "# ruff: noqa\n",
-        "from .core import *\nfrom .channels import *\n",
+        "from .core import *\nfrom .channels import *  # type: ignore[assignment]\n",
         f"SCHEMA_VERSION = '{version}'\n",
         "SCHEMA_URL = {!r}\n" "".format(schema_url(version)),
     ]
