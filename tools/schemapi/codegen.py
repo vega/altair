@@ -1,7 +1,7 @@
 """Code generation utilities"""
 import re
 import textwrap
-from typing import Set, Final, Optional, List, Iterable, Union
+from typing import Set, Final, Optional, List, Iterable, Union, Dict
 from dataclasses import dataclass
 
 from .utils import (
@@ -193,7 +193,6 @@ class SchemaGenerator:
         return get_args(self.info)
 
     def docstring(self, indent: int = 0) -> str:
-        # TODO: use get_args here for more information on allOf objects
         info = self.info
         doc = [
             "{} schema wrapper".format(self.classname),
@@ -287,14 +286,26 @@ class SchemaGenerator:
 
     def get_args(self, si: SchemaInfo) -> List[str]:
         contents = ["self"]
-        props: Union[List[str], SchemaProperties] = []
+        prop_infos: Dict[str, SchemaInfo] = {}
         if si.is_anyOf():
-            props = sorted({p for si_sub in si.anyOf for p in si_sub.properties})
+            prop_infos = {}
+            for si_sub in si.anyOf:
+                prop_infos.update(si_sub.properties)
         elif si.properties:
-            props = si.properties
+            prop_infos = dict(si.properties.items())
 
-        if props:
-            contents.extend([p + "=Undefined" for p in props])
+        if prop_infos:
+            contents.extend(
+                [
+                    f"{p}: Union["
+                    + info.get_python_type_representation(
+                        strictly_valid=True,
+                        altair_classes_prefix=self.altair_classes_prefix,
+                    )
+                    + ", UndefinedType] = Undefined"
+                    for p, info in prop_infos.items()
+                ]
+            )
         elif si.type:
             py_type = jsonschema_to_python_types[si.type]
             if py_type == "list":

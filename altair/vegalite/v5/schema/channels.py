@@ -362,11 +362,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Angle":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Angle":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Angle":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Angle":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -380,16 +384,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Angle":
         ...
@@ -399,12 +405,29 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Angle":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Angle":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Angle":
         ...
 
@@ -419,78 +442,140 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Angle":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Angle":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Angle":
         ...
@@ -502,30 +587,78 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Angle":
         ...
@@ -597,11 +730,63 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Angle":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Angle":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Angle":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Angle":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -773,11 +958,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Angle":
         ...
@@ -976,12 +1163,29 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "AngleDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "AngleDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "AngleDatum":
         ...
 
@@ -1064,17 +1268,41 @@ class AngleValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "AngleValue":
         ...
@@ -1082,13 +1310,27 @@ class AngleValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "AngleValue":
         ...
@@ -1096,18 +1338,34 @@ class AngleValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "AngleValue":
         ...
@@ -1115,25 +1373,48 @@ class AngleValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "AngleValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "AngleValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "AngleValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "AngleValue":
         ...
 
@@ -1423,11 +1704,15 @@ class Color(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Color":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Color":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Color":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Color":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -1441,16 +1726,18 @@ class Color(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Color":
         ...
@@ -1460,12 +1747,33 @@ class Color(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Color":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Color":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "Color":
         ...
 
@@ -1480,78 +1788,140 @@ class Color(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Color":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Color":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Color":
         ...
@@ -1563,30 +1933,78 @@ class Color(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Color":
         ...
@@ -1658,11 +2076,63 @@ class Color(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Color":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Color":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Color":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Color":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -1834,11 +2304,13 @@ class Color(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Color":
         ...
@@ -2039,12 +2511,33 @@ class ColorDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "ColorDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "ColorDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "ColorDatum":
         ...
 
@@ -2128,17 +2621,41 @@ class ColorValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "ColorValue":
         ...
@@ -2146,13 +2663,27 @@ class ColorValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "ColorValue":
         ...
@@ -2160,18 +2691,34 @@ class ColorValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "ColorValue":
         ...
@@ -2179,25 +2726,52 @@ class ColorValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "ColorValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "ColorValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "ColorValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "ColorValue":
         ...
 
@@ -2470,11 +3044,15 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Column":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Column":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Column":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Column":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -2492,16 +3070,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Column":
         ...
@@ -2519,44 +3099,72 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Column":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Column":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def header(
         self,
-        format=Undefined,
-        formatType=Undefined,
-        labelAlign=Undefined,
-        labelAnchor=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOrient=Undefined,
-        labelPadding=Undefined,
-        labels=Undefined,
-        orient=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[float, UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[Union[core.Color, core.ExprRef], UndefinedType] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        orient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[float, UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[Union[core.Color, core.ExprRef], UndefinedType] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Column":
         ...
@@ -2586,7 +3194,38 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Column":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Column":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -2762,11 +3401,13 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Column":
         ...
@@ -3068,11 +3709,15 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Description":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Description":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Description":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Description":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3086,16 +3731,18 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Description":
         ...
@@ -3109,12 +3756,29 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Description":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Description":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Description":
         ...
 
@@ -3129,7 +3793,13 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Description":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Description":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3309,11 +3979,13 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Description":
         ...
@@ -3403,17 +4075,41 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "DescriptionValue":
         ...
@@ -3421,13 +4117,27 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "DescriptionValue":
         ...
@@ -3435,18 +4145,34 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "DescriptionValue":
         ...
@@ -3454,25 +4180,48 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "DescriptionValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "DescriptionValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "DescriptionValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "DescriptionValue":
         ...
 
@@ -3692,11 +4441,15 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Detail":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Detail":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Detail":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Detail":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3710,16 +4463,18 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Detail":
         ...
@@ -3737,7 +4492,13 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Detail":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Detail":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -3905,11 +4666,13 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Detail":
         ...
@@ -4249,11 +5012,15 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Facet":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Facet":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4261,7 +5028,12 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def align(self, column=Undefined, row=Undefined, **kwds) -> "Facet":
+    def align(
+        self,
+        column: Union[Literal["all", "each", "none"], UndefinedType] = Undefined,
+        row: Union[Literal["all", "each", "none"], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4275,16 +5047,18 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Facet":
         ...
@@ -4302,7 +5076,12 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def center(self, column=Undefined, row=Undefined, **kwds) -> "Facet":
+    def center(
+        self,
+        column: Union[bool, UndefinedType] = Undefined,
+        row: Union[bool, UndefinedType] = Undefined,
+        **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4314,44 +5093,72 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Facet":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def header(
         self,
-        format=Undefined,
-        formatType=Undefined,
-        labelAlign=Undefined,
-        labelAnchor=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOrient=Undefined,
-        labelPadding=Undefined,
-        labels=Undefined,
-        orient=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[float, UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[Union[core.Color, core.ExprRef], UndefinedType] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        orient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[float, UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[Union[core.Color, core.ExprRef], UndefinedType] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Facet":
         ...
@@ -4381,7 +5188,38 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Facet":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4393,7 +5231,12 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def spacing(self, column=Undefined, row=Undefined, **kwds) -> "Facet":
+    def spacing(
+        self,
+        column: Union[float, UndefinedType] = Undefined,
+        row: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ) -> "Facet":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4561,11 +5404,13 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Facet":
         ...
@@ -4903,11 +5748,15 @@ class Fill(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Fill":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Fill":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Fill":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Fill":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -4921,16 +5770,18 @@ class Fill(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Fill":
         ...
@@ -4940,12 +5791,33 @@ class Fill(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Fill":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Fill":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "Fill":
         ...
 
@@ -4960,78 +5832,140 @@ class Fill(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Fill":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Fill":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Fill":
         ...
@@ -5043,30 +5977,78 @@ class Fill(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Fill":
         ...
@@ -5138,11 +6120,63 @@ class Fill(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Fill":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Fill":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Fill":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Fill":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -5314,11 +6348,13 @@ class Fill(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Fill":
         ...
@@ -5519,12 +6555,33 @@ class FillDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "FillDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "FillDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "FillDatum":
         ...
 
@@ -5608,17 +6665,41 @@ class FillValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "FillValue":
         ...
@@ -5626,13 +6707,27 @@ class FillValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "FillValue":
         ...
@@ -5640,18 +6735,34 @@ class FillValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "FillValue":
         ...
@@ -5659,25 +6770,52 @@ class FillValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "FillValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "FillValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "FillValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "FillValue":
         ...
 
@@ -5966,11 +7104,15 @@ class FillOpacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "FillOpacity":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "FillOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "FillOpacity":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "FillOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -5984,16 +7126,18 @@ class FillOpacity(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "FillOpacity":
         ...
@@ -6003,12 +7147,29 @@ class FillOpacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "FillOpacity":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "FillOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "FillOpacity":
         ...
 
@@ -6023,78 +7184,140 @@ class FillOpacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "FillOpacity":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "FillOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "FillOpacity":
         ...
@@ -6106,30 +7329,78 @@ class FillOpacity(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "FillOpacity":
         ...
@@ -6202,12 +7473,62 @@ class FillOpacity(
 
     @overload  # type: ignore[no-overload-impl]
     def sort(
-        self, field=Undefined, op=Undefined, order=Undefined, **kwds
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
     ) -> "FillOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "FillOpacity":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "FillOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -6379,11 +7700,13 @@ class FillOpacity(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "FillOpacity":
         ...
@@ -6584,12 +7907,29 @@ class FillOpacityDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "FillOpacityDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "FillOpacityDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "FillOpacityDatum":
         ...
 
@@ -6672,17 +8012,41 @@ class FillOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "FillOpacityValue":
         ...
@@ -6690,13 +8054,27 @@ class FillOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "FillOpacityValue":
         ...
@@ -6704,18 +8082,34 @@ class FillOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "FillOpacityValue":
         ...
@@ -6723,25 +8117,48 @@ class FillOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "FillOpacityValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "FillOpacityValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "FillOpacityValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "FillOpacityValue":
         ...
 
@@ -7001,11 +8418,15 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Href":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Href":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Href":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Href":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7019,16 +8440,18 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Href":
         ...
@@ -7042,12 +8465,29 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Href":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Href":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Href":
         ...
 
@@ -7062,7 +8502,13 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Href":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Href":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7242,11 +8688,13 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Href":
         ...
@@ -7336,17 +8784,41 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "HrefValue":
         ...
@@ -7354,13 +8826,27 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "HrefValue":
         ...
@@ -7368,18 +8854,34 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "HrefValue":
         ...
@@ -7387,25 +8889,48 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "HrefValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "HrefValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "HrefValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "HrefValue":
         ...
 
@@ -7625,11 +9150,11 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Key":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "Key":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Key":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "Key":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7643,16 +9168,18 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Key":
         ...
@@ -7670,7 +9197,13 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Key":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Key":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -7838,11 +9371,13 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Key":
         ...
@@ -8090,11 +9625,15 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Latitude":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Latitude":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Latitude":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Latitude":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8110,7 +9649,13 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Latitude":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Latitude":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8278,11 +9823,13 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Latitude":
         ...
@@ -8608,11 +10155,15 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Latitude2":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Latitude2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Latitude2":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Latitude2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8628,7 +10179,13 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Latitude2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Latitude2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -8796,11 +10353,13 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Latitude2":
         ...
@@ -9211,11 +10770,15 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Longitude":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Longitude":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Longitude":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Longitude":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9231,7 +10794,13 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Longitude":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Longitude":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9399,11 +10968,13 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Longitude":
         ...
@@ -9729,11 +11300,15 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Longitude2":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Longitude2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Longitude2":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Longitude2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9749,7 +11324,13 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Longitude2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Longitude2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -9917,11 +11498,13 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Longitude2":
         ...
@@ -10402,11 +11985,15 @@ class Opacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Opacity":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Opacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Opacity":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Opacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -10420,16 +12007,18 @@ class Opacity(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Opacity":
         ...
@@ -10439,12 +12028,29 @@ class Opacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Opacity":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Opacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Opacity":
         ...
 
@@ -10459,78 +12065,140 @@ class Opacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Opacity":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Opacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Opacity":
         ...
@@ -10542,30 +12210,78 @@ class Opacity(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Opacity":
         ...
@@ -10637,11 +12353,63 @@ class Opacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Opacity":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Opacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Opacity":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Opacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -10813,11 +12581,13 @@ class Opacity(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Opacity":
         ...
@@ -11016,12 +12786,29 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "OpacityDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "OpacityDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "OpacityDatum":
         ...
 
@@ -11104,17 +12891,41 @@ class OpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "OpacityValue":
         ...
@@ -11122,13 +12933,27 @@ class OpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "OpacityValue":
         ...
@@ -11136,18 +12961,34 @@ class OpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "OpacityValue":
         ...
@@ -11155,25 +12996,48 @@ class OpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "OpacityValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "OpacityValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "OpacityValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "OpacityValue":
         ...
 
@@ -11394,11 +13258,15 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Order":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Order":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Order":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Order":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -11412,16 +13280,18 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Order":
         ...
@@ -11439,7 +13309,13 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Order":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Order":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -11611,11 +13487,13 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Order":
         ...
@@ -11698,12 +13576,29 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     _encoding_name = "order"
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "OrderValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[float, UndefinedType] = Undefined,
+        **kwds
+    ) -> "OrderValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[float, UndefinedType] = Undefined,
+        **kwds
     ) -> "OrderValue":
         ...
 
@@ -12001,11 +13896,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Radius":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Radius":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Radius":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Radius":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12019,16 +13918,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Radius":
         ...
@@ -12046,36 +13947,90 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Radius":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Radius":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Radius":
         ...
@@ -12147,11 +14102,63 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Radius":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Radius":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Radius":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Radius":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12335,11 +14342,13 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Radius":
         ...
@@ -12569,30 +14578,78 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "RadiusDatum":
         ...
@@ -12807,11 +14864,15 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Radius2":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Radius2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Radius2":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Radius2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12827,7 +14888,13 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Radius2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Radius2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -12995,11 +15062,13 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Radius2":
         ...
@@ -13464,11 +15533,11 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Row":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "Row":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Row":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "Row":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -13486,16 +15555,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Row":
         ...
@@ -13513,44 +15584,72 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Row":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Row":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def header(
         self,
-        format=Undefined,
-        formatType=Undefined,
-        labelAlign=Undefined,
-        labelAnchor=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOrient=Undefined,
-        labelPadding=Undefined,
-        labels=Undefined,
-        orient=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        labelAngle: Union[float, UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[Union[core.Color, core.ExprRef], UndefinedType] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        orient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Literal[None, "start", "middle", "end"], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[float, UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[Union[core.Color, core.ExprRef], UndefinedType] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[
+            Literal["left", "right", "top", "bottom"], UndefinedType
+        ] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Row":
         ...
@@ -13580,7 +15679,38 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Row":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Row":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -13756,11 +15886,13 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Row":
         ...
@@ -14092,11 +16224,15 @@ class Shape(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Shape":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Shape":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Shape":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Shape":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -14110,16 +16246,18 @@ class Shape(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Shape":
         ...
@@ -14129,12 +16267,29 @@ class Shape(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Shape":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Shape":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Shape":
         ...
 
@@ -14149,78 +16304,140 @@ class Shape(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Shape":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Shape":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Shape":
         ...
@@ -14232,30 +16449,78 @@ class Shape(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Shape":
         ...
@@ -14327,11 +16592,63 @@ class Shape(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Shape":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Shape":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Shape":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Shape":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -14503,11 +16820,13 @@ class Shape(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Shape":
         ...
@@ -14706,12 +17025,29 @@ class ShapeDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "ShapeDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "ShapeDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "ShapeDatum":
         ...
 
@@ -14795,17 +17131,41 @@ class ShapeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["nominal", "ordinal", "geojson"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "ShapeValue":
         ...
@@ -14813,13 +17173,27 @@ class ShapeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "ShapeValue":
         ...
@@ -14827,18 +17201,34 @@ class ShapeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["nominal", "ordinal", "geojson"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "ShapeValue":
         ...
@@ -14846,25 +17236,48 @@ class ShapeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "ShapeValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "ShapeValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "ShapeValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "ShapeValue":
         ...
 
@@ -15151,11 +17564,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Size":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Size":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Size":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Size":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15169,16 +17586,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Size":
         ...
@@ -15188,12 +17607,29 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Size":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Size":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Size":
         ...
 
@@ -15208,78 +17644,140 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Size":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Size":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Size":
         ...
@@ -15291,30 +17789,78 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Size":
         ...
@@ -15386,11 +17932,63 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Size":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Size":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Size":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Size":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -15562,11 +18160,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Size":
         ...
@@ -15765,12 +18365,29 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "SizeDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "SizeDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "SizeDatum":
         ...
 
@@ -15853,17 +18470,41 @@ class SizeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "SizeValue":
         ...
@@ -15871,13 +18512,27 @@ class SizeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "SizeValue":
         ...
@@ -15885,18 +18540,34 @@ class SizeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "SizeValue":
         ...
@@ -15904,25 +18575,48 @@ class SizeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "SizeValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "SizeValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "SizeValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "SizeValue":
         ...
 
@@ -16212,11 +18906,15 @@ class Stroke(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Stroke":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Stroke":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Stroke":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Stroke":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16230,16 +18928,18 @@ class Stroke(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Stroke":
         ...
@@ -16249,12 +18949,33 @@ class Stroke(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Stroke":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Stroke":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "Stroke":
         ...
 
@@ -16269,78 +18990,140 @@ class Stroke(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Stroke":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Stroke":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Stroke":
         ...
@@ -16352,30 +19135,78 @@ class Stroke(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Stroke":
         ...
@@ -16447,11 +19278,63 @@ class Stroke(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Stroke":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Stroke":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Stroke":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Stroke":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -16623,11 +19506,13 @@ class Stroke(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Stroke":
         ...
@@ -16828,12 +19713,33 @@ class StrokeDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "StrokeDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "StrokeDatum":
         ...
 
@@ -16917,17 +19823,41 @@ class StrokeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeValue":
         ...
@@ -16935,13 +19865,27 @@ class StrokeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeValue":
         ...
@@ -16949,18 +19893,34 @@ class StrokeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeValue":
         ...
@@ -16968,25 +19928,52 @@ class StrokeValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "StrokeValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[
+            Union[core.Gradient, str, None, core.ExprRef], UndefinedType
+        ] = Undefined,
+        **kwds
     ) -> "StrokeValue":
         ...
 
@@ -17275,11 +20262,15 @@ class StrokeDash(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "StrokeDash":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "StrokeDash":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "StrokeDash":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "StrokeDash":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -17293,16 +20284,18 @@ class StrokeDash(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeDash":
         ...
@@ -17312,12 +20305,29 @@ class StrokeDash(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeDash":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeDash":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeDash":
         ...
 
@@ -17332,78 +20342,140 @@ class StrokeDash(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "StrokeDash":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "StrokeDash":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeDash":
         ...
@@ -17415,30 +20487,78 @@ class StrokeDash(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeDash":
         ...
@@ -17511,12 +20631,62 @@ class StrokeDash(
 
     @overload  # type: ignore[no-overload-impl]
     def sort(
-        self, field=Undefined, op=Undefined, order=Undefined, **kwds
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeDash":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "StrokeDash":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeDash":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -17688,11 +20858,13 @@ class StrokeDash(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeDash":
         ...
@@ -17893,12 +21065,29 @@ class StrokeDashDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeDashDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeDashDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeDashDatum":
         ...
 
@@ -17981,17 +21170,41 @@ class StrokeDashValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeDashValue":
         ...
@@ -17999,13 +21212,27 @@ class StrokeDashValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeDashValue":
         ...
@@ -18013,18 +21240,34 @@ class StrokeDashValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeDashValue":
         ...
@@ -18032,25 +21275,48 @@ class StrokeDashValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeDashValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeDashValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeDashValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeDashValue":
         ...
 
@@ -18339,11 +21605,15 @@ class StrokeOpacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "StrokeOpacity":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "StrokeOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "StrokeOpacity":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "StrokeOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -18357,16 +21627,18 @@ class StrokeOpacity(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeOpacity":
         ...
@@ -18376,12 +21648,29 @@ class StrokeOpacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeOpacity":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeOpacity":
         ...
 
@@ -18396,78 +21685,140 @@ class StrokeOpacity(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "StrokeOpacity":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "StrokeOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeOpacity":
         ...
@@ -18479,30 +21830,78 @@ class StrokeOpacity(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeOpacity":
         ...
@@ -18575,12 +21974,62 @@ class StrokeOpacity(
 
     @overload  # type: ignore[no-overload-impl]
     def sort(
-        self, field=Undefined, op=Undefined, order=Undefined, **kwds
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "StrokeOpacity":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeOpacity":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -18752,11 +22201,13 @@ class StrokeOpacity(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeOpacity":
         ...
@@ -18958,13 +22409,28 @@ class StrokeOpacityDatum(
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, test=Undefined, value=Undefined, **kwds
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeOpacityDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeOpacityDatum":
         ...
 
@@ -19047,17 +22513,41 @@ class StrokeOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeOpacityValue":
         ...
@@ -19065,13 +22555,27 @@ class StrokeOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeOpacityValue":
         ...
@@ -19079,18 +22583,34 @@ class StrokeOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeOpacityValue":
         ...
@@ -19098,27 +22618,48 @@ class StrokeOpacityValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeOpacityValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, test=Undefined, value=Undefined, **kwds
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeOpacityValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeOpacityValue":
         ...
 
@@ -19409,11 +22950,15 @@ class StrokeWidth(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "StrokeWidth":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "StrokeWidth":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "StrokeWidth":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "StrokeWidth":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -19427,16 +22972,18 @@ class StrokeWidth(
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeWidth":
         ...
@@ -19446,12 +22993,29 @@ class StrokeWidth(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeWidth":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeWidth":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeWidth":
         ...
 
@@ -19466,78 +23030,140 @@ class StrokeWidth(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "StrokeWidth":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "StrokeWidth":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def legend(
         self,
-        aria=Undefined,
-        clipHeight=Undefined,
-        columnPadding=Undefined,
-        columns=Undefined,
-        cornerRadius=Undefined,
-        description=Undefined,
-        direction=Undefined,
-        fillColor=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        gradientLength=Undefined,
-        gradientOpacity=Undefined,
-        gradientStrokeColor=Undefined,
-        gradientStrokeWidth=Undefined,
-        gradientThickness=Undefined,
-        gridAlign=Undefined,
-        labelAlign=Undefined,
-        labelBaseline=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        legendX=Undefined,
-        legendY=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        padding=Undefined,
-        rowPadding=Undefined,
-        strokeColor=Undefined,
-        symbolDash=Undefined,
-        symbolDashOffset=Undefined,
-        symbolFillColor=Undefined,
-        symbolLimit=Undefined,
-        symbolOffset=Undefined,
-        symbolOpacity=Undefined,
-        symbolSize=Undefined,
-        symbolStrokeColor=Undefined,
-        symbolStrokeWidth=Undefined,
-        symbolType=Undefined,
-        tickCount=Undefined,
-        tickMinStep=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titleOrient=Undefined,
-        titlePadding=Undefined,
-        type=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        clipHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columnPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        columns: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        cornerRadius: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        direction: Union[Literal["horizontal", "vertical"], UndefinedType] = Undefined,
+        fillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        gradientLength: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gradientStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientStrokeWidth: Union[
+            Union[float, core.ExprRef], UndefinedType
+        ] = Undefined,
+        gradientThickness: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        gridAlign: Union[
+            Union[core.LayoutAlign, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        labelFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        legendY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[
+            Literal[
+                "none",
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        rowPadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        strokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        symbolDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolFillColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolStrokeColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        symbolStrokeWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        symbolType: Union[
+            Union[core.SymbolShape, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCount: Union[
+            Union[core.TickCount, core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOrient: Union[Union[core.Orient, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeWidth":
         ...
@@ -19549,30 +23175,78 @@ class StrokeWidth(
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeWidth":
         ...
@@ -19645,12 +23319,62 @@ class StrokeWidth(
 
     @overload  # type: ignore[no-overload-impl]
     def sort(
-        self, field=Undefined, op=Undefined, order=Undefined, **kwds
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeWidth":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "StrokeWidth":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeWidth":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -19822,11 +23546,13 @@ class StrokeWidth(
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "StrokeWidth":
         ...
@@ -20027,12 +23753,29 @@ class StrokeWidthDatum(
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeWidthDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeWidthDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeWidthDatum":
         ...
 
@@ -20115,17 +23858,41 @@ class StrokeWidthValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeWidthValue":
         ...
@@ -20133,13 +23900,27 @@ class StrokeWidthValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeWidthValue":
         ...
@@ -20147,18 +23928,34 @@ class StrokeWidthValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "StrokeWidthValue":
         ...
@@ -20166,25 +23963,48 @@ class StrokeWidthValue(
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "StrokeWidthValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "StrokeWidthValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "StrokeWidthValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "StrokeWidthValue":
         ...
 
@@ -20444,11 +24264,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Text":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Text":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Text":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Text":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -20462,16 +24286,18 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Text":
         ...
@@ -20485,12 +24311,29 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Text":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[core.Text, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Text":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[core.Text, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Text":
         ...
 
@@ -20503,7 +24346,13 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Text":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Text":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -20683,11 +24532,13 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Text":
         ...
@@ -20909,12 +24760,29 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "TextDatum":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[core.Text, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "TextDatum":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[core.Text, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "TextDatum":
         ...
 
@@ -21011,16 +24879,31 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, str, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "TextValue":
         ...
@@ -21028,28 +24911,52 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        param=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, str, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "TextValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "TextValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[core.Text, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "TextValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[core.Text, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "TextValue":
         ...
 
@@ -21351,11 +25258,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Theta":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Theta":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Theta":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Theta":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -21369,16 +25280,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Theta":
         ...
@@ -21396,36 +25309,90 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Theta":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Theta":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Theta":
         ...
@@ -21497,11 +25464,63 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Theta":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Theta":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Theta":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Theta":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -21685,11 +25704,13 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Theta":
         ...
@@ -21919,30 +25940,78 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "ThetaDatum":
         ...
@@ -22157,11 +26226,15 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Theta2":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Theta2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Theta2":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Theta2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -22177,7 +26250,13 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Theta2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Theta2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -22345,11 +26424,13 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Theta2":
         ...
@@ -22801,11 +26882,15 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Tooltip":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Tooltip":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Tooltip":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "Tooltip":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -22819,16 +26904,18 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Tooltip":
         ...
@@ -22842,12 +26929,29 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Tooltip":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Tooltip":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Tooltip":
         ...
 
@@ -22862,7 +26966,13 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Tooltip":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Tooltip":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -23042,11 +27152,13 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Tooltip":
         ...
@@ -23136,17 +27248,41 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "TooltipValue":
         ...
@@ -23154,13 +27290,27 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "TooltipValue":
         ...
@@ -23168,18 +27318,34 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "TooltipValue":
         ...
@@ -23187,25 +27353,48 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "TooltipValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "TooltipValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "TooltipValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "TooltipValue":
         ...
 
@@ -23465,11 +27654,11 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Url":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "Url":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Url":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "Url":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -23483,16 +27672,18 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Url":
         ...
@@ -23506,12 +27697,29 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "Url":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Url":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "Url":
         ...
 
@@ -23526,7 +27734,13 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Url":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Url":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -23706,11 +27920,13 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Url":
         ...
@@ -23800,17 +28016,41 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        test=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "UrlValue":
         ...
@@ -23818,13 +28058,27 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        legend=Undefined,
-        scale=Undefined,
-        test=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "UrlValue":
         ...
@@ -23832,18 +28086,34 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        aggregate=Undefined,
-        bandPosition=Undefined,
-        bin=Undefined,
-        empty=Undefined,
-        field=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        sort=Undefined,
-        timeUnit=Undefined,
-        title=Undefined,
-        type=Undefined,
+        aggregate: Union[
+            Union[core.NonArgAggregateOp, core.ArgmaxDef, core.ArgminDef], UndefinedType
+        ] = Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        bin: Union[Union[bool, core.BinParams, None], UndefinedType] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        sort: Union[
+            Union[
+                core.SortArray,
+                core.AllSortString,
+                core.EncodingSortField,
+                core.SortByEncoding,
+                None,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        timeUnit: Union[
+            Union[core.TimeUnit, core.BinnedTimeUnit, core.TimeUnitParams],
+            UndefinedType,
+        ] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal"], UndefinedType
+        ] = Undefined,
         **kwds
     ) -> "UrlValue":
         ...
@@ -23851,25 +28121,48 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload  # type: ignore[no-overload-impl]
     def condition(
         self,
-        bandPosition=Undefined,
-        datum=Undefined,
-        empty=Undefined,
-        legend=Undefined,
-        param=Undefined,
-        scale=Undefined,
-        title=Undefined,
-        type=Undefined,
+        bandPosition: Union[float, UndefinedType] = Undefined,
+        datum: Union[
+            Union[core.PrimitiveValue, core.DateTime, core.ExprRef, core.RepeatRef],
+            UndefinedType,
+        ] = Undefined,
+        empty: Union[bool, UndefinedType] = Undefined,
+        legend: Union[Union[core.Legend, None], UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        scale: Union[Union[core.Scale, None], UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        type: Union[
+            Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
+            UndefinedType,
+        ] = Undefined,
         **kwds
     ) -> "UrlValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def condition(self, test=Undefined, value=Undefined, **kwds) -> "UrlValue":
+    def condition(
+        self,
+        test: Union[
+            Union[
+                core.LogicalNotPredicate,
+                core.LogicalAndPredicate,
+                core.LogicalOrPredicate,
+                core.Predicate,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
+    ) -> "UrlValue":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def condition(
-        self, empty=Undefined, param=Undefined, value=Undefined, **kwds
+        self,
+        empty: Union[bool, UndefinedType] = Undefined,
+        param: Union[str, UndefinedType] = Undefined,
+        value: Union[Union[str, None, core.ExprRef], UndefinedType] = Undefined,
+        **kwds
     ) -> "UrlValue":
         ...
 
@@ -24188,94 +28481,173 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "X":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "X":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "X":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "X":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def axis(
         self,
-        aria=Undefined,
-        bandPosition=Undefined,
-        description=Undefined,
-        domain=Undefined,
-        domainCap=Undefined,
-        domainColor=Undefined,
-        domainDash=Undefined,
-        domainDashOffset=Undefined,
-        domainOpacity=Undefined,
-        domainWidth=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        grid=Undefined,
-        gridCap=Undefined,
-        gridColor=Undefined,
-        gridDash=Undefined,
-        gridDashOffset=Undefined,
-        gridOpacity=Undefined,
-        gridWidth=Undefined,
-        labelAlign=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelBound=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFlush=Undefined,
-        labelFlushOffset=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        labels=Undefined,
-        maxExtent=Undefined,
-        minExtent=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        position=Undefined,
-        style=Undefined,
-        tickBand=Undefined,
-        tickCap=Undefined,
-        tickColor=Undefined,
-        tickCount=Undefined,
-        tickDash=Undefined,
-        tickDashOffset=Undefined,
-        tickExtra=Undefined,
-        tickMinStep=Undefined,
-        tickOffset=Undefined,
-        tickOpacity=Undefined,
-        tickRound=Undefined,
-        tickSize=Undefined,
-        tickWidth=Undefined,
-        ticks=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titlePadding=Undefined,
-        titleX=Undefined,
-        titleY=Undefined,
-        translate=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        bandPosition: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[
+            Union[core.StrokeCap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        domainDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        grid: Union[bool, UndefinedType] = Undefined,
+        gridCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        gridColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        gridDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        gridDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union[core.Align, core.ExprRef, core.ConditionalAxisLabelAlign],
+            UndefinedType,
+        ] = Undefined,
+        labelAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef, core.ConditionalAxisLabelBaseline],
+            UndefinedType,
+        ] = Undefined,
+        labelBound: Union[
+            Union[Union[float, bool], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlushOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, core.ExprRef, core.ConditionalAxisString], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef, core.ConditionalAxisLabelFontStyle],
+            UndefinedType,
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef, core.ConditionalAxisLabelFontWeight],
+            UndefinedType,
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        maxExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        minExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[Union[core.AxisOrient, core.ExprRef], UndefinedType] = Undefined,
+        position: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tickBand: Union[
+            Union[Literal["center", "extent"], core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        tickColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        tickCount: Union[
+            Union[float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        tickDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        tickDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickExtra: Union[bool, UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickRound: Union[bool, UndefinedType] = Undefined,
+        tickSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        ticks: Union[bool, UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        translate: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "X":
         ...
@@ -24295,16 +28667,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "X":
         ...
@@ -24322,16 +28696,26 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "X":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "X":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame=Undefined,
-        keyvals=Undefined,
-        method=Undefined,
-        value=Undefined,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        keyvals: Union[
+            Union[List[Any], core.ImputeSequence], UndefinedType
+        ] = Undefined,
+        method: Union[
+            Literal["value", "median", "max", "min", "mean"], UndefinedType
+        ] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
         **kwds
     ) -> "X":
         ...
@@ -24343,30 +28727,78 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "X":
         ...
@@ -24438,11 +28870,63 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "X":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "X":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "X":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "X":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -24626,11 +29110,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "X":
         ...
@@ -24877,84 +29363,163 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def axis(
         self,
-        aria=Undefined,
-        bandPosition=Undefined,
-        description=Undefined,
-        domain=Undefined,
-        domainCap=Undefined,
-        domainColor=Undefined,
-        domainDash=Undefined,
-        domainDashOffset=Undefined,
-        domainOpacity=Undefined,
-        domainWidth=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        grid=Undefined,
-        gridCap=Undefined,
-        gridColor=Undefined,
-        gridDash=Undefined,
-        gridDashOffset=Undefined,
-        gridOpacity=Undefined,
-        gridWidth=Undefined,
-        labelAlign=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelBound=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFlush=Undefined,
-        labelFlushOffset=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        labels=Undefined,
-        maxExtent=Undefined,
-        minExtent=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        position=Undefined,
-        style=Undefined,
-        tickBand=Undefined,
-        tickCap=Undefined,
-        tickColor=Undefined,
-        tickCount=Undefined,
-        tickDash=Undefined,
-        tickDashOffset=Undefined,
-        tickExtra=Undefined,
-        tickMinStep=Undefined,
-        tickOffset=Undefined,
-        tickOpacity=Undefined,
-        tickRound=Undefined,
-        tickSize=Undefined,
-        tickWidth=Undefined,
-        ticks=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titlePadding=Undefined,
-        titleX=Undefined,
-        titleY=Undefined,
-        translate=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        bandPosition: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[
+            Union[core.StrokeCap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        domainDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        grid: Union[bool, UndefinedType] = Undefined,
+        gridCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        gridColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        gridDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        gridDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union[core.Align, core.ExprRef, core.ConditionalAxisLabelAlign],
+            UndefinedType,
+        ] = Undefined,
+        labelAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef, core.ConditionalAxisLabelBaseline],
+            UndefinedType,
+        ] = Undefined,
+        labelBound: Union[
+            Union[Union[float, bool], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlushOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, core.ExprRef, core.ConditionalAxisString], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef, core.ConditionalAxisLabelFontStyle],
+            UndefinedType,
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef, core.ConditionalAxisLabelFontWeight],
+            UndefinedType,
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        maxExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        minExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[Union[core.AxisOrient, core.ExprRef], UndefinedType] = Undefined,
+        position: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tickBand: Union[
+            Union[Literal["center", "extent"], core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        tickColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        tickCount: Union[
+            Union[float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        tickDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        tickDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickExtra: Union[bool, UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickRound: Union[bool, UndefinedType] = Undefined,
+        tickSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        ticks: Union[bool, UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        translate: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "XDatum":
         ...
@@ -24970,10 +29535,14 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame=Undefined,
-        keyvals=Undefined,
-        method=Undefined,
-        value=Undefined,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        keyvals: Union[
+            Union[List[Any], core.ImputeSequence], UndefinedType
+        ] = Undefined,
+        method: Union[
+            Literal["value", "median", "max", "min", "mean"], UndefinedType
+        ] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
         **kwds
     ) -> "XDatum":
         ...
@@ -24985,30 +29554,78 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "XDatum":
         ...
@@ -25227,11 +29844,11 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "X2":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "X2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "X2":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "X2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -25247,7 +29864,13 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "X2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "X2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -25415,11 +30038,13 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "X2":
         ...
@@ -25763,11 +30388,15 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "XError":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "XError":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "XError":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "XError":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -25783,7 +30412,13 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "XError":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "XError":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -25951,11 +30586,13 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "XError":
         ...
@@ -26150,11 +30787,15 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "XError2":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "XError2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "XError2":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "XError2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -26170,7 +30811,13 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "XError2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "XError2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -26338,11 +30985,13 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "XError2":
         ...
@@ -26656,11 +31305,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "XOffset":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "XOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "XOffset":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "XOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -26674,16 +31327,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "XOffset":
         ...
@@ -26697,36 +31352,90 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "XOffset":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "XOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "XOffset":
         ...
@@ -26798,11 +31507,63 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "XOffset":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "XOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "XOffset":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "XOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -26974,11 +31735,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "XOffset":
         ...
@@ -27175,30 +31938,78 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "XOffsetDatum":
         ...
@@ -27566,94 +32377,173 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Y":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "Y":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Y":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "Y":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def axis(
         self,
-        aria=Undefined,
-        bandPosition=Undefined,
-        description=Undefined,
-        domain=Undefined,
-        domainCap=Undefined,
-        domainColor=Undefined,
-        domainDash=Undefined,
-        domainDashOffset=Undefined,
-        domainOpacity=Undefined,
-        domainWidth=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        grid=Undefined,
-        gridCap=Undefined,
-        gridColor=Undefined,
-        gridDash=Undefined,
-        gridDashOffset=Undefined,
-        gridOpacity=Undefined,
-        gridWidth=Undefined,
-        labelAlign=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelBound=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFlush=Undefined,
-        labelFlushOffset=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        labels=Undefined,
-        maxExtent=Undefined,
-        minExtent=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        position=Undefined,
-        style=Undefined,
-        tickBand=Undefined,
-        tickCap=Undefined,
-        tickColor=Undefined,
-        tickCount=Undefined,
-        tickDash=Undefined,
-        tickDashOffset=Undefined,
-        tickExtra=Undefined,
-        tickMinStep=Undefined,
-        tickOffset=Undefined,
-        tickOpacity=Undefined,
-        tickRound=Undefined,
-        tickSize=Undefined,
-        tickWidth=Undefined,
-        ticks=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titlePadding=Undefined,
-        titleX=Undefined,
-        titleY=Undefined,
-        translate=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        bandPosition: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[
+            Union[core.StrokeCap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        domainDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        grid: Union[bool, UndefinedType] = Undefined,
+        gridCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        gridColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        gridDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        gridDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union[core.Align, core.ExprRef, core.ConditionalAxisLabelAlign],
+            UndefinedType,
+        ] = Undefined,
+        labelAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef, core.ConditionalAxisLabelBaseline],
+            UndefinedType,
+        ] = Undefined,
+        labelBound: Union[
+            Union[Union[float, bool], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlushOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, core.ExprRef, core.ConditionalAxisString], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef, core.ConditionalAxisLabelFontStyle],
+            UndefinedType,
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef, core.ConditionalAxisLabelFontWeight],
+            UndefinedType,
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        maxExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        minExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[Union[core.AxisOrient, core.ExprRef], UndefinedType] = Undefined,
+        position: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tickBand: Union[
+            Union[Literal["center", "extent"], core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        tickColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        tickCount: Union[
+            Union[float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        tickDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        tickDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickExtra: Union[bool, UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickRound: Union[bool, UndefinedType] = Undefined,
+        tickSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        ticks: Union[bool, UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        translate: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "Y":
         ...
@@ -27673,16 +32563,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "Y":
         ...
@@ -27700,16 +32592,26 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Y":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Y":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame=Undefined,
-        keyvals=Undefined,
-        method=Undefined,
-        value=Undefined,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        keyvals: Union[
+            Union[List[Any], core.ImputeSequence], UndefinedType
+        ] = Undefined,
+        method: Union[
+            Literal["value", "median", "max", "min", "mean"], UndefinedType
+        ] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
         **kwds
     ) -> "Y":
         ...
@@ -27721,30 +32623,78 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "Y":
         ...
@@ -27816,11 +32766,63 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "Y":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Y":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "Y":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "Y":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -28004,11 +33006,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Y":
         ...
@@ -28255,84 +33259,163 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def axis(
         self,
-        aria=Undefined,
-        bandPosition=Undefined,
-        description=Undefined,
-        domain=Undefined,
-        domainCap=Undefined,
-        domainColor=Undefined,
-        domainDash=Undefined,
-        domainDashOffset=Undefined,
-        domainOpacity=Undefined,
-        domainWidth=Undefined,
-        format=Undefined,
-        formatType=Undefined,
-        grid=Undefined,
-        gridCap=Undefined,
-        gridColor=Undefined,
-        gridDash=Undefined,
-        gridDashOffset=Undefined,
-        gridOpacity=Undefined,
-        gridWidth=Undefined,
-        labelAlign=Undefined,
-        labelAngle=Undefined,
-        labelBaseline=Undefined,
-        labelBound=Undefined,
-        labelColor=Undefined,
-        labelExpr=Undefined,
-        labelFlush=Undefined,
-        labelFlushOffset=Undefined,
-        labelFont=Undefined,
-        labelFontSize=Undefined,
-        labelFontStyle=Undefined,
-        labelFontWeight=Undefined,
-        labelLimit=Undefined,
-        labelLineHeight=Undefined,
-        labelOffset=Undefined,
-        labelOpacity=Undefined,
-        labelOverlap=Undefined,
-        labelPadding=Undefined,
-        labelSeparation=Undefined,
-        labels=Undefined,
-        maxExtent=Undefined,
-        minExtent=Undefined,
-        offset=Undefined,
-        orient=Undefined,
-        position=Undefined,
-        style=Undefined,
-        tickBand=Undefined,
-        tickCap=Undefined,
-        tickColor=Undefined,
-        tickCount=Undefined,
-        tickDash=Undefined,
-        tickDashOffset=Undefined,
-        tickExtra=Undefined,
-        tickMinStep=Undefined,
-        tickOffset=Undefined,
-        tickOpacity=Undefined,
-        tickRound=Undefined,
-        tickSize=Undefined,
-        tickWidth=Undefined,
-        ticks=Undefined,
-        title=Undefined,
-        titleAlign=Undefined,
-        titleAnchor=Undefined,
-        titleAngle=Undefined,
-        titleBaseline=Undefined,
-        titleColor=Undefined,
-        titleFont=Undefined,
-        titleFontSize=Undefined,
-        titleFontStyle=Undefined,
-        titleFontWeight=Undefined,
-        titleLimit=Undefined,
-        titleLineHeight=Undefined,
-        titleOpacity=Undefined,
-        titlePadding=Undefined,
-        titleX=Undefined,
-        titleY=Undefined,
-        translate=Undefined,
-        values=Undefined,
-        zindex=Undefined,
+        aria: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        bandPosition: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        description: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[bool, UndefinedType] = Undefined,
+        domainCap: Union[
+            Union[core.StrokeCap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainDash: Union[Union[List[float], core.ExprRef], UndefinedType] = Undefined,
+        domainDashOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainWidth: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        format: Union[Union[str, core.Dict], UndefinedType] = Undefined,
+        formatType: Union[str, UndefinedType] = Undefined,
+        grid: Union[bool, UndefinedType] = Undefined,
+        gridCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        gridColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        gridDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        gridDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        gridWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelAlign: Union[
+            Union[core.Align, core.ExprRef, core.ConditionalAxisLabelAlign],
+            UndefinedType,
+        ] = Undefined,
+        labelAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef, core.ConditionalAxisLabelBaseline],
+            UndefinedType,
+        ] = Undefined,
+        labelBound: Union[
+            Union[Union[float, bool], core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        labelExpr: Union[str, UndefinedType] = Undefined,
+        labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
+        labelFlushOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelFont: Union[
+            Union[str, core.ExprRef, core.ConditionalAxisString], UndefinedType
+        ] = Undefined,
+        labelFontSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef, core.ConditionalAxisLabelFontStyle],
+            UndefinedType,
+        ] = Undefined,
+        labelFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef, core.ConditionalAxisLabelFontWeight],
+            UndefinedType,
+        ] = Undefined,
+        labelLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labelOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelOverlap: Union[
+            Union[core.LabelOverlap, core.ExprRef], UndefinedType
+        ] = Undefined,
+        labelPadding: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        labelSeparation: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        labels: Union[bool, UndefinedType] = Undefined,
+        maxExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        minExtent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        offset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        orient: Union[Union[core.AxisOrient, core.ExprRef], UndefinedType] = Undefined,
+        position: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        style: Union[Union[str, List[str]], UndefinedType] = Undefined,
+        tickBand: Union[
+            Union[Literal["center", "extent"], core.ExprRef], UndefinedType
+        ] = Undefined,
+        tickCap: Union[Union[core.StrokeCap, core.ExprRef], UndefinedType] = Undefined,
+        tickColor: Union[
+            Union[Union[None, core.Color], core.ExprRef, core.ConditionalAxisColor],
+            UndefinedType,
+        ] = Undefined,
+        tickCount: Union[
+            Union[float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        tickDash: Union[
+            Union[List[float], core.ExprRef, core.ConditionalAxisNumberArray],
+            UndefinedType,
+        ] = Undefined,
+        tickDashOffset: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickExtra: Union[bool, UndefinedType] = Undefined,
+        tickMinStep: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOffset: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        tickOpacity: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickRound: Union[bool, UndefinedType] = Undefined,
+        tickSize: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        tickWidth: Union[
+            Union[float, core.ExprRef, core.ConditionalAxisNumber], UndefinedType
+        ] = Undefined,
+        ticks: Union[bool, UndefinedType] = Undefined,
+        title: Union[Union[core.Text, None], UndefinedType] = Undefined,
+        titleAlign: Union[Union[core.Align, core.ExprRef], UndefinedType] = Undefined,
+        titleAnchor: Union[
+            Union[core.TitleAnchor, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleAngle: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleBaseline: Union[
+            Union[core.TextBaseline, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleColor: Union[
+            Union[Union[None, core.Color], core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFont: Union[Union[str, core.ExprRef], UndefinedType] = Undefined,
+        titleFontSize: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleFontStyle: Union[
+            Union[core.FontStyle, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleFontWeight: Union[
+            Union[core.FontWeight, core.ExprRef], UndefinedType
+        ] = Undefined,
+        titleLimit: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleLineHeight: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleOpacity: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titlePadding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleX: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        titleY: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        translate: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        values: Union[
+            Union[
+                List[float], List[str], List[bool], List[core.DateTime], core.ExprRef
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zindex: Union[float, UndefinedType] = Undefined,
         **kwds
     ) -> "YDatum":
         ...
@@ -28348,10 +33431,14 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def impute(
         self,
-        frame=Undefined,
-        keyvals=Undefined,
-        method=Undefined,
-        value=Undefined,
+        frame: Union[List[Union[None, float]], UndefinedType] = Undefined,
+        keyvals: Union[
+            Union[List[Any], core.ImputeSequence], UndefinedType
+        ] = Undefined,
+        method: Union[
+            Literal["value", "median", "max", "min", "mean"], UndefinedType
+        ] = Undefined,
+        value: Union[Any, UndefinedType] = Undefined,
         **kwds
     ) -> "YDatum":
         ...
@@ -28363,30 +33450,78 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "YDatum":
         ...
@@ -28605,11 +33740,11 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "Y2":
+    def aggregate(self, argmax: Union[str, UndefinedType] = Undefined, **kwds) -> "Y2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "Y2":
+    def aggregate(self, argmin: Union[str, UndefinedType] = Undefined, **kwds) -> "Y2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -28625,7 +33760,13 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "Y2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "Y2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -28793,11 +33934,13 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "Y2":
         ...
@@ -29141,11 +34284,15 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "YError":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "YError":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "YError":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "YError":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -29161,7 +34308,13 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "YError":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "YError":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -29329,11 +34482,13 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "YError":
         ...
@@ -29528,11 +34683,15 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "YError2":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "YError2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "YError2":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "YError2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -29548,7 +34707,13 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "YError2":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "YError2":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -29716,11 +34881,13 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "YError2":
         ...
@@ -30034,11 +35201,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmax=Undefined, **kwds) -> "YOffset":
+    def aggregate(
+        self, argmax: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "YOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def aggregate(self, argmin=Undefined, **kwds) -> "YOffset":
+    def aggregate(
+        self, argmin: Union[str, UndefinedType] = Undefined, **kwds
+    ) -> "YOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -30052,16 +35223,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def bin(
         self,
-        anchor=Undefined,
-        base=Undefined,
-        binned=Undefined,
-        divide=Undefined,
-        extent=Undefined,
-        maxbins=Undefined,
-        minstep=Undefined,
-        nice=Undefined,
-        step=Undefined,
-        steps=Undefined,
+        anchor: Union[float, UndefinedType] = Undefined,
+        base: Union[float, UndefinedType] = Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        divide: Union[List[float], UndefinedType] = Undefined,
+        extent: Union[
+            Union[List[float], core.ParameterExtent], UndefinedType
+        ] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        minstep: Union[float, UndefinedType] = Undefined,
+        nice: Union[bool, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        steps: Union[List[float], UndefinedType] = Undefined,
         **kwds
     ) -> "YOffset":
         ...
@@ -30075,36 +35248,90 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def field(self, repeat=Undefined, **kwds) -> "YOffset":
+    def field(
+        self,
+        repeat: Union[
+            Literal["row", "column", "repeat", "layer"], UndefinedType
+        ] = Undefined,
+        **kwds
+    ) -> "YOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "YOffset":
         ...
@@ -30176,11 +35403,63 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, field=Undefined, op=Undefined, order=Undefined, **kwds) -> "YOffset":
+    def sort(
+        self,
+        field: Union[Union[core.FieldName, core.RepeatRef], UndefinedType] = Undefined,
+        op: Union[
+            Literal[
+                "average",
+                "count",
+                "distinct",
+                "max",
+                "mean",
+                "median",
+                "min",
+                "missing",
+                "product",
+                "q1",
+                "q3",
+                "ci0",
+                "ci1",
+                "stderr",
+                "stdev",
+                "stdevp",
+                "sum",
+                "valid",
+                "values",
+                "variance",
+                "variancep",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "YOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
-    def sort(self, encoding=Undefined, order=Undefined, **kwds) -> "YOffset":
+    def sort(
+        self,
+        encoding: Union[
+            Literal[
+                "x",
+                "y",
+                "color",
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "size",
+                "shape",
+                "fillOpacity",
+                "strokeOpacity",
+                "opacity",
+                "text",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        order: Union[Union[core.SortOrder, None], UndefinedType] = Undefined,
+        **kwds
+    ) -> "YOffset":
         ...
 
     @overload  # type: ignore[no-overload-impl]
@@ -30352,11 +35631,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload  # type: ignore[no-overload-impl]
     def timeUnit(
         self,
-        binned=Undefined,
-        maxbins=Undefined,
-        step=Undefined,
-        unit=Undefined,
-        utc=Undefined,
+        binned: Union[bool, UndefinedType] = Undefined,
+        maxbins: Union[float, UndefinedType] = Undefined,
+        step: Union[float, UndefinedType] = Undefined,
+        unit: Union[
+            Union[core.SingleTimeUnit, core.MultiTimeUnit], UndefinedType
+        ] = Undefined,
+        utc: Union[bool, UndefinedType] = Undefined,
         **kwds
     ) -> "YOffset":
         ...
@@ -30553,30 +35834,78 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload  # type: ignore[no-overload-impl]
     def scale(
         self,
-        align=Undefined,
-        base=Undefined,
-        bins=Undefined,
-        clamp=Undefined,
-        constant=Undefined,
-        domain=Undefined,
-        domainMax=Undefined,
-        domainMid=Undefined,
-        domainMin=Undefined,
-        domainRaw=Undefined,
-        exponent=Undefined,
-        interpolate=Undefined,
-        nice=Undefined,
-        padding=Undefined,
-        paddingInner=Undefined,
-        paddingOuter=Undefined,
-        range=Undefined,
-        rangeMax=Undefined,
-        rangeMin=Undefined,
-        reverse=Undefined,
-        round=Undefined,
-        scheme=Undefined,
-        type=Undefined,
-        zero=Undefined,
+        align: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        base: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        bins: Union[Union[List[float], core.ScaleBinParams], UndefinedType] = Undefined,
+        clamp: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        constant: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domain: Union[
+            Union[
+                List[Union[None, str, float, bool, core.DateTime, core.ExprRef]],
+                str,
+                core.ParameterExtent,
+                core.DomainUnionWith,
+                core.ExprRef,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        domainMax: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainMid: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        domainMin: Union[
+            Union[float, core.DateTime, core.ExprRef], UndefinedType
+        ] = Undefined,
+        domainRaw: Union[dict, UndefinedType] = Undefined,
+        exponent: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        interpolate: Union[
+            Union[core.ScaleInterpolateEnum, core.ExprRef, core.ScaleInterpolateParams],
+            UndefinedType,
+        ] = Undefined,
+        nice: Union[
+            Union[bool, float, core.TimeInterval, core.TimeIntervalStep, core.ExprRef],
+            UndefinedType,
+        ] = Undefined,
+        padding: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingInner: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        paddingOuter: Union[Union[float, core.ExprRef], UndefinedType] = Undefined,
+        range: Union[
+            Union[
+                core.RangeEnum,
+                List[Union[float, str, List[float], core.ExprRef]],
+                core.FieldRange,
+            ],
+            UndefinedType,
+        ] = Undefined,
+        rangeMax: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        rangeMin: Union[Union[float, str, core.ExprRef], UndefinedType] = Undefined,
+        reverse: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        round: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
+        scheme: Union[
+            Union[core.ColorScheme, core.SchemeParams, core.ExprRef], UndefinedType
+        ] = Undefined,
+        type: Union[
+            Literal[
+                "linear",
+                "log",
+                "pow",
+                "sqrt",
+                "symlog",
+                "identity",
+                "sequential",
+                "time",
+                "utc",
+                "quantile",
+                "quantize",
+                "threshold",
+                "bin-ordinal",
+                "ordinal",
+                "point",
+                "band",
+            ],
+            UndefinedType,
+        ] = Undefined,
+        zero: Union[Union[bool, core.ExprRef], UndefinedType] = Undefined,
         **kwds
     ) -> "YOffsetDatum":
         ...
