@@ -251,9 +251,10 @@ class SchemaInfo:
             if for_type_hints:
                 type_representations.append("dict")
             else:
-                type_representations.append(
-                    "Dict[required=[{}]]".format(", ".join(self.required))
-                )
+                type_r = "Dict"
+                if self.required:
+                    type_r += "[required=[{}]]".format(", ".join(self.required))
+                type_representations.append(type_r)
         elif self.is_array():
             # A list is invariant in its type parameter. This means that e.g.
             # List[str] is not a subtype of List[Union[core.FieldName, str]]
@@ -286,7 +287,9 @@ class SchemaInfo:
 
         type_representations = sorted(set(flatten(type_representations)))
         type_representations_str = ", ".join(type_representations)
-        if len(type_representations) > 1:
+        # If it's not for_type_hints but instead for the docstrings, we don't want
+        # to include Union as it just clutters the docstrings.
+        if len(type_representations) > 1 and for_type_hints:
             type_representations_str = f"Union[{type_representations_str}]"
         return type_representations_str
 

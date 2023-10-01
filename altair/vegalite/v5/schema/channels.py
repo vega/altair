@@ -137,9 +137,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -151,7 +151,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -172,14 +172,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -194,7 +194,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -203,7 +203,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -216,7 +216,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -255,7 +255,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -264,7 +264,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -284,7 +284,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -3329,7 +3329,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """AngleDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict
 
     Parameters
     ----------
@@ -3338,16 +3338,16 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -3367,7 +3367,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -3566,14 +3566,14 @@ class AngleValue(
 ):
     """AngleValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -4312,9 +4312,9 @@ class Color(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -4326,7 +4326,7 @@ class Color(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -4347,14 +4347,14 @@ class Color(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -4369,7 +4369,7 @@ class Color(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -4378,7 +4378,7 @@ class Color(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -4391,7 +4391,7 @@ class Color(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -4430,7 +4430,7 @@ class Color(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -4439,7 +4439,7 @@ class Color(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -4459,7 +4459,7 @@ class Color(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -7534,7 +7534,7 @@ class ColorDatum(
 ):
     """ColorDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict
 
     Parameters
     ----------
@@ -7543,16 +7543,16 @@ class ColorDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -7572,7 +7572,7 @@ class ColorDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -7800,15 +7800,14 @@ class ColorValue(
 ):
     """ColorValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
-    Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], :class:`Gradient`, :class:`LinearGradient`, Dict[required=[gradient, stops]], :class:`RadialGradient`, Dict[required=[gradient, stops]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -8572,9 +8571,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -8582,7 +8581,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    align : Union[:class:`LayoutAlign`, Literal['all', 'each', 'none']]
+    align : :class:`LayoutAlign`, Literal['all', 'each', 'none']
         The alignment to apply to row/column facet's subplot. The supported string values
         are ``"all"``, ``"each"``, and ``"none"``.
 
@@ -8600,7 +8599,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -8626,7 +8625,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         respective rows or columns.
 
         **Default value:** ``false``
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -8641,9 +8640,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
+    header : :class:`Header`, Dict, None
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortOrder`, Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -8676,7 +8675,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -8685,7 +8684,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -8705,7 +8704,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -10012,9 +10011,9 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -10026,7 +10025,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -10047,14 +10046,14 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`, Sequence[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -10069,7 +10068,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[Union[:class:`Dict`, Dict[required=[]]], str]
+    format : :class:`Dict`, Dict, str
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -10103,7 +10102,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -10112,7 +10111,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -10132,7 +10131,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -10915,14 +10914,14 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """DescriptionValue schema wrapper
 
-    Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]
+    :class:`StringValueDefWithCondition`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -11659,9 +11658,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -11673,7 +11672,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -11694,7 +11693,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -11709,7 +11708,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -11718,7 +11717,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -11738,7 +11737,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -12440,9 +12439,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -12450,7 +12449,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    align : Union[Union[:class:`LayoutAlign`, Literal['all', 'each', 'none']], Union[:class:`RowColLayoutAlign`, Dict[required=[]]]]
+    align : :class:`LayoutAlign`, Literal['all', 'each', 'none'], :class:`RowColLayoutAlign`, Dict
         The alignment to apply to grid rows and columns. The supported string values are
         ``"all"``, ``"each"``, and ``"none"``.
 
@@ -12471,7 +12470,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -12504,7 +12503,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
           sub-plots without axes or legends into a uniform grid structure.
 
         **Default value:** ``"full"``
-    center : Union[Union[:class:`RowColboolean`, Dict[required=[]]], bool]
+    center : :class:`RowColboolean`, Dict, bool
         Boolean flag indicating if subviews should be centered relative to their respective
         rows or columns.
 
@@ -12530,7 +12529,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
         and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -12545,9 +12544,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
+    header : :class:`Header`, Dict, None
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortOrder`, Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12574,7 +12573,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
-    spacing : Union[Union[:class:`RowColnumber`, Dict[required=[]]], float]
+    spacing : :class:`RowColnumber`, Dict, float
         The spacing in pixels between sub-views of the composition operator. An object of
         the form ``{"row": number, "column": number}`` can be used to set different spacing
         values for rows and columns.
@@ -12582,7 +12581,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -12591,7 +12590,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -12611,7 +12610,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -13972,9 +13971,9 @@ class Fill(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -13986,7 +13985,7 @@ class Fill(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -14007,14 +14006,14 @@ class Fill(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -14029,7 +14028,7 @@ class Fill(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -14038,7 +14037,7 @@ class Fill(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -14051,7 +14050,7 @@ class Fill(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -14090,7 +14089,7 @@ class Fill(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -14099,7 +14098,7 @@ class Fill(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -14119,7 +14118,7 @@ class Fill(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -17194,7 +17193,7 @@ class FillDatum(
 ):
     """FillDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict
 
     Parameters
     ----------
@@ -17203,16 +17202,16 @@ class FillDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -17232,7 +17231,7 @@ class FillDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -17460,15 +17459,14 @@ class FillValue(
 ):
     """FillValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
-    Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], :class:`Gradient`, :class:`LinearGradient`, Dict[required=[gradient, stops]], :class:`RadialGradient`, Dict[required=[gradient, stops]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -18234,9 +18232,9 @@ class FillOpacity(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -18248,7 +18246,7 @@ class FillOpacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -18269,14 +18267,14 @@ class FillOpacity(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -18291,7 +18289,7 @@ class FillOpacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -18300,7 +18298,7 @@ class FillOpacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -18313,7 +18311,7 @@ class FillOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -18352,7 +18350,7 @@ class FillOpacity(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -18361,7 +18359,7 @@ class FillOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -18381,7 +18379,7 @@ class FillOpacity(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -21428,7 +21426,7 @@ class FillOpacityDatum(
 ):
     """FillOpacityDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict
 
     Parameters
     ----------
@@ -21437,16 +21435,16 @@ class FillOpacityDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -21466,7 +21464,7 @@ class FillOpacityDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -21665,14 +21663,14 @@ class FillOpacityValue(
 ):
     """FillOpacityValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -22408,9 +22406,9 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -22422,7 +22420,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -22443,14 +22441,14 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`, Sequence[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -22465,7 +22463,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[Union[:class:`Dict`, Dict[required=[]]], str]
+    format : :class:`Dict`, Dict, str
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -22499,7 +22497,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -22508,7 +22506,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -22528,7 +22526,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -23311,14 +23309,14 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """HrefValue schema wrapper
 
-    Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]
+    :class:`StringValueDefWithCondition`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -24055,9 +24053,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -24069,7 +24067,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -24090,7 +24088,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -24105,7 +24103,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -24114,7 +24112,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -24134,7 +24132,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -24836,9 +24834,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -24871,7 +24869,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -24886,7 +24884,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -24895,7 +24893,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25574,7 +25572,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """LatitudeDatum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -25583,9 +25581,9 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -25605,7 +25603,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -25735,9 +25733,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -25770,7 +25768,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -25785,7 +25783,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -25794,7 +25792,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -26398,7 +26396,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """Latitude2Datum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -26407,9 +26405,9 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -26429,7 +26427,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -26552,14 +26550,14 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Latitude2Value schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -26581,9 +26579,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -26616,7 +26614,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -26631,7 +26629,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -26640,7 +26638,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -27319,7 +27317,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """LongitudeDatum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -27328,9 +27326,9 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -27350,7 +27348,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -27480,9 +27478,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -27515,7 +27513,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -27530,7 +27528,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -27539,7 +27537,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28143,7 +28141,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """Longitude2Datum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -28152,9 +28150,9 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28174,7 +28172,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -28297,14 +28295,14 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Longitude2Value schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -28328,9 +28326,9 @@ class Opacity(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -28342,7 +28340,7 @@ class Opacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -28363,14 +28361,14 @@ class Opacity(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -28385,7 +28383,7 @@ class Opacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -28394,7 +28392,7 @@ class Opacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -28407,7 +28405,7 @@ class Opacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -28446,7 +28444,7 @@ class Opacity(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -28455,7 +28453,7 @@ class Opacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -28475,7 +28473,7 @@ class Opacity(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -31520,7 +31518,7 @@ class Opacity(
 class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """OpacityDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict
 
     Parameters
     ----------
@@ -31529,16 +31527,16 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -31558,7 +31556,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -31757,14 +31755,14 @@ class OpacityValue(
 ):
     """OpacityValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -32500,9 +32498,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -32514,7 +32512,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -32535,7 +32533,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -32550,9 +32548,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    sort : Union[:class:`SortOrder`, Literal['ascending', 'descending']]
+    sort : :class:`SortOrder`, Literal['ascending', 'descending']
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -32561,7 +32559,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -32581,7 +32579,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -33286,16 +33284,16 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 class OrderValue(ValueChannelMixin, core.OrderValueDef):
     """OrderValue schema wrapper
 
-    Union[:class:`OrderValueDef`, Dict[required=[value]]]
+    :class:`OrderValueDef`, Dict[required=[value]]
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumber`, Union[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]], :class:`ConditionalValueDefnumber`, Sequence[:class:`ConditionalParameterValueDefnumber`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumber`, Dict[required=[test, value]], :class:`ConditionalValueDefnumber`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -33387,9 +33385,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -33401,7 +33399,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -33422,7 +33420,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -33437,7 +33435,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -33450,7 +33448,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -33489,7 +33487,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -33520,7 +33518,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -33529,7 +33527,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -33549,7 +33547,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -35028,7 +35026,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """RadiusDatum schema wrapper
 
-    Union[:class:`PositionDatumDefBase`, Dict[required=[]]]
+    :class:`PositionDatumDefBase`, Dict
 
     Parameters
     ----------
@@ -35037,9 +35035,9 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -35052,7 +35050,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -35083,7 +35081,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -35103,7 +35101,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -35816,14 +35814,14 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     """RadiusValue schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -35847,9 +35845,9 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -35882,7 +35880,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -35897,7 +35895,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -35906,7 +35904,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -36510,7 +36508,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """Radius2Datum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -36519,9 +36517,9 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -36541,7 +36539,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -36664,14 +36662,14 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     """Radius2Value schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -36693,9 +36691,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -36703,7 +36701,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    align : Union[:class:`LayoutAlign`, Literal['all', 'each', 'none']]
+    align : :class:`LayoutAlign`, Literal['all', 'each', 'none']
         The alignment to apply to row/column facet's subplot. The supported string values
         are ``"all"``, ``"each"``, and ``"none"``.
 
@@ -36721,7 +36719,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -36747,7 +36745,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         respective rows or columns.
 
         **Default value:** ``false``
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -36762,9 +36760,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    header : Union[None, Union[:class:`Header`, Dict[required=[]]]]
+    header : :class:`Header`, Dict, None
         An object defining properties of a facet's header.
-    sort : Union[None, Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortOrder`, Literal['ascending', 'descending']]]
+    sort : :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortOrder`, Literal['ascending', 'descending'], None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -36797,7 +36795,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -36806,7 +36804,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -36826,7 +36824,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -38136,9 +38134,9 @@ class Shape(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -38150,7 +38148,7 @@ class Shape(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -38171,14 +38169,14 @@ class Shape(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -38193,7 +38191,7 @@ class Shape(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -38202,7 +38200,7 @@ class Shape(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -38215,7 +38213,7 @@ class Shape(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -38254,7 +38252,7 @@ class Shape(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -38263,7 +38261,7 @@ class Shape(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -38283,7 +38281,7 @@ class Shape(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`TypeForShape`, Literal['nominal', 'ordinal', 'geojson']]
+    type : :class:`TypeForShape`, Literal['nominal', 'ordinal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -41325,7 +41323,7 @@ class ShapeDatum(
 ):
     """ShapeDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict
 
     Parameters
     ----------
@@ -41334,16 +41332,16 @@ class ShapeDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -41363,7 +41361,7 @@ class ShapeDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -41563,15 +41561,14 @@ class ShapeValue(
 ):
     """ShapeValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`,
-    Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Dict[required=[test]], :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -42307,9 +42304,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -42321,7 +42318,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -42342,14 +42339,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -42364,7 +42361,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -42373,7 +42370,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -42386,7 +42383,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -42425,7 +42422,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -42434,7 +42431,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -42454,7 +42451,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -45499,7 +45496,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """SizeDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict
 
     Parameters
     ----------
@@ -45508,16 +45505,16 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -45537,7 +45534,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -45736,14 +45733,14 @@ class SizeValue(
 ):
     """SizeValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -46482,9 +46479,9 @@ class Stroke(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -46496,7 +46493,7 @@ class Stroke(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -46517,14 +46514,14 @@ class Stroke(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -46539,7 +46536,7 @@ class Stroke(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -46548,7 +46545,7 @@ class Stroke(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -46561,7 +46558,7 @@ class Stroke(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -46600,7 +46597,7 @@ class Stroke(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -46609,7 +46606,7 @@ class Stroke(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -46629,7 +46626,7 @@ class Stroke(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -49704,7 +49701,7 @@ class StrokeDatum(
 ):
     """StrokeDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict
 
     Parameters
     ----------
@@ -49713,16 +49710,16 @@ class StrokeDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -49742,7 +49739,7 @@ class StrokeDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -49970,15 +49967,14 @@ class StrokeValue(
 ):
     """StrokeValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`,
-    Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefGradientstringnullExprRef`, Union[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefGradientstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Gradient`, Union[:class:`LinearGradient`, Dict[required=[gradient, stops]]], Union[:class:`RadialGradient`, Dict[required=[gradient, stops]]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], :class:`Gradient`, :class:`LinearGradient`, Dict[required=[gradient, stops]], :class:`RadialGradient`, Dict[required=[gradient, stops]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -50744,9 +50740,9 @@ class StrokeDash(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -50758,7 +50754,7 @@ class StrokeDash(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -50779,14 +50775,14 @@ class StrokeDash(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberArrayExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberArrayExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -50801,7 +50797,7 @@ class StrokeDash(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -50810,7 +50806,7 @@ class StrokeDash(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -50823,7 +50819,7 @@ class StrokeDash(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -50862,7 +50858,7 @@ class StrokeDash(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -50871,7 +50867,7 @@ class StrokeDash(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -50891,7 +50887,7 @@ class StrokeDash(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -53942,7 +53938,7 @@ class StrokeDashDatum(
 ):
     """StrokeDashDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict
 
     Parameters
     ----------
@@ -53951,16 +53947,16 @@ class StrokeDashDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberArrayExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberArrayExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -53980,7 +53976,7 @@ class StrokeDashDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -54183,14 +54179,14 @@ class StrokeDashValue(
 ):
     """StrokeDashValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberArrayExprRef`, Union[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberArrayExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberArrayExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberArrayExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Sequence[float], Union[:class:`ExprRef`, Dict[required=[expr]]]]
+    value : :class:`ExprRef`, Dict[required=[expr]], Sequence[float]
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -54932,9 +54928,9 @@ class StrokeOpacity(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -54946,7 +54942,7 @@ class StrokeOpacity(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -54967,14 +54963,14 @@ class StrokeOpacity(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -54989,7 +54985,7 @@ class StrokeOpacity(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -54998,7 +54994,7 @@ class StrokeOpacity(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -55011,7 +55007,7 @@ class StrokeOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -55050,7 +55046,7 @@ class StrokeOpacity(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -55059,7 +55055,7 @@ class StrokeOpacity(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -55079,7 +55075,7 @@ class StrokeOpacity(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -58126,7 +58122,7 @@ class StrokeOpacityDatum(
 ):
     """StrokeOpacityDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict
 
     Parameters
     ----------
@@ -58135,16 +58131,16 @@ class StrokeOpacityDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -58164,7 +58160,7 @@ class StrokeOpacityDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -58363,14 +58359,14 @@ class StrokeOpacityValue(
 ):
     """StrokeOpacityValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -59110,9 +59106,9 @@ class StrokeWidth(
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -59124,7 +59120,7 @@ class StrokeWidth(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -59145,14 +59141,14 @@ class StrokeWidth(
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -59167,7 +59163,7 @@ class StrokeWidth(
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    legend : Union[None, Union[:class:`Legend`, Dict[required=[]]]]
+    legend : :class:`Legend`, Dict, None
         An object defining properties of the legend. If ``null``, the legend for the
         encoding channel will be removed.
 
@@ -59176,7 +59172,7 @@ class StrokeWidth(
 
         **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -59189,7 +59185,7 @@ class StrokeWidth(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -59228,7 +59224,7 @@ class StrokeWidth(
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -59237,7 +59233,7 @@ class StrokeWidth(
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -59257,7 +59253,7 @@ class StrokeWidth(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -62304,7 +62300,7 @@ class StrokeWidthDatum(
 ):
     """StrokeWidthDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict
 
     Parameters
     ----------
@@ -62313,16 +62309,16 @@ class StrokeWidthDatum(
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -62342,7 +62338,7 @@ class StrokeWidthDatum(
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -62541,14 +62537,14 @@ class StrokeWidthValue(
 ):
     """StrokeWidthValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict[required=[]]]
+    :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefnumberExprRef`, Union[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`, Sequence[:class:`ConditionalParameterValueDefnumberExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefnumberExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float]
+    value : :class:`ExprRef`, Dict[required=[expr]], float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -63284,9 +63280,9 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -63298,7 +63294,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -63319,14 +63315,14 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefTextExprRef`, Sequence[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefTextExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -63341,7 +63337,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[Union[:class:`Dict`, Dict[required=[]]], str]
+    format : :class:`Dict`, Dict, str
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -63375,7 +63371,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -63384,7 +63380,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -63404,7 +63400,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -64191,7 +64187,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumDefText):
     """TextDatum schema wrapper
 
-    Union[:class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict[required=[]]]
+    :class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict
 
     Parameters
     ----------
@@ -64200,16 +64196,16 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefTextExprRef`, Sequence[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefTextExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    format : Union[Union[:class:`Dict`, Dict[required=[]]], str]
+    format : :class:`Dict`, Dict, str
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -64243,7 +64239,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -64263,7 +64259,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -64482,14 +64478,14 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
     """TextValue schema wrapper
 
-    Union[:class:`ValueDefWithConditionStringFieldDefText`, Dict[required=[]]]
+    :class:`ValueDefWithConditionStringFieldDefText`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalStringFieldDef`, Union[:class:`ConditionalParameterStringFieldDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateStringFieldDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefTextExprRef`, Union[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterStringFieldDef`, Dict[required=[param]], :class:`ConditionalPredicateStringFieldDef`, Dict[required=[test]], :class:`ConditionalStringFieldDef`, :class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefTextExprRef`, Sequence[:class:`ConditionalParameterValueDefTextExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefTextExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefTextExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`Text`, Sequence[str], str]]
+    value : :class:`ExprRef`, Dict[required=[expr]], :class:`Text`, Sequence[str], str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -65041,9 +65037,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -65055,7 +65051,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -65076,7 +65072,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -65091,7 +65087,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -65104,7 +65100,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -65143,7 +65139,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -65174,7 +65170,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -65183,7 +65179,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -65203,7 +65199,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -66682,7 +66678,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """ThetaDatum schema wrapper
 
-    Union[:class:`PositionDatumDefBase`, Dict[required=[]]]
+    :class:`PositionDatumDefBase`, Dict
 
     Parameters
     ----------
@@ -66691,9 +66687,9 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -66706,7 +66702,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -66737,7 +66733,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -66757,7 +66753,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -67470,14 +67466,14 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     """ThetaValue schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -67501,9 +67497,9 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -67536,7 +67532,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -67551,7 +67547,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -67560,7 +67556,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -68164,7 +68160,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """Theta2Datum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -68173,9 +68169,9 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -68195,7 +68191,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -68318,14 +68314,14 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     """Theta2Value schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -68347,9 +68343,9 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -68361,7 +68357,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -68382,14 +68378,14 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`, Sequence[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -68404,7 +68400,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[Union[:class:`Dict`, Dict[required=[]]], str]
+    format : :class:`Dict`, Dict, str
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -68438,7 +68434,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -68447,7 +68443,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -68467,7 +68463,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -69250,14 +69246,14 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """TooltipValue schema wrapper
 
-    Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]
+    :class:`StringValueDefWithCondition`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -69993,9 +69989,9 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -70007,7 +70003,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -70028,14 +70024,14 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalValueDefstringExprRef`, Union[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`, Sequence[:class:`ConditionalParameterValueDefstringExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringExprRef`]
         One or more value definition(s) with `a parameter or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
         **Note:** A field definition's ``condition`` property can only contain `conditional
         value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -70050,7 +70046,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    format : Union[Union[:class:`Dict`, Dict[required=[]]], str]
+    format : :class:`Dict`, Dict, str
         When used with the default ``"number"`` and ``"time"`` format type, the text
         formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
@@ -70084,7 +70080,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         * ``"time"`` for temporal fields and ordinal and nominal fields with ``timeUnit``.
         * ``"number"`` for quantitative fields as well as ordinal and nominal fields without
           ``timeUnit``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -70093,7 +70089,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -70113,7 +70109,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -70896,14 +70892,14 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """UrlValue schema wrapper
 
-    Union[:class:`StringValueDefWithCondition`, Dict[required=[]]]
+    :class:`StringValueDefWithCondition`, Dict
 
     Parameters
     ----------
 
-    condition : Union[Sequence[Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]], Union[:class:`ConditionalMarkPropFieldOrDatumDef`, Union[:class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]]], Union[:class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]]]], Union[:class:`ConditionalValueDefstringnullExprRef`, Union[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]]], Union[:class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]]]]]
+    condition : :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, Dict[required=[param]], :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Dict[required=[test]], :class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`, Sequence[:class:`ConditionalParameterValueDefstringnullExprRef`, Dict[required=[param, value]], :class:`ConditionalPredicateValueDefstringnullExprRef`, Dict[required=[test, value]], :class:`ConditionalValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
-    value : Union[None, Union[:class:`ExprRef`, Dict[required=[expr]]], str]
+    value : :class:`ExprRef`, Dict[required=[expr]], None, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -71639,9 +71635,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -71649,7 +71645,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : Union[None, Union[:class:`Axis`, Dict[required=[]]]]
+    axis : :class:`Axis`, Dict, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -71662,7 +71658,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -71683,7 +71679,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -71698,7 +71694,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : Union[None, Union[:class:`ImputeParams`, Dict[required=[]]]]
+    impute : :class:`ImputeParams`, Dict, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -71706,7 +71702,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -71719,7 +71715,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -71758,7 +71754,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -71789,7 +71785,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -71798,7 +71794,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -71818,7 +71814,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -74599,12 +74595,12 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """XDatum schema wrapper
 
-    Union[:class:`PositionDatumDef`, Dict[required=[]]]
+    :class:`PositionDatumDef`, Dict
 
     Parameters
     ----------
 
-    axis : Union[None, Union[:class:`Axis`, Dict[required=[]]]]
+    axis : :class:`Axis`, Dict, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -74617,9 +74613,9 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    impute : Union[None, Union[:class:`ImputeParams`, Dict[required=[]]]]
+    impute : :class:`ImputeParams`, Dict, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -74627,7 +74623,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -74640,7 +74636,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -74671,7 +74667,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -74691,7 +74687,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -76706,14 +76702,14 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 class XValue(ValueChannelMixin, core.PositionValueDef):
     """XValue schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -76737,9 +76733,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -76772,7 +76768,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -76787,7 +76783,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -76796,7 +76792,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -77400,7 +77396,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 class X2Datum(DatumChannelMixin, core.DatumDef):
     """X2Datum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -77409,9 +77405,9 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -77431,7 +77427,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -77554,14 +77550,14 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 class X2Value(ValueChannelMixin, core.PositionValueDef):
     """X2Value schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -77585,9 +77581,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -77620,7 +77616,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -77635,7 +77631,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -77644,7 +77640,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -78248,7 +78244,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """XErrorValue schema wrapper
 
-    Union[:class:`ValueDefnumber`, Dict[required=[value]]]
+    :class:`ValueDefnumber`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -78279,9 +78275,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -78314,7 +78310,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -78329,7 +78325,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -78338,7 +78334,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -78942,7 +78938,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     """XError2Value schema wrapper
 
-    Union[:class:`ValueDefnumber`, Dict[required=[value]]]
+    :class:`ValueDefnumber`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -78971,9 +78967,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -78985,7 +78981,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -79006,7 +79002,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -79021,7 +79017,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -79034,7 +79030,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -79073,7 +79069,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -79082,7 +79078,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -79102,7 +79098,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -80556,7 +80552,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """XOffsetDatum schema wrapper
 
-    Union[:class:`ScaleDatumDef`, Dict[required=[]]]
+    :class:`ScaleDatumDef`, Dict
 
     Parameters
     ----------
@@ -80565,9 +80561,9 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -80580,7 +80576,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -80600,7 +80596,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -81292,7 +81288,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """XOffsetValue schema wrapper
 
-    Union[:class:`ValueDefnumber`, Dict[required=[value]]]
+    :class:`ValueDefnumber`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -81321,9 +81317,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -81331,7 +81327,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
         documentation.
-    axis : Union[None, Union[:class:`Axis`, Dict[required=[]]]]
+    axis : :class:`Axis`, Dict, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -81344,7 +81340,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool, str]
+    bin : :class:`BinParams`, Dict, None, bool, str
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -81365,7 +81361,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -81380,7 +81376,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    impute : Union[None, Union[:class:`ImputeParams`, Dict[required=[]]]]
+    impute : :class:`ImputeParams`, Dict, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -81388,7 +81384,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -81401,7 +81397,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -81440,7 +81436,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -81471,7 +81467,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -81480,7 +81476,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -81500,7 +81496,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -84281,12 +84277,12 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """YDatum schema wrapper
 
-    Union[:class:`PositionDatumDef`, Dict[required=[]]]
+    :class:`PositionDatumDef`, Dict
 
     Parameters
     ----------
 
-    axis : Union[None, Union[:class:`Axis`, Dict[required=[]]]]
+    axis : :class:`Axis`, Dict, None
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
 
@@ -84299,9 +84295,9 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    impute : Union[None, Union[:class:`ImputeParams`, Dict[required=[]]]]
+    impute : :class:`ImputeParams`, Dict, None
         An object defining the properties of the Impute Operation to be applied. The field
         value of the other positional channel is taken as ``key`` of the ``Impute``
         Operation. The field of the ``color`` channel if specified is used as ``groupby`` of
@@ -84309,7 +84305,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
         documentation.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -84322,7 +84318,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    stack : Union[None, Union[:class:`StackOffset`, Literal['zero', 'center', 'normalize']], bool]
+    stack : :class:`StackOffset`, Literal['zero', 'center', 'normalize'], None, bool
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
         for ``x``, ``y``, ``theta``, and ``radius`` channels with continuous domains. For
         example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -84353,7 +84349,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -84373,7 +84369,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -86388,14 +86384,14 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 class YValue(ValueChannelMixin, core.PositionValueDef):
     """YValue schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -86419,9 +86415,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -86454,7 +86450,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -86469,7 +86465,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -86478,7 +86474,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -87082,7 +87078,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 class Y2Datum(DatumChannelMixin, core.DatumDef):
     """Y2Datum schema wrapper
 
-    Union[:class:`DatumDef`, Dict[required=[]]]
+    :class:`DatumDef`, Dict
 
     Parameters
     ----------
@@ -87091,9 +87087,9 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -87113,7 +87109,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -87236,14 +87232,14 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
     """Y2Value schema wrapper
 
-    Union[:class:`PositionValueDef`, Dict[required=[value]]]
+    :class:`PositionValueDef`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
 
-    value : Union[Union[:class:`ExprRef`, Dict[required=[expr]]], float, str]
+    value : :class:`ExprRef`, Dict[required=[expr]], float, str
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
@@ -87267,9 +87263,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -87302,7 +87298,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -87317,7 +87313,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -87326,7 +87322,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -87930,7 +87926,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """YErrorValue schema wrapper
 
-    Union[:class:`ValueDefnumber`, Dict[required=[value]]]
+    :class:`ValueDefnumber`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -87961,9 +87957,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -87996,7 +87992,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -88011,7 +88007,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -88020,7 +88016,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -88624,7 +88620,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     """YError2Value schema wrapper
 
-    Union[:class:`ValueDefnumber`, Dict[required=[value]]]
+    :class:`ValueDefnumber`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -88653,9 +88649,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     Parameters
     ----------
 
-    shorthand : Union[Sequence[str], str]
+    shorthand : Sequence[str], str
         shorthand for field, aggregate, and type
-    aggregate : Union[:class:`Aggregate`, Union[:class:`ArgmaxDef`, Dict[required=[argmax]]], Union[:class:`ArgminDef`, Dict[required=[argmin]]], Union[:class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']]]
+    aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
 
@@ -88667,7 +88663,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    bin : Union[None, Union[:class:`BinParams`, Dict[required=[]]], bool]
+    bin : :class:`BinParams`, Dict, None, bool
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#bin-parameters>`__, or indicating
         that the data for ``x`` or ``y`` channel are binned before they are imported into
@@ -88688,7 +88684,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    field : Union[:class:`Field`, Union[:class:`FieldName`, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    field : :class:`FieldName`, str, :class:`Field`, :class:`RepeatRef`, Dict[required=[repeat]]
         **Required.** A string defining the name of the field from which to pull a data
         value or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
@@ -88703,7 +88699,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__. 2) ``field`` is not required
         if ``aggregate`` is ``count``.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -88716,7 +88712,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : Union[:class:`Sort`, None, Union[:class:`AllSortString`, Union[:class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']], Union[:class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']], Union[:class:`SortOrder`, Literal['ascending', 'descending']]], Union[:class:`EncodingSortField`, Dict[required=[]]], Union[:class:`SortArray`, Sequence[Union[:class:`DateTime`, Dict[required=[]]]], Sequence[bool], Sequence[float], Sequence[str]], Union[:class:`SortByEncoding`, Dict[required=[encoding]]]]
+    sort : :class:`AllSortString`, :class:`SortByChannelDesc`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], :class:`SortByChannel`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], :class:`SortOrder`, Literal['ascending', 'descending'], :class:`EncodingSortField`, Dict, :class:`SortArray`, Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str], :class:`SortByEncoding`, Dict[required=[encoding]], :class:`Sort`, None
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -88755,7 +88751,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : Union[Union[:class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear']], Union[:class:`TimeUnitParams`, Dict[required=[]]], Union[:class:`TimeUnit`, Union[:class:`MultiTimeUnit`, Union[:class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']], Union[:class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']]], Union[:class:`SingleTimeUnit`, Union[:class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds']], Union[:class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']]]]]
+    timeUnit : :class:`BinnedTimeUnit`, Literal['binnedutcyear', 'binnedutcyearquarter', 'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate', 'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes', 'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday', 'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes', 'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear'], Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth', 'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours', 'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds', 'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours', 'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds', 'binnedyeardayofyear'], :class:`LocalMultiTimeUnit`, Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'], :class:`MultiTimeUnit`, :class:`UtcMultiTimeUnit`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday', 'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds', 'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours', 'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday', 'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds', 'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes', 'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds'], :class:`LocalSingleTimeUnit`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date', 'hours', 'minutes', 'seconds', 'milliseconds'], :class:`SingleTimeUnit`, :class:`UtcSingleTimeUnit`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds'], :class:`TimeUnit`, :class:`TimeUnitParams`, Dict
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
@@ -88764,7 +88760,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -88784,7 +88780,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']]
+    type : :class:`StandardType`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -90238,7 +90234,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """YOffsetDatum schema wrapper
 
-    Union[:class:`ScaleDatumDef`, Dict[required=[]]]
+    :class:`ScaleDatumDef`, Dict
 
     Parameters
     ----------
@@ -90247,9 +90243,9 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
         and at the middle of the band if set to ``0.5``.
-    datum : Union[Union[:class:`DateTime`, Dict[required=[]]], Union[:class:`ExprRef`, Dict[required=[expr]]], Union[:class:`PrimitiveValue`, None, bool, float, str], Union[:class:`RepeatRef`, Dict[required=[repeat]]]]
+    datum : :class:`DateTime`, Dict, :class:`ExprRef`, Dict[required=[expr]], :class:`PrimitiveValue`, None, bool, float, str, :class:`RepeatRef`, Dict[required=[repeat]]
         A constant value in data domain.
-    scale : Union[None, Union[:class:`Scale`, Dict[required=[]]]]
+    scale : :class:`Scale`, Dict, None
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
         (pixels, colors, sizes) of the encoding channels.
@@ -90262,7 +90258,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    title : Union[None, Union[:class:`Text`, Sequence[str], str]]
+    title : :class:`Text`, Sequence[str], str, None
         A title for the field. If ``null``, the title will be removed.
 
         **Default value:**  derived from the field's name and transformation function (
@@ -90282,7 +90278,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : Union[:class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']]
+    type : :class:`Type`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
         The type of measurement ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``, or
         ``"nominal"`` ) for the encoded field or constant value ( ``datum`` ). It can also
         be a ``"geojson"`` type for encoding `'geoshape'
@@ -90974,7 +90970,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """YOffsetValue schema wrapper
 
-    Union[:class:`ValueDefnumber`, Dict[required=[value]]]
+    :class:`ValueDefnumber`, Dict[required=[value]]
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
