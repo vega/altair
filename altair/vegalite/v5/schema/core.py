@@ -3,18 +3,19 @@
 
 from typing import Any, Literal, Union, Protocol, Sequence, List
 from typing import Dict as TypingDict
-
+from typing import Generator as TypingGenerator
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
 
 import pkgutil
 import json
 
 
-def load_schema():
+def load_schema() -> dict:
     """Load the json schema associated with this module's functions"""
-    return json.loads(
-        pkgutil.get_data(__name__, "vega-lite-schema.json").decode("utf-8")
-    )
+    schema_bytes = pkgutil.get_data(__name__, "vega-lite-schema.json")
+    if schema_bytes is None:
+        raise ValueError("Unable to load vega-lite-schema.json")
+    return json.loads(schema_bytes.decode("utf-8"))
 
 
 class _ParameterProtocol(Protocol):
@@ -40,7 +41,7 @@ class VegaLiteSchema(SchemaBase):
     _rootschema = load_schema()
 
     @classmethod
-    def _default_wrapper_classes(cls):
+    def _default_wrapper_classes(cls) -> TypingGenerator[type, None, None]:
         return _subclasses(VegaLiteSchema)
 
 

@@ -14,14 +14,21 @@ from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters
 from altair.utils import parse_shorthand
-from typing import Any, overload, Sequence, List, Literal, Union
+from typing import Any, overload, Sequence, List, Literal, Union, Optional
+from typing import Dict as TypingDict
 
 
 class FieldChannelMixin:
-    def to_dict(self, validate=True, ignore=(), context=None):
+    def to_dict(
+        self,
+        validate: bool = True,
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> Union[dict, List[dict]]:
         context = context or {}
-        shorthand = self._get("shorthand")
-        field = self._get("field")
+        ignore = ignore or []
+        shorthand = self._get("shorthand")  # type: ignore[attr-defined]
+        field = self._get("field")  # type: ignore[attr-defined]
 
         if shorthand is not Undefined and field is not Undefined:
             raise ValueError(
@@ -31,10 +38,10 @@ class FieldChannelMixin:
 
         if isinstance(shorthand, (tuple, list)):
             # If given a list of shorthands, then transform it to a list of classes
-            kwds = self._kwds.copy()
+            kwds = self._kwds.copy()  # type: ignore[attr-defined]
             kwds.pop("shorthand")
             return [
-                self.__class__(sh, **kwds).to_dict(
+                self.__class__(sh, **kwds).to_dict(  # type: ignore[call-arg]
                     validate=validate, ignore=ignore, context=context
                 )
                 for sh in shorthand
@@ -44,9 +51,9 @@ class FieldChannelMixin:
             parsed = {}
         elif isinstance(shorthand, str):
             parsed = parse_shorthand(shorthand, data=context.get("data", None))
-            type_required = "type" in self._kwds
+            type_required = "type" in self._kwds  # type: ignore[attr-defined]
             type_in_shorthand = "type" in parsed
-            type_defined_explicitly = self._get("type") is not Undefined
+            type_defined_explicitly = self._get("type") is not Undefined  # type: ignore[attr-defined]
             if not type_required:
                 # Secondary field names don't require a type argument in VegaLite 3+.
                 # We still parse it out of the shorthand, but drop it here.
@@ -80,26 +87,38 @@ class FieldChannelMixin:
 
 
 class ValueChannelMixin:
-    def to_dict(self, validate=True, ignore=(), context=None):
+    def to_dict(
+        self,
+        validate: bool = True,
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> dict:
         context = context or {}
-        condition = self._get("condition", Undefined)
+        ignore = ignore or []
+        condition = self._get("condition", Undefined)  # type: ignore[attr-defined]
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
                 pass
             elif "field" in condition and "type" not in condition:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
-                copy = self.copy(deep=["condition"])
-                copy["condition"].update(kwds)
+                copy = self.copy(deep=["condition"])  # type: ignore[attr-defined]
+                copy["condition"].update(kwds)  # type: ignore[index]
         return super(ValueChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
 
 
 class DatumChannelMixin:
-    def to_dict(self, validate=True, ignore=(), context=None):
+    def to_dict(
+        self,
+        validate: bool = True,
+        ignore: Optional[List[str]] = None,
+        context: Optional[TypingDict[str, Any]] = None,
+    ) -> dict:
         context = context or {}
-        datum = self._get("datum", Undefined)
+        ignore = ignore or []
+        datum = self._get("datum", Undefined)  # type: ignore[attr-defined]
         copy = self  # don't copy unless we need to
         if datum is not Undefined:
             if isinstance(datum, core.SchemaBase):

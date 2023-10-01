@@ -94,6 +94,7 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr is Protocol
         or attr is Sequence
         or attr_name == "TypingDict"
+        or attr_name == "TypingGenerator"
     ):
         return False
     else:
