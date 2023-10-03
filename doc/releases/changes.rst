@@ -18,7 +18,7 @@ Backward-Incompatible Changes
 Version 5.1.2 (released Oct 4, 2023)
 ----------------------------------------
 
-- Update Vega-Lite from version 5.14.1 to version 5.16.0;
+- Update Vega-Lite from version 5.14.1 to version 5.15.1;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Bug Fixes

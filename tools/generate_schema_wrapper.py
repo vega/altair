@@ -29,7 +29,7 @@ from schemapi.utils import (  # noqa: E402
     resolve_references,
 )
 
-SCHEMA_VERSION: Final = "v5.15.0"
+SCHEMA_VERSION: Final = "v5.15.1"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
