@@ -20,7 +20,7 @@
 5. Update version to, e.g. 5.0.0:
 
    - in ``altair/__init__.py``
-   - in ``doc/conf.py`` (two places)
+   - in ``doc/conf.py``
 
 6. Double-check that all vega-lite/vega/vega-embed versions are up-to-date:
 
@@ -54,19 +54,21 @@
 12. update version to, e.g. 5.1.0dev:
 
     - in ``altair/__init__.py``
-    - in ``doc/conf.py`` (two places)
+    - in ``doc/conf.py``
 
 13. add a new changelog entry for the unreleased version:
 
-       Version 5.1.0 (unreleased)
-       --------------------------
+    ```
+    Version 5.1.0 (unreleased)
+    --------------------------
 
-       Enhancements
-       ~~~~~~~~~~~~
-       Bug Fixes
-       ~~~~~~~~~
-       Backward-Incompatible Changes
-       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Enhancements
+    ~~~~~~~~~~~~
+    Bug Fixes
+    ~~~~~~~~~
+    Backward-Incompatible Changes
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ```
 
 14. Commit change and push to main:
 

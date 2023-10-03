@@ -19,7 +19,7 @@ Version 5.1.2 (released Oct 3, 2023)
 ----------------------------------------
 
 - Update Vega-Lite from version 5.14.1 to version 5.15.1;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.15.1>`_.
 
 Bug Fixes
 ~~~~~~~~~
@@ -37,7 +37,7 @@ Version 5.1.0 (released August 28, 2023)
 ----------------------------------------
 
 - Update Vega-Lite from version 5.8.0 to version 5.14.1;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.14.1>`_.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -71,7 +71,7 @@ Version 5.0.0 (released May 9, 2023)
 ------------------------------------
 
 - Update Vega-Lite from version 4.17.0 to version 5.8.0;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.8.0>`_.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -150,7 +150,7 @@ Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
 
 - Update Vega-Lite from version 4.8.1 to version 4.17.0;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v4.17.0>`_.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -177,7 +177,7 @@ Version 4.1.0 (released April 1, 2020)
 
 - Minimum Python version is now 3.6
 - Update Vega-Lite to version 4.8.1; many new features and bug fixes from Vega-Lite
-  versions 4.1 through 4.8; see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+  versions 4.1 through 4.8; see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v4.8.0>`_.
 
 Enhancements
 ~~~~~~~~~~~~
