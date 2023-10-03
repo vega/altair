@@ -19,7 +19,7 @@ Version 5.1.2 (released Oct 3, 2023)
 ----------------------------------------
 
 - Update Vega-Lite from version 5.14.1 to version 5.15.1;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.15.1>`_.
+  see `Vega-Lite 5.15.1 Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.15.1>`_.
 
 Bug Fixes
 ~~~~~~~~~
@@ -37,7 +37,7 @@ Version 5.1.0 (released August 28, 2023)
 ----------------------------------------
 
 - Update Vega-Lite from version 5.8.0 to version 5.14.1;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.14.1>`_.
+  see `Vega-Lite 5.14.1 Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.14.1>`_.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -45,7 +45,7 @@ Enhancements
 - Add ``"vegafusion"`` data transformer with mime renderer, save, and ``to_dict``/``to_json`` integration (#3094, #3107)
 - Add ``JupyterChart`` to support accessing params and selections from Python (See :ref:`user-guide-jupyterchart`)  (#3151)
 - Support field encoding inference for objects that support the DataFrame Interchange Protocol (#3114)
-- Support grouped bars inside time axis with time bins (see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
+- Support grouped bars inside time axis with time bins (see `Vega-Lite 5.9.0 Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.9.0>`_)
 - Add new transform method `transform_extent` (#3148)
 - Add support for new referencing logic in version 4.18 of the jsonschema package
 - Add configurable pixels-per-inch (ppi) metadata to saved and displayed PNG images (#3163)
@@ -71,7 +71,7 @@ Version 5.0.0 (released May 9, 2023)
 ------------------------------------
 
 - Update Vega-Lite from version 4.17.0 to version 5.8.0;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.8.0>`_.
+  see `Vega-Lite 5.8.0 Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.8.0>`_.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -150,7 +150,7 @@ Version 4.2.0 (released Dec 29, 2021)
 -------------------------------------
 
 - Update Vega-Lite from version 4.8.1 to version 4.17.0;
-  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v4.17.0>`_.
+  see `Vega-Lite 4.17.0 Release Notes <https://github.com/vega/vega-lite/releases/tag/v4.17.0>`_.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -177,7 +177,7 @@ Version 4.1.0 (released April 1, 2020)
 
 - Minimum Python version is now 3.6
 - Update Vega-Lite to version 4.8.1; many new features and bug fixes from Vega-Lite
-  versions 4.1 through 4.8; see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases/tag/v4.8.0>`_.
+  versions 4.1 through 4.8; see `Vega-Lite 4.8.0 Release Notes <https://github.com/vega/vega-lite/releases/tag/v4.8.0>`_.
 
 Enhancements
 ~~~~~~~~~~~~
