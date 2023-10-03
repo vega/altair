@@ -15,6 +15,16 @@ Bug Fixes
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Version 5.1.2 (released Oct 4, 2023)
+----------------------------------------
+
+- Update Vega-Lite from version 5.14.1 to version 5.15.1;
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+
+Bug Fixes
+~~~~~~~~~
+- Remove usage of deprecated Pandas parameter ``convert_dtypes`` (#3191)
+- Fix encoding type inference for boolean columns when pyarrow is installed (#3210)
 
 Version 5.1.1 (released August 30, 2023)
 ----------------------------------------

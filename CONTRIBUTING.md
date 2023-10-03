@@ -53,6 +53,14 @@ git switch -c <your-branch-name>
 
 With this branch checked-out, make the desired changes to the package.
 
+A large part of Altair's code base is automatically generated.
+After you have made your manual changes,
+make sure to run the following to see if there are any changes
+to the automatically generated files: `python tools/generate_schema_wrapper.py`.
+
+For information on how to update the Vega-Lite version that Altair uses,
+please read [the maintainers' notes](NOTES_FOR_MAINTAINERS.md).
+
 ### Testing your Changes
 
 Before suggesting your contributing your changing to the main Altair repository,
