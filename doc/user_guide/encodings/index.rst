@@ -198,23 +198,26 @@ Effect of Data Type on Axis Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
-difference between a ``quantitative`` and ``ordinal`` scale for an column
+difference between a ``quantitative`` , ``ordinal`` and ``temporal`` scale for an column
 that contains integers specifying a year:
 
 .. altair-plot::
 
-    pop = data.population.url
+    pop = data.population()
+    # Convert interger to string data type
+    pop.year = pop.year.astype(str)
 
-    base = alt.Chart(pop).mark_bar().encode(
+    base = alt.Chart(pop).mark_line().encode(
         alt.Y('mean(people):Q').title('total population')
     ).properties(
-        width=200,
+        width=150,
         height=200
     )
 
     alt.hconcat(
         base.encode(x='year:Q').properties(title='year=quantitative'),
-        base.encode(x='year:O').properties(title='year=ordinal')
+        base.encode(x='year:O').properties(title='year=ordinal'),
+        base.encode(x='year:T').properties(title='year=temporal')
     )
 
 Because quantitative values do not have an inherent width, the bars do not
@@ -222,10 +225,15 @@ fill the entire space between the values.
 This view also makes clear the missing year of data that was not immediately
 apparent when we treated the years as categories.
 
+To plot the year data as four digit format; i.e. without thousand separator,
+we recommend converting integer to string data type first, then storing the data as temporal,
+since directly convert integer to temporal data type would result in an error.
+
+
 This kind of behavior is sometimes surprising to new users, but it emphasizes
 the importance of thinking carefully about your data types when visualizing
 data: a visual encoding that is suitable for categorical data may not be
-suitable for quantitative data, and vice versa.
+suitable for quantitative data or temporal data, and vice versa.
 
 
 .. _shorthand-description:
@@ -525,6 +533,18 @@ While the above examples show sorting of axes by specifying ``sort`` in the
 
 Here the y-axis is sorted reverse-alphabetically, while the color legend is
 sorted in the specified order, beginning with ``'Morris'``.
+
+Here is another example using :class:`EncodingSortField` class to sort color legend.
+By specifying ``field``, ``op`` and ``order``, the legend can be sorted based on chosen data field.
+
+.. altair-plot::
+
+    alt.Chart(barley).mark_rect().encode(
+    alt.X('mean(yield):Q').sort('ascending'),
+    alt.Y('site:N').sort('x'),
+    color=alt.Color('site',
+            sort=alt.EncodingSortField(field='yield', op='mean', order='ascending'))
+    )
 
 Datum and Value
 ~~~~~~~~~~~~~~~

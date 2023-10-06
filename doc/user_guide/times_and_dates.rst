@@ -52,7 +52,12 @@ example, we'll limit ourselves to the first two weeks of data:
 
 (notice that for date/time values we use the ``T`` to indicate a temporal
 encoding: while this is optional for pandas datetime input, it is good practice
-to specify a type explicitly; see :ref:`encoding-data-types` for more discussion).
+to specify a type explicitly; see :ref:`encoding-data-types` for more discussion.
+
+If you want to plot integers as four digit year format stored as temporal data, 
+please see the :ref:`type-axis-scale`).
+
+
 
 For date-time inputs like these, it can sometimes be useful to extract particular
 time units (e.g. hours of the day, dates of the month, etc.).
