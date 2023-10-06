@@ -44,7 +44,7 @@ Scatter Plot with Image Marks
 
     alt.Chart(source).mark_image(width=50, height=50).encode(x="x", y="y", url="img")
 
-Show Image Marks With Selection
+Show Image Marks with Selection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This example demonstrates how to display image marks with drag selection. We create two charts:
 one with point marks and the other with image marks, applying the selection filter only to the latter.
@@ -106,7 +106,7 @@ If you're looking to learn how to create an image tooltip that displays an image
 please see :ref:`Image Tooltip <gallery_image_tooltip>`. However, if the images for the tooltip are stored as NumPy 
 arrays, please refer to :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>`.
 
-Use Local Images As Image Marks
+Use Local Images as Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 We could also show local images using Base64 encoding, replace the image path below
 and create your own plot.
