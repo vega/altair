@@ -102,8 +102,9 @@ By combining these two charts, we can achieve the desired result.
 In the layered chart, images may overlap one other, using the faceted chart instead can
 avoid this issue.
 
-If you are searching for image tooltip that can show image while hovering on a point, 
-please see :ref:`Image Tooltip <gallery_image_tooltip>`.
+If you're looking to learn how to create an image tooltip that displays an image when hovering over a point, 
+please see :ref:`Image Tooltip <gallery_image_tooltip>`. However, if the images for the tooltip are stored as NumPy 
+arrays, please refer to :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>`.
 
 Use Local Images As Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
