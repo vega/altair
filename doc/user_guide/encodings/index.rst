@@ -170,7 +170,7 @@ Effect of Data Type on Color Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 As an example of this, here we will represent the same data three different ways,
 with the color encoded as a *quantitative*, *ordinal*, and *nominal* type,
-using three vertically-concatenated charts (see :ref:`vconcat-chart`):
+using three horizontally-concatenated charts (see :ref:`hconcat-chart`):
 
 .. altair-plot::
 
@@ -178,11 +178,11 @@ using three vertically-concatenated charts (see :ref:`vconcat-chart`):
        x='Horsepower:Q',
        y='Miles_per_Gallon:Q',
    ).properties(
-       width=150,
-       height=150
+       width=140,
+       height=140
    )
 
-   alt.vconcat(
+   alt.hconcat(
       base.encode(color='Cylinders:Q').properties(title='quantitative'),
       base.encode(color='Cylinders:O').properties(title='ordinal'),
       base.encode(color='Cylinders:N').properties(title='nominal'),
