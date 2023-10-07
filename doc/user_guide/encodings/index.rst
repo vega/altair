@@ -198,43 +198,49 @@ Effect of Data Type on Axis Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
-difference between a ``quantitative`` , ``ordinal`` and ``temporal`` scale for an column
+difference between a ``ordinal``, ``quantitative``, and ``temporal`` scale for an column
 that contains integers specifying a year:
 
 .. altair-plot::
 
     pop = data.population()
-    # Convert interger to string data type
-    pop.year = pop.year.astype(str)
 
-    base = alt.Chart(pop).mark_line().encode(
-        alt.Y('mean(people):Q').title('total population')
+    base = alt.Chart(pop).mark_bar().encode(
+        alt.Y('mean(people):Q').title('Total population')
     ).properties(
-        width=150,
-        height=200
+        width=140,
+        height=140
     )
 
     alt.hconcat(
-        base.encode(x='year:Q').properties(title='year=quantitative'),
-        base.encode(x='year:O').properties(title='year=ordinal'),
-        base.encode(x='year:T').properties(title='year=temporal')
+        base.encode(x='year:O').properties(title='ordinal'),
+        base.encode(x='year:Q').properties(title='quantitative'),
+        base.encode(x='year:T').properties(title='temporal')
     )
 
-Because quantitative values do not have an inherent width, the bars do not
+Because values on quantitative and temporal scales do not have an inherent width, the bars do not
 fill the entire space between the values.
-This view also makes clear the missing year of data that was not immediately
-apparent when we treated the years as categories.
+These scales clearly show the missing year of data that was not immediately
+apparent when we treated the years as ordinal data,
+but the axis formatting is undesirable in both cases.
 
-To plot the year data as four digit format; i.e. without thousand separator,
-we recommend converting integer to string data type first, then storing the data as temporal,
-since directly convert integer to temporal data type would result in an error.
+To plot four digit integers as years with proper axis formatting,
+i.e. without thousands separator,
+we recommend converting the integers to strings first,
+and the specifying a temporal data type in Altair.
+While it is also possible to change the axis format with ``.axis(format='i')``,
+it is preferred to specify the appropriate data type to Altair.
 
+.. altair-plot::
+
+    pop['year'] = pop['year'].astype(str)
+
+    base.mark_bar().encode(x='year:T').properties(title='temporal')
 
 This kind of behavior is sometimes surprising to new users, but it emphasizes
 the importance of thinking carefully about your data types when visualizing
 data: a visual encoding that is suitable for categorical data may not be
 suitable for quantitative data or temporal data, and vice versa.
-
 
 .. _shorthand-description:
 
