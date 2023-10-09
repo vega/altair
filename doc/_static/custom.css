@@ -82,6 +82,11 @@ properly displayed on mobile devices and not restricted to 20% */
     display: none;
 }
 
+/* Use old light blue color for banner since it goes better with the Altair logo */
+.bd-header-announcement {
+    background-color: #daebf1 !important;
+}
+
 /* Configurations for the start page
 ------------------------------------ */
 .lead {
