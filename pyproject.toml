@@ -81,7 +81,7 @@ doc = [
     "jinja2",
     "numpydoc",
     "pillow>=9,<10",
-    "pydata-sphinx-theme",
+    "pydata-sphinx-theme>=0.14.1",
     "geopandas",
     "myst-parser",
     "sphinx_copybutton",
