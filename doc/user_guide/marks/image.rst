@@ -110,6 +110,7 @@ Use Local Images as Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 We could also show local images using Base64 encoding, replace the image path below
 and create your own plot.
+This approach also works with images stored as Numpy Arrays as can be seen in the :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>` tutorial.
 
 .. code-block::
 
