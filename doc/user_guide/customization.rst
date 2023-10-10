@@ -309,8 +309,8 @@ Axis title can also be rotated:
 
     alt.Chart(df).mark_circle().encode(
     alt.X('x').axis(title="x"),
-    alt.Y('y').axis(title="Y Axis Title")
-    ).configure_axisY(
+    alt.Y('y').axis(
+        title="Y Axis Title",
         titleAngle=0,
         titleAlign="left",
         titleY=0,
