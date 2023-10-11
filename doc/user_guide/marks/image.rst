@@ -51,20 +51,17 @@ one with point marks and the other with image marks, applying the selection filt
 By combining these two charts, we can achieve the desired result.
 
 .. altair-plot::
-    :hide-code:
-    :div_class: properties-example
 
     import altair as alt
     import pandas as pd
 
     source = pd.DataFrame.from_records(
         [{'a': 1, 'b': 1, 'image': 'https://altair-viz.github.io/_static/altair-logo-light.png'},
-        {'a': 2, 'b': 2, 'image': 'https://avatars.githubusercontent.com/u/11796929?s=200&v=4'},
-        {'a': 3, 'b': 3, 'image': ''}]
+        {'a': 2, 'b': 2, 'image': 'https://avatars.githubusercontent.com/u/11796929?s=200&v=4'}]
     )
 
     brush = alt.selection_interval()
-    point = alt.Chart(source, width=200, height=200).mark_circle(size=100).encode(
+    point = alt.Chart(source).mark_circle(size=100).encode(
         x='a',
         y='b',
     ).add_params(
@@ -79,32 +76,21 @@ By combining these two charts, we can achieve the desired result.
         brush
     )
 
+    point + img
+
+In the layered chart, images may overlap one other. 
+An alternative is to use a faceted image chart beside the original chart:
+
+.. altair-plot::
+
     img_faceted = alt.Chart(source, width=50, height=75).mark_image().encode(
-        url='image'
-    ).facet(
+    url='image').facet(
         alt.Facet('image', title='', header=alt.Header(labelFontSize=0))
     ).transform_filter(
         brush
     )
 
-
-    two_layered_chart = point + img
-    faceted_chart = point | img_faceted
-
-    alt.hconcat(
-        two_layered_chart.properties(title="Two Layered Chart"),
-        faceted_chart.properties(title="Faceted Chart"),
-    ).configure_title(
-        fontSize=10,
-        anchor='start'
-    )
-
-In the layered chart, images may overlap one other, using the faceted chart instead can
-avoid this issue.
-
-If you're looking to learn how to create an image tooltip that displays an image when hovering over a point, 
-please see :ref:`Image Tooltip <gallery_image_tooltip>`. However, if the images for the tooltip are stored as NumPy 
-arrays, please refer to :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>`.
+    point | img_faceted
 
 Use Local Images as Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -112,7 +98,7 @@ We could also show local images using Base64 encoding, replace the image path be
 and create your own plot.
 This approach also works with images stored as Numpy Arrays as can be seen in the :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>` tutorial.
 
-.. code-block::
+.. altair-plot::
 
     import altair as alt
     import pandas as pd
@@ -122,7 +108,7 @@ This approach also works with images stored as Numpy Arrays as can be seen in th
 
     # replace your image path here
     # recommend use raw string for absolute path; i.e. r'C:\Users\...\img00.jpg'
-    images = ["./img00.jpg", "./img01.jpg", "./img02.jpg"]
+    images = ["doc/_static/gray-square.png","doc/_static/altair-logo-light.png"]
     imgCode = []
 
 
@@ -130,12 +116,12 @@ This approach also works with images stored as Numpy Arrays as can be seen in th
         image = PILImage.open(imgPath)
         output = io.BytesIO()   
         # choose the right format
-        image.save(output, format='JPEG')
+        image.save(output, format='PNG')
         encoded_string = "data:image/jpeg;base64,"+base64.b64encode(output.getvalue()).decode()
         imgCode.append(encoded_string)
 
-    x = [0.5, 1.5, 2.5]
-    y = [0.5, 1.5, 2.5]
+    x = [1,2]
+    y = [1,2]
     source = pd.DataFrame({"x": x, "y": y, "img": imgCode})
     alt.Chart(source).mark_image(
         width=50,
@@ -144,4 +130,27 @@ This approach also works with images stored as Numpy Arrays as can be seen in th
         x='x',
         y='y',
         url='img'
+    )
+
+Image Tooltip
+^^^^^^^^^^^^^
+This example shows how to render images in tooltips.
+Either URLs or local file paths can be used to reference the images. 
+To render the image, you must use the special column name "image" in your data 
+and pass it as a list to the tooltip encoding.
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame.from_records(
+        [{'a': 1, 'b': 1, 'image': 'https://altair-viz.github.io/_static/altair-logo-light.png'},
+         {'a': 2, 'b': 2, 'image': 'https://avatars.githubusercontent.com/u/11796929?s=200&v=4'}]
+    )
+
+    alt.Chart(source).mark_circle(size=200).encode(
+        x='a',
+        y='b',
+        tooltip=['image']  # Must be a list containing a field called "image"
     )
