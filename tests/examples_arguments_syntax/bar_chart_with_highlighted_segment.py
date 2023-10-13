@@ -20,19 +20,19 @@ bars = alt.Chart(source).mark_bar(color="#9CC8E2").encode(
 
 highlight = alt.Chart(source).mark_bar(color="#5BA3CF").encode(
     x='year:O',
-    y='baseline:Q',
-    y2='wheat:Q'
+    y='wheat:Q',
+    y2=alt.datum(20)
 ).transform_filter(
     alt.datum.wheat > 20
-).transform_calculate("baseline", "20")
+)
 
 highlight2 = alt.Chart(source).mark_bar(color="#2978B8").encode(
     x='year:O',
-    y='baseline:Q',
-    y2='wheat:Q'
+    y='wheat:Q',
+    y2=alt.datum(60)
 ).transform_filter(
     alt.datum.wheat > 60
-).transform_calculate("baseline", "60")
+)
 
 rule = alt.Chart(threshold).mark_rule().encode(
     y=alt.Y("threshold_value")
