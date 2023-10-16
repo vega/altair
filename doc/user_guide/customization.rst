@@ -472,38 +472,64 @@ can be passed to the `scheme` argument of the :class:`Scale` class:
 
 .. altair-plot::
 
-  import altair as alt
-  from vega_datasets import data
+    import altair as alt
+    from vega_datasets import data
 
-  iris = data.iris()
+    car = data.cars()
 
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color=alt.Color('species').scale(scheme='dark2')
-  )
+    alt.Chart(car).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color=alt.Color('Acceleration').scale(scheme="spectral")
+    )
+
+In this example, if we want to match the higher `Acceleration` data to red color,
+we can use the `reverse` parameter to reverse the color scheme:
+
+.. altair-plot::
+
+    alt.Chart(car).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color=alt.Color('Acceleration').scale(scheme="spectral", reverse=True)
+    )
 
 Color Domain and Range
 ~~~~~~~~~~~~~~~~~~~~~~
 
-To make a custom mapping of discrete values to colors, use the
-`domain` and `range` parameters of the :class:`Scale` class for
+To specify values to continuous scales, 
+use the `domain` and `range` parameters of the :class:`Scale` class for
 values and colors respectively.
 
 .. altair-plot::
 
-  import altair as alt
-  from vega_datasets import data
+    import altair as alt
+    from vega_datasets import data
 
-  iris = data.iris()
-  domain = ['setosa', 'versicolor', 'virginica']
-  range_ = ['red', 'green', 'blue']
+    domain = [10, 15, 20]
+    range_ = ['green', 'blue', 'red']
 
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color=alt.Color('species').scale(domain=domain, range=range_)
-  )
+    alt.Chart(car).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color=alt.Color('Acceleration:Q').scale(domain=domain, range=range_)
+    )
+
+For discrete scales, we could make a custom mapping of discrete values to colors:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    domain = ['Europe', "Japan", "USA"]
+    range_ = ['green', 'blue','red']
+
+    alt.Chart(car).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color=alt.Color('Origin:N').scale(domain=domain, range=range_)
+    )
 
 Raw Color Values
 ~~~~~~~~~~~~~~~~
