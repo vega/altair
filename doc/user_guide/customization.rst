@@ -308,13 +308,14 @@ Axis title can also be rotated:
 .. altair-plot::
 
     alt.Chart(df).mark_circle().encode(
-    alt.X('x').axis(title="x"),
-    alt.Y('y').axis(
-        title="Y Axis Title",
-        titleAngle=0,
-        titleAlign="left",
-        titleY=0,
-        titleX=0,
+        alt.X('x').axis(title="x"),
+        alt.Y('y').axis(
+            title="Y Axis Title",
+            titleAngle=0,
+            titleAlign="left",
+            titleY=-2,
+            titleX=0,
+        )
     )
 
 Additional formatting codes are available; for a listing of these see the
