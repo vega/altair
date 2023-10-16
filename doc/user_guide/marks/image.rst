@@ -126,48 +126,49 @@ we need to explicitly set the ``autosize`` option in the ``configure`` method.
 
 Use Local Images as Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-We could also show local images using Base64 encoding, replace the image path below
-and create your own plot.
-This approach also works with images stored as Numpy Arrays as can be seen in the :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>` tutorial.
+
+We could also show local images by first converting them to base64-encoded_ strings.
+In the example below,
+we load two images saved in the Altair repo;
+you can replace the image paths below with the location of the desired images on your machine.
+This approach also works with images stored as Numpy Arrays
+as can be seen in the tutorial :ref:`Displaying Numpy Images in Tooltips <numpy-tooltip-imgs>`.
 
 .. altair-plot::
 
+    import base64
     import altair as alt
     import pandas as pd
-    from IPython.display import Image
-    import base64, io, IPython
-    from PIL import Image as PILImage
 
-    # replace your image path here
-    # recommend use raw string for absolute path; i.e. r'C:\Users\...\img00.jpg'
-    images = ["doc/_static/gray-square.png","doc/_static/altair-logo-light.png"]
-    imgCode = []
+    from io import BytesIO
+    from PIL import Image
 
 
-    for imgPath in images:
-        image = PILImage.open(imgPath)
-        output = io.BytesIO()   
-        # choose the right format
-        image.save(output, format='PNG')
-        encoded_string = "data:image/jpeg;base64,"+base64.b64encode(output.getvalue()).decode()
-        imgCode.append(encoded_string)
+    image_paths = ["doc/_static/gray-square.png","doc/_static/altair-logo-light.png"]
+    base64_images = []
 
-    x = [1,2]
-    y = [1,2]
-    source = pd.DataFrame({"x": x, "y": y, "img": imgCode})
+    for image_path in image_paths:
+        pil_image = Image.open(image_path)
+        output = BytesIO()
+        pil_image.save(output, format='PNG')
+        base64_images.append(
+            "data:image/png;base64," + base64.b64encode(output.getvalue()).decode()
+        )
+
+    source = pd.DataFrame({"x": [1, 2], "y": [1, 2], "image": base64_images})
     alt.Chart(source).mark_image(
         width=50,
         height=50
     ).encode(
         x='x',
         y='y',
-        url='img'
+        url='image'
     )
 
 Image Tooltip
 ^^^^^^^^^^^^^
 This example shows how to render images in tooltips.
-Either URLs or local file paths can be used to reference the images. 
+Either URLs or local file paths can be used to reference the images.
 To render the image, you must use the special column name "image" in your data 
 and pass it as a list to the tooltip encoding.
 
@@ -186,3 +187,6 @@ and pass it as a list to the tooltip encoding.
         y='b',
         tooltip=['image']  # Must be a list containing a field called "image"
     )
+
+
+.. _base64-encoded: https://en.wikipedia.org/wiki/Binary-to-text_encoding
