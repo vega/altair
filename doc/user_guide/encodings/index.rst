@@ -422,8 +422,7 @@ options available to change the sort order:
   sort. For example ``sort='-x'`` would sort by the x channel in descending order.
 - Passing a list to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
-- Passing a :class:`EncodingSortField` class to ``sort`` allows you to sort
-  an axis by the value of some other field in the dataset.
+- Using the ``field`` and ``op`` parameters to specify a field and aggregation operation to sort by.
 
 Here is an example of applying these five different sort approaches on the
 x-axis, using the barley dataset:
@@ -489,7 +488,9 @@ x-axis, using the barley dataset:
 The last two charts are the same because the default aggregation
 (see :ref:`encoding-aggregates`) is ``mean``. To highlight the
 difference between sorting via channel and sorting via field consider the
-following example where we don't aggregate the data:
+following example where we don't aggregate the data
+and use the `op` parameter to specify a different aggregation than `mean`
+to use when sorting:
 
 .. altair-plot::
 
@@ -512,33 +513,44 @@ following example where we don't aggregate the data:
     sortfield = base.encode(
         alt.X('site:N').sort(field='yield', op='max')
     ).properties(
-        title='By Min Yield'
+        title='By Max Yield'
     )
     sortchannel | sortfield
-
-By passing a :class:`EncodingSortField` class to ``sort`` we have more control over
-the sorting process.
 
 
 Sorting Legends
 ^^^^^^^^^^^^^^^
 
-While the above examples show sorting of axes by specifying ``sort`` in the
+Just as how the above examples show sorting of axes by specifying ``sort`` in the
 :class:`X` and :class:`Y` encodings, legends can be sorted by specifying
-``sort`` in the :class:`Color` encoding:
+``sort`` in the encoding used in the legend (e.g. color, shape, size, etc).
+Below we show an example using the :class:`Color` encoding:
 
 .. altair-plot::
 
-    alt.Chart(barley).mark_rect().encode(
-        alt.X('mean(yield):Q').sort('ascending'),
-        alt.Y('site:N').sort('descending'),
+    alt.Chart(barley).mark_bar().encode(
+        alt.X('mean(yield):Q'),
+        alt.Y('site:N').sort('x'),
         alt.Color('site:N').sort([
             'Morris', 'Duluth', 'Grand Rapids', 'University Farm', 'Waseca', 'Crookston'
         ])
     )
 
-Here the y-axis is sorted reverse-alphabetically, while the color legend is
+Here the y-axis is sorted based on the x-values, while the color legend is
 sorted in the specified order, beginning with ``'Morris'``.
+
+In the next example,
+specifying ``field``, ``op`` and ``order``,
+sorts the legend sorted based on a chosen data field
+and operation.
+
+.. altair-plot::
+
+    alt.Chart(barley).mark_bar().encode(
+        alt.X('mean(yield):Q'),
+        alt.Y('site:N').sort('x'),
+        color=alt.Color('site').sort(field='yield', op='max', order='ascending')
+    )
 
 Datum and Value
 ~~~~~~~~~~~~~~~
