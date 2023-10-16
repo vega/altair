@@ -84,13 +84,45 @@ An alternative is to use a faceted image chart beside the original chart:
 .. altair-plot::
 
     img_faceted = alt.Chart(source, width=50, height=75).mark_image().encode(
-    url='image').facet(
+        url='image'
+    ).facet(
         alt.Facet('image', title='', header=alt.Header(labelFontSize=0))
     ).transform_filter(
         brush
     )
 
     point | img_faceted
+
+If we want the images to not be visible in the initial chart
+we could add ``empty=False`` to the interval selection.
+However,
+Altair will not automatically resize the chart area to include the faceted chart
+when a selection is made,
+which means it seems like the selection has no effect.
+In order to resize the chart automatically,
+we need to explicitly set the ``autosize`` option in the ``configure`` method.
+
+.. altair-plot::
+
+    brush = alt.selection_interval(empty=False)
+    point = alt.Chart(source).mark_circle(size=100).encode(
+        x='a',
+        y='b',
+    ).add_params(
+        brush
+    )
+    img_faceted = alt.Chart(source, width=50, height=75).mark_image().encode(
+        url='image'
+    ).facet(
+        alt.Facet('image', title='', header=alt.Header(labelFontSize=0))
+    ).transform_filter(
+        brush
+    )
+
+    (point | img_faceted).configure(
+        autosize=alt.AutoSizeParams(resize=True)
+    )
+
 
 Use Local Images as Image Marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
