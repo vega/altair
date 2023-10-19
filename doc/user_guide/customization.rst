@@ -457,85 +457,83 @@ Customizing Colors
 
 As discussed in :ref:`type-legend-scale`, Altair chooses a suitable default color
 scheme based on the type of the data that the color encodes. These defaults can
-be customized using the `scale` argument of the :class:`Color` class.
-
-The :class:`Scale` class passed to the `scale` argument provides a number of options
-for customizing the color scale; we will discuss a few of them here.
+be customized using the :meth:`scale` method of the :class:`Color` class.
 
 Color Schemes
 ~~~~~~~~~~~~~
+
 Altair  includes a set of named color schemes for both categorical and sequential
 data, defined by the vega project; see the
 `Vega documentation <https://vega.github.io/vega/docs/schemes/>`_
 for a full gallery of available color schemes.  These schemes
-can be passed to the `scheme` argument of the :class:`Scale` class:
+can be passed to the `scheme` argument of the :meth:`scale` method:
 
 .. altair-plot::
 
     import altair as alt
     from vega_datasets import data
 
-    car = data.cars()
+    cars = data.cars()
 
-    alt.Chart(car).mark_point().encode(
+    alt.Chart(cars).mark_point().encode(
         x='Horsepower',
         y='Miles_per_Gallon',
-        color=alt.Color('Acceleration').scale(scheme="spectral")
+        color=alt.Color('Acceleration').scale(scheme="lightgreyred")
     )
 
-In this example, if we want to match the higher `Acceleration` data to red color,
-we can use the `reverse` parameter to reverse the color scheme:
+The color scheme we used above highlights points on one end of the scale,
+while keeping the rest muted.
+If we want to highlight the lower ``Acceleration`` data to red color instead,
+we can use the ``reverse`` parameter to reverse the color scheme:
 
 .. altair-plot::
 
-    alt.Chart(car).mark_point().encode(
+    alt.Chart(cars).mark_point().encode(
         x='Horsepower',
         y='Miles_per_Gallon',
-        color=alt.Color('Acceleration').scale(scheme="spectral", reverse=True)
+        color=alt.Color('Acceleration').scale(scheme="lightgreyred", reverse=True)
     )
 
 Color Domain and Range
 ~~~~~~~~~~~~~~~~~~~~~~
 
-To specify values to continuous scales, 
-use the `domain` and `range` parameters of the :class:`Scale` class for
-values and colors respectively.
+To create a custom color scales,
+we can use the ``domain`` and ``range`` parameters
+of the ``scale`` method for
+the values and colors, respectively.
+This works both for continuous scales,
+where it can help highlight specific ranges of values:
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
+    domain = [5, 8, 10, 12, 25]
+    range_ = ['#9cc8e2', '#9cc8e2', 'red', '#5ba3cf', '#125ca4']
 
-    domain = [10, 15, 20]
-    range_ = ['green', 'blue', 'red']
-
-    alt.Chart(car).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color=alt.Color('Acceleration:Q').scale(domain=domain, range=range_)
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color=alt.Color('Acceleration').scale(domain=domain, range=range_)
     )
 
-For discrete scales, we could make a custom mapping of discrete values to colors:
+And for discrete scales:
 
 .. altair-plot::
 
-    import altair as alt
-    from vega_datasets import data
-
     domain = ['Europe', "Japan", "USA"]
-    range_ = ['green', 'blue','red']
+    range_ = ['seagreen', 'firebrick', 'rebeccapurple']
 
-    alt.Chart(car).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color=alt.Color('Origin:N').scale(domain=domain, range=range_)
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color=alt.Color('Origin').scale(domain=domain, range=range_)
     )
 
 Raw Color Values
 ~~~~~~~~~~~~~~~~
+
 The ``scale`` is what maps the raw input values into an appropriate color encoding
 for displaying the data. If your data entries consist of raw color names or codes,
-you can set ``scale=None`` to use those colors directly:
+you can set ``scale(None)`` to use those colors directly:
 
 .. altair-plot::
 
