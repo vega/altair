@@ -138,7 +138,7 @@ By default an Altair chart does not have a title, as seen in this example.
        color="source:N"
    )
 
-You can add a simple title by passing the `title` keyword argument with the data.
+You can add a simple title by passing the ``title`` keyword argument with the data.
 
 .. altair-plot::
 
@@ -148,7 +148,7 @@ You can add a simple title by passing the `title` keyword argument with the data
        color="source:N"
    )
 
-It is also possible to add a subtitle by passing in an `alt.Title` object.
+It is also possible to add a subtitle by passing in an ``alt.Title`` object.
 
 .. altair-plot::
 
@@ -204,7 +204,7 @@ Adjusting Axis Limits
 ---------------------
 The default axis limit used by Altair is dependent on the type of the data.
 To fine-tune the axis limits beyond these defaults, you can use the
-:class:`Scale` property of the axis encodings. For example, consider the
+:meth:`scale` method of the axis encodings. For example, consider the
 following plot:
 
 .. altair-plot::
@@ -220,8 +220,8 @@ following plot:
     )
 
 Altair inherits from Vega-Lite the convention of always including the zero-point
-in quantitative axes; if you would like to turn this off, you can add a
-:class:`Scale` property to the :class:`X` encoding that specifies ``zero=False``:
+in quantitative axes; if you would like to turn this off, you can add the
+:meth:`scale` method to the :class:`X` encoding that specifies ``zero=False``:
 
 .. altair-plot::
 
@@ -273,8 +273,10 @@ For example consider this plot:
 .. altair-plot::
 
    import pandas as pd
-   df = pd.DataFrame({'x': [0.03, 0.04, 0.05, 0.12, 0.07, 0.15],
-                      'y': [10, 35, 39, 50, 24, 35]})
+   df = pd.DataFrame(
+       {'x': [0.03, 0.04, 0.05, 0.12, 0.07, 0.15],
+       'y': [10, 35, 39, 50, 24, 35]
+   })
 
    alt.Chart(df).mark_circle().encode(
        x='x',
@@ -283,7 +285,7 @@ For example consider this plot:
 
 To fine-tune the formatting of the tick labels and to add a custom title to
 each axis, we can pass to the :class:`X` and :class:`Y` encoding a custom
-:class:`Axis` definition.
+axis definition within the :meth:`axis` method.
 Here is an example of formatting the x labels as a percentage, and
 the y labels as a dollar value:
 
@@ -310,7 +312,7 @@ Additional formatting codes are available; for a listing of these see the
 Adjusting the Legend
 --------------------
 
-A legend is added to the chart automatically when the `color`, `shape` or `size` arguments are passed to the :func:`encode` function. In this example we'll use `color`.
+A legend is added to the chart automatically when the ``color``, ``shape`` or ``size`` arguments are passed to the :func:`encode` function. In this example we'll use ``color``.
 
 .. altair-plot::
 
@@ -325,9 +327,24 @@ A legend is added to the chart automatically when the `color`, `shape` or `size`
       color='species'
   )
 
-In this case, the legend can be customized by introducing the :class:`Color` class and taking advantage of its `legend` argument. The `shape` and `size` arguments have their own corresponding classes.
+In this case, the legend can be customized by introducing the :class:`Color` class and taking advantage of its :meth:`legend` method. The ``shape`` and ``size`` arguments have their own corresponding classes.
 
-The legend option on all of them expects a :class:`Legend` object as its input, which accepts arguments to customize many aspects of its appearance. One simple example is giving the legend a `title`.
+The legend option on all of them expects a :class:`Legend` object as its input, which accepts arguments to customize many aspects of its appearance. One example is to move the legend to another position with the ``orient`` argument.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species').legend(orient="left")
+  )
+
+Another thing you can do is set a ``title``; in this case we can use the :meth:`title` method directly as a shortcut or specify the ``title`` parameter inside the :meth:`legend` method:.
 
 .. altair-plot::
 
@@ -342,20 +359,6 @@ The legend option on all of them expects a :class:`Legend` object as its input, 
       color=alt.Color('species').title("Species by color")
   )
 
-Another thing you can do is move the legend to another position with the `orient` argument.
-
-.. altair-plot::
-
-  import altair as alt
-  from vega_datasets import data
-
-  iris = data.iris()
-
-  alt.Chart(iris).mark_point().encode(
-      x='petalWidth',
-      y='petalLength',
-      color=alt.Color('species').legend(orient="left")
-  )
 
 You can remove the legend entirely by submitting a null value.
 
@@ -392,7 +395,7 @@ As an example, let's start with a simple scatter plot.
         color='species'
     )
 
-First remove the grid using the :meth:`Chart.configure_axis` method.
+First remove the grid using the :meth:`configure_axis` method.
 
 .. altair-plot::
 
@@ -410,7 +413,7 @@ First remove the grid using the :meth:`Chart.configure_axis` method.
     )
 
 You'll note that while the inside rules are gone, the outside border remains.
-Hide it by setting ``stroke=None`` inside :meth:`Chart.configure_view`
+Hide it by setting ``stroke=None`` inside :meth:`configure_view`
 (``strokeWidth=0`` and ``strokeOpacity=0`` also works):
 
 .. altair-plot::
@@ -555,6 +558,7 @@ you can set ``scale(None)`` to use those colors directly:
 
 Adjusting the Width of Bar Marks
 --------------------------------
+
 The width of the bars in a bar plot are controlled through the ``size`` property in the :meth:`~Chart.mark_bar()`:
 
 .. altair-plot::
@@ -602,7 +606,7 @@ Here is an example of setting the step width for a discrete scale:
       y='value:Q'
   ).properties(width=alt.Step(100))
 
-The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``width=alt.Step(100)``
+The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the chart is set using ``width=alt.Step(100)``
 
 
 .. _customization-chart-size:
@@ -642,7 +646,7 @@ the subchart rather than to the overall chart:
    )
 
 If you want your chart size to respond to the width of the HTML page or container in which
-it is rendererd, you can set ``width`` or ``height`` to the string ``"container"``:
+it is rendered, you can set ``width`` or ``height`` to the string ``"container"``:
 
 .. altair-plot::
     :div_class_: full-width-plot
@@ -657,7 +661,7 @@ it is rendererd, you can set ``width`` or ``height`` to the string ``"container"
 
 Note that this will only scale with the container if its parent element has a size determined
 outside the chart itself; For example, the container may be a ``<div>`` element that has style
-``width: 100%; height: 300px``. 
+``width: 100%; height: 300px``.
 
 
 .. _chart-themes:
