@@ -11,11 +11,10 @@ from vega_datasets import data
 
 source = data.seattle_weather()
 
-scale = alt.Scale(
+color = alt.Color('weather:N').scale(
     domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
     range=['#e7ba52', '#a7a7a7', '#aec7e8', '#1f77b4', '#9467bd']
 )
-color = alt.Color('weather:N', scale=scale)
 
 # We create two selections:
 # - a brush that is active on the top panel
