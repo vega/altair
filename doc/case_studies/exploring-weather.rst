@@ -17,7 +17,7 @@ The dataset is a CSV file with columns for the temperature
 wind speed (in meter/second), and weather type.
 We have one row for each day from January 1st, 2012 to December 31st, 2015.
 
-Altair is designed to work with data in the form of Pandas_
+Altair is designed to work with data in the form of pandas_
 dataframes, and contains a loader for this and other built-in datasets:
 
 .. altair-plot::
@@ -28,7 +28,7 @@ dataframes, and contains a loader for this and other built-in datasets:
     df = data.seattle_weather()
     df.head()
 
-The data is loaded from the web and stored in a Pandas DataFrame, and from
+The data is loaded from the web and stored in a pandas DataFrame, and from
 here we can explore it with Altair.
 
 Let’s start by looking at the precipitation, using tick marks to see the
@@ -135,7 +135,7 @@ Note that this calculation doesn't actually do any data manipulation in Python,
 but rather encodes and stores the operations within the plot specification,
 where they will be calculated by the renderer.
 
-Of course, the same calculation could be done by using Pandas manipulations to
+Of course, the same calculation could be done by using pandas manipulations to
 explicitly add a column to the dataframe; the disadvantage there is that the
 derived values would have to be stored in the plot specification
 rather than computed on-demand in the browser.
@@ -265,4 +265,4 @@ You can find more visualizations in the :ref:`example-gallery`.
 If you want to further customize your charts, you can refer to Altair's
 :ref:`api`.
 
-.. _Pandas: http://pandas.pydata.org/
+.. _pandas: http://pandas.pydata.org/

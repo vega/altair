@@ -279,7 +279,7 @@ in some data structures.
 
 The recommended thing to do when you have special characters in a column name
 is to rename your columns.
-For example, in Pandas you could replace ``:`` with ``_``
+For example, in pandas you could replace ``:`` with ``_``
 via ``df.rename(columns = lambda x: x.replace(':', '_'))``.
 If you don't want to rename your columns
 you will need to escape the special characters using a backslash:

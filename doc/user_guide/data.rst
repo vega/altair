@@ -15,7 +15,7 @@ and :class:`FacetChart`) accepts a dataset as its first argument.
 
 There are many different ways of specifying a dataset:
 
-- as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
+- as a `pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute), e.g. polars and pyarrow. This is experimental.
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
@@ -81,7 +81,7 @@ Similarly, we must also specify the data type when referencing data by URL:
 Encodings and their associated types are further discussed in :ref:`user-guide-encoding`.
 Below we go into more detail about the different ways of specifying data in an Altair chart.
 
-Pandas DataFrame
+pandas DataFrame
 ~~~~~~~~~~~~~~~~
 
 .. _data-in-index:
@@ -102,7 +102,7 @@ At times, relevant data appears in the index. For example:
    data.head()
 
 If you would like the index to be available to the chart, you can explicitly
-turn it into a column using the ``reset_index()`` method of Pandas dataframes:
+turn it into a column using the ``reset_index()`` method of pandas dataframes:
 
 .. altair-plot::
 
@@ -114,7 +114,7 @@ turn it into a column using the ``reset_index()`` method of Pandas dataframes:
 If the index object does not have a ``name`` attribute set, the resulting
 column will be called ``"index"``.
 More information is available in the
-`Pandas documentation <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.reset_index.html>`_.
+`pandas documentation <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.reset_index.html>`_.
 
 
 .. _data-long-vs-wide:
@@ -193,11 +193,11 @@ step within the chart itself. We will detail to two approaches below.
 
 .. _data-converting-long-form:
 
-Converting with Pandas
+Converting with pandas
 """"""""""""""""""""""
-This sort of data manipulation can be done as a preprocessing step using Pandas_,
+This sort of data manipulation can be done as a preprocessing step using pandas_,
 and is discussed in detail in the `Reshaping and Pivot Tables`_ section of the
-Pandas documentation.
+pandas documentation.
 
 For converting wide-form data to the long-form data used by Altair, the ``melt``
 method of dataframes can be used. The first argument to ``melt`` is the column
@@ -210,7 +210,7 @@ be optionally specified:
 
     wide_form.melt('Date', var_name='company', value_name='price')
 
-For more information on the ``melt`` method, see the `Pandas melt documentation`_.
+For more information on the ``melt`` method, see the `pandas melt documentation`_.
 
 In case you would like to undo this operation and convert from long-form back
 to wide-form, the ``pivot`` method of dataframes is useful.
@@ -220,7 +220,7 @@ to wide-form, the ``pivot`` method of dataframes is useful.
 
     long_form.pivot(index='Date', columns='company', values='price').reset_index()
 
-For more information on the ``pivot`` method, see the `Pandas pivot documentation`_.
+For more information on the ``pivot`` method, see the `pandas pivot documentation`_.
 
 Converting with Fold Transform
 """"""""""""""""""""""""""""""
@@ -307,9 +307,9 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 
    alt.layer(background, lines).project('naturalEarth1')
 
-.. _Pandas: http://pandas.pydata.org/
-.. _Pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
-.. _Pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
+.. _pandas: http://pandas.pydata.org/
+.. _pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
+.. _pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
 .. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
 
 
