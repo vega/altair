@@ -195,7 +195,7 @@ you can use the :meth:`~Chart.from_dict` method to construct the chart object:
 
 With a bit more effort and some judicious copying and pasting, we can
 manually convert this into more idiomatic Altair code for the same chart,
-including constructing a Pandas dataframe from the data values:
+including constructing a pandas dataframe from the data values:
 
 .. altair-plot::
 

@@ -290,10 +290,10 @@ whereas `vl-convert`_ is expected to provide the better performance.
 
 .. _preaggregate-and-filter:
 
-Preaggregate and Filter in Pandas
+Preaggregate and Filter in pandas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Another common approach is to perform data transformations such as aggregations
-and filters using Pandas before passing the data to Altair.
+and filters using pandas before passing the data to Altair.
 
 For example, to create a bar chart for the ``barley`` dataset summing up ``yield`` grouped by ``site``,
 it is convenient to pass the unaggregated data to Altair:
@@ -322,7 +322,7 @@ only the necessary columns:
         y=alt.Y("site:N").sort("-x")
     )
 
-You could also precalculate the sum in Pandas which would reduce the size of the dataset even more:
+You could also precalculate the sum in pandas which would reduce the size of the dataset even more:
 
 .. altair-plot::
 
@@ -357,7 +357,7 @@ in Altair.
         color=alt.Color("Origin").legend(None)
     )
 
-If you have a lot of data, you can perform the necessary calculations in Pandas and only
+If you have a lot of data, you can perform the necessary calculations in pandas and only
 pass the resulting summary statistics to Altair.
 
 First, let's define a few parameters where ``k`` stands for the multiplier which is used

@@ -13,11 +13,11 @@ Altair and Vega-Lite do their best to ensure that dates are interpreted and
 visualized in a consistent way.
 
 
-Altair and Pandas Datetimes
+Altair and pandas Datetimes
 ---------------------------
 
-Altair is designed to work best with `Pandas timeseries`_. A standard
-timezone-agnostic date/time column in a Pandas dataframe will be both
+Altair is designed to work best with `pandas timeseries`_. A standard
+timezone-agnostic date/time column in a pandas dataframe will be both
 interpreted and displayed as local user time. For example, here is a dataset
 containing hourly temperatures measured in Seattle:
 
@@ -91,7 +91,7 @@ time of the browser that does the rendering.
 
 If you would like your dates to instead be time-zone aware, you can set the
 timezone explicitly in the input dataframe. Since Seattle is in the
-``US/Pacific`` timezone, we can localize the timestamps in Pandas as follows:
+``US/Pacific`` timezone, we can localize the timestamps in pandas as follows:
 
 .. altair-plot::
    :output: repr
@@ -141,7 +141,7 @@ regardless of the system location:
 
 To make your charts as portable as possible (even in non-ES6 browsers which parse
 timezone-agnostic times as UTC), you can explicitly work
-in UTC time, both on the Pandas side and on the Vega-Lite side:
+in UTC time, both on the pandas side and on the Vega-Lite side:
 
 
 .. altair-plot::
@@ -155,7 +155,7 @@ in UTC time, both on the Pandas side and on the Vega-Lite side:
    )
 
 This is somewhat less convenient than the default behavior for timezone-agnostic
-dates, in which both Pandas and Vega-Lite assume times are local
+dates, in which both pandas and Vega-Lite assume times are local
 (except in non-ES6 browsers; see :ref:`note-browser-compliance`),
 but it gets around browser incompatibilities by explicitly working in UTC, which
 gives similar results even in older browsers.
@@ -223,5 +223,5 @@ it is ES6-compliant or because your computer locale happens to be set to
 the UTC+0 (GMT) timezone.
 
 .. _Coordinated Universal Time (UTC): https://en.wikipedia.org/wiki/Coordinated_Universal_Time
-.. _Pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
+.. _pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
 .. _ECMAScript 6: http://www.ecma-international.org/ecma-262/6.0/

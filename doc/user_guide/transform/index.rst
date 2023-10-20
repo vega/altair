@@ -7,12 +7,12 @@ Data Transformations
 It is often necessary to transform or filter data in the process of visualizing
 it. In Altair you can do this one of two ways:
 
-1. Before the chart definition, using standard Pandas data transformations.
+1. Before the chart definition, using standard pandas data transformations.
 2. Within the chart definition, using Vega-Lite's data transformation tools.
 
 In most cases, we suggest that you use the first approach, because it is more
 straightforward to those who are familiar with data manipulation in Python, and
-because the Pandas package offers much more flexibility than Vega-Lite in
+because the pandas package offers much more flexibility than Vega-Lite in
 available data manipulations.
 
 The second approach becomes useful when the data source is not a dataframe, but,

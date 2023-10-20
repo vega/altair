@@ -23,7 +23,7 @@ Version 5.1.2 (released Oct 3, 2023)
 
 Bug Fixes
 ~~~~~~~~~
-- Remove usage of deprecated Pandas parameter ``convert_dtypes`` (#3191)
+- Remove usage of deprecated pandas parameter ``convert_dtypes`` (#3191)
 - Fix encoding type inference for boolean columns when pyarrow is installed (#3210)
 
 Version 5.1.1 (released August 30, 2023)
