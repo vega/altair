@@ -163,7 +163,7 @@ function. For example:
 
 DuckDB Integration
 ^^^^^^^^^^^^^^^^^^
-VegaFusion provides optional integration with `DuckDB`_. Because DuckDB can perform queries on pandas
+VegaFusion provides optional integration with `DuckDB`_. Because DuckDB can perform queries on Pandas
 DataFrames without converting through Arrow, it's often faster than VegaFusion's default query engine
 which requires this conversion. See the `VegaFusion DuckDB`_ documentation for more information.
 
