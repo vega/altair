@@ -2,7 +2,7 @@
 Arrow Vector
 ------------------------------
 This example shows a basic vector plot use point mark ``triangle`` as shape,
-other shape options can be found in :ref:`Point Mark<user-guide-point-marks>`
+other shape options can be found in :ref:`Point Mark<user-guide-point-marks>`.
 """
 # category: case studies
 import altair as alt
