@@ -4,7 +4,7 @@ Arrow Vector
 This example shows a basic vector plot use point mark ``triangle`` as shape,
 other shape options can be found in :ref:`Point Mark<user-guide-point-marks>`.
 """
-# category: case studies
+# category: line charts
 import altair as alt
 import numpy as np
 import pandas as pd
