@@ -958,7 +958,7 @@ class SchemaBase:
                 }
             )
             kwds = {
-                k: v.to_list() if isinstance(v, pd.Series) else v
+                k: v.to_list() if isinstance(v, (pd.Series, pd.Index)) else v
                 for k, v in kwds.items()
                 if k not in list(ignore) + ["shorthand"]
             }
