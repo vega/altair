@@ -958,7 +958,9 @@ class SchemaBase:
                 }
             )
             kwds = {
-                k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
+                k: v.to_list() if isinstance(v, pd.Series) else v
+                for k, v in kwds.items()
+                if k not in list(ignore) + ["shorthand"]
             }
             if "mark" in kwds and isinstance(kwds["mark"], str):
                 kwds["mark"] = {"type": kwds["mark"]}
