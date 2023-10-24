@@ -1,7 +1,7 @@
 """
 Arrow Vector
 ------------------------------
-This example shows a basic vector plot use point mark ``triangle`` as shape,
+This example shows a basic vector plot using point mark ``triangle`` as shape,
 other shape options can be found in :ref:`Point Mark<user-guide-point-marks>`.
 """
 # category: line charts
