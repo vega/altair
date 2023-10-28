@@ -1593,7 +1593,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # an edge case and it's not worth changing the type annotation
             # in this function to account for it as it could be confusing to
             # users.
-            as_ = kwargs.pop("as", Undefined)  # type: ignore[assignment]
+            as_ = kwargs.pop("as", Undefined)
         elif "as" in kwargs:
             raise ValueError(
                 "transform_calculate: both 'as_' and 'as' passed as arguments."
