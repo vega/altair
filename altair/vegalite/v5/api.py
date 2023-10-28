@@ -33,7 +33,7 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
-_ChartDataType = Union[_DataType, core.Data, str, UndefinedType, core.Generator]
+_ChartDataType = Union[_DataType, core.Data, str, core.Generator, UndefinedType]
 
 
 # ------------------------------------------------------------------------
