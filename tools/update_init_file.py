@@ -15,15 +15,15 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
-from typing import Literal
+from typing import Literal, Final
 
 # Import Altair from head
-ROOT_DIR = abspath(join(dirname(__file__), ".."))
+ROOT_DIR: Final = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
 import altair as alt  # noqa: E402
 
 
-def update__all__variable():
+def update__all__variable() -> None:
     """Updates the __all__ variable to all relevant attributes of top-level Altair.
     This is for example useful to hide deprecated attributes from code completion in
     Jupyter.
@@ -65,7 +65,7 @@ def update__all__variable():
         f.write(new_file_content)
 
 
-def _is_relevant_attribute(attr_name):
+def _is_relevant_attribute(attr_name: str) -> bool:
     attr = getattr(alt, attr_name)
     if (
         getattr(attr, "_deprecated", False) is True

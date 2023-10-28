@@ -65,7 +65,7 @@ dev = [
     "pytest-cov",
     "m2r",
     "vega_datasets",
-    "vl-convert-python>=0.13.0",
+    "vl-convert-python>=0.14.0",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
@@ -81,7 +81,7 @@ doc = [
     "jinja2",
     "numpydoc",
     "pillow>=9,<10",
-    "pydata-sphinx-theme",
+    "pydata-sphinx-theme>=0.14.1",
     "geopandas",
     "myst-parser",
     "sphinx_copybutton",
@@ -230,6 +230,7 @@ module = [
     "pandas.lib.*",
     "nbformat.*",
     "ipykernel.*",
+    "m2r.*",
 ]
 ignore_missing_imports = true
 

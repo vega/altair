@@ -37,8 +37,8 @@ base = alt.Chart(source).properties(
 ).add_params(selector)
 
 points = base.mark_point(filled=True, size=200).encode(
-    x=alt.X('mean(height):Q').scale(domain=[0,84]),
-    y=alt.Y('mean(weight):Q').scale(domain=[0,250]),
+    alt.X('mean(height):Q').scale(domain=[0,84]),
+    alt.Y('mean(weight):Q').scale(domain=[0,250]),
     color=alt.condition(
         selector,
         'gender:N',
@@ -47,13 +47,13 @@ points = base.mark_point(filled=True, size=200).encode(
 )
 
 hists = base.mark_bar(opacity=0.5, thickness=100).encode(
-    x=alt.X('age')
+    alt.X('age')
         .bin(step=5) # step keeps bin size the same
         .scale(domain=[0,100]),
-    y=alt.Y('count()')
+    alt.Y('count()')
         .stack(None)
         .scale(domain=[0,350]),
-    color=alt.Color('gender:N', scale=color_scale)
+    alt.Color('gender:N').scale(color_scale)
 ).transform_filter(
     selector
 )

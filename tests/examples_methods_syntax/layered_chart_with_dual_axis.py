@@ -11,7 +11,7 @@ from vega_datasets import data
 source = data.seattle_weather()
 
 base = alt.Chart(source).encode(
-    alt.X('month(date):T').axis(title=None)
+    alt.X('month(date):T').title(None)
 )
 
 area = base.mark_area(opacity=0.3, color='#57A44C').encode(

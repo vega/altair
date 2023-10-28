@@ -163,9 +163,39 @@ You can also use ``text`` marks as labels for other marks and set offset (``dx``
 
     bar + text
 
+Labels Position Based on Condition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+By default, text mark as labels in Altair are positioned above or to the right of the value. 
+However, when dealing with negative values, this default positioning can lead to label overlap with the bar. 
+To address this issue, you can set label positions via :ref:`expressions`. 
+Here's an example demonstrating how to do this:
+
+.. altair-plot::
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({
+        "a": ["A", "B", "C"],
+        "b": [28, -5, 10]
+    })
+
+    bar = alt.Chart(source).mark_bar().encode(
+        y="a:N",
+        x=alt.X("b:Q").scale(domain=[-10, 35])
+    )
+
+    text_conditioned = bar.mark_text(
+        align="left",
+        baseline="middle",
+        dx=alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
+    ).encode(text="b")
+
+    bar + text_conditioned
+
+
 Scatter Plot with Text
 ^^^^^^^^^^^^^^^^^^^^^^
-Mapping a field to ``text`` channel of text mark sets the mark’s text value. For example, we can make a colored scatter plot with text marks showing the initial character of its origin, instead of ``point`` marks.
+Mapping a field to ``text`` channel of text mark sets the mark's text value. For example, we can make a colored scatter plot with text marks showing the initial character of its origin, instead of ``point`` marks.
 
 .. altair-plot::
     import altair as alt

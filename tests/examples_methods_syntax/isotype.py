@@ -69,7 +69,7 @@ color_scale = alt.Scale(
 alt.Chart(source).mark_point(filled=True, opacity=1, size=100).encode(
     alt.X('x:O').axis(None),
     alt.Y('animal:O').axis(None),
-    alt.Row('country:N').header(title=''),
+    alt.Row('country:N').title(None),
     alt.Shape('animal:N').legend(None).scale(shape_scale),
     alt.Color('animal:N').legend(None).scale(color_scale),
 ).transform_window(
