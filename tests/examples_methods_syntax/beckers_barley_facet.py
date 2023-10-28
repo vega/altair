@@ -25,7 +25,7 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
         .sort('-x')
         .axis(grid=True),
     alt.Color('year:N')
-        .legend(title="Year"),
+        .title("Year"),
     alt.Row('site:N')
         .title("")
         .sort(field='yield', op='sum', order='descending')

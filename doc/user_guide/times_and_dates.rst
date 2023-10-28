@@ -13,11 +13,11 @@ Altair and Vega-Lite do their best to ensure that dates are interpreted and
 visualized in a consistent way.
 
 
-Altair and Pandas Datetimes
+Altair and pandas Datetimes
 ---------------------------
 
-Altair is designed to work best with `Pandas timeseries`_. A standard
-timezone-agnostic date/time column in a Pandas dataframe will be both
+Altair is designed to work best with `pandas timeseries`_. A standard
+timezone-agnostic date/time column in a pandas dataframe will be both
 interpreted and displayed as local user time. For example, here is a dataset
 containing hourly temperatures measured in Seattle:
 
@@ -50,9 +50,12 @@ example, we'll limit ourselves to the first two weeks of data:
         y='temp:Q'
     )
 
-(notice that for date/time values we use the ``T`` to indicate a temporal
+Notice that for date/time values we use the ``T`` to indicate a temporal
 encoding: while this is optional for pandas datetime input, it is good practice
-to specify a type explicitly; see :ref:`encoding-data-types` for more discussion).
+to specify a type explicitly; see :ref:`encoding-data-types` for more discussion.
+If you want Altair to plot four digit integers as years,
+you need to cast them as strings before changing the data type to temporal,
+please see the :ref:`type-axis-scale` for details.
 
 For date-time inputs like these, it can sometimes be useful to extract particular
 time units (e.g. hours of the day, dates of the month, etc.).
@@ -88,7 +91,7 @@ time of the browser that does the rendering.
 
 If you would like your dates to instead be time-zone aware, you can set the
 timezone explicitly in the input dataframe. Since Seattle is in the
-``US/Pacific`` timezone, we can localize the timestamps in Pandas as follows:
+``US/Pacific`` timezone, we can localize the timestamps in pandas as follows:
 
 .. altair-plot::
    :output: repr
@@ -138,7 +141,7 @@ regardless of the system location:
 
 To make your charts as portable as possible (even in non-ES6 browsers which parse
 timezone-agnostic times as UTC), you can explicitly work
-in UTC time, both on the Pandas side and on the Vega-Lite side:
+in UTC time, both on the pandas side and on the Vega-Lite side:
 
 
 .. altair-plot::
@@ -152,7 +155,7 @@ in UTC time, both on the Pandas side and on the Vega-Lite side:
    )
 
 This is somewhat less convenient than the default behavior for timezone-agnostic
-dates, in which both Pandas and Vega-Lite assume times are local
+dates, in which both pandas and Vega-Lite assume times are local
 (except in non-ES6 browsers; see :ref:`note-browser-compliance`),
 but it gets around browser incompatibilities by explicitly working in UTC, which
 gives similar results even in older browsers.
@@ -220,5 +223,5 @@ it is ES6-compliant or because your computer locale happens to be set to
 the UTC+0 (GMT) timezone.
 
 .. _Coordinated Universal Time (UTC): https://en.wikipedia.org/wiki/Coordinated_Universal_Time
-.. _Pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
+.. _pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
 .. _ECMAScript 6: http://www.ecma-international.org/ecma-262/6.0/

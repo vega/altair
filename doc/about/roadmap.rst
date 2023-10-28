@@ -162,3 +162,4 @@ Areas of focus:
    self
    code_of_conduct
    governance
+   citing

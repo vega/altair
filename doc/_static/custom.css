@@ -70,9 +70,21 @@ properly displayed on mobile devices and not restricted to 20% */
   vertical-align: text-bottom;
   margin-right: 3px;
 }
-  
+
 .full-width-plot {
   width: 100%;
+}
+
+/* This hides the Ctrl + K from the search box on the start page
+ * to make it less distracting on the home page.
+ * The shortcut still shows up when clicking the search box */
+.search-button-field > .search-button__kbd-shortcut {
+    display: none;
+}
+
+/* Use old light blue color for banner since it goes better with the Altair logo */
+.bd-header-announcement {
+    background-color: #daebf1 !important;
 }
 
 /* Configurations for the start page

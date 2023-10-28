@@ -8791,6 +8791,11 @@
         "mouseover",
         "mouseup",
         "mousewheel",
+        "pointerdown",
+        "pointermove",
+        "pointerout",
+        "pointerover",
+        "pointerup",
         "timer",
         "touchend",
         "touchmove",
@@ -12467,6 +12472,13 @@
           },
           "type": "array"
         },
+        "fields": {
+          "description": "An array of field names whose values must match for a data tuple to fall within the selection.\n\n__See also:__ The [projection with `encodings` and `fields` section](https://vega.github.io/vega-lite/docs/selection.html#project) in the documentation.",
+          "items": {
+            "$ref": "#/definitions/FieldName"
+          },
+          "type": "array"
+        },
         "mark": {
           "$ref": "#/definitions/BrushConfig",
           "description": "An interval selection also adds a rectangle mark to depict the extents of the interval. The `mark` property can be used to customize the appearance of the mark.\n\n__See also:__ [`mark` examples](https://vega.github.io/vega-lite/docs/selection.html#mark) in the documentation."
@@ -12532,6 +12544,13 @@
           "description": "An array of encoding channels. The corresponding data field values must match for a data tuple to fall within the selection.\n\n__See also:__ The [projection with `encodings` and `fields` section](https://vega.github.io/vega-lite/docs/selection.html#project) in the documentation.",
           "items": {
             "$ref": "#/definitions/SingleDefUnitChannel"
+          },
+          "type": "array"
+        },
+        "fields": {
+          "description": "An array of field names whose values must match for a data tuple to fall within the selection.\n\n__See also:__ The [projection with `encodings` and `fields` section](https://vega.github.io/vega-lite/docs/selection.html#project) in the documentation.",
+          "items": {
+            "$ref": "#/definitions/FieldName"
           },
           "type": "array"
         },

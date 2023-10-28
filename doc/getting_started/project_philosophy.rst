@@ -8,7 +8,7 @@ Many excellent plotting libraries exist in Python, including:
 * `Seaborn <https://seaborn.pydata.org/>`_
 * `Lightning <http://lightning-viz.org>`_
 * `Plotly <https://plot.ly/>`_
-* `Pandas built-in plotting <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_
+* `pandas built-in plotting <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_
 * `HoloViews <https://holoviews.org>`_
 * `VisPy <https://vispy.org/>`_
 * `pygg <https://www.github.com/sirrice/pygg>`_

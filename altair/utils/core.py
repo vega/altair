@@ -343,7 +343,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         if dtype_name == "category":
             # Work around bug in to_json for categorical types in older versions
             # of pandas as they do not properly convert NaN values to null in to_json.
-            # We can probably remove this part once we require Pandas >= 1.0
+            # We can probably remove this part once we require pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
         elif dtype_name == "string":
@@ -588,8 +588,10 @@ def parse_shorthand(
                     column = dfi.get_column_by_name(unescaped_field)
                     try:
                         attrs["type"] = infer_vegalite_type_for_dfi_column(column)
-                    except NotImplementedError:
-                        # Fall back to pandas-based inference
+                    except (NotImplementedError, AttributeError, ValueError):
+                        # Fall back to pandas-based inference.
+                        # Note: The AttributeError catch is a workaround for
+                        # https://github.com/pandas-dev/pandas/issues/55332
                         if isinstance(data, pd.DataFrame):
                             attrs["type"] = infer_vegalite_type(data[unescaped_field])
                         else:
