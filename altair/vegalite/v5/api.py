@@ -2428,12 +2428,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-<<<<<<< HEAD
-                window.append(core.WindowFieldDef(**kwds))  # type: ignore[arg-type]
-=======
                 assert not isinstance(window, UndefinedType)  # For mypy
                 window.append(core.WindowFieldDef(**kwds))
->>>>>>> main
 
         return self._add_transform(
             core.WindowTransform(

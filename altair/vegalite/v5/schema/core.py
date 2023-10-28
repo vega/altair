@@ -17869,18 +17869,14 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-<<<<<<< HEAD
-    mark : :class:`BrushConfig`, Dict
-=======
-    fields : List(:class:`FieldName`)
+    fields : Sequence[:class:`FieldName`, str]
         An array of field names whose values must match for a data tuple to fall within the
         selection.
 
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    mark : :class:`BrushConfig`
->>>>>>> main
+    mark : :class:`BrushConfig`, Dict
         An interval selection also adds a rectangle mark to depict the extents of the
         interval. The ``mark`` property can be used to customize the appearance of the mark.
 
@@ -18001,6 +17997,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
+        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         mark: Union[Union["BrushConfig", dict], UndefinedType] = Undefined,
         on: Union[
             Union[
@@ -18026,6 +18023,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
             type=type,
             clear=clear,
             encodings=encodings,
+            fields=fields,
             mark=mark,
             on=on,
             resolve=resolve,
@@ -18060,18 +18058,14 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-<<<<<<< HEAD
-    mark : :class:`BrushConfig`, Dict
-=======
-    fields : List(:class:`FieldName`)
+    fields : Sequence[:class:`FieldName`, str]
         An array of field names whose values must match for a data tuple to fall within the
         selection.
 
         **See also:** The `projection with encodings and fields section
         <https://vega.github.io/vega-lite/docs/selection.html#project>`__ in the
         documentation.
-    mark : :class:`BrushConfig`
->>>>>>> main
+    mark : :class:`BrushConfig`, Dict
         An interval selection also adds a rectangle mark to depict the extents of the
         interval. The ``mark`` property can be used to customize the appearance of the mark.
 
@@ -18134,7 +18128,6 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/selection.html#zoom>`__ in the documentation.
     """
 
-<<<<<<< HEAD
     _schema = {"$ref": "#/definitions/IntervalSelectionConfigWithoutType"}
 
     def __init__(
@@ -18192,6 +18185,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
+        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         mark: Union[Union["BrushConfig", dict], UndefinedType] = Undefined,
         on: Union[
             Union[
@@ -18216,6 +18210,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         super(IntervalSelectionConfigWithoutType, self).__init__(
             clear=clear,
             encodings=encodings,
+            fields=fields,
             mark=mark,
             on=on,
             resolve=resolve,
@@ -18223,14 +18218,6 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             zoom=zoom,
             **kwds
         )
-=======
-    def __init__(self, clear=Undefined, encodings=Undefined, fields=Undefined, mark=Undefined,
-                 on=Undefined, resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
-        super(IntervalSelectionConfigWithoutType, self).__init__(clear=clear, encodings=encodings,
-                                                                 fields=fields, mark=mark, on=on,
-                                                                 resolve=resolve, translate=translate,
-                                                                 zoom=zoom, **kwds)
->>>>>>> main
 
 
 class JoinAggregateFieldDef(VegaLiteSchema):
@@ -56124,7 +56111,8 @@ class WindowEventType(VegaLiteSchema):
 
     :class:`EventType`, Literal['click', 'dblclick', 'dragenter', 'dragleave', 'dragover',
     'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover',
-    'mouseup', 'mousewheel', 'timer', 'touchend', 'touchmove', 'touchstart', 'wheel'],
+    'mouseup', 'mousewheel', 'pointerdown', 'pointermove', 'pointerout', 'pointerover',
+    'pointerup', 'timer', 'touchend', 'touchmove', 'touchstart', 'wheel'],
     :class:`WindowEventType`, str
     """
 
@@ -56137,16 +56125,10 @@ class WindowEventType(VegaLiteSchema):
 class EventType(WindowEventType):
     """EventType schema wrapper
 
-<<<<<<< HEAD
     :class:`EventType`, Literal['click', 'dblclick', 'dragenter', 'dragleave', 'dragover',
     'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover',
-    'mouseup', 'mousewheel', 'timer', 'touchend', 'touchmove', 'touchstart', 'wheel']
-=======
-    enum('click', 'dblclick', 'dragenter', 'dragleave', 'dragover', 'keydown', 'keypress',
-    'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'mousewheel',
-    'pointerdown', 'pointermove', 'pointerout', 'pointerover', 'pointerup', 'timer', 'touchend',
-    'touchmove', 'touchstart', 'wheel')
->>>>>>> main
+    'mouseup', 'mousewheel', 'pointerdown', 'pointermove', 'pointerout', 'pointerover',
+    'pointerup', 'timer', 'touchend', 'touchmove', 'touchstart', 'wheel']
     """
 
     _schema = {"$ref": "#/definitions/EventType"}
