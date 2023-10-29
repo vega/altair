@@ -337,7 +337,7 @@ def download_schemafile(
     return filename
 
 
-def load_and_preprocess_schemafile(schemapath: str) -> dict:
+def load_schema_with_shorthand_properties(schemapath: str) -> dict:
     with open(schemapath, encoding="utf8") as f:
         schema = json.load(f)
 
@@ -457,8 +457,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
     # TODO: generate simple tests for each wrapper
     basename = "VegaLiteSchema"
 
-    with open(schema_file, encoding="utf8") as f:
-        rootschema = json.load(f)
+    rootschema = load_schema_with_shorthand_properties(schema_file)
 
     definitions: Dict[str, SchemaGenerator] = {}
 
@@ -519,7 +518,7 @@ def generate_vegalite_channel_wrappers(
     schemafile: str, version: str, imports: Optional[List[str]] = None
 ) -> str:
     # TODO: generate __all__ for top of file
-    schema = load_and_preprocess_schemafile(schemafile)
+    schema = load_schema_with_shorthand_properties(schemafile)
     if imports is None:
         imports = [
             "import sys",

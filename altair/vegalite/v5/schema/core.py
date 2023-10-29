@@ -7987,7 +7987,8 @@ class ColorDef(VegaLiteSchema):
     """ColorDef schema wrapper
 
     :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    Dict[required=[shorthand]],
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
     """
 
@@ -11547,9 +11548,9 @@ class Encoding(VegaLiteSchema):
     Parameters
     ----------
 
-    angle : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    angle : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Rotation angle of point and text marks.
-    color : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
+    color : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[shorthand]], :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
         Color of the marks – either fill or stroke color based on  the ``filled`` property
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
@@ -11565,49 +11566,49 @@ class Encoding(VegaLiteSchema):
         encoding if conflicting encodings are specified. 2) See the scale documentation for
         more information about customizing `color scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
-    description : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict
+    description : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict
         A text description of this mark for ARIA accessibility (SVG output only). For SVG
         output the ``"aria-label"`` attribute will be set to this description.
-    detail : :class:`FieldDefWithoutScale`, Dict, Sequence[:class:`FieldDefWithoutScale`, Dict]
+    detail : :class:`FieldDefWithoutScale`, Dict[required=[shorthand]], Sequence[:class:`FieldDefWithoutScale`, Dict[required=[shorthand]]]
         Additional levels of detail for grouping data in aggregate views and in line, trail,
         and area marks without mapping data to a specific visual channel.
-    fill : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
+    fill : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[shorthand]], :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
         Fill color of the marks. **Default value:** If undefined, the default color depends
         on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__
         's ``color`` property.
 
         *Note:* The ``fill`` encoding has higher precedence than ``color``, thus may
         override the ``color`` encoding if conflicting encodings are specified.
-    fillOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    fillOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Fill opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
         ``fillOpacity`` property.
-    href : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict
+    href : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict
         A URL to load upon mouse click.
-    key : :class:`FieldDefWithoutScale`, Dict
+    key : :class:`FieldDefWithoutScale`, Dict[required=[shorthand]]
         A data field to use as a unique key for data binding. When a visualization’s data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
-    latitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict
+    latitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict[required=[shorthand]]
         Latitude position of geographically projected marks.
-    latitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    latitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    longitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict
+    longitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict[required=[shorthand]]
         Longitude position of geographically projected marks.
-    longitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    longitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    opacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    opacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : :class:`OrderFieldDef`, Dict, :class:`OrderOnlyDef`, Dict, :class:`OrderValueDef`, Dict[required=[value]], Sequence[:class:`OrderFieldDef`, Dict]
+    order : :class:`OrderFieldDef`, Dict[required=[shorthand]], :class:`OrderOnlyDef`, Dict, :class:`OrderValueDef`, Dict[required=[value]], Sequence[:class:`OrderFieldDef`, Dict[required=[shorthand]]]
         Order of the marks.
 
 
@@ -11622,11 +11623,11 @@ class Encoding(VegaLiteSchema):
 
         **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
         creating additional aggregation grouping.
-    radius : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    radius : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         The outer radius in pixels of arc marks.
-    radius2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    radius2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         The inner radius in pixels of arc marks.
-    shape : :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict, :class:`ShapeDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
+    shape : :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict[required=[shorthand]], :class:`ShapeDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
         Shape of the mark.
 
 
@@ -11646,7 +11647,7 @@ class Encoding(VegaLiteSchema):
         **Default value:** If undefined, the default shape depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's ``shape``
         property. ( ``"circle"`` if unset.)
-    size : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    size : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Size of the mark.
 
 
@@ -11656,7 +11657,7 @@ class Encoding(VegaLiteSchema):
         * For ``"text"`` – the text's font size.
         * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
           instead of line with varying size)
-    stroke : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
+    stroke : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[shorthand]], :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
         Stroke color of the marks. **Default value:** If undefined, the default color
         depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``color``
@@ -11664,77 +11665,77 @@ class Encoding(VegaLiteSchema):
 
         *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus may
         override the ``color`` encoding if conflicting encodings are specified.
-    strokeDash : :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict, :class:`NumericArrayMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
+    strokeDash : :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict[required=[shorthand]], :class:`NumericArrayMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
         Stroke dash of the marks.
 
         **Default value:** ``[1,0]`` (No dash).
-    strokeOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    strokeOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Stroke opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
         ``strokeOpacity`` property.
-    strokeWidth : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    strokeWidth : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Stroke width of the marks.
 
         **Default value:** If undefined, the default stroke width depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
         ``strokeWidth`` property.
-    text : :class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict, :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict, :class:`TextDef`, :class:`ValueDefWithConditionStringFieldDefText`, Dict
+    text : :class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict, :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict[required=[shorthand]], :class:`TextDef`, :class:`ValueDefWithConditionStringFieldDefText`, Dict
         Text of the ``text`` mark.
-    theta : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    theta : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
         clockwise.)
 
         For text marks, polar coordinate angle in radians.
-    theta2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    theta2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict, None, Sequence[:class:`StringFieldDef`, Dict]
+    tooltip : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict, None, Sequence[:class:`StringFieldDef`, Dict]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
 
         See the `tooltip <https://vega.github.io/vega-lite/docs/tooltip.html>`__
         documentation for a detailed discussion about tooltip in Vega-Lite.
-    url : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict
+    url : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict
         The URL of an image mark.
-    x : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    x : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    x2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    xError : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    xError : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
-    xError2 : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    xError2 : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Secondary error value of x coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
-    xOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    xOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Offset of x-position of the marks
-    y : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    y : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    y2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    yError : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    yError : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
-    yError2 : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    yError2 : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Secondary error value of y coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
-    yOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    yOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Offset of y-position of the marks
     """
 
@@ -12994,11 +12995,13 @@ class ExprRef(VegaLiteSchema):
 class FacetEncodingFieldDef(VegaLiteSchema):
     """FacetEncodingFieldDef schema wrapper
 
-    :class:`FacetEncodingFieldDef`, Dict
+    :class:`FacetEncodingFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -13243,6 +13246,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -13479,6 +13483,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         **kwds
     ):
         super(FacetEncodingFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             align=align,
             bandPosition=bandPosition,
@@ -13953,9 +13958,9 @@ class FacetedEncoding(VegaLiteSchema):
     Parameters
     ----------
 
-    angle : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    angle : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Rotation angle of point and text marks.
-    color : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
+    color : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[shorthand]], :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
         Color of the marks – either fill or stroke color based on  the ``filled`` property
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
@@ -13971,55 +13976,55 @@ class FacetedEncoding(VegaLiteSchema):
         encoding if conflicting encodings are specified. 2) See the scale documentation for
         more information about customizing `color scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
-    column : :class:`RowColumnEncodingFieldDef`, Dict
+    column : :class:`RowColumnEncodingFieldDef`, Dict[required=[shorthand]]
         A field definition for the horizontal facet of trellis plots.
-    description : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict
+    description : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict
         A text description of this mark for ARIA accessibility (SVG output only). For SVG
         output the ``"aria-label"`` attribute will be set to this description.
-    detail : :class:`FieldDefWithoutScale`, Dict, Sequence[:class:`FieldDefWithoutScale`, Dict]
+    detail : :class:`FieldDefWithoutScale`, Dict[required=[shorthand]], Sequence[:class:`FieldDefWithoutScale`, Dict[required=[shorthand]]]
         Additional levels of detail for grouping data in aggregate views and in line, trail,
         and area marks without mapping data to a specific visual channel.
-    facet : :class:`FacetEncodingFieldDef`, Dict
+    facet : :class:`FacetEncodingFieldDef`, Dict[required=[shorthand]]
         A field definition for the (flexible) facet of trellis plots.
 
         If either ``row`` or ``column`` is specified, this channel will be ignored.
-    fill : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
+    fill : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[shorthand]], :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
         Fill color of the marks. **Default value:** If undefined, the default color depends
         on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__
         's ``color`` property.
 
         *Note:* The ``fill`` encoding has higher precedence than ``color``, thus may
         override the ``color`` encoding if conflicting encodings are specified.
-    fillOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    fillOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Fill opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
         ``fillOpacity`` property.
-    href : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict
+    href : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict
         A URL to load upon mouse click.
-    key : :class:`FieldDefWithoutScale`, Dict
+    key : :class:`FieldDefWithoutScale`, Dict[required=[shorthand]]
         A data field to use as a unique key for data binding. When a visualization’s data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
-    latitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict
+    latitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict[required=[shorthand]]
         Latitude position of geographically projected marks.
-    latitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    latitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    longitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict
+    longitude : :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict[required=[shorthand]]
         Longitude position of geographically projected marks.
-    longitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    longitude2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    opacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    opacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
         property.
-    order : :class:`OrderFieldDef`, Dict, :class:`OrderOnlyDef`, Dict, :class:`OrderValueDef`, Dict[required=[value]], Sequence[:class:`OrderFieldDef`, Dict]
+    order : :class:`OrderFieldDef`, Dict[required=[shorthand]], :class:`OrderOnlyDef`, Dict, :class:`OrderValueDef`, Dict[required=[value]], Sequence[:class:`OrderFieldDef`, Dict[required=[shorthand]]]
         Order of the marks.
 
 
@@ -14034,13 +14039,13 @@ class FacetedEncoding(VegaLiteSchema):
 
         **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
         creating additional aggregation grouping.
-    radius : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    radius : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         The outer radius in pixels of arc marks.
-    radius2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    radius2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         The inner radius in pixels of arc marks.
-    row : :class:`RowColumnEncodingFieldDef`, Dict
+    row : :class:`RowColumnEncodingFieldDef`, Dict[required=[shorthand]]
         A field definition for the vertical facet of trellis plots.
-    shape : :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict, :class:`ShapeDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
+    shape : :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict[required=[shorthand]], :class:`ShapeDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
         Shape of the mark.
 
 
@@ -14060,7 +14065,7 @@ class FacetedEncoding(VegaLiteSchema):
         **Default value:** If undefined, the default shape depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's ``shape``
         property. ( ``"circle"`` if unset.)
-    size : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    size : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Size of the mark.
 
 
@@ -14070,7 +14075,7 @@ class FacetedEncoding(VegaLiteSchema):
         * For ``"text"`` – the text's font size.
         * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
           instead of line with varying size)
-    stroke : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
+    stroke : :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict[required=[shorthand]], :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
         Stroke color of the marks. **Default value:** If undefined, the default color
         depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``color``
@@ -14078,77 +14083,77 @@ class FacetedEncoding(VegaLiteSchema):
 
         *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus may
         override the ``color`` encoding if conflicting encodings are specified.
-    strokeDash : :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict, :class:`NumericArrayMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
+    strokeDash : :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict[required=[shorthand]], :class:`NumericArrayMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
         Stroke dash of the marks.
 
         **Default value:** ``[1,0]`` (No dash).
-    strokeOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    strokeOpacity : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Stroke opacity of the marks.
 
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
         ``strokeOpacity`` property.
-    strokeWidth : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict, :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
+    strokeWidth : :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]], :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`, Dict
         Stroke width of the marks.
 
         **Default value:** If undefined, the default stroke width depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
         ``strokeWidth`` property.
-    text : :class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict, :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict, :class:`TextDef`, :class:`ValueDefWithConditionStringFieldDefText`, Dict
+    text : :class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict, :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict[required=[shorthand]], :class:`TextDef`, :class:`ValueDefWithConditionStringFieldDefText`, Dict
         Text of the ``text`` mark.
-    theta : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    theta : :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         For arc marks, the arc length in radians if theta2 is not specified, otherwise the
         start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
         clockwise.)
 
         For text marks, polar coordinate angle in radians.
-    theta2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    theta2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         The end angle of arc marks in radians. A value of 0 indicates up or “north”,
         increasing values proceed clockwise.
-    tooltip : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict, None, Sequence[:class:`StringFieldDef`, Dict]
+    tooltip : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict, None, Sequence[:class:`StringFieldDef`, Dict]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
 
         See the `tooltip <https://vega.github.io/vega-lite/docs/tooltip.html>`__
         documentation for a detailed discussion about tooltip in Vega-Lite.
-    url : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict
+    url : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict
         The URL of an image mark.
-    x : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    x : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
         specified ``x2`` or ``width``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    x2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    x2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"width"`` for the width
         of the plot.
-    xError : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    xError : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
-    xError2 : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    xError2 : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Secondary error value of x coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
-    xOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    xOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Offset of x-position of the marks
-    y : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict, :class:`PositionValueDef`, Dict[required=[value]]
+    y : :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
         specified ``y2`` or ``height``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    y2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    y2 : :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`, Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
         The ``value`` of this channel can be a number or a string ``"height"`` for the
         height of the plot.
-    yError : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    yError : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
-    yError2 : :class:`SecondaryFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    yError2 : :class:`SecondaryFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Secondary error value of y coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
-    yOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict, :class:`ValueDefnumber`, Dict[required=[value]]
+    yOffset : :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
         Offset of y-position of the marks
     """
 
@@ -14690,12 +14695,14 @@ class Field(VegaLiteSchema):
 class FieldDefWithoutScale(VegaLiteSchema):
     """FieldDefWithoutScale schema wrapper
 
-    :class:`FieldDefWithoutScale`, Dict
+    :class:`FieldDefWithoutScale`, Dict[required=[shorthand]]
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -14848,6 +14855,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -15053,6 +15061,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         **kwds
     ):
         super(FieldDefWithoutScale, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -18345,7 +18354,8 @@ class LabelOverlap(VegaLiteSchema):
 class LatLongDef(VegaLiteSchema):
     """LatLongDef schema wrapper
 
-    :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`, Dict
+    :class:`DatumDef`, Dict, :class:`LatLongDef`, :class:`LatLongFieldDef`,
+    Dict[required=[shorthand]]
     """
 
     _schema = {"$ref": "#/definitions/LatLongDef"}
@@ -18357,11 +18367,13 @@ class LatLongDef(VegaLiteSchema):
 class LatLongFieldDef(LatLongDef):
     """LatLongFieldDef schema wrapper
 
-    :class:`LatLongFieldDef`, Dict
+    :class:`LatLongFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -18514,6 +18526,7 @@ class LatLongFieldDef(LatLongDef):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -18711,6 +18724,7 @@ class LatLongFieldDef(LatLongDef):
         **kwds
     ):
         super(LatLongFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -27262,8 +27276,8 @@ class MarkPropDefGradientstringnull(VegaLiteSchema):
     """MarkPropDefGradientstringnull schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict,
-    :class:`MarkPropDefGradientstringnull`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    Dict[required=[shorthand]], :class:`MarkPropDefGradientstringnull`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`, Dict
     """
 
@@ -27457,11 +27471,14 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull schema wrapper
 
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, Dict
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
+    Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -27684,6 +27701,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -27974,6 +27992,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         super(
             FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull, self
         ).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -27993,7 +28012,7 @@ class MarkPropDefnumber(VegaLiteSchema):
     """MarkPropDefnumber schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]],
     :class:`MarkPropDefnumber`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`,
     Dict
     """
@@ -28008,8 +28027,8 @@ class MarkPropDefnumberArray(VegaLiteSchema):
     """MarkPropDefnumberArray schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict,
-    :class:`MarkPropDefnumberArray`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
+    Dict[required=[shorthand]], :class:`MarkPropDefnumberArray`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
     """
 
@@ -28023,8 +28042,8 @@ class MarkPropDefstringnullTypeForShape(VegaLiteSchema):
     """MarkPropDefstringnullTypeForShape schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict,
-    :class:`MarkPropDefstringnullTypeForShape`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
+    Dict[required=[shorthand]], :class:`MarkPropDefstringnullTypeForShape`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
     """
 
@@ -28295,8 +28314,8 @@ class NumericArrayMarkPropDef(VegaLiteSchema):
     """NumericArrayMarkPropDef schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefnumberArray`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict,
-    :class:`NumericArrayMarkPropDef`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`,
+    Dict[required=[shorthand]], :class:`NumericArrayMarkPropDef`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray`, Dict
     """
 
@@ -28478,11 +28497,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray schema wrapper
 
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -28705,6 +28726,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -28983,6 +29005,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         **kwds
     ):
         super(FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -29002,7 +29025,7 @@ class NumericMarkPropDef(VegaLiteSchema):
     """NumericMarkPropDef schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefnumber`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]],
     :class:`NumericMarkPropDef`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`,
     Dict
     """
@@ -29183,11 +29206,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumber schema wrapper
 
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -29410,6 +29435,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -29688,6 +29714,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         **kwds
     ):
         super(FieldOrDatumDefWithConditionMarkPropFieldDefnumber, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -29706,8 +29733,8 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 class OffsetDef(VegaLiteSchema):
     """OffsetDef schema wrapper
 
-    :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`, Dict,
-    :class:`ValueDefnumber`, Dict[required=[value]]
+    :class:`OffsetDef`, :class:`ScaleDatumDef`, Dict, :class:`ScaleFieldDef`,
+    Dict[required=[shorthand]], :class:`ValueDefnumber`, Dict[required=[value]]
     """
 
     _schema = {"$ref": "#/definitions/OffsetDef"}
@@ -29719,11 +29746,13 @@ class OffsetDef(VegaLiteSchema):
 class OrderFieldDef(VegaLiteSchema):
     """OrderFieldDef schema wrapper
 
-    :class:`OrderFieldDef`, Dict
+    :class:`OrderFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -29878,6 +29907,7 @@ class OrderFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -30086,6 +30116,7 @@ class OrderFieldDef(VegaLiteSchema):
         **kwds
     ):
         super(OrderFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -32048,8 +32079,8 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 class PolarDef(VegaLiteSchema):
     """PolarDef schema wrapper
 
-    :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`, Dict,
-    :class:`PositionValueDef`, Dict[required=[value]]
+    :class:`PolarDef`, :class:`PositionDatumDefBase`, Dict, :class:`PositionFieldDefBase`,
+    Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
     """
 
     _schema = {"$ref": "#/definitions/PolarDef"}
@@ -32112,7 +32143,7 @@ class Position2Def(VegaLiteSchema):
     """Position2Def schema wrapper
 
     :class:`DatumDef`, Dict, :class:`Position2Def`, :class:`PositionValueDef`,
-    Dict[required=[value]], :class:`SecondaryFieldDef`, Dict
+    Dict[required=[value]], :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     """
 
     _schema = {"$ref": "#/definitions/Position2Def"}
@@ -32453,8 +32484,8 @@ class PositionDatumDefBase(PolarDef):
 class PositionDef(VegaLiteSchema):
     """PositionDef schema wrapper
 
-    :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`, Dict,
-    :class:`PositionValueDef`, Dict[required=[value]]
+    :class:`PositionDatumDef`, Dict, :class:`PositionDef`, :class:`PositionFieldDef`,
+    Dict[required=[shorthand]], :class:`PositionValueDef`, Dict[required=[value]]
     """
 
     _schema = {"$ref": "#/definitions/PositionDef"}
@@ -32682,11 +32713,13 @@ class PositionDatumDef(PositionDef):
 class PositionFieldDef(PositionDef):
     """PositionFieldDef schema wrapper
 
-    :class:`PositionFieldDef`, Dict
+    :class:`PositionFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -32939,6 +32972,7 @@ class PositionFieldDef(PositionDef):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -33209,6 +33243,7 @@ class PositionFieldDef(PositionDef):
         **kwds
     ):
         super(PositionFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             axis=axis,
             bandPosition=bandPosition,
@@ -33228,11 +33263,13 @@ class PositionFieldDef(PositionDef):
 class PositionFieldDefBase(PolarDef):
     """PositionFieldDefBase schema wrapper
 
-    :class:`PositionFieldDefBase`, Dict
+    :class:`PositionFieldDefBase`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -33468,6 +33505,7 @@ class PositionFieldDefBase(PolarDef):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -33734,6 +33772,7 @@ class PositionFieldDefBase(PolarDef):
         **kwds
     ):
         super(PositionFieldDefBase, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -38657,11 +38696,13 @@ class RowColnumber(VegaLiteSchema):
 class RowColumnEncodingFieldDef(VegaLiteSchema):
     """RowColumnEncodingFieldDef schema wrapper
 
-    :class:`RowColumnEncodingFieldDef`, Dict
+    :class:`RowColumnEncodingFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -38868,6 +38909,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -39094,6 +39136,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         **kwds
     ):
         super(RowColumnEncodingFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             align=align,
             bandPosition=bandPosition,
@@ -40381,11 +40424,13 @@ class ScaleDatumDef(OffsetDef):
 class ScaleFieldDef(OffsetDef):
     """ScaleFieldDef schema wrapper
 
-    :class:`ScaleFieldDef`, Dict
+    :class:`ScaleFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -40590,6 +40635,7 @@ class ScaleFieldDef(OffsetDef):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -40850,6 +40896,7 @@ class ScaleFieldDef(OffsetDef):
         **kwds
     ):
         super(ScaleFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -41436,13 +41483,15 @@ class SchemeParams(VegaLiteSchema):
 class SecondaryFieldDef(Position2Def):
     """SecondaryFieldDef schema wrapper
 
-    :class:`SecondaryFieldDef`, Dict
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -41526,6 +41575,7 @@ class SecondaryFieldDef(Position2Def):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -41722,6 +41772,7 @@ class SecondaryFieldDef(Position2Def):
         **kwds
     ):
         super(SecondaryFieldDef, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -42152,8 +42203,8 @@ class ShapeDef(VegaLiteSchema):
     """ShapeDef schema wrapper
 
     :class:`FieldOrDatumDefWithConditionDatumDefstringnull`, Dict,
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict,
-    :class:`ShapeDef`,
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
+    Dict[required=[shorthand]], :class:`ShapeDef`,
     :class:`ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull`, Dict
     """
 
@@ -42337,11 +42388,14 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
 
-    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`, Dict
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
+    Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -42564,6 +42618,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -42841,6 +42896,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         super(
             FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull, self
         ).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -42870,7 +42926,7 @@ class SharedEncoding(VegaLiteSchema):
 
     description : Dict
 
-    detail : :class:`FieldDefWithoutScale`, Dict, Sequence[:class:`FieldDefWithoutScale`, Dict]
+    detail : :class:`FieldDefWithoutScale`, Dict[required=[shorthand]], Sequence[:class:`FieldDefWithoutScale`, Dict[required=[shorthand]]]
         Additional levels of detail for grouping data in aggregate views and in line, trail,
         and area marks without mapping data to a specific visual channel.
     fill : Dict
@@ -42891,7 +42947,7 @@ class SharedEncoding(VegaLiteSchema):
 
     opacity : Dict
 
-    order : :class:`OrderFieldDef`, Dict, :class:`OrderOnlyDef`, Dict, :class:`OrderValueDef`, Dict[required=[value]], Sequence[:class:`OrderFieldDef`, Dict]
+    order : :class:`OrderFieldDef`, Dict[required=[shorthand]], :class:`OrderOnlyDef`, Dict, :class:`OrderValueDef`, Dict[required=[value]], Sequence[:class:`OrderFieldDef`, Dict[required=[shorthand]]]
         Order of the marks.
 
 
@@ -42928,7 +42984,7 @@ class SharedEncoding(VegaLiteSchema):
 
     theta2 : Dict
 
-    tooltip : :class:`StringFieldDefWithCondition`, Dict, :class:`StringValueDefWithCondition`, Dict, None, Sequence[:class:`StringFieldDef`, Dict]
+    tooltip : :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]], :class:`StringValueDefWithCondition`, Dict, None, Sequence[:class:`StringFieldDef`, Dict]
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
         `the tooltip property in the mark definition
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
@@ -45458,11 +45514,13 @@ class StringFieldDef(VegaLiteSchema):
 class StringFieldDefWithCondition(VegaLiteSchema):
     """StringFieldDefWithCondition schema wrapper
 
-    :class:`StringFieldDefWithCondition`, Dict
+    :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -45656,6 +45714,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -45880,6 +45939,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         **kwds
     ):
         super(StringFieldDefWithCondition, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
@@ -46112,8 +46172,8 @@ class TextDef(VegaLiteSchema):
     """TextDef schema wrapper
 
     :class:`FieldOrDatumDefWithConditionStringDatumDefText`, Dict,
-    :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict, :class:`TextDef`,
-    :class:`ValueDefWithConditionStringFieldDefText`, Dict
+    :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict[required=[shorthand]],
+    :class:`TextDef`, :class:`ValueDefWithConditionStringFieldDefText`, Dict
     """
 
     _schema = {"$ref": "#/definitions/TextDef"}
@@ -46330,11 +46390,13 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
 class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     """FieldOrDatumDefWithConditionStringFieldDefText schema wrapper
 
-    :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict
+    :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict[required=[shorthand]]
 
     Parameters
     ----------
 
+    shorthand : Sequence[str], str
+        shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
         ``"min"``, ``"max"``, ``"count"`` ).
@@ -46530,6 +46592,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
     def __init__(
         self,
+        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -46754,6 +46817,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         **kwds
     ):
         super(FieldOrDatumDefWithConditionStringFieldDefText, self).__init__(
+            shorthand=shorthand,
             aggregate=aggregate,
             bandPosition=bandPosition,
             bin=bin,
