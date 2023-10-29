@@ -4,11 +4,10 @@ based on the updated Altair schema.
 """
 import inspect
 import sys
+import subprocess
 from pathlib import Path
 from os.path import abspath, dirname, join
 from typing import TypeVar, Type, cast, List, Any, Optional, Iterable, Union
-
-import black
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -58,11 +57,22 @@ def update__all__variable() -> None:
         + lines[last_definition_line + 1 :]
     )
     # Format file content with black
-    new_file_content = black.format_str("\n".join(new_lines), mode=black.Mode())
+    new_file_content = ruff_format_str("\n".join(new_lines))
 
     # Write new version of altair/__init__.py
     with open(init_path, "w") as f:
         f.write(new_file_content)
+
+
+def ruff_format_str(code: str) -> str:
+    r = subprocess.run(
+        # Name of the file does not seem to matter but ruff requires one
+        ["ruff", "format", "--stdin-filename", "placeholder.py"],
+        input=code.encode(),
+        check=True,
+        capture_output=True,
+    )
+    return r.stdout.decode()
 
 
 def _is_relevant_attribute(attr_name: str) -> bool:
