@@ -349,7 +349,7 @@ def value(value, **kwargs) -> dict:
 def param(
     name: Optional[str] = None,
     value: Union[Any, UndefinedType] = Undefined,
-    bind: Union[core.Binding, str, UndefinedType] = Undefined,
+    bind: Union[core.Binding, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
     expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
     **kwds,
@@ -368,7 +368,7 @@ def param(
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
-    bind : :class:`Binding`, str (optional)
+    bind : :class:`Binding` (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
     empty : boolean (optional)
@@ -424,9 +424,10 @@ def param(
             # If both 'value' and 'init' are set, we ignore 'init'.
             kwds.pop("init")
 
+    # ignore[arg-type] comment is needed because we can also pass expr.core.Expression
     if "select" not in kwds:
         parameter.param = core.VariableParameter(
-            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
+            name=parameter.name, bind=bind, value=value, expr=expr, **kwds  # type: ignore[arg-type]
         )
         parameter.param_type = "variable"
     elif "views" in kwds:
@@ -1379,7 +1380,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             spacing=spacing,
             tilt=tilt,
             translate=translate,
-            type=type,
+            # Ignore as we type here `type` as a str but in core.Projection
+            # it's a Literal with all options
+            type=type,  # type: ignore[arg-type]
             **kwds,
         )
         return self.properties(projection=projection)
@@ -1603,10 +1606,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         if as_ is not Undefined or calculate is not Undefined:
             dct = {"as": as_, "calculate": calculate}
-            self = self._add_transform(core.CalculateTransform(**dct))
+            self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
         for as_, calculate in kwargs.items():
             dct = {"as": as_, "calculate": calculate}
-            self = self._add_transform(core.CalculateTransform(**dct))
+            self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
         return self
 
     def transform_density(
@@ -1869,7 +1872,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             elif isinstance(filter.empty, bool):
                 new_filter["empty"] = filter.empty
             filter = new_filter  # type: ignore[assignment]
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))  # type: ignore[arg-type]
 
     def transform_flatten(
         self,
@@ -2071,7 +2074,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(
             core.PivotTransform(
-                pivot=pivot, value=value, groupby=groupby, limit=limit, op=op
+                # Ignore as we type here `op` as a str but in core.PivotTransform
+                # it's a Literal with all options
+                pivot=pivot, value=value, groupby=groupby, limit=limit, op=op  # type: ignore[arg-type]
             )
         )
 
@@ -2321,7 +2326,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 )
         if as_ is not Undefined:
             dct = {"as": as_, "timeUnit": timeUnit, "field": field}
-            self = self._add_transform(core.TimeUnitTransform(**dct))
+            self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
         for as_, shorthand in kwargs.items():
             dct = utils.parse_shorthand(
                 shorthand,
@@ -2333,7 +2338,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct["as"] = as_
             if "timeUnit" not in dct:
                 raise ValueError("'{}' must include a valid timeUnit".format(shorthand))
-            self = self._add_transform(core.TimeUnitTransform(**dct))
+            self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
         return self
 
     def transform_window(
@@ -2429,7 +2434,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                     )
                 )
                 assert not isinstance(window, UndefinedType)  # For mypy
-                window.append(core.WindowFieldDef(**kwds))
+                # Ignore as core.WindowFieldDef has a Literal type hint with all options
+                window.append(core.WindowFieldDef(**kwds))  # type: ignore[arg-type]
 
         return self._add_transform(
             core.WindowTransform(
