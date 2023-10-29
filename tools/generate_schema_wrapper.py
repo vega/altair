@@ -235,6 +235,11 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 
+ENCODE_SIGNATURE: Final = """
+def _encode_signature({encode_method_args}):
+    ...
+"""
+
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -352,7 +357,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
-        
+
         field_ref = def_dict.get("field")
         if field_ref is not None:
             defschema = {"$ref": field_ref}
@@ -461,6 +466,8 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     definitions: Dict[str, SchemaGenerator] = {}
 
+    encode_method_args = ""
+
     for name in rootschema["definitions"]:
         defschema = {"$ref": "#/definitions/" + name}
         defschema_repr = {"$ref": "#/definitions/" + name}
@@ -473,6 +480,17 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
             basename=basename,
             rootschemarepr=CodeSnippet("{}._rootschema".format(basename)),
         )
+        if name == "FacetedEncoding":
+            # For the .encode method in api.py:_EncodingMixin we need the same
+            # type signature as in core.FacetedEncoding but additionally, for every
+            # arguemtn it should also accept a "shorthand" as a string or list of
+            # strings.
+            encode_method_args = ", ".join(definitions[name].init_args(
+                additional_types=["str", "List[str]"]
+            )[0])
+
+    assert len(encode_method_args) > 0
+    encode_method_signature = ENCODE_SIGNATURE.format(encode_method_args=encode_method_args)
 
     graph: Dict[str, List[str]] = {}
 
@@ -497,6 +515,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
     ]
     contents.append(PARAMETER_PROTOCOL)
+    contents.append(encode_method_signature)
     contents.append(BASE_SCHEMA.format(basename=basename))
     contents.append(
         schema_class(

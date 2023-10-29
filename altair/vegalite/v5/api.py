@@ -2610,7 +2610,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
 
 class _EncodingMixin:
-    @utils.use_signature(core.FacetedEncoding)
+    @utils.use_signature(core._encode_signature)
     def encode(self, *args, **kwargs) -> Self:
         # Convert args to kwargs based on their types.
         kwargs = utils.infer_encoding_types(args, kwargs, channels)

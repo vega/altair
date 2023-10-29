@@ -1,7 +1,7 @@
 """Code generation utilities"""
 import re
 import textwrap
-from typing import Set, Final, Optional, List, Union, Dict
+from typing import Set, Final, Optional, List, Union, Dict, Tuple
 from dataclasses import dataclass
 
 from .utils import (
@@ -237,6 +237,21 @@ class SchemaGenerator:
 
     def init_code(self, indent: int = 0) -> str:
         """Return code suitable for the __init__ function of a Schema class"""
+        args, super_args = self.init_args()
+
+        initfunc = self.init_template.format(
+            classname=self.classname,
+            arglist=", ".join(args),
+            super_arglist=", ".join(super_args),
+        )
+        if indent:
+            initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
+        return initfunc
+
+    def init_args(
+        self, additional_types: Optional[List[str]] = None
+    ) -> Tuple[List[str], List[str]]:
+        additional_types  = additional_types or []
         info = self.info
         arg_info = self.arg_info
 
@@ -257,10 +272,17 @@ class SchemaGenerator:
 
         args.extend(
             f"{p}: Union["
-            + info.properties[p].get_python_type_representation(
-                for_type_hints=True, altair_classes_prefix=self.altair_classes_prefix
+            + ", ".join(
+                [
+                    *additional_types,
+                    info.properties[p].get_python_type_representation(
+                        for_type_hints=True,
+                        altair_classes_prefix=self.altair_classes_prefix,
+                    ),
+                    "UndefinedType",
+                ]
             )
-            + ", UndefinedType] = Undefined"
+            + "] = Undefined"
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(
@@ -273,15 +295,7 @@ class SchemaGenerator:
         if arg_info.additional:
             args.append("**kwds")
             super_args.append("**kwds")
-
-        initfunc = self.init_template.format(
-            classname=self.classname,
-            arglist=", ".join(args),
-            super_arglist=", ".join(super_args),
-        )
-        if indent:
-            initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
-        return initfunc
+        return args, super_args
 
     def get_args(self, si: SchemaInfo) -> List[str]:
         contents = ["self"]
