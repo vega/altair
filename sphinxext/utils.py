@@ -122,7 +122,7 @@ def get_docstring_and_rest(filename):
 
     if not isinstance(node, ast.Module):
         raise TypeError(
-            "This function only supports modules. " "You provided {}".format(
+            "This function only supports modules. You provided {}".format(
                 node.__class__.__name__
             )
         )
