@@ -500,10 +500,7 @@ def generate_vegalite_channel_wrappers(
 
     contents.append(CHANNEL_MIXINS)
 
-    if version == "v2":
-        encoding_def = "EncodingWithFacet"
-    else:
-        encoding_def = "FacetedEncoding"
+    encoding_def = "FacetedEncoding"
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
