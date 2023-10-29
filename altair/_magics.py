@@ -54,12 +54,11 @@ def _get_variable(name):
     if ip is None:
         raise ValueError(
             "Magic command must be run within an IPython "
-            "environemnt, in which get_ipython() is defined."
+            "environment, in which get_ipython() is defined."
         )
     if name not in ip.user_ns:
         raise NameError(
-            "argument '{}' does not match the "
-            "name of any defined variable".format(name)
+            "argument '{}' does not match the name of any defined variable".format(name)
         )
     return ip.user_ns[name]
 
