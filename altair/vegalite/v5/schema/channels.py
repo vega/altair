@@ -132,7 +132,7 @@ class DatumChannelMixin:
 class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Angle schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -4307,6 +4307,7 @@ class Color(
 ):
     """Color schema wrapper
 
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
     Dict[required=[shorthand]]
 
     Parameters
@@ -8566,7 +8567,7 @@ class ColorValue(
 class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Column schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`RowColumnEncodingFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -10006,7 +10007,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -11652,7 +11653,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
 class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """Detail schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldDefWithoutScale`, Dict[required=[shorthand]]
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
@@ -12434,7 +12435,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     """Facet schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FacetEncodingFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -13966,6 +13967,7 @@ class Fill(
 ):
     """Fill schema wrapper
 
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
     Dict[required=[shorthand]]
 
     Parameters
@@ -18227,7 +18229,7 @@ class FillOpacity(
 ):
     """FillOpacity schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -22401,7 +22403,7 @@ class FillOpacityValue(
 class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -24047,7 +24049,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
 class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """Key schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldDefWithoutScale`, Dict[required=[shorthand]]
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
@@ -24829,7 +24831,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     """Latitude schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`LatLongFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -25726,7 +25728,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Latitude2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -26574,7 +26576,7 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     """Longitude schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`LatLongFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -27471,7 +27473,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Longitude2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -28321,7 +28323,7 @@ class Opacity(
 ):
     """Opacity schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -32493,7 +32495,7 @@ class OpacityValue(
 class Order(FieldChannelMixin, core.OrderFieldDef):
     """Order schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`OrderFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -33380,7 +33382,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
 class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     """Radius schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`PositionFieldDefBase`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -35838,7 +35840,7 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
 class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     """Radius2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -36686,7 +36688,7 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
 class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Row schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`RowColumnEncodingFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -38129,6 +38131,7 @@ class Shape(
 ):
     """Shape schema wrapper
 
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull`,
     Dict[required=[shorthand]]
 
     Parameters
@@ -42299,7 +42302,7 @@ class ShapeValue(
 class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Size schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -46474,6 +46477,7 @@ class Stroke(
 ):
     """Stroke schema wrapper
 
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`,
     Dict[required=[shorthand]]
 
     Parameters
@@ -50735,7 +50739,7 @@ class StrokeDash(
 ):
     """StrokeDash schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -54923,7 +54927,7 @@ class StrokeOpacity(
 ):
     """StrokeOpacity schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -59101,7 +59105,7 @@ class StrokeWidth(
 ):
     """StrokeWidth schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -63275,7 +63279,7 @@ class StrokeWidthValue(
 class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefText):
     """Text schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`FieldOrDatumDefWithConditionStringFieldDefText`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -65032,7 +65036,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
 class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     """Theta schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`PositionFieldDefBase`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -67490,7 +67494,7 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
 class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     """Theta2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -68338,7 +68342,7 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
 class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -69984,7 +69988,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
 class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`StringFieldDefWithCondition`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -71630,7 +71634,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
 class X(FieldChannelMixin, core.PositionFieldDef):
     """X schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`PositionFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -76726,7 +76730,7 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
 class X2(FieldChannelMixin, core.SecondaryFieldDef):
     """X2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -77574,7 +77578,7 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
 class XError(FieldChannelMixin, core.SecondaryFieldDef):
     """XError schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -78268,7 +78272,7 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
 class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     """XError2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -78962,7 +78966,7 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
 class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     """XOffset schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`ScaleFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -81312,7 +81316,7 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
 class Y(FieldChannelMixin, core.PositionFieldDef):
     """Y schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`PositionFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------
@@ -86408,7 +86412,7 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
 class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     """Y2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -87256,7 +87260,7 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
 class YError(FieldChannelMixin, core.SecondaryFieldDef):
     """YError schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -87950,7 +87954,7 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
 class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     """YError2 schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`SecondaryFieldDef`, Dict[required=[shorthand]]
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -88644,7 +88648,7 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
 class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     """YOffset schema wrapper
 
-    Dict[required=[shorthand]]
+    :class:`ScaleFieldDef`, Dict[required=[shorthand]]
 
     Parameters
     ----------

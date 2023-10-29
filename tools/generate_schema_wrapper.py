@@ -337,6 +337,44 @@ def download_schemafile(
     return filename
 
 
+def load_and_preprocess_schemafile(schemapath: str) -> dict:
+    with open(schemapath, encoding="utf8") as f:
+        schema = json.load(f)
+
+    schema = _add_shorthand_property_to_field_encodings(schema)
+    return schema
+
+
+def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
+    encoding_def = "FacetedEncoding"
+
+    encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
+
+    for prop, propschema in encoding.properties.items():
+        def_dict = get_field_datum_value_defs(propschema, schema)
+        
+        field_ref = def_dict.get("field")
+        if field_ref is not None:
+            defschema = {"$ref": field_ref}
+            defschema = copy.deepcopy(resolve_references(defschema, schema))
+            # For Encoding field definitions, we patch the schema by adding the
+            # shorthand property.
+            defschema["properties"]["shorthand"] = {
+                "anyOf": [
+                    {"type": "string"},
+                    {"type": "array", "items": {"type": "string"}},
+                ],
+                "description": "shorthand for field, aggregate, and type",
+            }
+            if "required" not in defschema:
+                defschema["required"] = ["shorthand"]
+            else:
+                if "shorthand" not in defschema["required"]:
+                    defschema["required"].append("shorthand")
+            schema["definitions"][field_ref.split("/")[-1]] = defschema
+    return schema
+
+
 def copy_schemapi_util() -> None:
     """
     Copy the schemapi utility into altair/utils/ and its test file to tests/utils/
@@ -481,8 +519,7 @@ def generate_vegalite_channel_wrappers(
     schemafile: str, version: str, imports: Optional[List[str]] = None
 ) -> str:
     # TODO: generate __all__ for top of file
-    with open(schemafile, encoding="utf8") as f:
-        schema = json.load(f)
+    schema = load_and_preprocess_schemafile(schemafile)
     if imports is None:
         imports = [
             "import sys",
@@ -522,18 +559,6 @@ def generate_vegalite_channel_wrappers(
             if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
-                defschema = copy.deepcopy(resolve_references(defschema, schema))
-
-                # For Encoding field definitions, we patch the schema by adding the
-                # shorthand property.
-                defschema["properties"]["shorthand"] = {
-                    "anyOf": [
-                        {"type": "string"},
-                        {"type": "array", "items": {"type": "string"}},
-                    ],
-                    "description": "shorthand for field, aggregate, and type",
-                }
-                defschema["required"] = ["shorthand"]
 
             elif encoding_spec == "datum":
                 Generator = DatumSchemaGenerator
