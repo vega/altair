@@ -58,9 +58,7 @@ def _get_variable(name):
         )
     if name not in ip.user_ns:
         raise NameError(
-            "argument '{}' does not match the name of any defined variable".format(
-                name
-            )
+            "argument '{}' does not match the name of any defined variable".format(name)
         )
     return ip.user_ns[name]
 
