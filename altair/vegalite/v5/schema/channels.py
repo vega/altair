@@ -137,7 +137,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -3030,7 +3030,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -4313,7 +4315,7 @@ class Color(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -7224,7 +7226,9 @@ class Color(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -8572,7 +8576,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -9759,7 +9763,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -10012,7 +10018,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -10671,7 +10677,9 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -11659,7 +11667,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -12213,7 +12221,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -12440,7 +12450,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -13704,7 +13714,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -13973,7 +13985,7 @@ class Fill(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -16884,7 +16896,9 @@ class Fill(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -18234,7 +18248,7 @@ class FillOpacity(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -21127,7 +21141,9 @@ class FillOpacity(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -22408,7 +22424,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -23067,7 +23083,9 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -24055,7 +24073,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -24609,7 +24627,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -24836,7 +24856,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -25360,7 +25380,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -25735,7 +25757,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -26186,7 +26208,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -26581,7 +26605,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -27105,7 +27129,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -27480,7 +27506,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -27931,7 +27957,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -28328,7 +28356,7 @@ class Opacity(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -31221,7 +31249,9 @@ class Opacity(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -32500,7 +32530,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -33060,7 +33090,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -33387,7 +33419,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -34740,7 +34772,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -35847,7 +35881,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -36298,7 +36332,9 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -36693,7 +36729,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -37880,7 +37916,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -38137,7 +38175,7 @@ class Shape(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -41028,7 +41066,9 @@ class Shape(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -42307,7 +42347,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -45200,7 +45240,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -46483,7 +46525,7 @@ class Stroke(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -49394,7 +49436,9 @@ class Stroke(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -50744,7 +50788,7 @@ class StrokeDash(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -53637,7 +53681,9 @@ class StrokeDash(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -54932,7 +54978,7 @@ class StrokeOpacity(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -57825,7 +57871,9 @@ class StrokeOpacity(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -59110,7 +59158,7 @@ class StrokeWidth(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -62003,7 +62051,9 @@ class StrokeWidth(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -63284,7 +63334,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -63947,7 +63997,9 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -65041,7 +65093,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -66394,7 +66446,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -67501,7 +67555,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -67952,7 +68006,9 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -68347,7 +68403,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -69006,7 +69062,9 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -69993,7 +70051,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -70652,7 +70710,9 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -71639,7 +71699,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -74305,7 +74365,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -76737,7 +76799,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -77188,7 +77250,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -77585,7 +77649,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -78036,7 +78100,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -78279,7 +78345,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -78730,7 +78796,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -78971,7 +79039,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -80277,7 +80345,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -81321,7 +81391,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -83987,7 +84057,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -86419,7 +86491,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -86870,7 +86942,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -87267,7 +87341,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -87718,7 +87792,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -87961,7 +88037,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -88412,7 +88488,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[
@@ -88653,7 +88731,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -89959,7 +90037,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union[core.RepeatRef, dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 Union[

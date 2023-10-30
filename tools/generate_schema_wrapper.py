@@ -368,6 +368,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
                 "anyOf": [
                     {"type": "string"},
                     {"type": "array", "items": {"type": "string"}},
+                    {"$ref": "#/definitions/RepeatRef"},
                 ],
                 "description": "shorthand for field, aggregate, and type",
             }

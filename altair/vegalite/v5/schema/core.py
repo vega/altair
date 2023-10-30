@@ -13395,7 +13395,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -13641,7 +13641,9 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -15096,7 +15098,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -15250,7 +15252,9 @@ class FieldDefWithoutScale(VegaLiteSchema):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -18767,7 +18771,7 @@ class LatLongFieldDef(LatLongDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -18921,7 +18925,9 @@ class LatLongFieldDef(LatLongDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -27872,7 +27878,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -28096,7 +28102,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -28897,7 +28905,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -29121,7 +29129,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -29606,7 +29616,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -29830,7 +29840,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -30146,7 +30158,7 @@ class OrderFieldDef(VegaLiteSchema):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -30302,7 +30314,9 @@ class OrderFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -33113,7 +33127,7 @@ class PositionFieldDef(PositionDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -33367,7 +33381,9 @@ class PositionFieldDef(PositionDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -33663,7 +33679,7 @@ class PositionFieldDefBase(PolarDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -33900,7 +33916,9 @@ class PositionFieldDefBase(PolarDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -39096,7 +39114,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -39304,7 +39322,9 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -40824,7 +40844,7 @@ class ScaleFieldDef(OffsetDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -41030,7 +41050,9 @@ class ScaleFieldDef(OffsetDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -41885,7 +41907,7 @@ class SecondaryFieldDef(Position2Def):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -41970,7 +41992,9 @@ class SecondaryFieldDef(Position2Def):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -42789,7 +42813,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -43013,7 +43037,9 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -45914,7 +45940,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -46109,7 +46135,9 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",
@@ -46790,7 +46818,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     Parameters
     ----------
 
-    shorthand : Sequence[str], str
+    shorthand : :class:`RepeatRef`, Dict[required=[repeat]], Sequence[str], str
         shorthand for field, aggregate, and type
     aggregate : :class:`Aggregate`, :class:`ArgmaxDef`, Dict[required=[argmax]], :class:`ArgminDef`, Dict[required=[argmin]], :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
         Aggregation function for the field (e.g., ``"mean"``, ``"sum"``, ``"median"``,
@@ -46987,7 +47015,9 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
     def __init__(
         self,
-        shorthand: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
+        shorthand: Union[
+            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+        ] = Undefined,
         aggregate: Union[
             Union[
                 "Aggregate",

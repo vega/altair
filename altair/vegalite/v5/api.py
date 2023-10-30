@@ -2769,7 +2769,10 @@ class Chart(
         **kwargs,
     ) -> None:
         super(Chart, self).__init__(
-            data=data,
+            # Data type hints won't match with what TopLevelUnitSpec expects
+            # as there is some data processing happening when converting to
+            # a VL spec
+            data=data,  # type: ignore[arg-type]
             encoding=encoding,
             mark=mark,
             width=width,
