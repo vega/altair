@@ -1,18 +1,16 @@
 """Generate a schema wrapper from a schema"""
 import argparse
 import copy
-import os
-import sys
 import json
+import os
 import re
-from os.path import abspath, join, dirname
-from typing import Final, Optional, List, Dict, Tuple, Literal, Union, Type
-
+import sys
 import textwrap
+from os.path import abspath, dirname, join
+from typing import Dict, Final, List, Literal, Optional, Tuple, Type, Union
 from urllib import request
 
 import m2r
-import black
 
 # Add path so that schemapi can be imported from the tools folder
 current_dir = dirname(__file__)
@@ -23,9 +21,10 @@ sys.path.insert(0, abspath(join(current_dir, "..")))
 from schemapi import codegen  # noqa: E402
 from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (  # noqa: E402
-    get_valid_identifier,
     SchemaInfo,
+    get_valid_identifier,
     resolve_references,
+    ruff_format_str,
 )
 
 SCHEMA_VERSION: Final = "v5.15.1"
@@ -355,7 +354,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
-    for prop, propschema in encoding.properties.items():
+    for _, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
 
         field_ref = def_dict.get("field")
@@ -486,12 +485,14 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
             # type signature as in core.FacetedEncoding but additionally, for every
             # arguemtn it should also accept a "shorthand" as a string or list of
             # strings.
-            encode_method_args = ", ".join(definitions[name].init_args(
-                additional_types=["str", "List[str]"]
-            )[0])
+            encode_method_args = ", ".join(
+                definitions[name].init_args(additional_types=["str", "List[str]"])[0]
+            )
 
     assert len(encode_method_args) > 0
-    encode_method_signature = ENCODE_SIGNATURE.format(encode_method_args=encode_method_args)
+    encode_method_signature = ENCODE_SIGNATURE.format(
+        encode_method_args=encode_method_args
+    )
 
     graph: Dict[str, List[str]] = {}
 
@@ -691,12 +692,6 @@ def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
     return imports, "\n".join(code)
 
 
-def format_code(code: Union[str, List[str]]) -> str:
-    if isinstance(code, list):
-        code = "\n".join(code)
-    return black.format_str(code, mode=black.Mode())
-
-
 def vegalite_main(skip_download: bool = False) -> None:
     version = SCHEMA_VERSION
     path = abspath(
@@ -719,21 +714,21 @@ def vegalite_main(skip_download: bool = False) -> None:
         "SCHEMA_URL = {!r}\n" "".format(schema_url(version)),
     ]
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(format_code(content))
+        f.write(ruff_format_str(content))
 
     # Generate the core schema wrappers
     outfile = join(schemapath, "core.py")
     print("Generating\n {}\n  ->{}".format(schemafile, outfile))
     file_contents = generate_vegalite_schema_wrapper(schemafile)
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(format_code(file_contents))
+        f.write(ruff_format_str(file_contents))
 
     # Generate the channel wrappers
     outfile = join(schemapath, "channels.py")
     print("Generating\n {}\n  ->{}".format(schemafile, outfile))
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(format_code(code))
+        f.write(ruff_format_str(code))
 
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
@@ -762,7 +757,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         config_mixin,
     ]
     with open(outfile, "w", encoding="utf8") as f:
-        f.write(format_code(content))
+        f.write(ruff_format_str(content))
 
 
 def main() -> None:

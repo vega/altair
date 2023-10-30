@@ -427,7 +427,7 @@ def _encode_signature(
         ],
         UndefinedType,
     ] = Undefined,
-    **kwds
+    **kwds,
 ):
     ...
 
@@ -542,7 +542,7 @@ class AggregatedFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AggregatedFieldDef, self).__init__(op=op, field=field, **kwds)
 
@@ -1849,7 +1849,7 @@ class AreaConfig(AnyMarkConfig):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AreaConfig, self).__init__(
             align=align,
@@ -1923,7 +1923,7 @@ class AreaConfig(AnyMarkConfig):
             x2=x2,
             y=y,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -2008,7 +2008,7 @@ class AutoSizeParams(VegaLiteSchema):
             Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AutoSizeParams, self).__init__(
             contains=contains, resize=resize, type=type, **kwds
@@ -3643,7 +3643,7 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Axis, self).__init__(
             aria=aria,
@@ -3724,7 +3724,7 @@ class Axis(VegaLiteSchema):
             translate=translate,
             values=values,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -5347,7 +5347,7 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AxisConfig, self).__init__(
             aria=aria,
@@ -5429,7 +5429,7 @@ class AxisConfig(VegaLiteSchema):
             translate=translate,
             values=values,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -5469,7 +5469,7 @@ class AxisResolveMap(VegaLiteSchema):
         y: Union[
             Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
 
@@ -6743,7 +6743,7 @@ class BarConfig(AnyMarkConfig):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BarConfig, self).__init__(
             align=align,
@@ -6820,7 +6820,7 @@ class BarConfig(AnyMarkConfig):
             x2=x2,
             y=y,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -7379,7 +7379,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         zindex: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BaseTitleNoValueRefs, self).__init__(
             align=align,
@@ -7407,7 +7407,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             subtitleLineHeight=subtitleLineHeight,
             subtitlePadding=subtitlePadding,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -7494,7 +7494,7 @@ class BinParams(VegaLiteSchema):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BinParams, self).__init__(
             anchor=anchor,
@@ -7507,7 +7507,7 @@ class BinParams(VegaLiteSchema):
             nice=nice,
             step=step,
             steps=steps,
-            **kwds
+            **kwds,
         )
 
 
@@ -7556,7 +7556,7 @@ class BindCheckbox(Binding):
         debounce: Union[float, UndefinedType] = Undefined,
         element: Union[Union["Element", str], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BindCheckbox, self).__init__(
             input=input, debounce=debounce, element=element, name=name, **kwds
@@ -7593,7 +7593,7 @@ class BindDirect(Binding):
         element: Union[Union[Union["Element", str], dict], UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         event: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BindDirect, self).__init__(
             element=element, debounce=debounce, event=event, **kwds
@@ -7640,7 +7640,7 @@ class BindInput(Binding):
         input: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         placeholder: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BindInput, self).__init__(
             autocomplete=autocomplete,
@@ -7649,7 +7649,7 @@ class BindInput(Binding):
             input=input,
             name=name,
             placeholder=placeholder,
-            **kwds
+            **kwds,
         )
 
 
@@ -7690,7 +7690,7 @@ class BindRadioSelect(Binding):
         element: Union[Union["Element", str], UndefinedType] = Undefined,
         labels: Union[Sequence[str], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BindRadioSelect, self).__init__(
             input=input,
@@ -7699,7 +7699,7 @@ class BindRadioSelect(Binding):
             element=element,
             labels=labels,
             name=name,
-            **kwds
+            **kwds,
         )
 
 
@@ -7745,7 +7745,7 @@ class BindRange(Binding):
         min: Union[float, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BindRange, self).__init__(
             input=input,
@@ -7755,7 +7755,7 @@ class BindRange(Binding):
             min=min,
             name=name,
             step=step,
-            **kwds
+            **kwds,
         )
 
 
@@ -7910,7 +7910,7 @@ class BoxPlotConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BoxPlotConfig, self).__init__(
             box=box,
@@ -7920,7 +7920,7 @@ class BoxPlotConfig(VegaLiteSchema):
             rule=rule,
             size=size,
             ticks=ticks,
-            **kwds
+            **kwds,
         )
 
 
@@ -8333,7 +8333,7 @@ class BrushConfig(VegaLiteSchema):
         strokeDashOffset: Union[float, UndefinedType] = Undefined,
         strokeOpacity: Union[float, UndefinedType] = Undefined,
         strokeWidth: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BrushConfig, self).__init__(
             cursor=cursor,
@@ -8344,7 +8344,7 @@ class BrushConfig(VegaLiteSchema):
             strokeDashOffset=strokeDashOffset,
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
-            **kwds
+            **kwds,
         )
 
 
@@ -8887,7 +8887,7 @@ class BoxPlotDef(CompositeMarkDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BoxPlotDef, self).__init__(
             type=type,
@@ -8903,7 +8903,7 @@ class BoxPlotDef(CompositeMarkDef):
             rule=rule,
             size=size,
             ticks=ticks,
-            **kwds
+            **kwds,
         )
 
 
@@ -8945,7 +8945,7 @@ class CompositionConfig(VegaLiteSchema):
         self,
         columns: Union[float, UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(CompositionConfig, self).__init__(
             columns=columns, spacing=spacing, **kwds
@@ -9788,7 +9788,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterStringFieldDef, self).__init__(
             param=param,
@@ -9802,7 +9802,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -10228,7 +10228,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateStringFieldDef, self).__init__(
             test=test,
@@ -10241,7 +10241,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -10306,7 +10306,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefGradientstringnullExprRef, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -10372,7 +10372,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefGradientstringnullExprRef, self).__init__(
             test=test, value=value, **kwds
@@ -10425,7 +10425,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefTextExprRef, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -10481,7 +10481,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefTextExprRef, self).__init__(
             test=test, value=value, **kwds
@@ -10528,7 +10528,7 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefnumber, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -10578,7 +10578,7 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
             UndefinedType,
         ] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefnumber, self).__init__(
             test=test, value=value, **kwds
@@ -10632,7 +10632,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefnumberArrayExprRef, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -10689,7 +10689,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
             Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefnumberArrayExprRef, self).__init__(
             test=test, value=value, **kwds
@@ -10738,7 +10738,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefnumberExprRef, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -10790,7 +10790,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         value: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefnumberExprRef, self).__init__(
             test=test, value=value, **kwds
@@ -10839,7 +10839,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
             Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefstringExprRef, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -10891,7 +10891,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
         value: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefstringExprRef, self).__init__(
             test=test, value=value, **kwds
@@ -10945,7 +10945,7 @@ class ConditionalParameterValueDefstringnullExprRef(
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalParameterValueDefstringnullExprRef, self).__init__(
             param=param, value=value, empty=empty, **kwds
@@ -11002,7 +11002,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
             Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConditionalPredicateValueDefstringnullExprRef, self).__init__(
             test=test, value=value, **kwds
@@ -11551,7 +11551,7 @@ class Config(VegaLiteSchema):
         tooltipFormat: Union[Union["FormatConfig", dict], UndefinedType] = Undefined,
         trail: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
         view: Union[Union["ViewConfig", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Config, self).__init__(
             arc=arc,
@@ -11626,7 +11626,7 @@ class Config(VegaLiteSchema):
             tooltipFormat=tooltipFormat,
             trail=trail,
             view=view,
-            **kwds
+            **kwds,
         )
 
 
@@ -11725,7 +11725,7 @@ class CsvDataFormat(DataFormat):
         self,
         parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
         type: Union[Literal["csv", "tsv"], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(CsvDataFormat, self).__init__(parse=parse, type=type, **kwds)
 
@@ -11873,7 +11873,7 @@ class DomainUnionWith(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DomainUnionWith, self).__init__(unionWith=unionWith, **kwds)
 
@@ -11920,7 +11920,7 @@ class DsvDataFormat(DataFormat):
         delimiter: Union[str, UndefinedType] = Undefined,
         parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DsvDataFormat, self).__init__(
             delimiter=delimiter, parse=parse, type=type, **kwds
@@ -12457,7 +12457,7 @@ class Encoding(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Encoding, self).__init__(
             angle=angle,
@@ -12497,7 +12497,7 @@ class Encoding(VegaLiteSchema):
             yError=yError,
             yError2=yError2,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
 
 
@@ -12626,7 +12626,7 @@ class ErrorBandConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         tension: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ErrorBandConfig, self).__init__(
             band=band,
@@ -12634,7 +12634,7 @@ class ErrorBandConfig(VegaLiteSchema):
             extent=extent,
             interpolate=interpolate,
             tension=tension,
-            **kwds
+            **kwds,
         )
 
 
@@ -12951,7 +12951,7 @@ class ErrorBandDef(CompositeMarkDef):
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         tension: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ErrorBandDef, self).__init__(
             type=type,
@@ -12964,7 +12964,7 @@ class ErrorBandDef(CompositeMarkDef):
             opacity=opacity,
             orient=orient,
             tension=tension,
-            **kwds
+            **kwds,
         )
 
 
@@ -13050,7 +13050,7 @@ class ErrorBarConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ErrorBarConfig, self).__init__(
             extent=extent,
@@ -13058,7 +13058,7 @@ class ErrorBarConfig(VegaLiteSchema):
             size=size,
             thickness=thickness,
             ticks=ticks,
-            **kwds
+            **kwds,
         )
 
 
@@ -13332,7 +13332,7 @@ class ErrorBarDef(CompositeMarkDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ErrorBarDef, self).__init__(
             type=type,
@@ -13345,7 +13345,7 @@ class ErrorBarDef(CompositeMarkDef):
             size=size,
             thickness=thickness,
             ticks=ticks,
-            **kwds
+            **kwds,
         )
 
 
@@ -13881,7 +13881,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FacetEncodingFieldDef, self).__init__(
             shorthand=shorthand,
@@ -13899,7 +13899,7 @@ class FacetEncodingFieldDef(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -14310,7 +14310,7 @@ class FacetFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FacetFieldDef, self).__init__(
             aggregate=aggregate,
@@ -14322,7 +14322,7 @@ class FacetFieldDef(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -14346,7 +14346,7 @@ class FacetMapping(VegaLiteSchema):
         self,
         column: Union[Union["FacetFieldDef", dict], UndefinedType] = Undefined,
         row: Union[Union["FacetFieldDef", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FacetMapping, self).__init__(column=column, row=row, **kwds)
 
@@ -14882,7 +14882,7 @@ class FacetedEncoding(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FacetedEncoding, self).__init__(
             angle=angle,
@@ -14925,7 +14925,7 @@ class FacetedEncoding(VegaLiteSchema):
             yError=yError,
             yError2=yError2,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
 
 
@@ -14976,7 +14976,7 @@ class Feature(VegaLiteSchema):
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Feature, self).__init__(
             geometry=geometry,
@@ -14984,7 +14984,7 @@ class Feature(VegaLiteSchema):
             type=type,
             bbox=bbox,
             id=id,
-            **kwds
+            **kwds,
         )
 
 
@@ -15015,7 +15015,7 @@ class FeatureCollection(VegaLiteSchema):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FeatureCollection, self).__init__(
             features=features, type=type, bbox=bbox, **kwds
@@ -15069,7 +15069,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FeatureGeometryGeoJsonProperties, self).__init__(
             geometry=geometry,
@@ -15077,7 +15077,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
             type=type,
             bbox=bbox,
             id=id,
-            **kwds
+            **kwds,
         )
 
 
@@ -15461,7 +15461,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldDefWithoutScale, self).__init__(
             shorthand=shorthand,
@@ -15472,7 +15472,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -15912,7 +15912,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionStringFieldDefstring, self).__init__(
             aggregate=aggregate,
@@ -15925,7 +15925,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -16059,7 +16059,7 @@ class FormatConfig(VegaLiteSchema):
         numberFormatType: Union[str, UndefinedType] = Undefined,
         timeFormat: Union[str, UndefinedType] = Undefined,
         timeFormatType: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FormatConfig, self).__init__(
             normalizedNumberFormat=normalizedNumberFormat,
@@ -16068,7 +16068,7 @@ class FormatConfig(VegaLiteSchema):
             numberFormatType=numberFormatType,
             timeFormat=timeFormat,
             timeFormatType=timeFormatType,
-            **kwds
+            **kwds,
         )
 
 
@@ -16223,7 +16223,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GenericUnitSpecEncodingAnyMark, self).__init__(
             mark=mark,
@@ -16235,7 +16235,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
             projection=projection,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -16286,7 +16286,7 @@ class GeoJsonFeature(Fit):
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GeoJsonFeature, self).__init__(
             geometry=geometry,
@@ -16294,7 +16294,7 @@ class GeoJsonFeature(Fit):
             type=type,
             bbox=bbox,
             id=id,
-            **kwds
+            **kwds,
         )
 
 
@@ -16325,7 +16325,7 @@ class GeoJsonFeatureCollection(Fit):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GeoJsonFeatureCollection, self).__init__(
             features=features, type=type, bbox=bbox, **kwds
@@ -16400,7 +16400,7 @@ class GeometryCollection(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GeometryCollection, self).__init__(
             geometries=geometries, type=type, bbox=bbox, **kwds
@@ -16600,7 +16600,7 @@ class GradientStop(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         offset: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GradientStop, self).__init__(color=color, offset=offset, **kwds)
 
@@ -16627,7 +16627,7 @@ class GraticuleGenerator(Generator):
             Union[Union["GraticuleParams", dict], bool], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GraticuleGenerator, self).__init__(graticule=graticule, name=name, **kwds)
 
@@ -16695,7 +16695,7 @@ class GraticuleParams(VegaLiteSchema):
         stepMinor: Union[
             Union["Vector2number", Sequence[float]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(GraticuleParams, self).__init__(
             extent=extent,
@@ -16705,7 +16705,7 @@ class GraticuleParams(VegaLiteSchema):
             step=step,
             stepMajor=stepMajor,
             stepMinor=stepMinor,
-            **kwds
+            **kwds,
         )
 
 
@@ -17355,7 +17355,7 @@ class Header(VegaLiteSchema):
         titlePadding: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Header, self).__init__(
             format=format,
@@ -17390,7 +17390,7 @@ class Header(VegaLiteSchema):
             titleLineHeight=titleLineHeight,
             titleOrient=titleOrient,
             titlePadding=titlePadding,
-            **kwds
+            **kwds,
         )
 
 
@@ -18019,7 +18019,7 @@ class HeaderConfig(VegaLiteSchema):
         titlePadding: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(HeaderConfig, self).__init__(
             format=format,
@@ -18054,7 +18054,7 @@ class HeaderConfig(VegaLiteSchema):
             titleLineHeight=titleLineHeight,
             titleOrient=titleOrient,
             titlePadding=titlePadding,
-            **kwds
+            **kwds,
         )
 
 
@@ -18133,7 +18133,7 @@ class ImputeParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ImputeParams, self).__init__(
             frame=frame, keyvals=keyvals, method=method, value=value, **kwds
@@ -18164,7 +18164,7 @@ class ImputeSequence(VegaLiteSchema):
         stop: Union[float, UndefinedType] = Undefined,
         start: Union[float, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ImputeSequence, self).__init__(stop=stop, start=start, step=step, **kwds)
 
@@ -18214,7 +18214,7 @@ class InlineData(DataSource):
             UndefinedType,
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(InlineData, self).__init__(
             values=values, format=format, name=name, **kwds
@@ -18429,7 +18429,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         ] = Undefined,
         translate: Union[Union[bool, str], UndefinedType] = Undefined,
         zoom: Union[Union[bool, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(IntervalSelectionConfig, self).__init__(
             type=type,
@@ -18441,7 +18441,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
             resolve=resolve,
             translate=translate,
             zoom=zoom,
-            **kwds
+            **kwds,
         )
 
 
@@ -18617,7 +18617,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         ] = Undefined,
         translate: Union[Union[bool, str], UndefinedType] = Undefined,
         zoom: Union[Union[bool, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(IntervalSelectionConfigWithoutType, self).__init__(
             clear=clear,
@@ -18628,7 +18628,7 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             resolve=resolve,
             translate=translate,
             zoom=zoom,
-            **kwds
+            **kwds,
         )
 
 
@@ -18687,7 +18687,7 @@ class JoinAggregateFieldDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(JoinAggregateFieldDef, self).__init__(op=op, field=field, **kwds)
 
@@ -18735,7 +18735,7 @@ class JsonDataFormat(DataFormat):
         parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
         property: Union[str, UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(JsonDataFormat, self).__init__(
             parse=parse, property=property, type=type, **kwds
@@ -19126,7 +19126,7 @@ class LatLongFieldDef(LatLongDef):
             Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LatLongFieldDef, self).__init__(
             shorthand=shorthand,
@@ -19137,7 +19137,7 @@ class LatLongFieldDef(LatLongDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -19164,7 +19164,7 @@ class LayerRepeatMapping(VegaLiteSchema):
         layer: Union[Sequence[str], UndefinedType] = Undefined,
         column: Union[Sequence[str], UndefinedType] = Undefined,
         row: Union[Sequence[str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LayerRepeatMapping, self).__init__(
             layer=layer, column=column, row=row, **kwds
@@ -20956,7 +20956,7 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Legend, self).__init__(
             aria=aria,
@@ -21025,7 +21025,7 @@ class Legend(VegaLiteSchema):
             type=type,
             values=values,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -23149,7 +23149,7 @@ class LegendConfig(VegaLiteSchema):
         zindex: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LegendConfig, self).__init__(
             aria=aria,
@@ -23227,7 +23227,7 @@ class LegendConfig(VegaLiteSchema):
             titlePadding=titlePadding,
             unselectedOpacity=unselectedOpacity,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -23313,7 +23313,7 @@ class LegendResolveMap(VegaLiteSchema):
         strokeWidth: Union[
             Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LegendResolveMap, self).__init__(
             angle=angle,
@@ -23327,7 +23327,7 @@ class LegendResolveMap(VegaLiteSchema):
             strokeDash=strokeDash,
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
-            **kwds
+            **kwds,
         )
 
 
@@ -23359,7 +23359,7 @@ class LegendStreamBinding(LegendBinding):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LegendStreamBinding, self).__init__(legend=legend, **kwds)
 
@@ -24609,7 +24609,7 @@ class LineConfig(AnyMarkConfig):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LineConfig, self).__init__(
             align=align,
@@ -24682,7 +24682,7 @@ class LineConfig(AnyMarkConfig):
             x2=x2,
             y=y,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -24713,7 +24713,7 @@ class LineString(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LineString, self).__init__(
             coordinates=coordinates, type=type, bbox=bbox, **kwds
@@ -24763,7 +24763,7 @@ class LinearGradient(Gradient):
         x2: Union[float, UndefinedType] = Undefined,
         y1: Union[float, UndefinedType] = Undefined,
         y2: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LinearGradient, self).__init__(
             gradient=gradient, stops=stops, id=id, x1=x1, x2=x2, y1=y1, y2=y2, **kwds
@@ -24790,7 +24790,7 @@ class Locale(VegaLiteSchema):
         self,
         number: Union[Union["NumberLocale", dict], UndefinedType] = Undefined,
         time: Union[Union["TimeLocale", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Locale, self).__init__(number=number, time=time, **kwds)
 
@@ -24836,7 +24836,7 @@ class LookupData(VegaLiteSchema):
         ] = Undefined,
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
         fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
 
@@ -24865,7 +24865,7 @@ class LookupSelection(VegaLiteSchema):
         key: Union[Union["FieldName", str], UndefinedType] = Undefined,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LookupSelection, self).__init__(
             key=key, param=param, fields=fields, **kwds
@@ -26113,7 +26113,7 @@ class MarkConfig(AnyMarkConfig):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(MarkConfig, self).__init__(
             align=align,
@@ -26185,7 +26185,7 @@ class MarkConfig(AnyMarkConfig):
             x2=x2,
             y=y,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -27583,7 +27583,7 @@ class MarkDef(AnyMark):
         yOffset: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(MarkDef, self).__init__(
             type=type,
@@ -27673,7 +27673,7 @@ class MarkDef(AnyMark):
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
 
 
@@ -27859,7 +27859,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionDatumDefGradientstringnull, self).__init__(
             bandPosition=bandPosition,
@@ -27867,7 +27867,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
             datum=datum,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -28394,7 +28394,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(
             FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull, self
@@ -28411,7 +28411,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -28512,7 +28512,7 @@ class MultiLineString(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(MultiLineString, self).__init__(
             coordinates=coordinates, type=type, bbox=bbox, **kwds
@@ -28546,7 +28546,7 @@ class MultiPoint(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(MultiPoint, self).__init__(
             coordinates=coordinates, type=type, bbox=bbox, **kwds
@@ -28581,7 +28581,7 @@ class MultiPolygon(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(MultiPolygon, self).__init__(
             coordinates=coordinates, type=type, bbox=bbox, **kwds
@@ -28622,7 +28622,7 @@ class NamedData(DataSource):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(NamedData, self).__init__(name=name, format=format, **kwds)
 
@@ -28702,7 +28702,7 @@ class NumberLocale(VegaLiteSchema):
             Union["Vector10string", Sequence[str]], UndefinedType
         ] = Undefined,
         percent: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(NumberLocale, self).__init__(
             currency=currency,
@@ -28713,7 +28713,7 @@ class NumberLocale(VegaLiteSchema):
             nan=nan,
             numerals=numerals,
             percent=percent,
-            **kwds
+            **kwds,
         )
 
 
@@ -28887,7 +28887,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionDatumDefnumberArray, self).__init__(
             bandPosition=bandPosition,
@@ -28895,7 +28895,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
             datum=datum,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -29411,7 +29411,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray, self).__init__(
             shorthand=shorthand,
@@ -29426,7 +29426,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -29598,7 +29598,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionDatumDefnumber, self).__init__(
             bandPosition=bandPosition,
@@ -29606,7 +29606,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
             datum=datum,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -30122,7 +30122,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionMarkPropFieldDefnumber, self).__init__(
             shorthand=shorthand,
@@ -30137,7 +30137,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -30526,7 +30526,7 @@ class OrderFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OrderFieldDef, self).__init__(
             shorthand=shorthand,
@@ -30538,7 +30538,7 @@ class OrderFieldDef(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -30561,7 +30561,7 @@ class OrderOnlyDef(VegaLiteSchema):
         sort: Union[
             Union["SortOrder", Literal["ascending", "descending"]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OrderOnlyDef, self).__init__(sort=sort, **kwds)
 
@@ -30611,7 +30611,7 @@ class OrderValueDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OrderValueDef, self).__init__(value=value, condition=condition, **kwds)
 
@@ -31925,7 +31925,7 @@ class OverlayMarkDef(VegaLiteSchema):
         yOffset: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OverlayMarkDef, self).__init__(
             align=align,
@@ -32007,7 +32007,7 @@ class OverlayMarkDef(VegaLiteSchema):
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
 
 
@@ -32102,7 +32102,7 @@ class Point(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Point, self).__init__(
             coordinates=coordinates, type=type, bbox=bbox, **kwds
@@ -32289,7 +32289,7 @@ class PointSelectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         toggle: Union[Union[bool, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PointSelectionConfig, self).__init__(
             type=type,
@@ -32300,7 +32300,7 @@ class PointSelectionConfig(VegaLiteSchema):
             on=on,
             resolve=resolve,
             toggle=toggle,
-            **kwds
+            **kwds,
         )
 
 
@@ -32475,7 +32475,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         toggle: Union[Union[bool, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PointSelectionConfigWithoutType, self).__init__(
             clear=clear,
@@ -32485,7 +32485,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
             on=on,
             resolve=resolve,
             toggle=toggle,
-            **kwds
+            **kwds,
         )
 
 
@@ -32529,7 +32529,7 @@ class Polygon(Geometry):
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Polygon, self).__init__(
             coordinates=coordinates, type=type, bbox=bbox, **kwds
@@ -32694,7 +32694,7 @@ class DatumDef(LatLongDef, Position2Def):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DatumDef, self).__init__(
             bandPosition=bandPosition, datum=datum, title=title, type=type, **kwds
@@ -32881,7 +32881,7 @@ class PositionDatumDefBase(PolarDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PositionDatumDefBase, self).__init__(
             bandPosition=bandPosition,
@@ -32890,7 +32890,7 @@ class PositionDatumDefBase(PolarDef):
             stack=stack,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -33108,7 +33108,7 @@ class PositionDatumDef(PositionDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PositionDatumDef, self).__init__(
             axis=axis,
@@ -33119,7 +33119,7 @@ class PositionDatumDef(PositionDef):
             stack=stack,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -33655,7 +33655,7 @@ class PositionFieldDef(PositionDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PositionFieldDef, self).__init__(
             shorthand=shorthand,
@@ -33671,7 +33671,7 @@ class PositionFieldDef(PositionDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -34186,7 +34186,7 @@ class PositionFieldDefBase(PolarDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PositionFieldDefBase, self).__init__(
             shorthand=shorthand,
@@ -34200,7 +34200,7 @@ class PositionFieldDefBase(PolarDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -34228,7 +34228,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PositionValueDef, self).__init__(value=value, **kwds)
 
@@ -34506,7 +34506,7 @@ class FieldEqualPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldEqualPredicate, self).__init__(
             equal=equal, field=field, timeUnit=timeUnit, **kwds
@@ -34693,7 +34693,7 @@ class FieldGTEPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldGTEPredicate, self).__init__(
             field=field, gte=gte, timeUnit=timeUnit, **kwds
@@ -34880,7 +34880,7 @@ class FieldGTPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldGTPredicate, self).__init__(
             field=field, gt=gt, timeUnit=timeUnit, **kwds
@@ -35067,7 +35067,7 @@ class FieldLTEPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldLTEPredicate, self).__init__(
             field=field, lte=lte, timeUnit=timeUnit, **kwds
@@ -35254,7 +35254,7 @@ class FieldLTPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldLTPredicate, self).__init__(
             field=field, lt=lt, timeUnit=timeUnit, **kwds
@@ -35442,7 +35442,7 @@ class FieldOneOfPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOneOfPredicate, self).__init__(
             field=field, oneOf=oneOf, timeUnit=timeUnit, **kwds
@@ -35635,7 +35635,7 @@ class FieldRangePredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldRangePredicate, self).__init__(
             field=field, range=range, timeUnit=timeUnit, **kwds
@@ -35816,7 +35816,7 @@ class FieldValidPredicate(Predicate):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldValidPredicate, self).__init__(
             field=field, valid=valid, timeUnit=timeUnit, **kwds
@@ -35844,7 +35844,7 @@ class ParameterPredicate(Predicate):
         self,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ParameterPredicate, self).__init__(param=param, empty=empty, **kwds)
 
@@ -36110,7 +36110,7 @@ class Projection(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Projection, self).__init__(
             center=center,
@@ -36137,7 +36137,7 @@ class Projection(VegaLiteSchema):
             tilt=tilt,
             translate=translate,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -36402,7 +36402,7 @@ class ProjectionConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ProjectionConfig, self).__init__(
             center=center,
@@ -36429,7 +36429,7 @@ class ProjectionConfig(VegaLiteSchema):
             tilt=tilt,
             translate=translate,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -36507,7 +36507,7 @@ class RadialGradient(Gradient):
         x2: Union[float, UndefinedType] = Undefined,
         y1: Union[float, UndefinedType] = Undefined,
         y2: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RadialGradient, self).__init__(
             gradient=gradient,
@@ -36519,7 +36519,7 @@ class RadialGradient(Gradient):
             x2=x2,
             y1=y1,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -37526,7 +37526,7 @@ class RangeConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbol: Union[Sequence[Union["SymbolShape", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RangeConfig, self).__init__(
             category=category,
@@ -37535,7 +37535,7 @@ class RangeConfig(VegaLiteSchema):
             ordinal=ordinal,
             ramp=ramp,
             symbol=symbol,
-            **kwds
+            **kwds,
         )
 
 
@@ -38839,7 +38839,7 @@ class RectConfig(AnyMarkConfig):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RectConfig, self).__init__(
             align=align,
@@ -38915,7 +38915,7 @@ class RectConfig(AnyMarkConfig):
             x2=x2,
             y=y,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -38958,7 +38958,7 @@ class RepeatMapping(VegaLiteSchema):
         self,
         column: Union[Sequence[str], UndefinedType] = Undefined,
         row: Union[Sequence[str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RepeatMapping, self).__init__(column=column, row=row, **kwds)
 
@@ -38983,7 +38983,7 @@ class RepeatRef(Field):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RepeatRef, self).__init__(repeat=repeat, **kwds)
 
@@ -39014,7 +39014,7 @@ class Resolve(VegaLiteSchema):
         axis: Union[Union["AxisResolveMap", dict], UndefinedType] = Undefined,
         legend: Union[Union["LegendResolveMap", dict], UndefinedType] = Undefined,
         scale: Union[Union["ScaleResolveMap", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Resolve, self).__init__(axis=axis, legend=legend, scale=scale, **kwds)
 
@@ -39055,7 +39055,7 @@ class RowColLayoutAlign(VegaLiteSchema):
         row: Union[
             Union["LayoutAlign", Literal["all", "each", "none"]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RowColLayoutAlign, self).__init__(column=column, row=row, **kwds)
 
@@ -39080,7 +39080,7 @@ class RowColboolean(VegaLiteSchema):
         self,
         column: Union[bool, UndefinedType] = Undefined,
         row: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RowColboolean, self).__init__(column=column, row=row, **kwds)
 
@@ -39105,7 +39105,7 @@ class RowColnumber(VegaLiteSchema):
         self,
         column: Union[float, UndefinedType] = Undefined,
         row: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RowColnumber, self).__init__(column=column, row=row, **kwds)
 
@@ -39552,7 +39552,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RowColumnEncodingFieldDef, self).__init__(
             shorthand=shorthand,
@@ -39568,7 +39568,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -40380,7 +40380,7 @@ class Scale(VegaLiteSchema):
         zero: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Scale, self).__init__(
             align=align,
@@ -40407,7 +40407,7 @@ class Scale(VegaLiteSchema):
             scheme=scheme,
             type=type,
             zero=zero,
-            **kwds
+            **kwds,
         )
 
 
@@ -40450,7 +40450,7 @@ class ScaleBinParams(ScaleBins):
         step: Union[float, UndefinedType] = Undefined,
         start: Union[float, UndefinedType] = Undefined,
         stop: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ScaleBinParams, self).__init__(step=step, start=start, stop=stop, **kwds)
 
@@ -40651,7 +40651,7 @@ class ScaleConfig(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
         ] = Undefined,
         zero: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ScaleConfig, self).__init__(
             bandPaddingInner=bandPaddingInner,
@@ -40681,7 +40681,7 @@ class ScaleConfig(VegaLiteSchema):
             useUnaggregatedDomain=useUnaggregatedDomain,
             xReverse=xReverse,
             zero=zero,
-            **kwds
+            **kwds,
         )
 
 
@@ -40828,7 +40828,7 @@ class ScaleDatumDef(OffsetDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ScaleDatumDef, self).__init__(
             bandPosition=bandPosition,
@@ -40836,7 +40836,7 @@ class ScaleDatumDef(OffsetDef):
             scale=scale,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -41314,7 +41314,7 @@ class ScaleFieldDef(OffsetDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ScaleFieldDef, self).__init__(
             shorthand=shorthand,
@@ -41327,7 +41327,7 @@ class ScaleFieldDef(OffsetDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -41366,7 +41366,7 @@ class ScaleInterpolateParams(VegaLiteSchema):
             Literal["rgb", "cubehelix", "cubehelix-long"], UndefinedType
         ] = Undefined,
         gamma: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ScaleInterpolateParams, self).__init__(type=type, gamma=gamma, **kwds)
 
@@ -41470,7 +41470,7 @@ class ScaleResolveMap(VegaLiteSchema):
         yOffset: Union[
             Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ScaleResolveMap, self).__init__(
             angle=angle,
@@ -41490,7 +41490,7 @@ class ScaleResolveMap(VegaLiteSchema):
             xOffset=xOffset,
             y=y,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
 
 
@@ -41894,7 +41894,7 @@ class SchemeParams(VegaLiteSchema):
         ] = Undefined,
         count: Union[float, UndefinedType] = Undefined,
         extent: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SchemeParams, self).__init__(
             name=name, count=count, extent=extent, **kwds
@@ -42192,7 +42192,7 @@ class SecondaryFieldDef(Position2Def):
         title: Union[
             Union[None, Union["Text", Sequence[str], str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SecondaryFieldDef, self).__init__(
             shorthand=shorthand,
@@ -42202,7 +42202,7 @@ class SecondaryFieldDef(Position2Def):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -42242,7 +42242,7 @@ class SelectionConfig(VegaLiteSchema):
         point: Union[
             Union["PointSelectionConfigWithoutType", dict], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SelectionConfig, self).__init__(interval=interval, point=point, **kwds)
 
@@ -42315,7 +42315,7 @@ class DateTime(SelectionInit):
         seconds: Union[float, UndefinedType] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         year: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DateTime, self).__init__(
             date=date,
@@ -42328,7 +42328,7 @@ class DateTime(SelectionInit):
             seconds=seconds,
             utc=utc,
             year=year,
-            **kwds
+            **kwds,
         )
 
 
@@ -42469,7 +42469,7 @@ class SelectionParameter(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SelectionParameter, self).__init__(
             name=name, select=select, bind=bind, value=value, **kwds
@@ -42520,7 +42520,7 @@ class SequenceGenerator(Generator):
         self,
         sequence: Union[Union["SequenceParams", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SequenceGenerator, self).__init__(sequence=sequence, name=name, **kwds)
 
@@ -42554,7 +42554,7 @@ class SequenceParams(VegaLiteSchema):
         start: Union[float, UndefinedType] = Undefined,
         stop: Union[float, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SequenceParams, self).__init__(start=start, stop=stop, step=step, **kwds)
 
@@ -42794,7 +42794,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionDatumDefstringnull, self).__init__(
             bandPosition=bandPosition,
@@ -42802,7 +42802,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
             datum=datum,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -43316,7 +43316,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
             Union["TypeForShape", Literal["nominal", "ordinal", "geojson"]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(
             FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull, self
@@ -43333,7 +43333,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -43503,7 +43503,7 @@ class SharedEncoding(VegaLiteSchema):
         yError: Union[dict, UndefinedType] = Undefined,
         yError2: Union[dict, UndefinedType] = Undefined,
         yOffset: Union[dict, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SharedEncoding, self).__init__(
             angle=angle,
@@ -43543,7 +43543,7 @@ class SharedEncoding(VegaLiteSchema):
             yError=yError,
             yError2=yError2,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
 
 
@@ -43668,7 +43668,7 @@ class EncodingSortField(Sort):
             Union[None, Union["SortOrder", Literal["ascending", "descending"]]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(EncodingSortField, self).__init__(field=field, op=op, order=order, **kwds)
 
@@ -43757,7 +43757,7 @@ class SortByEncoding(Sort):
             Union[None, Union["SortOrder", Literal["ascending", "descending"]]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SortByEncoding, self).__init__(encoding=encoding, order=order, **kwds)
 
@@ -43787,7 +43787,7 @@ class SortField(VegaLiteSchema):
             Union[None, Union["SortOrder", Literal["ascending", "descending"]]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SortField, self).__init__(field=field, order=order, **kwds)
 
@@ -44004,7 +44004,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ConcatSpecGenericSpec, self).__init__(
             concat=concat,
@@ -44019,7 +44019,7 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             spacing=spacing,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -44200,7 +44200,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FacetSpec, self).__init__(
             facet=facet,
@@ -44216,7 +44216,7 @@ class FacetSpec(Spec, NonNormalizedSpec):
             spacing=spacing,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -44469,7 +44469,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         ] = Undefined,
         view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
         width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FacetedUnitSpec, self).__init__(
             mark=mark,
@@ -44489,7 +44489,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
             transform=transform,
             view=view,
             width=width,
-            **kwds
+            **kwds,
         )
 
 
@@ -44621,7 +44621,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(HConcatSpecGenericSpec, self).__init__(
             hconcat=hconcat,
@@ -44634,7 +44634,7 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             spacing=spacing,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -44790,7 +44790,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
         ] = Undefined,
         view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
         width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LayerSpec, self).__init__(
             layer=layer,
@@ -44805,7 +44805,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
             transform=transform,
             view=view,
             width=width,
-            **kwds
+            **kwds,
         )
 
 
@@ -44997,7 +44997,7 @@ class LayerRepeatSpec(RepeatSpec):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LayerRepeatSpec, self).__init__(
             repeat=repeat,
@@ -45013,7 +45013,7 @@ class LayerRepeatSpec(RepeatSpec):
             spacing=spacing,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -45208,7 +45208,7 @@ class NonLayerRepeatSpec(RepeatSpec):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(NonLayerRepeatSpec, self).__init__(
             repeat=repeat,
@@ -45224,7 +45224,7 @@ class NonLayerRepeatSpec(RepeatSpec):
             spacing=spacing,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -45248,7 +45248,7 @@ class SphereGenerator(Generator):
         self,
         sphere: Union[Union[bool, dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SphereGenerator, self).__init__(sphere=sphere, name=name, **kwds)
 
@@ -45401,7 +45401,7 @@ class DerivedStream(Stream):
             UndefinedType,
         ] = Undefined,
         throttle: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DerivedStream, self).__init__(
             stream=stream,
@@ -45412,7 +45412,7 @@ class DerivedStream(Stream):
             markname=markname,
             marktype=marktype,
             throttle=throttle,
-            **kwds
+            **kwds,
         )
 
 
@@ -45507,7 +45507,7 @@ class MergedStream(Stream):
             UndefinedType,
         ] = Undefined,
         throttle: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(MergedStream, self).__init__(
             merge=merge,
@@ -45518,7 +45518,7 @@ class MergedStream(Stream):
             markname=markname,
             marktype=marktype,
             throttle=throttle,
-            **kwds
+            **kwds,
         )
 
 
@@ -45920,7 +45920,7 @@ class StringFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StringFieldDef, self).__init__(
             aggregate=aggregate,
@@ -45932,7 +45932,7 @@ class StringFieldDef(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -46363,7 +46363,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StringFieldDefWithCondition, self).__init__(
             shorthand=shorthand,
@@ -46377,7 +46377,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -46427,7 +46427,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
             Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StringValueDefWithCondition, self).__init__(
             condition=condition, value=value, **kwds
@@ -46525,7 +46525,7 @@ class StyleConfigIndex(VegaLiteSchema):
         text: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
         tick: Union[Union["TickConfig", dict], UndefinedType] = Undefined,
         trail: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StyleConfigIndex, self).__init__(
             arc=arc,
@@ -46543,7 +46543,7 @@ class StyleConfigIndex(VegaLiteSchema):
             text=text,
             tick=tick,
             trail=trail,
-            **kwds
+            **kwds,
         )
 
 
@@ -46800,7 +46800,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionStringDatumDefText, self).__init__(
             bandPosition=bandPosition,
@@ -46810,7 +46810,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
             formatType=formatType,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -47243,7 +47243,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FieldOrDatumDefWithConditionStringFieldDefText, self).__init__(
             shorthand=shorthand,
@@ -47257,7 +47257,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -48511,7 +48511,7 @@ class TickConfig(AnyMarkConfig):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TickConfig, self).__init__(
             align=align,
@@ -48585,7 +48585,7 @@ class TickConfig(AnyMarkConfig):
             x2=x2,
             y=y,
             y2=y2,
-            **kwds
+            **kwds,
         )
 
 
@@ -48651,7 +48651,7 @@ class TimeIntervalStep(TickCount):
             UndefinedType,
         ] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TimeIntervalStep, self).__init__(interval=interval, step=step, **kwds)
 
@@ -48704,7 +48704,7 @@ class TimeLocale(VegaLiteSchema):
             Union["Vector12string", Sequence[str]], UndefinedType
         ] = Undefined,
         time: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TimeLocale, self).__init__(
             date=date,
@@ -48715,7 +48715,7 @@ class TimeLocale(VegaLiteSchema):
             shortDays=shortDays,
             shortMonths=shortMonths,
             time=time,
-            **kwds
+            **kwds,
         )
 
 
@@ -48972,7 +48972,7 @@ class TimeUnitParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TimeUnitParams, self).__init__(
             binned=binned, maxbins=maxbins, step=step, unit=unit, utc=utc, **kwds
@@ -49116,7 +49116,7 @@ class TimeUnitTransformParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TimeUnitTransformParams, self).__init__(
             maxbins=maxbins, step=step, unit=unit, utc=utc, **kwds
@@ -49690,7 +49690,7 @@ class TitleConfig(VegaLiteSchema):
         zindex: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TitleConfig, self).__init__(
             align=align,
@@ -49718,7 +49718,7 @@ class TitleConfig(VegaLiteSchema):
             subtitleLineHeight=subtitleLineHeight,
             subtitlePadding=subtitlePadding,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -50324,7 +50324,7 @@ class TitleParams(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TitleParams, self).__init__(
             text=text,
@@ -50355,7 +50355,7 @@ class TitleParams(VegaLiteSchema):
             subtitleLineHeight=subtitleLineHeight,
             subtitlePadding=subtitlePadding,
             zindex=zindex,
-            **kwds
+            **kwds,
         )
 
 
@@ -50376,7 +50376,7 @@ class TooltipContent(VegaLiteSchema):
     def __init__(
         self,
         content: Union[Literal["encoding", "data"], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TooltipContent, self).__init__(content=content, **kwds)
 
@@ -50486,7 +50486,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
             UndefinedType,
         ] = Undefined,
         views: Union[Sequence[str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelSelectionParameter, self).__init__(
             name=name, select=select, bind=bind, value=value, views=views, **kwds
@@ -50918,7 +50918,7 @@ class TopLevelConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelConcatSpec, self).__init__(
             concat=concat,
@@ -50940,7 +50940,7 @@ class TopLevelConcatSpec(TopLevelSpec):
             title=title,
             transform=transform,
             usermeta=usermeta,
-            **kwds
+            **kwds,
         )
 
 
@@ -51346,7 +51346,7 @@ class TopLevelFacetSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelFacetSpec, self).__init__(
             data=data,
@@ -51369,7 +51369,7 @@ class TopLevelFacetSpec(TopLevelSpec):
             title=title,
             transform=transform,
             usermeta=usermeta,
-            **kwds
+            **kwds,
         )
 
 
@@ -51726,7 +51726,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelHConcatSpec, self).__init__(
             hconcat=hconcat,
@@ -51746,7 +51746,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
             title=title,
             transform=transform,
             usermeta=usermeta,
-            **kwds
+            **kwds,
         )
 
 
@@ -52126,7 +52126,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
         view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
         width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelLayerSpec, self).__init__(
             layer=layer,
@@ -52148,7 +52148,7 @@ class TopLevelLayerSpec(TopLevelSpec):
             usermeta=usermeta,
             view=view,
             width=width,
-            **kwds
+            **kwds,
         )
 
 
@@ -52632,7 +52632,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
         view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
         width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelUnitSpec, self).__init__(
             data=data,
@@ -52658,7 +52658,7 @@ class TopLevelUnitSpec(TopLevelSpec):
             usermeta=usermeta,
             view=view,
             width=width,
-            **kwds
+            **kwds,
         )
 
 
@@ -53015,7 +53015,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
             UndefinedType,
         ] = Undefined,
         usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopLevelVConcatSpec, self).__init__(
             vconcat=vconcat,
@@ -53035,7 +53035,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
             title=title,
             transform=transform,
             usermeta=usermeta,
-            **kwds
+            **kwds,
         )
 
 
@@ -53090,7 +53090,7 @@ class TopoDataFormat(DataFormat):
         mesh: Union[str, UndefinedType] = Undefined,
         parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TopoDataFormat, self).__init__(
             feature=feature, mesh=mesh, parse=parse, type=type, **kwds
@@ -53144,7 +53144,7 @@ class AggregateTransform(Transform):
             Sequence[Union["AggregatedFieldDef", dict]], UndefinedType
         ] = Undefined,
         groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AggregateTransform, self).__init__(
             aggregate=aggregate, groupby=groupby, **kwds
@@ -53177,7 +53177,7 @@ class BinTransform(Transform):
         self,
         bin: Union[Union[Union["BinParams", dict], bool], UndefinedType] = Undefined,
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(BinTransform, self).__init__(bin=bin, field=field, **kwds)
 
@@ -53268,7 +53268,7 @@ class DensityTransform(Transform):
         maxsteps: Union[float, UndefinedType] = Undefined,
         minsteps: Union[float, UndefinedType] = Undefined,
         steps: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DensityTransform, self).__init__(
             density=density,
@@ -53280,7 +53280,7 @@ class DensityTransform(Transform):
             maxsteps=maxsteps,
             minsteps=minsteps,
             steps=steps,
-            **kwds
+            **kwds,
         )
 
 
@@ -53304,7 +53304,7 @@ class ExtentTransform(Transform):
         self,
         extent: Union[Union["FieldName", str], UndefinedType] = Undefined,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ExtentTransform, self).__init__(extent=extent, param=param, **kwds)
 
@@ -53373,7 +53373,7 @@ class FilterTransform(Transform):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FilterTransform, self).__init__(filter=filter, **kwds)
 
@@ -53402,7 +53402,7 @@ class FlattenTransform(Transform):
     def __init__(
         self,
         flatten: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FlattenTransform, self).__init__(flatten=flatten, **kwds)
 
@@ -53427,7 +53427,7 @@ class FoldTransform(Transform):
     def __init__(
         self,
         fold: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FoldTransform, self).__init__(fold=fold, **kwds)
 
@@ -53494,7 +53494,7 @@ class ImputeTransform(Transform):
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ImputeTransform, self).__init__(
             impute=impute,
@@ -53504,7 +53504,7 @@ class ImputeTransform(Transform):
             keyvals=keyvals,
             method=method,
             value=value,
-            **kwds
+            **kwds,
         )
 
 
@@ -53531,7 +53531,7 @@ class JoinAggregateTransform(Transform):
             Sequence[Union["JoinAggregateFieldDef", dict]], UndefinedType
         ] = Undefined,
         groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(JoinAggregateTransform, self).__init__(
             joinaggregate=joinaggregate, groupby=groupby, **kwds
@@ -53572,7 +53572,7 @@ class LoessTransform(Transform):
         on: Union[Union["FieldName", str], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
         groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LoessTransform, self).__init__(
             loess=loess, on=on, bandwidth=bandwidth, groupby=groupby, **kwds
@@ -53613,7 +53613,7 @@ class LookupTransform(Transform):
         self,
         lookup: Union[str, UndefinedType] = Undefined,
         default: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
 
@@ -53683,7 +53683,7 @@ class PivotTransform(Transform):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(PivotTransform, self).__init__(
             pivot=pivot, value=value, groupby=groupby, limit=limit, op=op, **kwds
@@ -53724,7 +53724,7 @@ class QuantileTransform(Transform):
         groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         probs: Union[Sequence[float], UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(QuantileTransform, self).__init__(
             quantile=quantile, groupby=groupby, probs=probs, step=step, **kwds
@@ -53786,7 +53786,7 @@ class RegressionTransform(Transform):
         ] = Undefined,
         order: Union[float, UndefinedType] = Undefined,
         params: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RegressionTransform, self).__init__(
             on=on,
@@ -53796,7 +53796,7 @@ class RegressionTransform(Transform):
             method=method,
             order=order,
             params=params,
-            **kwds
+            **kwds,
         )
 
 
@@ -53858,7 +53858,7 @@ class StackTransform(Transform):
             Literal["zero", "center", "normalize"], UndefinedType
         ] = Undefined,
         sort: Union[Sequence[Union["SortField", dict]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StackTransform, self).__init__(
             groupby=groupby, stack=stack, offset=offset, sort=sort, **kwds
@@ -54001,7 +54001,7 @@ class TimeUnitTransform(Transform):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TimeUnitTransform, self).__init__(field=field, timeUnit=timeUnit, **kwds)
 
@@ -54394,7 +54394,7 @@ class TypedFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TypedFieldDef, self).__init__(
             aggregate=aggregate,
@@ -54404,7 +54404,7 @@ class TypedFieldDef(VegaLiteSchema):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -54557,7 +54557,7 @@ class UnitSpec(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(UnitSpec, self).__init__(
             mark=mark,
@@ -54569,7 +54569,7 @@ class UnitSpec(VegaLiteSchema):
             projection=projection,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -54758,7 +54758,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
         ] = Undefined,
         view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
         width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(UnitSpecWithFrame, self).__init__(
             mark=mark,
@@ -54773,7 +54773,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
             transform=transform,
             view=view,
             width=width,
-            **kwds
+            **kwds,
         )
 
 
@@ -54810,7 +54810,7 @@ class UrlData(DataSource):
             UndefinedType,
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(UrlData, self).__init__(url=url, format=format, name=name, **kwds)
 
@@ -54977,7 +54977,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(VConcatSpecGenericSpec, self).__init__(
             vconcat=vconcat,
@@ -54990,7 +54990,7 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
             spacing=spacing,
             title=title,
             transform=transform,
-            **kwds
+            **kwds,
         )
 
 
@@ -55063,7 +55063,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(
             ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull, self
@@ -55124,7 +55124,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
             Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(
             ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull, self
@@ -55180,7 +55180,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         value: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefnumber, self).__init__(
             condition=condition, value=value, **kwds
@@ -55237,7 +55237,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
             Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray, self).__init__(
             condition=condition, value=value, **kwds
@@ -55292,7 +55292,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
             Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefstringnull, self).__init__(
             condition=condition, value=value, **kwds
@@ -55348,7 +55348,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ValueDefWithConditionStringFieldDefText, self).__init__(
             condition=condition, value=value, **kwds
@@ -55401,7 +55401,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ValueDefnumberwidthheightExprRef, self).__init__(value=value, **kwds)
 
@@ -55451,7 +55451,7 @@ class VariableParameter(TopLevelParameter):
         ] = Undefined,
         expr: Union[Union["Expr", str], UndefinedType] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(VariableParameter, self).__init__(
             name=name, bind=bind, expr=expr, value=value, **kwds
@@ -56048,7 +56048,7 @@ class ViewBackground(VegaLiteSchema):
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ViewBackground, self).__init__(
             cornerRadius=cornerRadius,
@@ -56065,7 +56065,7 @@ class ViewBackground(VegaLiteSchema):
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
             style=style,
-            **kwds
+            **kwds,
         )
 
 
@@ -56573,7 +56573,7 @@ class ViewConfig(VegaLiteSchema):
         strokeWidth: Union[
             Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ViewConfig, self).__init__(
             clip=clip,
@@ -56595,7 +56595,7 @@ class ViewConfig(VegaLiteSchema):
             strokeMiterLimit=strokeMiterLimit,
             strokeOpacity=strokeOpacity,
             strokeWidth=strokeWidth,
-            **kwds
+            **kwds,
         )
 
 
@@ -56711,7 +56711,7 @@ class WindowFieldDef(VegaLiteSchema):
         ] = Undefined,
         field: Union[Union["FieldName", str], UndefinedType] = Undefined,
         param: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(WindowFieldDef, self).__init__(op=op, field=field, param=param, **kwds)
 
@@ -56787,7 +56787,7 @@ class WindowTransform(Transform):
         groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
         sort: Union[Sequence[Union["SortField", dict]], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(WindowTransform, self).__init__(
             window=window,
@@ -56795,5 +56795,5 @@ class WindowTransform(Transform):
             groupby=groupby,
             ignorePeers=ignorePeers,
             sort=sort,
-            **kwds
+            **kwds,
         )

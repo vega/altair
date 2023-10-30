@@ -32,8 +32,9 @@ class FieldChannelMixin:
 
         if shorthand is not Undefined and field is not Undefined:
             raise ValueError(
-                "{} specifies both shorthand={} and field={}. "
-                "".format(self.__class__.__name__, shorthand, field)
+                "{} specifies both shorthand={} and field={}. " "".format(
+                    self.__class__.__name__, shorthand, field
+                )
             )
 
         if isinstance(shorthand, (tuple, list)):
@@ -384,7 +385,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -392,7 +393,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -400,7 +401,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -432,7 +433,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -469,7 +470,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -482,7 +483,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -502,7 +503,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2017,7 +2018,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2580,7 +2581,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2625,7 +2626,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2646,7 +2647,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2690,7 +2691,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2721,7 +2722,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2745,7 +2746,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2765,7 +2766,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2803,7 +2804,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2841,7 +2842,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2864,7 +2865,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -2887,7 +2888,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -3010,7 +3011,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Angle":
         ...
 
@@ -3312,7 +3313,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Angle, self).__init__(
             shorthand=shorthand,
@@ -3327,7 +3328,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -3480,7 +3481,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleDatum":
         ...
 
@@ -3493,7 +3494,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleDatum":
         ...
 
@@ -3519,7 +3520,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "AngleDatum":
         ...
 
@@ -3554,7 +3555,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AngleDatum, self).__init__(
             datum=datum,
@@ -3562,7 +3563,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -3871,7 +3872,7 @@ class AngleValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleValue":
         ...
 
@@ -3922,7 +3923,7 @@ class AngleValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleValue":
         ...
 
@@ -4189,7 +4190,7 @@ class AngleValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleValue":
         ...
 
@@ -4220,7 +4221,7 @@ class AngleValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleValue":
         ...
 
@@ -4253,7 +4254,7 @@ class AngleValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleValue":
         ...
 
@@ -4266,7 +4267,7 @@ class AngleValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "AngleValue":
         ...
 
@@ -4301,7 +4302,7 @@ class AngleValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(AngleValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -4566,7 +4567,7 @@ class Color(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -4574,7 +4575,7 @@ class Color(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -4582,7 +4583,7 @@ class Color(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -4614,7 +4615,7 @@ class Color(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -4660,7 +4661,7 @@ class Color(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -4682,7 +4683,7 @@ class Color(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -4702,7 +4703,7 @@ class Color(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6217,7 +6218,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6780,7 +6781,7 @@ class Color(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6825,7 +6826,7 @@ class Color(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6846,7 +6847,7 @@ class Color(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6890,7 +6891,7 @@ class Color(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6921,7 +6922,7 @@ class Color(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6945,7 +6946,7 @@ class Color(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -6965,7 +6966,7 @@ class Color(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -7003,7 +7004,7 @@ class Color(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -7041,7 +7042,7 @@ class Color(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -7064,7 +7065,7 @@ class Color(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -7087,7 +7088,7 @@ class Color(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -7210,7 +7211,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Color":
         ...
 
@@ -7522,7 +7523,7 @@ class Color(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Color, self).__init__(
             shorthand=shorthand,
@@ -7537,7 +7538,7 @@ class Color(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -7701,7 +7702,7 @@ class ColorDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorDatum":
         ...
 
@@ -7723,7 +7724,7 @@ class ColorDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorDatum":
         ...
 
@@ -7749,7 +7750,7 @@ class ColorDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "ColorDatum":
         ...
 
@@ -7794,7 +7795,7 @@ class ColorDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ColorDatum, self).__init__(
             datum=datum,
@@ -7802,7 +7803,7 @@ class ColorDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -8112,7 +8113,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorValue":
         ...
 
@@ -8163,7 +8164,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorValue":
         ...
 
@@ -8430,7 +8431,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorValue":
         ...
 
@@ -8461,7 +8462,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorValue":
         ...
 
@@ -8503,7 +8504,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorValue":
         ...
 
@@ -8525,7 +8526,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ColorValue":
         ...
 
@@ -8570,7 +8571,7 @@ class ColorValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -8817,7 +8818,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -8825,7 +8826,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -8833,7 +8834,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -8869,7 +8870,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -8891,7 +8892,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9390,7 +9391,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9458,7 +9459,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9486,7 +9487,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9506,7 +9507,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9544,7 +9545,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9582,7 +9583,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9605,7 +9606,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9628,7 +9629,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -9751,7 +9752,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Column":
         ...
 
@@ -10001,7 +10002,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Column, self).__init__(
             shorthand=shorthand,
@@ -10017,7 +10018,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -10250,7 +10251,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10258,7 +10259,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10266,7 +10267,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10298,7 +10299,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10339,7 +10340,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10352,7 +10353,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10372,7 +10373,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10404,7 +10405,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10424,7 +10425,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10462,7 +10463,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10500,7 +10501,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10523,7 +10524,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10546,7 +10547,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10669,7 +10670,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Description":
         ...
 
@@ -10917,7 +10918,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Description, self).__init__(
             shorthand=shorthand,
@@ -10931,7 +10932,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -11238,7 +11239,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "DescriptionValue":
         ...
 
@@ -11289,7 +11290,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "DescriptionValue":
         ...
 
@@ -11556,7 +11557,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "DescriptionValue":
         ...
 
@@ -11587,7 +11588,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "DescriptionValue":
         ...
 
@@ -11620,7 +11621,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "DescriptionValue":
         ...
 
@@ -11633,7 +11634,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "DescriptionValue":
         ...
 
@@ -11668,7 +11669,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(DescriptionValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -11862,7 +11863,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -11870,7 +11871,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -11878,7 +11879,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -11910,7 +11911,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -11932,7 +11933,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -11952,7 +11953,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -11972,7 +11973,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -12010,7 +12011,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -12048,7 +12049,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -12071,7 +12072,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -12094,7 +12095,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -12217,7 +12218,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Detail":
         ...
 
@@ -12446,7 +12447,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Detail, self).__init__(
             shorthand=shorthand,
@@ -12457,7 +12458,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -12741,7 +12742,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -12749,7 +12750,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -12757,7 +12758,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -12774,7 +12775,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         row: Union[
             Union[Literal["all", "each", "none"], core.LayoutAlign], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -12806,7 +12807,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -12827,7 +12828,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         self,
         column: Union[bool, UndefinedType] = Undefined,
         row: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -12845,7 +12846,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13344,7 +13345,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13412,7 +13413,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13429,7 +13430,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         self,
         column: Union[float, UndefinedType] = Undefined,
         row: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13449,7 +13450,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13469,7 +13470,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13507,7 +13508,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13545,7 +13546,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13568,7 +13569,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13591,7 +13592,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13714,7 +13715,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Facet":
         ...
 
@@ -13974,7 +13975,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Facet, self).__init__(
             shorthand=shorthand,
@@ -13992,7 +13993,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -14256,7 +14257,7 @@ class Fill(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -14264,7 +14265,7 @@ class Fill(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -14272,7 +14273,7 @@ class Fill(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -14304,7 +14305,7 @@ class Fill(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -14350,7 +14351,7 @@ class Fill(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -14372,7 +14373,7 @@ class Fill(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -14392,7 +14393,7 @@ class Fill(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -15907,7 +15908,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16470,7 +16471,7 @@ class Fill(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16515,7 +16516,7 @@ class Fill(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16536,7 +16537,7 @@ class Fill(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16580,7 +16581,7 @@ class Fill(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16611,7 +16612,7 @@ class Fill(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16635,7 +16636,7 @@ class Fill(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16655,7 +16656,7 @@ class Fill(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16693,7 +16694,7 @@ class Fill(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16731,7 +16732,7 @@ class Fill(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16754,7 +16755,7 @@ class Fill(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16777,7 +16778,7 @@ class Fill(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -16900,7 +16901,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Fill":
         ...
 
@@ -17212,7 +17213,7 @@ class Fill(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Fill, self).__init__(
             shorthand=shorthand,
@@ -17227,7 +17228,7 @@ class Fill(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -17391,7 +17392,7 @@ class FillDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillDatum":
         ...
 
@@ -17413,7 +17414,7 @@ class FillDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillDatum":
         ...
 
@@ -17439,7 +17440,7 @@ class FillDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "FillDatum":
         ...
 
@@ -17484,7 +17485,7 @@ class FillDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FillDatum, self).__init__(
             datum=datum,
@@ -17492,7 +17493,7 @@ class FillDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -17802,7 +17803,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillValue":
         ...
 
@@ -17853,7 +17854,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillValue":
         ...
 
@@ -18120,7 +18121,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillValue":
         ...
 
@@ -18151,7 +18152,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillValue":
         ...
 
@@ -18193,7 +18194,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillValue":
         ...
 
@@ -18215,7 +18216,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillValue":
         ...
 
@@ -18260,7 +18261,7 @@ class FillValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -18523,7 +18524,7 @@ class FillOpacity(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -18531,7 +18532,7 @@ class FillOpacity(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -18539,7 +18540,7 @@ class FillOpacity(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -18571,7 +18572,7 @@ class FillOpacity(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -18608,7 +18609,7 @@ class FillOpacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -18621,7 +18622,7 @@ class FillOpacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -18641,7 +18642,7 @@ class FillOpacity(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20156,7 +20157,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20719,7 +20720,7 @@ class FillOpacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20764,7 +20765,7 @@ class FillOpacity(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20785,7 +20786,7 @@ class FillOpacity(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20829,7 +20830,7 @@ class FillOpacity(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20860,7 +20861,7 @@ class FillOpacity(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20884,7 +20885,7 @@ class FillOpacity(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20904,7 +20905,7 @@ class FillOpacity(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20942,7 +20943,7 @@ class FillOpacity(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -20980,7 +20981,7 @@ class FillOpacity(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -21003,7 +21004,7 @@ class FillOpacity(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -21026,7 +21027,7 @@ class FillOpacity(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -21149,7 +21150,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacity":
         ...
 
@@ -21451,7 +21452,7 @@ class FillOpacity(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FillOpacity, self).__init__(
             shorthand=shorthand,
@@ -21466,7 +21467,7 @@ class FillOpacity(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -21621,7 +21622,7 @@ class FillOpacityDatum(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityDatum":
         ...
 
@@ -21634,7 +21635,7 @@ class FillOpacityDatum(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityDatum":
         ...
 
@@ -21660,7 +21661,7 @@ class FillOpacityDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "FillOpacityDatum":
         ...
 
@@ -21695,7 +21696,7 @@ class FillOpacityDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FillOpacityDatum, self).__init__(
             datum=datum,
@@ -21703,7 +21704,7 @@ class FillOpacityDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -22012,7 +22013,7 @@ class FillOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityValue":
         ...
 
@@ -22063,7 +22064,7 @@ class FillOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityValue":
         ...
 
@@ -22330,7 +22331,7 @@ class FillOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityValue":
         ...
 
@@ -22361,7 +22362,7 @@ class FillOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityValue":
         ...
 
@@ -22394,7 +22395,7 @@ class FillOpacityValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityValue":
         ...
 
@@ -22407,7 +22408,7 @@ class FillOpacityValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "FillOpacityValue":
         ...
 
@@ -22442,7 +22443,7 @@ class FillOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -22676,7 +22677,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22684,7 +22685,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22692,7 +22693,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22724,7 +22725,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22765,7 +22766,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22778,7 +22779,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22798,7 +22799,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22830,7 +22831,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22850,7 +22851,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22888,7 +22889,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22926,7 +22927,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22949,7 +22950,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -22972,7 +22973,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -23095,7 +23096,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Href":
         ...
 
@@ -23343,7 +23344,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Href, self).__init__(
             shorthand=shorthand,
@@ -23357,7 +23358,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -23664,7 +23665,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "HrefValue":
         ...
 
@@ -23715,7 +23716,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "HrefValue":
         ...
 
@@ -23982,7 +23983,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "HrefValue":
         ...
 
@@ -24013,7 +24014,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "HrefValue":
         ...
 
@@ -24046,7 +24047,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "HrefValue":
         ...
 
@@ -24059,7 +24060,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "HrefValue":
         ...
 
@@ -24094,7 +24095,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -24288,7 +24289,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24296,7 +24297,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24304,7 +24305,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24336,7 +24337,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24358,7 +24359,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24378,7 +24379,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24398,7 +24399,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24436,7 +24437,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24474,7 +24475,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24497,7 +24498,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24520,7 +24521,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24643,7 +24644,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Key":
         ...
 
@@ -24872,7 +24873,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Key, self).__init__(
             shorthand=shorthand,
@@ -24883,7 +24884,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -25075,7 +25076,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25083,7 +25084,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25091,7 +25092,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25113,7 +25114,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25133,7 +25134,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25153,7 +25154,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25191,7 +25192,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25229,7 +25230,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25252,7 +25253,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25275,7 +25276,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25398,7 +25399,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude":
         ...
 
@@ -25617,7 +25618,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Latitude, self).__init__(
             shorthand=shorthand,
@@ -25628,7 +25629,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -25761,7 +25762,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "LatitudeDatum":
         ...
 
@@ -25779,7 +25780,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LatitudeDatum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -25907,7 +25908,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -25915,7 +25916,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -25923,7 +25924,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -25945,7 +25946,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -25965,7 +25966,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -25985,7 +25986,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -26023,7 +26024,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -26061,7 +26062,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -26084,7 +26085,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -26107,7 +26108,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -26230,7 +26231,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Latitude2":
         ...
 
@@ -26444,7 +26445,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Latitude2, self).__init__(
             shorthand=shorthand,
@@ -26454,7 +26455,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -26587,7 +26588,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "Latitude2Datum":
         ...
 
@@ -26605,7 +26606,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Latitude2Datum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -26824,7 +26825,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26832,7 +26833,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26840,7 +26841,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26862,7 +26863,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26882,7 +26883,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26902,7 +26903,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26940,7 +26941,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -26978,7 +26979,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -27001,7 +27002,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -27024,7 +27025,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -27147,7 +27148,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude":
         ...
 
@@ -27366,7 +27367,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Longitude, self).__init__(
             shorthand=shorthand,
@@ -27377,7 +27378,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -27510,7 +27511,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "LongitudeDatum":
         ...
 
@@ -27528,7 +27529,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(LongitudeDatum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -27656,7 +27657,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27664,7 +27665,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27672,7 +27673,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27694,7 +27695,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27714,7 +27715,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27734,7 +27735,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27772,7 +27773,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27810,7 +27811,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27833,7 +27834,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27856,7 +27857,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -27979,7 +27980,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Longitude2":
         ...
 
@@ -28193,7 +28194,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Longitude2, self).__init__(
             shorthand=shorthand,
@@ -28203,7 +28204,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -28336,7 +28337,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "Longitude2Datum":
         ...
 
@@ -28354,7 +28355,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Longitude2Datum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -28643,7 +28644,7 @@ class Opacity(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -28651,7 +28652,7 @@ class Opacity(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -28659,7 +28660,7 @@ class Opacity(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -28691,7 +28692,7 @@ class Opacity(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -28728,7 +28729,7 @@ class Opacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -28741,7 +28742,7 @@ class Opacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -28761,7 +28762,7 @@ class Opacity(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -30276,7 +30277,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -30839,7 +30840,7 @@ class Opacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -30884,7 +30885,7 @@ class Opacity(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -30905,7 +30906,7 @@ class Opacity(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -30949,7 +30950,7 @@ class Opacity(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -30980,7 +30981,7 @@ class Opacity(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31004,7 +31005,7 @@ class Opacity(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31024,7 +31025,7 @@ class Opacity(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31062,7 +31063,7 @@ class Opacity(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31100,7 +31101,7 @@ class Opacity(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31123,7 +31124,7 @@ class Opacity(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31146,7 +31147,7 @@ class Opacity(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31269,7 +31270,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Opacity":
         ...
 
@@ -31571,7 +31572,7 @@ class Opacity(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Opacity, self).__init__(
             shorthand=shorthand,
@@ -31586,7 +31587,7 @@ class Opacity(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -31739,7 +31740,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityDatum":
         ...
 
@@ -31752,7 +31753,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityDatum":
         ...
 
@@ -31778,7 +31779,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "OpacityDatum":
         ...
 
@@ -31813,7 +31814,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OpacityDatum, self).__init__(
             datum=datum,
@@ -31821,7 +31822,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -32130,7 +32131,7 @@ class OpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityValue":
         ...
 
@@ -32181,7 +32182,7 @@ class OpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityValue":
         ...
 
@@ -32448,7 +32449,7 @@ class OpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityValue":
         ...
 
@@ -32479,7 +32480,7 @@ class OpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityValue":
         ...
 
@@ -32512,7 +32513,7 @@ class OpacityValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityValue":
         ...
 
@@ -32525,7 +32526,7 @@ class OpacityValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OpacityValue":
         ...
 
@@ -32560,7 +32561,7 @@ class OpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -32755,7 +32756,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32763,7 +32764,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32771,7 +32772,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32803,7 +32804,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32825,7 +32826,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32849,7 +32850,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32869,7 +32870,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32907,7 +32908,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32945,7 +32946,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32968,7 +32969,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -32991,7 +32992,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -33114,7 +33115,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Order":
         ...
 
@@ -33346,7 +33347,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Order, self).__init__(
             shorthand=shorthand,
@@ -33358,7 +33359,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -33413,7 +33414,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
             UndefinedType,
         ] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OrderValue":
         ...
 
@@ -33423,7 +33424,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "OrderValue":
         ...
 
@@ -33453,7 +33454,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(OrderValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -33729,7 +33730,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -33737,7 +33738,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -33745,7 +33746,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -33777,7 +33778,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -33799,7 +33800,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34358,7 +34359,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34403,7 +34404,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34424,7 +34425,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34468,7 +34469,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34499,7 +34500,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34535,7 +34536,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34555,7 +34556,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34593,7 +34594,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34631,7 +34632,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34654,7 +34655,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34677,7 +34678,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -34800,7 +34801,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius":
         ...
 
@@ -35092,7 +35093,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Radius, self).__init__(
             shorthand=shorthand,
@@ -35106,7 +35107,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -35822,7 +35823,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "RadiusDatum":
         ...
 
@@ -35858,7 +35859,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "RadiusDatum":
         ...
 
@@ -35885,7 +35886,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(RadiusDatum, self).__init__(
             datum=datum,
@@ -35894,7 +35895,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             stack=stack,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -36043,7 +36044,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36051,7 +36052,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36059,7 +36060,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36081,7 +36082,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36101,7 +36102,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36121,7 +36122,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36159,7 +36160,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36197,7 +36198,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36220,7 +36221,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36243,7 +36244,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36366,7 +36367,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Radius2":
         ...
 
@@ -36580,7 +36581,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Radius2, self).__init__(
             shorthand=shorthand,
@@ -36590,7 +36591,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -36723,7 +36724,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "Radius2Datum":
         ...
 
@@ -36741,7 +36742,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Radius2Datum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -37014,7 +37015,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37022,7 +37023,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37030,7 +37031,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37066,7 +37067,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37088,7 +37089,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37587,7 +37588,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37655,7 +37656,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37683,7 +37684,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37703,7 +37704,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37741,7 +37742,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37779,7 +37780,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37802,7 +37803,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37825,7 +37826,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -37948,7 +37949,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Row":
         ...
 
@@ -38198,7 +38199,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Row, self).__init__(
             shorthand=shorthand,
@@ -38214,7 +38215,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -38478,7 +38479,7 @@ class Shape(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -38486,7 +38487,7 @@ class Shape(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -38494,7 +38495,7 @@ class Shape(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -38526,7 +38527,7 @@ class Shape(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -38563,7 +38564,7 @@ class Shape(
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -38576,7 +38577,7 @@ class Shape(
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -38596,7 +38597,7 @@ class Shape(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40111,7 +40112,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40674,7 +40675,7 @@ class Shape(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40719,7 +40720,7 @@ class Shape(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40740,7 +40741,7 @@ class Shape(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40784,7 +40785,7 @@ class Shape(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40815,7 +40816,7 @@ class Shape(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40839,7 +40840,7 @@ class Shape(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40859,7 +40860,7 @@ class Shape(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40897,7 +40898,7 @@ class Shape(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40935,7 +40936,7 @@ class Shape(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40958,7 +40959,7 @@ class Shape(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -40981,7 +40982,7 @@ class Shape(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -41104,7 +41105,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Shape":
         ...
 
@@ -41401,7 +41402,7 @@ class Shape(
             Union[Literal["nominal", "ordinal", "geojson"], core.TypeForShape],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Shape, self).__init__(
             shorthand=shorthand,
@@ -41416,7 +41417,7 @@ class Shape(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -41571,7 +41572,7 @@ class ShapeDatum(
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeDatum":
         ...
 
@@ -41584,7 +41585,7 @@ class ShapeDatum(
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeDatum":
         ...
 
@@ -41610,7 +41611,7 @@ class ShapeDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "ShapeDatum":
         ...
 
@@ -41645,7 +41646,7 @@ class ShapeDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ShapeDatum, self).__init__(
             datum=datum,
@@ -41653,7 +41654,7 @@ class ShapeDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -41960,7 +41961,7 @@ class ShapeValue(
             Union[Literal["nominal", "ordinal", "geojson"], core.TypeForShape],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeValue":
         ...
 
@@ -42011,7 +42012,7 @@ class ShapeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeValue":
         ...
 
@@ -42275,7 +42276,7 @@ class ShapeValue(
             Union[Literal["nominal", "ordinal", "geojson"], core.TypeForShape],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeValue":
         ...
 
@@ -42306,7 +42307,7 @@ class ShapeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeValue":
         ...
 
@@ -42339,7 +42340,7 @@ class ShapeValue(
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeValue":
         ...
 
@@ -42352,7 +42353,7 @@ class ShapeValue(
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ShapeValue":
         ...
 
@@ -42393,7 +42394,7 @@ class ShapeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -42654,7 +42655,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -42662,7 +42663,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -42670,7 +42671,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -42702,7 +42703,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -42739,7 +42740,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -42752,7 +42753,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -42772,7 +42773,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -44287,7 +44288,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -44850,7 +44851,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -44895,7 +44896,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -44916,7 +44917,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -44960,7 +44961,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -44991,7 +44992,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45015,7 +45016,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45035,7 +45036,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45073,7 +45074,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45111,7 +45112,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45134,7 +45135,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45157,7 +45158,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45280,7 +45281,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Size":
         ...
 
@@ -45582,7 +45583,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Size, self).__init__(
             shorthand=shorthand,
@@ -45597,7 +45598,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -45750,7 +45751,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeDatum":
         ...
 
@@ -45763,7 +45764,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeDatum":
         ...
 
@@ -45789,7 +45790,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "SizeDatum":
         ...
 
@@ -45824,7 +45825,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SizeDatum, self).__init__(
             datum=datum,
@@ -45832,7 +45833,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -46141,7 +46142,7 @@ class SizeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeValue":
         ...
 
@@ -46192,7 +46193,7 @@ class SizeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeValue":
         ...
 
@@ -46459,7 +46460,7 @@ class SizeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeValue":
         ...
 
@@ -46490,7 +46491,7 @@ class SizeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeValue":
         ...
 
@@ -46523,7 +46524,7 @@ class SizeValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeValue":
         ...
 
@@ -46536,7 +46537,7 @@ class SizeValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "SizeValue":
         ...
 
@@ -46571,7 +46572,7 @@ class SizeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -46836,7 +46837,7 @@ class Stroke(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -46844,7 +46845,7 @@ class Stroke(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -46852,7 +46853,7 @@ class Stroke(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -46884,7 +46885,7 @@ class Stroke(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -46930,7 +46931,7 @@ class Stroke(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -46952,7 +46953,7 @@ class Stroke(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -46972,7 +46973,7 @@ class Stroke(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -48487,7 +48488,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49050,7 +49051,7 @@ class Stroke(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49095,7 +49096,7 @@ class Stroke(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49116,7 +49117,7 @@ class Stroke(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49160,7 +49161,7 @@ class Stroke(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49191,7 +49192,7 @@ class Stroke(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49215,7 +49216,7 @@ class Stroke(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49235,7 +49236,7 @@ class Stroke(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49273,7 +49274,7 @@ class Stroke(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49311,7 +49312,7 @@ class Stroke(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49334,7 +49335,7 @@ class Stroke(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49357,7 +49358,7 @@ class Stroke(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49480,7 +49481,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Stroke":
         ...
 
@@ -49792,7 +49793,7 @@ class Stroke(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Stroke, self).__init__(
             shorthand=shorthand,
@@ -49807,7 +49808,7 @@ class Stroke(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -49971,7 +49972,7 @@ class StrokeDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDatum":
         ...
 
@@ -49993,7 +49994,7 @@ class StrokeDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDatum":
         ...
 
@@ -50019,7 +50020,7 @@ class StrokeDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "StrokeDatum":
         ...
 
@@ -50064,7 +50065,7 @@ class StrokeDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeDatum, self).__init__(
             datum=datum,
@@ -50072,7 +50073,7 @@ class StrokeDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -50382,7 +50383,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeValue":
         ...
 
@@ -50433,7 +50434,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeValue":
         ...
 
@@ -50700,7 +50701,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeValue":
         ...
 
@@ -50731,7 +50732,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeValue":
         ...
 
@@ -50773,7 +50774,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeValue":
         ...
 
@@ -50795,7 +50796,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeValue":
         ...
 
@@ -50840,7 +50841,7 @@ class StrokeValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -51103,7 +51104,7 @@ class StrokeDash(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -51111,7 +51112,7 @@ class StrokeDash(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -51119,7 +51120,7 @@ class StrokeDash(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -51151,7 +51152,7 @@ class StrokeDash(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -51188,7 +51189,7 @@ class StrokeDash(
             Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -51201,7 +51202,7 @@ class StrokeDash(
             Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -51221,7 +51222,7 @@ class StrokeDash(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -52736,7 +52737,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53299,7 +53300,7 @@ class StrokeDash(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53344,7 +53345,7 @@ class StrokeDash(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53365,7 +53366,7 @@ class StrokeDash(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53409,7 +53410,7 @@ class StrokeDash(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53440,7 +53441,7 @@ class StrokeDash(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53464,7 +53465,7 @@ class StrokeDash(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53484,7 +53485,7 @@ class StrokeDash(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53522,7 +53523,7 @@ class StrokeDash(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53560,7 +53561,7 @@ class StrokeDash(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53583,7 +53584,7 @@ class StrokeDash(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53606,7 +53607,7 @@ class StrokeDash(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -53729,7 +53730,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDash":
         ...
 
@@ -54035,7 +54036,7 @@ class StrokeDash(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeDash, self).__init__(
             shorthand=shorthand,
@@ -54050,7 +54051,7 @@ class StrokeDash(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -54205,7 +54206,7 @@ class StrokeDashDatum(
             Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashDatum":
         ...
 
@@ -54218,7 +54219,7 @@ class StrokeDashDatum(
             Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashDatum":
         ...
 
@@ -54244,7 +54245,7 @@ class StrokeDashDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "StrokeDashDatum":
         ...
 
@@ -54283,7 +54284,7 @@ class StrokeDashDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeDashDatum, self).__init__(
             datum=datum,
@@ -54291,7 +54292,7 @@ class StrokeDashDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -54600,7 +54601,7 @@ class StrokeDashValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashValue":
         ...
 
@@ -54651,7 +54652,7 @@ class StrokeDashValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashValue":
         ...
 
@@ -54918,7 +54919,7 @@ class StrokeDashValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashValue":
         ...
 
@@ -54949,7 +54950,7 @@ class StrokeDashValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashValue":
         ...
 
@@ -54982,7 +54983,7 @@ class StrokeDashValue(
             Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashValue":
         ...
 
@@ -54995,7 +54996,7 @@ class StrokeDashValue(
             Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeDashValue":
         ...
 
@@ -55034,7 +55035,7 @@ class StrokeDashValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -55297,7 +55298,7 @@ class StrokeOpacity(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -55305,7 +55306,7 @@ class StrokeOpacity(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -55313,7 +55314,7 @@ class StrokeOpacity(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -55345,7 +55346,7 @@ class StrokeOpacity(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -55382,7 +55383,7 @@ class StrokeOpacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -55395,7 +55396,7 @@ class StrokeOpacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -55415,7 +55416,7 @@ class StrokeOpacity(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -56930,7 +56931,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57493,7 +57494,7 @@ class StrokeOpacity(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57538,7 +57539,7 @@ class StrokeOpacity(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57559,7 +57560,7 @@ class StrokeOpacity(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57603,7 +57604,7 @@ class StrokeOpacity(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57634,7 +57635,7 @@ class StrokeOpacity(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57658,7 +57659,7 @@ class StrokeOpacity(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57678,7 +57679,7 @@ class StrokeOpacity(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57716,7 +57717,7 @@ class StrokeOpacity(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57754,7 +57755,7 @@ class StrokeOpacity(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57777,7 +57778,7 @@ class StrokeOpacity(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57800,7 +57801,7 @@ class StrokeOpacity(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -57923,7 +57924,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacity":
         ...
 
@@ -58225,7 +58226,7 @@ class StrokeOpacity(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeOpacity, self).__init__(
             shorthand=shorthand,
@@ -58240,7 +58241,7 @@ class StrokeOpacity(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -58395,7 +58396,7 @@ class StrokeOpacityDatum(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityDatum":
         ...
 
@@ -58408,7 +58409,7 @@ class StrokeOpacityDatum(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityDatum":
         ...
 
@@ -58434,7 +58435,7 @@ class StrokeOpacityDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityDatum":
         ...
 
@@ -58469,7 +58470,7 @@ class StrokeOpacityDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeOpacityDatum, self).__init__(
             datum=datum,
@@ -58477,7 +58478,7 @@ class StrokeOpacityDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -58786,7 +58787,7 @@ class StrokeOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityValue":
         ...
 
@@ -58837,7 +58838,7 @@ class StrokeOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityValue":
         ...
 
@@ -59104,7 +59105,7 @@ class StrokeOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityValue":
         ...
 
@@ -59135,7 +59136,7 @@ class StrokeOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityValue":
         ...
 
@@ -59168,7 +59169,7 @@ class StrokeOpacityValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityValue":
         ...
 
@@ -59181,7 +59182,7 @@ class StrokeOpacityValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeOpacityValue":
         ...
 
@@ -59216,7 +59217,7 @@ class StrokeOpacityValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeOpacityValue, self).__init__(
             value=value, condition=condition, **kwds
@@ -59481,7 +59482,7 @@ class StrokeWidth(
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -59489,7 +59490,7 @@ class StrokeWidth(
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -59497,7 +59498,7 @@ class StrokeWidth(
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -59529,7 +59530,7 @@ class StrokeWidth(
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -59566,7 +59567,7 @@ class StrokeWidth(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -59579,7 +59580,7 @@ class StrokeWidth(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -59599,7 +59600,7 @@ class StrokeWidth(
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61114,7 +61115,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61677,7 +61678,7 @@ class StrokeWidth(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61722,7 +61723,7 @@ class StrokeWidth(
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61743,7 +61744,7 @@ class StrokeWidth(
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61787,7 +61788,7 @@ class StrokeWidth(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61818,7 +61819,7 @@ class StrokeWidth(
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61842,7 +61843,7 @@ class StrokeWidth(
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61862,7 +61863,7 @@ class StrokeWidth(
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61900,7 +61901,7 @@ class StrokeWidth(
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61938,7 +61939,7 @@ class StrokeWidth(
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61961,7 +61962,7 @@ class StrokeWidth(
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -61984,7 +61985,7 @@ class StrokeWidth(
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -62107,7 +62108,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidth":
         ...
 
@@ -62409,7 +62410,7 @@ class StrokeWidth(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeWidth, self).__init__(
             shorthand=shorthand,
@@ -62424,7 +62425,7 @@ class StrokeWidth(
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -62579,7 +62580,7 @@ class StrokeWidthDatum(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthDatum":
         ...
 
@@ -62592,7 +62593,7 @@ class StrokeWidthDatum(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthDatum":
         ...
 
@@ -62618,7 +62619,7 @@ class StrokeWidthDatum(
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "StrokeWidthDatum":
         ...
 
@@ -62653,7 +62654,7 @@ class StrokeWidthDatum(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeWidthDatum, self).__init__(
             datum=datum,
@@ -62661,7 +62662,7 @@ class StrokeWidthDatum(
             condition=condition,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -62970,7 +62971,7 @@ class StrokeWidthValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthValue":
         ...
 
@@ -63021,7 +63022,7 @@ class StrokeWidthValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthValue":
         ...
 
@@ -63288,7 +63289,7 @@ class StrokeWidthValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthValue":
         ...
 
@@ -63319,7 +63320,7 @@ class StrokeWidthValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthValue":
         ...
 
@@ -63352,7 +63353,7 @@ class StrokeWidthValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthValue":
         ...
 
@@ -63365,7 +63366,7 @@ class StrokeWidthValue(
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "StrokeWidthValue":
         ...
 
@@ -63400,7 +63401,7 @@ class StrokeWidthValue(
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -63634,7 +63635,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63642,7 +63643,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63650,7 +63651,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63682,7 +63683,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63726,7 +63727,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63742,7 +63743,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63760,7 +63761,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63792,7 +63793,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63812,7 +63813,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63850,7 +63851,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63888,7 +63889,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63911,7 +63912,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -63934,7 +63935,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -64057,7 +64058,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Text":
         ...
 
@@ -64305,7 +64306,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Text, self).__init__(
             shorthand=shorthand,
@@ -64319,7 +64320,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -64509,7 +64510,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TextDatum":
         ...
 
@@ -64525,7 +64526,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TextDatum":
         ...
 
@@ -64563,7 +64564,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "TextDatum":
         ...
 
@@ -64600,7 +64601,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TextDatum, self).__init__(
             datum=datum,
@@ -64610,7 +64611,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
             formatType=formatType,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -64863,7 +64864,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TextValue":
         ...
 
@@ -65076,7 +65077,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TextValue":
         ...
 
@@ -65112,7 +65113,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TextValue":
         ...
 
@@ -65128,7 +65129,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TextValue":
         ...
 
@@ -65163,7 +65164,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -65439,7 +65440,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -65447,7 +65448,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -65455,7 +65456,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -65487,7 +65488,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -65509,7 +65510,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66068,7 +66069,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66113,7 +66114,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66134,7 +66135,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66178,7 +66179,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66209,7 +66210,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66245,7 +66246,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66265,7 +66266,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66303,7 +66304,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66341,7 +66342,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66364,7 +66365,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66387,7 +66388,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66510,7 +66511,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta":
         ...
 
@@ -66802,7 +66803,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Theta, self).__init__(
             shorthand=shorthand,
@@ -66816,7 +66817,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -67532,7 +67533,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "ThetaDatum":
         ...
 
@@ -67568,7 +67569,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "ThetaDatum":
         ...
 
@@ -67595,7 +67596,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(ThetaDatum, self).__init__(
             datum=datum,
@@ -67604,7 +67605,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             stack=stack,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -67753,7 +67754,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67761,7 +67762,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67769,7 +67770,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67791,7 +67792,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67811,7 +67812,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67831,7 +67832,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67869,7 +67870,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67907,7 +67908,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67930,7 +67931,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -67953,7 +67954,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -68076,7 +68077,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Theta2":
         ...
 
@@ -68290,7 +68291,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Theta2, self).__init__(
             shorthand=shorthand,
@@ -68300,7 +68301,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -68433,7 +68434,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "Theta2Datum":
         ...
 
@@ -68451,7 +68452,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Theta2Datum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -68711,7 +68712,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68719,7 +68720,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68727,7 +68728,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68759,7 +68760,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68800,7 +68801,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68813,7 +68814,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68833,7 +68834,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68865,7 +68866,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68885,7 +68886,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68923,7 +68924,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68961,7 +68962,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -68984,7 +68985,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -69007,7 +69008,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -69130,7 +69131,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Tooltip":
         ...
 
@@ -69378,7 +69379,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Tooltip, self).__init__(
             shorthand=shorthand,
@@ -69392,7 +69393,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -69699,7 +69700,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TooltipValue":
         ...
 
@@ -69750,7 +69751,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TooltipValue":
         ...
 
@@ -70017,7 +70018,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TooltipValue":
         ...
 
@@ -70048,7 +70049,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TooltipValue":
         ...
 
@@ -70081,7 +70082,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TooltipValue":
         ...
 
@@ -70094,7 +70095,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "TooltipValue":
         ...
 
@@ -70129,7 +70130,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -70363,7 +70364,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70371,7 +70372,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70379,7 +70380,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70411,7 +70412,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70452,7 +70453,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70465,7 +70466,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70485,7 +70486,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70517,7 +70518,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70537,7 +70538,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70575,7 +70576,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70613,7 +70614,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70636,7 +70637,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70659,7 +70660,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -70782,7 +70783,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Url":
         ...
 
@@ -71030,7 +71031,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Url, self).__init__(
             shorthand=shorthand,
@@ -71044,7 +71045,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -71351,7 +71352,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "UrlValue":
         ...
 
@@ -71402,7 +71403,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "UrlValue":
         ...
 
@@ -71669,7 +71670,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "UrlValue":
         ...
 
@@ -71700,7 +71701,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "UrlValue":
         ...
 
@@ -71733,7 +71734,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "UrlValue":
         ...
 
@@ -71746,7 +71747,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "UrlValue":
         ...
 
@@ -71781,7 +71782,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(UrlValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -72074,7 +72075,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -72082,7 +72083,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -72090,7 +72091,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -73362,7 +73363,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -73398,7 +73399,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -73420,7 +73421,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -73436,7 +73437,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -73999,7 +74000,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74044,7 +74045,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74065,7 +74066,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74109,7 +74110,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74140,7 +74141,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74176,7 +74177,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74196,7 +74197,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74234,7 +74235,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74272,7 +74273,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74295,7 +74296,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74318,7 +74319,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74441,7 +74442,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X":
         ...
 
@@ -74737,7 +74738,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(X, self).__init__(
             shorthand=shorthand,
@@ -74753,7 +74754,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -76195,7 +76196,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XDatum":
         ...
 
@@ -76219,7 +76220,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XDatum":
         ...
 
@@ -76782,7 +76783,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XDatum":
         ...
 
@@ -76818,7 +76819,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "XDatum":
         ...
 
@@ -76849,7 +76850,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(XDatum, self).__init__(
             datum=datum,
@@ -76860,7 +76861,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             stack=stack,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -77009,7 +77010,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77017,7 +77018,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77025,7 +77026,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77047,7 +77048,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77067,7 +77068,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77087,7 +77088,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77125,7 +77126,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77163,7 +77164,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77186,7 +77187,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77209,7 +77210,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77332,7 +77333,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "X2":
         ...
 
@@ -77546,7 +77547,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(X2, self).__init__(
             shorthand=shorthand,
@@ -77556,7 +77557,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -77689,7 +77690,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "X2Datum":
         ...
 
@@ -77707,7 +77708,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(X2Datum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -77859,7 +77860,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -77867,7 +77868,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -77875,7 +77876,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -77897,7 +77898,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -77917,7 +77918,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -77937,7 +77938,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -77975,7 +77976,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -78013,7 +78014,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -78036,7 +78037,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -78059,7 +78060,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -78182,7 +78183,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError":
         ...
 
@@ -78396,7 +78397,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(XError, self).__init__(
             shorthand=shorthand,
@@ -78406,7 +78407,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -78555,7 +78556,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78563,7 +78564,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78571,7 +78572,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78593,7 +78594,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78613,7 +78614,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78633,7 +78634,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78671,7 +78672,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78709,7 +78710,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78732,7 +78733,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78755,7 +78756,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -78878,7 +78879,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XError2":
         ...
 
@@ -79092,7 +79093,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(XError2, self).__init__(
             shorthand=shorthand,
@@ -79102,7 +79103,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -79370,7 +79371,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -79378,7 +79379,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -79386,7 +79387,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -79418,7 +79419,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -79436,7 +79437,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -79995,7 +79996,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80040,7 +80041,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80061,7 +80062,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80105,7 +80106,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80136,7 +80137,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80160,7 +80161,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80180,7 +80181,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80218,7 +80219,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80256,7 +80257,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80279,7 +80280,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80302,7 +80303,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80425,7 +80426,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffset":
         ...
 
@@ -80709,7 +80710,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(XOffset, self).__init__(
             shorthand=shorthand,
@@ -80722,7 +80723,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -81407,7 +81408,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "XOffsetDatum":
         ...
 
@@ -81431,7 +81432,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "XOffsetDatum":
         ...
 
@@ -81450,7 +81451,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(XOffsetDatum, self).__init__(
             datum=datum,
@@ -81458,7 +81459,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             scale=scale,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -81774,7 +81775,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -81782,7 +81783,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -81790,7 +81791,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83062,7 +83063,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83098,7 +83099,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83120,7 +83121,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83136,7 +83137,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83699,7 +83700,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83744,7 +83745,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83765,7 +83766,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83809,7 +83810,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83840,7 +83841,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83876,7 +83877,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83896,7 +83897,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83934,7 +83935,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83972,7 +83973,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -83995,7 +83996,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -84018,7 +84019,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -84141,7 +84142,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y":
         ...
 
@@ -84437,7 +84438,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Y, self).__init__(
             shorthand=shorthand,
@@ -84453,7 +84454,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -85895,7 +85896,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YDatum":
         ...
 
@@ -85919,7 +85920,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YDatum":
         ...
 
@@ -86482,7 +86483,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YDatum":
         ...
 
@@ -86518,7 +86519,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "YDatum":
         ...
 
@@ -86549,7 +86550,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(YDatum, self).__init__(
             datum=datum,
@@ -86560,7 +86561,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             stack=stack,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -86709,7 +86710,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86717,7 +86718,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86725,7 +86726,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86747,7 +86748,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86767,7 +86768,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86787,7 +86788,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86825,7 +86826,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86863,7 +86864,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86886,7 +86887,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -86909,7 +86910,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -87032,7 +87033,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "Y2":
         ...
 
@@ -87246,7 +87247,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Y2, self).__init__(
             shorthand=shorthand,
@@ -87256,7 +87257,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -87389,7 +87390,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "Y2Datum":
         ...
 
@@ -87407,7 +87408,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(Y2Datum, self).__init__(
             datum=datum, bandPosition=bandPosition, title=title, type=type, **kwds
@@ -87559,7 +87560,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87567,7 +87568,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87575,7 +87576,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87597,7 +87598,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87617,7 +87618,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87637,7 +87638,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87675,7 +87676,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87713,7 +87714,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87736,7 +87737,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87759,7 +87760,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -87882,7 +87883,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError":
         ...
 
@@ -88096,7 +88097,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(YError, self).__init__(
             shorthand=shorthand,
@@ -88106,7 +88107,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -88255,7 +88256,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88263,7 +88264,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88271,7 +88272,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88293,7 +88294,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88313,7 +88314,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88333,7 +88334,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88371,7 +88372,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88409,7 +88410,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88432,7 +88433,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88455,7 +88456,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88578,7 +88579,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YError2":
         ...
 
@@ -88792,7 +88793,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(YError2, self).__init__(
             shorthand=shorthand,
@@ -88802,7 +88803,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             field=field,
             timeUnit=timeUnit,
             title=title,
-            **kwds
+            **kwds,
         )
 
 
@@ -89070,7 +89071,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "variance",
             "variancep",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89078,7 +89079,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def aggregate(
         self,
         argmax: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89086,7 +89087,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def aggregate(
         self,
         argmin: Union[Union[core.FieldName, str], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89118,7 +89119,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         nice: Union[bool, UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89136,7 +89137,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         repeat: Union[
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89695,7 +89696,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89740,7 +89741,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "opacity",
             "text",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89761,7 +89762,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "-opacity",
             "-text",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89805,7 +89806,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89836,7 +89837,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Union[None, Union[Literal["ascending", "descending"], core.SortOrder]],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89860,7 +89861,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "seconds",
             "milliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89880,7 +89881,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcseconds",
             "utcmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89918,7 +89919,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "minutesseconds",
             "secondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89956,7 +89957,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcminutesseconds",
             "utcsecondsmilliseconds",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -89979,7 +89980,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedyearweekdayhoursminutesseconds",
             "binnedyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -90002,7 +90003,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedutcyearweekdayhoursminutesseconds",
             "binnedutcyeardayofyear",
         ],
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -90125,7 +90126,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffset":
         ...
 
@@ -90409,7 +90410,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(YOffset, self).__init__(
             shorthand=shorthand,
@@ -90422,7 +90423,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             timeUnit=timeUnit,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 
@@ -91107,7 +91108,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> "YOffsetDatum":
         ...
 
@@ -91131,7 +91132,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
-        **kwds
+        **kwds,
     ) -> "YOffsetDatum":
         ...
 
@@ -91150,7 +91151,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ):
         super(YOffsetDatum, self).__init__(
             datum=datum,
@@ -91158,7 +91159,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             scale=scale,
             title=title,
             type=type,
-            **kwds
+            **kwds,
         )
 
 

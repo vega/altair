@@ -980,7 +980,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'arc' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -1070,7 +1070,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -2040,7 +2040,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'area' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -2130,7 +2130,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -3100,7 +3100,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'bar' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -3190,7 +3190,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -4160,7 +4160,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'image' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -4250,7 +4250,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -5220,7 +5220,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'line' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -5310,7 +5310,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -6280,7 +6280,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'point' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -6370,7 +6370,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -7340,7 +7340,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'rect' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -7430,7 +7430,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -8400,7 +8400,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'rule' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -8490,7 +8490,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -9460,7 +9460,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'text' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -9550,7 +9550,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -10520,7 +10520,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'tick' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -10610,7 +10610,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -11580,7 +11580,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'trail' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -11670,7 +11670,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -12640,7 +12640,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'circle' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -12730,7 +12730,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -13700,7 +13700,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'square' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -13790,7 +13790,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -14760,7 +14760,7 @@ class MarkMethodMixin:
             Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)"""
         kwds = dict(
@@ -14850,7 +14850,7 @@ class MarkMethodMixin:
             y2=y2,
             y2Offset=y2Offset,
             yOffset=yOffset,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -15113,7 +15113,7 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)"""
         kwds = dict(
@@ -15129,7 +15129,7 @@ class MarkMethodMixin:
             rule=rule,
             size=size,
             ticks=ticks,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -15350,7 +15350,7 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)"""
         kwds = dict(
@@ -15363,7 +15363,7 @@ class MarkMethodMixin:
             size=size,
             thickness=thickness,
             ticks=ticks,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):
@@ -15606,7 +15606,7 @@ class MarkMethodMixin:
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
         ] = Undefined,
         tension: Union[float, UndefinedType] = Undefined,
-        **kwds
+        **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)"""
         kwds = dict(
@@ -15619,7 +15619,7 @@ class MarkMethodMixin:
             opacity=opacity,
             orient=orient,
             tension=tension,
-            **kwds
+            **kwds,
         )
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         if any(val is not Undefined for val in kwds.values()):

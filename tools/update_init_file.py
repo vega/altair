@@ -3,22 +3,22 @@ This script updates the attribute __all__ in altair/__init__.py
 based on the updated Altair schema.
 """
 import inspect
-import sys
 import subprocess
-from pathlib import Path
+import sys
 from os.path import abspath, dirname, join
+from pathlib import Path
 from typing import (
-    TypeVar,
-    Type,
-    cast,
-    List,
-    Any,
-    Optional,
-    Iterable,
-    Union,
     IO,
+    Any,
+    Iterable,
+    List,
+    Optional,
     Protocol,
     Sequence,
+    Type,
+    TypeVar,
+    Union,
+    cast,
 )
 
 if sys.version_info >= (3, 11):
@@ -26,10 +26,13 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
-from typing import Literal, Final
+from typing import Final, Literal
+
+ROOT_DIR: Final = abspath(join(dirname(__file__), ".."))
+sys.path.insert(0, abspath(dirname(__file__)))
+from schemapi.utils import ruff_format_str  # noqa: E402
 
 # Import Altair from head
-ROOT_DIR: Final = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
 import altair as alt  # noqa: E402
 
@@ -74,17 +77,6 @@ def update__all__variable() -> None:
     # Write new version of altair/__init__.py
     with open(init_path, "w") as f:
         f.write(new_file_content)
-
-
-def ruff_format_str(code: str) -> str:
-    r = subprocess.run(
-        # Name of the file does not seem to matter but ruff requires one
-        ["ruff", "format", "--stdin-filename", "placeholder.py"],
-        input=code.encode(),
-        check=True,
-        capture_output=True,
-    )
-    return r.stdout.decode()
 
 
 def _is_relevant_attribute(attr_name: str) -> bool:

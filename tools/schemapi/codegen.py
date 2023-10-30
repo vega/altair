@@ -251,7 +251,7 @@ class SchemaGenerator:
     def init_args(
         self, additional_types: Optional[List[str]] = None
     ) -> Tuple[List[str], List[str]]:
-        additional_types  = additional_types or []
+        additional_types = additional_types or []
         info = self.info
         arg_info = self.arg_info
 

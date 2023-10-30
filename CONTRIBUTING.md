@@ -72,7 +72,7 @@ hatch run test
 ```
 
 
-This also runs the [`black`](https://black.readthedocs.io/) code formatter, [`ruff`](https://ruff.rs/) linter and [`mypy`](https://mypy-lang.org/) as type checker.
+This also runs the [`ruff`](https://ruff.rs/) linter and formatter as well as [`mypy`](https://mypy-lang.org/) as type checker.
 
 
 Study the output of any failed tests and try to fix the issues

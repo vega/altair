@@ -427,7 +427,11 @@ def param(
     # ignore[arg-type] comment is needed because we can also pass expr.core.Expression
     if "select" not in kwds:
         parameter.param = core.VariableParameter(
-            name=parameter.name, bind=bind, value=value, expr=expr, **kwds  # type: ignore[arg-type]
+            name=parameter.name,
+            bind=bind,
+            value=value,
+            expr=expr,
+            **kwds,  # type: ignore[arg-type]
         )
         parameter.param_type = "variable"
     elif "views" in kwds:
@@ -2076,7 +2080,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.PivotTransform(
                 # Ignore as we type here `op` as a str but in core.PivotTransform
                 # it's a Literal with all options
-                pivot=pivot, value=value, groupby=groupby, limit=limit, op=op  # type: ignore[arg-type]
+                pivot=pivot,
+                value=value,
+                groupby=groupby,
+                limit=limit,
+                op=op,  # type: ignore[arg-type]
             )
         )
 

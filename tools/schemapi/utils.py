@@ -2,12 +2,12 @@
 
 import keyword
 import re
+import subprocess
 import textwrap
 import urllib
-from typing import Final, Optional, List, Dict, Any, Iterable
+from typing import Any, Dict, Final, Iterable, List, Optional, Union
 
 from .schemapi import _resolve_references as resolve_references
-
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
@@ -527,3 +527,17 @@ def flatten(container: Iterable) -> Iterable:
                 yield j
         else:
             yield i
+
+
+def ruff_format_str(code: Union[str, List[str]]) -> str:
+    if isinstance(code, list):
+        code = "\n".join(code)
+
+    r = subprocess.run(
+        # Name of the file does not seem to matter but ruff requires one
+        ["ruff", "format", "--stdin-filename", "placeholder.py"],
+        input=code.encode(),
+        check=True,
+        capture_output=True,
+    )
+    return r.stdout.decode()
