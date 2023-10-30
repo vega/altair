@@ -430,8 +430,8 @@ def param(
             name=parameter.name,
             bind=bind,
             value=value,
-            expr=expr,
-            **kwds,  # type: ignore[arg-type]
+            expr=expr,  # type: ignore[arg-type]
+            **kwds,
         )
         parameter.param_type = "variable"
     elif "views" in kwds:
