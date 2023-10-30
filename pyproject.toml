@@ -218,5 +218,6 @@ module = [
     "nbformat.*",
     "ipykernel.*",
     "m2r.*",
+    "schemapi.*"
 ]
 ignore_missing_imports = true
