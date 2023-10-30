@@ -1,9 +1,10 @@
-import pytest
-import warnings
+import io
 import json
+import warnings
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from altair.utils import infer_vegalite_type, sanitize_dataframe
 
@@ -68,7 +69,7 @@ def test_sanitize_dataframe():
     print(s)
 
     # Re-construct pandas dataframe
-    df2 = pd.read_json(s)
+    df2 = pd.read_json(io.StringIO(s))
 
     # Re-order the columns to match df
     df2 = df2[df.columns]

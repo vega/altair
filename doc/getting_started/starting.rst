@@ -29,10 +29,10 @@ Here is the outline of this basic tutorial:
 The Data
 --------
 
-Data in Altair is built around the Pandas Dataframe. One of the defining
+Data in Altair is built around the pandas Dataframe. One of the defining
 characteristics of statistical visualization is that it begins with
 `tidy <http://vita.had.co.nz/papers/tidy-data.html>`_
-Dataframes. For the purposes of this tutorial, we'll start by importing Pandas
+Dataframes. For the purposes of this tutorial, we'll start by importing pandas
 and creating a simple DataFrame to visualize, with a categorical variable in
 column a and a numerical variable in column b:
 

@@ -343,7 +343,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
         if dtype_name == "category":
             # Work around bug in to_json for categorical types in older versions
             # of pandas as they do not properly convert NaN values to null in to_json.
-            # We can probably remove this part once we require Pandas >= 1.0
+            # We can probably remove this part once we require pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
         elif dtype_name == "string":
@@ -380,18 +380,21 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue
-        elif dtype_name in {
-            "Int8",
-            "Int16",
-            "Int32",
-            "Int64",
-            "UInt8",
-            "UInt16",
-            "UInt32",
-            "UInt64",
-            "Float32",
-            "Float64",
-        }:  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
+        elif (
+            dtype_name
+            in {
+                "Int8",
+                "Int16",
+                "Int32",
+                "Int64",
+                "UInt8",
+                "UInt16",
+                "UInt32",
+                "UInt64",
+                "Float32",
+                "Float64",
+            }
+        ):  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
@@ -588,8 +591,10 @@ def parse_shorthand(
                     column = dfi.get_column_by_name(unescaped_field)
                     try:
                         attrs["type"] = infer_vegalite_type_for_dfi_column(column)
-                    except NotImplementedError:
-                        # Fall back to pandas-based inference
+                    except (NotImplementedError, AttributeError, ValueError):
+                        # Fall back to pandas-based inference.
+                        # Note: The AttributeError catch is a workaround for
+                        # https://github.com/pandas-dev/pandas/issues/55332
                         if isinstance(data, pd.DataFrame):
                             attrs["type"] = infer_vegalite_type(data[unescaped_field])
                         else:

@@ -40,8 +40,8 @@ jobs:
         if: ${{ matrix.python-version == '3.8' }}
         run: |
           pip uninstall -y pyarrow vegafusion vegafusion-python-embed
-      - name: Maybe install lowest supported Pandas version
-        # We install the lowest supported Pandas version for one job to test that
+      - name: Maybe install lowest supported pandas version
+        # We install the lowest supported pandas version for one job to test that
         # it still works. Downgrade to the oldest versions of pandas and numpy that include
         # Python 3.8 wheels, so only run this job for Python 3.8
         if: ${{ matrix.python-version == '3.8' }}
