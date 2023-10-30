@@ -7482,7 +7482,11 @@ class BinParams(VegaLiteSchema):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            Union["BinExtent", Sequence[float], Union["ParameterExtent", dict]],
+            Union[
+                "BinExtent",
+                Sequence[float],
+                Union["ParameterExtent", "_ParameterProtocol", dict],
+            ],
             UndefinedType,
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
@@ -39866,7 +39870,7 @@ class Scale(VegaLiteSchema):
                 ],
                 Union["DomainUnionWith", dict],
                 Union["ExprRef", "_ParameterProtocol", dict],
-                Union["ParameterExtent", dict],
+                Union["ParameterExtent", "_ParameterProtocol", dict],
                 str,
             ],
             UndefinedType,

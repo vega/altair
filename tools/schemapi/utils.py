@@ -202,6 +202,8 @@ class SchemaInfo:
                     # but then we would need to write some overload signatures for
                     # api.param).
                     class_names.append("_ParameterProtocol")
+                if self.title == "ParameterExtent":
+                    class_names.append("_ParameterProtocol")
 
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
