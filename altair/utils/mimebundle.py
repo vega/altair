@@ -170,7 +170,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
             "The altair_saver export engine is deprecated and will be removed in a future version.\n"
             "Please migrate to the vl-convert engine",
             AltairDeprecationWarning,
-            stacklevel=1
+            stacklevel=1,
         )
         import altair_saver
 
