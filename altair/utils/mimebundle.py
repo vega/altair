@@ -1,6 +1,8 @@
+from .deprecation import AltairDeprecationWarning
 from .html import spec_to_html
 from ._importers import import_vl_convert
 import struct
+import warnings
 
 
 def spec_to_mimebundle(
@@ -164,6 +166,12 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
             # but raise exception for the sake of future development
             raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
     elif normalized_engine == "altairsaver":
+        warnings.warn(
+            "The altair_saver export engine is deprecated and will be removed in a future version.\n"
+            "Please migrate to the vl-convert engine",
+            AltairDeprecationWarning,
+            stacklevel=1
+        )
         import altair_saver
 
         return altair_saver.render(spec, format, mode=mode, **kwargs)
