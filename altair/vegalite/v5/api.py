@@ -2623,8 +2623,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
+# Only import it here as we need to import `value` from
+# this script in _encode_signature.py
+from ._encode_signature import _encode_signature
+
+
 class _EncodingMixin:
-    @utils.use_signature(core._encode_signature)
+    @utils.use_signature(_encode_signature)
     def encode(self, *args, **kwargs) -> Self:
         # Convert args to kwargs based on their types.
         kwargs = utils.infer_encoding_types(args, kwargs, channels)

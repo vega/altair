@@ -235,6 +235,15 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 """
 
 ENCODE_SIGNATURE: Final = """
+# Type alias for value and datum dictionaries.
+# They are mainly used to make the type hints
+# more readable when they show up in IDEs. We can't type these more accurately
+# as TypedDict do not accept arbitrary extra keys where as alt.value and alt.datum
+# do. Also see https://github.com/python/mypy/issues/4617#issuecomment-367647383
+# We can't split it into two separate type aliases as IDEs such as VS Code
+# simply show the first one in the signature if they refer to the same type.
+ValueOrDatum = dict
+
 def _encode_signature({encode_method_args}):
     ...
 """
@@ -466,8 +475,6 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     definitions: Dict[str, SchemaGenerator] = {}
 
-    encode_method_args = ""
-
     for name in rootschema["definitions"]:
         defschema = {"$ref": "#/definitions/" + name}
         defschema_repr = {"$ref": "#/definitions/" + name}
@@ -480,19 +487,6 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
             basename=basename,
             rootschemarepr=CodeSnippet("{}._rootschema".format(basename)),
         )
-        if name == "FacetedEncoding":
-            # For the .encode method in api.py:_EncodingMixin we need the same
-            # type signature as in core.FacetedEncoding but additionally, for every
-            # arguemtn it should also accept a "shorthand" as a string or list of
-            # strings.
-            encode_method_args = ", ".join(
-                definitions[name].init_args(additional_types=["str", "List[str]"])[0]
-            )
-
-    assert len(encode_method_args) > 0
-    encode_method_signature = ENCODE_SIGNATURE.format(
-        encode_method_args=encode_method_args
-    )
 
     graph: Dict[str, List[str]] = {}
 
@@ -517,7 +511,6 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
     ]
     contents.append(PARAMETER_PROTOCOL)
-    contents.append(encode_method_signature)
     contents.append(BASE_SCHEMA.format(basename=basename))
     contents.append(
         schema_class(
@@ -537,7 +530,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
 def generate_vegalite_channel_wrappers(
     schemafile: str, version: str, imports: Optional[List[str]] = None
-) -> str:
+) -> Tuple[str, Dict[str, List[str]]]:
     # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
     if imports is None:
@@ -561,8 +554,12 @@ def generate_vegalite_channel_wrappers(
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
+    channel_field_datum_value_class_names = {}
+
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
+
+        field_datum_value_class_names = []
 
         for encoding_spec, definition in def_dict.items():
             classname = prop[0].upper() + prop[1:]
@@ -601,7 +598,11 @@ def generate_vegalite_channel_wrappers(
                 altair_classes_prefix="core",
             )
             contents.append(gen.schema_class())
-    return "\n".join(contents)
+
+            field_datum_value_class_names.append(classname)
+
+        channel_field_datum_value_class_names[prop] = field_datum_value_class_names
+    return "\n".join(contents), channel_field_datum_value_class_names
 
 
 def generate_vegalite_mark_mixin(
@@ -726,7 +727,9 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     outfile = join(schemapath, "channels.py")
     print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-    code = generate_vegalite_channel_wrappers(schemafile, version=version)
+    code, channel_field_datum_value_class_names = generate_vegalite_channel_wrappers(
+        schemafile, version=version
+    )
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(code))
 
@@ -758,6 +761,35 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(content))
+
+    # Generate the type signature for the encode method
+    outfile = join(path, "_encode_signature.py")
+    print(f"Generating {outfile}")
+    imports = [
+        "from typing import Union",
+        "from .schema import *",
+    ]
+    encode_signature = _create_encode_signature(channel_field_datum_value_class_names)
+    content = [HEADER, "# ruff: noqa: F403, F405", *imports, encode_signature]
+    with open(outfile, "w", encoding="utf8") as f:
+        f.write(ruff_format_str(content))
+
+
+def _create_encode_signature(
+    channel_field_datum_value_class_names: Dict[str, List[str]]
+) -> str:
+    args = ["self"]
+    for channel, class_names in channel_field_datum_value_class_names.items():
+        # Show shortest class name first, e.g. Color and then show ColorDatum, ColorValue later
+        class_names = sorted(class_names, key=len)
+        shortest = class_names[0]
+        class_names = class_names[1:]
+
+        union_types = (
+            ["str", shortest, "ValueOrDatum"] + class_names + ["UndefinedType"]
+        )
+        args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
+    return ENCODE_SIGNATURE.format(encode_method_args=", ".join(args))
 
 
 def main() -> None:
