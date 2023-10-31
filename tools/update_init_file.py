@@ -98,6 +98,7 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr is IO
         or attr_name == "TypingDict"
         or attr_name == "TypingGenerator"
+        or attr_name == "ValueOrDatum"
     ):
         return False
     else:

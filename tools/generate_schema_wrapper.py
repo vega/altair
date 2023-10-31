@@ -6,6 +6,7 @@ import os
 import re
 import sys
 import textwrap
+from dataclasses import dataclass
 from os.path import abspath, dirname, join
 from typing import Dict, Final, List, Literal, Optional, Tuple, Type, Union
 from urllib import request
@@ -235,14 +236,18 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 """
 
 ENCODE_SIGNATURE: Final = """
-# Type alias for value and datum dictionaries.
+# Type aliases for value and datum dictionaries.
 # They are mainly used to make the type hints
-# more readable when they show up in IDEs. We can't type these more accurately
+# more readable when they show up in IDEs so that users know they can use
+# alt.datum or alt.value. We can't type these more accurately
 # as TypedDict do not accept arbitrary extra keys where as alt.value and alt.datum
 # do. Also see https://github.com/python/mypy/issues/4617#issuecomment-367647383
-# We can't split it into two separate type aliases as IDEs such as VS Code
-# simply show the first one in the signature if they refer to the same type.
-ValueOrDatum = dict
+# If we want to use both value and datum it needs to be a combined type alias
+# as IDEs such as VS Code simply show the first type alias in the signature 
+# if they refer to the same type.
+_Value = dict
+_Datum = dict
+_DatumOrValue = dict
 
 def _encode_signature({encode_method_args}):
     ...
@@ -528,9 +533,16 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
     return "\n".join(contents)
 
 
+@dataclass
+class ChannelFieldDatumValueClassNames:
+    field: Optional[str] = None
+    datum: Optional[str] = None
+    value: Optional[str] = None
+
+
 def generate_vegalite_channel_wrappers(
     schemafile: str, version: str, imports: Optional[List[str]] = None
-) -> Tuple[str, Dict[str, List[str]]]:
+) -> str:
     # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
     if imports is None:
@@ -554,12 +566,14 @@ def generate_vegalite_channel_wrappers(
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
-    channel_field_datum_value_class_names = {}
+    channel_to_field_datum_value_class_names: dict[
+        str, ChannelFieldDatumValueClassNames
+    ] = {}
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
 
-        field_datum_value_class_names = []
+        class_names = ChannelFieldDatumValueClassNames()
 
         for encoding_spec, definition in def_dict.items():
             classname = prop[0].upper() + prop[1:]
@@ -576,16 +590,19 @@ def generate_vegalite_channel_wrappers(
             if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
+                class_names.field = classname
 
             elif encoding_spec == "datum":
                 Generator = DatumSchemaGenerator
                 classname += "Datum"
                 nodefault = ["datum"]
+                class_names.datum = classname
 
             elif encoding_spec == "value":
                 Generator = ValueSchemaGenerator
                 classname += "Value"
                 nodefault = ["value"]
+                class_names.value = classname
 
             gen = Generator(
                 classname=classname,
@@ -599,10 +616,14 @@ def generate_vegalite_channel_wrappers(
             )
             contents.append(gen.schema_class())
 
-            field_datum_value_class_names.append(classname)
+        channel_to_field_datum_value_class_names[prop] = class_names
 
-        channel_field_datum_value_class_names[prop] = field_datum_value_class_names
-    return "\n".join(contents), channel_field_datum_value_class_names
+    # Generate the type signature for the encode method
+    encode_signature = _create_encode_signature(
+        channel_to_field_datum_value_class_names
+    )
+    contents.append(encode_signature)
+    return "\n".join(contents)
 
 
 def generate_vegalite_mark_mixin(
@@ -727,9 +748,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     # Generate the channel wrappers
     outfile = join(schemapath, "channels.py")
     print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-    code, channel_field_datum_value_class_names = generate_vegalite_channel_wrappers(
-        schemafile, version=version
-    )
+    code = generate_vegalite_channel_wrappers(schemafile, version=version)
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(code))
 
@@ -762,32 +781,40 @@ def vegalite_main(skip_download: bool = False) -> None:
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(content))
 
-    # Generate the type signature for the encode method
-    outfile = join(path, "_encode_signature.py")
-    print(f"Generating {outfile}")
-    imports = [
-        "from typing import Union",
-        "from .schema import *",
-    ]
-    encode_signature = _create_encode_signature(channel_field_datum_value_class_names)
-    content = [HEADER, "# ruff: noqa: F403, F405", *imports, encode_signature]
-    with open(outfile, "w", encoding="utf8") as f:
-        f.write(ruff_format_str(content))
-
 
 def _create_encode_signature(
-    channel_field_datum_value_class_names: Dict[str, List[str]]
+    channel_to_field_datum_value_class_names: Dict[
+        str, ChannelFieldDatumValueClassNames
+    ],
 ) -> str:
     args = ["self"]
-    for channel, class_names in channel_field_datum_value_class_names.items():
-        # Show shortest class name first, e.g. Color and then show ColorDatum, ColorValue later
-        class_names = sorted(class_names, key=len)
-        shortest = class_names[0]
-        class_names = class_names[1:]
+    for channel, class_names in channel_to_field_datum_value_class_names.items():
+        field_class_name = class_names.field
+        assert (
+            field_class_name is not None
+        ), "All channels are expected to have a field class"
+        datum_and_value_class_names = []
+        if class_names.datum is not None:
+            datum_and_value_class_names.append(class_names.datum)
+            accepts_datum = True
+        else:
+            accepts_datum = False
 
-        union_types = (
-            ["str", shortest, "ValueOrDatum"] + class_names + ["UndefinedType"]
-        )
+        if class_names.value is not None:
+            datum_and_value_class_names.append(class_names.value)
+            accepts_value = True
+        else:
+            accepts_value = False
+
+        union_types = ["str", field_class_name]
+        if accepts_datum and accepts_value:
+            union_types.append("_DatumOrValue")
+        elif accepts_datum:
+            union_types.append("_Datum")
+        elif accepts_value:
+            union_types.append("_Value")
+
+        union_types = union_types + datum_and_value_class_names + ["UndefinedType"]
         args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
     return ENCODE_SIGNATURE.format(encode_method_args=", ".join(args))
 
