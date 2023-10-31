@@ -243,7 +243,7 @@ ENCODE_SIGNATURE: Final = """
 # as TypedDict do not accept arbitrary extra keys where as alt.value and alt.datum
 # do. Also see https://github.com/python/mypy/issues/4617#issuecomment-367647383
 # If we want to use both value and datum it needs to be a combined type alias
-# as IDEs such as VS Code simply show the first type alias in the signature 
+# as IDEs such as VS Code simply show the first type alias in the signature
 # if they refer to the same type.
 _Value = dict
 _Datum = dict
