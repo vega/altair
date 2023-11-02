@@ -236,19 +236,6 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
 """
 
 ENCODE_SIGNATURE: Final = """
-# Type aliases for value and datum dictionaries.
-# They are mainly used to make the type hints
-# more readable when they show up in IDEs so that users know they can use
-# alt.datum or alt.value. We can't type these more accurately
-# as TypedDict do not accept arbitrary extra keys where as alt.value and alt.datum
-# do. Also see https://github.com/python/mypy/issues/4617#issuecomment-367647383
-# If we want to use both value and datum it needs to be a combined type alias
-# as IDEs such as VS Code simply show the first type alias in the signature
-# if they refer to the same type.
-_Value = dict
-_Datum = dict
-_DatumOrValue = dict
-
 def _encode_signature({encode_method_args}):
     ...
 """
@@ -796,23 +783,15 @@ def _create_encode_signature(
         datum_and_value_class_names = []
         if class_names.datum is not None:
             datum_and_value_class_names.append(class_names.datum)
-            accepts_datum = True
-        else:
-            accepts_datum = False
 
         if class_names.value is not None:
             datum_and_value_class_names.append(class_names.value)
-            accepts_value = True
-        else:
-            accepts_value = False
 
-        union_types = ["str", field_class_name]
-        if accepts_datum and accepts_value:
-            union_types.append("_DatumOrValue")
-        elif accepts_datum:
-            union_types.append("_Datum")
-        elif accepts_value:
-            union_types.append("_Value")
+        # dict stands for the return types of alt.datum, alt.value as well as
+        # the dictionary representation of an encoding channel class. See
+        # discussions in https://github.com/altair-viz/altair/pull/3208
+        # for more background.
+        union_types = ["str", field_class_name, "dict"]
 
         union_types = union_types + datum_and_value_class_names + ["UndefinedType"]
         args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")

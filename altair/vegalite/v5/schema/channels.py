@@ -91187,118 +91187,75 @@ class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
         super(YOffsetValue, self).__init__(value=value, **kwds)
 
 
-# Type aliases for value and datum dictionaries.
-# They are mainly used to make the type hints
-# more readable when they show up in IDEs so that users know they can use
-# alt.datum or alt.value. We can't type these more accurately
-# as TypedDict do not accept arbitrary extra keys where as alt.value and alt.datum
-# do. Also see https://github.com/python/mypy/issues/4617#issuecomment-367647383
-# If we want to use both value and datum it needs to be a combined type alias
-# as IDEs such as VS Code simply show the first type alias in the signature
-# if they refer to the same type.
-_Value = dict
-_Datum = dict
-_DatumOrValue = dict
-
-
 def _encode_signature(
     self,
-    angle: Union[
-        str, Angle, _DatumOrValue, AngleDatum, AngleValue, UndefinedType
-    ] = Undefined,
-    color: Union[
-        str, Color, _DatumOrValue, ColorDatum, ColorValue, UndefinedType
-    ] = Undefined,
-    column: Union[str, Column, UndefinedType] = Undefined,
+    angle: Union[str, Angle, dict, AngleDatum, AngleValue, UndefinedType] = Undefined,
+    color: Union[str, Color, dict, ColorDatum, ColorValue, UndefinedType] = Undefined,
+    column: Union[str, Column, dict, UndefinedType] = Undefined,
     description: Union[
-        str, Description, _Value, DescriptionValue, UndefinedType
+        str, Description, dict, DescriptionValue, UndefinedType
     ] = Undefined,
-    detail: Union[str, Detail, UndefinedType] = Undefined,
-    facet: Union[str, Facet, UndefinedType] = Undefined,
-    fill: Union[
-        str, Fill, _DatumOrValue, FillDatum, FillValue, UndefinedType
-    ] = Undefined,
+    detail: Union[str, Detail, dict, UndefinedType] = Undefined,
+    facet: Union[str, Facet, dict, UndefinedType] = Undefined,
+    fill: Union[str, Fill, dict, FillDatum, FillValue, UndefinedType] = Undefined,
     fillOpacity: Union[
-        str,
-        FillOpacity,
-        _DatumOrValue,
-        FillOpacityDatum,
-        FillOpacityValue,
-        UndefinedType,
+        str, FillOpacity, dict, FillOpacityDatum, FillOpacityValue, UndefinedType
     ] = Undefined,
-    href: Union[str, Href, _Value, HrefValue, UndefinedType] = Undefined,
-    key: Union[str, Key, UndefinedType] = Undefined,
-    latitude: Union[str, Latitude, _Datum, LatitudeDatum, UndefinedType] = Undefined,
+    href: Union[str, Href, dict, HrefValue, UndefinedType] = Undefined,
+    key: Union[str, Key, dict, UndefinedType] = Undefined,
+    latitude: Union[str, Latitude, dict, LatitudeDatum, UndefinedType] = Undefined,
     latitude2: Union[
-        str, Latitude2, _DatumOrValue, Latitude2Datum, Latitude2Value, UndefinedType
+        str, Latitude2, dict, Latitude2Datum, Latitude2Value, UndefinedType
     ] = Undefined,
-    longitude: Union[str, Longitude, _Datum, LongitudeDatum, UndefinedType] = Undefined,
+    longitude: Union[str, Longitude, dict, LongitudeDatum, UndefinedType] = Undefined,
     longitude2: Union[
-        str, Longitude2, _DatumOrValue, Longitude2Datum, Longitude2Value, UndefinedType
+        str, Longitude2, dict, Longitude2Datum, Longitude2Value, UndefinedType
     ] = Undefined,
     opacity: Union[
-        str, Opacity, _DatumOrValue, OpacityDatum, OpacityValue, UndefinedType
+        str, Opacity, dict, OpacityDatum, OpacityValue, UndefinedType
     ] = Undefined,
-    order: Union[str, Order, _Value, OrderValue, UndefinedType] = Undefined,
+    order: Union[str, Order, dict, OrderValue, UndefinedType] = Undefined,
     radius: Union[
-        str, Radius, _DatumOrValue, RadiusDatum, RadiusValue, UndefinedType
+        str, Radius, dict, RadiusDatum, RadiusValue, UndefinedType
     ] = Undefined,
     radius2: Union[
-        str, Radius2, _DatumOrValue, Radius2Datum, Radius2Value, UndefinedType
+        str, Radius2, dict, Radius2Datum, Radius2Value, UndefinedType
     ] = Undefined,
-    row: Union[str, Row, UndefinedType] = Undefined,
-    shape: Union[
-        str, Shape, _DatumOrValue, ShapeDatum, ShapeValue, UndefinedType
-    ] = Undefined,
-    size: Union[
-        str, Size, _DatumOrValue, SizeDatum, SizeValue, UndefinedType
-    ] = Undefined,
+    row: Union[str, Row, dict, UndefinedType] = Undefined,
+    shape: Union[str, Shape, dict, ShapeDatum, ShapeValue, UndefinedType] = Undefined,
+    size: Union[str, Size, dict, SizeDatum, SizeValue, UndefinedType] = Undefined,
     stroke: Union[
-        str, Stroke, _DatumOrValue, StrokeDatum, StrokeValue, UndefinedType
+        str, Stroke, dict, StrokeDatum, StrokeValue, UndefinedType
     ] = Undefined,
     strokeDash: Union[
-        str, StrokeDash, _DatumOrValue, StrokeDashDatum, StrokeDashValue, UndefinedType
+        str, StrokeDash, dict, StrokeDashDatum, StrokeDashValue, UndefinedType
     ] = Undefined,
     strokeOpacity: Union[
-        str,
-        StrokeOpacity,
-        _DatumOrValue,
-        StrokeOpacityDatum,
-        StrokeOpacityValue,
-        UndefinedType,
+        str, StrokeOpacity, dict, StrokeOpacityDatum, StrokeOpacityValue, UndefinedType
     ] = Undefined,
     strokeWidth: Union[
-        str,
-        StrokeWidth,
-        _DatumOrValue,
-        StrokeWidthDatum,
-        StrokeWidthValue,
-        UndefinedType,
+        str, StrokeWidth, dict, StrokeWidthDatum, StrokeWidthValue, UndefinedType
     ] = Undefined,
-    text: Union[
-        str, Text, _DatumOrValue, TextDatum, TextValue, UndefinedType
-    ] = Undefined,
-    theta: Union[
-        str, Theta, _DatumOrValue, ThetaDatum, ThetaValue, UndefinedType
-    ] = Undefined,
+    text: Union[str, Text, dict, TextDatum, TextValue, UndefinedType] = Undefined,
+    theta: Union[str, Theta, dict, ThetaDatum, ThetaValue, UndefinedType] = Undefined,
     theta2: Union[
-        str, Theta2, _DatumOrValue, Theta2Datum, Theta2Value, UndefinedType
+        str, Theta2, dict, Theta2Datum, Theta2Value, UndefinedType
     ] = Undefined,
-    tooltip: Union[str, Tooltip, _Value, TooltipValue, UndefinedType] = Undefined,
-    url: Union[str, Url, _Value, UrlValue, UndefinedType] = Undefined,
-    x: Union[str, X, _DatumOrValue, XDatum, XValue, UndefinedType] = Undefined,
-    x2: Union[str, X2, _DatumOrValue, X2Datum, X2Value, UndefinedType] = Undefined,
-    xError: Union[str, XError, _Value, XErrorValue, UndefinedType] = Undefined,
-    xError2: Union[str, XError2, _Value, XError2Value, UndefinedType] = Undefined,
+    tooltip: Union[str, Tooltip, dict, TooltipValue, UndefinedType] = Undefined,
+    url: Union[str, Url, dict, UrlValue, UndefinedType] = Undefined,
+    x: Union[str, X, dict, XDatum, XValue, UndefinedType] = Undefined,
+    x2: Union[str, X2, dict, X2Datum, X2Value, UndefinedType] = Undefined,
+    xError: Union[str, XError, dict, XErrorValue, UndefinedType] = Undefined,
+    xError2: Union[str, XError2, dict, XError2Value, UndefinedType] = Undefined,
     xOffset: Union[
-        str, XOffset, _DatumOrValue, XOffsetDatum, XOffsetValue, UndefinedType
+        str, XOffset, dict, XOffsetDatum, XOffsetValue, UndefinedType
     ] = Undefined,
-    y: Union[str, Y, _DatumOrValue, YDatum, YValue, UndefinedType] = Undefined,
-    y2: Union[str, Y2, _DatumOrValue, Y2Datum, Y2Value, UndefinedType] = Undefined,
-    yError: Union[str, YError, _Value, YErrorValue, UndefinedType] = Undefined,
-    yError2: Union[str, YError2, _Value, YError2Value, UndefinedType] = Undefined,
+    y: Union[str, Y, dict, YDatum, YValue, UndefinedType] = Undefined,
+    y2: Union[str, Y2, dict, Y2Datum, Y2Value, UndefinedType] = Undefined,
+    yError: Union[str, YError, dict, YErrorValue, UndefinedType] = Undefined,
+    yError2: Union[str, YError2, dict, YError2Value, UndefinedType] = Undefined,
     yOffset: Union[
-        str, YOffset, _DatumOrValue, YOffsetDatum, YOffsetValue, UndefinedType
+        str, YOffset, dict, YOffsetDatum, YOffsetValue, UndefinedType
     ] = Undefined,
 ):
     ...
