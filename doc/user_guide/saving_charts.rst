@@ -172,9 +172,8 @@ or::
     pip install vl-convert-python
 
 Unlike altair_saver_, vl-convert_ does not require any external dependencies.
-However, it only supports saving charts to PNG and SVG formats. To save directly to
-PDF, altair_saver_ is still required. See the vl-convert documentation for information
-on other `limitations <https://github.com/vega/vl-convert#limitations>`_.
+See the vl-convert documentation for information and for known
+`limitations <https://github.com/vega/vl-convert#limitations>`_.
 
 altair_saver
 ^^^^^^^^^^^^
