@@ -8,7 +8,7 @@ def import_vegafusion() -> ModuleType:
     try:
         version = importlib_version("vegafusion")
         if Version(version) < Version(min_version):
-            raise ImportError(
+            raise RuntimeError(
                 f"The vegafusion package must be version {min_version} or greater. "
                 f"Found version {version}"
             )
@@ -29,11 +29,11 @@ def import_vegafusion() -> ModuleType:
 
 
 def import_vl_convert() -> ModuleType:
-    min_version = "0.14.0"
+    min_version = "1.0.0"
     try:
         version = importlib_version("vl-convert-python")
         if Version(version) < Version(min_version):
-            raise ImportError(
+            raise RuntimeError(
                 f"The vl-convert-python package must be version {min_version} or greater. "
                 f"Found version {version}"
             )
@@ -58,7 +58,7 @@ def import_pyarrow_interchange() -> ModuleType:
         version = importlib_version("pyarrow")
 
         if Version(version) < Version(min_version):
-            raise ImportError(
+            raise RuntimeError(
                 f"The pyarrow package must be version {min_version} or greater. "
                 f"Found version {version}"
             )

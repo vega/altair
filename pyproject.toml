@@ -3,7 +3,6 @@
 # 2 project configuration
 # 3 tool configuration, for:
 # - hatch
-# - black
 # - ruff
 # - pytest
 # - mypy
@@ -49,6 +48,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
 [project.urls]
@@ -64,7 +64,7 @@ dev = [
     "pytest-cov",
     "m2r",
     "vega_datasets",
-    "vl-convert-python>=0.14.0",
+    "vl-convert-python>=1.0.0",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",

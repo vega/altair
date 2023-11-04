@@ -1,8 +1,10 @@
 from typing import Literal, Optional, Union, cast
 
+from .deprecation import AltairDeprecationWarning
 from .html import spec_to_html
 from ._importers import import_vl_convert
 import struct
+import warnings
 
 
 def spec_to_mimebundle(
@@ -154,11 +156,31 @@ def _spec_to_mimebundle_with_engine(
             return {"image/png": png}, {
                 "image/png": {"width": w / factor, "height": h / factor}
             }
+        elif format == "pdf":
+            scale = kwargs.get("scale_factor", 1)
+            if mode == "vega":
+                pdf = vlc.vega_to_pdf(
+                    spec,
+                    scale=scale,
+                )
+            else:
+                pdf = vlc.vegalite_to_pdf(
+                    spec,
+                    vl_version=vl_version,
+                    scale=scale,
+                )
+            return {"application/pdf": pdf}
         else:
             # This should be validated above
             # but raise exception for the sake of future development
             raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
     elif normalized_engine == "altairsaver":
+        warnings.warn(
+            "The altair_saver export engine is deprecated and will be removed in a future version.\n"
+            "Please migrate to the vl-convert engine",
+            AltairDeprecationWarning,
+            stacklevel=1,
+        )
         import altair_saver
 
         return altair_saver.render(spec, format, mode=mode, **kwargs)
@@ -204,18 +226,13 @@ def _validate_normalize_engine(
             raise ValueError(
                 "The 'vl-convert' conversion engine requires the vl-convert-python package"
             )
-        if format == "pdf":
-            raise ValueError(
-                "The 'vl-convert' conversion engine does not support the {fmt!r} format.\n"
-                "Use the 'altair_saver' engine instead".format(fmt=format)
-            )
     elif normalized_engine == "altairsaver":
         if altair_saver is None:
             raise ValueError(
                 "The 'altair_saver' conversion engine requires the altair_saver package"
             )
     elif normalized_engine is None:
-        if vlc is not None and format != "pdf":
+        if vlc is not None:
             normalized_engine = "vlconvert"
         elif altair_saver is not None:
             normalized_engine = "altairsaver"
