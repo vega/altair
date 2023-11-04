@@ -3,6 +3,7 @@ from typing import Optional, Dict
 
 import jinja2
 
+from altair.utils._importers import import_vl_convert, vl_version_for_vl_convert
 
 HTML_TEMPLATE = jinja2.Template(
     """
@@ -182,11 +183,7 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
     }
   </style>
   <script type="text/javascript">
-    // vega.js v{{ vega_version }}
-    {{ vega_script }}
-    // vega-lite.js v{{ vegalite_version }}
-    {{ vegalite_script }}
-    // vega-embed.js v{{ vegaembed_version }}
+    // vega-embed.js bundle with Vega-Lite version v{{ vegalite_version }}
     {{ vegaembed_script }}
   </script>
 </head>
@@ -256,7 +253,7 @@ def spec_to_html(
         tags. If True, then load libraries using requirejs
     template : jinja2.Template or string (optional)
         Specify the template to use (default = 'standard'). If template is a
-        string, it must be one of {'universal', 'standard'}. Otherwise, it
+        string, it must be one of {'universal', 'standard', 'inline'}. Otherwise, it
         can be a jinja2.Template object containing a custom template.
 
     Returns
@@ -283,19 +280,9 @@ def spec_to_html(
 
     render_kwargs = {}
     if template == "inline":
-        try:
-            from altair_viewer import get_bundled_script
-        except ImportError as err:
-            raise ImportError(
-                "The altair_viewer package is required to convert to HTML with inline=True"
-            ) from err
-        render_kwargs["vega_script"] = get_bundled_script("vega", vega_version)
-        render_kwargs["vegalite_script"] = get_bundled_script(
-            "vega-lite", vegalite_version
-        )
-        render_kwargs["vegaembed_script"] = get_bundled_script(
-            "vega-embed", vegaembed_version
-        )
+        vlc = import_vl_convert()
+        vl_version = vl_version_for_vl_convert()
+        render_kwargs["vegaembed_script"] = vlc.javascript_bundle(vl_version=vl_version)
 
     jinja_template = TEMPLATES.get(template, template)
     if not hasattr(jinja_template, "render"):

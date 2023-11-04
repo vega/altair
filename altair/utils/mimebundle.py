@@ -1,6 +1,6 @@
 from .deprecation import AltairDeprecationWarning
 from .html import spec_to_html
-from ._importers import import_vl_convert
+from ._importers import import_vl_convert, vl_version_for_vl_convert
 import struct
 import warnings
 
@@ -107,11 +107,7 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
 
     if normalized_engine == "vlconvert":
         vlc = import_vl_convert()
-        from ..vegalite import SCHEMA_VERSION
-
-        # Compute VlConvert's vl_version string (of the form 'v5_2')
-        # from SCHEMA_VERSION (of the form 'v5.2.0')
-        vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
+        vl_version = vl_version_for_vl_convert()
         if format == "vega":
             if mode == "vega":
                 vg = spec
