@@ -1109,10 +1109,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # normally trigger a MaxRowsError
         if override_data_transformer:
             with data_transformers.disable_max_rows():
-                result = save(**kwds)
+                save(**kwds)
         else:
-            result = save(**kwds)
-        return result
+            save(**kwds)
+        return
 
     # Fallback for when rendering fails; the full repr is too long to be
     # useful in nearly all cases.
