@@ -91195,7 +91195,7 @@ def _encode_signature(
     description: Union[
         str, Description, dict, DescriptionValue, UndefinedType
     ] = Undefined,
-    detail: Union[str, Detail, dict, UndefinedType] = Undefined,
+    detail: Union[str, Detail, dict, list, UndefinedType] = Undefined,
     facet: Union[str, Facet, dict, UndefinedType] = Undefined,
     fill: Union[str, Fill, dict, FillDatum, FillValue, UndefinedType] = Undefined,
     fillOpacity: Union[
@@ -91214,7 +91214,7 @@ def _encode_signature(
     opacity: Union[
         str, Opacity, dict, OpacityDatum, OpacityValue, UndefinedType
     ] = Undefined,
-    order: Union[str, Order, dict, OrderValue, UndefinedType] = Undefined,
+    order: Union[str, Order, dict, list, OrderValue, UndefinedType] = Undefined,
     radius: Union[
         str, Radius, dict, RadiusDatum, RadiusValue, UndefinedType
     ] = Undefined,
@@ -91241,7 +91241,7 @@ def _encode_signature(
     theta2: Union[
         str, Theta2, dict, Theta2Datum, Theta2Value, UndefinedType
     ] = Undefined,
-    tooltip: Union[str, Tooltip, dict, TooltipValue, UndefinedType] = Undefined,
+    tooltip: Union[str, Tooltip, dict, list, TooltipValue, UndefinedType] = Undefined,
     url: Union[str, Url, dict, UrlValue, UndefinedType] = Undefined,
     x: Union[str, X, dict, XDatum, XValue, UndefinedType] = Undefined,
     x2: Union[str, X2, dict, X2Datum, X2Value, UndefinedType] = Undefined,

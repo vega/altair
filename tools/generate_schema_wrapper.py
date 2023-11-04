@@ -521,10 +521,11 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
 
 @dataclass
-class ChannelFieldDatumValueClassNames:
-    field: Optional[str] = None
-    datum: Optional[str] = None
-    value: Optional[str] = None
+class ChannelInfo:
+    supports_arrays: bool
+    field_class_name: Optional[str] = None
+    datum_class_name: Optional[str] = None
+    value_class_name: Optional[str] = None
 
 
 def generate_vegalite_channel_wrappers(
@@ -553,14 +554,15 @@ def generate_vegalite_channel_wrappers(
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
-    channel_to_field_datum_value_class_names: dict[
-        str, ChannelFieldDatumValueClassNames
-    ] = {}
+    channel_infos: dict[str, ChannelInfo] = {}
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
 
-        class_names = ChannelFieldDatumValueClassNames()
+        supports_arrays = any(
+            schema_info.is_array() for schema_info in propschema.anyOf
+        )
+        channel_info = ChannelInfo(supports_arrays=supports_arrays)
 
         for encoding_spec, definition in def_dict.items():
             classname = prop[0].upper() + prop[1:]
@@ -577,19 +579,19 @@ def generate_vegalite_channel_wrappers(
             if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
-                class_names.field = classname
+                channel_info.field_class_name = classname
 
             elif encoding_spec == "datum":
                 Generator = DatumSchemaGenerator
                 classname += "Datum"
                 nodefault = ["datum"]
-                class_names.datum = classname
+                channel_info.datum_class_name = classname
 
             elif encoding_spec == "value":
                 Generator = ValueSchemaGenerator
                 classname += "Value"
                 nodefault = ["value"]
-                class_names.value = classname
+                channel_info.value_class_name = classname
 
             gen = Generator(
                 classname=classname,
@@ -603,12 +605,10 @@ def generate_vegalite_channel_wrappers(
             )
             contents.append(gen.schema_class())
 
-        channel_to_field_datum_value_class_names[prop] = class_names
+        channel_infos[prop] = channel_info
 
     # Generate the type signature for the encode method
-    encode_signature = _create_encode_signature(
-        channel_to_field_datum_value_class_names
-    )
+    encode_signature = _create_encode_signature(channel_infos)
     contents.append(encode_signature)
     return "\n".join(contents)
 
@@ -770,28 +770,31 @@ def vegalite_main(skip_download: bool = False) -> None:
 
 
 def _create_encode_signature(
-    channel_to_field_datum_value_class_names: Dict[
-        str, ChannelFieldDatumValueClassNames
-    ],
+    channel_infos: Dict[str, ChannelInfo],
 ) -> str:
     args = ["self"]
-    for channel, class_names in channel_to_field_datum_value_class_names.items():
-        field_class_name = class_names.field
+    for channel, info in channel_infos.items():
+        field_class_name = info.field_class_name
         assert (
             field_class_name is not None
         ), "All channels are expected to have a field class"
         datum_and_value_class_names = []
-        if class_names.datum is not None:
-            datum_and_value_class_names.append(class_names.datum)
+        if info.datum_class_name is not None:
+            datum_and_value_class_names.append(info.datum_class_name)
 
-        if class_names.value is not None:
-            datum_and_value_class_names.append(class_names.value)
+        if info.value_class_name is not None:
+            datum_and_value_class_names.append(info.value_class_name)
 
         # dict stands for the return types of alt.datum, alt.value as well as
         # the dictionary representation of an encoding channel class. See
         # discussions in https://github.com/altair-viz/altair/pull/3208
         # for more background.
         union_types = ["str", field_class_name, "dict"]
+        if info.supports_arrays:
+            # We could be more specific about what types are accepted in the list
+            # but then the signatures would get rather long and less useful
+            # to a user when it shows up in their IDE.
+            union_types.append("list")
 
         union_types = union_types + datum_and_value_class_names + ["UndefinedType"]
         args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
