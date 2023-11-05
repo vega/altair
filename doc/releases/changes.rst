@@ -8,6 +8,7 @@ Version 5.2.0 (unreleased month date, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Support offline HTML export using vl-convert (#3251)
 
 Bug Fixes
 ~~~~~~~~~
