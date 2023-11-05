@@ -21,7 +21,6 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 from .compiler import vegalite_compilers
-from ...utils._importers import import_vl_convert
 from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
@@ -1069,6 +1068,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
         """
+        from ...utils._importers import import_vl_convert
         vlc = import_vl_convert()
         if _using_vegafusion():
             return vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
