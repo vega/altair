@@ -1069,6 +1069,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             If True, editor will open chart in fullscreen mode. Default False
         """
         from ...utils._importers import import_vl_convert
+
         vlc = import_vl_convert()
         if _using_vegafusion():
             return vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
