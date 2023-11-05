@@ -1057,11 +1057,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def to_url(self, fullscreen: bool = False) -> str:
         """Convert a chart to a URL that opens the chart specification in the Vega chart editor
-
-        Convert a chart to a sharable URL that opens the chart in the online Vega chart editor.
         The chart specification (including any inline data) is encoded in the URL.
 
-        This method requires the option vl-convert-python dependency
+        This method requires that the vl-convert-python package is installed.
 
         Parameters
         ----------
