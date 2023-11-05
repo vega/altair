@@ -29,7 +29,7 @@ def import_vegafusion() -> ModuleType:
 
 
 def import_vl_convert() -> ModuleType:
-    min_version = "1.0.0"
+    min_version = "1.0.1"
     try:
         version = importlib_version("vl-convert-python")
         if Version(version) < Version(min_version):
