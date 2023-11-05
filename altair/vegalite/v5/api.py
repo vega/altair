@@ -1055,7 +1055,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             requirejs=requirejs,
         )
 
-    def to_url(self, fullscreen: bool = False):
+    def to_url(self, fullscreen: bool = False) -> str:
         """Convert a chart to a URL that opens the chart specification in the Vega chart editor
 
         Convert a chart to a sharable URL that opens the chart in the online Vega chart editor.
