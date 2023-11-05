@@ -1,4 +1,4 @@
-from typing import Literal, Optional, Union, cast
+from typing import Literal, Optional, Union, cast, Tuple
 
 from .deprecation import AltairDeprecationWarning
 from .html import spec_to_html
@@ -16,7 +16,7 @@ def spec_to_mimebundle(
     vegalite_version: Optional[str] = None,
     engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
     **kwargs,
-) -> Union[dict, tuple[dict, dict]]:
+) -> Union[dict, Tuple[dict, dict]]:
     """Convert a vega-lite specification to a mimebundle
 
     The mimebundle type is controlled by the ``format`` argument, which can be
@@ -93,7 +93,7 @@ def _spec_to_mimebundle_with_engine(
     format: Literal["png", "svg", "pdf", "vega"],
     mode: Literal["vega-lite", "vega"],
     **kwargs,
-) -> Union[dict, tuple[dict, dict]]:
+) -> Union[dict, Tuple[dict, dict]]:
     """Helper for Vega-Lite to mimebundle conversions that require an engine
 
     Parameters
