@@ -64,7 +64,7 @@ dev = [
     "pytest-cov",
     "m2r",
     "vega_datasets",
-    "vl-convert-python>=1.0.0",
+    "vl-convert-python>=1.0.1",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
