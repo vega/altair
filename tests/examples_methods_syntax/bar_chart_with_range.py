@@ -10,7 +10,7 @@ from vega_datasets import data
 source = data.seattle_weather()
 
 bar = alt.Chart(source).mark_bar(cornerRadius=10, height=10).encode(
-    x=alt.X('min(temp_min):Q').scale(domain=[-15, 45]).title('temperature (°C)'),
+    x=alt.X('min(temp_min):Q').scale(domain=[-15, 45]).title('Temperature (°C)'),
     x2='max(temp_max):Q',
     y=alt.Y('month(date):O').title(None) 
 )
