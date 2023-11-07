@@ -225,16 +225,10 @@ def _validate_normalize_engine(engine, format):
         elif altair_saver is not None:
             normalized_engine = "altairsaver"
         else:
-            if format == "pdf":
-                raise ValueError(
-                    "Saving charts in {fmt!r} format requires the altair_saver package: "
-                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-                )
-            else:
-                raise ValueError(
-                    "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
-                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-                )
+            raise ValueError(
+                "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
+                "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+            )
     else:
         raise ValueError(
             "Invalid conversion engine {engine!r}. Expected one of {valid!r}".format(
