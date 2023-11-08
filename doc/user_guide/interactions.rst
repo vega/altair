@@ -356,7 +356,7 @@ point is highlighted:
 
 .. altair-plot::
 
-    point_nearest = alt.selection_point(on='mouseover', nearest=True)
+    point_nearest = alt.selection_point(on='mousemove', nearest=True)
     make_example(point_nearest)
 
 Point selections also allow for multiple chart objects to be selected.
