@@ -56,7 +56,7 @@ class _Parameter(Protocol):
     # It would be better if we could directly use the Parameter class,
     # but that would create a circular import.
     # The protocol does not need to have all the attributes and methods of this
-    # class but the actual api.Parameter just needs to pass a type check 
+    # class but the actual api.Parameter just needs to pass a type check
     # as a core._Parameter.
 
     _counter: int
