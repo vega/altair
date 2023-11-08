@@ -186,7 +186,7 @@ def _get_channels_mapping() -> TypingDict[TypingType[core.SchemaBase], str]:
 
 # -------------------------------------------------------------------------
 # Tools for working with parameters
-class Parameter(expr.core.OperatorMixin, object):
+class Parameter(expr.core.OperatorMixin):
     """A Parameter object"""
 
     # NOTE: If you change this class, make sure that the protocol in

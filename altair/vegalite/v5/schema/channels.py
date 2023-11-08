@@ -423,7 +423,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -467,8 +467,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Angle":
@@ -480,8 +479,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Angle":
@@ -511,28 +509,22 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -700,19 +692,17 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -877,29 +867,27 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -910,7 +898,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -1077,23 +1065,20 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -1117,48 +1102,40 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -1178,12 +1155,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -1348,17 +1323,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -1523,25 +1497,21 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -1706,18 +1676,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -1741,13 +1709,12 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -1755,14 +1722,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -1773,7 +1740,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -1940,22 +1907,19 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -1979,32 +1943,28 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -2013,7 +1973,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -2030,24 +1990,20 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -2055,15 +2011,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -2071,29 +2027,27 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -2110,7 +2064,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -2130,7 +2084,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -2138,23 +2092,20 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -2177,20 +2128,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -2548,7 +2495,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -2578,8 +2525,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Angle":
@@ -3478,8 +3424,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleDatum":
@@ -3491,8 +3436,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleDatum":
@@ -3884,7 +3828,7 @@ class AngleValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -4202,7 +4146,7 @@ class AngleValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -4251,8 +4195,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleValue":
@@ -4264,8 +4207,7 @@ class AngleValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleValue":
@@ -4605,7 +4547,7 @@ class Color(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -4656,7 +4598,7 @@ class Color(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -4678,7 +4620,7 @@ class Color(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -4711,28 +4653,22 @@ class Color(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -4900,19 +4836,17 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -5077,29 +5011,27 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5110,7 +5042,7 @@ class Color(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5277,23 +5209,20 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -5317,48 +5246,40 @@ class Color(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -5378,12 +5299,10 @@ class Color(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -5548,17 +5467,16 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -5723,25 +5641,21 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -5906,18 +5820,16 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -5941,13 +5853,12 @@ class Color(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -5955,14 +5866,14 @@ class Color(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5973,7 +5884,7 @@ class Color(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -6140,22 +6051,19 @@ class Color(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -6179,32 +6087,28 @@ class Color(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -6213,7 +6117,7 @@ class Color(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -6230,24 +6134,20 @@ class Color(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -6255,15 +6155,15 @@ class Color(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -6271,29 +6171,27 @@ class Color(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -6310,7 +6208,7 @@ class Color(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -6330,7 +6228,7 @@ class Color(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -6338,23 +6236,20 @@ class Color(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -6377,20 +6272,16 @@ class Color(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -6748,7 +6639,7 @@ class Color(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -6778,8 +6669,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Color":
@@ -7697,7 +7587,7 @@ class ColorDatum(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -7719,7 +7609,7 @@ class ColorDatum(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -8125,7 +8015,7 @@ class ColorValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -8443,7 +8333,7 @@ class ColorValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -8499,7 +8389,7 @@ class ColorValue(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -8521,7 +8411,7 @@ class ColorValue(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -8860,7 +8750,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -8904,7 +8794,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -8920,7 +8810,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -9084,23 +8974,20 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.Color,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -9124,24 +9011,21 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -9153,7 +9037,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -9169,7 +9053,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -9333,22 +9217,19 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.Color,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -9372,24 +9253,21 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Column":
@@ -10289,7 +10167,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -10337,8 +10215,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Description":
@@ -10350,8 +10227,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Description":
@@ -11251,7 +11127,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -11569,7 +11445,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -11618,8 +11494,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "DescriptionValue":
@@ -11631,8 +11506,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "DescriptionValue":
@@ -11901,7 +11775,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -12797,7 +12671,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -12858,7 +12732,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -12874,7 +12748,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -13038,23 +12912,20 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                     core.Color,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -13078,24 +12949,21 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -13107,7 +12975,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -13123,7 +12991,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -13287,22 +13155,19 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                     core.Color,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -13326,24 +13191,21 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Facet":
@@ -14295,7 +14157,7 @@ class Fill(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -14346,7 +14208,7 @@ class Fill(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -14368,7 +14230,7 @@ class Fill(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -14401,28 +14263,22 @@ class Fill(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -14590,19 +14446,17 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -14767,29 +14621,27 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14800,7 +14652,7 @@ class Fill(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -14967,23 +14819,20 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -15007,48 +14856,40 @@ class Fill(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -15068,12 +14909,10 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -15238,17 +15077,16 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -15413,25 +15251,21 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -15596,18 +15430,16 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -15631,13 +15463,12 @@ class Fill(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -15645,14 +15476,14 @@ class Fill(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -15663,7 +15494,7 @@ class Fill(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -15830,22 +15661,19 @@ class Fill(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -15869,32 +15697,28 @@ class Fill(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -15903,7 +15727,7 @@ class Fill(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -15920,24 +15744,20 @@ class Fill(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -15945,15 +15765,15 @@ class Fill(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -15961,29 +15781,27 @@ class Fill(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -16000,7 +15818,7 @@ class Fill(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -16020,7 +15838,7 @@ class Fill(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -16028,23 +15846,20 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -16067,20 +15882,16 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -16438,7 +16249,7 @@ class Fill(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -16468,8 +16279,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Fill":
@@ -17387,7 +17197,7 @@ class FillDatum(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -17409,7 +17219,7 @@ class FillDatum(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -17815,7 +17625,7 @@ class FillValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -18133,7 +17943,7 @@ class FillValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -18189,7 +17999,7 @@ class FillValue(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -18211,7 +18021,7 @@ class FillValue(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -18562,7 +18372,7 @@ class FillOpacity(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -18606,8 +18416,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacity":
@@ -18619,8 +18428,7 @@ class FillOpacity(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacity":
@@ -18650,28 +18458,22 @@ class FillOpacity(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -18839,19 +18641,17 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -19016,29 +18816,27 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -19049,7 +18847,7 @@ class FillOpacity(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -19216,23 +19014,20 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -19256,48 +19051,40 @@ class FillOpacity(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -19317,12 +19104,10 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -19487,17 +19272,16 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -19662,25 +19446,21 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -19845,18 +19625,16 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -19880,13 +19658,12 @@ class FillOpacity(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -19894,14 +19671,14 @@ class FillOpacity(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -19912,7 +19689,7 @@ class FillOpacity(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -20079,22 +19856,19 @@ class FillOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -20118,32 +19892,28 @@ class FillOpacity(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -20152,7 +19922,7 @@ class FillOpacity(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -20169,24 +19939,20 @@ class FillOpacity(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -20194,15 +19960,15 @@ class FillOpacity(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -20210,29 +19976,27 @@ class FillOpacity(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -20249,7 +20013,7 @@ class FillOpacity(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -20269,7 +20033,7 @@ class FillOpacity(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -20277,23 +20041,20 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -20316,20 +20077,16 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -20687,7 +20444,7 @@ class FillOpacity(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -20717,8 +20474,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacity":
@@ -21619,8 +21375,7 @@ class FillOpacityDatum(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityDatum":
@@ -21632,8 +21387,7 @@ class FillOpacityDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityDatum":
@@ -22025,7 +21779,7 @@ class FillOpacityValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -22343,7 +22097,7 @@ class FillOpacityValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -22392,8 +22146,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityValue":
@@ -22405,8 +22158,7 @@ class FillOpacityValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityValue":
@@ -22715,7 +22467,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -22763,8 +22515,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Href":
@@ -22776,8 +22527,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Href":
@@ -23677,7 +23427,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -23995,7 +23745,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -24044,8 +23794,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "HrefValue":
@@ -24057,8 +23806,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "HrefValue":
@@ -24327,7 +24075,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -28682,7 +28430,7 @@ class Opacity(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -28726,8 +28474,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Opacity":
@@ -28739,8 +28486,7 @@ class Opacity(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Opacity":
@@ -28770,28 +28516,22 @@ class Opacity(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -28959,19 +28699,17 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -29136,29 +28874,27 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -29169,7 +28905,7 @@ class Opacity(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -29336,23 +29072,20 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -29376,48 +29109,40 @@ class Opacity(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -29437,12 +29162,10 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -29607,17 +29330,16 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -29782,25 +29504,21 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -29965,18 +29683,16 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -30000,13 +29716,12 @@ class Opacity(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -30014,14 +29729,14 @@ class Opacity(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -30032,7 +29747,7 @@ class Opacity(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -30199,22 +29914,19 @@ class Opacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -30238,32 +29950,28 @@ class Opacity(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -30272,7 +29980,7 @@ class Opacity(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -30289,24 +29997,20 @@ class Opacity(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -30314,15 +30018,15 @@ class Opacity(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -30330,29 +30034,27 @@ class Opacity(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -30369,7 +30071,7 @@ class Opacity(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -30389,7 +30091,7 @@ class Opacity(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -30397,23 +30099,20 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -30436,20 +30135,16 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -30807,7 +30502,7 @@ class Opacity(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -30837,8 +30532,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Opacity":
@@ -31737,8 +31431,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityDatum":
@@ -31750,8 +31443,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityDatum":
@@ -32143,7 +31835,7 @@ class OpacityValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -32461,7 +32153,7 @@ class OpacityValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -32510,8 +32202,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityValue":
@@ -32523,8 +32214,7 @@ class OpacityValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityValue":
@@ -32794,7 +32484,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -33768,7 +33458,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -33808,24 +33498,20 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -33833,15 +33519,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -33849,29 +33535,27 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -33888,7 +33572,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -33908,7 +33592,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -33916,23 +33600,20 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -33955,20 +33636,16 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -34326,7 +34003,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -34356,8 +34033,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Radius":
@@ -35272,24 +34948,20 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -35297,15 +34969,15 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -35313,29 +34985,27 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -35352,7 +35022,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -35372,7 +35042,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -35380,23 +35050,20 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -35419,20 +35086,16 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -35790,7 +35453,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -35820,8 +35483,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "RadiusDatum":
@@ -37057,7 +36719,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -37101,7 +36763,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -37117,7 +36779,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -37281,23 +36943,20 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.Color,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -37321,24 +36980,21 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -37350,7 +37006,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -37366,7 +37022,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -37530,22 +37186,19 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     core.Color,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -37569,24 +37222,21 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[Literal["left", "right", "top", "bottom"], core.Orient], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Row":
@@ -38517,7 +38167,7 @@ class Shape(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -38561,8 +38211,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Shape":
@@ -38574,8 +38223,7 @@ class Shape(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Shape":
@@ -38605,28 +38253,22 @@ class Shape(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -38794,19 +38436,17 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -38971,29 +38611,27 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -39004,7 +38642,7 @@ class Shape(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -39171,23 +38809,20 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -39211,48 +38846,40 @@ class Shape(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -39272,12 +38899,10 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -39442,17 +39067,16 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -39617,25 +39241,21 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -39800,18 +39420,16 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -39835,13 +39453,12 @@ class Shape(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -39849,14 +39466,14 @@ class Shape(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -39867,7 +39484,7 @@ class Shape(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -40034,22 +39651,19 @@ class Shape(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -40073,32 +39687,28 @@ class Shape(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -40107,7 +39717,7 @@ class Shape(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -40124,24 +39734,20 @@ class Shape(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -40149,15 +39755,15 @@ class Shape(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -40165,29 +39771,27 @@ class Shape(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -40204,7 +39808,7 @@ class Shape(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -40224,7 +39828,7 @@ class Shape(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -40232,23 +39836,20 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -40271,20 +39872,16 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -40642,7 +40239,7 @@ class Shape(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -40672,8 +40269,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Shape":
@@ -41569,8 +41165,7 @@ class ShapeDatum(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeDatum":
@@ -41582,8 +41177,7 @@ class ShapeDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeDatum":
@@ -41973,7 +41567,7 @@ class ShapeValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -42288,7 +41882,7 @@ class ShapeValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -42337,8 +41931,7 @@ class ShapeValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeValue":
@@ -42350,8 +41943,7 @@ class ShapeValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeValue":
@@ -42693,7 +42285,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -42737,8 +42329,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Size":
@@ -42750,8 +42341,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Size":
@@ -42781,28 +42371,22 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -42970,19 +42554,17 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -43147,29 +42729,27 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43180,7 +42760,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -43347,23 +42927,20 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -43387,48 +42964,40 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -43448,12 +43017,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -43618,17 +43185,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -43793,25 +43359,21 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -43976,18 +43538,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44011,13 +43571,12 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -44025,14 +43584,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44043,7 +43602,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44210,22 +43769,19 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -44249,32 +43805,28 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -44283,7 +43835,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -44300,24 +43852,20 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -44325,15 +43873,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -44341,29 +43889,27 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -44380,7 +43926,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -44400,7 +43946,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -44408,23 +43954,20 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -44447,20 +43990,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -44818,7 +44357,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -44848,8 +44387,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Size":
@@ -45748,8 +45286,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeDatum":
@@ -45761,8 +45298,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeDatum":
@@ -46154,7 +45690,7 @@ class SizeValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -46472,7 +46008,7 @@ class SizeValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -46521,8 +46057,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeValue":
@@ -46534,8 +46069,7 @@ class SizeValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeValue":
@@ -46875,7 +46409,7 @@ class Stroke(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -46926,7 +46460,7 @@ class Stroke(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -46948,7 +46482,7 @@ class Stroke(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -46981,28 +46515,22 @@ class Stroke(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -47170,19 +46698,17 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -47347,29 +46873,27 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -47380,7 +46904,7 @@ class Stroke(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -47547,23 +47071,20 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -47587,48 +47108,40 @@ class Stroke(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -47648,12 +47161,10 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -47818,17 +47329,16 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -47993,25 +47503,21 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -48176,18 +47682,16 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -48211,13 +47715,12 @@ class Stroke(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -48225,14 +47728,14 @@ class Stroke(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -48243,7 +47746,7 @@ class Stroke(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -48410,22 +47913,19 @@ class Stroke(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -48449,32 +47949,28 @@ class Stroke(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -48483,7 +47979,7 @@ class Stroke(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -48500,24 +47996,20 @@ class Stroke(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -48525,15 +48017,15 @@ class Stroke(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -48541,29 +48033,27 @@ class Stroke(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -48580,7 +48070,7 @@ class Stroke(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -48600,7 +48090,7 @@ class Stroke(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -48608,23 +48098,20 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -48647,20 +48134,16 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -49018,7 +48501,7 @@ class Stroke(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -49048,8 +48531,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Stroke":
@@ -49967,7 +49449,7 @@ class StrokeDatum(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -49989,7 +49471,7 @@ class StrokeDatum(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -50395,7 +49877,7 @@ class StrokeValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -50713,7 +50195,7 @@ class StrokeValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -50769,7 +50251,7 @@ class StrokeValue(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -50791,7 +50273,7 @@ class StrokeValue(
                     Union[core.RadialGradient, dict],
                     core.Gradient,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -51142,7 +50624,7 @@ class StrokeDash(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -51186,7 +50668,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -51199,7 +50681,7 @@ class StrokeDash(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -51230,28 +50712,22 @@ class StrokeDash(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -51419,19 +50895,17 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -51596,29 +51070,27 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51629,7 +51101,7 @@ class StrokeDash(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51796,23 +51268,20 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -51836,48 +51305,40 @@ class StrokeDash(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -51897,12 +51358,10 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -52067,17 +51526,16 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -52242,25 +51700,21 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -52425,18 +51879,16 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -52460,13 +51912,12 @@ class StrokeDash(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -52474,14 +51925,14 @@ class StrokeDash(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52492,7 +51943,7 @@ class StrokeDash(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52659,22 +52110,19 @@ class StrokeDash(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -52698,32 +52146,28 @@ class StrokeDash(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -52732,7 +52176,7 @@ class StrokeDash(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52749,24 +52193,20 @@ class StrokeDash(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -52774,15 +52214,15 @@ class StrokeDash(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -52790,29 +52230,27 @@ class StrokeDash(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -52829,7 +52267,7 @@ class StrokeDash(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -52849,7 +52287,7 @@ class StrokeDash(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -52857,23 +52295,20 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -52896,20 +52331,16 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -53267,7 +52698,7 @@ class StrokeDash(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -53297,8 +52728,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDash":
@@ -54203,7 +53633,7 @@ class StrokeDashDatum(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -54216,7 +53646,7 @@ class StrokeDashDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -54613,7 +54043,7 @@ class StrokeDashValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -54931,7 +54361,7 @@ class StrokeDashValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -54980,7 +54410,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -54993,7 +54423,7 @@ class StrokeDashValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -55336,7 +54766,7 @@ class StrokeOpacity(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -55380,8 +54810,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacity":
@@ -55393,8 +54822,7 @@ class StrokeOpacity(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacity":
@@ -55424,28 +54852,22 @@ class StrokeOpacity(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -55613,19 +55035,17 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -55790,29 +55210,27 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -55823,7 +55241,7 @@ class StrokeOpacity(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -55990,23 +55408,20 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -56030,48 +55445,40 @@ class StrokeOpacity(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -56091,12 +55498,10 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -56261,17 +55666,16 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -56436,25 +55840,21 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -56619,18 +56019,16 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -56654,13 +56052,12 @@ class StrokeOpacity(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -56668,14 +56065,14 @@ class StrokeOpacity(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -56686,7 +56083,7 @@ class StrokeOpacity(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -56853,22 +56250,19 @@ class StrokeOpacity(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -56892,32 +56286,28 @@ class StrokeOpacity(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -56926,7 +56316,7 @@ class StrokeOpacity(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -56943,24 +56333,20 @@ class StrokeOpacity(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -56968,15 +56354,15 @@ class StrokeOpacity(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -56984,29 +56370,27 @@ class StrokeOpacity(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -57023,7 +56407,7 @@ class StrokeOpacity(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -57043,7 +56427,7 @@ class StrokeOpacity(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -57051,23 +56435,20 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -57090,20 +56471,16 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -57461,7 +56838,7 @@ class StrokeOpacity(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -57491,8 +56868,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacity":
@@ -58393,8 +57769,7 @@ class StrokeOpacityDatum(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityDatum":
@@ -58406,8 +57781,7 @@ class StrokeOpacityDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityDatum":
@@ -58799,7 +58173,7 @@ class StrokeOpacityValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -59117,7 +58491,7 @@ class StrokeOpacityValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -59166,8 +58540,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityValue":
@@ -59179,8 +58552,7 @@ class StrokeOpacityValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityValue":
@@ -59520,7 +58892,7 @@ class StrokeWidth(
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -59564,8 +58936,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidth":
@@ -59577,8 +58948,7 @@ class StrokeWidth(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidth":
@@ -59608,28 +58978,22 @@ class StrokeWidth(
     def legend(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union[Literal["horizontal", "vertical"], core.Orientation], UndefinedType
@@ -59797,19 +59161,17 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
@@ -59974,29 +59336,27 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
                 Union[Literal["all", "each", "none"], core.LayoutAlign],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -60007,7 +59367,7 @@ class StrokeWidth(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -60174,23 +59534,20 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -60214,48 +59571,40 @@ class StrokeWidth(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -60275,12 +59624,10 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
@@ -60445,17 +59792,16 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
@@ -60620,25 +59966,21 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
@@ -60803,18 +60145,16 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.SymbolShape, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.SymbolShape, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -60838,13 +60178,12 @@ class StrokeWidth(
                     core.TickCount,
                     float,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union[Sequence[str], core.Text, str]], UndefinedType
@@ -60852,14 +60191,14 @@ class StrokeWidth(
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -60870,7 +60209,7 @@ class StrokeWidth(
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -61037,22 +60376,19 @@ class StrokeWidth(
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -61076,32 +60412,28 @@ class StrokeWidth(
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
                 Union[Literal["left", "right", "top", "bottom"], core.Orient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -61110,7 +60442,7 @@ class StrokeWidth(
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -61127,24 +60459,20 @@ class StrokeWidth(
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -61152,15 +60480,15 @@ class StrokeWidth(
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -61168,29 +60496,27 @@ class StrokeWidth(
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -61207,7 +60533,7 @@ class StrokeWidth(
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -61227,7 +60553,7 @@ class StrokeWidth(
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -61235,23 +60561,20 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -61274,20 +60597,16 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -61645,7 +60964,7 @@ class StrokeWidth(
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -61675,8 +60994,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidth":
@@ -62577,8 +61895,7 @@ class StrokeWidthDatum(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthDatum":
@@ -62590,8 +61907,7 @@ class StrokeWidthDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthDatum":
@@ -62983,7 +62299,7 @@ class StrokeWidthValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -63301,7 +62617,7 @@ class StrokeWidthValue(
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -63350,8 +62666,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthValue":
@@ -63363,8 +62678,7 @@ class StrokeWidthValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthValue":
@@ -63673,7 +62987,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -63723,7 +63037,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         value: Union[
             Union[
                 Union[Sequence[str], core.Text, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -63739,7 +63053,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         value: Union[
             Union[
                 Union[Sequence[str], core.Text, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -64506,7 +63820,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         value: Union[
             Union[
                 Union[Sequence[str], core.Text, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -64522,7 +63836,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         value: Union[
             Union[
                 Union[Sequence[str], core.Text, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -65109,7 +64423,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         value: Union[
             Union[
                 Union[Sequence[str], core.Text, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -65125,7 +64439,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         value: Union[
             Union[
                 Union[Sequence[str], core.Text, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -65478,7 +64792,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -65518,24 +64832,20 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -65543,15 +64853,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -65559,29 +64869,27 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -65598,7 +64906,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -65618,7 +64926,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -65626,23 +64934,20 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -65665,20 +64970,16 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -66036,7 +65337,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -66066,8 +65367,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Theta":
@@ -66982,24 +66282,20 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -67007,15 +66303,15 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -67023,29 +66319,27 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -67062,7 +66356,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -67082,7 +66376,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -67090,23 +66384,20 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -67129,20 +66420,16 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -67500,7 +66787,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -67530,8 +66817,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ThetaDatum":
@@ -68750,7 +68036,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -68798,8 +68084,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Tooltip":
@@ -68811,8 +68096,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Tooltip":
@@ -69712,7 +68996,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -70030,7 +69314,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -70079,8 +69363,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TooltipValue":
@@ -70092,8 +69375,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TooltipValue":
@@ -70402,7 +69684,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -70450,8 +69732,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Url":
@@ -70463,8 +69744,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Url":
@@ -71364,7 +70644,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -71682,7 +70962,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             Union[
                 Union[None, bool, core.PrimitiveValue, float, str],
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.RepeatRef, dict],
             ],
             UndefinedType,
@@ -71731,8 +71011,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "UrlValue":
@@ -71744,8 +71023,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[Union[core.ParameterName, str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[None, Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "UrlValue":
@@ -72099,22 +71377,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def axis(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -72281,25 +71556,22 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
@@ -72307,7 +71579,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         gridCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -72475,7 +71747,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -72483,14 +71755,14 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -72498,7 +71770,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         gridOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -72506,7 +71778,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         gridWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -72515,13 +71787,12 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
                 Union[core.ConditionalAxisLabelAlign, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
@@ -72531,14 +71802,12 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     str,
                 ],
                 Union[core.ConditionalAxisLabelBaseline, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[
-                Union[bool, float], Union[core.ExprRef, core._ParameterProtocol, dict]
-            ],
+            Union[Union[bool, float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
@@ -72705,20 +71974,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
                 Union[core.ConditionalAxisString, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -72726,7 +71994,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelFontSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -72734,7 +72002,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelFontStyle: Union[
             Union[
                 Union[core.ConditionalAxisLabelFontStyle, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.FontStyle, str],
             ],
             UndefinedType,
@@ -72760,22 +72028,20 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     core.FontWeight,
                 ],
                 Union[core.ConditionalAxisLabelFontWeight, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -72783,7 +72049,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -72791,58 +72057,52 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
                 Union[Literal["top", "bottom", "left", "right"], core.AxisOrient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
-                Literal["center", "extent"],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Literal["center", "extent"], Union[core.ExprRef, core._Parameter, dict]
             ],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -73010,7 +72270,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -73029,7 +72289,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 float,
             ],
@@ -73039,31 +72299,29 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -73072,7 +72330,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         tickSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -73080,7 +72338,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         tickWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -73092,20 +72350,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
@@ -73114,7 +72371,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -73281,22 +72538,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -73320,37 +72574,30 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
@@ -73358,7 +72605,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -73389,7 +72636,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -73449,24 +72696,20 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -73474,15 +72717,15 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -73490,29 +72733,27 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -73529,7 +72770,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -73549,7 +72790,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -73557,23 +72798,20 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -73596,20 +72834,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -73967,7 +73201,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -73997,8 +73231,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "X":
@@ -74932,22 +74165,19 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def axis(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -75114,25 +74344,22 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
@@ -75140,7 +74367,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         gridCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -75308,7 +74535,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -75316,14 +74543,14 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75331,7 +74558,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         gridOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75339,7 +74566,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         gridWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75348,13 +74575,12 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
                 Union[core.ConditionalAxisLabelAlign, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
@@ -75364,14 +74590,12 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     str,
                 ],
                 Union[core.ConditionalAxisLabelBaseline, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[
-                Union[bool, float], Union[core.ExprRef, core._ParameterProtocol, dict]
-            ],
+            Union[Union[bool, float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
@@ -75538,20 +74762,19 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
                 Union[core.ConditionalAxisString, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -75559,7 +74782,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelFontSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75567,7 +74790,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelFontStyle: Union[
             Union[
                 Union[core.ConditionalAxisLabelFontStyle, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.FontStyle, str],
             ],
             UndefinedType,
@@ -75593,22 +74816,20 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     core.FontWeight,
                 ],
                 Union[core.ConditionalAxisLabelFontWeight, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75616,7 +74837,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75624,58 +74845,52 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
                 Union[Literal["top", "bottom", "left", "right"], core.AxisOrient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
-                Literal["center", "extent"],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Literal["center", "extent"], Union[core.ExprRef, core._Parameter, dict]
             ],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -75843,7 +75058,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -75862,7 +75077,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 float,
             ],
@@ -75872,31 +75087,29 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75905,7 +75118,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         tickSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75913,7 +75126,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         tickWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -75925,20 +75138,19 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
@@ -75947,7 +75159,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -76114,22 +75326,19 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -76153,37 +75362,30 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
@@ -76191,7 +75393,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -76232,24 +75434,20 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -76257,15 +75455,15 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -76273,29 +75471,27 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -76312,7 +75508,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -76332,7 +75528,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -76340,23 +75536,20 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -76379,20 +75572,16 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -76750,7 +75939,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -76780,8 +75969,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "XDatum":
@@ -79409,7 +78597,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -79445,24 +78633,20 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -79470,15 +78654,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -79486,29 +78670,27 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -79525,7 +78707,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -79545,7 +78727,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -79553,23 +78735,20 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -79592,20 +78771,16 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -79963,7 +79138,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -79993,8 +79168,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "XOffset":
@@ -80857,24 +80031,20 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -80882,15 +80052,15 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -80898,29 +80068,27 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -80937,7 +80105,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -80957,7 +80125,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -80965,23 +80133,20 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -81004,20 +80169,16 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -81375,7 +80536,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -81405,8 +80566,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "XOffsetDatum":
@@ -81799,22 +80959,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def axis(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -81981,25 +81138,22 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
@@ -82007,7 +81161,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         gridCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -82175,7 +81329,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -82183,14 +81337,14 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82198,7 +81352,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         gridOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82206,7 +81360,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         gridWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82215,13 +81369,12 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
                 Union[core.ConditionalAxisLabelAlign, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
@@ -82231,14 +81384,12 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     str,
                 ],
                 Union[core.ConditionalAxisLabelBaseline, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[
-                Union[bool, float], Union[core.ExprRef, core._ParameterProtocol, dict]
-            ],
+            Union[Union[bool, float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
@@ -82405,20 +81556,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
                 Union[core.ConditionalAxisString, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -82426,7 +81576,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelFontSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82434,7 +81584,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelFontStyle: Union[
             Union[
                 Union[core.ConditionalAxisLabelFontStyle, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.FontStyle, str],
             ],
             UndefinedType,
@@ -82460,22 +81610,20 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     core.FontWeight,
                 ],
                 Union[core.ConditionalAxisLabelFontWeight, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82483,7 +81631,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82491,58 +81639,52 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
                 Union[Literal["top", "bottom", "left", "right"], core.AxisOrient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
-                Literal["center", "extent"],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Literal["center", "extent"], Union[core.ExprRef, core._Parameter, dict]
             ],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -82710,7 +81852,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -82729,7 +81871,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 float,
             ],
@@ -82739,31 +81881,29 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82772,7 +81912,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         tickSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82780,7 +81920,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         tickWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -82792,20 +81932,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
@@ -82814,7 +81953,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -82981,22 +82120,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -83020,37 +82156,30 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
@@ -83058,7 +82187,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -83089,7 +82218,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -83149,24 +82278,20 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -83174,15 +82299,15 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -83190,29 +82315,27 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -83229,7 +82352,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -83249,7 +82372,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -83257,23 +82380,20 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -83296,20 +82416,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -83667,7 +82783,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -83697,8 +82813,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Y":
@@ -84632,22 +83747,19 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def axis(
         self,
         aria: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -84814,25 +83926,22 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union[core.ExprRef, core._ParameterProtocol, dict]],
+            Union[Sequence[float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         format: Union[Union[Union[core.Dict, dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
@@ -84840,7 +83949,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         gridCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -85008,7 +84117,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -85016,14 +84125,14 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85031,7 +84140,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         gridOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85039,7 +84148,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         gridWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85048,13 +84157,12 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
                 Union[core.ConditionalAxisLabelAlign, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
@@ -85064,14 +84172,12 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     str,
                 ],
                 Union[core.ConditionalAxisLabelBaseline, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[
-                Union[bool, float], Union[core.ExprRef, core._ParameterProtocol, dict]
-            ],
+            Union[Union[bool, float], Union[core.ExprRef, core._Parameter, dict]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
@@ -85238,20 +84344,19 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
                 Union[core.ConditionalAxisString, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -85259,7 +84364,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelFontSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85267,7 +84372,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelFontStyle: Union[
             Union[
                 Union[core.ConditionalAxisLabelFontStyle, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.FontStyle, str],
             ],
             UndefinedType,
@@ -85293,22 +84398,20 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     core.FontWeight,
                 ],
                 Union[core.ConditionalAxisLabelFontWeight, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85316,7 +84419,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85324,58 +84427,52 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelOverlap: Union[
             Union[
                 Union[bool, core.LabelOverlap, str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
                 Union[Literal["top", "bottom", "left", "right"], core.AxisOrient],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
             Union[
-                Literal["center", "extent"],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Literal["center", "extent"], Union[core.ExprRef, core._Parameter, dict]
             ],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
                 Union[Literal["butt", "round", "square"], core.StrokeCap],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -85543,7 +84640,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                 ],
                 Union[core.ConditionalAxisColor, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -85562,7 +84659,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 float,
             ],
@@ -85572,31 +84669,29 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             Union[
                 Sequence[float],
                 Union[core.ConditionalAxisNumberArray, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85605,7 +84700,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         tickSize: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85613,7 +84708,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         tickWidth: Union[
             Union[
                 Union[core.ConditionalAxisNumber, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
@@ -85625,20 +84720,19 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         titleAlign: Union[
             Union[
                 Union[Literal["left", "center", "right"], core.Align],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
                 Union[Literal[None, "start", "middle", "end"], core.TitleAnchor],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
@@ -85647,7 +84741,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     core.TextBaseline,
                     str,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -85814,22 +84908,19 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                         str,
                     ],
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
             Union[
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.FontStyle, str],
+                Union[core.ExprRef, core._Parameter, dict], Union[core.FontStyle, str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -85853,37 +84944,30 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.FontWeight,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
@@ -85891,7 +84975,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -85932,24 +85016,20 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -85957,15 +85037,15 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -85973,29 +85053,27 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -86012,7 +85090,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -86032,7 +85110,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -86040,23 +85118,20 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -86079,20 +85154,16 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -86450,7 +85521,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -86480,8 +85551,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "YDatum":
@@ -89109,7 +88179,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         extent: Union[
             Union[
                 Sequence[float],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 core.BinExtent,
             ],
             UndefinedType,
@@ -89145,24 +88215,20 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -89170,15 +88236,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -89186,29 +88252,27 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -89225,7 +88289,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -89245,7 +88309,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -89253,23 +88317,20 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -89292,20 +88353,16 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -89663,7 +88720,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -89693,8 +88750,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "YOffset":
@@ -90557,24 +89613,20 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def scale(
         self,
         align: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union[Sequence[float], Union[core.ScaleBinParams, dict], core.ScaleBins],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -90582,15 +89634,15 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     Union[
                         None,
                         Union[core.DateTime, dict],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union[core.DomainUnionWith, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
-                Union[core.ParameterExtent, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
+                Union[core.ParameterExtent, core._Parameter, dict],
                 str,
             ],
             UndefinedType,
@@ -90598,29 +89650,27 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         domainMax: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
             Union[
                 Union[core.DateTime, dict],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union[core.ExprRef, core._ParameterProtocol, dict], UndefinedType
+            Union[core.ExprRef, core._Parameter, dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -90637,7 +89687,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     ],
                     core.ScaleInterpolateEnum,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.ScaleInterpolateParams, dict],
             ],
             UndefinedType,
@@ -90657,7 +89707,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     ],
                     core.TimeInterval,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.TimeIntervalStep, dict],
                 bool,
                 float,
@@ -90665,23 +89715,20 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union[core.ExprRef, core._ParameterProtocol, dict],
+                        Union[core.ExprRef, core._Parameter, dict],
                         float,
                         str,
                     ]
@@ -90704,20 +89751,16 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], float, str],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -91075,7 +90118,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
                     ],
                     core.ColorScheme,
                 ],
-                Union[core.ExprRef, core._ParameterProtocol, dict],
+                Union[core.ExprRef, core._Parameter, dict],
                 Union[core.SchemeParams, dict],
             ],
             UndefinedType,
@@ -91105,8 +90148,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union[core.ExprRef, core._ParameterProtocol, dict], bool],
-            UndefinedType,
+            Union[Union[core.ExprRef, core._Parameter, dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "YOffsetDatum":

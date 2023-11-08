@@ -18,12 +18,13 @@ def load_schema() -> dict:
     return json.loads(schema_bytes.decode("utf-8"))
 
 
-class _ParameterProtocol(Protocol):
+class _Parameter(Protocol):
     # This protocol represents a Parameter as defined in api.py
     # It would be better if we could directly use the Parameter class,
     # but that would create a circular import.
     # The protocol does not need to have all the attributes and methods of this
-    # class but a Parameter needs to pass a type check as a ParameterProtocol.
+    # class but the actual api.Parameter just needs to pass a type check
+    # as a core._Parameter.
 
     _counter: int
 
@@ -592,28 +593,28 @@ class AreaConfig(AnyMarkConfig):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -645,7 +646,7 @@ class AreaConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -809,7 +810,7 @@ class AreaConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -819,19 +820,19 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -876,31 +877,31 @@ class AreaConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -1063,7 +1064,7 @@ class AreaConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -1073,24 +1074,22 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -1113,18 +1112,18 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -1150,54 +1149,54 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         line: Union[
             Union[Union["OverlayMarkDef", dict], bool], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         point: Union[
             Union[Union["OverlayMarkDef", dict], bool, str], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -1360,7 +1359,7 @@ class AreaConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -1371,59 +1370,57 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -1432,27 +1429,23 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -2014,25 +2007,25 @@ class Axis(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         domainColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -2198,24 +2191,23 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
@@ -2223,7 +2215,7 @@ class Axis(VegaLiteSchema):
         gridColor: Union[
             Union[
                 Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -2392,14 +2384,14 @@ class Axis(VegaLiteSchema):
             Union[
                 Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2407,7 +2399,7 @@ class Axis(VegaLiteSchema):
         gridOpacity: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2415,7 +2407,7 @@ class Axis(VegaLiteSchema):
         gridWidth: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2424,17 +2416,17 @@ class Axis(VegaLiteSchema):
             Union[
                 Union["Align", Literal["left", "center", "right"]],
                 Union["ConditionalAxisLabelAlign", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
                 Union["ConditionalAxisLabelBaseline", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -2444,13 +2436,13 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union[bool, float]],
+            Union[Union["ExprRef", "_Parameter", dict], Union[bool, float]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             Union[
                 Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -2618,12 +2610,12 @@ class Axis(VegaLiteSchema):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
                 Union["ConditionalAxisString", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 str,
             ],
             UndefinedType,
@@ -2631,7 +2623,7 @@ class Axis(VegaLiteSchema):
         labelFontSize: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2639,7 +2631,7 @@ class Axis(VegaLiteSchema):
         labelFontStyle: Union[
             Union[
                 Union["ConditionalAxisLabelFontStyle", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["FontStyle", str],
             ],
             UndefinedType,
@@ -2647,7 +2639,7 @@ class Axis(VegaLiteSchema):
         labelFontWeight: Union[
             Union[
                 Union["ConditionalAxisLabelFontWeight", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -2670,15 +2662,15 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2686,60 +2678,56 @@ class Axis(VegaLiteSchema):
         labelOpacity: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["LabelOverlap", bool, str],
+                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
                 Union["AxisOrient", Literal["top", "bottom", "left", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[
-                Literal["center", "extent"],
-                Union["ExprRef", "_ParameterProtocol", dict],
-            ],
+            Union[Literal["center", "extent"], Union["ExprRef", "_Parameter", dict]],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
@@ -2747,7 +2735,7 @@ class Axis(VegaLiteSchema):
         tickColor: Union[
             Union[
                 Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -2914,7 +2902,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TimeInterval",
                     Literal[
@@ -2937,29 +2925,29 @@ class Axis(VegaLiteSchema):
             Union[
                 Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2968,7 +2956,7 @@ class Axis(VegaLiteSchema):
         tickSize: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2976,7 +2964,7 @@ class Axis(VegaLiteSchema):
         tickWidth: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -2988,23 +2976,23 @@ class Axis(VegaLiteSchema):
         titleAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -3015,7 +3003,7 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -3181,20 +3169,18 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -3217,25 +3203,25 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
@@ -3243,7 +3229,7 @@ class Axis(VegaLiteSchema):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -3717,26 +3703,26 @@ class AxisConfig(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         domainColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -3902,24 +3888,23 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
@@ -3927,7 +3912,7 @@ class AxisConfig(VegaLiteSchema):
         gridColor: Union[
             Union[
                 Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -4096,14 +4081,14 @@ class AxisConfig(VegaLiteSchema):
             Union[
                 Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4111,7 +4096,7 @@ class AxisConfig(VegaLiteSchema):
         gridOpacity: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4119,7 +4104,7 @@ class AxisConfig(VegaLiteSchema):
         gridWidth: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4128,17 +4113,17 @@ class AxisConfig(VegaLiteSchema):
             Union[
                 Union["Align", Literal["left", "center", "right"]],
                 Union["ConditionalAxisLabelAlign", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
                 Union["ConditionalAxisLabelBaseline", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -4148,13 +4133,13 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union[bool, float]],
+            Union[Union["ExprRef", "_Parameter", dict], Union[bool, float]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             Union[
                 Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -4322,12 +4307,12 @@ class AxisConfig(VegaLiteSchema):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
                 Union["ConditionalAxisString", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 str,
             ],
             UndefinedType,
@@ -4335,7 +4320,7 @@ class AxisConfig(VegaLiteSchema):
         labelFontSize: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4343,7 +4328,7 @@ class AxisConfig(VegaLiteSchema):
         labelFontStyle: Union[
             Union[
                 Union["ConditionalAxisLabelFontStyle", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["FontStyle", str],
             ],
             UndefinedType,
@@ -4351,7 +4336,7 @@ class AxisConfig(VegaLiteSchema):
         labelFontWeight: Union[
             Union[
                 Union["ConditionalAxisLabelFontWeight", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -4374,15 +4359,15 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4390,60 +4375,56 @@ class AxisConfig(VegaLiteSchema):
         labelOpacity: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["LabelOverlap", bool, str],
+                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
                 Union["AxisOrient", Literal["top", "bottom", "left", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[
-                Literal["center", "extent"],
-                Union["ExprRef", "_ParameterProtocol", dict],
-            ],
+            Union[Literal["center", "extent"], Union["ExprRef", "_Parameter", dict]],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
@@ -4451,7 +4432,7 @@ class AxisConfig(VegaLiteSchema):
         tickColor: Union[
             Union[
                 Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -4618,7 +4599,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TimeInterval",
                     Literal[
@@ -4641,29 +4622,29 @@ class AxisConfig(VegaLiteSchema):
             Union[
                 Sequence[float],
                 Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4672,7 +4653,7 @@ class AxisConfig(VegaLiteSchema):
         tickSize: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4680,7 +4661,7 @@ class AxisConfig(VegaLiteSchema):
         tickWidth: Union[
             Union[
                 Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
             ],
             UndefinedType,
@@ -4692,23 +4673,23 @@ class AxisConfig(VegaLiteSchema):
         titleAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -4719,7 +4700,7 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -4885,20 +4866,18 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -4921,25 +4900,25 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
@@ -4947,7 +4926,7 @@ class AxisConfig(VegaLiteSchema):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5481,28 +5460,28 @@ class BarConfig(AnyMarkConfig):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -5535,7 +5514,7 @@ class BarConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5699,7 +5678,7 @@ class BarConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -5710,22 +5689,22 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -5770,16 +5749,16 @@ class BarConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
@@ -5788,16 +5767,16 @@ class BarConfig(AnyMarkConfig):
             Union[Union["RelativeBandSize", dict], float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -5960,7 +5939,7 @@ class BarConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -5970,24 +5949,22 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -6010,18 +5987,18 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -6047,51 +6024,51 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -6254,7 +6231,7 @@ class BarConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -6265,59 +6242,57 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -6326,27 +6301,23 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -6521,16 +6492,16 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ] = Undefined,
         anchor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
@@ -6542,7 +6513,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ] = Undefined,
         color: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -6708,26 +6679,24 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -6751,30 +6720,30 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ] = Undefined,
         frame: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["TitleFrame", Literal["bounds", "group"]], str],
             ],
             UndefinedType,
         ] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleOrient", Literal["none", "left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         subtitleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -6940,20 +6909,18 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         subtitleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -6976,13 +6943,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -7090,7 +7057,7 @@ class BinParams(VegaLiteSchema):
             Union[
                 "BinExtent",
                 Sequence[float],
-                Union["ParameterExtent", "_ParameterProtocol", dict],
+                Union["ParameterExtent", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -8416,7 +8383,7 @@ class BoxPlotDef(CompositeMarkDef):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -9900,7 +9867,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
         value: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -9967,7 +9934,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
         value: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -10024,8 +9991,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -10081,8 +10047,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         ] = Undefined,
         value: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -10233,8 +10198,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
         self,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10291,8 +10255,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -10340,7 +10303,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         self,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10393,7 +10356,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -10441,7 +10404,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
         self,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10494,7 +10457,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -10546,8 +10509,7 @@ class ConditionalParameterValueDefstringnullExprRef(
         self,
         param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
-            UndefinedType,
+            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10604,8 +10566,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
-            UndefinedType,
+            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -11088,7 +11049,7 @@ class Config(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -11114,7 +11075,7 @@ class Config(VegaLiteSchema):
         legend: Union[Union["LegendConfig", dict], UndefinedType] = Undefined,
         line: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         locale: Union[Union["Locale", dict], UndefinedType] = Undefined,
         mark: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
@@ -11123,10 +11084,7 @@ class Config(VegaLiteSchema):
         numberFormat: Union[str, UndefinedType] = Undefined,
         numberFormatType: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -12515,7 +12473,7 @@ class ErrorBandDef(CompositeMarkDef):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -12888,7 +12846,7 @@ class ErrorBarDef(CompositeMarkDef):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -16487,7 +16445,7 @@ class Header(VegaLiteSchema):
         labelAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -16497,7 +16455,7 @@ class Header(VegaLiteSchema):
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -16666,26 +16624,24 @@ class Header(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -16708,16 +16664,16 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
             Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -16729,7 +16685,7 @@ class Header(VegaLiteSchema):
         titleAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -16739,7 +16695,7 @@ class Header(VegaLiteSchema):
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -16908,25 +16864,23 @@ class Header(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -16949,16 +16903,16 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -17153,7 +17107,7 @@ class HeaderConfig(VegaLiteSchema):
         labelAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -17163,7 +17117,7 @@ class HeaderConfig(VegaLiteSchema):
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -17332,26 +17286,24 @@ class HeaderConfig(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -17374,16 +17326,16 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
             Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -17393,7 +17345,7 @@ class HeaderConfig(VegaLiteSchema):
         titleAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -17403,7 +17355,7 @@ class HeaderConfig(VegaLiteSchema):
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -17572,25 +17524,23 @@ class HeaderConfig(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -17613,16 +17563,16 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -19092,29 +19042,29 @@ class Legend(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         fillColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -19282,14 +19232,14 @@ class Legend(VegaLiteSchema):
         format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -19455,14 +19405,14 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["LayoutAlign", Literal["all", "each", "none"]],
             ],
             UndefinedType,
@@ -19470,13 +19420,13 @@ class Legend(VegaLiteSchema):
         labelAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -19487,7 +19437,7 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         labelColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -19654,20 +19604,18 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -19690,35 +19638,34 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["LabelOverlap", bool, str],
+                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -19738,14 +19685,14 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -19911,15 +19858,14 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -20085,20 +20031,20 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -20264,17 +20210,15 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["SymbolShape", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["SymbolShape", str]],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TickCount",
                     Union[
@@ -20297,7 +20241,7 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
             Union[None, Union["Text", Sequence[str], str]], UndefinedType
@@ -20305,20 +20249,20 @@ class Legend(VegaLiteSchema):
         titleAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -20329,7 +20273,7 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -20495,20 +20439,18 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -20531,23 +20473,23 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Orient", Literal["left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
@@ -20556,7 +20498,7 @@ class Legend(VegaLiteSchema):
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -20932,22 +20874,22 @@ class LegendConfig(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
@@ -20955,7 +20897,7 @@ class LegendConfig(VegaLiteSchema):
         disable: Union[bool, UndefinedType] = Undefined,
         fillColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -21122,7 +21064,7 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         gradientDirection: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Orientation", Literal["horizontal", "vertical"]],
             ],
             UndefinedType,
@@ -21130,20 +21072,20 @@ class LegendConfig(VegaLiteSchema):
         gradientHorizontalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientHorizontalMinLength: Union[float, UndefinedType] = Undefined,
         gradientLabelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientLabelOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientLength: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -21309,16 +21251,16 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientVerticalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientVerticalMinLength: Union[float, UndefinedType] = Undefined,
         gridAlign: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["LayoutAlign", Literal["all", "each", "none"]],
             ],
             UndefinedType,
@@ -21326,13 +21268,13 @@ class LegendConfig(VegaLiteSchema):
         labelAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -21343,7 +21285,7 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         labelColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -21509,20 +21451,18 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -21545,38 +21485,35 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["LabelOverlap", bool, str],
+                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
-        layout: Union[
-            Union["ExprRef", "_ParameterProtocol", dict], UndefinedType
-        ] = Undefined,
+        layout: Union[Union["ExprRef", "_Parameter", dict], UndefinedType] = Undefined,
         legendX: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
@@ -21596,14 +21533,14 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -21769,15 +21706,14 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolBaseFillColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -21944,7 +21880,7 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         symbolBaseStrokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -22110,22 +22046,21 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolDirection: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Orientation", Literal["horizontal", "vertical"]],
             ],
             UndefinedType,
         ] = Undefined,
         symbolFillColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -22291,20 +22226,20 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -22470,17 +22405,15 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["SymbolShape", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["SymbolShape", str]],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TickCount",
                     Union[
@@ -22506,20 +22439,20 @@ class LegendConfig(VegaLiteSchema):
         titleAlign: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -22530,7 +22463,7 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -22696,20 +22629,18 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -22732,27 +22663,27 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Orient", Literal["left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         unselectedOpacity: Union[float, UndefinedType] = Undefined,
         zindex: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -23355,28 +23286,28 @@ class LineConfig(AnyMarkConfig):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -23408,7 +23339,7 @@ class LineConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -23572,7 +23503,7 @@ class LineConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -23582,19 +23513,19 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -23639,31 +23570,31 @@ class LineConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -23826,7 +23757,7 @@ class LineConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -23836,24 +23767,22 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -23876,18 +23805,18 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -23913,51 +23842,51 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         point: Union[
             Union[Union["OverlayMarkDef", dict], bool, str], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -24120,7 +24049,7 @@ class LineConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -24131,59 +24060,57 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -24192,27 +24119,23 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -24862,28 +24785,28 @@ class MarkConfig(AnyMarkConfig):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -24915,7 +24838,7 @@ class MarkConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -25079,7 +25002,7 @@ class MarkConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -25089,19 +25012,19 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -25146,31 +25069,31 @@ class MarkConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -25333,7 +25256,7 @@ class MarkConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -25343,24 +25266,22 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -25383,18 +25304,18 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -25420,48 +25341,48 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -25624,7 +25545,7 @@ class MarkConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -25635,59 +25556,57 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -25696,27 +25615,23 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -26283,29 +26198,29 @@ class MarkDef(AnyMark):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -26338,7 +26253,7 @@ class MarkDef(AnyMark):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -26503,7 +26418,7 @@ class MarkDef(AnyMark):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -26514,22 +26429,22 @@ class MarkDef(AnyMark):
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -26574,16 +26489,16 @@ class MarkDef(AnyMark):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
@@ -26592,13 +26507,13 @@ class MarkDef(AnyMark):
             Union[Union["RelativeBandSize", dict], float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -26761,7 +26676,7 @@ class MarkDef(AnyMark):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -26771,24 +26686,22 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -26812,22 +26725,22 @@ class MarkDef(AnyMark):
         ] = Undefined,
         height: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["RelativeBandSize", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -26853,60 +26766,60 @@ class MarkDef(AnyMark):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         line: Union[
             Union[Union["OverlayMarkDef", dict], bool], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         point: Union[
             Union[Union["OverlayMarkDef", dict], bool, str], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -27069,7 +26982,7 @@ class MarkDef(AnyMark):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -27080,59 +26993,57 @@ class MarkDef(AnyMark):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
@@ -27140,7 +27051,7 @@ class MarkDef(AnyMark):
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -27149,44 +27060,40 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["RelativeBandSize", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -27448,7 +27355,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -28476,7 +28383,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -29187,7 +29094,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -30197,7 +30104,7 @@ class OrderValueDef(VegaLiteSchema):
     def __init__(
         self,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
@@ -30648,28 +30555,28 @@ class OverlayMarkDef(VegaLiteSchema):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -30701,7 +30608,7 @@ class OverlayMarkDef(VegaLiteSchema):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -30866,7 +30773,7 @@ class OverlayMarkDef(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -30876,19 +30783,19 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -30933,31 +30840,31 @@ class OverlayMarkDef(VegaLiteSchema):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -31120,7 +31027,7 @@ class OverlayMarkDef(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -31130,24 +31037,22 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -31170,18 +31075,18 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -31207,54 +31112,54 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -31417,7 +31322,7 @@ class OverlayMarkDef(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -31428,66 +31333,64 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -31496,39 +31399,35 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -32283,7 +32182,7 @@ class DatumDef(LatLongDef, Position2Def):
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -32463,7 +32362,7 @@ class PositionDatumDefBase(PolarDef):
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -32687,7 +32586,7 @@ class PositionDatumDef(PositionDef):
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -33830,8 +33729,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     def __init__(
         self,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -33953,7 +33851,7 @@ class FieldEqualPredicate(Predicate):
         equal: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 bool,
                 float,
                 str,
@@ -34142,7 +34040,7 @@ class FieldGTEPredicate(Predicate):
         gte: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
                 str,
             ],
@@ -34329,7 +34227,7 @@ class FieldGTPredicate(Predicate):
         gt: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
                 str,
             ],
@@ -34516,7 +34414,7 @@ class FieldLTEPredicate(Predicate):
         lte: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
                 str,
             ],
@@ -34703,7 +34601,7 @@ class FieldLTPredicate(Predicate):
         lt: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 float,
                 str,
             ],
@@ -35082,11 +34980,11 @@ class FieldRangePredicate(Predicate):
                     Union[
                         None,
                         Union["DateTime", dict],
-                        Union["ExprRef", "_ParameterProtocol", dict],
+                        Union["ExprRef", "_Parameter", dict],
                         float,
                     ]
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35570,17 +35468,17 @@ class Projection(VegaLiteSchema):
         self,
         center: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         clipAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         clipExtent: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Vector2Vector2number",
                     Sequence[Union["Vector2number", Sequence[float]]],
@@ -35589,14 +35487,14 @@ class Projection(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         coefficient: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         distance: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         extent: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Vector2Vector2number",
                     Sequence[Union["Vector2number", Sequence[float]]],
@@ -35614,7 +35512,7 @@ class Projection(VegaLiteSchema):
                         Union["GeoJsonFeatureCollection", dict],
                     ]
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Fit",
                     Sequence[Union["GeoJsonFeature", dict]],
@@ -35625,39 +35523,38 @@ class Projection(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fraction: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lobes: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallel: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         pointRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         precision: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ratio: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         reflectX: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         reflectY: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         rotate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     Union["Vector2number", Sequence[float]],
                     Union["Vector3number", Sequence[float]],
@@ -35666,31 +35563,31 @@ class Projection(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         scale: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         size: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         spacing: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tilt: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         type: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "ProjectionType",
                     Literal[
@@ -35862,17 +35759,17 @@ class ProjectionConfig(VegaLiteSchema):
         self,
         center: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         clipAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         clipExtent: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Vector2Vector2number",
                     Sequence[Union["Vector2number", Sequence[float]]],
@@ -35881,14 +35778,14 @@ class ProjectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         coefficient: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         distance: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         extent: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Vector2Vector2number",
                     Sequence[Union["Vector2number", Sequence[float]]],
@@ -35906,7 +35803,7 @@ class ProjectionConfig(VegaLiteSchema):
                         Union["GeoJsonFeatureCollection", dict],
                     ]
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Fit",
                     Sequence[Union["GeoJsonFeature", dict]],
@@ -35917,39 +35814,38 @@ class ProjectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fraction: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lobes: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallel: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         pointRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         precision: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ratio: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         reflectX: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         reflectY: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         rotate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     Union["Vector2number", Sequence[float]],
                     Union["Vector3number", Sequence[float]],
@@ -35958,31 +35854,31 @@ class ProjectionConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         scale: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         size: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         spacing: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tilt: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["Vector2number", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         type: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "ProjectionType",
                     Literal[
@@ -37580,28 +37476,28 @@ class RectConfig(AnyMarkConfig):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -37634,7 +37530,7 @@ class RectConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -37798,7 +37694,7 @@ class RectConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -37809,19 +37705,19 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -37866,16 +37762,16 @@ class RectConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
@@ -37884,16 +37780,16 @@ class RectConfig(AnyMarkConfig):
             Union[Union["RelativeBandSize", dict], float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -38056,7 +37952,7 @@ class RectConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -38066,24 +37962,22 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -38106,18 +38000,18 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -38143,51 +38037,51 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -38350,7 +38244,7 @@ class RectConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -38361,59 +38255,57 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -38422,27 +38314,23 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -39446,20 +39334,20 @@ class Scale(VegaLiteSchema):
     def __init__(
         self,
         align: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
             Union["ScaleBins", Sequence[float], Union["ScaleBinParams", dict]],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
@@ -39467,47 +39355,39 @@ class Scale(VegaLiteSchema):
                     Union[
                         None,
                         Union["DateTime", dict],
-                        Union["ExprRef", "_ParameterProtocol", dict],
+                        Union["ExprRef", "_Parameter", dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
                 Union["DomainUnionWith", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["ParameterExtent", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
+                Union["ParameterExtent", "_Parameter", dict],
                 str,
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
-                float,
-            ],
+            Union[Union["DateTime", dict], Union["ExprRef", "_Parameter", dict], float],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
-            Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
-                float,
-            ],
+            Union[Union["DateTime", dict], Union["ExprRef", "_Parameter", dict], float],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union["ExprRef", "_ParameterProtocol", dict], UndefinedType
+            Union["ExprRef", "_Parameter", dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "ScaleInterpolateEnum",
                     Literal[
@@ -39527,7 +39407,7 @@ class Scale(VegaLiteSchema):
         ] = Undefined,
         nice: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TimeInterval",
                     Literal[
@@ -39548,20 +39428,20 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union["ExprRef", "_ParameterProtocol", dict],
+                        Union["ExprRef", "_Parameter", dict],
                         float,
                         str,
                     ]
@@ -39584,18 +39464,16 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
@@ -39953,7 +39831,7 @@ class Scale(VegaLiteSchema):
                         ],
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["SchemeParams", dict],
             ],
             UndefinedType,
@@ -39983,7 +39861,7 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -40204,25 +40082,25 @@ class ScaleConfig(VegaLiteSchema):
     def __init__(
         self,
         bandPaddingInner: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bandPaddingOuter: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingInner: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingOuter: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         barBandPaddingInner: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         clamp: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         continuousPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         maxBandSize: Union[float, UndefinedType] = Undefined,
         maxFontSize: Union[float, UndefinedType] = Undefined,
@@ -40235,25 +40113,25 @@ class ScaleConfig(VegaLiteSchema):
         minSize: Union[float, UndefinedType] = Undefined,
         minStrokeWidth: Union[float, UndefinedType] = Undefined,
         offsetBandPaddingInner: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offsetBandPaddingOuter: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         pointPadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         quantileCount: Union[float, UndefinedType] = Undefined,
         quantizeCount: Union[float, UndefinedType] = Undefined,
         rectBandPaddingInner: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         useUnaggregatedDomain: Union[bool, UndefinedType] = Undefined,
         xReverse: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         zero: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -40416,7 +40294,7 @@ class ScaleDatumDef(OffsetDef):
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -42383,7 +42261,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -46029,8 +45907,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
-            UndefinedType,
+            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -46387,7 +46264,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         datum: Union[
             Union[
                 Union["DateTime", dict],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["PrimitiveValue", None, bool, float, str],
                 Union["RepeatRef", dict],
             ],
@@ -47258,29 +47135,29 @@ class TickConfig(AnyMarkConfig):
         align: Union[
             Union[
                 Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "TextBaseline",
                     Union["Baseline", Literal["top", "middle", "bottom"]],
@@ -47312,7 +47189,7 @@ class TickConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -47476,7 +47353,7 @@ class TickConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -47486,19 +47363,19 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -47543,31 +47420,31 @@ class TickConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TextDirection", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
@@ -47730,7 +47607,7 @@ class TickConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -47740,24 +47617,22 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -47780,18 +47655,18 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Interpolate",
                     Literal[
@@ -47817,48 +47692,48 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
             Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["SymbolShape", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -48021,7 +47896,7 @@ class TickConfig(AnyMarkConfig):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -48032,52 +47907,50 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
@@ -48085,7 +47958,7 @@ class TickConfig(AnyMarkConfig):
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TooltipContent", dict],
                 bool,
                 float,
@@ -48094,27 +47967,23 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], Union["URI", str]],
+            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -48832,16 +48701,16 @@ class TitleConfig(VegaLiteSchema):
         ] = Undefined,
         anchor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
@@ -48853,7 +48722,7 @@ class TitleConfig(VegaLiteSchema):
         ] = Undefined,
         color: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -49019,26 +48888,24 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -49062,30 +48929,30 @@ class TitleConfig(VegaLiteSchema):
         ] = Undefined,
         frame: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["TitleFrame", Literal["bounds", "group"]], str],
             ],
             UndefinedType,
         ] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleOrient", Literal["none", "left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         subtitleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -49251,20 +49118,18 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         subtitleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -49287,13 +49152,13 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -49460,8 +49325,7 @@ class TitleParams(VegaLiteSchema):
         self,
         text: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -49472,10 +49336,10 @@ class TitleParams(VegaLiteSchema):
             Union["TitleAnchor", Literal[None, "start", "middle", "end"]], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], bool], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
@@ -49487,7 +49351,7 @@ class TitleParams(VegaLiteSchema):
         ] = Undefined,
         color: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -49653,26 +49517,24 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -49696,23 +49558,23 @@ class TitleParams(VegaLiteSchema):
         ] = Undefined,
         frame: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[Union["TitleFrame", Literal["bounds", "group"]], str],
             ],
             UndefinedType,
         ] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["TitleOrient", Literal["none", "left", "right", "top", "bottom"]],
             ],
             UndefinedType,
@@ -49721,7 +49583,7 @@ class TitleParams(VegaLiteSchema):
         subtitle: Union[Union["Text", Sequence[str], str], UndefinedType] = Undefined,
         subtitleColor: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     None,
                     Union[
@@ -49887,20 +49749,18 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], str], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict], Union["FontStyle", str]
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
             UndefinedType,
         ] = Undefined,
         subtitleFontWeight: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "FontWeight",
                     Literal[
@@ -49923,10 +49783,10 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
@@ -50436,7 +50296,7 @@ class TopLevelConcatSpec(TopLevelSpec):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50471,10 +50331,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -50885,7 +50742,7 @@ class TopLevelFacetSpec(TopLevelSpec):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50899,10 +50756,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -51249,7 +51103,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51281,10 +51135,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -51645,7 +51496,7 @@ class TopLevelLayerSpec(TopLevelSpec):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -51679,10 +51530,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -52165,7 +52013,7 @@ class TopLevelUnitSpec(TopLevelSpec):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52182,10 +52030,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -52538,7 +52383,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52570,10 +52415,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Padding", dict, float],
-            ],
+            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
             UndefinedType,
         ] = Undefined,
         params: Union[
@@ -54658,7 +54500,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
         value: Union[
             Union[
                 None,
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union[
                     "Gradient",
                     Union["LinearGradient", dict],
@@ -54726,8 +54568,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
-            UndefinedType,
+            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54783,7 +54624,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54839,8 +54680,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54894,8 +54734,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_ParameterProtocol", dict], str],
-            UndefinedType,
+            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54948,8 +54787,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         ] = Undefined,
         value: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
-                Union["Text", Sequence[str], str],
+                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
             ],
             UndefinedType,
         ] = Undefined,
@@ -55003,8 +54841,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     def __init__(
         self,
         value: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float, str],
-            UndefinedType,
+            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -55240,7 +55077,7 @@ class ViewBackground(VegaLiteSchema):
     def __init__(
         self,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -55447,15 +55284,15 @@ class ViewBackground(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
@@ -55618,39 +55455,38 @@ class ViewBackground(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         **kwds,
@@ -55763,7 +55599,7 @@ class ViewConfig(VegaLiteSchema):
         continuousHeight: Union[float, UndefinedType] = Undefined,
         continuousWidth: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -55972,15 +55808,15 @@ class ViewConfig(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         stroke: Union[
@@ -56144,39 +55980,38 @@ class ViewConfig(VegaLiteSchema):
                     Union["HexColor", str],
                     str,
                 ],
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeCap", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_ParameterProtocol", dict]],
-            UndefinedType,
+            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_ParameterProtocol", dict],
+                Union["ExprRef", "_Parameter", dict],
                 Union["StrokeJoin", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_ParameterProtocol", dict], float], UndefinedType
+            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):

@@ -193,7 +193,7 @@ class SchemaInfo:
                 class_names = [self.title]
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
-                    # We use the _ParameterProtocol to indicate this although this
+                    # We use the _Parameter to indicate this although this
                     # protocol would also pass for selection parameters but
                     # due to how the Parameter class is defined, it would be quite
                     # complex to further differentiate between a value and
@@ -201,9 +201,9 @@ class SchemaInfo:
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
-                    class_names.append("_ParameterProtocol")
+                    class_names.append("_Parameter")
                 if self.title == "ParameterExtent":
-                    class_names.append("_ParameterProtocol")
+                    class_names.append("_Parameter")
 
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
