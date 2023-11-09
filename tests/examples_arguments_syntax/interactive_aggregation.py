@@ -1,0 +1,39 @@
+"""
+Interactive Chart with Aggregation
+==================================
+This example shows an interactive chart where the range binder controls a
+threshold as rule where the datapoints on the left-side are aggregated and on the
+right-side are drawn as is. 
+The ability to slide back and fourth may help you understand how the visualization
+represents the aggregation. Example inspired by @dwootton.
+"""
+# category: interactive charts
+import altair as alt
+from vega_datasets import data
+
+source = data.movies()
+
+slider = alt.binding_range(min=1, max=10, step=1)
+threshold = alt.param(name='threshold', value=5, bind=slider)
+
+alt.layer(
+    alt.Chart(source).mark_circle().encode(
+        x=alt.X('IMDB_Rating:Q', title='IMDB Rating'),
+        y=alt.Y('Rotten_Tomatoes_Rating:Q', title='Rotten Tomatoes Rating')
+    ).transform_filter(
+        alt.datum['IMDB_Rating'] > threshold
+    ),
+
+    alt.Chart(source).mark_circle(color='yellowgreen').encode(
+        x=alt.X('IMDB_Rating:Q', bin=alt.Bin(maxbins=10)),
+        y=alt.Y('Rotten_Tomatoes_Rating:Q', bin=alt.Bin(maxbins=10)),
+        size=alt.Size('count()', scale=alt.Scale(domain=[0,160]))
+    ).transform_filter(
+        alt.datum['IMDB_Rating'] < threshold
+    ),
+
+    alt.Chart().mark_rule(color='gray').encode(
+        strokeWidth=alt.StrokeWidth(value=3),
+        x=alt.X(datum=alt.expr(threshold.name), type='quantitative')
+    )
+).add_params(threshold)
