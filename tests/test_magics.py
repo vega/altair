@@ -31,9 +31,7 @@ if IPYTHON_AVAILABLE:
 import pandas as pd
 table = pd.DataFrame.from_records({})
 the_data = table
-""".format(
-            DATA_RECORDS
-        )
+""".format(DATA_RECORDS)
     )
 
 

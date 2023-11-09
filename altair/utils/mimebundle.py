@@ -1,18 +1,22 @@
+from typing import Literal, Optional, Union, cast, Tuple
+
+from .deprecation import AltairDeprecationWarning
 from .html import spec_to_html
 from ._importers import import_vl_convert
 import struct
+import warnings
 
 
 def spec_to_mimebundle(
-    spec,
-    format,
-    mode=None,
-    vega_version=None,
-    vegaembed_version=None,
-    vegalite_version=None,
-    engine=None,
+    spec: dict,
+    format: Literal["html", "json", "png", "svg", "pdf", "vega", "vega-lite"],
+    mode: Optional[Literal["vega-lite"]] = None,
+    vega_version: Optional[str] = None,
+    vegaembed_version: Optional[str] = None,
+    vegalite_version: Optional[str] = None,
+    engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
     **kwargs,
-):
+) -> Union[dict, Tuple[dict, dict]]:
     """Convert a vega-lite specification to a mimebundle
 
     The mimebundle type is controlled by the ``format`` argument, which can be
@@ -52,18 +56,20 @@ def spec_to_mimebundle(
     if mode != "vega-lite":
         raise ValueError("mode must be 'vega-lite'")
 
+    internal_mode: Literal["vega-lite", "vega"] = mode
     if using_vegafusion():
         spec = compile_with_vegafusion(spec)
-        mode = "vega"
+        internal_mode = "vega"
 
     if format in ["png", "svg", "pdf", "vega"]:
+        format = cast(Literal["png", "svg", "pdf", "vega"], format)
         return _spec_to_mimebundle_with_engine(
-            spec, format, mode, engine=engine, **kwargs
+            spec, format, internal_mode, engine=engine, **kwargs
         )
     if format == "html":
         html = spec_to_html(
             spec,
-            mode=mode,
+            mode=internal_mode,
             vega_version=vega_version,
             vegaembed_version=vegaembed_version,
             vegalite_version=vegalite_version,
@@ -82,7 +88,12 @@ def spec_to_mimebundle(
     )
 
 
-def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
+def _spec_to_mimebundle_with_engine(
+    spec: dict,
+    format: Literal["png", "svg", "pdf", "vega"],
+    mode: Literal["vega-lite", "vega"],
+    **kwargs,
+) -> Union[dict, Tuple[dict, dict]]:
     """Helper for Vega-Lite to mimebundle conversions that require an engine
 
     Parameters
@@ -145,11 +156,31 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
             return {"image/png": png}, {
                 "image/png": {"width": w / factor, "height": h / factor}
             }
+        elif format == "pdf":
+            scale = kwargs.get("scale_factor", 1)
+            if mode == "vega":
+                pdf = vlc.vega_to_pdf(
+                    spec,
+                    scale=scale,
+                )
+            else:
+                pdf = vlc.vegalite_to_pdf(
+                    spec,
+                    vl_version=vl_version,
+                    scale=scale,
+                )
+            return {"application/pdf": pdf}
         else:
             # This should be validated above
             # but raise exception for the sake of future development
             raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
     elif normalized_engine == "altairsaver":
+        warnings.warn(
+            "The altair_saver export engine is deprecated and will be removed in a future version.\n"
+            "Please migrate to the vl-convert engine",
+            AltairDeprecationWarning,
+            stacklevel=1,
+        )
         import altair_saver
 
         return altair_saver.render(spec, format, mode=mode, **kwargs)
@@ -161,7 +192,10 @@ def _spec_to_mimebundle_with_engine(spec, format, mode, **kwargs):
         )
 
 
-def _validate_normalize_engine(engine, format):
+def _validate_normalize_engine(
+    engine: Optional[Literal["vl-convert", "altair_saver"]],
+    format: Literal["png", "svg", "pdf", "vega"],
+) -> str:
     """Helper to validate and normalize the user-provided engine
 
     engine : {None, 'vl-convert', 'altair_saver'}
@@ -192,32 +226,21 @@ def _validate_normalize_engine(engine, format):
             raise ValueError(
                 "The 'vl-convert' conversion engine requires the vl-convert-python package"
             )
-        if format == "pdf":
-            raise ValueError(
-                "The 'vl-convert' conversion engine does not support the {fmt!r} format.\n"
-                "Use the 'altair_saver' engine instead".format(fmt=format)
-            )
     elif normalized_engine == "altairsaver":
         if altair_saver is None:
             raise ValueError(
                 "The 'altair_saver' conversion engine requires the altair_saver package"
             )
     elif normalized_engine is None:
-        if vlc is not None and format != "pdf":
+        if vlc is not None:
             normalized_engine = "vlconvert"
         elif altair_saver is not None:
             normalized_engine = "altairsaver"
         else:
-            if format == "pdf":
-                raise ValueError(
-                    "Saving charts in {fmt!r} format requires the altair_saver package: "
-                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-                )
-            else:
-                raise ValueError(
-                    "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
-                    "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
-                )
+            raise ValueError(
+                "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
+                "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+            )
     else:
         raise ValueError(
             "Invalid conversion engine {engine!r}. Expected one of {valid!r}".format(

@@ -182,7 +182,7 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
 
 
 def using_vegafusion() -> bool:
-    """Check whether the vegafusion data transfomer is enabled"""
+    """Check whether the vegafusion data transformer is enabled"""
     # Local import to avoid circular ImportError
     from altair import data_transformers
 

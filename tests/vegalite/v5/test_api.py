@@ -322,23 +322,15 @@ def test_save(format, engine, basic_chart):
                 return
 
         elif engine == "vl-convert":
-            if vlc is None and format != "bogus":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "vl-convert-python" in str(err.value)
-                return
-            elif format == "pdf":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert (
-                    f"The 'vl-convert' conversion engine does not support the '{format}' format"
-                    in str(err.value)
-                )
-                return
-            elif format not in ("png", "svg"):
+            if format == "bogus":
                 with pytest.raises(ValueError) as err:
                     basic_chart.save(out, format=format, engine=engine)
                 assert f"Unsupported format: '{format}'" in str(err.value)
+                return
+            elif vlc is None:
+                with pytest.raises(ValueError) as err:
+                    basic_chart.save(out, format=format, engine=engine)
+                assert "vl-convert-python" in str(err.value)
                 return
 
     basic_chart.save(out, format=format, engine=engine)
@@ -353,6 +345,8 @@ def test_save(format, engine, basic_chart):
         assert content.startswith("<svg")
     elif format == "png":
         assert content.startswith(b"\x89PNG")
+    elif format == "pdf":
+        assert content.startswith(b"%PDF-")
 
     fid, filename = tempfile.mkstemp(suffix="." + format)
     os.close(fid)
@@ -384,6 +378,30 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega@5' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@5' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@6' in content
+
+
+def test_to_url(basic_chart):
+    share_url = basic_chart.to_url()
+    expected_vegalite_encoding = (
+        "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QU"
+        "OQFtMKEPMUBaMACY5LTAA4AnACM55ugFY6ARgBspgOz2zh03Wfs5bCwsIDIganIATgDWyoQAngAOmsgg1hEh3JhQk"
+        "HQkSKggAB7K8JgANnRaStzxSVpQEGokcmUZIHElWBValiA1ickgAI6kckRwisRomtLcACSUYIyY4VpihAmUyAD029"
+        "MIcgB0CBOMpJaHcBDbi8vhe5gHumUTmHt2h44fjocAVpTQPraBRySiYQiUZQ6OT6IwmCzWWwOFzuTymby+fyBYLIA"
+        "DaoCUKQAgkDesgDKYZAStAAhUkoOx2KkgQkgADC9OQABYWMzWQARTnmRx8rQAUU5phFnGpKQAYpy7LyZSytABxTmO"
+        "cyilKCSVuHUgACSioMkgAutIgA"
+    )
+
+    assert (
+        share_url
+        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}"
+    )
+
+    # Check fullscreen
+    fullscreen_share_url = basic_chart.to_url(fullscreen=True)
+    assert (
+        fullscreen_share_url
+        == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}/view"
+    )
 
 
 def test_facet_basic():

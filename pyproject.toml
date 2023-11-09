@@ -3,7 +3,6 @@
 # 2 project configuration
 # 3 tool configuration, for:
 # - hatch
-# - black
 # - ruff
 # - pytest
 # - mypy
@@ -49,6 +48,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
 [project.urls]
@@ -58,14 +58,13 @@ Source = "https://github.com/altair-viz/altair"
 [project.optional-dependencies]
 dev = [
     "hatch",
-    "ruff",
-    "black<24",
+    "ruff>=0.1.3",
     "ipython",
     "pytest",
     "pytest-cov",
     "m2r",
     "vega_datasets",
-    "vl-convert-python>=0.14.0",
+    "vl-convert-python>=1.0.0",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
@@ -104,8 +103,8 @@ features = ["dev"]
 
 [tool.hatch.envs.default.scripts]
 test = [
-    "black --diff --color --check .",
     "ruff check .",
+    "ruff format --diff --check .",
     "mypy altair tests",
     "python -m pytest --pyargs --doctest-modules tests altair",
 ]
@@ -146,27 +145,21 @@ publish-clean-build = [
     "(cd doc && bash sync_website.sh)",
 ]
 
-[tool.black]
-line-length = 88
-target-version = ["py38", "py39", "py310", "py311"]
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | build
-  | dist
-  | doc
-  | tests/examples_arguments_syntax
-  | tests/examples_methods_syntax
-  | altair/vegalite/v\d*/schema
-)/
-'''
-
 [tool.ruff]
 target-version = "py38"
 line-length = 88
+indent-width = 4
+exclude = [
+    ".git",
+    "build",
+    "__pycache__",
+    "tests/examples_arguments_syntax",
+    "tests/examples_methods_syntax",
+    "tests/test_transformed_data.py",    
+    "altair/vegalite/v?/schema",
+]
+
+[tool.ruff.lint]
 select = [
     # flake8-bugbear
     "B",
@@ -181,15 +174,11 @@ select = [
     # flake8-tidy-imports
     "TID",
 ]
-ignore = [
-    # E203, E266, W503 not yet supported by ruff,
-    # see https://github.com/charliermarsh/ruff/issues/2402
+ignore = [  
     # Whitespace before ':'
-    # "E203",
+    "E203",
     # Too many leading '#' for block comment
-    # "E266",
-    # Line break occurred before a binary operator
-    # "W503",
+    "E266",
     # Line too long
     "E501",
     # Relative imports are banned
@@ -198,14 +187,12 @@ ignore = [
     # python>=3.10 only
     "B905",
 ]
-exclude = [
-    ".git",
-    "build",
-    "__pycache__",
-    "tests/examples_arguments_syntax",
-    "tests/examples_methods_syntax",
-    "altair/vegalite/v?/schema",
-]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
 
 [tool.ruff.mccabe]
 max-complexity = 18

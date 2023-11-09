@@ -59,7 +59,9 @@ def json_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
 
 
 def png_renderer(spec: dict, **metadata) -> Dict[str, bytes]:
-    return spec_to_mimebundle(
+    # To get proper return value type, would need to write complex
+    # overload signatures for spec_to_mimebundle based on `format`
+    return spec_to_mimebundle(  # type: ignore[return-value]
         spec,
         format="png",
         mode="vega-lite",
@@ -71,7 +73,9 @@ def png_renderer(spec: dict, **metadata) -> Dict[str, bytes]:
 
 
 def svg_renderer(spec: dict, **metadata) -> Dict[str, str]:
-    return spec_to_mimebundle(
+    # To get proper return value type, would need to write complex
+    # overload signatures for spec_to_mimebundle based on `format`
+    return spec_to_mimebundle(  # type: ignore[return-value]
         spec,
         format="svg",
         mode="vega-lite",

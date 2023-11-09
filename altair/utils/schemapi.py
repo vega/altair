@@ -1079,7 +1079,7 @@ class SchemaBase:
         cls,
         json_string: str,
         validate: bool = True,
-        **kwargs: Any
+        **kwargs: Any,
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
     ) -> Any:

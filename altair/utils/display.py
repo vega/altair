@@ -210,6 +210,8 @@ class HTMLRenderer:
     def __call__(self, spec: dict, **metadata) -> Dict[str, str]:
         kwargs = self.kwargs.copy()
         kwargs.update(metadata)
-        return spec_to_mimebundle(
+        # To get proper return value type, would need to write complex
+        # overload signatures for spec_to_mimebundle based on `format`
+        return spec_to_mimebundle(  # type: ignore[return-value]
             spec, format="html", output_div=self.output_div, **kwargs
         )
