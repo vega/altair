@@ -101,7 +101,7 @@ def save(
         Additional keyword arguments are passed to the output method
         associated with the specified format.
     webdriver : string {'chrome' | 'firefox'} (optional)
-        Webdriver to use for png or svg output
+        Webdriver to use for png, svg, or pdf output when using altair_saver engine
     scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
     engine: string {'vl-convert', 'altair_saver'}
@@ -111,7 +111,7 @@ def save(
         from a CDN location in the resulting html file.
         If True, the required JavaScript libraries are inlined into the resulting
         html file so that it will work without an internet connection.
-        The altair_viewer package is required if True.
+        The vl-convert-python package is required if True.
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """

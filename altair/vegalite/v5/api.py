@@ -1040,7 +1040,43 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         json_kwds: Optional[dict] = None,
         fullhtml: bool = True,
         requirejs: bool = False,
+        inline: bool = False,
+        **kwargs,
     ) -> str:
+        """Embed a Vega/Vega-Lite spec into an HTML page
+
+        Parameters
+        ----------
+        base_url : string (optional)
+            The base url from which to load the javascript libraries.
+        output_div : string (optional)
+            The id of the div element where the plot will be shown.
+        embed_options : dict (optional)
+            Dictionary of options to pass to the vega-embed script. Default
+            entry is {'mode': mode}.
+        json_kwds : dict (optional)
+            Dictionary of keywords to pass to json.dumps().
+        fullhtml : boolean (optional)
+            If True (default) then return a full html page. If False, then return
+            an HTML snippet that can be embedded into an HTML page.
+        requirejs : boolean (optional)
+            If False (default) then load libraries from base_url using <script>
+            tags. If True, then load libraries using requirejs
+        inline: bool (optional)
+            If False (default), the required JavaScript libraries are loaded
+            from a CDN location in the resulting html file.
+            If True, the required JavaScript libraries are inlined into the resulting
+            html file so that it will work without an internet connection.
+            The vl-convert-python package is required if True.
+        **kwargs :
+            additional kwargs passed to spec_to_html.
+        Returns
+        -------
+        output : string
+            an HTML string for rendering the chart.
+        """
+        if inline:
+            kwargs["template"] = "inline"
         return utils.spec_to_html(
             self.to_dict(),
             mode="vega-lite",
@@ -1053,6 +1089,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             json_kwds=json_kwds,
             fullhtml=fullhtml,
             requirejs=requirejs,
+            **kwargs,
         )
 
     def save(
@@ -1061,9 +1098,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
+        mode: Optional[str] = None,
         vegalite_version: str = VEGALITE_VERSION,
         vega_version: str = VEGA_VERSION,
         vegaembed_version: str = VEGAEMBED_VERSION,
+        embed_options: Optional[dict] = None,
+        json_kwds: Optional[dict] = None,
+        webdriver: Optional[str] = None,
+        engine: Optional[str] = None,
+        inline=False,
         **kwargs,
     ) -> None:
         """Save a chart to file in a variety of formats
@@ -1082,14 +1125,36 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             If True (default), then the save action will be done with
             the MaxRowsError disabled. If False, then do not change the data
             transformer.
-        scale_factor : float
-            For svg or png formats, scale the image by this factor when saving.
-            This can be used to control the size or resolution of the output.
-            Default is 1.0
-        **kwargs :
+        scale_factor : float (optional)
+            scale_factor to use to change size/resolution of png or svg output
+        mode : string (optional)
+            Must be 'vega-lite'. If not specified, then infer the mode from
+            the '$schema' property of the spec, or the ``opt`` dictionary.
+            If it's not specified in either of those places, then use 'vega-lite'.
+        vegalite_version : string (optional)
+            For html output, the version of vegalite.js to use
+        vega_version : string (optional)
+            For html output, the version of vega.js to use
+        vegaembed_version : string (optional)
+            For html output, the version of vegaembed.js to use
+        embed_options : dict (optional)
+            The vegaEmbed options dictionary. Default is {}
+            (See https://github.com/vega/vega-embed for details)
+        json_kwds : dict (optional)
             Additional keyword arguments are passed to the output method
             associated with the specified format.
-
+        webdriver : string {'chrome' | 'firefox'} (optional)
+            Webdriver to use for png, svg, or pdf output when using altair_saver engine
+        engine: string {'vl-convert', 'altair_saver'}
+            the conversion engine to use for 'png', 'svg', and 'pdf' formats
+        inline: bool (optional)
+            If False (default), the required JavaScript libraries are loaded
+            from a CDN location in the resulting html file.
+            If True, the required JavaScript libraries are inlined into the resulting
+            html file so that it will work without an internet connection.
+            The vl-convert-python package is required if True.
+        **kwargs :
+            additional kwargs passed to spec_to_mimebundle.
         """
         from ...utils.save import save
 
@@ -1098,9 +1163,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             fp=fp,
             format=format,
             scale_factor=scale_factor,
+            mode=mode,
             vegalite_version=vegalite_version,
             vega_version=vega_version,
             vegaembed_version=vegaembed_version,
+            embed_options=embed_options,
+            json_kwds=json_kwds,
+            webdriver=webdriver,
+            engine=engine,
+            inline=inline,
             **kwargs,
         )
 
