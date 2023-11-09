@@ -8,6 +8,7 @@ Version 5.2.0 (unreleased month date, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Support offline HTML export using vl-convert (#3251)
 - Support saving charts as PDF files using the vl-convert export engine (#3244)
 - Support converting charts to sharable Vega editor URLs with ``chart.to_url()`` (#3252)
 

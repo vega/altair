@@ -29,7 +29,7 @@ def import_vegafusion() -> ModuleType:
 
 
 def import_vl_convert() -> ModuleType:
-    min_version = "1.0.0"
+    min_version = "1.0.1"
     try:
         version = importlib_version("vl-convert-python")
         if Version(version) < Version(min_version):
@@ -42,7 +42,7 @@ def import_vl_convert() -> ModuleType:
         return vlc
     except ImportError as err:
         raise ImportError(
-            f"The vl-convert Vega-Lite compiler and image export feature requires\n"
+            f"The vl-convert Vega-Lite compiler and file export feature requires\n"
             f"version {min_version} or greater of the 'vl-convert-python' package. \n"
             f"This can be installed with pip using:\n"
             f'   pip install "vl-convert-python>={min_version}"\n'
@@ -50,6 +50,14 @@ def import_vl_convert() -> ModuleType:
             f'   conda install -c conda-forge "vl-convert-python>={min_version}"\n\n'
             f"ImportError: {err.args[0]}"
         ) from err
+
+
+def vl_version_for_vl_convert() -> str:
+    from ..vegalite import SCHEMA_VERSION
+
+    # Compute VlConvert's vl_version string (of the form 'v5_2')
+    # from SCHEMA_VERSION (of the form 'v5.2.0')
+    return "_".join(SCHEMA_VERSION.split(".")[:2])
 
 
 def import_pyarrow_interchange() -> ModuleType:
