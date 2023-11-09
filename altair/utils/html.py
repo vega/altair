@@ -210,8 +210,8 @@ TEMPLATES: Dict[str, jinja2.Template] = {
 def spec_to_html(
     spec: dict,
     mode: str,
-    vega_version: str,
-    vegaembed_version: str,
+    vega_version: Optional[str],
+    vegaembed_version: Optional[str],
     vegalite_version: Optional[str] = None,
     base_url: str = "https://cdn.jsdelivr.net/npm",
     output_div: str = "vis",

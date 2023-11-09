@@ -1092,6 +1092,25 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **kwargs,
         )
 
+    def to_url(self, *, fullscreen: bool = False) -> str:
+        """Convert a chart to a URL that opens the chart specification in the Vega chart editor
+        The chart specification (including any inline data) is encoded in the URL.
+
+        This method requires that the vl-convert-python package is installed.
+
+        Parameters
+        ----------
+        fullscreen : bool
+            If True, editor will open chart in fullscreen mode. Default False
+        """
+        from ...utils._importers import import_vl_convert
+
+        vlc = import_vl_convert()
+        if _using_vegafusion():
+            return vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
+        else:
+            return vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
+
     def save(
         self,
         fp: Union[str, IO],
@@ -1180,10 +1199,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # normally trigger a MaxRowsError
         if override_data_transformer:
             with data_transformers.disable_max_rows():
-                result = save(**kwds)
+                save(**kwds)
         else:
-            result = save(**kwds)
-        return result
+            save(**kwds)
+        return
 
     # Fallback for when rendering fails; the full repr is too long to be
     # useful in nearly all cases.

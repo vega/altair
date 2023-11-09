@@ -1,13 +1,19 @@
 import json
 import pathlib
 import warnings
+from typing import IO, Union, Optional, Literal
 
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
 from altair.utils._vegafusion_data import using_vegafusion
 
 
-def write_file_or_filename(fp, content, mode="w", encoding=None):
+def write_file_or_filename(
+    fp: Union[str, pathlib.PurePath, IO],
+    content: Union[str, bytes],
+    mode: str = "w",
+    encoding: Optional[str] = None,
+) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
     if isinstance(fp, str) or isinstance(fp, pathlib.PurePath):
@@ -17,7 +23,9 @@ def write_file_or_filename(fp, content, mode="w", encoding=None):
         fp.write(content)
 
 
-def set_inspect_format_argument(format, fp, inline):
+def set_inspect_format_argument(
+    format: Optional[str], fp: Union[str, pathlib.PurePath, IO], inline: bool
+) -> str:
     """Inspect the format argument in the save function"""
     if format is None:
         if isinstance(fp, str):
@@ -36,7 +44,12 @@ def set_inspect_format_argument(format, fp, inline):
     return format
 
 
-def set_inspect_mode_argument(mode, embed_options, spec, vegalite_version):
+def set_inspect_mode_argument(
+    mode: Optional[Literal["vega-lite"]],
+    embed_options: dict,
+    spec: dict,
+    vegalite_version: Optional[str],
+) -> Literal["vega-lite"]:
     """Inspect the mode argument in the save function"""
     if mode is None:
         if "mode" in embed_options:
@@ -57,20 +70,20 @@ def set_inspect_mode_argument(mode, embed_options, spec, vegalite_version):
 
 def save(
     chart,
-    fp,
-    vega_version,
-    vegaembed_version,
-    format=None,
-    mode=None,
-    vegalite_version=None,
-    embed_options=None,
-    json_kwds=None,
-    webdriver=None,
-    scale_factor=1,
-    engine=None,
-    inline=False,
+    fp: Union[str, pathlib.PurePath, IO],
+    vega_version: Optional[str],
+    vegaembed_version: Optional[str],
+    format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
+    mode: Optional[Literal["vega-lite"]] = None,
+    vegalite_version: Optional[str] = None,
+    embed_options: Optional[dict] = None,
+    json_kwds: Optional[dict] = None,
+    webdriver: Optional[Literal["chrome", "firefox"]] = None,
+    scale_factor: float = 1,
+    engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
+    inline: bool = False,
     **kwargs,
-):
+) -> None:
     """Save a chart to file in a variety of formats
 
     Supported formats are [json, html, png, svg, pdf]
@@ -121,7 +134,7 @@ def save(
     if embed_options is None:
         embed_options = {}
 
-    format = set_inspect_format_argument(format, fp, inline)
+    format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
     def perform_save():
         spec = chart.to_dict(context={"pre_transform": False})

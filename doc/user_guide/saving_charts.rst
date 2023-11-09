@@ -242,6 +242,26 @@ size at the default resolution of 72 ppi::
 
     chart.save('chart.png', scale_factor=2)
 
+Sharable URL
+~~~~~~~~~~~~
+The :meth:`Chart.to_url` method can be used to build a sharable URL that opens the chart
+specification in the online Vega editor_.
+
+.. altair-plot::
+    :output: repr
+
+    import altair as alt
+    from vega_datasets import data
+
+    chart = alt.Chart(data.cars.url).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    )
+
+    chart.to_url()
+
 .. _vl-convert: https://github.com/vega/vl-convert
 .. _altair_saver: http://github.com/altair-viz/altair_saver/
 .. _vegaEmbed: https://github.com/vega/vega-embed
+.. _editor: https://vega.github.io/editor/
