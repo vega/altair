@@ -256,24 +256,28 @@ class SchemaGenerator(codegen.SchemaGenerator):
     '''
     )
 
-    def _process_description(self, description: str):
-        description = "".join(
-            [
-                reSpecial.sub("", d) if i % 2 else d
-                for i, d in enumerate(reLink.split(description))
-            ]
-        )  # remove formatting from links
-        description = m2r.convert(description)
-        description = description.replace(m2r.prolog, "")
-        description = description.replace(":raw-html-m2r:", ":raw-html:")
-        description = description.replace(r"\ ,", ",")
-        description = description.replace(r"\ ", " ")
-        # turn explicit references into anonymous references
-        description = description.replace(">`_", ">`__")
-        # Some entries in the Vega-Lite schema miss the second occurence of '__'
-        description = description.replace("__Default value: ", "__Default value:__ ")
-        description += "\n"
-        return description.strip()
+    def _process_description(self, description: str) -> str:
+        return process_description(description)
+
+
+def process_description(description: str) -> str:
+    description = "".join(
+        [
+            reSpecial.sub("", d) if i % 2 else d
+            for i, d in enumerate(reLink.split(description))
+        ]
+    )  # remove formatting from links
+    description = m2r.convert(description)
+    description = description.replace(m2r.prolog, "")
+    description = description.replace(":raw-html-m2r:", ":raw-html:")
+    description = description.replace(r"\ ,", ",")
+    description = description.replace(r"\ ", " ")
+    # turn explicit references into anonymous references
+    description = description.replace(">`_", ">`__")
+    # Some entries in the Vega-Lite schema miss the second occurence of '__'
+    description = description.replace("__Default value: ", "__Default value:__ ")
+    description += "\n"
+    return description.strip()
 
 
 class FieldSchemaGenerator(SchemaGenerator):
@@ -527,6 +531,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 @dataclass
 class ChannelInfo:
     supports_arrays: bool
+    deep_description: str
     field_class_name: Optional[str] = None
     datum_class_name: Optional[str] = None
     value_class_name: Optional[str] = None
@@ -566,7 +571,10 @@ def generate_vegalite_channel_wrappers(
         supports_arrays = any(
             schema_info.is_array() for schema_info in propschema.anyOf
         )
-        channel_info = ChannelInfo(supports_arrays=supports_arrays)
+        channel_info = ChannelInfo(
+            supports_arrays=supports_arrays,
+            deep_description=propschema.deep_description,
+        )
 
         for encoding_spec, definition in def_dict.items():
             classname = prop[0].upper() + prop[1:]
@@ -807,8 +815,13 @@ def _create_encode_signature(
         docstring_union_types = docstring_union_types + [
             rst_syntax_for_class(c) for c in datum_and_value_class_names
         ]
+
         signature_args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
+
         docstring_parameters.append(f"{channel} : {', '.join(docstring_union_types)}")
+        docstring_parameters.append(
+            "    {}".format(process_description(info.deep_description))
+        )
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
