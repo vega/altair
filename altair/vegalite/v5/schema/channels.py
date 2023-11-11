@@ -90300,4 +90300,48 @@ def _encode_signature(
         str, YOffset, dict, YOffsetDatum, YOffsetValue, UndefinedType
     ] = Undefined,
 ):
+    """Parameters
+    ----------
+
+    angle : str, :class:`Angle`, Dict, :class:`AngleDatum`, :class:`AngleValue`
+    color : str, :class:`Color`, Dict, :class:`ColorDatum`, :class:`ColorValue`
+    column : str, :class:`Column`, Dict
+    description : str, :class:`Description`, Dict, :class:`DescriptionValue`
+    detail : str, :class:`Detail`, Dict, List
+    facet : str, :class:`Facet`, Dict
+    fill : str, :class:`Fill`, Dict, :class:`FillDatum`, :class:`FillValue`
+    fillOpacity : str, :class:`FillOpacity`, Dict, :class:`FillOpacityDatum`, :class:`FillOpacityValue`
+    href : str, :class:`Href`, Dict, :class:`HrefValue`
+    key : str, :class:`Key`, Dict
+    latitude : str, :class:`Latitude`, Dict, :class:`LatitudeDatum`
+    latitude2 : str, :class:`Latitude2`, Dict, :class:`Latitude2Datum`, :class:`Latitude2Value`
+    longitude : str, :class:`Longitude`, Dict, :class:`LongitudeDatum`
+    longitude2 : str, :class:`Longitude2`, Dict, :class:`Longitude2Datum`, :class:`Longitude2Value`
+    opacity : str, :class:`Opacity`, Dict, :class:`OpacityDatum`, :class:`OpacityValue`
+    order : str, :class:`Order`, Dict, List, :class:`OrderValue`
+    radius : str, :class:`Radius`, Dict, :class:`RadiusDatum`, :class:`RadiusValue`
+    radius2 : str, :class:`Radius2`, Dict, :class:`Radius2Datum`, :class:`Radius2Value`
+    row : str, :class:`Row`, Dict
+    shape : str, :class:`Shape`, Dict, :class:`ShapeDatum`, :class:`ShapeValue`
+    size : str, :class:`Size`, Dict, :class:`SizeDatum`, :class:`SizeValue`
+    stroke : str, :class:`Stroke`, Dict, :class:`StrokeDatum`, :class:`StrokeValue`
+    strokeDash : str, :class:`StrokeDash`, Dict, :class:`StrokeDashDatum`, :class:`StrokeDashValue`
+    strokeOpacity : str, :class:`StrokeOpacity`, Dict, :class:`StrokeOpacityDatum`, :class:`StrokeOpacityValue`
+    strokeWidth : str, :class:`StrokeWidth`, Dict, :class:`StrokeWidthDatum`, :class:`StrokeWidthValue`
+    text : str, :class:`Text`, Dict, :class:`TextDatum`, :class:`TextValue`
+    theta : str, :class:`Theta`, Dict, :class:`ThetaDatum`, :class:`ThetaValue`
+    theta2 : str, :class:`Theta2`, Dict, :class:`Theta2Datum`, :class:`Theta2Value`
+    tooltip : str, :class:`Tooltip`, Dict, List, :class:`TooltipValue`
+    url : str, :class:`Url`, Dict, :class:`UrlValue`
+    x : str, :class:`X`, Dict, :class:`XDatum`, :class:`XValue`
+    x2 : str, :class:`X2`, Dict, :class:`X2Datum`, :class:`X2Value`
+    xError : str, :class:`XError`, Dict, :class:`XErrorValue`
+    xError2 : str, :class:`XError2`, Dict, :class:`XError2Value`
+    xOffset : str, :class:`XOffset`, Dict, :class:`XOffsetDatum`, :class:`XOffsetValue`
+    y : str, :class:`Y`, Dict, :class:`YDatum`, :class:`YValue`
+    y2 : str, :class:`Y2`, Dict, :class:`Y2Datum`, :class:`Y2Value`
+    yError : str, :class:`YError`, Dict, :class:`YErrorValue`
+    yError2 : str, :class:`YError2`, Dict, :class:`YError2Value`
+    yOffset : str, :class:`YOffset`, Dict, :class:`YOffsetDatum`, :class:`YOffsetValue`
+    """
     ...

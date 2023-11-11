@@ -26,6 +26,8 @@ from schemapi.utils import (  # noqa: E402
     get_valid_identifier,
     resolve_references,
     ruff_format_str,
+    rst_syntax_for_class,
+    indent_docstring,
 )
 
 SCHEMA_VERSION: Final = "v5.15.1"
@@ -236,10 +238,11 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 
-ENCODE_SIGNATURE: Final = """
+ENCODE_SIGNATURE: Final = '''
 def _encode_signature({encode_method_args}):
+    """{docstring}"""
     ...
-"""
+'''
 
 
 class SchemaGenerator(codegen.SchemaGenerator):
@@ -773,7 +776,8 @@ def vegalite_main(skip_download: bool = False) -> None:
 def _create_encode_signature(
     channel_infos: Dict[str, ChannelInfo],
 ) -> str:
-    args = ["self"]
+    signature_args: list[str] = ["self"]
+    docstring_parameters: list[str] = ["", "Parameters", "----------", ""]
     for channel, info in channel_infos.items():
         field_class_name = info.field_class_name
         assert (
@@ -791,15 +795,28 @@ def _create_encode_signature(
         # discussions in https://github.com/altair-viz/altair/pull/3208
         # for more background.
         union_types = ["str", field_class_name, "dict"]
+        docstring_union_types = ["str", rst_syntax_for_class(field_class_name), "Dict"]
         if info.supports_arrays:
             # We could be more specific about what types are accepted in the list
             # but then the signatures would get rather long and less useful
             # to a user when it shows up in their IDE.
             union_types.append("list")
+            docstring_union_types.append("List")
 
         union_types = union_types + datum_and_value_class_names + ["UndefinedType"]
-        args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
-    return ENCODE_SIGNATURE.format(encode_method_args=", ".join(args))
+        docstring_union_types = docstring_union_types + [
+            rst_syntax_for_class(c) for c in datum_and_value_class_names
+        ]
+        signature_args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
+        docstring_parameters.append(f"{channel} : {', '.join(docstring_union_types)}")
+    if len(docstring_parameters) > 1:
+        docstring_parameters += [""]
+    docstring = indent_docstring(
+        docstring_parameters, indent_level=4, width=100, lstrip=True
+    )
+    return ENCODE_SIGNATURE.format(
+        encode_method_args=", ".join(signature_args), docstring=docstring
+    )
 
 
 def main() -> None:

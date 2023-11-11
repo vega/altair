@@ -218,7 +218,7 @@ class SchemaInfo:
                 type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs
-                type_representations.append(":class:`{}`".format(self.title))
+                type_representations.append(rst_syntax_for_class(self.title))
 
         if self.is_empty():
             type_representations.append("Any")
@@ -514,6 +514,10 @@ def fix_docstring_issues(docstring: str) -> str:
         "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
     )
     return docstring
+
+
+def rst_syntax_for_class(class_name: str) -> str:
+    return f":class:`{class_name}`"
 
 
 def flatten(container: Iterable) -> Iterable:
