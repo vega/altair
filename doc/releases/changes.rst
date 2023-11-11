@@ -8,6 +8,7 @@ Version 5.2.0 (unreleased month date, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Vega-Altair is now a typed package, with type annotations for all public functions and classes and some of the internal code (#2951)
 
 Bug Fixes
 ~~~~~~~~~
