@@ -27,14 +27,14 @@ from ...utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from ...utils.core import _DataFrameLike
-from ...utils.data import _DataType
+from ...utils.data import DataType
 
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
     from typing_extensions import Self
 
-_ChartDataType = Union[_DataType, core.Data, str, core.Generator, UndefinedType]
+ChartDataType = Union[DataType, core.Data, str, core.Generator, UndefinedType]
 
 
 # ------------------------------------------------------------------------
@@ -2652,7 +2652,7 @@ class _EncodingMixin:
         column: Union[
             str, core.FacetFieldDef, channels.Column, UndefinedType
         ] = Undefined,
-        data: Union[_ChartDataType, UndefinedType] = Undefined,
+        data: Union[ChartDataType, UndefinedType] = Undefined,
         columns: Union[int, UndefinedType] = Undefined,
         **kwargs,
     ) -> "FacetChart":
@@ -2770,7 +2770,7 @@ class Chart(
 
     def __init__(
         self,
-        data: Union[_ChartDataType, UndefinedType] = Undefined,
+        data: Union[ChartDataType, UndefinedType] = Undefined,
         encoding: Union[core.FacetedEncoding, UndefinedType] = Undefined,
         mark: Union[str, core.AnyMark, UndefinedType] = Undefined,
         width: Union[int, str, dict, core.Step, UndefinedType] = Undefined,

@@ -8,7 +8,7 @@ from typing import TypedDict, Final
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import _DataFrameLike
-from altair.utils.data import _DataType, _ToValuesReturnType, MaxRowsError
+from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
 
 # Temporary storage for dataframes that have been extracted
@@ -29,8 +29,8 @@ class _ToVegaFusionReturnUrlDict(TypedDict):
 
 @curried.curry
 def vegafusion_data_transformer(
-    data: _DataType, max_rows: int = 100000
-) -> Union[_ToVegaFusionReturnUrlDict, _ToValuesReturnType]:
+    data: DataType, max_rows: int = 100000
+) -> Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]:
     """VegaFusion Data Transformer"""
     if hasattr(data, "__geo_interface__"):
         # Use default transformer for geo interface objects

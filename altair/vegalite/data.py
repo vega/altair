@@ -12,14 +12,14 @@ from ..utils.data import (
     check_data_type,
 )
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
-from ..utils.data import _DataType, _ToValuesReturnType
+from ..utils.data import DataType, ToValuesReturnType
 from ..utils.plugin_registry import PluginEnabler
 
 
 @curried.curry
 def default_data_transformer(
-    data: _DataType, max_rows: int = 5000
-) -> _ToValuesReturnType:
+    data: DataType, max_rows: int = 5000
+) -> ToValuesReturnType:
     return curried.pipe(data, limit_rows(max_rows=max_rows), to_values)
 
 
