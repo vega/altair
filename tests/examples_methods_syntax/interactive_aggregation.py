@@ -21,7 +21,7 @@ alt.layer(
         x=alt.X("IMDB_Rating:Q").title("IMDB Rating"),
         y=alt.Y("Rotten_Tomatoes_Rating:Q").title("Rotten Tomatoes Rating")
     ).transform_filter(
-        alt.datum["IMDB_Rating"] > threshold
+        alt.datum["IMDB_Rating"] >= threshold
     ),
 
     alt.Chart(source).mark_circle().encode(
@@ -33,7 +33,7 @@ alt.layer(
     ),
 
     alt.Chart().mark_rule(color="gray").encode(
-        strokeWidth=alt.StrokeWidth(value=3),
+        strokeWidth=alt.StrokeWidth(value=6),
         x=alt.X(datum=alt.expr(threshold.name), type="quantitative")
     )
 ).add_params(threshold)
