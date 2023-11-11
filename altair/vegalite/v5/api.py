@@ -816,7 +816,10 @@ def condition(
     test_predicates = (str, expr.Expression, core.PredicateComposition)
 
     condition: TypingDict[
-        str, Union[bool, str, _expr_core.Expression, core.PredicateComposition]
+        str,
+        Union[
+            bool, str, _expr_core.Expression, core.PredicateComposition, UndefinedType
+        ],
     ]
     if isinstance(predicate, Parameter):
         if (
@@ -1604,7 +1607,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # an edge case and it's not worth changing the type annotation
             # in this function to account for it as it could be confusing to
             # users.
-            as_ = kwargs.pop("as", Undefined)
+            as_ = kwargs.pop("as", Undefined)  # type: ignore[assignment]
         elif "as" in kwargs:
             raise ValueError(
                 "transform_calculate: both 'as_' and 'as' passed as arguments."
@@ -2689,17 +2692,14 @@ class _EncodingMixin:
                 "facet argument cannot be combined with row/column argument."
             )
 
-        # Remove "ignore" statement once Undefined is no longer typed as Any
         if data is Undefined:
-            # Remove "ignore" statement once Undefined is no longer typed as Any
-            if self.data is Undefined:  # type: ignore
+            if self.data is Undefined:  # type: ignore[has-type]
                 raise ValueError(
                     "Facet charts require data to be specified at the top level."
                 )
             # ignore type as copy comes from another class
             self = self.copy(deep=False)  # type: ignore[attr-defined]
-            # Remove "ignore" statement once Undefined is no longer typed as Any
-            data, self.data = self.data, Undefined  # type: ignore
+            data, self.data = self.data, Undefined  # type: ignore[has-type]
 
         if facet_specified:
             if isinstance(facet, str):
@@ -2875,7 +2875,7 @@ class Chart(
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
-            copy.data = core.InlineData(values=[{}])
+            copy.data = core.InlineData(values=[{}])  # type: ignore[assignment]
             return super(Chart, copy).to_dict(
                 validate=validate, format=format, ignore=ignore, context=context
             )

@@ -733,11 +733,7 @@ class UndefinedType:
         return "Undefined"
 
 
-# In the future Altair may implement a more complete set of type hints.
-# But for now, we'll add an annotation to indicate that the type checker
-# should permit any value passed to a function argument whose default
-# value is Undefined.
-Undefined: Any = UndefinedType()
+Undefined = UndefinedType()
 
 
 class SchemaBase:
