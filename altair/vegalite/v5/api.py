@@ -18,6 +18,7 @@ from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
 
 from .data import data_transformers
 from ... import utils, expr
+from ...expr import core as _expr_core
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 from .compiler import vegalite_compilers
@@ -186,7 +187,7 @@ def _get_channels_mapping() -> TypingDict[TypingType[core.SchemaBase], str]:
 
 # -------------------------------------------------------------------------
 # Tools for working with parameters
-class Parameter(expr.core.OperatorMixin):
+class Parameter(_expr_core.OperatorMixin):
     """A Parameter object"""
 
     # NOTE: If you change this class, make sure that the protocol in
@@ -241,7 +242,7 @@ class Parameter(expr.core.OperatorMixin):
         if self.param_type == "selection":
             return SelectionPredicateComposition({"not": {"param": self.name}})
         else:
-            return expr.core.OperatorMixin.__invert__(self)
+            return _expr_core.OperatorMixin.__invert__(self)
 
     def __and__(self, other):
         if self.param_type == "selection":
@@ -249,7 +250,7 @@ class Parameter(expr.core.OperatorMixin):
                 other = {"param": other.name}
             return SelectionPredicateComposition({"and": [{"param": self.name}, other]})
         else:
-            return expr.core.OperatorMixin.__and__(self, other)
+            return _expr_core.OperatorMixin.__and__(self, other)
 
     def __or__(self, other):
         if self.param_type == "selection":
@@ -257,7 +258,7 @@ class Parameter(expr.core.OperatorMixin):
                 other = {"param": other.name}
             return SelectionPredicateComposition({"or": [{"param": self.name}, other]})
         else:
-            return expr.core.OperatorMixin.__or__(self, other)
+            return _expr_core.OperatorMixin.__or__(self, other)
 
     def __repr__(self) -> str:
         return "Parameter({0!r}, {1})".format(self.name, self.param)
@@ -270,20 +271,20 @@ class Parameter(expr.core.OperatorMixin):
 
     def __getattr__(
         self, field_name: str
-    ) -> Union[expr.core.GetAttrExpression, "SelectionExpression"]:
+    ) -> Union[_expr_core.GetAttrExpression, "SelectionExpression"]:
         if field_name.startswith("__") and field_name.endswith("__"):
             raise AttributeError(field_name)
-        _attrexpr = expr.core.GetAttrExpression(self.name, field_name)
+        _attrexpr = _expr_core.GetAttrExpression(self.name, field_name)
         # If self is a SelectionParameter and field_name is in its
         # fields or encodings list, then we want to return an expression.
         if check_fields_and_encodings(self, field_name):
             return SelectionExpression(_attrexpr)
-        return expr.core.GetAttrExpression(self.name, field_name)
+        return _expr_core.GetAttrExpression(self.name, field_name)
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
-    def __getitem__(self, field_name: str) -> expr.core.GetItemExpression:
-        return expr.core.GetItemExpression(self.name, field_name)
+    def __getitem__(self, field_name: str) -> _expr_core.GetItemExpression:
+        return _expr_core.GetItemExpression(self.name, field_name)
 
 
 # Enables use of ~, &, | with compositions of selection objects.
@@ -298,7 +299,7 @@ class SelectionPredicateComposition(core.PredicateComposition):
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
 
 
-class ParameterExpression(expr.core.OperatorMixin, object):
+class ParameterExpression(_expr_core.OperatorMixin, object):
     def __init__(self, expr) -> None:
         self.expr = expr
 
@@ -312,7 +313,7 @@ class ParameterExpression(expr.core.OperatorMixin, object):
         return ParameterExpression(expr=expr)
 
 
-class SelectionExpression(expr.core.OperatorMixin, object):
+class SelectionExpression(_expr_core.OperatorMixin, object):
     def __init__(self, expr) -> None:
         self.expr = expr
 
@@ -351,7 +352,7 @@ def param(
     value: Union[Any, UndefinedType] = Undefined,
     bind: Union[core.Binding, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
+    expr: Union[str, core.Expr, _expr_core.Expression, UndefinedType] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -424,7 +425,7 @@ def param(
             # If both 'value' and 'init' are set, we ignore 'init'.
             kwds.pop("init")
 
-    # ignore[arg-type] comment is needed because we can also pass expr.core.Expression
+    # ignore[arg-type] comment is needed because we can also pass _expr_core.Expression
     if "select" not in kwds:
         parameter.param = core.VariableParameter(
             name=parameter.name,
@@ -511,7 +512,7 @@ def selection_interval(
     value: Union[Any, UndefinedType] = Undefined,
     bind: Union[core.Binding, str, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
+    expr: Union[str, core.Expr, _expr_core.Expression, UndefinedType] = Undefined,
     encodings: Union[List[str], UndefinedType] = Undefined,
     on: Union[str, UndefinedType] = Undefined,
     clear: Union[str, bool, UndefinedType] = Undefined,
@@ -815,7 +816,7 @@ def condition(
     test_predicates = (str, expr.Expression, core.PredicateComposition)
 
     condition: TypingDict[
-        str, Union[bool, str, expr.core.Expression, core.PredicateComposition]
+        str, Union[bool, str, _expr_core.Expression, core.PredicateComposition]
     ]
     if isinstance(predicate, Parameter):
         if (
@@ -1547,9 +1548,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         as_: Union[str, core.FieldName, UndefinedType] = Undefined,
         calculate: Union[
-            str, core.Expr, expr.core.Expression, UndefinedType
+            str, core.Expr, _expr_core.Expression, UndefinedType
         ] = Undefined,
-        **kwargs: Union[str, core.Expr, expr.core.Expression],
+        **kwargs: Union[str, core.Expr, _expr_core.Expression],
     ) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
@@ -1842,7 +1843,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         filter: Union[
             str,
             core.Expr,
-            expr.core.Expression,
+            _expr_core.Expression,
             core.Predicate,
             Parameter,
             core.PredicateComposition,
