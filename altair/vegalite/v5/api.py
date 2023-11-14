@@ -2766,7 +2766,10 @@ class _EncodingMixin:
             # Remove "ignore" statement once Undefined is no longer typed as Any
             if self.data is Undefined:  # type: ignore
                 raise ValueError(
-                    "Facet charts require data to be specified at the top level."
+                    "Facet charts require data to be specified at the top level. "
+                    "If you are trying to facet layered or concatenated charts, "
+                    "ensure that the same data variable is passed to each chart "
+                    "or specify the data inside the facet method instead."
                 )
             # ignore type as copy comes from another class
             self = self.copy(deep=False)  # type: ignore[attr-defined]
