@@ -18,6 +18,7 @@ from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
 
 from .data import data_transformers
 from ... import utils, expr
+from ...expr import core as _expr_core
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 from .compiler import vegalite_compilers
@@ -186,8 +187,11 @@ def _get_channels_mapping() -> TypingDict[TypingType[core.SchemaBase], str]:
 
 # -------------------------------------------------------------------------
 # Tools for working with parameters
-class Parameter(expr.core.OperatorMixin, object):
+class Parameter(_expr_core.OperatorMixin):
     """A Parameter object"""
+
+    # NOTE: If you change this class, make sure that the protocol in
+    # altair/vegalite/v5/schema/core.py is updated accordingly if needed.
 
     _counter: int = 0
 
@@ -238,7 +242,7 @@ class Parameter(expr.core.OperatorMixin, object):
         if self.param_type == "selection":
             return SelectionPredicateComposition({"not": {"param": self.name}})
         else:
-            return expr.core.OperatorMixin.__invert__(self)
+            return _expr_core.OperatorMixin.__invert__(self)
 
     def __and__(self, other):
         if self.param_type == "selection":
@@ -246,7 +250,7 @@ class Parameter(expr.core.OperatorMixin, object):
                 other = {"param": other.name}
             return SelectionPredicateComposition({"and": [{"param": self.name}, other]})
         else:
-            return expr.core.OperatorMixin.__and__(self, other)
+            return _expr_core.OperatorMixin.__and__(self, other)
 
     def __or__(self, other):
         if self.param_type == "selection":
@@ -254,7 +258,7 @@ class Parameter(expr.core.OperatorMixin, object):
                 other = {"param": other.name}
             return SelectionPredicateComposition({"or": [{"param": self.name}, other]})
         else:
-            return expr.core.OperatorMixin.__or__(self, other)
+            return _expr_core.OperatorMixin.__or__(self, other)
 
     def __repr__(self) -> str:
         return "Parameter({0!r}, {1})".format(self.name, self.param)
@@ -267,20 +271,20 @@ class Parameter(expr.core.OperatorMixin, object):
 
     def __getattr__(
         self, field_name: str
-    ) -> Union[expr.core.GetAttrExpression, "SelectionExpression"]:
+    ) -> Union[_expr_core.GetAttrExpression, "SelectionExpression"]:
         if field_name.startswith("__") and field_name.endswith("__"):
             raise AttributeError(field_name)
-        _attrexpr = expr.core.GetAttrExpression(self.name, field_name)
+        _attrexpr = _expr_core.GetAttrExpression(self.name, field_name)
         # If self is a SelectionParameter and field_name is in its
         # fields or encodings list, then we want to return an expression.
         if check_fields_and_encodings(self, field_name):
             return SelectionExpression(_attrexpr)
-        return expr.core.GetAttrExpression(self.name, field_name)
+        return _expr_core.GetAttrExpression(self.name, field_name)
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
-    def __getitem__(self, field_name: str) -> expr.core.GetItemExpression:
-        return expr.core.GetItemExpression(self.name, field_name)
+    def __getitem__(self, field_name: str) -> _expr_core.GetItemExpression:
+        return _expr_core.GetItemExpression(self.name, field_name)
 
 
 # Enables use of ~, &, | with compositions of selection objects.
@@ -295,7 +299,7 @@ class SelectionPredicateComposition(core.PredicateComposition):
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
 
 
-class ParameterExpression(expr.core.OperatorMixin, object):
+class ParameterExpression(_expr_core.OperatorMixin, object):
     def __init__(self, expr) -> None:
         self.expr = expr
 
@@ -309,7 +313,7 @@ class ParameterExpression(expr.core.OperatorMixin, object):
         return ParameterExpression(expr=expr)
 
 
-class SelectionExpression(expr.core.OperatorMixin, object):
+class SelectionExpression(_expr_core.OperatorMixin, object):
     def __init__(self, expr) -> None:
         self.expr = expr
 
@@ -346,9 +350,9 @@ def value(value, **kwargs) -> dict:
 def param(
     name: Optional[str] = None,
     value: Union[Any, UndefinedType] = Undefined,
-    bind: Union[core.Binding, str, UndefinedType] = Undefined,
+    bind: Union[core.Binding, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
+    expr: Union[str, core.Expr, _expr_core.Expression, UndefinedType] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -365,7 +369,7 @@ def param(
     value : any (optional)
         The default value of the parameter. If not specified, the parameter
         will be created without a default value.
-    bind : :class:`Binding`, str (optional)
+    bind : :class:`Binding` (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
     empty : boolean (optional)
@@ -421,9 +425,14 @@ def param(
             # If both 'value' and 'init' are set, we ignore 'init'.
             kwds.pop("init")
 
+    # ignore[arg-type] comment is needed because we can also pass _expr_core.Expression
     if "select" not in kwds:
         parameter.param = core.VariableParameter(
-            name=parameter.name, bind=bind, value=value, expr=expr, **kwds
+            name=parameter.name,
+            bind=bind,
+            value=value,
+            expr=expr,  # type: ignore[arg-type]
+            **kwds,
         )
         parameter.param_type = "variable"
     elif "views" in kwds:
@@ -503,7 +512,7 @@ def selection_interval(
     value: Union[Any, UndefinedType] = Undefined,
     bind: Union[core.Binding, str, UndefinedType] = Undefined,
     empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[str, core.Expr, expr.core.Expression, UndefinedType] = Undefined,
+    expr: Union[str, core.Expr, _expr_core.Expression, UndefinedType] = Undefined,
     encodings: Union[List[str], UndefinedType] = Undefined,
     on: Union[str, UndefinedType] = Undefined,
     clear: Union[str, bool, UndefinedType] = Undefined,
@@ -807,7 +816,7 @@ def condition(
     test_predicates = (str, expr.Expression, core.PredicateComposition)
 
     condition: TypingDict[
-        str, Union[bool, str, expr.core.Expression, core.PredicateComposition]
+        str, Union[bool, str, _expr_core.Expression, core.PredicateComposition]
     ]
     if isinstance(predicate, Parameter):
         if (
@@ -1466,7 +1475,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             spacing=spacing,
             tilt=tilt,
             translate=translate,
-            type=type,
+            # Ignore as we type here `type` as a str but in core.Projection
+            # it's a Literal with all options
+            type=type,  # type: ignore[arg-type]
             **kwds,
         )
         return self.properties(projection=projection)
@@ -1627,9 +1638,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         as_: Union[str, core.FieldName, UndefinedType] = Undefined,
         calculate: Union[
-            str, core.Expr, expr.core.Expression, UndefinedType
+            str, core.Expr, _expr_core.Expression, UndefinedType
         ] = Undefined,
-        **kwargs: Union[str, core.Expr, expr.core.Expression],
+        **kwargs: Union[str, core.Expr, _expr_core.Expression],
     ) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
@@ -1690,10 +1701,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             )
         if as_ is not Undefined or calculate is not Undefined:
             dct = {"as": as_, "calculate": calculate}
-            self = self._add_transform(core.CalculateTransform(**dct))
+            self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
         for as_, calculate in kwargs.items():
             dct = {"as": as_, "calculate": calculate}
-            self = self._add_transform(core.CalculateTransform(**dct))
+            self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
         return self
 
     def transform_density(
@@ -1922,7 +1933,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         filter: Union[
             str,
             core.Expr,
-            expr.core.Expression,
+            _expr_core.Expression,
             core.Predicate,
             Parameter,
             core.PredicateComposition,
@@ -1956,7 +1967,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             elif isinstance(filter.empty, bool):
                 new_filter["empty"] = filter.empty
             filter = new_filter  # type: ignore[assignment]
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))  # type: ignore[arg-type]
 
     def transform_flatten(
         self,
@@ -2158,7 +2169,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(
             core.PivotTransform(
-                pivot=pivot, value=value, groupby=groupby, limit=limit, op=op
+                # Ignore as we type here `op` as a str but in core.PivotTransform
+                # it's a Literal with all options
+                pivot=pivot,
+                value=value,
+                groupby=groupby,
+                limit=limit,
+                op=op,  # type: ignore[arg-type]
             )
         )
 
@@ -2408,7 +2425,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 )
         if as_ is not Undefined:
             dct = {"as": as_, "timeUnit": timeUnit, "field": field}
-            self = self._add_transform(core.TimeUnitTransform(**dct))
+            self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
         for as_, shorthand in kwargs.items():
             dct = utils.parse_shorthand(
                 shorthand,
@@ -2420,7 +2437,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct["as"] = as_
             if "timeUnit" not in dct:
                 raise ValueError("'{}' must include a valid timeUnit".format(shorthand))
-            self = self._add_transform(core.TimeUnitTransform(**dct))
+            self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
         return self
 
     def transform_window(
@@ -2516,7 +2533,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                     )
                 )
                 assert not isinstance(window, UndefinedType)  # For mypy
-                window.append(core.WindowFieldDef(**kwds))
+                # Ignore as core.WindowFieldDef has a Literal type hint with all options
+                window.append(core.WindowFieldDef(**kwds))  # type: ignore[arg-type]
 
         return self._add_transform(
             core.WindowTransform(
@@ -2697,7 +2715,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
 
 class _EncodingMixin:
-    @utils.use_signature(core.FacetedEncoding)
+    @utils.use_signature(channels._encode_signature)
     def encode(self, *args, **kwargs) -> Self:
         # Convert args to kwargs based on their types.
         kwargs = utils.infer_encoding_types(args, kwargs, channels)
@@ -2853,7 +2871,10 @@ class Chart(
         **kwargs,
     ) -> None:
         super(Chart, self).__init__(
-            data=data,
+            # Data type hints won't match with what TopLevelUnitSpec expects
+            # as there is some data processing happening when converting to
+            # a VL spec
+            data=data,  # type: ignore[arg-type]
             encoding=encoding,
             mark=mark,
             width=width,

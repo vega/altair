@@ -44,7 +44,7 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
-_TSchemaBase = TypeVar("_TSchemaBase", bound="SchemaBase")
+_TSchemaBase = TypeVar("_TSchemaBase", bound=Type["SchemaBase"])
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors = Dict[str, ValidationErrorList]

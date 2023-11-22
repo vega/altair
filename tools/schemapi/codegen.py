@@ -1,15 +1,15 @@
 """Code generation utilities"""
 import re
 import textwrap
-from typing import Set, Final, Optional, List, Iterable, Union
+from typing import Set, Final, Optional, List, Union, Dict, Tuple
 from dataclasses import dataclass
 
 from .utils import (
     SchemaInfo,
     is_valid_identifier,
     indent_docstring,
-    indent_arglist,
-    SchemaProperties,
+    jsonschema_to_python_types,
+    flatten,
 )
 
 
@@ -100,6 +100,7 @@ class SchemaGenerator:
     rootschemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit root
         schema.
+    altair_classes_prefix : string, optional
     **kwargs : dict
         Additional keywords for derived classes.
     """
@@ -135,6 +136,7 @@ class SchemaGenerator:
         rootschemarepr: Optional[object] = None,
         nodefault: Optional[List[str]] = None,
         haspropsetters: bool = False,
+        altair_classes_prefix: Optional[str] = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -146,6 +148,7 @@ class SchemaGenerator:
         self.nodefault = nodefault or ()
         self.haspropsetters = haspropsetters
         self.kwargs = kwargs
+        self.altair_classes_prefix = altair_classes_prefix
 
     def subclasses(self) -> List[str]:
         """Return a list of subclass names, if any."""
@@ -181,13 +184,23 @@ class SchemaGenerator:
             **self.kwargs,
         )
 
+    @property
+    def info(self) -> SchemaInfo:
+        return SchemaInfo(self.schema, self.rootschema)
+
+    @property
+    def arg_info(self) -> ArgInfo:
+        return get_args(self.info)
+
     def docstring(self, indent: int = 0) -> str:
-        # TODO: add a general description at the top, derived from the schema.
-        #       for example, a non-object definition should list valid type, enum
-        #       values, etc.
-        # TODO: use get_args here for more information on allOf objects
-        info = SchemaInfo(self.schema, self.rootschema)
-        doc = ["{} schema wrapper".format(self.classname), "", info.medium_description]
+        info = self.info
+        doc = [
+            "{} schema wrapper".format(self.classname),
+            "",
+            info.get_python_type_representation(
+                altair_classes_prefix=self.altair_classes_prefix
+            ),
+        ]
         if info.description:
             doc += self._process_description(  # remove condition description
                 re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
@@ -199,7 +212,7 @@ class SchemaGenerator:
         doc = [line for line in doc if ":raw-html:" not in line]
 
         if info.properties:
-            arg_info = get_args(info)
+            arg_info = self.arg_info
             doc += ["", "Parameters", "----------", ""]
             for prop in (
                 sorted(arg_info.required)
@@ -208,7 +221,12 @@ class SchemaGenerator:
             ):
                 propinfo = info.properties[prop]
                 doc += [
-                    "{} : {}".format(prop, propinfo.short_description),
+                    "{} : {}".format(
+                        prop,
+                        propinfo.get_python_type_representation(
+                            altair_classes_prefix=self.altair_classes_prefix,
+                        ),
+                    ),
                     "    {}".format(
                         self._process_description(propinfo.deep_description)
                     ),
@@ -219,8 +237,23 @@ class SchemaGenerator:
 
     def init_code(self, indent: int = 0) -> str:
         """Return code suitable for the __init__ function of a Schema class"""
-        info = SchemaInfo(self.schema, rootschema=self.rootschema)
-        arg_info = get_args(info)
+        args, super_args = self.init_args()
+
+        initfunc = self.init_template.format(
+            classname=self.classname,
+            arglist=", ".join(args),
+            super_arglist=", ".join(super_args),
+        )
+        if indent:
+            initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
+        return initfunc
+
+    def init_args(
+        self, additional_types: Optional[List[str]] = None
+    ) -> Tuple[List[str], List[str]]:
+        additional_types = additional_types or []
+        info = self.info
+        arg_info = self.arg_info
 
         nodefault = set(self.nodefault)
         arg_info.required -= nodefault
@@ -238,7 +271,18 @@ class SchemaGenerator:
             super_args.append("*args")
 
         args.extend(
-            "{}=Undefined".format(p)
+            f"{p}: Union["
+            + ", ".join(
+                [
+                    *additional_types,
+                    info.properties[p].get_python_type_representation(
+                        for_type_hints=True,
+                        altair_classes_prefix=self.altair_classes_prefix,
+                    ),
+                    "UndefinedType",
+                ]
+            )
+            + "] = Undefined"
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(
@@ -251,49 +295,38 @@ class SchemaGenerator:
         if arg_info.additional:
             args.append("**kwds")
             super_args.append("**kwds")
-
-        arg_indent_level = 9 + indent
-        super_arg_indent_level = 23 + len(self.classname) + indent
-
-        initfunc = self.init_template.format(
-            classname=self.classname,
-            arglist=indent_arglist(args, indent_level=arg_indent_level),
-            super_arglist=indent_arglist(
-                super_args, indent_level=super_arg_indent_level
-            ),
-        )
-        if indent:
-            initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
-        return initfunc
-
-    _equiv_python_types = {
-        "string": "str",
-        "number": "float",
-        "integer": "int",
-        "object": "dict",
-        "boolean": "bool",
-        "array": "list",
-        "null": "None",
-    }
+        return args, super_args
 
     def get_args(self, si: SchemaInfo) -> List[str]:
         contents = ["self"]
-        props: Union[List[str], SchemaProperties] = []
+        prop_infos: Dict[str, SchemaInfo] = {}
         if si.is_anyOf():
-            props = sorted({p for si_sub in si.anyOf for p in si_sub.properties})
+            prop_infos = {}
+            for si_sub in si.anyOf:
+                prop_infos.update(si_sub.properties)
         elif si.properties:
-            props = si.properties
+            prop_infos = dict(si.properties.items())
 
-        if props:
-            contents.extend([p + "=Undefined" for p in props])
+        if prop_infos:
+            contents.extend(
+                [
+                    f"{p}: Union["
+                    + info.get_python_type_representation(
+                        for_type_hints=True,
+                        altair_classes_prefix=self.altair_classes_prefix,
+                    )
+                    + ", UndefinedType] = Undefined"
+                    for p, info in prop_infos.items()
+                ]
+            )
         elif si.type:
-            py_type = self._equiv_python_types[si.type]
+            py_type = jsonschema_to_python_types[si.type]
             if py_type == "list":
                 # Try to get a type hint like "List[str]" which is more specific
                 # then just "list"
                 item_vl_type = si.items.get("type", None)
                 if item_vl_type is not None:
-                    item_type = self._equiv_python_types[item_vl_type]
+                    item_type = jsonschema_to_python_types[item_vl_type]
                 else:
                     item_si = SchemaInfo(si.items, self.rootschema)
                     assert item_si.is_reference()
@@ -316,7 +349,7 @@ class SchemaGenerator:
     ) -> List[str]:
         lines = []
         if has_overload:
-            lines.append("@overload  # type: ignore[no-overload-impl]")
+            lines.append("@overload")
         args = ", ".join(self.get_args(sub_si))
         lines.append(f"def {attr}({args}) -> '{self.classname}':")
         lines.append(indent * " " + "...\n")
@@ -327,7 +360,7 @@ class SchemaGenerator:
         if si.is_anyOf():
             return self._get_signature_any_of(si, attr, indent)
         else:
-            return self.get_signature(attr, si, indent)
+            return self.get_signature(attr, si, indent, has_overload=True)
 
     def _get_signature_any_of(
         self, si: SchemaInfo, attr: str, indent: int
@@ -351,16 +384,3 @@ class SchemaGenerator:
         type_hints = [hint for a in args for hint in self.setter_hint(a, indent)]
 
         return ("\n" + indent * " ").join(type_hints)
-
-
-def flatten(container: Iterable) -> Iterable:
-    """Flatten arbitrarily flattened list
-
-    From https://stackoverflow.com/a/10824420
-    """
-    for i in container:
-        if isinstance(i, (list, tuple)):
-            for j in flatten(i):
-                yield j
-        else:
-            yield i

@@ -49,6 +49,8 @@ autodoc_default_flags = ["members", "inherited-members"]
 
 autodoc_member_order = "groupwise"
 
+autodoc_typehints = "none"
+
 # generate autosummary even if no references
 autosummary_generate = True
 

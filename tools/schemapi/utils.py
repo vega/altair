@@ -2,14 +2,24 @@
 
 import keyword
 import re
+import subprocess
 import textwrap
 import urllib
-from typing import Final, Optional, List, Dict, Any
+from typing import Any, Dict, Final, Iterable, List, Optional, Union
 
 from .schemapi import _resolve_references as resolve_references
 
-
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
+
+jsonschema_to_python_types = {
+    "string": "str",
+    "number": "float",
+    "integer": "int",
+    "object": "dict",
+    "boolean": "bool",
+    "array": "list",
+    "null": "None",
+}
 
 
 def get_valid_identifier(
@@ -169,69 +179,121 @@ class SchemaInfo:
         else:
             return ""
 
-    @property
-    def short_description(self) -> str:
+    def get_python_type_representation(
+        self,
+        for_type_hints: bool = False,
+        altair_classes_prefix: Optional[str] = None,
+    ) -> str:
+        # This is a list of all types which can be used for the current SchemaInfo.
+        # This includes Altair classes, standard Python types, etc.
+        type_representations: List[str] = []
         if self.title:
-            # use RST syntax for generated sphinx docs
-            return ":class:`{}`".format(self.title)
-        else:
-            return self.medium_description
+            # Add the name of the current Altair class
+            if for_type_hints:
+                class_names = [self.title]
+                if self.title == "ExprRef":
+                    # In these cases, a value parameter is also always accepted.
+                    # We use the _Parameter to indicate this although this
+                    # protocol would also pass for selection parameters but
+                    # due to how the Parameter class is defined, it would be quite
+                    # complex to further differentiate between a value and
+                    # a selection parameter based on the type system (one could
+                    # try to check for the type of the Parameter.param attribute
+                    # but then we would need to write some overload signatures for
+                    # api.param).
+                    class_names.append("_Parameter")
+                if self.title == "ParameterExtent":
+                    class_names.append("_Parameter")
 
-    _simple_types: Dict[str, str] = {
-        "string": "string",
-        "number": "float",
-        "integer": "integer",
-        "object": "mapping",
-        "boolean": "boolean",
-        "array": "list",
-        "null": "None",
-    }
+                prefix = (
+                    "" if not altair_classes_prefix else altair_classes_prefix + "."
+                )
+                # If there is no prefix, it might be that the class is defined
+                # in the same script and potentially after this line -> We use
+                # deferred type annotations using quotation marks.
+                if not prefix:
+                    class_names = [f'"{n}"' for n in class_names]
+                else:
+                    class_names = [f"{prefix}{n}" for n in class_names]
+                type_representations.extend(class_names)
+            else:
+                # use RST syntax for generated sphinx docs
+                type_representations.append(rst_syntax_for_class(self.title))
 
-    @property
-    def medium_description(self) -> str:
         if self.is_empty():
-            return "Any"
+            type_representations.append("Any")
         elif self.is_enum():
-            return "enum({})".format(", ".join(map(repr, self.enum)))
+            type_representations.append(
+                "Literal[{}]".format(", ".join(map(repr, self.enum)))
+            )
         elif self.is_anyOf():
-            return "anyOf({})".format(
-                ", ".join(s.short_description for s in self.anyOf)
+            type_representations.extend(
+                [
+                    s.get_python_type_representation(
+                        for_type_hints=for_type_hints,
+                        altair_classes_prefix=altair_classes_prefix,
+                    )
+                    for s in self.anyOf
+                ]
             )
-        elif self.is_oneOf():
-            return "oneOf({})".format(
-                ", ".join(s.short_description for s in self.oneOf)
-            )
-        elif self.is_allOf():
-            return "allOf({})".format(
-                ", ".join(s.short_description for s in self.allOf)
-            )
-        elif self.is_not():
-            return "not {}".format(self.not_.short_description)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
                 subschema.schema["type"] = typ_
-                options.append(subschema.short_description)
-            return "anyOf({})".format(", ".join(options))
+                options.append(
+                    subschema.get_python_type_representation(
+                        # We always use title if possible for nested objects
+                        for_type_hints=for_type_hints,
+                        altair_classes_prefix=altair_classes_prefix,
+                    )
+                )
+            type_representations.extend(options)
         elif self.is_object():
-            return "Mapping(required=[{}])".format(", ".join(self.required))
+            if for_type_hints:
+                type_representations.append("dict")
+            else:
+                type_r = "Dict"
+                if self.required:
+                    type_r += "[required=[{}]]".format(", ".join(self.required))
+                type_representations.append(type_r)
         elif self.is_array():
-            return "List({})".format(self.child(self.items).short_description)
-        elif self.type in self._simple_types:
-            return self._simple_types[self.type]
-        elif not self.type:
-            import warnings
-
-            warnings.warn(
-                "no short_description for schema\n{}" "".format(self.schema),
-                stacklevel=1,
+            # A list is invariant in its type parameter. This means that e.g.
+            # List[str] is not a subtype of List[Union[core.FieldName, str]]
+            # and hence we would need to explicitly write out the combinations,
+            # so in this case:
+            # List[core.FieldName], List[str], List[core.FieldName, str]
+            # However, this can easily explode to too many combinations.
+            # Furthermore, we would also need to add additional entries
+            # for e.g. int wherever a float is accepted which would lead to very
+            # long code.
+            # As suggested in the mypy docs,
+            # https://mypy.readthedocs.io/en/stable/common_issues.html#variance,
+            # we revert to using Sequence which works as well for lists and also
+            # includes tuples which are also supported by the SchemaBase.to_dict
+            # method. However, it is not entirely accurate as some sequences
+            # such as e.g. a range are not supported by SchemaBase.to_dict but
+            # this tradeoff seems worth it.
+            type_representations.append(
+                "Sequence[{}]".format(
+                    self.child(self.items).get_python_type_representation(
+                        for_type_hints=for_type_hints,
+                        altair_classes_prefix=altair_classes_prefix,
+                    )
+                )
             )
-            return "any"
+        elif self.type in jsonschema_to_python_types:
+            type_representations.append(jsonschema_to_python_types[self.type])
         else:
-            raise ValueError(
-                "No medium_description available for this schema for schema"
-            )
+            raise ValueError("No Python type representation available for this schema")
+
+        type_representations = sorted(set(flatten(type_representations)))
+        type_representations_str = ", ".join(type_representations)
+        # If it's not for_type_hints but instead for the docstrings, we don't want
+        # to include Union as it just clutters the docstrings.
+        if len(type_representations) > 1 and for_type_hints:
+            type_representations_str = f"Union[{type_representations_str}]"
+        return type_representations_str
 
     @property
     def properties(self) -> SchemaProperties:
@@ -363,22 +425,6 @@ class SchemaInfo:
         return self.type == "array"
 
 
-def indent_arglist(
-    args: List[str], indent_level: int, width: int = 100, lstrip: bool = True
-) -> str:
-    """Indent an argument list for use in generated code"""
-    wrapper = textwrap.TextWrapper(
-        width=width,
-        initial_indent=indent_level * " ",
-        subsequent_indent=indent_level * " ",
-        break_long_words=False,
-    )
-    wrapped = "\n".join(wrapper.wrap(", ".join(args)))
-    if lstrip:
-        wrapped = wrapped.lstrip()
-    return wrapped
-
-
 def indent_docstring(
     lines: List[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
@@ -468,3 +514,34 @@ def fix_docstring_issues(docstring: str) -> str:
         "types#datetime", "https://vega.github.io/vega-lite/docs/datetime.html"
     )
     return docstring
+
+
+def rst_syntax_for_class(class_name: str) -> str:
+    return f":class:`{class_name}`"
+
+
+def flatten(container: Iterable) -> Iterable:
+    """Flatten arbitrarily flattened list
+
+    From https://stackoverflow.com/a/10824420
+    """
+    for i in container:
+        if isinstance(i, (list, tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i
+
+
+def ruff_format_str(code: Union[str, List[str]]) -> str:
+    if isinstance(code, list):
+        code = "\n".join(code)
+
+    r = subprocess.run(
+        # Name of the file does not seem to matter but ruff requires one
+        ["ruff", "format", "--stdin-filename", "placeholder.py"],
+        input=code.encode(),
+        check=True,
+        capture_output=True,
+    )
+    return r.stdout.decode()
