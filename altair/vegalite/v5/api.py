@@ -1231,7 +1231,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be concatenated.")
         # Too difficult to type check this
-        return vconcat(self, other)  # type: ignore[arg-type]
+        return vconcat(self, other)
 
     def __or__(self, other) -> "HConcatChart":
         if not isinstance(other, TopLevelMixin):
