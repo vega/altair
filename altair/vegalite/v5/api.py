@@ -3564,7 +3564,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self.add_params(*selections)
 
 
-def vconcat(*charts: core.NonNormalizedSpec, **kwargs) -> VConcatChart:
+def vconcat(*charts, **kwargs) -> VConcatChart:
     """Concatenate charts vertically"""
     return VConcatChart(vconcat=charts, **kwargs)
 
