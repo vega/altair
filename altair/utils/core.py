@@ -45,7 +45,7 @@ V = TypeVar("V")
 P = ParamSpec("P")
 
 
-class _DataFrameLike(Protocol):
+class DataFrameLike(Protocol):
     def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
         ...
 
@@ -442,7 +442,7 @@ def sanitize_arrow_table(pa_table):
 
 def parse_shorthand(
     shorthand: Union[Dict[str, Any], str],
-    data: Optional[Union[pd.DataFrame, _DataFrameLike]] = None,
+    data: Optional[Union[pd.DataFrame, DataFrameLike]] = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,

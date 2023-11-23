@@ -10,7 +10,7 @@ from toolz import curried
 from typing import TypeVar
 
 from ._importers import import_pyarrow_interchange
-from .core import sanitize_dataframe, sanitize_arrow_table, _DataFrameLike
+from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
@@ -23,11 +23,11 @@ if TYPE_CHECKING:
     import pyarrow.lib
 
 
-class _SupportsGeoInterface(Protocol):
+class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-DataType = Union[dict, pd.DataFrame, _SupportsGeoInterface, _DataFrameLike]
+DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, DataFrameLike]
 TDataType = TypeVar("TDataType", bound=DataType)
 
 VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
@@ -199,7 +199,7 @@ def to_json(
 
 @curried.curry
 def to_csv(
-    data: Union[dict, pd.DataFrame, _DataFrameLike],
+    data: Union[dict, pd.DataFrame, DataFrameLike],
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
@@ -288,7 +288,7 @@ def _data_to_json_string(data: DataType) -> str:
         )
 
 
-def _data_to_csv_string(data: Union[dict, pd.DataFrame, _DataFrameLike]) -> str:
+def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):

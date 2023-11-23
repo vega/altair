@@ -7,7 +7,7 @@ from typing import Union, Dict, Set, MutableMapping
 from typing import TypedDict, Final
 
 from altair.utils._importers import import_vegafusion
-from altair.utils.core import _DataFrameLike
+from altair.utils.core import DataFrameLike
 from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
 
@@ -15,7 +15,7 @@ from altair.vegalite.data import default_data_transformer
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
 # rather than a dict so that the Python interpreter is free to garbage
 # collect the stored DataFrames.
-extracted_inline_tables: MutableMapping[str, _DataFrameLike] = WeakValueDictionary()
+extracted_inline_tables: MutableMapping[str, DataFrameLike] = WeakValueDictionary()
 
 # Special URL prefix that VegaFusion uses to denote that a
 # dataset in a Vega spec corresponds to an entry in the `inline_datasets`
@@ -95,7 +95,7 @@ def get_inline_table_names(vega_spec: dict) -> Set[str]:
     return table_names
 
 
-def get_inline_tables(vega_spec: dict) -> Dict[str, _DataFrameLike]:
+def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     """Get the inline tables referenced by a Vega specification
 
     Note: This function should only be called on a Vega spec that corresponds
