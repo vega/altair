@@ -49,7 +49,7 @@ of some docstrings.
 Major version updates (e.g. Vega-Lite 1.X->2.X) have required substantial
 rewrites, because the internal structure of the schema changed appreciably.
 
-## Updating the Vega-Lite in JupyterChart
+### Updating the Vega-Lite in JupyterChart
 To update the Vega-Lite version used in JupyterChart, update the version in the 
 esm.sh URL in `altair/jupyter/js/index.js`.
 
