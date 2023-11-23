@@ -6,7 +6,7 @@ Release Notes
 Version 5.2.0 (unreleased month date, year)
 -------------------------------------------
 - Update Vega-Lite from version 5.15.1 to version 5.16.3;
-  see `Vega-Lite 5.16.3 Release Notes <https://github.com/vega/vega-lite/releases/tag/v5.16.3>`_.
+  see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
