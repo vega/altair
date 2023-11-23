@@ -131,16 +131,13 @@ def save(
     if json_kwds is None:
         json_kwds = {}
 
-    if embed_options is None:
-        embed_options = {}
-
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
     def perform_save():
         spec = chart.to_dict(context={"pre_transform": False})
 
         inner_mode = set_inspect_mode_argument(
-            mode, embed_options, spec, vegalite_version
+            mode, embed_options or {}, spec, vegalite_version
         )
 
         if format == "json":
@@ -169,6 +166,7 @@ def save(
                 vega_version=vega_version,
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
+                embed_options=embed_options,
                 webdriver=webdriver,
                 scale_factor=scale_factor,
                 engine=engine,

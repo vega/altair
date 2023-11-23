@@ -56,6 +56,8 @@ class RendererRegistry(PluginRegistry[RendererType]):
         padding: Optional[int] = None,
         scaleFactor: Optional[float] = None,
         actions: Optional[Union[bool, Dict[str, bool]]] = None,
+        format_locale: Optional[Union[str, dict]] = None,
+        time_format_locale: Optional[Union[str, dict]] = None,
         **kwargs,
     ) -> PluginEnabler:
         """Set options for embeddings of Vega & Vega-Lite charts.
@@ -88,6 +90,14 @@ class RendererRegistry(PluginRegistry[RendererType]):
             can take a key-value mapping object that maps keys (export, source,
             compiled, editor) to boolean values for determining if
             each action link should be shown.
+        format_locale : str or dict
+            d3-format locale name or dictionary. Defaults to "en-US" for United States English.
+            See https://github.com/d3/d3-format/tree/main/locale for available names and example
+            definitions.
+        time_format_locale : str or dict
+            d3-time-format locale name or dictionary. Defaults to "en-US" for United States English.
+            See https://github.com/d3/d3-time-format/tree/main/locale for available names and example
+            definitions.
         **kwargs :
             Additional options are passed directly to embed options.
         """
@@ -99,6 +109,8 @@ class RendererRegistry(PluginRegistry[RendererType]):
             "padding": padding,
             "scaleFactor": scaleFactor,
             "actions": actions,
+            "formatLocale": format_locale,
+            "timeFormatLocale": time_format_locale,
         }
         kwargs.update({key: val for key, val in options.items() if val is not None})
         return self.enable(None, embed_options=kwargs)
