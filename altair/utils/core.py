@@ -41,11 +41,11 @@ from typing import Literal, Protocol, TYPE_CHECKING
 if TYPE_CHECKING:
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
 
-_V = TypeVar("_V")
-_P = ParamSpec("_P")
+V = TypeVar("V")
+P = ParamSpec("P")
 
 
-class _DataFrameLike(Protocol):
+class DataFrameLike(Protocol):
     def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
         ...
 
@@ -188,12 +188,12 @@ TIMEUNITS = [
 ]
 
 
-_InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
+InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
 
 def infer_vegalite_type(
     data: object,
-) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
+) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -442,7 +442,7 @@ def sanitize_arrow_table(pa_table):
 
 def parse_shorthand(
     shorthand: Union[Dict[str, Any], str],
-    data: Optional[Union[pd.DataFrame, _DataFrameLike]] = None,
+    data: Optional[Union[pd.DataFrame, DataFrameLike]] = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
@@ -637,7 +637,7 @@ def parse_shorthand(
 
 def infer_vegalite_type_for_dfi_column(
     column: Union[Column, "PandasColumn"],
-) -> Union[_InferredVegaLiteType, Tuple[_InferredVegaLiteType, list]]:
+) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
     try:
@@ -672,10 +672,10 @@ def infer_vegalite_type_for_dfi_column(
         raise ValueError(f"Unexpected DtypeKind: {kind}")
 
 
-def use_signature(Obj: Callable[_P, Any]):
+def use_signature(Obj: Callable[P, Any]):
     """Apply call signature and documentation of Obj to the decorated method"""
 
-    def decorate(f: Callable[..., _V]) -> Callable[_P, _V]:
+    def decorate(f: Callable[..., V]) -> Callable[P, V]:
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
         f.__wrapped__ = Obj.__init__  # type: ignore

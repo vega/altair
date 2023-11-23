@@ -26,15 +26,15 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from ...utils.core import _DataFrameLike
-from ...utils.data import _DataType
+from ...utils.core import DataFrameLike
+from ...utils.data import DataType
 
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
     from typing_extensions import Self
 
-_ChartDataType = Union[_DataType, core.Data, str, core.Generator, UndefinedType]
+ChartDataType = Union[DataType, core.Data, str, core.Generator, UndefinedType]
 
 
 # ------------------------------------------------------------------------
@@ -816,7 +816,10 @@ def condition(
     test_predicates = (str, expr.Expression, core.PredicateComposition)
 
     condition: TypingDict[
-        str, Union[bool, str, _expr_core.Expression, core.PredicateComposition]
+        str,
+        Union[
+            bool, str, _expr_core.Expression, core.PredicateComposition, UndefinedType
+        ],
     ]
     if isinstance(predicate, Parameter):
         if (
@@ -1228,7 +1231,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if not isinstance(other, TopLevelMixin):
             raise ValueError("Only Chart objects can be concatenated.")
         # Too difficult to type check this
-        return vconcat(self, other)  # type: ignore[arg-type]
+        return vconcat(self, other)
 
     def __or__(self, other) -> "HConcatChart":
         if not isinstance(other, TopLevelMixin):
@@ -1694,7 +1697,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # an edge case and it's not worth changing the type annotation
             # in this function to account for it as it could be confusing to
             # users.
-            as_ = kwargs.pop("as", Undefined)
+            as_ = kwargs.pop("as", Undefined)  # type: ignore[assignment]
         elif "as" in kwargs:
             raise ValueError(
                 "transform_calculate: both 'as_' and 'as' passed as arguments."
@@ -2739,7 +2742,7 @@ class _EncodingMixin:
         column: Union[
             str, core.FacetFieldDef, channels.Column, UndefinedType
         ] = Undefined,
-        data: Union[_ChartDataType, UndefinedType] = Undefined,
+        data: Union[ChartDataType, UndefinedType] = Undefined,
         columns: Union[int, UndefinedType] = Undefined,
         **kwargs,
     ) -> "FacetChart":
@@ -2779,10 +2782,8 @@ class _EncodingMixin:
                 "facet argument cannot be combined with row/column argument."
             )
 
-        # Remove "ignore" statement once Undefined is no longer typed as Any
         if data is Undefined:
-            # Remove "ignore" statement once Undefined is no longer typed as Any
-            if self.data is Undefined:  # type: ignore
+            if self.data is Undefined:  # type: ignore[has-type]
                 raise ValueError(
                     "Facet charts require data to be specified at the top level. "
                     "If you are trying to facet layered or concatenated charts, "
@@ -2791,8 +2792,7 @@ class _EncodingMixin:
                 )
             # ignore type as copy comes from another class
             self = self.copy(deep=False)  # type: ignore[attr-defined]
-            # Remove "ignore" statement once Undefined is no longer typed as Any
-            data, self.data = self.data, Undefined  # type: ignore
+            data, self.data = self.data, Undefined  # type: ignore[has-type]
 
         if facet_specified:
             if isinstance(facet, str):
@@ -2863,7 +2863,7 @@ class Chart(
 
     def __init__(
         self,
-        data: Union[_ChartDataType, UndefinedType] = Undefined,
+        data: Union[ChartDataType, UndefinedType] = Undefined,
         encoding: Union[core.FacetedEncoding, UndefinedType] = Undefined,
         mark: Union[str, core.AnyMark, UndefinedType] = Undefined,
         width: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
@@ -2968,7 +2968,7 @@ class Chart(
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
-            copy.data = core.InlineData(values=[{}])
+            copy.data = core.InlineData(values=[{}])  # type: ignore[assignment]
             return super(Chart, copy).to_dict(
                 validate=validate, format=format, ignore=ignore, context=context
             )
@@ -2980,7 +2980,7 @@ class Chart(
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[_DataFrameLike]:
+    ) -> Optional[DataFrameLike]:
         """Evaluate a Chart's transforms
 
         Evaluate the data transforms associated with a Chart and return the
@@ -3183,7 +3183,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[_DataFrameLike]:
+    ) -> Optional[DataFrameLike]:
         """Evaluate a RepeatChart's transforms
 
         Evaluate the data transforms associated with a RepeatChart and return the
@@ -3300,7 +3300,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[_DataFrameLike]:
+    ) -> List[DataFrameLike]:
         """Evaluate a ConcatChart's transforms
 
         Evaluate the data transforms associated with a ConcatChart and return the
@@ -3399,7 +3399,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[_DataFrameLike]:
+    ) -> List[DataFrameLike]:
         """Evaluate a HConcatChart's transforms
 
         Evaluate the data transforms associated with a HConcatChart and return the
@@ -3498,7 +3498,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[_DataFrameLike]:
+    ) -> List[DataFrameLike]:
         """Evaluate a VConcatChart's transforms
 
         Evaluate the data transforms associated with a VConcatChart and return the
@@ -3564,7 +3564,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self.add_params(*selections)
 
 
-def vconcat(*charts: core.NonNormalizedSpec, **kwargs) -> VConcatChart:
+def vconcat(*charts, **kwargs) -> VConcatChart:
     """Concatenate charts vertically"""
     return VConcatChart(vconcat=charts, **kwargs)
 
@@ -3596,7 +3596,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> List[_DataFrameLike]:
+    ) -> List[DataFrameLike]:
         """Evaluate a LayerChart's transforms
 
         Evaluate the data transforms associated with a LayerChart and return the
@@ -3713,7 +3713,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         self,
         row_limit: Optional[int] = None,
         exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[_DataFrameLike]:
+    ) -> Optional[DataFrameLike]:
         """Evaluate a FacetChart's transforms
 
         Evaluate the data transforms associated with a FacetChart and return the
