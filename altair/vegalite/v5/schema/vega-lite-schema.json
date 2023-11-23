@@ -8330,33 +8330,24 @@
       "additionalProperties": false,
       "properties": {
         "unionWith": {
-          "anyOf": [
-            {
-              "items": {
+          "description": "Customized domain values to be union with the field's values or explicitly defined domain. Should be an array of valid scale domain values.",
+          "items": {
+            "anyOf": [
+              {
                 "type": "number"
               },
-              "type": "array"
-            },
-            {
-              "items": {
+              {
                 "type": "string"
               },
-              "type": "array"
-            },
-            {
-              "items": {
+              {
                 "type": "boolean"
               },
-              "type": "array"
-            },
-            {
-              "items": {
+              {
                 "$ref": "#/definitions/DateTime"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "Customized domain values to be union with the field's values or explicitly defined domain. Should be an array of valid scale domain values."
+              }
+            ]
+          },
+          "type": "array"
         }
       },
       "required": [
@@ -12499,7 +12490,7 @@
           "description": "With layered and multi-view displays, a strategy that determines how selections' data queries are resolved when applied in a filter transform, conditional encoding rule, or scale domain.\n\nOne of:\n- `\"global\"` -- only one brush exists for the entire SPLOM. When the user begins to drag, any previous brushes are cleared, and a new one is constructed.\n- `\"union\"` -- each cell contains its own brush, and points are highlighted if they lie within _any_ of these individual brushes.\n- `\"intersect\"` -- each cell contains its own brush, and points are highlighted only if they fall within _all_ of these individual brushes.\n\n__Default value:__ `global`.\n\n__See also:__ [`resolve` examples](https://vega.github.io/vega-lite/docs/selection.html#resolve) in the documentation."
         },
         "translate": {
-          "description": "When truthy, allows a user to interactively move an interval selection back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega event stream definition](https://vega.github.io/vega/docs/event-streams/) which must include a start and end event to trigger continuous panning. Discrete panning (e.g., pressing the left/right arrow keys) will be supported in future versions.\n\n__Default value:__ `true`, which corresponds to `[mousedown, window:mouseup] > window:mousemove!`. This default allows users to clicks and drags within an interval selection to reposition it.\n\n__See also:__ [`translate` examples](https://vega.github.io/vega-lite/docs/selection.html#translate) in the documentation.",
+          "description": "When truthy, allows a user to interactively move an interval selection back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega event stream definition](https://vega.github.io/vega/docs/event-streams/) which must include a start and end event to trigger continuous panning. Discrete panning (e.g., pressing the left/right arrow keys) will be supported in future versions.\n\n__Default value:__ `true`, which corresponds to `[pointerdown, window:pointerup] > window:pointermove!`. This default allows users to clicks and drags within an interval selection to reposition it.\n\n__See also:__ [`translate` examples](https://vega.github.io/vega-lite/docs/selection.html#translate) in the documentation.",
           "type": [
             "string",
             "boolean"
@@ -12574,7 +12565,7 @@
           "description": "With layered and multi-view displays, a strategy that determines how selections' data queries are resolved when applied in a filter transform, conditional encoding rule, or scale domain.\n\nOne of:\n- `\"global\"` -- only one brush exists for the entire SPLOM. When the user begins to drag, any previous brushes are cleared, and a new one is constructed.\n- `\"union\"` -- each cell contains its own brush, and points are highlighted if they lie within _any_ of these individual brushes.\n- `\"intersect\"` -- each cell contains its own brush, and points are highlighted only if they fall within _all_ of these individual brushes.\n\n__Default value:__ `global`.\n\n__See also:__ [`resolve` examples](https://vega.github.io/vega-lite/docs/selection.html#resolve) in the documentation."
         },
         "translate": {
-          "description": "When truthy, allows a user to interactively move an interval selection back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega event stream definition](https://vega.github.io/vega/docs/event-streams/) which must include a start and end event to trigger continuous panning. Discrete panning (e.g., pressing the left/right arrow keys) will be supported in future versions.\n\n__Default value:__ `true`, which corresponds to `[mousedown, window:mouseup] > window:mousemove!`. This default allows users to clicks and drags within an interval selection to reposition it.\n\n__See also:__ [`translate` examples](https://vega.github.io/vega-lite/docs/selection.html#translate) in the documentation.",
+          "description": "When truthy, allows a user to interactively move an interval selection back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega event stream definition](https://vega.github.io/vega/docs/event-streams/) which must include a start and end event to trigger continuous panning. Discrete panning (e.g., pressing the left/right arrow keys) will be supported in future versions.\n\n__Default value:__ `true`, which corresponds to `[pointerdown, window:pointerup] > window:pointermove!`. This default allows users to clicks and drags within an interval selection to reposition it.\n\n__See also:__ [`translate` examples](https://vega.github.io/vega-lite/docs/selection.html#translate) in the documentation.",
           "type": [
             "string",
             "boolean"

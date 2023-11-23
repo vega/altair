@@ -11418,7 +11418,7 @@ class DomainUnionWith(VegaLiteSchema):
     Parameters
     ----------
 
-    unionWith : Sequence[:class:`DateTime`, Dict], Sequence[bool], Sequence[float], Sequence[str]
+    unionWith : Sequence[:class:`DateTime`, Dict, bool, float, str]
         Customized domain values to be union with the field's values or explicitly defined
         domain. Should be an array of valid scale domain values.
     """
@@ -11428,13 +11428,7 @@ class DomainUnionWith(VegaLiteSchema):
     def __init__(
         self,
         unionWith: Union[
-            Union[
-                Sequence[Union["DateTime", dict]],
-                Sequence[bool],
-                Sequence[float],
-                Sequence[str],
-            ],
-            UndefinedType,
+            Sequence[Union[Union["DateTime", dict], bool, float, str]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -17884,8 +17878,8 @@ class IntervalSelectionConfig(VegaLiteSchema):
         include a start and end event to trigger continuous panning. Discrete panning (e.g.,
         pressing the left/right arrow keys) will be supported in future versions.
 
-        **Default value:** ``true``, which corresponds to ``[mousedown, window:mouseup] >
-        window:mousemove!``. This default allows users to clicks and drags within an
+        **Default value:** ``true``, which corresponds to ``[pointerdown, window:pointerup]
+        > window:pointermove!``. This default allows users to clicks and drags within an
         interval selection to reposition it.
 
         **See also:** `translate examples
@@ -18073,8 +18067,8 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
         include a start and end event to trigger continuous panning. Discrete panning (e.g.,
         pressing the left/right arrow keys) will be supported in future versions.
 
-        **Default value:** ``true``, which corresponds to ``[mousedown, window:mouseup] >
-        window:mousemove!``. This default allows users to clicks and drags within an
+        **Default value:** ``true``, which corresponds to ``[pointerdown, window:pointerup]
+        > window:pointermove!``. This default allows users to clicks and drags within an
         interval selection to reposition it.
 
         **See also:** `translate examples

@@ -11,7 +11,7 @@ All the files within these directories are created automatically by running
 the following script from the root of the repository:
 
 ```bash
-$ python tools/generate_schema_wrapper.py
+$ hatch run python tools/generate_schema_wrapper.py
 ```
 
 This script does a couple things:
@@ -49,10 +49,12 @@ of some docstrings.
 Major version updates (e.g. Vega-Lite 1.X->2.X) have required substantial
 rewrites, because the internal structure of the schema changed appreciably.
 
-## Updating the Vega-Lite in JupyterChart
-To update the Vega-Lite version used in JupyterChart, update the version in the esm.sh URL in `altair/jupyter/js/index.js`.
+### Updating the Vega-Lite in JupyterChart
+To update the Vega-Lite version used in JupyterChart, update the version in the 
+esm.sh URL in `altair/jupyter/js/index.js`.
 
-For example, to update to Vega-Lite 5.15.1, Vega 5 and Vega-Embed 6, the URL should be:
+For example, to update to Vega-Lite 5.15.1, Vega 5 and Vega-Embed 6, the URL 
+should be:
 
 ```javascript
 import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.15.1";
