@@ -11,7 +11,7 @@ All the files within these directories are created automatically by running
 the following script from the root of the repository:
 
 ```bash
-$ python tools/generate_schema_wrapper.py
+$ hatch run python tools/generate_schema_wrapper.py
 ```
 
 This script does a couple things:
