@@ -49,6 +49,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
 ]
 
 [project.urls]
@@ -64,7 +65,7 @@ dev = [
     "pytest-cov",
     "m2r",
     "vega_datasets",
-    "vl-convert-python>=1.0.1",
+    "vl-convert-python>=1.1.0",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",

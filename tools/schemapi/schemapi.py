@@ -42,7 +42,7 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
-_TSchemaBase = TypeVar("_TSchemaBase", bound=Type["SchemaBase"])
+TSchemaBase = TypeVar("TSchemaBase", bound=Type["SchemaBase"])
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors = Dict[str, ValidationErrorList]
@@ -731,11 +731,7 @@ class UndefinedType:
         return "Undefined"
 
 
-# In the future Altair may implement a more complete set of type hints.
-# But for now, we'll add an annotation to indicate that the type checker
-# should permit any value passed to a function argument whose default
-# value is Undefined.
-Undefined: Any = UndefinedType()
+Undefined = UndefinedType()
 
 
 class SchemaBase:
@@ -1327,7 +1323,7 @@ class _PropertySetter:
         return obj
 
 
-def with_property_setters(cls: _TSchemaBase) -> _TSchemaBase:
+def with_property_setters(cls: TSchemaBase) -> TSchemaBase:
     """
     Decorator to add property setters to a Schema class.
     """

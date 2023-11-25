@@ -1,4 +1,4 @@
-import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.15.1";
+import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
 import debounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 
 export async function render({ model, el }) {

@@ -383,12 +383,12 @@ def test_save_html(basic_chart, inline):
 def test_to_url(basic_chart):
     share_url = basic_chart.to_url()
     expected_vegalite_encoding = (
-        "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QU"
-        "OQFtMKEPMUBaMACY5LTAA4AnACM55ugFY6ARgBspgOz2zh03Wfs5bCwsIDIganIATgDWyoQAngAOmsgg1hEh3JhQk"
-        "HQkSKggAB7K8JgANnRaStzxSVpQEGokcmUZIHElWBValiA1ickgAI6kckRwisRomtLcACSUYIyY4VpihAmUyAD029"
-        "MIcgB0CBOMpJaHcBDbi8vhe5gHumUTmHt2h44fjocAVpTQPraBRySiYQiUZQ6OT6IwmCzWWwOFzuTymby+fyBYLIA"
-        "DaoCUKQAgkDesgDKYZAStAAhUkoOx2KkgQkgADC9OQABYWMzWQARTnmRx8rQAUU5phFnGpKQAYpy7LyZSytABxTmO"
-        "cyilKCSVuHUgACSioMkgAutIgA"
+        "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO5"
+        "0AhoTl4QUOQFtMKEPMUBaMACY5LTAA4AnACM55ugFY6ARgBspgOz2zh03Wfs5bCwsIDIganIATgDWyoQ"
+        "AngAOmsgg1hEh3JhQkHQkSKggAB7K8JgANnRaStzxSVpQEGokcmUZIHElWBValiA1ickgAI6kckRwisR"
+        "omtLcACSUYIyY4VpihAmUyAD029MIcgB0CBOMpJaHcBDbi8vhe5gHumUTmHt2hy6HLIcAVpTQPraBRyS"
+        "iYQiUZQ6OT6IwmCzWWwOFzuTymby+fyBYLIADaoCUKQAgkDesgDKYZAStAAhUkoOx2KkgQkgADC9OQABY"
+        "WMzWQARTnmRx8rQAUU5phFnGpKQAYpy7LyZSytABxTmOcyilKCSVuHUgACSioMkgAutIgA"
     )
 
     assert (
