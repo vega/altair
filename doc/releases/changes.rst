@@ -13,6 +13,7 @@ Enhancements
 - Support offline HTML export using vl-convert (#3251)
 - Support saving charts as PDF files using the vl-convert export engine (#3244)
 - Support converting charts to sharable Vega editor URLs with ``chart.to_url()`` (#3252)
+- Pass `formatLocale` and `timeFormatLocale` through to vl-convert to support locales in static image export (#3274)
 - Vega-Altair is now a typed package, with type annotations for all public functions and classes and some of the internal code (#2951)
 
 Bug Fixes

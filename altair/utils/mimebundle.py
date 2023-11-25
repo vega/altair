@@ -14,6 +14,7 @@ def spec_to_mimebundle(
     vega_version: Optional[str] = None,
     vegaembed_version: Optional[str] = None,
     vegalite_version: Optional[str] = None,
+    embed_options: Optional[dict] = None,
     engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
     **kwargs,
 ) -> Union[dict, Tuple[dict, dict]]:
@@ -36,6 +37,10 @@ def spec_to_mimebundle(
         The version of vegaembed.js to use
     vegalite_version : string
         The version of vegalite.js to use. Only required if mode=='vega-lite'
+    embed_options : dict (optional)
+        The vegaEmbed options dictionary. Defaults to the embed options set with
+        alt.renderers.set_embed_options().
+        (See https://github.com/vega/vega-embed for details)
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use for 'png', 'svg', 'pdf', and 'vega' formats
     **kwargs :
@@ -51,7 +56,11 @@ def spec_to_mimebundle(
     The png, svg, pdf, and vega outputs require the altair_saver package
     """
     # Local import to avoid circular ImportError
-    from altair.utils.display import compile_with_vegafusion, using_vegafusion
+    from altair.utils.display import (
+        compile_with_vegafusion,
+        using_vegafusion,
+    )
+    from altair import renderers
 
     if mode != "vega-lite":
         raise ValueError("mode must be 'vega-lite'")
@@ -61,10 +70,22 @@ def spec_to_mimebundle(
         spec = compile_with_vegafusion(spec)
         internal_mode = "vega"
 
+    # Default to the embed options set by alt.renderers.set_embed_options
+    if embed_options is None:
+        embed_options = renderers.options.get("embed_options", {})
+
+    embed_options = preprocess_embed_options(embed_options)
+
     if format in ["png", "svg", "pdf", "vega"]:
         format = cast(Literal["png", "svg", "pdf", "vega"], format)
         return _spec_to_mimebundle_with_engine(
-            spec, format, internal_mode, engine=engine, **kwargs
+            spec,
+            format,
+            internal_mode,
+            engine=engine,
+            format_locale=embed_options.get("formatLocale", None),
+            time_format_locale=embed_options.get("timeFormatLocale", None),
+            **kwargs,
         )
     if format == "html":
         html = spec_to_html(
@@ -73,6 +94,7 @@ def spec_to_mimebundle(
             vega_version=vega_version,
             vegaembed_version=vegaembed_version,
             vegalite_version=vegalite_version,
+            embed_options=embed_options,
             **kwargs,
         )
         return {"text/html": html}
@@ -92,6 +114,8 @@ def _spec_to_mimebundle_with_engine(
     spec: dict,
     format: Literal["png", "svg", "pdf", "vega"],
     mode: Literal["vega-lite", "vega"],
+    format_locale: Optional[Union[str, dict]] = None,
+    time_format_locale: Optional[Union[str, dict]] = None,
     **kwargs,
 ) -> Union[dict, Tuple[dict, dict]]:
     """Helper for Vega-Lite to mimebundle conversions that require an engine
@@ -106,6 +130,14 @@ def _spec_to_mimebundle_with_engine(
         The rendering mode.
     engine: string {'vl-convert', 'altair_saver'}
         the conversion engine to use
+    format_locale : str or dict
+        d3-format locale name or dictionary. Defaults to "en-US" for United States English.
+        See https://github.com/d3/d3-format/tree/main/locale for available names and example
+        definitions.
+    time_format_locale : str or dict
+        d3-time-format locale name or dictionary. Defaults to "en-US" for United States English.
+        See https://github.com/d3/d3-time-format/tree/main/locale for available names and example
+        definitions.
     **kwargs :
         Additional arguments will be passed to the conversion function
     """
@@ -125,9 +157,18 @@ def _spec_to_mimebundle_with_engine(
             return {"application/vnd.vega.v5+json": vg}
         elif format == "svg":
             if mode == "vega":
-                svg = vlc.vega_to_svg(spec)
+                svg = vlc.vega_to_svg(
+                    spec,
+                    format_locale=format_locale,
+                    time_format_locale=time_format_locale,
+                )
             else:
-                svg = vlc.vegalite_to_svg(spec, vl_version=vl_version)
+                svg = vlc.vegalite_to_svg(
+                    spec,
+                    vl_version=vl_version,
+                    format_locale=format_locale,
+                    time_format_locale=time_format_locale,
+                )
             return {"image/svg+xml": svg}
         elif format == "png":
             scale = kwargs.get("scale_factor", 1)
@@ -139,6 +180,8 @@ def _spec_to_mimebundle_with_engine(
                     spec,
                     scale=scale,
                     ppi=ppi,
+                    format_locale=format_locale,
+                    time_format_locale=time_format_locale,
                 )
             else:
                 png = vlc.vegalite_to_png(
@@ -146,6 +189,8 @@ def _spec_to_mimebundle_with_engine(
                     vl_version=vl_version,
                     scale=scale,
                     ppi=ppi,
+                    format_locale=format_locale,
+                    time_format_locale=time_format_locale,
                 )
             factor = ppi / default_ppi
             w, h = _pngxy(png)
@@ -158,12 +203,16 @@ def _spec_to_mimebundle_with_engine(
                 pdf = vlc.vega_to_pdf(
                     spec,
                     scale=scale,
+                    format_locale=format_locale,
+                    time_format_locale=time_format_locale,
                 )
             else:
                 pdf = vlc.vegalite_to_pdf(
                     spec,
                     vl_version=vl_version,
                     scale=scale,
+                    format_locale=format_locale,
+                    time_format_locale=time_format_locale,
                 )
             return {"application/pdf": pdf}
         else:
@@ -254,3 +303,34 @@ def _pngxy(data):
     ihdr = data.index(b"IHDR")
     # next 8 bytes are width/height
     return struct.unpack(">ii", data[ihdr + 4 : ihdr + 12])
+
+
+def preprocess_embed_options(embed_options: dict) -> dict:
+    """Preprocess embed options to a form compatible with Vega Embed
+
+    Parameters
+    ----------
+    embed_options : dict
+        The embed options dictionary to preprocess.
+
+    Returns
+    -------
+    embed_opts : dict
+        The preprocessed embed options dictionary.
+    """
+    embed_options = embed_options.copy()
+
+    # Convert locale strings to objects compatible with Vega Embed using vl-convert
+    format_locale = embed_options.get("formatLocale", None)
+    if isinstance(format_locale, str):
+        vlc = import_vl_convert()
+        embed_options["formatLocale"] = vlc.get_format_locale(format_locale)
+
+    time_format_locale = embed_options.get("timeFormatLocale", None)
+    if isinstance(time_format_locale, str):
+        vlc = import_vl_convert()
+        embed_options["timeFormatLocale"] = vlc.get_time_format_locale(
+            time_format_locale
+        )
+
+    return embed_options
