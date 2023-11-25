@@ -828,12 +828,12 @@ the locale for your chart using the global ``alt.renderers.set_embed_options`` f
 
    import altair as alt
    alt.renderers.set_embed_options(
-       formatLocale=format_locale, timeFormatLocale=time_format_locale
+       format_locale=format_locale, time_format_locale=time_format_locale
    )
 
 Here ``format_locale`` and ``time_format_locale`` may either be D3 format dictionaries,
 or strings with the names of pre-defined locales. For example, here we use the
-Italian locale (named `it-IT`) for both currencies and dates:
+Italian locale (named ``it-IT``) for both currencies and dates:
 
 .. altair-plot::
    :output: none
@@ -841,7 +841,7 @@ Italian locale (named `it-IT`) for both currencies and dates:
    import altair as alt
    from vega_datasets import data
 
-   alt.renderers.set_embed_options(timeFormatLocale="it-IT", formatLocale="it-IT")
+   alt.renderers.set_embed_options(format_locale="it-IT", time_format_locale="it-IT")
 
    source = data.stocks.url
    chart = alt.Chart(source).mark_area().transform_filter('year(datum.date) == 2009').encode(
@@ -856,6 +856,16 @@ Italian locale (named `it-IT`) for both currencies and dates:
 
 See https://unpkg.com/d3-format/locale/ for a list of available format locale names, and
 see https://unpkg.com/d3-time-format/locale/ for a list of available time format locales.
+
+The configured localization settings persist upon saving.
+
+.. note::
+
+    The globally defined properties, ``format_locale`` and ``time_format_locale``, apply to
+    the full session and are not specific to individual charts. To revert localization settings
+    to the default U.S. English locale, use the following command::
+
+        alt.renderers.set_embed_options(format_locale="en-US", time_format_locale="en-US")
 
 .. _Vega Themes: https://github.com/vega/vega-themes/
 .. _`D3's localization support`: https://d3-wiki.readthedocs.io/zh-cn/master/Localization/
