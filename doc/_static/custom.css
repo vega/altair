@@ -1,3 +1,15 @@
+html[data-theme="light"] {
+  --pst-color-primary: rgb(93, 154, 181);
+  --pst-color-secondary: rgb(93, 155, 182);
+  --pst-color-secondary-bg: rgb(223, 235, 240);
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: rgb(93, 155, 182);
+  --pst-color-secondary: rgb(93, 155, 182);
+  --pst-color-secondary-bg: rgb(33, 45, 51);
+}
+
 .wy-nav-side p.caption {
   color: #F5F5F5;
 }
@@ -80,11 +92,6 @@ properly displayed on mobile devices and not restricted to 20% */
  * The shortcut still shows up when clicking the search box */
 .search-button-field > .search-button__kbd-shortcut {
     display: none;
-}
-
-/* Use old light blue color for banner since it goes better with the Altair logo */
-.bd-header-announcement {
-    background-color: #daebf1 !important;
 }
 
 /* Configurations for the start page
