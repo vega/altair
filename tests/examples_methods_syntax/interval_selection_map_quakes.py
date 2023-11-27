@@ -16,7 +16,7 @@ gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
 
 # defintion for interactive brush
 brush = alt.selection_interval(
-    encodings=['longitude'], 
+    encodings=["longitude"], 
     empty=False, 
     value={"longitude": [-50, -110]}
 )
@@ -38,7 +38,7 @@ quakes = alt.Chart(gdf_quakies).transform_calculate(
 ).mark_circle(opacity=0.35, tooltip=True).encode(
     longitude="lon:Q",
     latitude="lat:Q",
-    color=alt.condition(brush, alt.value('goldenrod'), alt.value('steelblue')),
+    color=alt.condition(brush, alt.value("goldenrod"), alt.value("steelblue")),
     size=alt.Size("mag:Q").scale(type="pow", range=[1, 1000], domain=[0, 7], exponent=4),
 ).add_params(brush)
 
@@ -47,13 +47,13 @@ left_map = alt.layer(sphere, world, quakes).project(type="mercator")
 
 # histogram of binned earthquakes
 bars = alt.Chart(gdf_quakies).mark_bar().encode(
-    x=alt.X('mag:Q').bin(extent=[0,7]),
-    y='count(mag):Q',
-    color=alt.value('steelblue')
+    x=alt.X("mag:Q").bin(extent=[0,7]),
+    y="count(mag):Q",
+    color=alt.value("steelblue")
 )
 
 # filtered earthquakes
-bars_overlay = bars.encode(color=alt.value('goldenrod')).transform_filter(brush)
+bars_overlay = bars.encode(color=alt.value("goldenrod")).transform_filter(brush)
 
 # combine layers for histogram
 right_bars = alt.layer(bars, bars_overlay)
