@@ -72,7 +72,8 @@ dev = [
     "types-setuptools",
     "pyarrow>=11",
     "vegafusion[embed]>=1.4.0",
-    "anywidget"
+    "anywidget",
+    "geopandas",
 ]
 doc = [
     "sphinx",
@@ -82,7 +83,6 @@ doc = [
     "numpydoc",
     "pillow>=9,<10",
     "pydata-sphinx-theme>=0.14.1",
-    "geopandas",
     "myst-parser",
     "sphinx_copybutton",
     "sphinx-design",
@@ -216,6 +216,7 @@ module = [
     "yaml.*",
     "vl_convert.*",
     "pandas.lib.*",
+    "geopandas.*",
     "nbformat.*",
     "ipykernel.*",
     "m2r.*",
