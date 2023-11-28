@@ -3,7 +3,7 @@
 Release Notes
 =============
 
-Version 5.2.0 (unreleased month date, year)
+Version 5.2.0 (released Nov 28, 2023)
 -------------------------------------------
 - Update Vega-Lite from version 5.15.1 to version 5.16.3;
   see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
@@ -15,6 +15,12 @@ Enhancements
 - Support converting charts to sharable Vega editor URLs with ``chart.to_url()`` (#3252)
 - Pass `formatLocale` and `timeFormatLocale` through to vl-convert to support locales in static image export (#3274)
 - Vega-Altair is now a typed package, with type annotations for all public functions and classes and some of the internal code (#2951)
+
+Maintenance
+~~~~~~~~~~~
+
+- Vega-Altair now uses ``ruff`` for maintaining code quality & consistency (#3243)
+- Vega-Altair is tested against Python 3.12 (#3235)
 
 Bug Fixes
 ~~~~~~~~~

@@ -78,7 +78,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "5.2.0dev"
+version = "5.2.0"
 # The full version, including alpha/beta/rc tags.
 release = f"{version}"
 
