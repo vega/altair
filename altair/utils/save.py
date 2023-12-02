@@ -12,7 +12,7 @@ def write_file_or_filename(
     fp: Union[str, pathlib.PurePath, IO],
     content: Union[str, bytes],
     mode: str = "w",
-    encoding: Optional[str] = "utf-8",
+    encoding: Optional[str] = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
@@ -142,7 +142,7 @@ def save(
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
-            write_file_or_filename(fp, json_spec, mode="w")
+            write_file_or_filename(fp, json_spec, mode="w", encoding="utf-8")
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
@@ -157,7 +157,7 @@ def save(
                 json_kwds=json_kwds,
                 **kwargs,
             )
-            write_file_or_filename(fp, mimebundle["text/html"], mode="w")
+            write_file_or_filename(fp, mimebundle["text/html"], mode="w", encoding="utf-8")
         elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
                 spec=spec,
