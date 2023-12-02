@@ -12,7 +12,7 @@ def write_file_or_filename(
     fp: Union[str, pathlib.PurePath, IO],
     content: Union[str, bytes],
     mode: str = "w",
-    encoding: Optional[str] = None,
+    encoding: Optional[str] = "utf-8",
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
