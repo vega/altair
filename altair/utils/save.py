@@ -20,7 +20,7 @@ def write_file_or_filename(
         with open(file=fp, mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
-        fp.write(content) 
+        fp.write(content)
 
 
 def set_inspect_format_argument(
