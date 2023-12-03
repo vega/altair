@@ -157,7 +157,9 @@ def save(
                 json_kwds=json_kwds,
                 **kwargs,
             )
-            write_file_or_filename(fp, mimebundle["text/html"], mode="w", encoding="utf-8")
+            write_file_or_filename(
+                fp, mimebundle["text/html"], mode="w", encoding="utf-8"
+            )
         elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
                 spec=spec,
