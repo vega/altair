@@ -143,10 +143,7 @@ def save(
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
             write_file_or_filename(
-                fp,
-                json_spec,
-                mode="w",
-                encoding=kwargs.get("encoding", "utf-8")
+                fp, json_spec, mode="w", encoding=kwargs.get("encoding", "utf-8")
             )
         elif format == "html":
             if inline:
@@ -163,7 +160,10 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp, mimebundle["text/html"], mode="w", encoding=kwargs.get("encoding", "utf-8")
+                fp,
+                mimebundle["text/html"],
+                mode="w",
+                encoding=kwargs.get("encoding", "utf-8")
             )
         elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
