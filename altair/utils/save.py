@@ -158,7 +158,7 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp, mimebundle["text/html"], mode="w", encoding="utf-8"
+                fp, mimebundle["text/html"], mode="w", encoding=kwargs.get("encoding", "utf-8")
             )
         elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
