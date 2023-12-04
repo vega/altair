@@ -142,7 +142,12 @@ def save(
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
-            write_file_or_filename(fp, json_spec, mode="w", encoding=kwargs.get("encoding", "utf-8"))
+            write_file_or_filename(
+                fp,
+                json_spec,
+                mode="w",
+                encoding=kwargs.get("encoding", "utf-8")
+            )
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
