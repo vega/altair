@@ -3247,7 +3247,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 
 
 def repeat(
-    repeater: Literal["row", "column", "repeat", "layer"] = "repeat"
+    repeater: Literal["row", "column", "repeat", "layer"] = "repeat",
 ) -> core.RepeatRef:
     """Tie a channel to the row or column within a repeated chart
 
