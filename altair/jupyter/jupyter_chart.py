@@ -101,9 +101,10 @@ class JupyterChart(anywidget.AnyWidget):
     """
 
     # Public traitlets
-    chart = traitlets.Instance(TopLevelSpec)
-    spec = traitlets.Dict().tag(sync=True)
+    chart = traitlets.Instance(TopLevelSpec, allow_none=True)
+    spec = traitlets.Dict(allow_none=True).tag(sync=True)
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
+    local_tz = traitlets.Unicode(default_value=None, allow_none=True).tag(sync=True)
 
     # Internal selection traitlets
     _selection_types = traitlets.Dict()
@@ -135,13 +136,21 @@ class JupyterChart(anywidget.AnyWidget):
         state when the wrapped Chart instance changes
         """
         new_chart = change.new
-
-        params = getattr(new_chart, "params", [])
         selection_watches = []
         selection_types = {}
         initial_params = {}
         initial_vl_selections = {}
         empty_selections = {}
+
+        if new_chart is None:
+            with self.hold_sync():
+                self.spec = None
+                self._selection_types = selection_types
+                self._vl_selections = initial_vl_selections
+                self._params = initial_params
+            return
+
+        params = getattr(new_chart, "params", [])
 
         if params is not alt.Undefined:
             for param in new_chart.params:

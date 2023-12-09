@@ -19,7 +19,18 @@ export async function render({ model, el }) {
           finalize();
         }
 
+        model.set("local_tz", Intl.DateTimeFormat().resolvedOptions().timeZone);
+
         let spec = model.get("spec");
+        if (spec == null) {
+            // Remove any existing chart and return
+            while (el.firstChild) {
+                el.removeChild(el.lastChild);
+            }
+            model.save_changes();
+            return;
+        }
+
         let api;
         try {
             api = await embed(el, spec);
