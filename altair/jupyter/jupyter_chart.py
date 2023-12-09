@@ -4,7 +4,10 @@ import pathlib
 from typing import Any, Set
 
 import altair as alt
-from altair.utils._vegafusion_data import using_vegafusion
+from altair.utils._vegafusion_data import (
+    using_vegafusion,
+    compile_to_vegafusion_chart_state,
+)
 from altair import TopLevelSpec
 from altair.utils.selection import IndexSelection, PointSelection, IntervalSelection
 
@@ -113,6 +116,12 @@ class JupyterChart(anywidget.AnyWidget):
     # Internal param traitlets
     _params = traitlets.Dict().tag(sync=True)
 
+    # Internal comm traitlets for VegaFusion support
+    _chart_state = traitlets.Any(allow_none=True)
+    _js_watch_plan = traitlets.List().tag(sync=True)
+    _js_to_py_updates = traitlets.List().tag(sync=True)
+    _py_to_js_updates = traitlets.List().tag(sync=True)
+
     def __init__(self, chart: TopLevelSpec, debounce_wait: int = 10, **kwargs: Any):
         """
         Jupyter Widget for displaying and updating Altair Charts, and
@@ -214,12 +223,38 @@ class JupyterChart(anywidget.AnyWidget):
         # Update properties all together
         with self.hold_sync():
             if using_vegafusion():
-                self.spec = new_chart.to_dict(format="vega")
+                if self.local_tz is None:
+                    self.spec = None
+
+                    def on_local_tz_change(change):
+                        self._init_with_vegafusion(change["new"])
+
+                    self.observe(on_local_tz_change, ["local_tz"])
+                else:
+                    self._init_with_vegafusion(self.local_tz)
             else:
                 self.spec = new_chart.to_dict()
             self._selection_types = selection_types
             self._vl_selections = initial_vl_selections
             self._params = initial_params
+
+    def _init_with_vegafusion(self, local_tz: str):
+        vegalite_spec = self.chart.to_dict(
+            format="vega-lite", context={"pre_transform": False}
+        )
+        with self.hold_sync():
+            self._chart_state = compile_to_vegafusion_chart_state(
+                vegalite_spec, local_tz
+            )
+            self._js_watch_plan = self._chart_state.get_watch_plan()["client_to_server"]
+            self.spec = self._chart_state.get_transformed_spec()
+
+            # Callback to update chart state and send updates back to client
+            def on_js_to_py_updates(change):
+                updates = self._chart_state.update(change["new"])
+                self._py_to_js_updates = updates
+
+            self.observe(on_js_to_py_updates, ["_js_to_py_updates"])
 
     @traitlets.observe("_params")
     def _on_change_params(self, change):

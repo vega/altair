@@ -1,5 +1,6 @@
 import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
 import debounce from "https://esm.sh/lodash-es@4.17.21/debounce";
+import cloneDeep from "https://esm.sh/lodash-es@4.17.21/cloneDeep";
 
 export async function render({ model, el }) {
     let finalize;
@@ -21,7 +22,7 @@ export async function render({ model, el }) {
 
         model.set("local_tz", Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-        let spec = model.get("spec");
+        let spec = cloneDeep(model.get("spec"));
         if (spec == null) {
             // Remove any existing chart and return
             while (el.firstChild) {
@@ -87,6 +88,47 @@ export async function render({ model, el }) {
             }
             await api.view.runAsync();
         });
+
+        // Add signal/data listeners
+        for (const watch of model.get("_js_watch_plan") ?? []) {
+            if (watch.namespace === "data") {
+                const dataHandler = (_, value) => {
+                    model.set("_js_to_py_updates", [{
+                        namespace: "data",
+                        name: watch.name,
+                        scope: watch.scope,
+                        value: cleanJson(value)
+                    }]);
+                    model.save_changes();
+                };
+                addDataListener(api.view, watch.name, watch.scope, debounce(dataHandler, wait, maxWait))
+
+            } else if (watch.namespace === "signal") {
+                const signalHandler = (_, value) => {
+                    model.set("_js_to_py_updates", [{
+                        namespace: "signal",
+                        name: watch.name,
+                        scope: watch.scope,
+                        value: cleanJson(value)
+                    }]);
+                    model.save_changes();
+                };
+
+                addSignalListener(api.view, watch.name, watch.scope, debounce(signalHandler, wait, maxWait))
+            }
+        }
+
+        // Add signal/data updaters
+        model.on('change:_py_to_js_updates', async (updates) => {
+            for (const update of updates.changed._py_to_js_updates ?? []) {
+                if (update.namespace === "signal") {
+                    setSignalValue(api.view, update.name, update.scope, update.value);
+                } else if (update.namespace === "data") {
+                    setDataValue(api.view, update.name, update.scope, update.value);
+                }
+            }
+            await api.view.runAsync();
+        });
     }
 
     model.on('change:spec', reembed);
@@ -96,4 +138,81 @@ export async function render({ model, el }) {
 
 function cleanJson(data) {
     return JSON.parse(JSON.stringify(data))
+}
+
+function getNestedRuntime(view, scope) {
+    var runtime = view._runtime;
+    for (const index of scope) {
+        runtime = runtime.subcontext[index];
+    }
+    return runtime
+}
+
+function lookupSignalOp(view, name, scope) {
+    let parent_runtime = getNestedRuntime(view, scope);
+    return parent_runtime.signals[name] ?? null;
+}
+
+function dataRef(view, name, scope) {
+    let parent_runtime = getNestedRuntime(view, scope);
+    return parent_runtime.data[name];
+}
+
+export function setSignalValue(view, name, scope, value) {
+    let signal_op = lookupSignalOp(view, name, scope);
+    view.update(signal_op, value);
+}
+
+export function setDataValue(view, name, scope, value) {
+    let dataset = dataRef(view, name, scope);
+    let changeset = view.changeset().remove(() => true).insert(value)
+    dataset.modified = true;
+    view.pulse(dataset.input, changeset);
+}
+
+export function addSignalListener(view, name, scope, handler) {
+    let signal_op = lookupSignalOp(view, name, scope);
+    return addOperatorListener(
+        view,
+        name,
+        signal_op,
+        handler,
+    );
+}
+
+export function addDataListener(view, name, scope, handler) {
+    let dataset = dataRef(view, name, scope).values;
+    return addOperatorListener(
+        view,
+        name,
+        dataset,
+        handler,
+    );
+}
+
+// Private helpers from Vega for dealing with nested signals/data
+function findOperatorHandler(op, handler) {
+    const h = (op._targets || [])
+        .filter(op => op._update && op._update.handler === handler);
+    return h.length ? h[0] : null;
+}
+
+function addOperatorListener(view, name, op, handler) {
+    let h = findOperatorHandler(op, handler);
+    if (!h) {
+        h = trap(view, () => handler(name, op.value));
+        h.handler = handler;
+        view.on(op, null, h);
+    }
+    return view;
+}
+
+function trap(view, fn) {
+    return !fn ? null : function() {
+        try {
+            fn.apply(this, arguments);
+        } catch (error) {
+            view.error(error);
+        }
+    };
 }
