@@ -2,12 +2,23 @@ from toolz import curried
 import uuid
 from weakref import WeakValueDictionary
 
-from typing import Union, Dict, Set, MutableMapping, TypedDict, Final, Any
+from typing import (
+    Union,
+    Dict,
+    Set,
+    MutableMapping,
+    TypedDict,
+    Final,
+    TYPE_CHECKING,
+)
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
 from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
+
+if TYPE_CHECKING:
+    from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
@@ -122,7 +133,9 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     return tables
 
 
-def compile_to_vegafusion_chart_state(vegalite_spec: dict, local_tz: str) -> Any:
+def compile_to_vegafusion_chart_state(
+    vegalite_spec: dict, local_tz: str
+) -> "ChartState":
     """Compile a Vega-Lite spec to a VegaFusion ChartState
 
     Note: This function should only be called on a Vega-Lite spec
@@ -223,7 +236,7 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     return transformed_vega_spec
 
 
-def handle_row_limit_exceeded(row_limit, warnings):
+def handle_row_limit_exceeded(row_limit: int, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
             raise MaxRowsError(
