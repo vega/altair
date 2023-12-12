@@ -1,6 +1,5 @@
 # Vega-Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
-
 [![github actions](https://github.com/altair-viz/altair/workflows/build/badge.svg)](https://github.com/altair-viz/altair/actions?query=workflow%3Abuild)
 [![code style black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
@@ -77,6 +76,7 @@ points & bars
 ![Vega-Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/main/images/cars_scatter_bar.gif)
 
 ## Features
+
 * Carefully-designed, declarative Python API.
 * Auto-generated internal Python API that guarantees visualizations are type-checked and
   in full conformance with the [Vega-Lite](https://github.com/vega/vega-lite)
@@ -88,6 +88,7 @@ points & bars
 * Serialize visualizations as JSON files.
 
 ## Installation
+
 Vega-Altair can be installed with:
 ```bash
 pip install altair
@@ -101,14 +102,17 @@ conda install altair -c conda-forge
 For full installation instructions, please see [the documentation](https://altair-viz.github.io/getting_started/installation.html).
 
 ## Getting Help
+
 If you have a question that is not addressed in the documentation, 
 you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag.
 For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
 
 ## Development
+
 You can find the instructions on how to install the package for development in [the documentation](https://altair-viz.github.io/getting_started/installation.html).
 
 To run the tests and linters, use
+
 ```
 hatch run test
 ```
@@ -117,6 +121,7 @@ For information on how to contribute your developments back to the Vega-Altair r
 [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md)
 
 ## Citing Vega-Altair
+
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 
 If you use Vega-Altair in academic work, please consider citing https://joss.theoj.org/papers/10.21105/joss.01057 as
@@ -136,6 +141,7 @@ If you use Vega-Altair in academic work, please consider citing https://joss.the
 }
 ```
 Please additionally consider citing the [Vega-Lite](https://vega.github.io/vega-lite/) project, which Vega-Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
+
 ```bib
 @article{Satyanarayan2017,
     author={Satyanarayan, Arvind and Moritz, Dominik and Wongsuphasawat, Kanit and Heer, Jeffrey},

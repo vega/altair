@@ -1,6 +1,5 @@
 # Notes for Maintainers of Altair
 
-
 ## Auto-generating the Python code
 
 The core Python API for Altair can be found in the following locations:
@@ -61,6 +60,7 @@ import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.15.1
 ```
 
 ### Updating vl-convert version bound
+
 When updating the version of Vega-Lite, it's important to ensure that 
 [vl-convert](https://github.com/vega/vl-convert) includes support for the new Vega-Lite version. 
 Check the [vl-convert releases](https://github.com/vega/vl-convert/releases) to find the minimum
