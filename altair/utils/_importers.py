@@ -4,7 +4,7 @@ from importlib.metadata import version as importlib_version
 
 
 def import_vegafusion() -> ModuleType:
-    min_version = "1.4.0"
+    min_version = "1.5.0"
     try:
         version = importlib_version("vegafusion")
         if Version(version) < Version(min_version):
