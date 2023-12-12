@@ -107,6 +107,7 @@ class JupyterChart(anywidget.AnyWidget):
     chart = traitlets.Instance(TopLevelSpec, allow_none=True)
     spec = traitlets.Dict(allow_none=True).tag(sync=True)
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
+    max_wait = traitlets.Bool(default_value=True).tag(sync=True)
     local_tz = traitlets.Unicode(default_value=None, allow_none=True).tag(sync=True)
 
     # Internal selection traitlets
@@ -122,7 +123,13 @@ class JupyterChart(anywidget.AnyWidget):
     _js_to_py_updates = traitlets.List().tag(sync=True)
     _py_to_js_updates = traitlets.List().tag(sync=True)
 
-    def __init__(self, chart: TopLevelSpec, debounce_wait: int = 10, **kwargs: Any):
+    def __init__(
+        self,
+        chart: TopLevelSpec,
+        debounce_wait: int = 10,
+        max_wait: bool = True,
+        **kwargs: Any,
+    ):
         """
         Jupyter Widget for displaying and updating Altair Charts, and
         retrieving selection and parameter values
@@ -132,11 +139,18 @@ class JupyterChart(anywidget.AnyWidget):
         chart: Chart
             Altair Chart instance
         debounce_wait: int
-             Debouncing wait time in milliseconds
+             Debouncing wait time in milliseconds. Updates will be sent from the client to the kernel
+             after debounce_wait milliseconds of no chart interactions.
+        max_wait: bool
+             If True (default), updates will be sent from the client to the kernel every debounce_wait
+             milliseconds even if there are ongoing chart interactions. If False, updates will not be
+             sent until chart interactions have completed.
         """
         self.params = Params({})
         self.selections = Selections({})
-        super().__init__(chart=chart, debounce_wait=debounce_wait, **kwargs)
+        super().__init__(
+            chart=chart, debounce_wait=debounce_wait, max_wait=max_wait, **kwargs
+        )
 
     @traitlets.observe("chart")
     def _on_change_chart(self, change):

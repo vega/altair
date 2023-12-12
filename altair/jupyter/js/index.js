@@ -44,7 +44,10 @@ export async function render({ model, el }) {
 
         // Debounce config
         const wait = model.get("debounce_wait") ?? 10;
-        const maxWait = wait;
+        const debounceOpts = {leading: false, trailing: true};
+        if (model.get("max_wait") ?? true) {
+            debounceOpts["maxWait"] = wait;
+        }
 
         const initialSelections = {};
         for (const selectionName of Object.keys(model.get("_vl_selections"))) {
@@ -57,7 +60,7 @@ export async function render({ model, el }) {
                 model.set("_vl_selections", newSelections);
                 model.save_changes();
             };
-            api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, {maxWait}));
+            api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, debounceOpts));
 
             initialSelections[selectionName] = {
                 value: cleanJson(api.view.signal(selectionName) ?? {}),
@@ -74,7 +77,7 @@ export async function render({ model, el }) {
                 model.set("_params", newParams);
                 model.save_changes();
             };
-            api.view.addSignalListener(paramName, debounce(paramHandler, wait, {maxWait}));
+            api.view.addSignalListener(paramName, debounce(paramHandler, wait, debounceOpts));
 
             initialParams[paramName] = api.view.signal(paramName) ?? null
         }
@@ -101,7 +104,7 @@ export async function render({ model, el }) {
                     }]);
                     model.save_changes();
                 };
-                addDataListener(api.view, watch.name, watch.scope, debounce(dataHandler, wait, maxWait))
+                addDataListener(api.view, watch.name, watch.scope, debounce(dataHandler, wait, debounceOpts))
 
             } else if (watch.namespace === "signal") {
                 const signalHandler = (_, value) => {
@@ -114,7 +117,7 @@ export async function render({ model, el }) {
                     model.save_changes();
                 };
 
-                addSignalListener(api.view, watch.name, watch.scope, debounce(signalHandler, wait, maxWait))
+                addSignalListener(api.view, watch.name, watch.scope, debounce(signalHandler, wait, debounceOpts))
             }
         }
 
@@ -133,6 +136,7 @@ export async function render({ model, el }) {
 
     model.on('change:spec', reembed);
     model.on('change:debounce_wait', reembed);
+    model.on('change:max_wait', reembed);
     await reembed();
 }
 
