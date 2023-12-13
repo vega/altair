@@ -1,3 +1,4 @@
+import json
 import anywidget
 import traitlets
 import pathlib
@@ -107,6 +108,7 @@ class JupyterChart(anywidget.AnyWidget):
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
     max_wait = traitlets.Bool(default_value=True).tag(sync=True)
     local_tz = traitlets.Unicode(default_value=None, allow_none=True).tag(sync=True)
+    debug = traitlets.Bool(default_value=False)
 
     # Internal selection traitlets
     _selection_types = traitlets.Dict()
@@ -126,6 +128,7 @@ class JupyterChart(anywidget.AnyWidget):
         chart: TopLevelSpec,
         debounce_wait: int = 10,
         max_wait: bool = True,
+        debug: bool = False,
         **kwargs: Any,
     ):
         """
@@ -143,11 +146,17 @@ class JupyterChart(anywidget.AnyWidget):
              If True (default), updates will be sent from the client to the kernel every debounce_wait
              milliseconds even if there are ongoing chart interactions. If False, updates will not be
              sent until chart interactions have completed.
+        debug: bool
+             If True, debug messages will be printed
         """
         self.params = Params({})
         self.selections = Selections({})
         super().__init__(
-            chart=chart, debounce_wait=debounce_wait, max_wait=max_wait, **kwargs
+            chart=chart,
+            debounce_wait=debounce_wait,
+            max_wait=max_wait,
+            debug=debug,
+            **kwargs,
         )
 
     @traitlets.observe("chart")
@@ -263,7 +272,13 @@ class JupyterChart(anywidget.AnyWidget):
 
             # Callback to update chart state and send updates back to client
             def on_js_to_py_updates(change):
+                if self.debug:
+                    updates_str = json.dumps(change["new"], indent=2)
+                    print(f"JavaScript to Python VegaFusion updates:\n {updates_str}")
                 updates = self._chart_state.update(change["new"])
+                if self.debug:
+                    updates_str = json.dumps(updates, indent=2)
+                    print(f"Python to JavaScript VegaFusion updates:\n {updates_str}")
                 self._py_to_js_updates = updates
 
             self.observe(on_js_to_py_updates, ["_js_to_py_updates"])
