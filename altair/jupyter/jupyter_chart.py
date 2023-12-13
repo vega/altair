@@ -23,9 +23,7 @@ class Params(traitlets.HasTraits):
         super().__init__()
 
         for key, value in trait_values.items():
-            if isinstance(value, int):
-                traitlet_type = traitlets.Int()
-            elif isinstance(value, float):
+            if isinstance(value, (int, float)):
                 traitlet_type = traitlets.Float()
             elif isinstance(value, str):
                 traitlet_type = traitlets.Unicode()
