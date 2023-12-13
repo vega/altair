@@ -119,9 +119,9 @@ class JupyterChart(anywidget.AnyWidget):
 
     # Internal comm traitlets for VegaFusion support
     _chart_state = traitlets.Any(allow_none=True)
-    _js_watch_plan = traitlets.List().tag(sync=True)
-    _js_to_py_updates = traitlets.List().tag(sync=True)
-    _py_to_js_updates = traitlets.List().tag(sync=True)
+    _js_watch_plan = traitlets.Any(allow_none=True).tag(sync=True)
+    _js_to_py_updates = traitlets.Any(allow_none=True).tag(sync=True)
+    _py_to_js_updates = traitlets.Any(allow_none=True).tag(sync=True)
 
     def __init__(
         self,
@@ -260,28 +260,33 @@ class JupyterChart(anywidget.AnyWidget):
             self._params = initial_params
 
     def _init_with_vegafusion(self, local_tz: str):
-        vegalite_spec = self.chart.to_dict(
-            format="vega-lite", context={"pre_transform": False}
-        )
-        with self.hold_sync():
-            self._chart_state = compile_to_vegafusion_chart_state(
-                vegalite_spec, local_tz
-            )
-            self._js_watch_plan = self._chart_state.get_watch_plan()["client_to_server"]
-            self.spec = self._chart_state.get_transformed_spec()
+        if self.chart is not None:
+            vegalite_spec = self.chart.to_dict(context={"pre_transform": False})
+            with self.hold_sync():
+                self._chart_state = compile_to_vegafusion_chart_state(
+                    vegalite_spec, local_tz
+                )
+                self._js_watch_plan = self._chart_state.get_watch_plan()[
+                    "client_to_server"
+                ]
+                self.spec = self._chart_state.get_transformed_spec()
 
-            # Callback to update chart state and send updates back to client
-            def on_js_to_py_updates(change):
-                if self.debug:
-                    updates_str = json.dumps(change["new"], indent=2)
-                    print(f"JavaScript to Python VegaFusion updates:\n {updates_str}")
-                updates = self._chart_state.update(change["new"])
-                if self.debug:
-                    updates_str = json.dumps(updates, indent=2)
-                    print(f"Python to JavaScript VegaFusion updates:\n {updates_str}")
-                self._py_to_js_updates = updates
+                # Callback to update chart state and send updates back to client
+                def on_js_to_py_updates(change):
+                    if self.debug:
+                        updates_str = json.dumps(change["new"], indent=2)
+                        print(
+                            f"JavaScript to Python VegaFusion updates:\n {updates_str}"
+                        )
+                    updates = self._chart_state.update(change["new"])
+                    if self.debug:
+                        updates_str = json.dumps(updates, indent=2)
+                        print(
+                            f"Python to JavaScript VegaFusion updates:\n {updates_str}"
+                        )
+                    self._py_to_js_updates = updates
 
-            self.observe(on_js_to_py_updates, ["_js_to_py_updates"])
+                self.observe(on_js_to_py_updates, ["_js_to_py_updates"])
 
     @traitlets.observe("_params")
     def _on_change_params(self, change):
