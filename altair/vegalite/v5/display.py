@@ -90,7 +90,9 @@ def jupyter_renderer(spec: dict):
     """Render chart using the JupyterChart Jupyter Widget"""
     from altair import Chart, JupyterChart
 
-    return JupyterChart(chart=Chart.from_dict(spec))._repr_mimebundle_()
+    # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_
+    # conditionally defined in AnyWidget
+    return JupyterChart(chart=Chart.from_dict(spec))._repr_mimebundle_()  # type: ignore[attr-defined]
 
 
 html_renderer = HTMLRenderer(
