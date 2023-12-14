@@ -86,6 +86,13 @@ def svg_renderer(spec: dict, **metadata) -> Dict[str, str]:
     )
 
 
+def render_jupyter(spec):
+    """Render chart using the JupyterChart Jupyter Widget"""
+    from altair import Chart, JupyterChart
+
+    return JupyterChart(chart=Chart.from_dict(spec))._repr_mimebundle_()
+
+
 html_renderer = HTMLRenderer(
     mode="vega-lite",
     template="universal",
@@ -105,6 +112,7 @@ renderers.register("nteract", mimetype_renderer)
 renderers.register("json", json_renderer)
 renderers.register("png", png_renderer)
 renderers.register("svg", svg_renderer)
+renderers.register("jupyter", render_jupyter)
 renderers.enable("default")
 
 
