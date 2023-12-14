@@ -8,6 +8,8 @@ Version 5.3.0 (unreleased month day, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Add "jupyter" renderer which uses JupyterChart for rendering (#3283)
+
 Bug Fixes
 ~~~~~~~~~
 Backward-Incompatible Changes
