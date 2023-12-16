@@ -1,5 +1,5 @@
-import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
-import debounce from "https://esm.sh/lodash-es@4.17.21/debounce";
+import vegaEmbed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
+import lodashDebounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 
 export async function render({ model, el }) {
     let finalize;
@@ -22,7 +22,7 @@ export async function render({ model, el }) {
         let spec = model.get("spec");
         let api;
         try {
-            api = await embed(el, spec);
+            api = await vegaEmbed(el, spec);
         } catch (error) {
             showError(error)
             return;
@@ -45,7 +45,7 @@ export async function render({ model, el }) {
                 model.set("_vl_selections", newSelections);
                 model.save_changes();
             };
-            api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, {maxWait}));
+            api.view.addSignalListener(selectionName, lodashDebounce(selectionHandler, wait, {maxWait}));
 
             initialSelections[selectionName] = {
                 value: cleanJson(api.view.signal(selectionName) ?? {}),
@@ -62,7 +62,7 @@ export async function render({ model, el }) {
                 model.set("_params", newParams);
                 model.save_changes();
             };
-            api.view.addSignalListener(paramName, debounce(paramHandler, wait, {maxWait}));
+            api.view.addSignalListener(paramName, lodashDebounce(paramHandler, wait, {maxWait}));
 
             initialParams[paramName] = api.view.signal(paramName) ?? null
         }
