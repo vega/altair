@@ -40,6 +40,12 @@ The most used built-in renderers are:
   newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
   with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
+``alt.renderers.enable("jupyter")``
+  *(added in version 5.3.0):* Output the chart using :ref:`user-guide-jupyterchart`. This renderer
+  is compatible with environments that support third-party Jupyter Widgets including
+  JupyterLab_, `Jupyter Notebook`_, `VSCode-Python`_, and `Colab`_.
+  It requires a web connection in order to load relevant Javascript libraries.
+
 In addition, Altair includes the following renderers:
 
 - ``"default"``, ``"colab"``, ``"kaggle"``, ``"zeppelin"``: identical to ``"html"``
