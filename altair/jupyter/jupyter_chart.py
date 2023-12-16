@@ -112,6 +112,24 @@ class JupyterChart(anywidget.AnyWidget):
     # Internal param traitlets
     _params = traitlets.Dict().tag(sync=True)
 
+    @classmethod
+    def enable_offline(cls):
+        from altair.utils._importers import import_vl_convert, vl_version_for_vl_convert
+
+        vlc = import_vl_convert()
+
+        src_lines = (_here / "js" / "index.js").read_text().split("\n")
+
+        # Remove leading lines with only whitespace or imports
+        while src_lines and (
+            len(src_lines[0].strip()) == 0 or src_lines[0].startswith("import")
+        ):
+            src_lines.pop(0)
+
+        src = "\n".join(src_lines)
+        bundled_src = vlc.javascript_bundle(src, vl_version=vl_version_for_vl_convert())
+        cls._esm = bundled_src
+
     def __init__(self, chart: TopLevelSpec, debounce_wait: int = 10, **kwargs: Any):
         """
         Jupyter Widget for displaying and updating Altair Charts, and
