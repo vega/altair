@@ -2,7 +2,7 @@
 Histogram with Gradient Color
 -----------------------------
 This example shows how to make a histogram with gradient color. 
-The low-high IMDB rating is represented with the color scheme `redyellowgreen`.
+The low-high IMDB rating is represented with the color scheme `pinkyellowgreen`.
 """
 # category: distributions
 import altair as alt
@@ -18,6 +18,6 @@ alt.Chart(source).mark_bar().encode(
     alt.Y('count()'),
     alt.Color("IMDB_Rating:Q", 
         bin=alt.Bin(maxbins=20), 
-        scale=alt.Scale(scheme='redyellowgreen')
+        scale=alt.Scale(scheme='pinkyellowgreen')
     )
 )
