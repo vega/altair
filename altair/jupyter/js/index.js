@@ -1,6 +1,5 @@
 import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
 import debounce from "https://esm.sh/lodash-es@4.17.21/debounce";
-import cloneDeep from "https://esm.sh/lodash-es@4.17.21/cloneDeep";
 
 export async function render({ model, el }) {
     let finalize;
@@ -22,7 +21,7 @@ export async function render({ model, el }) {
 
         model.set("local_tz", Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-        let spec = cloneDeep(model.get("spec"));
+        let spec = structuredClone(model.get("spec"));
         if (spec == null) {
             // Remove any existing chart and return
             while (el.firstChild) {
