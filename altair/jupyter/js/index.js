@@ -1,5 +1,5 @@
-import embed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
-import debounce from "https://esm.sh/lodash-es@4.17.21/debounce";
+import vegaEmbed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
+import lodashDebounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 
 export async function render({ model, el }) {
     let finalize;
@@ -33,7 +33,7 @@ export async function render({ model, el }) {
 
         let api;
         try {
-            api = await embed(el, spec);
+            api = await vegaEmbed(el, spec);
         } catch (error) {
             showError(error)
             return;
@@ -59,7 +59,7 @@ export async function render({ model, el }) {
                 model.set("_vl_selections", newSelections);
                 model.save_changes();
             };
-            api.view.addSignalListener(selectionName, debounce(selectionHandler, wait, debounceOpts));
+            api.view.addSignalListener(selectionName, lodashDebounce(selectionHandler, wait, debounceOpts));
 
             initialSelections[selectionName] = {
                 value: cleanJson(api.view.signal(selectionName) ?? {}),
@@ -76,7 +76,7 @@ export async function render({ model, el }) {
                 model.set("_params", newParams);
                 model.save_changes();
             };
-            api.view.addSignalListener(paramName, debounce(paramHandler, wait, debounceOpts));
+            api.view.addSignalListener(paramName, lodashDebounce(paramHandler, wait, debounceOpts));
 
             initialParams[paramName] = api.view.signal(paramName) ?? null
         }
@@ -103,7 +103,7 @@ export async function render({ model, el }) {
                     }]);
                     model.save_changes();
                 };
-                addDataListener(api.view, watch.name, watch.scope, debounce(dataHandler, wait, debounceOpts))
+                addDataListener(api.view, watch.name, watch.scope, lodashDebounce(dataHandler, wait, debounceOpts))
 
             } else if (watch.namespace === "signal") {
                 const signalHandler = (_, value) => {
@@ -116,7 +116,7 @@ export async function render({ model, el }) {
                     model.save_changes();
                 };
 
-                addSignalListener(api.view, watch.name, watch.scope, debounce(signalHandler, wait, debounceOpts))
+                addSignalListener(api.view, watch.name, watch.scope, lodashDebounce(signalHandler, wait, debounceOpts))
             }
         }
 
