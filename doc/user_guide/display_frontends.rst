@@ -41,10 +41,14 @@ The most used built-in renderers are:
   with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
 ``alt.renderers.enable("jupyter")``
-  *(added in version 5.3.0):* Output the chart using :ref:`user-guide-jupyterchart`. This renderer
+  *(added in version 5.3):* Output the chart using :ref:`user-guide-jupyterchart`. This renderer
   is compatible with environments that support third-party Jupyter Widgets including
   JupyterLab_, `Jupyter Notebook`_, `VSCode-Python`_, and `Colab`_.
-  It requires a web connection in order to load relevant Javascript libraries.
+  It requires a web connection in order to load relevant Javascript libraries.  Note that,
+  although this renderer uses ``JupyterChart``, it does not provide the
+  ability to access value and selection params in Python. To do so, create a ``JupyterChart``
+  object explicitly following the instructions in the :ref:`user-guide-jupyterchart`
+  documentation.
 
 In addition, Altair includes the following renderers:
 
