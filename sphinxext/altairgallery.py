@@ -166,7 +166,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
         filename = example["name"] + (".svg" if example["use_svg"] else ".png")
         image_file = os.path.join(image_dir, filename)
 
-        example_hash = hashlib.sha256(example["code"].encode()).hexdigest()
+        example_hash = hashlib.sha256(example["code"].encode()).hexdigest()[:32]
         hashes_match = hashes.get(filename, "") == example_hash
 
         if hashes_match and os.path.exists(image_file):
