@@ -57,7 +57,7 @@ def _dataset_name(values: Union[dict, list, core.InlineDataset]) -> str:
     if values == [{}]:
         return "empty"
     values_json = json.dumps(values, sort_keys=True)
-    hsh = hashlib.sha256(values_json.encode()).hexdigest()
+    hsh = hashlib.sha256(values_json.encode()).hexdigest()[:32]
     return "data-" + hsh
 
 
