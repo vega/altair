@@ -193,8 +193,8 @@ def dict_hash(dct):
     serialized = json.dumps(dct, sort_keys=True)
 
     try:
-        m = hashlib.md5(serialized)
+        m = hashlib.sha256(serialized)
     except TypeError:
-        m = hashlib.md5(serialized.encode())
+        m = hashlib.sha256(serialized.encode())
 
     return m.hexdigest()
