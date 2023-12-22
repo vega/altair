@@ -257,7 +257,7 @@ def check_data_type(data: DataType) -> None:
 # Private utilities
 # ==============================================================================
 def _compute_data_hash(data_str: str) -> str:
-    return hashlib.md5(data_str.encode()).hexdigest()
+    return hashlib.sha256(data_str.encode()).hexdigest()[:32]
 
 
 def _data_to_json_string(data: DataType) -> str:
