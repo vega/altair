@@ -5,7 +5,7 @@
 #
 # These classes are only for use in type signatures
 import enum
-from typing import Any, Iterable, Optional, Tuple, Protocol
+from typing import Any, Iterable, Optional, Tuple, Protocol, Literal
 
 
 class DtypeKind(enum.IntEnum):
@@ -120,8 +120,6 @@ class DataFrame(Protocol):
     ``__dataframe__`` method of a public data frame class in a library adhering
     to the dataframe interchange protocol specification.
     """
-
-    version: int = 0  # version of the protocol
 
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
