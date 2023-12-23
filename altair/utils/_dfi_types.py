@@ -121,7 +121,7 @@ class DataFrame(Protocol):
     to the dataframe interchange protocol specification.
     """
 
-    version = 0  # version of the protocol
+    version: int = 0  # version of the protocol
 
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
