@@ -1,21 +1,10 @@
 # DataFrame Interchange Protocol Types
 # Copied from https://data-apis.org/dataframe-protocol/latest/API.html
+# and changed ABCs to Protocols
 #
 # These classes are only for use in type signatures
-from abc import (
-    ABC,
-    abstractmethod,
-)
 import enum
-from typing import (
-    Any,
-    Dict,
-    Iterable,
-    Optional,
-    Sequence,
-    Tuple,
-    TypedDict,
-)
+from typing import Any, Dict, Iterable, Optional, Sequence, Tuple, TypedDict, Protocol
 
 
 class DlpackDeviceType(enum.IntEnum):
@@ -117,7 +106,7 @@ class CategoricalDescription(TypedDict):
     categories: "Optional[Column]"
 
 
-class Buffer(ABC):
+class Buffer(Protocol):
     """
     Data in the buffer is guaranteed to be contiguous in memory.
 
@@ -133,7 +122,6 @@ class Buffer(ABC):
     """
 
     @property
-    @abstractmethod
     def bufsize(self) -> int:
         """
         Buffer size in bytes.
@@ -141,14 +129,12 @@ class Buffer(ABC):
         pass
 
     @property
-    @abstractmethod
     def ptr(self) -> int:
         """
         Pointer to start of the buffer as an integer.
         """
         pass
 
-    @abstractmethod
     def __dlpack__(self):
         """
         Produce DLPack capsule (see array API standard).
@@ -163,7 +149,6 @@ class Buffer(ABC):
         """
         raise NotImplementedError("__dlpack__")
 
-    @abstractmethod
     def __dlpack_device__(self) -> Tuple[DlpackDeviceType, Optional[int]]:
         """
         Device type and device ID for where the data in the buffer resides.
@@ -173,7 +158,7 @@ class Buffer(ABC):
         pass
 
 
-class Column(ABC):
+class Column(Protocol):
     """
     A column object, with only the methods and properties required by the
     interchange protocol defined.
@@ -217,7 +202,6 @@ class Column(ABC):
           doesn't need its own version or ``__column__`` protocol.
     """
 
-    @abstractmethod
     def size(self) -> int:
         """
         Size of the column, in elements.
@@ -231,7 +215,6 @@ class Column(ABC):
         pass
 
     @property
-    @abstractmethod
     def offset(self) -> int:
         """
         Offset of first element.
@@ -243,7 +226,6 @@ class Column(ABC):
         pass
 
     @property
-    @abstractmethod
     def dtype(self) -> Dtype:
         """
         Dtype description as a tuple ``(kind, bit-width, format string, endianness)``.
@@ -275,7 +257,6 @@ class Column(ABC):
         pass
 
     @property
-    @abstractmethod
     def describe_categorical(self) -> CategoricalDescription:
         """
         If the dtype is categorical, there are two options:
@@ -298,7 +279,6 @@ class Column(ABC):
         pass
 
     @property
-    @abstractmethod
     def describe_null(self) -> Tuple[ColumnNullType, Any]:
         """
         Return the missing value (or "null") representation the column dtype
@@ -311,7 +291,6 @@ class Column(ABC):
         pass
 
     @property
-    @abstractmethod
     def null_count(self) -> Optional[int]:
         """
         Number of null elements, if known.
@@ -321,21 +300,18 @@ class Column(ABC):
         pass
 
     @property
-    @abstractmethod
     def metadata(self) -> Dict[str, Any]:
         """
         The metadata for the column. See `DataFrame.metadata` for more details.
         """
         pass
 
-    @abstractmethod
     def num_chunks(self) -> int:
         """
         Return the number of chunks the column consists of.
         """
         pass
 
-    @abstractmethod
     def get_chunks(self, n_chunks: Optional[int] = None) -> Iterable["Column"]:
         """
         Return an iterator yielding the chunks.
@@ -344,7 +320,6 @@ class Column(ABC):
         """
         pass
 
-    @abstractmethod
     def get_buffers(self) -> ColumnBuffers:
         """
         Return a dictionary containing the underlying buffers.
@@ -377,7 +352,7 @@ class Column(ABC):
 #        pass
 
 
-class DataFrame(ABC):
+class DataFrame(Protocol):
     """
     A data frame class, with only the methods required by the interchange
     protocol defined.
@@ -394,7 +369,6 @@ class DataFrame(ABC):
 
     version = 0  # version of the protocol
 
-    @abstractmethod
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
     ) -> "DataFrame":
@@ -413,7 +387,6 @@ class DataFrame(ABC):
         pass
 
     @property
-    @abstractmethod
     def metadata(self) -> Dict[str, Any]:
         """
         The metadata for the data frame, as a dictionary with string keys. The
@@ -426,14 +399,12 @@ class DataFrame(ABC):
         """
         pass
 
-    @abstractmethod
     def num_columns(self) -> int:
         """
         Return the number of columns in the DataFrame.
         """
         pass
 
-    @abstractmethod
     def num_rows(self) -> Optional[int]:
         # TODO: not happy with Optional, but need to flag it may be expensive
         #       why include it if it may be None - what do we expect consumers
@@ -443,56 +414,48 @@ class DataFrame(ABC):
         """
         pass
 
-    @abstractmethod
     def num_chunks(self) -> int:
         """
         Return the number of chunks the DataFrame consists of.
         """
         pass
 
-    @abstractmethod
     def column_names(self) -> Iterable[str]:
         """
         Return an iterator yielding the column names.
         """
         pass
 
-    @abstractmethod
     def get_column(self, i: int) -> Column:
         """
         Return the column at the indicated position.
         """
         pass
 
-    @abstractmethod
     def get_column_by_name(self, name: str) -> Column:
         """
         Return the column whose name is the indicated name.
         """
         pass
 
-    @abstractmethod
     def get_columns(self) -> Iterable[Column]:
         """
         Return an iterator yielding the columns.
         """
         pass
 
-    @abstractmethod
     def select_columns(self, indices: Sequence[int]) -> "DataFrame":
         """
         Create a new DataFrame by selecting a subset of columns by index.
         """
         pass
 
-    @abstractmethod
     def select_columns_by_name(self, names: Sequence[str]) -> "DataFrame":
         """
         Create a new DataFrame by selecting a subset of columns by name.
         """
         pass
 
-    @abstractmethod
     def get_chunks(self, n_chunks: Optional[int] = None) -> Iterable["DataFrame"]:
         """
         Return an iterator yielding the chunks.
