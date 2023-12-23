@@ -5,7 +5,7 @@
 #
 # These classes are only for use in type signatures
 import enum
-from typing import Any, Iterable, Optional, Tuple, Protocol, Literal
+from typing import Any, Iterable, Optional, Tuple, Protocol
 
 
 class DtypeKind(enum.IntEnum):
