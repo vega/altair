@@ -157,7 +157,7 @@ If you are using a dashboarding package that is not listed here, please `open an
 
 
 Working in environments without a JavaScript frontend
------------------------------------------------------
+-----------------------------------------------------   
 The Vega-Lite specifications produced by Altair can be produced in any Python
 environment, but to render these specifications currently requires a javascript
 engine. For this reason, Altair works most seamlessly with the browser-based
