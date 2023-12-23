@@ -135,7 +135,7 @@ Optionally, for offline rendering, you can use the mimetype renderer::
     # Optional in VS Code
     alt.renderers.enable('mimetype')
 
-.. _display-general:
+.. _display_dashboards:
 
 Dashboards
 ----------
@@ -155,6 +155,7 @@ Package                                                                         
 
 If you are using a dashboarding package that is not listed here, please `open an issue <https://github.com/altair-viz/altair/issues>`_ on GitHub so that we can add it.
 
+.. _display-general:
 
 Working in environments without a JavaScript frontend
 -----------------------------------------------------   

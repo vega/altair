@@ -8,6 +8,8 @@ Version 5.3.0 (unreleased month day, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Docs: Add :ref:`section on dashboards <display_dashboards>` which have support for Altair (#3299)
+
 Bug Fixes
 ~~~~~~~~~
 Backward-Incompatible Changes
