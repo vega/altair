@@ -140,73 +140,15 @@ class DataFrame(Protocol):
         """
         pass
 
-    @property
-    def metadata(self) -> Dict[str, Any]:
-        """
-        The metadata for the data frame, as a dictionary with string keys. The
-        contents of `metadata` may be anything, they are meant for a library
-        to store information that it needs to, e.g., roundtrip losslessly or
-        for two implementations to share data that is not (yet) part of the
-        interchange protocol specification. For avoiding collisions with other
-        entries, please add name the keys with the name of the library
-        followed by a period and the desired name, e.g, ``pandas.indexcol``.
-        """
-        pass
-
-    def num_columns(self) -> int:
-        """
-        Return the number of columns in the DataFrame.
-        """
-        pass
-
-    def num_rows(self) -> Optional[int]:
-        # TODO: not happy with Optional, but need to flag it may be expensive
-        #       why include it if it may be None - what do we expect consumers
-        #       to do here?
-        """
-        Return the number of rows in the DataFrame, if available.
-        """
-        pass
-
-    def num_chunks(self) -> int:
-        """
-        Return the number of chunks the DataFrame consists of.
-        """
-        pass
-
     def column_names(self) -> Iterable[str]:
         """
         Return an iterator yielding the column names.
         """
         pass
 
-    def get_column(self, i: int) -> Column:
-        """
-        Return the column at the indicated position.
-        """
-        pass
-
     def get_column_by_name(self, name: str) -> Column:
         """
         Return the column whose name is the indicated name.
-        """
-        pass
-
-    def get_columns(self) -> Iterable[Column]:
-        """
-        Return an iterator yielding the columns.
-        """
-        pass
-
-    def select_columns(self, indices: Sequence[int]) -> "DataFrame":
-        """
-        Create a new DataFrame by selecting a subset of columns by index.
-        """
-        pass
-
-    def select_columns_by_name(self, names: Sequence[str]) -> "DataFrame":
-        """
-        Create a new DataFrame by selecting a subset of columns by name.
         """
         pass
 
