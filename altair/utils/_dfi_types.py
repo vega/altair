@@ -4,7 +4,7 @@
 #
 # These classes are only for use in type signatures
 import enum
-from typing import Any, Dict, Iterable, Optional, Sequence, Tuple, TypedDict, Protocol
+from typing import Any, Iterable, Optional, Tuple, Protocol
 
 
 class DtypeKind(enum.IntEnum):
@@ -38,17 +38,11 @@ class DtypeKind(enum.IntEnum):
     CATEGORICAL = 23
 
 
-Dtype = Tuple[DtypeKind, int, str, str]  # see Column.dtype
-
-
-class CategoricalDescription(TypedDict):
-    # whether the ordering of dictionary indices is semantically meaningful
-    is_ordered: bool
-    # whether a dictionary-style mapping of categorical values to other objects exists
-    is_dictionary: bool
-    # Python-level only (e.g. ``{int: str}``).
-    # None if not a dictionary-style categorical.
-    categories: "Optional[Column]"
+# Type hint of first element would actually be DtypeKind but can't use that
+# as other libraries won't use an instance of our own Enum in this module but have
+# their own. Type checkers will raise an error on that even though the enums
+# are identical.
+Dtype = Tuple[Any, int, str, str]  # see Column.dtype
 
 
 class Column(Protocol):
@@ -83,8 +77,13 @@ class Column(Protocol):
         """
         pass
 
+    # Have to use a generic Any return type as not all libraries who implement
+    # the dataframe interchange protocol implement the TypedDict that is usually
+    # returned here in the same way. As TypedDicts are invariant, even a slight change
+    # will lead to an error by a type checker. See PR in which this code was added
+    # for details.
     @property
-    def describe_categorical(self) -> CategoricalDescription:
+    def describe_categorical(self) -> Any:
         """
         If the dtype is categorical, there are two options:
         - There are only values in the data buffer.
