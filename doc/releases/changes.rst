@@ -9,11 +9,14 @@ Version 5.3.0 (unreleased month day, year)
 Enhancements
 ~~~~~~~~~~~~
 - Docs: Add :ref:`section on dashboards <display_dashboards>` which have support for Altair (#3299)
+- Support restrictive FIPS-compliant environment (#3291)
 
 Bug Fixes
 ~~~~~~~~~
+
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Changed hash function from ``md5`` to a truncated ``sha256`` non-cryptograhic hash (#3291)
 
 Version 5.2.0 (released Nov 28, 2023)
 -------------------------------------------
