@@ -8,12 +8,15 @@ Version 5.3.0 (unreleased month day, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Support restrictive FIPS-compliant environment (#3291)
+
 Bug Fixes
 ~~~~~~~~~
 - Fix type hints for libraries such as Polars where Altair uses the dataframe interchange protocol (#3297)
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Changed hash function from ``md5`` to a truncated ``sha256`` non-cryptograhic hash (#3291)
 
 Version 5.2.0 (released Nov 28, 2023)
 -------------------------------------------
