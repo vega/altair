@@ -153,6 +153,9 @@ Package                                                                         
 `Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                              
 ===================================================================================================================================  ===================================  =============================
 
+The above mentioned frameworks all require you to run a web application on a server if you want to share your work with others. A web application gives you a lot of flexibility, you can for example fetch data from a database based on the value of a dropdown menu in the dashboard. However, it comes with some complexity as well. 
+For use cases where the interactivity provided by Altair itself is enough, you can also use tools which generate HTML pages which do not require a web server such as `Quarto <https://quarto.org/>`_ or `Jupyter Book <https://jupyterbook.org/>`_.
+
 If you are using a dashboarding package that is not listed here, please `open an issue <https://github.com/altair-viz/altair/issues>`_ on GitHub so that we can add it.
 
 .. _display-general:
