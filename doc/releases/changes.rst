@@ -12,6 +12,7 @@ Enhancements
 
 Bug Fixes
 ~~~~~~~~~
+- Fix type hints for libraries such as Polars where Altair uses the dataframe interchange protocol (#3297)
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -46,7 +46,9 @@ P = ParamSpec("P")
 
 
 class DataFrameLike(Protocol):
-    def __dataframe__(self, *args, **kwargs) -> DfiDataFrame:
+    def __dataframe__(
+        self, nan_as_null: bool = False, allow_copy: bool = True
+    ) -> DfiDataFrame:
         ...
 
 
