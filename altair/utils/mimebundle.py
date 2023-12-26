@@ -72,9 +72,11 @@ def spec_to_mimebundle(
 
     # Default to the embed options set by alt.renderers.set_embed_options
     if embed_options is None:
-        embed_options = renderers.options.get("embed_options", {})
+        final_embed_options = renderers.options.get("embed_options", {})
+    else:
+        final_embed_options = embed_options
 
-    embed_options = preprocess_embed_options(embed_options)
+    embed_options = preprocess_embed_options(final_embed_options)
 
     if format in ["png", "svg", "pdf", "vega"]:
         format = cast(Literal["png", "svg", "pdf", "vega"], format)
