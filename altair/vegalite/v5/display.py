@@ -86,6 +86,15 @@ def svg_renderer(spec: dict, **metadata) -> Dict[str, str]:
     )
 
 
+def jupyter_renderer(spec: dict):
+    """Render chart using the JupyterChart Jupyter Widget"""
+    from altair import Chart, JupyterChart
+
+    # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_
+    # conditionally defined in AnyWidget
+    return JupyterChart(chart=Chart.from_dict(spec))._repr_mimebundle_()  # type: ignore[attr-defined]
+
+
 html_renderer = HTMLRenderer(
     mode="vega-lite",
     template="universal",
@@ -105,6 +114,7 @@ renderers.register("nteract", mimetype_renderer)
 renderers.register("json", json_renderer)
 renderers.register("png", png_renderer)
 renderers.register("svg", svg_renderer)
+renderers.register("jupyter", jupyter_renderer)
 renderers.enable("default")
 
 

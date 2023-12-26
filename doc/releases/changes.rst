@@ -8,6 +8,7 @@ Version 5.3.0 (unreleased month day, year)
 
 Enhancements
 ~~~~~~~~~~~~
+- Add "jupyter" renderer which uses JupyterChart for rendering (#3283). See :ref:`renderers` for more information.
 - Support restrictive FIPS-compliant environment (#3291)
 
 Bug Fixes
