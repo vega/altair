@@ -2,14 +2,23 @@ from toolz import curried
 import uuid
 from weakref import WeakValueDictionary
 
-from typing import Union, Dict, Set, MutableMapping
-
-from typing import TypedDict, Final
+from typing import (
+    Union,
+    Dict,
+    Set,
+    MutableMapping,
+    TypedDict,
+    Final,
+    TYPE_CHECKING,
+)
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
 from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
+
+if TYPE_CHECKING:
+    from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
 # from charts by the vegafusion data transformer. Use a WeakValueDictionary
@@ -124,6 +133,60 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     return tables
 
 
+def compile_to_vegafusion_chart_state(
+    vegalite_spec: dict, local_tz: str
+) -> "ChartState":
+    """Compile a Vega-Lite spec to a VegaFusion ChartState
+
+    Note: This function should only be called on a Vega-Lite spec
+    that was generated with the "vegafusion" data transformer enabled.
+    In particular, this spec may contain references to extract datasets
+    using table:// prefixed URLs.
+
+    Parameters
+    ----------
+    vegalite_spec: dict
+        A Vega-Lite spec that was generated from an Altair chart with
+        the "vegafusion" data transformer enabled
+    local_tz: str
+        Local timezone name (e.g. 'America/New_York')
+
+    Returns
+    -------
+    ChartState
+        A VegaFusion ChartState object
+    """
+    # Local import to avoid circular ImportError
+    from altair import vegalite_compilers, data_transformers
+
+    vf = import_vegafusion()
+
+    # Compile Vega-Lite spec to Vega
+    compiler = vegalite_compilers.get()
+    if compiler is None:
+        raise ValueError("No active vega-lite compiler plugin found")
+
+    vega_spec = compiler(vegalite_spec)
+
+    # Retrieve dict of inline tables referenced by the spec
+    inline_tables = get_inline_tables(vega_spec)
+
+    # Pre-evaluate transforms in vega spec with vegafusion
+    row_limit = data_transformers.options.get("max_rows", None)
+
+    chart_state = vf.runtime.new_chart_state(
+        vega_spec,
+        local_tz=local_tz,
+        inline_datasets=inline_tables,
+        row_limit=row_limit,
+    )
+
+    # Check from row limit warning and convert to MaxRowsError
+    handle_row_limit_exceeded(row_limit, chart_state.get_warnings())
+
+    return chart_state
+
+
 def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     """Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion
 
@@ -168,6 +231,12 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     )
 
     # Check from row limit warning and convert to MaxRowsError
+    handle_row_limit_exceeded(row_limit, warnings)
+
+    return transformed_vega_spec
+
+
+def handle_row_limit_exceeded(row_limit: int, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
             raise MaxRowsError(
@@ -177,8 +246,6 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
                 "the limit by calling alt.data_transformers.disable_max_rows(). Note that\n"
                 "disabling this limit may cause the browser to freeze or crash."
             )
-
-    return transformed_vega_spec
 
 
 def using_vegafusion() -> bool:

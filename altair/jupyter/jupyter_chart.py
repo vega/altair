@@ -1,10 +1,14 @@
+import json
 import anywidget
 import traitlets
 import pathlib
 from typing import Any, Set
 
 import altair as alt
-from altair.utils._vegafusion_data import using_vegafusion
+from altair.utils._vegafusion_data import (
+    using_vegafusion,
+    compile_to_vegafusion_chart_state,
+)
 from altair import TopLevelSpec
 from altair.utils.selection import IndexSelection, PointSelection, IntervalSelection
 
@@ -20,9 +24,7 @@ class Params(traitlets.HasTraits):
         super().__init__()
 
         for key, value in trait_values.items():
-            if isinstance(value, int):
-                traitlet_type = traitlets.Int()
-            elif isinstance(value, float):
+            if isinstance(value, (int, float)):
                 traitlet_type = traitlets.Float()
             elif isinstance(value, str):
                 traitlet_type = traitlets.Unicode()
@@ -101,9 +103,12 @@ class JupyterChart(anywidget.AnyWidget):
     """
 
     # Public traitlets
-    chart = traitlets.Instance(TopLevelSpec)
-    spec = traitlets.Dict().tag(sync=True)
+    chart = traitlets.Instance(TopLevelSpec, allow_none=True)
+    spec = traitlets.Dict(allow_none=True).tag(sync=True)
     debounce_wait = traitlets.Float(default_value=10).tag(sync=True)
+    max_wait = traitlets.Bool(default_value=True).tag(sync=True)
+    local_tz = traitlets.Unicode(default_value=None, allow_none=True).tag(sync=True)
+    debug = traitlets.Bool(default_value=False)
 
     # Internal selection traitlets
     _selection_types = traitlets.Dict()
@@ -112,7 +117,20 @@ class JupyterChart(anywidget.AnyWidget):
     # Internal param traitlets
     _params = traitlets.Dict().tag(sync=True)
 
-    def __init__(self, chart: TopLevelSpec, debounce_wait: int = 10, **kwargs: Any):
+    # Internal comm traitlets for VegaFusion support
+    _chart_state = traitlets.Any(allow_none=True)
+    _js_watch_plan = traitlets.Any(allow_none=True).tag(sync=True)
+    _js_to_py_updates = traitlets.Any(allow_none=True).tag(sync=True)
+    _py_to_js_updates = traitlets.Any(allow_none=True).tag(sync=True)
+
+    def __init__(
+        self,
+        chart: TopLevelSpec,
+        debounce_wait: int = 10,
+        max_wait: bool = True,
+        debug: bool = False,
+        **kwargs: Any,
+    ):
         """
         Jupyter Widget for displaying and updating Altair Charts, and
         retrieving selection and parameter values
@@ -122,11 +140,24 @@ class JupyterChart(anywidget.AnyWidget):
         chart: Chart
             Altair Chart instance
         debounce_wait: int
-             Debouncing wait time in milliseconds
+             Debouncing wait time in milliseconds. Updates will be sent from the client to the kernel
+             after debounce_wait milliseconds of no chart interactions.
+        max_wait: bool
+             If True (default), updates will be sent from the client to the kernel every debounce_wait
+             milliseconds even if there are ongoing chart interactions. If False, updates will not be
+             sent until chart interactions have completed.
+        debug: bool
+             If True, debug messages will be printed
         """
         self.params = Params({})
         self.selections = Selections({})
-        super().__init__(chart=chart, debounce_wait=debounce_wait, **kwargs)
+        super().__init__(
+            chart=chart,
+            debounce_wait=debounce_wait,
+            max_wait=max_wait,
+            debug=debug,
+            **kwargs,
+        )
 
     @traitlets.observe("chart")
     def _on_change_chart(self, change):
@@ -135,13 +166,21 @@ class JupyterChart(anywidget.AnyWidget):
         state when the wrapped Chart instance changes
         """
         new_chart = change.new
-
-        params = getattr(new_chart, "params", [])
         selection_watches = []
         selection_types = {}
         initial_params = {}
         initial_vl_selections = {}
         empty_selections = {}
+
+        if new_chart is None:
+            with self.hold_sync():
+                self.spec = None
+                self._selection_types = selection_types
+                self._vl_selections = initial_vl_selections
+                self._params = initial_params
+            return
+
+        params = getattr(new_chart, "params", [])
 
         if params is not alt.Undefined:
             for param in new_chart.params:
@@ -205,12 +244,49 @@ class JupyterChart(anywidget.AnyWidget):
         # Update properties all together
         with self.hold_sync():
             if using_vegafusion():
-                self.spec = new_chart.to_dict(format="vega")
+                if self.local_tz is None:
+                    self.spec = None
+
+                    def on_local_tz_change(change):
+                        self._init_with_vegafusion(change["new"])
+
+                    self.observe(on_local_tz_change, ["local_tz"])
+                else:
+                    self._init_with_vegafusion(self.local_tz)
             else:
                 self.spec = new_chart.to_dict()
             self._selection_types = selection_types
             self._vl_selections = initial_vl_selections
             self._params = initial_params
+
+    def _init_with_vegafusion(self, local_tz: str):
+        if self.chart is not None:
+            vegalite_spec = self.chart.to_dict(context={"pre_transform": False})
+            with self.hold_sync():
+                self._chart_state = compile_to_vegafusion_chart_state(
+                    vegalite_spec, local_tz
+                )
+                self._js_watch_plan = self._chart_state.get_watch_plan()[
+                    "client_to_server"
+                ]
+                self.spec = self._chart_state.get_transformed_spec()
+
+                # Callback to update chart state and send updates back to client
+                def on_js_to_py_updates(change):
+                    if self.debug:
+                        updates_str = json.dumps(change["new"], indent=2)
+                        print(
+                            f"JavaScript to Python VegaFusion updates:\n {updates_str}"
+                        )
+                    updates = self._chart_state.update(change["new"])
+                    if self.debug:
+                        updates_str = json.dumps(updates, indent=2)
+                        print(
+                            f"Python to JavaScript VegaFusion updates:\n {updates_str}"
+                        )
+                    self._py_to_js_updates = updates
+
+                self.observe(on_js_to_py_updates, ["_js_to_py_updates"])
 
     @traitlets.observe("_params")
     def _on_change_params(self, change):

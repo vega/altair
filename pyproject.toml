@@ -71,7 +71,7 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "pyarrow>=11",
-    "vegafusion[embed]>=1.4.0",
+    "vegafusion[embed]>=1.5.0",
     "anywidget",
     "geopandas",
 ]

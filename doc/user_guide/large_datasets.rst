@@ -90,7 +90,9 @@ unused columns, which reduces dataset size even for charts without data transfor
 
 When the ``"vegafusion"`` data transformer is active, data transformations will be
 pre-evaluated when :ref:`displaying-charts`, :ref:`user-guide-saving`, converted charts a dictionaries,
-and converting charts to JSON.
+and converting charts to JSON. When combined with :ref:`user-guide-jupyterchart` or the ``"jupyter"``
+renderer (See :ref:`customizing-renderers`), data transformations will also be evaluated in Python
+dynamically in response to chart selection events.
 
 VegaFusion's development is sponsored by `Hex <https://hex.tech>`_.
 
@@ -108,8 +110,6 @@ or conda
 
    conda install -c conda-forge vegafusion vegafusion-python-embed vl-convert-python
 
-Note that conda packages are not yet available for the Apple Silicon architecture.
-
 Enabling the VegaFusion Data Transformer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Activate the VegaFusion data transformer with:
@@ -123,10 +123,11 @@ All charts created after activating the VegaFusion data transformer
 will work with datasets containing up to 100,000 rows.
 VegaFusion's row limit is applied after all supported data transformations have been applied.
 So you are unlikely to reach it with a chart such as a histogram,
-but you may hit it in the case of a large scatter chart or a chart that uses interactivity.
-If you need to work with larger datasets,
-you can disable the maximum row limit
-or switch to using the VegaFusion widget renderer described below.
+but you may hit it in the case of a large scatter chart or a chart that includes interactivity
+when not using ``JupyterChart`` or the ``"jupyter"`` renderer.
+
+If you need to work with larger datasets, you can disable the maximum row limit
+or switch to using ``JupyterChart`` or the ``"jupyter"`` renderer described below.
 
 Converting to JSON or dictionary
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -148,8 +149,8 @@ Local Timezone Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Some Altair transformations (e.g. :ref:`user-guide-timeunit-transform`) are based on
 a local timezone. Normally, the browser's local timezone is used. However, because
-VegaFusion evaluates these transforms in Python before rendering, it's not possible to
-access the browser's timezone. Instead, the local timezone of the Python kernel will be
+VegaFusion evaluates these transforms in Python before rendering, it's not always possible
+to access the browser's timezone. Instead, the local timezone of the Python kernel will be
 used by default. In the case of a cloud notebook service, this may be difference than
 the browser's local timezone.
 
@@ -161,6 +162,9 @@ function. For example:
     import vegafusion as vf
     vf.set_local_tz("America/New_York")
 
+When using ``JupyterChart`` or the ``"jupyter"`` renderer, the browser's local timezone
+is used.
+
 DuckDB Integration
 ^^^^^^^^^^^^^^^^^^
 VegaFusion provides optional integration with `DuckDB`_. Because DuckDB can perform queries on pandas
@@ -169,25 +173,32 @@ which requires this conversion. See the `VegaFusion DuckDB`_ documentation for m
 
 Interactivity
 ^^^^^^^^^^^^^
-For charts that use selections to filter data interactively, the VegaFusion data transformer
-will include all of the data that participates in the interaction in the resulting chart
-specification. This makes it an unsuitable approach for building interactive charts that filter
-large datasets (e.g. crossfiltering a dataset with over a million rows).
+When using the default ``"html"`` renderer with charts that use selections to filter data interactively,
+the VegaFusion data transformer will include all of the data that participates in the interaction in the resulting chart specification. This makes it an unsuitable approach for building interactive charts that filter large datasets (e.g. crossfiltering a dataset with over a million rows).
 
-The `VegaFusion widget renderer`_ is designed to support this use case, and is available in the
-third-party ``vegafusion-jupyter`` package.
+The ``JupyterChart`` widget and the ``"jupyter"`` renderer are designed to work with the VegaFusion
+data transformer to evaluate data transformations interactively in response to selection events.
+This avoids the need to transfer the full dataset to the browser, and so supports
+interactive exploration of aggregated datasets on the order of millions of rows.
 
-It is enabled with:
+Either use ``JupyterChart`` directly:
 
 .. code-block:: python
 
-    import vegafusion as vf
-    vf.enable_widget()
+    import altair as alt
+    alt.data_transformers.enable("vegafusion")
+    ...
+    alt.JupyterChart(chart)
 
-The widget renderer uses a Jupyter Widget extension to maintain a live connection between the displayed chart
-and the Python kernel. This makes it possible for transforms to be evaluated interactively in response to
-changes in selections, and to send the datasets to the client in arrow format separately instead of inlining
-them in the chart json specification.
+Or, enable the ``"jupyter"`` renderer and display charts as usual:
+
+.. code-block:: python
+
+    import altair as alt
+    alt.data_transformers.enable("vegafusion")
+    alt.renderers.enable("jupyter")
+    ...
+    chart
 
 Charts rendered this way require a running Python kernel and Jupyter Widget extension to
 display, which works in many frontends including locally in the classic notebook, JupyterLab, and VSCode,
@@ -455,8 +466,6 @@ summary statistics to Altair instead of the full dataset.
     rules + bars + ticks + outliers
 
 .. _VegaFusion: https://vegafusion.io
-.. _VegaFusion mime renderer: https://vegafusion.io/mime_renderer.html
-.. _VegaFusion widget renderer: https://vegafusion.io/widget_renderer.html
 .. _DuckDB: https://duckdb.org/
 .. _VegaFusion DuckDB: https://vegafusion.io/duckdb.html
 .. _vl-convert: https://github.com/vega/vl-convert
