@@ -139,7 +139,7 @@ Optionally, for offline rendering, you can use the mimetype renderer::
 
 Dashboards
 ----------
-Altair is compatible with common Python dashboarding packages. Some of them even provide support for reading out :ref:`parameters <user-guide-interactions>` from the chart.
+Altair is compatible with common Python dashboarding packages. Many of them even provide support for reading out :ref:`parameters <user-guide-interactions>` from the chart.
 This allows you to e.g. select data points and update another part of the dashboard such as a table based on that selection:
 
 ===================================================================================================================================  ===================================  =============================
