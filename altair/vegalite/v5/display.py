@@ -92,7 +92,9 @@ def jupyter_renderer(spec: dict, **metadata):
 
     # Configure offline mode
     offline = metadata.get("offline", False)
-    JupyterChart.enable_offline(offline=offline)
+
+    # mypy doesn't see the enable_offline class method for some reason
+    JupyterChart.enable_offline(offline=offline)  # type: ignore[attr-defined]
 
     # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_
     # conditionally defined in AnyWidget
