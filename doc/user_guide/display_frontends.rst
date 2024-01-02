@@ -40,6 +40,16 @@ The most used built-in renderers are:
   newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
   with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
+``alt.renderers.enable("jupyter")``
+  *(added in version 5.3):* Output the chart using :ref:`user-guide-jupyterchart`. This renderer
+  is compatible with environments that support third-party Jupyter Widgets including
+  JupyterLab_, `Jupyter Notebook`_, `VSCode-Python`_, and `Colab`_.
+  It requires a web connection in order to load relevant Javascript libraries.  Note that,
+  although this renderer uses ``JupyterChart``, it does not provide the
+  ability to access value and selection params in Python. To do so, create a ``JupyterChart``
+  object explicitly following the instructions in the :ref:`user-guide-jupyterchart`
+  documentation.
+
 In addition, Altair includes the following renderers:
 
 - ``"default"``, ``"colab"``, ``"kaggle"``, ``"zeppelin"``: identical to ``"html"``
@@ -135,10 +145,33 @@ Optionally, for offline rendering, you can use the mimetype renderer::
     # Optional in VS Code
     alt.renderers.enable('mimetype')
 
+.. _display_dashboards:
+
+Dashboards
+----------
+Altair is compatible with common Python dashboarding packages. Many of them even provide support for reading out :ref:`parameters <user-guide-interactions>` from the chart.
+This allows you to e.g. select data points and update another part of the dashboard such as a table based on that selection:
+
+===================================================================================================================================  ===================================  =============================
+Package                                                                                                                              Displays interactive Altair charts   Supports reading out parameters
+===================================================================================================================================  ===================================  =============================
+`Panel <https://panel.holoviz.org/reference/panes/Vega.html#altair>`_                                                                ✔                                    ✔
+`Plotly Dash <https://dash.plotly.com/>`_ using `dash_vega_components <https://github.com/altair-viz/dash-vega-components>`_         ✔                                    ✔
+`Jupyter Voila <https://voila.readthedocs.io/en/stable/>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`                       ✔                                    ✔
+`Shiny <https://shiny.posit.co/py/docs/ipywidgets.html#quick-start>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`            ✔                                    ✔
+`Solara <https://solara.dev/api/altair>`_                                                                                            ✔                                    ✔
+`Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                              
+===================================================================================================================================  ===================================  =============================
+
+The above mentioned frameworks all require you to run a web application on a server if you want to share your work with others. A web application gives you a lot of flexibility, you can for example fetch data from a database based on the value of a dropdown menu in the dashboard. However, it comes with some complexity as well. 
+For use cases where the interactivity provided by Altair itself is enough, you can also use tools which generate HTML pages which do not require a web server such as `Quarto <https://quarto.org/>`_ or `Jupyter Book <https://jupyterbook.org/>`_.
+
+If you are using a dashboarding package that is not listed here, please `open an issue <https://github.com/altair-viz/altair/issues>`_ on GitHub so that we can add it.
+
 .. _display-general:
 
-Working in non-Notebook Environments
-------------------------------------
+Working in environments without a JavaScript frontend
+-----------------------------------------------------   
 The Vega-Lite specifications produced by Altair can be produced in any Python
 environment, but to render these specifications currently requires a javascript
 engine. For this reason, Altair works most seamlessly with the browser-based
@@ -149,16 +182,6 @@ have a built-in javascript engine, you'll need to somehow connect your charts
 to a second tool that can execute javascript.
 
 There are a few options available for this:
-
-Vega-enabled IDEs
-~~~~~~~~~~~~~~~~~
-Some IDEs have extensions that natively recognize and display Altair charts.
-Examples are:
-
-- The `VSCode-Python`_ extension, which supports native Altair and Vega-Lite
-  chart display as of November 2019.
-- The Hydrogen_ project, which is built on nteract_ and renders Altair charts
-  via the ``mimetype`` renderer.
 
 Altair Viewer
 ~~~~~~~~~~~~~

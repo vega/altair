@@ -30,6 +30,9 @@ def test_chart_with_no_interactivity(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            # With the "vegafusion" transformer, the spec is not computed until the front-end
+            # sets the local_tz. Assign this property manually to simulate this.
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -59,6 +62,7 @@ def test_interval_selection_example(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -126,6 +130,7 @@ def test_index_selection_example(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()
@@ -185,6 +190,7 @@ def test_point_selection(transformer):
         widget = alt.JupyterChart(chart)
 
         if transformer == "vegafusion":
+            widget.local_tz = "UTC"
             assert widget.spec == chart.to_dict(format="vega")
         else:
             assert widget.spec == chart.to_dict()

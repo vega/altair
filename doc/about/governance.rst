@@ -11,5 +11,5 @@ The Altair-Viz organization is governed by the documents that reside in the
 Project Governance
 ------------------
 The Vega-Altair library is governed by the documents that reside in the
-`project-docs <https://github.com/vega/.github/blob/main/org-docs/>`_ directory of
+`project-docs <https://github.com/vega/.github/blob/main/project-docs/>`_ directory of
 the Vega Organizational GitHub repository.
