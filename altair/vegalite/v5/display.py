@@ -86,9 +86,13 @@ def svg_renderer(spec: dict, **metadata) -> Dict[str, str]:
     )
 
 
-def jupyter_renderer(spec: dict):
+def jupyter_renderer(spec: dict, **metadata):
     """Render chart using the JupyterChart Jupyter Widget"""
     from altair import Chart, JupyterChart
+
+    # Configure offline mode
+    offline = metadata.get("offline", False)
+    JupyterChart.enable_offline(offline=offline)
 
     # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_
     # conditionally defined in AnyWidget
