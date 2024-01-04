@@ -183,7 +183,8 @@ class SchemaInfo:
         self,
         for_type_hints: bool = False,
         altair_classes_prefix: Optional[str] = None,
-    ) -> str:
+        return_as_str: bool = True,
+    ) -> Union[str, List[str]]:
         # This is a list of all types which can be used for the current SchemaInfo.
         # This includes Altair classes, standard Python types, etc.
         type_representations: List[str] = []
@@ -235,6 +236,7 @@ class SchemaInfo:
                     s.get_python_type_representation(
                         for_type_hints=for_type_hints,
                         altair_classes_prefix=altair_classes_prefix,
+                        return_as_str=False,
                     )
                     for s in self.anyOf
                 ]
@@ -285,12 +287,15 @@ class SchemaInfo:
             raise ValueError("No Python type representation available for this schema")
 
         type_representations = sorted(set(flatten(type_representations)))
-        type_representations_str = ", ".join(type_representations)
-        # If it's not for_type_hints but instead for the docstrings, we don't want
-        # to include Union as it just clutters the docstrings.
-        if len(type_representations) > 1 and for_type_hints:
-            type_representations_str = f"Union[{type_representations_str}]"
-        return type_representations_str
+        if return_as_str:
+            type_representations_str = ", ".join(type_representations)
+            # If it's not for_type_hints but instead for the docstrings, we don't want
+            # to include Union as it just clutters the docstrings.
+            if len(type_representations) > 1 and for_type_hints:
+                type_representations_str = f"Union[{type_representations_str}]"
+            return type_representations_str
+        else:
+            return type_representations
 
     @property
     def properties(self) -> SchemaProperties:
