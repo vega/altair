@@ -287,8 +287,21 @@ class SchemaInfo:
             raise ValueError("No Python type representation available for this schema")
 
         # Shorter types are usually the more relevant ones, e.g. `str` instead
-        # of `SchemaBase`
-        type_representations = sorted(set(flatten(type_representations)), key=len)
+        # of `SchemaBase`. Output order from set is non-deterministic -> If
+        # types have same length names, order would be non-deterministic as it is
+        # returned from sort. Hence, we sort as well by type name as a tie-breaker,
+        # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
+        # for more infos.
+        type_representations = sorted(
+            # Using lower as we don't want to prefer uppercase such as "None" over
+            # "str"
+            set(flatten(type_representations)),
+            key=lambda x: x.lower(),
+        )  # Secondary sort
+        type_representations = sorted(
+            type_representations,
+            key=len,
+        )  # Primary sort
         if return_as_str:
             type_representations_str = ", ".join(type_representations)
             # If it's not for_type_hints but instead for the docstrings, we don't want

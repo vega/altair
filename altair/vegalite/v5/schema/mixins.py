@@ -31,27 +31,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -60,8 +60,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -245,22 +245,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -309,31 +309,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -488,17 +488,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -524,13 +524,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -559,62 +559,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -778,11 +778,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -794,73 +794,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -973,27 +973,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -1002,8 +1002,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -1187,22 +1187,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -1251,31 +1251,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -1430,17 +1430,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -1466,13 +1466,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -1501,62 +1501,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -1720,11 +1720,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -1736,73 +1736,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -1915,27 +1915,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -1944,8 +1944,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -2129,22 +2129,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -2193,31 +2193,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -2372,17 +2372,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -2408,13 +2408,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -2443,62 +2443,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -2662,11 +2662,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -2678,73 +2678,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -2857,27 +2857,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -2886,8 +2886,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -3071,22 +3071,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -3135,31 +3135,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -3314,17 +3314,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -3350,13 +3350,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -3385,62 +3385,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -3604,11 +3604,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -3620,73 +3620,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -3799,27 +3799,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -3828,8 +3828,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -4013,22 +4013,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -4077,31 +4077,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -4256,17 +4256,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -4292,13 +4292,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -4327,62 +4327,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -4546,11 +4546,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -4562,73 +4562,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -4741,27 +4741,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -4770,8 +4770,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -4955,22 +4955,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -5019,31 +5019,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -5198,17 +5198,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -5234,13 +5234,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -5269,62 +5269,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -5488,11 +5488,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -5504,73 +5504,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -5683,27 +5683,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -5712,8 +5712,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -5897,22 +5897,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -5961,31 +5961,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -6140,17 +6140,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -6176,13 +6176,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -6211,62 +6211,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -6430,11 +6430,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -6446,73 +6446,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -6625,27 +6625,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -6654,8 +6654,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -6839,22 +6839,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -6903,31 +6903,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -7082,17 +7082,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -7118,13 +7118,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -7153,62 +7153,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -7372,11 +7372,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -7388,73 +7388,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -7567,27 +7567,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -7596,8 +7596,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -7781,22 +7781,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -7845,31 +7845,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -8024,17 +8024,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -8060,13 +8060,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -8095,62 +8095,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -8314,11 +8314,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -8330,73 +8330,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -8509,27 +8509,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -8538,8 +8538,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -8723,22 +8723,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -8787,31 +8787,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -8966,17 +8966,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -9002,13 +9002,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -9037,62 +9037,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -9256,11 +9256,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -9272,73 +9272,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -9451,27 +9451,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -9480,8 +9480,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -9665,22 +9665,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -9729,31 +9729,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -9908,17 +9908,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -9944,13 +9944,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -9979,62 +9979,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -10198,11 +10198,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -10214,73 +10214,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -10393,27 +10393,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -10422,8 +10422,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -10607,22 +10607,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -10671,31 +10671,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -10850,17 +10850,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -10886,13 +10886,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -10921,62 +10921,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -11140,11 +11140,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -11156,73 +11156,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -11335,27 +11335,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -11364,8 +11364,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -11549,22 +11549,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -11613,31 +11613,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -11792,17 +11792,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -11828,13 +11828,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -11863,62 +11863,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -12082,11 +12082,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -12098,73 +12098,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -12277,27 +12277,27 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
                 str,
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal["top", "middle", "bottom"],
             ],
             UndefinedType,
@@ -12306,8 +12306,8 @@ class MarkMethodMixin:
         blend: Union[
             Union[
                 dict,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     None,
                     "multiply",
@@ -12491,22 +12491,22 @@ class MarkMethodMixin:
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
@@ -12555,31 +12555,31 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dir: Union[
-            Union[dict, core.SchemaBase, core._Parameter, Literal["ltr", "rtl"]],
+            Union[dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"]],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
             Union[dict, float, core.SchemaBase], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -12734,17 +12734,17 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         fontWeight: Union[
             Union[
@@ -12770,13 +12770,13 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         innerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
@@ -12805,62 +12805,62 @@ class MarkMethodMixin:
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
-        line: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        line: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         order: Union[Union[bool, None], UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[str, dict, bool, core.SchemaBase], UndefinedType
+            Union[str, bool, dict, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[dict, bool, core.SchemaBase, core._Parameter], UndefinedType
+            Union[bool, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 str,
                 dict,
                 None,
-                core.SchemaBase,
                 core._Parameter,
+                core.SchemaBase,
                 Literal[
                     "black",
                     "silver",
@@ -13024,11 +13024,11 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[dict, Sequence[float], core.SchemaBase, core._Parameter],
+            Union[dict, core._Parameter, core.SchemaBase, Sequence[float]],
             UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
@@ -13040,73 +13040,73 @@ class MarkMethodMixin:
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         style: Union[Union[str, Sequence[str]], UndefinedType] = Undefined,
         tension: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[str, dict, Sequence[str], core.SchemaBase, core._Parameter],
+            Union[str, dict, Sequence[str], core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[str, dict, bool, None, float, core.SchemaBase, core._Parameter],
+            Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase],
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[str, dict, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         width: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[str, dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[str, dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[dict, float, core.SchemaBase, core._Parameter], UndefinedType
+            Union[dict, float, core._Parameter, core.SchemaBase], UndefinedType
         ] = Undefined,
         **kwds,
     ) -> Self:
@@ -13209,7 +13209,7 @@ class MarkMethodMixin:
 
     def mark_boxplot(
         self,
-        box: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        box: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
@@ -13372,15 +13372,15 @@ class MarkMethodMixin:
         ] = Undefined,
         extent: Union[Union[str, float], UndefinedType] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        median: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        median: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
-        outliers: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
-        rule: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        outliers: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
+        rule: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        ticks: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)"""
@@ -13576,10 +13576,10 @@ class MarkMethodMixin:
         orient: Union[
             Union[core.SchemaBase, Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
-        rule: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        rule: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
-        ticks: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        ticks: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)"""
@@ -13604,8 +13604,8 @@ class MarkMethodMixin:
 
     def mark_errorband(
         self,
-        band: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
-        borders: Union[Union[dict, bool, core.SchemaBase], UndefinedType] = Undefined,
+        band: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
+        borders: Union[Union[bool, dict, core.SchemaBase], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
