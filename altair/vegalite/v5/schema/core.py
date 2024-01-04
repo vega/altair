@@ -48,8 +48,6 @@ class VegaLiteSchema(SchemaBase):
 
 class Root(VegaLiteSchema):
     """Root schema wrapper
-
-    dict, :class:`SchemaBase`
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
@@ -61,12 +59,7 @@ class Root(VegaLiteSchema):
 
 
 class Aggregate(VegaLiteSchema):
-    """Aggregate schema wrapper
-
-    dict, :class:`SchemaBase`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median',
-    'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum',
-    'valid', 'values', 'variance', 'variancep']
-    """
+    """Aggregate schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Aggregate"}
 
@@ -75,12 +68,7 @@ class Aggregate(VegaLiteSchema):
 
 
 class AggregateOp(VegaLiteSchema):
-    """AggregateOp schema wrapper
-
-    :class:`SchemaBase`, Literal['argmax', 'argmin', 'average', 'count', 'distinct', 'max',
-    'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev',
-    'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep']
-    """
+    """AggregateOp schema wrapper"""
 
     _schema = {"$ref": "#/definitions/AggregateOp"}
 
@@ -90,8 +78,6 @@ class AggregateOp(VegaLiteSchema):
 
 class AggregatedFieldDef(VegaLiteSchema):
     """AggregatedFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -147,10 +133,7 @@ class AggregatedFieldDef(VegaLiteSchema):
 
 
 class Align(VegaLiteSchema):
-    """Align schema wrapper
-
-    :class:`SchemaBase`, Literal['left', 'center', 'right']
-    """
+    """Align schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Align"}
 
@@ -159,11 +142,7 @@ class Align(VegaLiteSchema):
 
 
 class AnyMark(VegaLiteSchema):
-    """AnyMark schema wrapper
-
-    str, dict, :class:`SchemaBase`, Literal['arc', 'area', 'bar', 'image', 'line', 'point',
-    'rect', 'rule', 'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
-    """
+    """AnyMark schema wrapper"""
 
     _schema = {"$ref": "#/definitions/AnyMark"}
 
@@ -172,10 +151,7 @@ class AnyMark(VegaLiteSchema):
 
 
 class AnyMarkConfig(VegaLiteSchema):
-    """AnyMarkConfig schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """AnyMarkConfig schema wrapper"""
 
     _schema = {"$ref": "#/definitions/AnyMarkConfig"}
 
@@ -185,8 +161,6 @@ class AnyMarkConfig(VegaLiteSchema):
 
 class AreaConfig(AnyMarkConfig):
     """AreaConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -1422,8 +1396,6 @@ class AreaConfig(AnyMarkConfig):
 class ArgmaxDef(Aggregate):
     """ArgmaxDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -1442,8 +1414,6 @@ class ArgmaxDef(Aggregate):
 class ArgminDef(Aggregate):
     """ArgminDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -1461,8 +1431,6 @@ class ArgminDef(Aggregate):
 
 class AutoSizeParams(VegaLiteSchema):
     """AutoSizeParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -1507,10 +1475,7 @@ class AutoSizeParams(VegaLiteSchema):
 
 
 class AutosizeType(VegaLiteSchema):
-    """AutosizeType schema wrapper
-
-    :class:`SchemaBase`, Literal['pad', 'none', 'fit', 'fit-x', 'fit-y']
-    """
+    """AutosizeType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/AutosizeType"}
 
@@ -1520,8 +1485,6 @@ class AutosizeType(VegaLiteSchema):
 
 class Axis(VegaLiteSchema):
     """Axis schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -3062,8 +3025,6 @@ class Axis(VegaLiteSchema):
 
 class AxisConfig(VegaLiteSchema):
     """AxisConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -4607,10 +4568,7 @@ class AxisConfig(VegaLiteSchema):
 
 
 class AxisOrient(VegaLiteSchema):
-    """AxisOrient schema wrapper
-
-    :class:`SchemaBase`, Literal['top', 'bottom', 'left', 'right']
-    """
+    """AxisOrient schema wrapper"""
 
     _schema = {"$ref": "#/definitions/AxisOrient"}
 
@@ -4620,8 +4578,6 @@ class AxisOrient(VegaLiteSchema):
 
 class AxisResolveMap(VegaLiteSchema):
     """AxisResolveMap schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -4649,8 +4605,6 @@ class AxisResolveMap(VegaLiteSchema):
 
 class BBox(VegaLiteSchema):
     """BBox schema wrapper
-
-    Sequence[float], :class:`SchemaBase`
     Bounding box https://tools.ietf.org/html/rfc7946#section-5
     """
 
@@ -4662,8 +4616,6 @@ class BBox(VegaLiteSchema):
 
 class BarConfig(AnyMarkConfig):
     """BarConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -5901,8 +5853,6 @@ class BarConfig(AnyMarkConfig):
 class BaseTitleNoValueRefs(VegaLiteSchema):
     """BaseTitleNoValueRefs schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -6444,10 +6394,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
 
 
 class BinExtent(VegaLiteSchema):
-    """BinExtent schema wrapper
-
-    dict, Sequence[float], :class:`SchemaBase`
-    """
+    """BinExtent schema wrapper"""
 
     _schema = {"$ref": "#/definitions/BinExtent"}
 
@@ -6457,8 +6404,6 @@ class BinExtent(VegaLiteSchema):
 
 class BinParams(VegaLiteSchema):
     """BinParams schema wrapper
-
-    dict, :class:`SchemaBase`
     Binning properties or boolean flag for determining whether to bin data or not.
 
     Parameters
@@ -6539,10 +6484,7 @@ class BinParams(VegaLiteSchema):
 
 
 class Binding(VegaLiteSchema):
-    """Binding schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Binding schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Binding"}
 
@@ -6552,8 +6494,6 @@ class Binding(VegaLiteSchema):
 
 class BindCheckbox(Binding):
     """BindCheckbox schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -6590,8 +6530,6 @@ class BindCheckbox(Binding):
 class BindDirect(Binding):
     """BindDirect schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -6626,8 +6564,6 @@ class BindDirect(Binding):
 
 class BindInput(Binding):
     """BindInput schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -6680,8 +6616,6 @@ class BindInput(Binding):
 class BindRadioSelect(Binding):
     """BindRadioSelect schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -6729,8 +6663,6 @@ class BindRadioSelect(Binding):
 
 class BindRange(Binding):
     """BindRange schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -6784,20 +6716,7 @@ class BindRange(Binding):
 
 
 class BinnedTimeUnit(VegaLiteSchema):
-    """BinnedTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['binnedyear', 'binnedyearquarter', 'binnedyearquartermonth',
-    'binnedyearmonth', 'binnedyearmonthdate', 'binnedyearmonthdatehours',
-    'binnedyearmonthdatehoursminutes', 'binnedyearmonthdatehoursminutesseconds',
-    'binnedyearweek', 'binnedyearweekday', 'binnedyearweekdayhours',
-    'binnedyearweekdayhoursminutes', 'binnedyearweekdayhoursminutesseconds',
-    'binnedyeardayofyear'], Literal['binnedutcyear', 'binnedutcyearquarter',
-    'binnedutcyearquartermonth', 'binnedutcyearmonth', 'binnedutcyearmonthdate',
-    'binnedutcyearmonthdatehours', 'binnedutcyearmonthdatehoursminutes',
-    'binnedutcyearmonthdatehoursminutesseconds', 'binnedutcyearweek', 'binnedutcyearweekday',
-    'binnedutcyearweekdayhours', 'binnedutcyearweekdayhoursminutes',
-    'binnedutcyearweekdayhoursminutesseconds', 'binnedutcyeardayofyear']
-    """
+    """BinnedTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/BinnedTimeUnit"}
 
@@ -6806,12 +6725,7 @@ class BinnedTimeUnit(VegaLiteSchema):
 
 
 class Blend(VegaLiteSchema):
-    """Blend schema wrapper
-
-    :class:`SchemaBase`, Literal[None, 'multiply', 'screen', 'overlay', 'darken', 'lighten',
-    'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue',
-    'saturation', 'color', 'luminosity']
-    """
+    """Blend schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Blend"}
 
@@ -6821,8 +6735,6 @@ class Blend(VegaLiteSchema):
 
 class BoxPlotConfig(VegaLiteSchema):
     """BoxPlotConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -6880,8 +6792,6 @@ class BoxPlotConfig(VegaLiteSchema):
 
 class BrushConfig(VegaLiteSchema):
     """BrushConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -7289,32 +7199,7 @@ class BrushConfig(VegaLiteSchema):
 
 
 class Color(VegaLiteSchema):
-    """Color schema wrapper
-
-    str, :class:`SchemaBase`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red',
-    'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua',
-    'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque',
-    'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse',
-    'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue',
-    'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki',
-    'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon',
-    'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise',
-    'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick',
-    'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow',
-    'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender',
-    'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan',
-    'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon',
-    'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue',
-    'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue',
-    'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen',
-    'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin',
-    'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen',
-    'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum',
-    'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen',
-    'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow',
-    'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat',
-    'whitesmoke', 'yellowgreen', 'rebeccapurple']
-    """
+    """Color schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Color"}
 
@@ -7323,10 +7208,7 @@ class Color(VegaLiteSchema):
 
 
 class ColorDef(VegaLiteSchema):
-    """ColorDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ColorDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ColorDef"}
 
@@ -7335,32 +7217,7 @@ class ColorDef(VegaLiteSchema):
 
 
 class ColorName(Color):
-    """ColorName schema wrapper
-
-    :class:`SchemaBase`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple',
-    'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange',
-    'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond',
-    'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral',
-    'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod',
-    'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen',
-    'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue',
-    'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue',
-    'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro',
-    'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink',
-    'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen',
-    'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray',
-    'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue',
-    'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen',
-    'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple',
-    'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise',
-    'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite',
-    'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen',
-    'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum',
-    'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen',
-    'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow',
-    'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat',
-    'whitesmoke', 'yellowgreen', 'rebeccapurple']
-    """
+    """ColorName schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ColorName"}
 
@@ -7369,72 +7226,7 @@ class ColorName(Color):
 
 
 class ColorScheme(VegaLiteSchema):
-    """ColorScheme schema wrapper
-
-    :class:`SchemaBase`, Literal['rainbow', 'sinebow'], Literal['blues', 'tealblues', 'teals',
-    'greens', 'browns', 'greys', 'purples', 'warmgreys', 'reds', 'oranges'], Literal['accent',
-    'category10', 'category20', 'category20b', 'category20c', 'dark2', 'paired', 'pastel1',
-    'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20'], Literal['blueorange',
-    'blueorange-3', 'blueorange-4', 'blueorange-5', 'blueorange-6', 'blueorange-7',
-    'blueorange-8', 'blueorange-9', 'blueorange-10', 'blueorange-11', 'brownbluegreen',
-    'brownbluegreen-3', 'brownbluegreen-4', 'brownbluegreen-5', 'brownbluegreen-6',
-    'brownbluegreen-7', 'brownbluegreen-8', 'brownbluegreen-9', 'brownbluegreen-10',
-    'brownbluegreen-11', 'purplegreen', 'purplegreen-3', 'purplegreen-4', 'purplegreen-5',
-    'purplegreen-6', 'purplegreen-7', 'purplegreen-8', 'purplegreen-9', 'purplegreen-10',
-    'purplegreen-11', 'pinkyellowgreen', 'pinkyellowgreen-3', 'pinkyellowgreen-4',
-    'pinkyellowgreen-5', 'pinkyellowgreen-6', 'pinkyellowgreen-7', 'pinkyellowgreen-8',
-    'pinkyellowgreen-9', 'pinkyellowgreen-10', 'pinkyellowgreen-11', 'purpleorange',
-    'purpleorange-3', 'purpleorange-4', 'purpleorange-5', 'purpleorange-6', 'purpleorange-7',
-    'purpleorange-8', 'purpleorange-9', 'purpleorange-10', 'purpleorange-11', 'redblue',
-    'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6', 'redblue-7', 'redblue-8', 'redblue-9',
-    'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3', 'redgrey-4', 'redgrey-5', 'redgrey-6',
-    'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10', 'redgrey-11', 'redyellowblue',
-    'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5', 'redyellowblue-6',
-    'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9', 'redyellowblue-10',
-    'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3', 'redyellowgreen-4',
-    'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7', 'redyellowgreen-8',
-    'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11', 'spectral', 'spectral-3',
-    'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9',
-    'spectral-10', 'spectral-11'], Literal['turbo', 'viridis', 'inferno', 'magma', 'plasma',
-    'cividis', 'bluegreen', 'bluegreen-3', 'bluegreen-4', 'bluegreen-5', 'bluegreen-6',
-    'bluegreen-7', 'bluegreen-8', 'bluegreen-9', 'bluepurple', 'bluepurple-3', 'bluepurple-4',
-    'bluepurple-5', 'bluepurple-6', 'bluepurple-7', 'bluepurple-8', 'bluepurple-9', 'goldgreen',
-    'goldgreen-3', 'goldgreen-4', 'goldgreen-5', 'goldgreen-6', 'goldgreen-7', 'goldgreen-8',
-    'goldgreen-9', 'goldorange', 'goldorange-3', 'goldorange-4', 'goldorange-5', 'goldorange-6',
-    'goldorange-7', 'goldorange-8', 'goldorange-9', 'goldred', 'goldred-3', 'goldred-4',
-    'goldred-5', 'goldred-6', 'goldred-7', 'goldred-8', 'goldred-9', 'greenblue', 'greenblue-3',
-    'greenblue-4', 'greenblue-5', 'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9',
-    'orangered', 'orangered-3', 'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7',
-    'orangered-8', 'orangered-9', 'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4',
-    'purplebluegreen-5', 'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8',
-    'purplebluegreen-9', 'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5',
-    'purpleblue-6', 'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3',
-    'purplered-4', 'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9',
-    'redpurple', 'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7',
-    'redpurple-8', 'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4',
-    'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8',
-    'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5',
-    'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown',
-    'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6',
-    'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered',
-    'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6',
-    'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9', 'darkblue', 'darkblue-3',
-    'darkblue-4', 'darkblue-5', 'darkblue-6', 'darkblue-7', 'darkblue-8', 'darkblue-9',
-    'darkgold', 'darkgold-3', 'darkgold-4', 'darkgold-5', 'darkgold-6', 'darkgold-7',
-    'darkgold-8', 'darkgold-9', 'darkgreen', 'darkgreen-3', 'darkgreen-4', 'darkgreen-5',
-    'darkgreen-6', 'darkgreen-7', 'darkgreen-8', 'darkgreen-9', 'darkmulti', 'darkmulti-3',
-    'darkmulti-4', 'darkmulti-5', 'darkmulti-6', 'darkmulti-7', 'darkmulti-8', 'darkmulti-9',
-    'darkred', 'darkred-3', 'darkred-4', 'darkred-5', 'darkred-6', 'darkred-7', 'darkred-8',
-    'darkred-9', 'lightgreyred', 'lightgreyred-3', 'lightgreyred-4', 'lightgreyred-5',
-    'lightgreyred-6', 'lightgreyred-7', 'lightgreyred-8', 'lightgreyred-9', 'lightgreyteal',
-    'lightgreyteal-3', 'lightgreyteal-4', 'lightgreyteal-5', 'lightgreyteal-6',
-    'lightgreyteal-7', 'lightgreyteal-8', 'lightgreyteal-9', 'lightmulti', 'lightmulti-3',
-    'lightmulti-4', 'lightmulti-5', 'lightmulti-6', 'lightmulti-7', 'lightmulti-8',
-    'lightmulti-9', 'lightorange', 'lightorange-3', 'lightorange-4', 'lightorange-5',
-    'lightorange-6', 'lightorange-7', 'lightorange-8', 'lightorange-9', 'lighttealblue',
-    'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6',
-    'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
-    """
+    """ColorScheme schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ColorScheme"}
 
@@ -7443,12 +7235,7 @@ class ColorScheme(VegaLiteSchema):
 
 
 class Categorical(ColorScheme):
-    """Categorical schema wrapper
-
-    :class:`SchemaBase`, Literal['accent', 'category10', 'category20', 'category20b',
-    'category20c', 'dark2', 'paired', 'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10',
-    'tableau20']
-    """
+    """Categorical schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Categorical"}
 
@@ -7457,10 +7244,7 @@ class Categorical(ColorScheme):
 
 
 class CompositeMark(AnyMark):
-    """CompositeMark schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """CompositeMark schema wrapper"""
 
     _schema = {"$ref": "#/definitions/CompositeMark"}
 
@@ -7469,10 +7253,7 @@ class CompositeMark(AnyMark):
 
 
 class BoxPlot(CompositeMark):
-    """BoxPlot schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """BoxPlot schema wrapper"""
 
     _schema = {"$ref": "#/definitions/BoxPlot"}
 
@@ -7481,10 +7262,7 @@ class BoxPlot(CompositeMark):
 
 
 class CompositeMarkDef(AnyMark):
-    """CompositeMarkDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """CompositeMarkDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/CompositeMarkDef"}
 
@@ -7494,8 +7272,6 @@ class CompositeMarkDef(AnyMark):
 
 class BoxPlotDef(CompositeMarkDef):
     """BoxPlotDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -7761,8 +7537,6 @@ class BoxPlotDef(CompositeMarkDef):
 class CompositionConfig(VegaLiteSchema):
     """CompositionConfig schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -7804,10 +7578,7 @@ class CompositionConfig(VegaLiteSchema):
 
 
 class ConditionalAxisColor(VegaLiteSchema):
-    """ConditionalAxisColor schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisColor schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisColor"}
 
@@ -7816,10 +7587,7 @@ class ConditionalAxisColor(VegaLiteSchema):
 
 
 class ConditionalAxisLabelAlign(VegaLiteSchema):
-    """ConditionalAxisLabelAlign schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisLabelAlign schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelAlign"}
 
@@ -7828,10 +7596,7 @@ class ConditionalAxisLabelAlign(VegaLiteSchema):
 
 
 class ConditionalAxisLabelBaseline(VegaLiteSchema):
-    """ConditionalAxisLabelBaseline schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisLabelBaseline schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelBaseline"}
 
@@ -7840,10 +7605,7 @@ class ConditionalAxisLabelBaseline(VegaLiteSchema):
 
 
 class ConditionalAxisLabelFontStyle(VegaLiteSchema):
-    """ConditionalAxisLabelFontStyle schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisLabelFontStyle schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelFontStyle"}
 
@@ -7852,10 +7614,7 @@ class ConditionalAxisLabelFontStyle(VegaLiteSchema):
 
 
 class ConditionalAxisLabelFontWeight(VegaLiteSchema):
-    """ConditionalAxisLabelFontWeight schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisLabelFontWeight schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisLabelFontWeight"}
 
@@ -7864,10 +7623,7 @@ class ConditionalAxisLabelFontWeight(VegaLiteSchema):
 
 
 class ConditionalAxisNumber(VegaLiteSchema):
-    """ConditionalAxisNumber schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisNumber schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisNumber"}
 
@@ -7876,10 +7632,7 @@ class ConditionalAxisNumber(VegaLiteSchema):
 
 
 class ConditionalAxisNumberArray(VegaLiteSchema):
-    """ConditionalAxisNumberArray schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisNumberArray schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisNumberArray"}
 
@@ -7888,10 +7641,7 @@ class ConditionalAxisNumberArray(VegaLiteSchema):
 
 
 class ConditionalAxisPropertyAlignnull(VegaLiteSchema):
-    """ConditionalAxisPropertyAlignnull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertyAlignnull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(Align|null)>"}
 
@@ -7900,10 +7650,7 @@ class ConditionalAxisPropertyAlignnull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertyColornull(VegaLiteSchema):
-    """ConditionalAxisPropertyColornull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertyColornull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(Color|null)>"}
 
@@ -7912,10 +7659,7 @@ class ConditionalAxisPropertyColornull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertyFontStylenull(VegaLiteSchema):
-    """ConditionalAxisPropertyFontStylenull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertyFontStylenull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(FontStyle|null)>"}
 
@@ -7924,10 +7668,7 @@ class ConditionalAxisPropertyFontStylenull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertyFontWeightnull(VegaLiteSchema):
-    """ConditionalAxisPropertyFontWeightnull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertyFontWeightnull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(FontWeight|null)>"}
 
@@ -7936,10 +7677,7 @@ class ConditionalAxisPropertyFontWeightnull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertyTextBaselinenull(VegaLiteSchema):
-    """ConditionalAxisPropertyTextBaselinenull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertyTextBaselinenull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(TextBaseline|null)>"}
 
@@ -7948,10 +7686,7 @@ class ConditionalAxisPropertyTextBaselinenull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertynumberArraynull(VegaLiteSchema):
-    """ConditionalAxisPropertynumberArraynull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertynumberArraynull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(number[]|null)>"}
 
@@ -7960,10 +7695,7 @@ class ConditionalAxisPropertynumberArraynull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertynumbernull(VegaLiteSchema):
-    """ConditionalAxisPropertynumbernull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertynumbernull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(number|null)>"}
 
@@ -7972,10 +7704,7 @@ class ConditionalAxisPropertynumbernull(VegaLiteSchema):
 
 
 class ConditionalAxisPropertystringnull(VegaLiteSchema):
-    """ConditionalAxisPropertystringnull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisPropertystringnull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisProperty<(string|null)>"}
 
@@ -7984,10 +7713,7 @@ class ConditionalAxisPropertystringnull(VegaLiteSchema):
 
 
 class ConditionalAxisString(VegaLiteSchema):
-    """ConditionalAxisString schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalAxisString schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalAxisString"}
 
@@ -7996,10 +7722,7 @@ class ConditionalAxisString(VegaLiteSchema):
 
 
 class ConditionalMarkPropFieldOrDatumDef(VegaLiteSchema):
-    """ConditionalMarkPropFieldOrDatumDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalMarkPropFieldOrDatumDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalMarkPropFieldOrDatumDef"}
 
@@ -8008,10 +7731,7 @@ class ConditionalMarkPropFieldOrDatumDef(VegaLiteSchema):
 
 
 class ConditionalMarkPropFieldOrDatumDefTypeForShape(VegaLiteSchema):
-    """ConditionalMarkPropFieldOrDatumDefTypeForShape schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalMarkPropFieldOrDatumDefTypeForShape schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalMarkPropFieldOrDatumDef<TypeForShape>"}
 
@@ -8022,10 +7742,7 @@ class ConditionalMarkPropFieldOrDatumDefTypeForShape(VegaLiteSchema):
 
 
 class ConditionalParameterMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatumDef):
-    """ConditionalParameterMarkPropFieldOrDatumDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalParameterMarkPropFieldOrDatumDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalParameter<MarkPropFieldOrDatumDef>"}
 
@@ -8036,10 +7753,7 @@ class ConditionalParameterMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatu
 class ConditionalParameterMarkPropFieldOrDatumDefTypeForShape(
     ConditionalMarkPropFieldOrDatumDefTypeForShape
 ):
-    """ConditionalParameterMarkPropFieldOrDatumDefTypeForShape schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalParameterMarkPropFieldOrDatumDefTypeForShape schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalParameter<MarkPropFieldOrDatumDef<TypeForShape>>"
@@ -8052,10 +7766,7 @@ class ConditionalParameterMarkPropFieldOrDatumDefTypeForShape(
 
 
 class ConditionalPredicateMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatumDef):
-    """ConditionalPredicateMarkPropFieldOrDatumDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateMarkPropFieldOrDatumDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalPredicate<MarkPropFieldOrDatumDef>"}
 
@@ -8066,10 +7777,7 @@ class ConditionalPredicateMarkPropFieldOrDatumDef(ConditionalMarkPropFieldOrDatu
 class ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape(
     ConditionalMarkPropFieldOrDatumDefTypeForShape
 ):
-    """ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<MarkPropFieldOrDatumDef<TypeForShape>>"
@@ -8082,10 +7790,7 @@ class ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape(
 
 
 class ConditionalPredicateValueDefAlignnullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefAlignnullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefAlignnullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(Align|null)>|ExprRef)>"
@@ -8098,10 +7803,7 @@ class ConditionalPredicateValueDefAlignnullExprRef(VegaLiteSchema):
 
 
 class ConditionalPredicateValueDefColornullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefColornullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefColornullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(Color|null)>|ExprRef)>"
@@ -8114,10 +7816,7 @@ class ConditionalPredicateValueDefColornullExprRef(VegaLiteSchema):
 
 
 class ConditionalPredicateValueDefFontStylenullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefFontStylenullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefFontStylenullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(FontStyle|null)>|ExprRef)>"
@@ -8130,10 +7829,7 @@ class ConditionalPredicateValueDefFontStylenullExprRef(VegaLiteSchema):
 
 
 class ConditionalPredicateValueDefFontWeightnullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefFontWeightnullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefFontWeightnullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(FontWeight|null)>|ExprRef)>"
@@ -8146,10 +7842,7 @@ class ConditionalPredicateValueDefFontWeightnullExprRef(VegaLiteSchema):
 
 
 class ConditionalPredicateValueDefTextBaselinenullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefTextBaselinenullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefTextBaselinenullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(TextBaseline|null)>|ExprRef)>"
@@ -8162,10 +7855,7 @@ class ConditionalPredicateValueDefTextBaselinenullExprRef(VegaLiteSchema):
 
 
 class ConditionalPredicateValueDefnumberArraynullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefnumberArraynullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefnumberArraynullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(number[]|null)>|ExprRef)>"
@@ -8178,10 +7868,7 @@ class ConditionalPredicateValueDefnumberArraynullExprRef(VegaLiteSchema):
 
 
 class ConditionalPredicateValueDefnumbernullExprRef(VegaLiteSchema):
-    """ConditionalPredicateValueDefnumbernullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalPredicateValueDefnumbernullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalPredicate<(ValueDef<(number|null)>|ExprRef)>"
@@ -8194,10 +7881,7 @@ class ConditionalPredicateValueDefnumbernullExprRef(VegaLiteSchema):
 
 
 class ConditionalStringFieldDef(VegaLiteSchema):
-    """ConditionalStringFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalStringFieldDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalStringFieldDef"}
 
@@ -8207,8 +7891,6 @@ class ConditionalStringFieldDef(VegaLiteSchema):
 
 class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
     """ConditionalParameterStringFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -8591,8 +8273,6 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
     """ConditionalPredicateStringFieldDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -8967,10 +8647,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
 
 
 class ConditionalValueDefGradientstringnullExprRef(VegaLiteSchema):
-    """ConditionalValueDefGradientstringnullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefGradientstringnullExprRef schema wrapper"""
 
     _schema = {
         "$ref": "#/definitions/ConditionalValueDef<(Gradient|string|null|ExprRef)>"
@@ -8986,8 +8663,6 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
     ConditionalValueDefGradientstringnullExprRef
 ):
     """ConditionalParameterValueDefGradientstringnullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9026,8 +8701,6 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
 ):
     """ConditionalPredicateValueDefGradientstringnullExprRef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9057,10 +8730,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
 
 
 class ConditionalValueDefTextExprRef(VegaLiteSchema):
-    """ConditionalValueDefTextExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefTextExprRef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(Text|ExprRef)>"}
 
@@ -9070,8 +8740,6 @@ class ConditionalValueDefTextExprRef(VegaLiteSchema):
 
 class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
     """ConditionalParameterValueDefTextExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9106,8 +8774,6 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
 class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
     """ConditionalPredicateValueDefTextExprRef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9135,10 +8801,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
 
 class ConditionalValueDefnumber(VegaLiteSchema):
-    """ConditionalValueDefnumber schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefnumber schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<number>"}
 
@@ -9148,8 +8811,6 @@ class ConditionalValueDefnumber(VegaLiteSchema):
 
 class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
     """ConditionalParameterValueDefnumber schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9182,8 +8843,6 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
 class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
     """ConditionalPredicateValueDefnumber schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9209,10 +8868,7 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
 
 
 class ConditionalValueDefnumberArrayExprRef(VegaLiteSchema):
-    """ConditionalValueDefnumberArrayExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefnumberArrayExprRef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(number[]|ExprRef)>"}
 
@@ -9224,8 +8880,6 @@ class ConditionalParameterValueDefnumberArrayExprRef(
     ConditionalValueDefnumberArrayExprRef
 ):
     """ConditionalParameterValueDefnumberArrayExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9264,8 +8918,6 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
 ):
     """ConditionalPredicateValueDefnumberArrayExprRef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9295,10 +8947,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
 
 
 class ConditionalValueDefnumberExprRef(VegaLiteSchema):
-    """ConditionalValueDefnumberExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefnumberExprRef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(number|ExprRef)>"}
 
@@ -9308,8 +8957,6 @@ class ConditionalValueDefnumberExprRef(VegaLiteSchema):
 
 class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef):
     """ConditionalParameterValueDefnumberExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9344,8 +8991,6 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef):
     """ConditionalPredicateValueDefnumberExprRef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9373,10 +9018,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 
 
 class ConditionalValueDefstringExprRef(VegaLiteSchema):
-    """ConditionalValueDefstringExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefstringExprRef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(string|ExprRef)>"}
 
@@ -9386,8 +9028,6 @@ class ConditionalValueDefstringExprRef(VegaLiteSchema):
 
 class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef):
     """ConditionalParameterValueDefstringExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9420,8 +9060,6 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
 class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef):
     """ConditionalPredicateValueDefstringExprRef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9447,10 +9085,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
 
 
 class ConditionalValueDefstringnullExprRef(VegaLiteSchema):
-    """ConditionalValueDefstringnullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ConditionalValueDefstringnullExprRef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ConditionalValueDef<(string|null|ExprRef)>"}
 
@@ -9462,8 +9097,6 @@ class ConditionalParameterValueDefstringnullExprRef(
     ConditionalValueDefstringnullExprRef
 ):
     """ConditionalParameterValueDefstringnullExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -9502,8 +9135,6 @@ class ConditionalPredicateValueDefstringnullExprRef(
 ):
     """ConditionalPredicateValueDefstringnullExprRef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9534,8 +9165,6 @@ class ConditionalPredicateValueDefstringnullExprRef(
 
 class Config(VegaLiteSchema):
     """Config schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -10133,15 +9762,7 @@ class Config(VegaLiteSchema):
 
 
 class Cursor(VegaLiteSchema):
-    """Cursor schema wrapper
-
-    :class:`SchemaBase`, Literal['auto', 'default', 'none', 'context-menu', 'help', 'pointer',
-    'progress', 'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move',
-    'no-drop', 'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize',
-    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize',
-    'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab',
-    'grabbing']
-    """
+    """Cursor schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Cursor"}
 
@@ -10150,10 +9771,7 @@ class Cursor(VegaLiteSchema):
 
 
 class Cyclical(ColorScheme):
-    """Cyclical schema wrapper
-
-    :class:`SchemaBase`, Literal['rainbow', 'sinebow']
-    """
+    """Cyclical schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Cyclical"}
 
@@ -10162,10 +9780,7 @@ class Cyclical(ColorScheme):
 
 
 class Data(VegaLiteSchema):
-    """Data schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Data schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Data"}
 
@@ -10174,10 +9789,7 @@ class Data(VegaLiteSchema):
 
 
 class DataFormat(VegaLiteSchema):
-    """DataFormat schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """DataFormat schema wrapper"""
 
     _schema = {"$ref": "#/definitions/DataFormat"}
 
@@ -10187,8 +9799,6 @@ class DataFormat(VegaLiteSchema):
 
 class CsvDataFormat(DataFormat):
     """CsvDataFormat schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -10228,10 +9838,7 @@ class CsvDataFormat(DataFormat):
 
 
 class DataSource(Data):
-    """DataSource schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """DataSource schema wrapper"""
 
     _schema = {"$ref": "#/definitions/DataSource"}
 
@@ -10240,10 +9847,7 @@ class DataSource(Data):
 
 
 class Datasets(VegaLiteSchema):
-    """Datasets schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Datasets schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Datasets"}
 
@@ -10252,10 +9856,7 @@ class Datasets(VegaLiteSchema):
 
 
 class Day(VegaLiteSchema):
-    """Day schema wrapper
-
-    float, :class:`SchemaBase`
-    """
+    """Day schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Day"}
 
@@ -10264,10 +9865,7 @@ class Day(VegaLiteSchema):
 
 
 class Dict(VegaLiteSchema):
-    """Dict schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Dict schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Dict"}
 
@@ -10276,10 +9874,7 @@ class Dict(VegaLiteSchema):
 
 
 class DictInlineDataset(VegaLiteSchema):
-    """DictInlineDataset schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """DictInlineDataset schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Dict<InlineDataset>"}
 
@@ -10288,10 +9883,7 @@ class DictInlineDataset(VegaLiteSchema):
 
 
 class DictSelectionInit(VegaLiteSchema):
-    """DictSelectionInit schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """DictSelectionInit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Dict<SelectionInit>"}
 
@@ -10300,10 +9892,7 @@ class DictSelectionInit(VegaLiteSchema):
 
 
 class DictSelectionInitInterval(VegaLiteSchema):
-    """DictSelectionInitInterval schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """DictSelectionInitInterval schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Dict<SelectionInitInterval>"}
 
@@ -10312,30 +9901,7 @@ class DictSelectionInitInterval(VegaLiteSchema):
 
 
 class Diverging(ColorScheme):
-    """Diverging schema wrapper
-
-    :class:`SchemaBase`, Literal['blueorange', 'blueorange-3', 'blueorange-4', 'blueorange-5',
-    'blueorange-6', 'blueorange-7', 'blueorange-8', 'blueorange-9', 'blueorange-10',
-    'blueorange-11', 'brownbluegreen', 'brownbluegreen-3', 'brownbluegreen-4',
-    'brownbluegreen-5', 'brownbluegreen-6', 'brownbluegreen-7', 'brownbluegreen-8',
-    'brownbluegreen-9', 'brownbluegreen-10', 'brownbluegreen-11', 'purplegreen',
-    'purplegreen-3', 'purplegreen-4', 'purplegreen-5', 'purplegreen-6', 'purplegreen-7',
-    'purplegreen-8', 'purplegreen-9', 'purplegreen-10', 'purplegreen-11', 'pinkyellowgreen',
-    'pinkyellowgreen-3', 'pinkyellowgreen-4', 'pinkyellowgreen-5', 'pinkyellowgreen-6',
-    'pinkyellowgreen-7', 'pinkyellowgreen-8', 'pinkyellowgreen-9', 'pinkyellowgreen-10',
-    'pinkyellowgreen-11', 'purpleorange', 'purpleorange-3', 'purpleorange-4', 'purpleorange-5',
-    'purpleorange-6', 'purpleorange-7', 'purpleorange-8', 'purpleorange-9', 'purpleorange-10',
-    'purpleorange-11', 'redblue', 'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6',
-    'redblue-7', 'redblue-8', 'redblue-9', 'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3',
-    'redgrey-4', 'redgrey-5', 'redgrey-6', 'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10',
-    'redgrey-11', 'redyellowblue', 'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5',
-    'redyellowblue-6', 'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9',
-    'redyellowblue-10', 'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3',
-    'redyellowgreen-4', 'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7',
-    'redyellowgreen-8', 'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11',
-    'spectral', 'spectral-3', 'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7',
-    'spectral-8', 'spectral-9', 'spectral-10', 'spectral-11']
-    """
+    """Diverging schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Diverging"}
 
@@ -10345,8 +9911,6 @@ class Diverging(ColorScheme):
 
 class DomainUnionWith(VegaLiteSchema):
     """DomainUnionWith schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -10370,8 +9934,6 @@ class DomainUnionWith(VegaLiteSchema):
 
 class DsvDataFormat(DataFormat):
     """DsvDataFormat schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -10418,10 +9980,7 @@ class DsvDataFormat(DataFormat):
 
 
 class Element(VegaLiteSchema):
-    """Element schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """Element schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Element"}
 
@@ -10431,8 +9990,6 @@ class Element(VegaLiteSchema):
 
 class Encoding(VegaLiteSchema):
     """Encoding schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -10720,10 +10277,7 @@ class Encoding(VegaLiteSchema):
 
 
 class ErrorBand(CompositeMark):
-    """ErrorBand schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """ErrorBand schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ErrorBand"}
 
@@ -10733,8 +10287,6 @@ class ErrorBand(CompositeMark):
 
 class ErrorBandConfig(VegaLiteSchema):
     """ErrorBandConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -10827,8 +10379,6 @@ class ErrorBandConfig(VegaLiteSchema):
 
 class ErrorBandDef(CompositeMarkDef):
     """ErrorBandDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -11113,10 +10663,7 @@ class ErrorBandDef(CompositeMarkDef):
 
 
 class ErrorBar(CompositeMark):
-    """ErrorBar schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """ErrorBar schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ErrorBar"}
 
@@ -11126,8 +10673,6 @@ class ErrorBar(CompositeMark):
 
 class ErrorBarConfig(VegaLiteSchema):
     """ErrorBarConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -11179,8 +10724,6 @@ class ErrorBarConfig(VegaLiteSchema):
 
 class ErrorBarDef(CompositeMarkDef):
     """ErrorBarDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -11424,10 +10967,7 @@ class ErrorBarDef(CompositeMarkDef):
 
 
 class ErrorBarExtent(VegaLiteSchema):
-    """ErrorBarExtent schema wrapper
-
-    :class:`SchemaBase`, Literal['ci', 'iqr', 'stderr', 'stdev']
-    """
+    """ErrorBarExtent schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ErrorBarExtent"}
 
@@ -11436,10 +10976,7 @@ class ErrorBarExtent(VegaLiteSchema):
 
 
 class Expr(VegaLiteSchema):
-    """Expr schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """Expr schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Expr"}
 
@@ -11449,8 +10986,6 @@ class Expr(VegaLiteSchema):
 
 class ExprRef(VegaLiteSchema):
     """ExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -11467,8 +11002,6 @@ class ExprRef(VegaLiteSchema):
 
 class FacetEncodingFieldDef(VegaLiteSchema):
     """FacetEncodingFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -11928,8 +11461,6 @@ class FacetEncodingFieldDef(VegaLiteSchema):
 class FacetFieldDef(VegaLiteSchema):
     """FacetFieldDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -12307,8 +11838,6 @@ class FacetFieldDef(VegaLiteSchema):
 class FacetMapping(VegaLiteSchema):
     """FacetMapping schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -12331,8 +11860,6 @@ class FacetMapping(VegaLiteSchema):
 
 class FacetedEncoding(VegaLiteSchema):
     """FacetedEncoding schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -12635,8 +12162,6 @@ class FacetedEncoding(VegaLiteSchema):
 
 class Feature(VegaLiteSchema):
     """Feature schema wrapper
-
-    dict, :class:`SchemaBase`
     A feature object which contains a geometry and associated properties.
     https://tools.ietf.org/html/rfc7946#section-3.2
 
@@ -12680,8 +12205,6 @@ class Feature(VegaLiteSchema):
 
 class FeatureCollection(VegaLiteSchema):
     """FeatureCollection schema wrapper
-
-    dict, :class:`SchemaBase`
     A collection of feature objects.  https://tools.ietf.org/html/rfc7946#section-3.3
 
     Parameters
@@ -12712,8 +12235,6 @@ class FeatureCollection(VegaLiteSchema):
 
 class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
     """FeatureGeometryGeoJsonProperties schema wrapper
-
-    dict, :class:`SchemaBase`
     A feature object which contains a geometry and associated properties.
     https://tools.ietf.org/html/rfc7946#section-3.2
 
@@ -12756,10 +12277,7 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
 
 
 class Field(VegaLiteSchema):
-    """Field schema wrapper
-
-    str, dict, :class:`SchemaBase`
-    """
+    """Field schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Field"}
 
@@ -12769,8 +12287,6 @@ class Field(VegaLiteSchema):
 
 class FieldDefWithoutScale(VegaLiteSchema):
     """FieldDefWithoutScale schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
@@ -13111,10 +12627,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
 
 
 class FieldName(Field):
-    """FieldName schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """FieldName schema wrapper"""
 
     _schema = {"$ref": "#/definitions/FieldName"}
 
@@ -13124,8 +12637,6 @@ class FieldName(Field):
 
 class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
     """FieldOrDatumDefWithConditionStringFieldDefstring schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -13512,8 +13023,6 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
 class FieldRange(VegaLiteSchema):
     """FieldRange schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -13528,10 +13037,7 @@ class FieldRange(VegaLiteSchema):
 
 
 class Fit(VegaLiteSchema):
-    """Fit schema wrapper
-
-    dict, :class:`SchemaBase`, Sequence[dict, :class:`SchemaBase`]
-    """
+    """Fit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Fit"}
 
@@ -13540,10 +13046,7 @@ class Fit(VegaLiteSchema):
 
 
 class FontStyle(VegaLiteSchema):
-    """FontStyle schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """FontStyle schema wrapper"""
 
     _schema = {"$ref": "#/definitions/FontStyle"}
 
@@ -13552,11 +13055,7 @@ class FontStyle(VegaLiteSchema):
 
 
 class FontWeight(VegaLiteSchema):
-    """FontWeight schema wrapper
-
-    :class:`SchemaBase`, Literal['normal', 'bold', 'lighter', 'bolder', 100, 200, 300, 400, 500,
-    600, 700, 800, 900]
-    """
+    """FontWeight schema wrapper"""
 
     _schema = {"$ref": "#/definitions/FontWeight"}
 
@@ -13566,8 +13065,6 @@ class FontWeight(VegaLiteSchema):
 
 class FormatConfig(VegaLiteSchema):
     """FormatConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -13651,10 +13148,7 @@ class FormatConfig(VegaLiteSchema):
 
 
 class Generator(Data):
-    """Generator schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Generator schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Generator"}
 
@@ -13664,8 +13158,6 @@ class Generator(Data):
 
 class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
     """GenericUnitSpecEncodingAnyMark schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a unit (single-view) specification.
 
     Parameters
@@ -13752,8 +13244,6 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
 
 class GeoJsonFeature(Fit):
     """GeoJsonFeature schema wrapper
-
-    dict, :class:`SchemaBase`
     A feature object which contains a geometry and associated properties.
     https://tools.ietf.org/html/rfc7946#section-3.2
 
@@ -13797,8 +13287,6 @@ class GeoJsonFeature(Fit):
 
 class GeoJsonFeatureCollection(Fit):
     """GeoJsonFeatureCollection schema wrapper
-
-    dict, :class:`SchemaBase`
     A collection of feature objects.  https://tools.ietf.org/html/rfc7946#section-3.3
 
     Parameters
@@ -13828,10 +13316,7 @@ class GeoJsonFeatureCollection(Fit):
 
 
 class GeoJsonProperties(VegaLiteSchema):
-    """GeoJsonProperties schema wrapper
-
-    dict, None, :class:`SchemaBase`
-    """
+    """GeoJsonProperties schema wrapper"""
 
     _schema = {"$ref": "#/definitions/GeoJsonProperties"}
 
@@ -13841,8 +13326,6 @@ class GeoJsonProperties(VegaLiteSchema):
 
 class Geometry(VegaLiteSchema):
     """Geometry schema wrapper
-
-    dict, :class:`SchemaBase`
     Union of geometry objects. https://tools.ietf.org/html/rfc7946#section-3
     """
 
@@ -13854,8 +13337,6 @@ class Geometry(VegaLiteSchema):
 
 class GeometryCollection(Geometry):
     """GeometryCollection schema wrapper
-
-    dict, :class:`SchemaBase`
     Geometry Collection https://tools.ietf.org/html/rfc7946#section-3.1.8
 
     Parameters
@@ -13887,10 +13368,7 @@ class GeometryCollection(Geometry):
 
 
 class Gradient(VegaLiteSchema):
-    """Gradient schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Gradient schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Gradient"}
 
@@ -13900,8 +13378,6 @@ class Gradient(VegaLiteSchema):
 
 class GradientStop(VegaLiteSchema):
     """GradientStop schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -14080,8 +13556,6 @@ class GradientStop(VegaLiteSchema):
 class GraticuleGenerator(Generator):
     """GraticuleGenerator schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -14104,8 +13578,6 @@ class GraticuleGenerator(Generator):
 
 class GraticuleParams(VegaLiteSchema):
     """GraticuleParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -14165,8 +13637,6 @@ class GraticuleParams(VegaLiteSchema):
 
 class Header(VegaLiteSchema):
     """Header schema wrapper
-
-    dict, :class:`SchemaBase`
     Headers of row / column channels for faceted plots.
 
     Parameters
@@ -14817,8 +14287,6 @@ class Header(VegaLiteSchema):
 class HeaderConfig(VegaLiteSchema):
     """HeaderConfig schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -15447,10 +14915,7 @@ class HeaderConfig(VegaLiteSchema):
 
 
 class HexColor(Color):
-    """HexColor schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """HexColor schema wrapper"""
 
     _schema = {"$ref": "#/definitions/HexColor"}
 
@@ -15459,10 +14924,7 @@ class HexColor(Color):
 
 
 class ImputeMethod(VegaLiteSchema):
-    """ImputeMethod schema wrapper
-
-    :class:`SchemaBase`, Literal['value', 'median', 'max', 'min', 'mean']
-    """
+    """ImputeMethod schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ImputeMethod"}
 
@@ -15472,8 +14934,6 @@ class ImputeMethod(VegaLiteSchema):
 
 class ImputeParams(VegaLiteSchema):
     """ImputeParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -15530,8 +14990,6 @@ class ImputeParams(VegaLiteSchema):
 class ImputeSequence(VegaLiteSchema):
     """ImputeSequence schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -15558,8 +15016,6 @@ class ImputeSequence(VegaLiteSchema):
 
 class InlineData(DataSource):
     """InlineData schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -15598,11 +15054,7 @@ class InlineData(DataSource):
 
 
 class InlineDataset(VegaLiteSchema):
-    """InlineDataset schema wrapper
-
-    str, dict, Sequence[str], Sequence[bool], Sequence[dict], Sequence[float],
-    :class:`SchemaBase`
-    """
+    """InlineDataset schema wrapper"""
 
     _schema = {"$ref": "#/definitions/InlineDataset"}
 
@@ -15611,12 +15063,7 @@ class InlineDataset(VegaLiteSchema):
 
 
 class Interpolate(VegaLiteSchema):
-    """Interpolate schema wrapper
-
-    :class:`SchemaBase`, Literal['basis', 'basis-open', 'basis-closed', 'bundle', 'cardinal',
-    'cardinal-open', 'cardinal-closed', 'catmull-rom', 'linear', 'linear-closed', 'monotone',
-    'natural', 'step', 'step-before', 'step-after']
-    """
+    """Interpolate schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Interpolate"}
 
@@ -15626,8 +15073,6 @@ class Interpolate(VegaLiteSchema):
 
 class IntervalSelectionConfig(VegaLiteSchema):
     """IntervalSelectionConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -15800,8 +15245,6 @@ class IntervalSelectionConfig(VegaLiteSchema):
 class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     """IntervalSelectionConfigWithoutType schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -15963,8 +15406,6 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
 class JoinAggregateFieldDef(VegaLiteSchema):
     """JoinAggregateFieldDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -16021,8 +15462,6 @@ class JoinAggregateFieldDef(VegaLiteSchema):
 class JsonDataFormat(DataFormat):
     """JsonDataFormat schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -16069,10 +15508,7 @@ class JsonDataFormat(DataFormat):
 
 
 class LabelOverlap(VegaLiteSchema):
-    """LabelOverlap schema wrapper
-
-    str, bool, :class:`SchemaBase`
-    """
+    """LabelOverlap schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LabelOverlap"}
 
@@ -16081,10 +15517,7 @@ class LabelOverlap(VegaLiteSchema):
 
 
 class LatLongDef(VegaLiteSchema):
-    """LatLongDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """LatLongDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LatLongDef"}
 
@@ -16094,8 +15527,6 @@ class LatLongDef(VegaLiteSchema):
 
 class LatLongFieldDef(LatLongDef):
     """LatLongFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -16433,8 +15864,6 @@ class LatLongFieldDef(LatLongDef):
 class LayerRepeatMapping(VegaLiteSchema):
     """LayerRepeatMapping schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -16461,10 +15890,7 @@ class LayerRepeatMapping(VegaLiteSchema):
 
 
 class LayoutAlign(VegaLiteSchema):
-    """LayoutAlign schema wrapper
-
-    :class:`SchemaBase`, Literal['all', 'each', 'none']
-    """
+    """LayoutAlign schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LayoutAlign"}
 
@@ -16474,8 +15900,6 @@ class LayoutAlign(VegaLiteSchema):
 
 class Legend(VegaLiteSchema):
     """Legend schema wrapper
-
-    dict, :class:`SchemaBase`
     Properties of a legend or boolean flag for determining whether to show it.
 
     Parameters
@@ -18217,10 +17641,7 @@ class Legend(VegaLiteSchema):
 
 
 class LegendBinding(VegaLiteSchema):
-    """LegendBinding schema wrapper
-
-    str, dict, :class:`SchemaBase`
-    """
+    """LegendBinding schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LegendBinding"}
 
@@ -18230,8 +17651,6 @@ class LegendBinding(VegaLiteSchema):
 
 class LegendConfig(VegaLiteSchema):
     """LegendConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -20298,11 +19717,7 @@ class LegendConfig(VegaLiteSchema):
 
 
 class LegendOrient(VegaLiteSchema):
-    """LegendOrient schema wrapper
-
-    :class:`SchemaBase`, Literal['none', 'left', 'right', 'top', 'bottom', 'top-left',
-    'top-right', 'bottom-left', 'bottom-right']
-    """
+    """LegendOrient schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LegendOrient"}
 
@@ -20312,8 +19727,6 @@ class LegendOrient(VegaLiteSchema):
 
 class LegendResolveMap(VegaLiteSchema):
     """LegendResolveMap schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -20400,8 +19813,6 @@ class LegendResolveMap(VegaLiteSchema):
 class LegendStreamBinding(LegendBinding):
     """LegendStreamBinding schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -20419,8 +19830,6 @@ class LegendStreamBinding(LegendBinding):
 
 class LineConfig(AnyMarkConfig):
     """LineConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -21642,8 +21051,6 @@ class LineConfig(AnyMarkConfig):
 
 class LineString(Geometry):
     """LineString schema wrapper
-
-    dict, :class:`SchemaBase`
     LineString geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.4
 
     Parameters
@@ -21676,8 +21083,6 @@ class LineString(Geometry):
 
 class LinearGradient(Gradient):
     """LinearGradient schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -21727,8 +21132,6 @@ class LinearGradient(Gradient):
 class Locale(VegaLiteSchema):
     """Locale schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -21751,8 +21154,6 @@ class Locale(VegaLiteSchema):
 
 class LookupData(VegaLiteSchema):
     """LookupData schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -21780,8 +21181,6 @@ class LookupData(VegaLiteSchema):
 
 class LookupSelection(VegaLiteSchema):
     """LookupSelection schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -21811,9 +21210,6 @@ class LookupSelection(VegaLiteSchema):
 
 class Mark(AnyMark):
     """Mark schema wrapper
-
-    :class:`SchemaBase`, Literal['arc', 'area', 'bar', 'image', 'line', 'point', 'rect', 'rule',
-    'text', 'tick', 'trail', 'circle', 'square', 'geoshape']
     All types of primitive marks.
     """
 
@@ -21825,8 +21221,6 @@ class Mark(AnyMark):
 
 class MarkConfig(AnyMarkConfig):
     """MarkConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -23031,8 +22425,6 @@ class MarkConfig(AnyMarkConfig):
 
 class MarkDef(AnyMark):
     """MarkDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -24403,10 +23795,7 @@ class MarkDef(AnyMark):
 
 
 class MarkPropDefGradientstringnull(VegaLiteSchema):
-    """MarkPropDefGradientstringnull schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """MarkPropDefGradientstringnull schema wrapper"""
 
     _schema = {"$ref": "#/definitions/MarkPropDef<(Gradient|string|null)>"}
 
@@ -24418,8 +23807,6 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
     ColorDef, MarkPropDefGradientstringnull
 ):
     """FieldOrDatumDefWithConditionDatumDefGradientstringnull schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -24563,8 +23950,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
     ColorDef, MarkPropDefGradientstringnull
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -25024,10 +24409,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
 
 class MarkPropDefnumber(VegaLiteSchema):
-    """MarkPropDefnumber schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """MarkPropDefnumber schema wrapper"""
 
     _schema = {"$ref": "#/definitions/MarkPropDef<number>"}
 
@@ -25036,10 +24418,7 @@ class MarkPropDefnumber(VegaLiteSchema):
 
 
 class MarkPropDefnumberArray(VegaLiteSchema):
-    """MarkPropDefnumberArray schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """MarkPropDefnumberArray schema wrapper"""
 
     _schema = {"$ref": "#/definitions/MarkPropDef<number[]>"}
 
@@ -25048,10 +24427,7 @@ class MarkPropDefnumberArray(VegaLiteSchema):
 
 
 class MarkPropDefstringnullTypeForShape(VegaLiteSchema):
-    """MarkPropDefstringnullTypeForShape schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """MarkPropDefstringnullTypeForShape schema wrapper"""
 
     _schema = {"$ref": "#/definitions/MarkPropDef<(string|null),TypeForShape>"}
 
@@ -25060,11 +24436,7 @@ class MarkPropDefstringnullTypeForShape(VegaLiteSchema):
 
 
 class MarkType(VegaLiteSchema):
-    """MarkType schema wrapper
-
-    :class:`SchemaBase`, Literal['arc', 'area', 'image', 'group', 'line', 'path', 'rect',
-    'rule', 'shape', 'symbol', 'text', 'trail']
-    """
+    """MarkType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/MarkType"}
 
@@ -25073,10 +24445,7 @@ class MarkType(VegaLiteSchema):
 
 
 class Month(VegaLiteSchema):
-    """Month schema wrapper
-
-    float, :class:`SchemaBase`
-    """
+    """Month schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Month"}
 
@@ -25086,8 +24455,6 @@ class Month(VegaLiteSchema):
 
 class MultiLineString(Geometry):
     """MultiLineString schema wrapper
-
-    dict, :class:`SchemaBase`
     MultiLineString geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.5
 
     Parameters
@@ -25120,8 +24487,6 @@ class MultiLineString(Geometry):
 
 class MultiPoint(Geometry):
     """MultiPoint schema wrapper
-
-    dict, :class:`SchemaBase`
     MultiPoint geometry object.  https://tools.ietf.org/html/rfc7946#section-3.1.3
 
     Parameters
@@ -25154,8 +24519,6 @@ class MultiPoint(Geometry):
 
 class MultiPolygon(Geometry):
     """MultiPolygon schema wrapper
-
-    dict, :class:`SchemaBase`
     MultiPolygon geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.7
 
     Parameters
@@ -25190,8 +24553,6 @@ class MultiPolygon(Geometry):
 class NamedData(DataSource):
     """NamedData schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -25218,12 +24579,7 @@ class NamedData(DataSource):
 
 
 class NonArgAggregateOp(Aggregate):
-    """NonArgAggregateOp schema wrapper
-
-    :class:`SchemaBase`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min',
-    'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid',
-    'values', 'variance', 'variancep']
-    """
+    """NonArgAggregateOp schema wrapper"""
 
     _schema = {"$ref": "#/definitions/NonArgAggregateOp"}
 
@@ -25233,8 +24589,6 @@ class NonArgAggregateOp(Aggregate):
 
 class NonNormalizedSpec(VegaLiteSchema):
     """NonNormalizedSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Any specification in Vega-Lite.
     """
 
@@ -25246,8 +24600,6 @@ class NonNormalizedSpec(VegaLiteSchema):
 
 class NumberLocale(VegaLiteSchema):
     """NumberLocale schema wrapper
-
-    dict, :class:`SchemaBase`
     Locale definition for formatting numbers.
 
     Parameters
@@ -25299,10 +24651,7 @@ class NumberLocale(VegaLiteSchema):
 
 
 class NumericArrayMarkPropDef(VegaLiteSchema):
-    """NumericArrayMarkPropDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """NumericArrayMarkPropDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/NumericArrayMarkPropDef"}
 
@@ -25314,8 +24663,6 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
     MarkPropDefnumberArray, NumericArrayMarkPropDef
 ):
     """FieldOrDatumDefWithConditionDatumDefnumberArray schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -25457,8 +24804,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
     MarkPropDefnumberArray, NumericArrayMarkPropDef
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -25916,10 +25261,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
 
 class NumericMarkPropDef(VegaLiteSchema):
-    """NumericMarkPropDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """NumericMarkPropDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/NumericMarkPropDef"}
 
@@ -25929,8 +25271,6 @@ class NumericMarkPropDef(VegaLiteSchema):
 
 class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkPropDef):
     """FieldOrDatumDefWithConditionDatumDefnumber schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -26072,8 +25412,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
     MarkPropDefnumber, NumericMarkPropDef
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefnumber schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -26531,10 +25869,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
 
 class OffsetDef(VegaLiteSchema):
-    """OffsetDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """OffsetDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/OffsetDef"}
 
@@ -26544,8 +25879,6 @@ class OffsetDef(VegaLiteSchema):
 
 class OrderFieldDef(VegaLiteSchema):
     """OrderFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -26893,8 +26226,6 @@ class OrderFieldDef(VegaLiteSchema):
 class OrderOnlyDef(VegaLiteSchema):
     """OrderOnlyDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -26916,8 +26247,6 @@ class OrderOnlyDef(VegaLiteSchema):
 
 class OrderValueDef(VegaLiteSchema):
     """OrderValueDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -26951,10 +26280,7 @@ class OrderValueDef(VegaLiteSchema):
 
 
 class Orient(VegaLiteSchema):
-    """Orient schema wrapper
-
-    :class:`SchemaBase`, Literal['left', 'right', 'top', 'bottom']
-    """
+    """Orient schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Orient"}
 
@@ -26963,10 +26289,7 @@ class Orient(VegaLiteSchema):
 
 
 class Orientation(VegaLiteSchema):
-    """Orientation schema wrapper
-
-    :class:`SchemaBase`, Literal['horizontal', 'vertical']
-    """
+    """Orientation schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Orientation"}
 
@@ -26976,8 +26299,6 @@ class Orientation(VegaLiteSchema):
 
 class OverlayMarkDef(VegaLiteSchema):
     """OverlayMarkDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -28249,10 +27570,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
 
 class Padding(VegaLiteSchema):
-    """Padding schema wrapper
-
-    dict, float, :class:`SchemaBase`
-    """
+    """Padding schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Padding"}
 
@@ -28261,10 +27579,7 @@ class Padding(VegaLiteSchema):
 
 
 class ParameterExtent(BinExtent):
-    """ParameterExtent schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ParameterExtent schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ParameterExtent"}
 
@@ -28273,10 +27588,7 @@ class ParameterExtent(BinExtent):
 
 
 class ParameterName(VegaLiteSchema):
-    """ParameterName schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """ParameterName schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ParameterName"}
 
@@ -28285,10 +27597,7 @@ class ParameterName(VegaLiteSchema):
 
 
 class Parse(VegaLiteSchema):
-    """Parse schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Parse schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Parse"}
 
@@ -28297,10 +27606,7 @@ class Parse(VegaLiteSchema):
 
 
 class ParseValue(VegaLiteSchema):
-    """ParseValue schema wrapper
-
-    str, None, :class:`SchemaBase`
-    """
+    """ParseValue schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ParseValue"}
 
@@ -28310,8 +27616,6 @@ class ParseValue(VegaLiteSchema):
 
 class Point(Geometry):
     """Point schema wrapper
-
-    dict, :class:`SchemaBase`
     Point geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.2
 
     Parameters
@@ -28346,8 +27650,6 @@ class Point(Geometry):
 
 class PointSelectionConfig(VegaLiteSchema):
     """PointSelectionConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -28518,8 +27820,6 @@ class PointSelectionConfig(VegaLiteSchema):
 class PointSelectionConfigWithoutType(VegaLiteSchema):
     """PointSelectionConfigWithoutType schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -28677,10 +27977,7 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
 
 
 class PolarDef(VegaLiteSchema):
-    """PolarDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """PolarDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/PolarDef"}
 
@@ -28690,8 +27987,6 @@ class PolarDef(VegaLiteSchema):
 
 class Polygon(Geometry):
     """Polygon schema wrapper
-
-    dict, :class:`SchemaBase`
     Polygon geometry object. https://tools.ietf.org/html/rfc7946#section-3.1.6
 
     Parameters
@@ -28724,8 +28019,6 @@ class Polygon(Geometry):
 
 class Position(VegaLiteSchema):
     """Position schema wrapper
-
-    Sequence[float], :class:`SchemaBase`
     A Position is an array of coordinates. https://tools.ietf.org/html/rfc7946#section-3.1.1
     Array should contain between two and three elements. The previous GeoJSON specification
     allowed more elements (e.g., which could be used to represent M values), but the current
@@ -28739,10 +28032,7 @@ class Position(VegaLiteSchema):
 
 
 class Position2Def(VegaLiteSchema):
-    """Position2Def schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Position2Def schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Position2Def"}
 
@@ -28752,8 +28042,6 @@ class Position2Def(VegaLiteSchema):
 
 class DatumDef(LatLongDef, Position2Def):
     """DatumDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -28878,8 +28166,6 @@ class DatumDef(LatLongDef, Position2Def):
 
 class PositionDatumDefBase(PolarDef):
     """PositionDatumDefBase schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -29061,10 +28347,7 @@ class PositionDatumDefBase(PolarDef):
 
 
 class PositionDef(VegaLiteSchema):
-    """PositionDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """PositionDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/PositionDef"}
 
@@ -29074,8 +28357,6 @@ class PositionDef(VegaLiteSchema):
 
 class PositionDatumDef(PositionDef):
     """PositionDatumDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -29279,8 +28560,6 @@ class PositionDatumDef(PositionDef):
 
 class PositionFieldDef(PositionDef):
     """PositionFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -29776,8 +29055,6 @@ class PositionFieldDef(PositionDef):
 class PositionFieldDefBase(PolarDef):
     """PositionFieldDefBase schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -30250,8 +29527,6 @@ class PositionFieldDefBase(PolarDef):
 
 class PositionValueDef(PolarDef, Position2Def, PositionDef):
     """PositionValueDef schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -30277,10 +29552,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
 
 
 class PredicateComposition(VegaLiteSchema):
-    """PredicateComposition schema wrapper
-
-    str, dict, :class:`SchemaBase`
-    """
+    """PredicateComposition schema wrapper"""
 
     _schema = {"$ref": "#/definitions/PredicateComposition"}
 
@@ -30290,8 +29562,6 @@ class PredicateComposition(VegaLiteSchema):
 
 class LogicalAndPredicate(PredicateComposition):
     """LogicalAndPredicate schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -30309,8 +29579,6 @@ class LogicalAndPredicate(PredicateComposition):
 class LogicalNotPredicate(PredicateComposition):
     """LogicalNotPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -30327,8 +29595,6 @@ class LogicalNotPredicate(PredicateComposition):
 class LogicalOrPredicate(PredicateComposition):
     """LogicalOrPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -30343,10 +29609,7 @@ class LogicalOrPredicate(PredicateComposition):
 
 
 class Predicate(PredicateComposition):
-    """Predicate schema wrapper
-
-    str, dict, :class:`SchemaBase`
-    """
+    """Predicate schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Predicate"}
 
@@ -30356,8 +29619,6 @@ class Predicate(PredicateComposition):
 
 class FieldEqualPredicate(Predicate):
     """FieldEqualPredicate schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -30513,8 +29774,6 @@ class FieldEqualPredicate(Predicate):
 class FieldGTEPredicate(Predicate):
     """FieldGTEPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -30668,8 +29927,6 @@ class FieldGTEPredicate(Predicate):
 
 class FieldGTPredicate(Predicate):
     """FieldGTPredicate schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -30825,8 +30082,6 @@ class FieldGTPredicate(Predicate):
 class FieldLTEPredicate(Predicate):
     """FieldLTEPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -30981,8 +30236,6 @@ class FieldLTEPredicate(Predicate):
 class FieldLTPredicate(Predicate):
     """FieldLTPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -31136,8 +30389,6 @@ class FieldLTPredicate(Predicate):
 
 class FieldOneOfPredicate(Predicate):
     """FieldOneOfPredicate schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -31298,8 +30549,6 @@ class FieldOneOfPredicate(Predicate):
 class FieldRangePredicate(Predicate):
     """FieldRangePredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -31459,8 +30708,6 @@ class FieldRangePredicate(Predicate):
 class FieldValidPredicate(Predicate):
     """FieldValidPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -31615,8 +30862,6 @@ class FieldValidPredicate(Predicate):
 class ParameterPredicate(Predicate):
     """ParameterPredicate schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -31640,8 +30885,6 @@ class ParameterPredicate(Predicate):
 
 class Projection(VegaLiteSchema):
     """Projection schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -31890,8 +31133,6 @@ class Projection(VegaLiteSchema):
 class ProjectionConfig(VegaLiteSchema):
     """ProjectionConfig schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -32137,13 +31378,7 @@ class ProjectionConfig(VegaLiteSchema):
 
 
 class ProjectionType(VegaLiteSchema):
-    """ProjectionType schema wrapper
-
-    :class:`SchemaBase`, Literal['albers', 'albersUsa', 'azimuthalEqualArea',
-    'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 'conicEquidistant',
-    'equalEarth', 'equirectangular', 'gnomonic', 'identity', 'mercator', 'naturalEarth1',
-    'orthographic', 'stereographic', 'transverseMercator']
-    """
+    """ProjectionType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ProjectionType"}
 
@@ -32153,8 +31388,6 @@ class ProjectionType(VegaLiteSchema):
 
 class RadialGradient(Gradient):
     """RadialGradient schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -32228,8 +31461,6 @@ class RadialGradient(Gradient):
 
 class RangeConfig(VegaLiteSchema):
     """RangeConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -33133,10 +32364,7 @@ class RangeConfig(VegaLiteSchema):
 
 
 class RangeRawArray(VegaLiteSchema):
-    """RangeRawArray schema wrapper
-
-    Sequence[float], :class:`SchemaBase`
-    """
+    """RangeRawArray schema wrapper"""
 
     _schema = {"$ref": "#/definitions/RangeRawArray"}
 
@@ -33145,12 +32373,7 @@ class RangeRawArray(VegaLiteSchema):
 
 
 class RangeScheme(VegaLiteSchema):
-    """RangeScheme schema wrapper
-
-    dict, :class:`SchemaBase`, Sequence[str, bool, None, float, Sequence[float],
-    :class:`SchemaBase`], Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp',
-    'diverging', 'heatmap']
-    """
+    """RangeScheme schema wrapper"""
 
     _schema = {"$ref": "#/definitions/RangeScheme"}
 
@@ -33159,11 +32382,7 @@ class RangeScheme(VegaLiteSchema):
 
 
 class RangeEnum(RangeScheme):
-    """RangeEnum schema wrapper
-
-    :class:`SchemaBase`, Literal['width', 'height', 'symbol', 'category', 'ordinal', 'ramp',
-    'diverging', 'heatmap']
-    """
+    """RangeEnum schema wrapper"""
 
     _schema = {"$ref": "#/definitions/RangeEnum"}
 
@@ -33172,10 +32391,7 @@ class RangeEnum(RangeScheme):
 
 
 class RangeRaw(RangeScheme):
-    """RangeRaw schema wrapper
-
-    :class:`SchemaBase`, Sequence[str, bool, None, float, Sequence[float], :class:`SchemaBase`]
-    """
+    """RangeRaw schema wrapper"""
 
     _schema = {"$ref": "#/definitions/RangeRaw"}
 
@@ -33185,8 +32401,6 @@ class RangeRaw(RangeScheme):
 
 class RectConfig(AnyMarkConfig):
     """RectConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -34416,8 +33630,6 @@ class RectConfig(AnyMarkConfig):
 class RelativeBandSize(VegaLiteSchema):
     """RelativeBandSize schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -34434,8 +33646,6 @@ class RelativeBandSize(VegaLiteSchema):
 
 class RepeatMapping(VegaLiteSchema):
     """RepeatMapping schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -34459,8 +33669,6 @@ class RepeatMapping(VegaLiteSchema):
 
 class RepeatRef(Field):
     """RepeatRef schema wrapper
-
-    dict, :class:`SchemaBase`
     Reference to a repeated value.
 
     Parameters
@@ -34484,8 +33692,6 @@ class RepeatRef(Field):
 
 class Resolve(VegaLiteSchema):
     """Resolve schema wrapper
-
-    dict, :class:`SchemaBase`
     Defines how scales, axes, and legends from different specs should be combined. Resolve is a
     mapping from ``scale``, ``axis``, and ``legend`` to a mapping from channels to resolutions.
     Scales and guides can be resolved to be ``"independent"`` or ``"shared"``.
@@ -34514,10 +33720,7 @@ class Resolve(VegaLiteSchema):
 
 
 class ResolveMode(VegaLiteSchema):
-    """ResolveMode schema wrapper
-
-    :class:`SchemaBase`, Literal['independent', 'shared']
-    """
+    """ResolveMode schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ResolveMode"}
 
@@ -34527,8 +33730,6 @@ class ResolveMode(VegaLiteSchema):
 
 class RowColLayoutAlign(VegaLiteSchema):
     """RowColLayoutAlign schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -34557,8 +33758,6 @@ class RowColLayoutAlign(VegaLiteSchema):
 class RowColboolean(VegaLiteSchema):
     """RowColboolean schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -34582,8 +33781,6 @@ class RowColboolean(VegaLiteSchema):
 class RowColnumber(VegaLiteSchema):
     """RowColnumber schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -34606,8 +33803,6 @@ class RowColnumber(VegaLiteSchema):
 
 class RowColumnEncodingFieldDef(VegaLiteSchema):
     """RowColumnEncodingFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -35024,8 +34219,6 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
 
 class Scale(VegaLiteSchema):
     """Scale schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -35791,10 +34984,7 @@ class Scale(VegaLiteSchema):
 
 
 class ScaleBins(VegaLiteSchema):
-    """ScaleBins schema wrapper
-
-    dict, Sequence[float], :class:`SchemaBase`
-    """
+    """ScaleBins schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ScaleBins"}
 
@@ -35804,8 +34994,6 @@ class ScaleBins(VegaLiteSchema):
 
 class ScaleBinParams(ScaleBins):
     """ScaleBinParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -35836,8 +35024,6 @@ class ScaleBinParams(ScaleBins):
 
 class ScaleConfig(VegaLiteSchema):
     """ScaleConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -36063,8 +35249,6 @@ class ScaleConfig(VegaLiteSchema):
 class ScaleDatumDef(OffsetDef):
     """ScaleDatumDef schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -36207,8 +35391,6 @@ class ScaleDatumDef(OffsetDef):
 
 class ScaleFieldDef(OffsetDef):
     """ScaleFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -36642,11 +35824,7 @@ class ScaleFieldDef(OffsetDef):
 
 
 class ScaleInterpolateEnum(VegaLiteSchema):
-    """ScaleInterpolateEnum schema wrapper
-
-    :class:`SchemaBase`, Literal['rgb', 'lab', 'hcl', 'hsl', 'hsl-long', 'hcl-long',
-    'cubehelix', 'cubehelix-long']
-    """
+    """ScaleInterpolateEnum schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ScaleInterpolateEnum"}
 
@@ -36656,8 +35834,6 @@ class ScaleInterpolateEnum(VegaLiteSchema):
 
 class ScaleInterpolateParams(VegaLiteSchema):
     """ScaleInterpolateParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -36683,8 +35859,6 @@ class ScaleInterpolateParams(VegaLiteSchema):
 
 class ScaleResolveMap(VegaLiteSchema):
     """ScaleResolveMap schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -36805,12 +35979,7 @@ class ScaleResolveMap(VegaLiteSchema):
 
 
 class ScaleType(VegaLiteSchema):
-    """ScaleType schema wrapper
-
-    :class:`SchemaBase`, Literal['linear', 'log', 'pow', 'sqrt', 'symlog', 'identity',
-    'sequential', 'time', 'utc', 'quantile', 'quantize', 'threshold', 'bin-ordinal', 'ordinal',
-    'point', 'band']
-    """
+    """ScaleType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ScaleType"}
 
@@ -36820,8 +35989,6 @@ class ScaleType(VegaLiteSchema):
 
 class SchemeParams(VegaLiteSchema):
     """SchemeParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -37199,8 +36366,6 @@ class SchemeParams(VegaLiteSchema):
 
 class SecondaryFieldDef(Position2Def):
     """SecondaryFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -37469,8 +36634,6 @@ class SecondaryFieldDef(Position2Def):
 class SelectionConfig(VegaLiteSchema):
     """SelectionConfig schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -37504,10 +36667,7 @@ class SelectionConfig(VegaLiteSchema):
 
 
 class SelectionInit(VegaLiteSchema):
-    """SelectionInit schema wrapper
-
-    str, bool, dict, None, float, :class:`SchemaBase`
-    """
+    """SelectionInit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SelectionInit"}
 
@@ -37517,8 +36677,6 @@ class SelectionInit(VegaLiteSchema):
 
 class DateTime(SelectionInit):
     """DateTime schema wrapper
-
-    dict, :class:`SchemaBase`
     Object for defining datetime in Vega-Lite Filter. If both month and quarter are provided,
     month has higher precedence. ``day`` cannot be combined with other date. We accept string
     for month and day names.
@@ -37588,10 +36746,7 @@ class DateTime(SelectionInit):
 
 
 class PrimitiveValue(SelectionInit):
-    """PrimitiveValue schema wrapper
-
-    str, bool, None, float, :class:`SchemaBase`
-    """
+    """PrimitiveValue schema wrapper"""
 
     _schema = {"$ref": "#/definitions/PrimitiveValue"}
 
@@ -37600,11 +36755,7 @@ class PrimitiveValue(SelectionInit):
 
 
 class SelectionInitInterval(VegaLiteSchema):
-    """SelectionInitInterval schema wrapper
-
-    Sequence[str], Sequence[bool], Sequence[float], :class:`SchemaBase`, Sequence[dict,
-    :class:`SchemaBase`]
-    """
+    """SelectionInitInterval schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SelectionInitInterval"}
 
@@ -37613,10 +36764,7 @@ class SelectionInitInterval(VegaLiteSchema):
 
 
 class SelectionInitIntervalMapping(VegaLiteSchema):
-    """SelectionInitIntervalMapping schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """SelectionInitIntervalMapping schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SelectionInitIntervalMapping"}
 
@@ -37625,10 +36773,7 @@ class SelectionInitIntervalMapping(VegaLiteSchema):
 
 
 class SelectionInitMapping(VegaLiteSchema):
-    """SelectionInitMapping schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """SelectionInitMapping schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SelectionInitMapping"}
 
@@ -37638,8 +36783,6 @@ class SelectionInitMapping(VegaLiteSchema):
 
 class SelectionParameter(VegaLiteSchema):
     """SelectionParameter schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -37709,10 +36852,7 @@ class SelectionParameter(VegaLiteSchema):
 
 
 class SelectionResolution(VegaLiteSchema):
-    """SelectionResolution schema wrapper
-
-    :class:`SchemaBase`, Literal['global', 'union', 'intersect']
-    """
+    """SelectionResolution schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SelectionResolution"}
 
@@ -37721,10 +36861,7 @@ class SelectionResolution(VegaLiteSchema):
 
 
 class SelectionType(VegaLiteSchema):
-    """SelectionType schema wrapper
-
-    :class:`SchemaBase`, Literal['point', 'interval']
-    """
+    """SelectionType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SelectionType"}
 
@@ -37734,8 +36871,6 @@ class SelectionType(VegaLiteSchema):
 
 class SequenceGenerator(Generator):
     """SequenceGenerator schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -37759,8 +36894,6 @@ class SequenceGenerator(Generator):
 
 class SequenceParams(VegaLiteSchema):
     """SequenceParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -37792,48 +36925,7 @@ class SequenceParams(VegaLiteSchema):
 
 
 class SequentialMultiHue(ColorScheme):
-    """SequentialMultiHue schema wrapper
-
-    :class:`SchemaBase`, Literal['turbo', 'viridis', 'inferno', 'magma', 'plasma', 'cividis',
-    'bluegreen', 'bluegreen-3', 'bluegreen-4', 'bluegreen-5', 'bluegreen-6', 'bluegreen-7',
-    'bluegreen-8', 'bluegreen-9', 'bluepurple', 'bluepurple-3', 'bluepurple-4', 'bluepurple-5',
-    'bluepurple-6', 'bluepurple-7', 'bluepurple-8', 'bluepurple-9', 'goldgreen', 'goldgreen-3',
-    'goldgreen-4', 'goldgreen-5', 'goldgreen-6', 'goldgreen-7', 'goldgreen-8', 'goldgreen-9',
-    'goldorange', 'goldorange-3', 'goldorange-4', 'goldorange-5', 'goldorange-6',
-    'goldorange-7', 'goldorange-8', 'goldorange-9', 'goldred', 'goldred-3', 'goldred-4',
-    'goldred-5', 'goldred-6', 'goldred-7', 'goldred-8', 'goldred-9', 'greenblue', 'greenblue-3',
-    'greenblue-4', 'greenblue-5', 'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9',
-    'orangered', 'orangered-3', 'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7',
-    'orangered-8', 'orangered-9', 'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4',
-    'purplebluegreen-5', 'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8',
-    'purplebluegreen-9', 'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5',
-    'purpleblue-6', 'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3',
-    'purplered-4', 'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9',
-    'redpurple', 'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7',
-    'redpurple-8', 'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4',
-    'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8',
-    'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5',
-    'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown',
-    'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6',
-    'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered',
-    'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6',
-    'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9', 'darkblue', 'darkblue-3',
-    'darkblue-4', 'darkblue-5', 'darkblue-6', 'darkblue-7', 'darkblue-8', 'darkblue-9',
-    'darkgold', 'darkgold-3', 'darkgold-4', 'darkgold-5', 'darkgold-6', 'darkgold-7',
-    'darkgold-8', 'darkgold-9', 'darkgreen', 'darkgreen-3', 'darkgreen-4', 'darkgreen-5',
-    'darkgreen-6', 'darkgreen-7', 'darkgreen-8', 'darkgreen-9', 'darkmulti', 'darkmulti-3',
-    'darkmulti-4', 'darkmulti-5', 'darkmulti-6', 'darkmulti-7', 'darkmulti-8', 'darkmulti-9',
-    'darkred', 'darkred-3', 'darkred-4', 'darkred-5', 'darkred-6', 'darkred-7', 'darkred-8',
-    'darkred-9', 'lightgreyred', 'lightgreyred-3', 'lightgreyred-4', 'lightgreyred-5',
-    'lightgreyred-6', 'lightgreyred-7', 'lightgreyred-8', 'lightgreyred-9', 'lightgreyteal',
-    'lightgreyteal-3', 'lightgreyteal-4', 'lightgreyteal-5', 'lightgreyteal-6',
-    'lightgreyteal-7', 'lightgreyteal-8', 'lightgreyteal-9', 'lightmulti', 'lightmulti-3',
-    'lightmulti-4', 'lightmulti-5', 'lightmulti-6', 'lightmulti-7', 'lightmulti-8',
-    'lightmulti-9', 'lightorange', 'lightorange-3', 'lightorange-4', 'lightorange-5',
-    'lightorange-6', 'lightorange-7', 'lightorange-8', 'lightorange-9', 'lighttealblue',
-    'lighttealblue-3', 'lighttealblue-4', 'lighttealblue-5', 'lighttealblue-6',
-    'lighttealblue-7', 'lighttealblue-8', 'lighttealblue-9']
-    """
+    """SequentialMultiHue schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SequentialMultiHue"}
 
@@ -37842,11 +36934,7 @@ class SequentialMultiHue(ColorScheme):
 
 
 class SequentialSingleHue(ColorScheme):
-    """SequentialSingleHue schema wrapper
-
-    :class:`SchemaBase`, Literal['blues', 'tealblues', 'teals', 'greens', 'browns', 'greys',
-    'purples', 'warmgreys', 'reds', 'oranges']
-    """
+    """SequentialSingleHue schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SequentialSingleHue"}
 
@@ -37855,10 +36943,7 @@ class SequentialSingleHue(ColorScheme):
 
 
 class ShapeDef(VegaLiteSchema):
-    """ShapeDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """ShapeDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/ShapeDef"}
 
@@ -37870,8 +36955,6 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
     MarkPropDefstringnullTypeForShape, ShapeDef
 ):
     """FieldOrDatumDefWithConditionDatumDefstringnull schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -38015,8 +37098,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
     MarkPropDefstringnullTypeForShape, ShapeDef
 ):
     """FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -38476,8 +37557,6 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 class SharedEncoding(VegaLiteSchema):
     """SharedEncoding schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -38668,13 +37747,7 @@ class SharedEncoding(VegaLiteSchema):
 
 
 class SingleDefUnitChannel(VegaLiteSchema):
-    """SingleDefUnitChannel schema wrapper
-
-    :class:`SchemaBase`, Literal['x', 'y', 'xOffset', 'yOffset', 'x2', 'y2', 'longitude',
-    'latitude', 'longitude2', 'latitude2', 'theta', 'theta2', 'radius', 'radius2', 'color',
-    'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'strokeDash',
-    'size', 'angle', 'shape', 'key', 'text', 'href', 'url', 'description']
-    """
+    """SingleDefUnitChannel schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SingleDefUnitChannel"}
 
@@ -38683,14 +37756,7 @@ class SingleDefUnitChannel(VegaLiteSchema):
 
 
 class Sort(VegaLiteSchema):
-    """Sort schema wrapper
-
-    dict, None, Sequence[str], Sequence[bool], Sequence[float], :class:`SchemaBase`,
-    Literal['ascending', 'descending'], Sequence[dict, :class:`SchemaBase`], Literal['x', 'y',
-    'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity',
-    'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth',
-    '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
-    """
+    """Sort schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Sort"}
 
@@ -38699,13 +37765,7 @@ class Sort(VegaLiteSchema):
 
 
 class AllSortString(Sort):
-    """AllSortString schema wrapper
-
-    :class:`SchemaBase`, Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill',
-    'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity',
-    'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size',
-    '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
-    """
+    """AllSortString schema wrapper"""
 
     _schema = {"$ref": "#/definitions/AllSortString"}
 
@@ -38715,8 +37775,6 @@ class AllSortString(Sort):
 
 class EncodingSortField(Sort):
     """EncodingSortField schema wrapper
-
-    dict, :class:`SchemaBase`
     A sort definition for sorting a discrete scale in an encoding field definition.
 
     Parameters
@@ -38785,11 +37843,7 @@ class EncodingSortField(Sort):
 
 
 class SortArray(Sort):
-    """SortArray schema wrapper
-
-    Sequence[str], Sequence[bool], Sequence[float], :class:`SchemaBase`, Sequence[dict,
-    :class:`SchemaBase`]
-    """
+    """SortArray schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SortArray"}
 
@@ -38798,11 +37852,7 @@ class SortArray(Sort):
 
 
 class SortByChannel(AllSortString):
-    """SortByChannel schema wrapper
-
-    :class:`SchemaBase`, Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size',
-    'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
-    """
+    """SortByChannel schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SortByChannel"}
 
@@ -38811,11 +37861,7 @@ class SortByChannel(AllSortString):
 
 
 class SortByChannelDesc(AllSortString):
-    """SortByChannelDesc schema wrapper
-
-    :class:`SchemaBase`, Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth',
-    '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
-    """
+    """SortByChannelDesc schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SortByChannelDesc"}
 
@@ -38825,8 +37871,6 @@ class SortByChannelDesc(AllSortString):
 
 class SortByEncoding(Sort):
     """SortByEncoding schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -38872,8 +37916,6 @@ class SortByEncoding(Sort):
 
 class SortField(VegaLiteSchema):
     """SortField schema wrapper
-
-    dict, :class:`SchemaBase`
     A sort definition for transform
 
     Parameters
@@ -38900,10 +37942,7 @@ class SortField(VegaLiteSchema):
 
 
 class SortOrder(AllSortString):
-    """SortOrder schema wrapper
-
-    :class:`SchemaBase`, Literal['ascending', 'descending']
-    """
+    """SortOrder schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SortOrder"}
 
@@ -38913,8 +37952,6 @@ class SortOrder(AllSortString):
 
 class Spec(VegaLiteSchema):
     """Spec schema wrapper
-
-    dict, :class:`SchemaBase`
     Any specification in Vega-Lite.
     """
 
@@ -38926,8 +37963,6 @@ class Spec(VegaLiteSchema):
 
 class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     """ConcatSpecGenericSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a generalized concatenation specification.
 
     Parameters
@@ -39054,8 +38089,6 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
 
 class FacetSpec(Spec, NonNormalizedSpec):
     """FacetSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a facet specification.
 
     Parameters
@@ -39190,8 +38223,6 @@ class FacetSpec(Spec, NonNormalizedSpec):
 
 class FacetedUnitSpec(Spec, NonNormalizedSpec):
     """FacetedUnitSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Unit spec that can have a composite mark and row or column channels (shorthand for a facet
     spec).
 
@@ -39388,8 +38419,6 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
 
 class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     """HConcatSpecGenericSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a horizontal concatenation specification.
 
     Parameters
@@ -39468,8 +38497,6 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
 
 class LayerSpec(Spec, NonNormalizedSpec):
     """LayerSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     A full layered plot specification, which may contains ``encoding`` and ``projection``
     properties that will be applied to underlying unit (single-view) specifications.
 
@@ -39586,10 +38613,7 @@ class LayerSpec(Spec, NonNormalizedSpec):
 
 
 class RepeatSpec(Spec, NonNormalizedSpec):
-    """RepeatSpec schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """RepeatSpec schema wrapper"""
 
     _schema = {"$ref": "#/definitions/RepeatSpec"}
 
@@ -39599,8 +38623,6 @@ class RepeatSpec(Spec, NonNormalizedSpec):
 
 class LayerRepeatSpec(RepeatSpec):
     """LayerRepeatSpec schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -39736,8 +38758,6 @@ class LayerRepeatSpec(RepeatSpec):
 
 class NonLayerRepeatSpec(RepeatSpec):
     """NonLayerRepeatSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a repeat specification.
 
     Parameters
@@ -39875,8 +38895,6 @@ class NonLayerRepeatSpec(RepeatSpec):
 class SphereGenerator(Generator):
     """SphereGenerator schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -39898,10 +38916,7 @@ class SphereGenerator(Generator):
 
 
 class StackOffset(VegaLiteSchema):
-    """StackOffset schema wrapper
-
-    :class:`SchemaBase`, Literal['zero', 'center', 'normalize']
-    """
+    """StackOffset schema wrapper"""
 
     _schema = {"$ref": "#/definitions/StackOffset"}
 
@@ -39910,10 +38925,7 @@ class StackOffset(VegaLiteSchema):
 
 
 class StandardType(VegaLiteSchema):
-    """StandardType schema wrapper
-
-    :class:`SchemaBase`, Literal['quantitative', 'ordinal', 'temporal', 'nominal']
-    """
+    """StandardType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/StandardType"}
 
@@ -39923,8 +38935,6 @@ class StandardType(VegaLiteSchema):
 
 class Step(VegaLiteSchema):
     """Step schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -39943,10 +38953,7 @@ class Step(VegaLiteSchema):
 
 
 class StepFor(VegaLiteSchema):
-    """StepFor schema wrapper
-
-    :class:`SchemaBase`, Literal['position', 'offset']
-    """
+    """StepFor schema wrapper"""
 
     _schema = {"$ref": "#/definitions/StepFor"}
 
@@ -39955,10 +38962,7 @@ class StepFor(VegaLiteSchema):
 
 
 class Stream(VegaLiteSchema):
-    """Stream schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Stream schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Stream"}
 
@@ -39968,8 +38972,6 @@ class Stream(VegaLiteSchema):
 
 class DerivedStream(Stream):
     """DerivedStream schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -40039,10 +39041,7 @@ class DerivedStream(Stream):
 
 
 class EventStream(Stream):
-    """EventStream schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """EventStream schema wrapper"""
 
     _schema = {"$ref": "#/definitions/EventStream"}
 
@@ -40052,8 +39051,6 @@ class EventStream(Stream):
 
 class MergedStream(Stream):
     """MergedStream schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -40124,8 +39121,6 @@ class MergedStream(Stream):
 
 class StringFieldDef(VegaLiteSchema):
     """StringFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -40498,8 +39493,6 @@ class StringFieldDef(VegaLiteSchema):
 
 class StringFieldDefWithCondition(VegaLiteSchema):
     """StringFieldDefWithCondition schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -40890,8 +39883,6 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 class StringValueDefWithCondition(VegaLiteSchema):
     """StringValueDefWithCondition schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -40921,10 +39912,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
 
 
 class StrokeCap(VegaLiteSchema):
-    """StrokeCap schema wrapper
-
-    :class:`SchemaBase`, Literal['butt', 'round', 'square']
-    """
+    """StrokeCap schema wrapper"""
 
     _schema = {"$ref": "#/definitions/StrokeCap"}
 
@@ -40933,10 +39921,7 @@ class StrokeCap(VegaLiteSchema):
 
 
 class StrokeJoin(VegaLiteSchema):
-    """StrokeJoin schema wrapper
-
-    :class:`SchemaBase`, Literal['miter', 'round', 'bevel']
-    """
+    """StrokeJoin schema wrapper"""
 
     _schema = {"$ref": "#/definitions/StrokeJoin"}
 
@@ -40946,8 +39931,6 @@ class StrokeJoin(VegaLiteSchema):
 
 class StyleConfigIndex(VegaLiteSchema):
     """StyleConfigIndex schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -41034,10 +40017,7 @@ class StyleConfigIndex(VegaLiteSchema):
 
 
 class SymbolShape(VegaLiteSchema):
-    """SymbolShape schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """SymbolShape schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SymbolShape"}
 
@@ -41046,10 +40026,7 @@ class SymbolShape(VegaLiteSchema):
 
 
 class Text(VegaLiteSchema):
-    """Text schema wrapper
-
-    str, Sequence[str], :class:`SchemaBase`
-    """
+    """Text schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Text"}
 
@@ -41058,10 +40035,7 @@ class Text(VegaLiteSchema):
 
 
 class TextBaseline(VegaLiteSchema):
-    """TextBaseline schema wrapper
-
-    str, :class:`SchemaBase`, Literal['top', 'middle', 'bottom']
-    """
+    """TextBaseline schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TextBaseline"}
 
@@ -41070,10 +40044,7 @@ class TextBaseline(VegaLiteSchema):
 
 
 class Baseline(TextBaseline):
-    """Baseline schema wrapper
-
-    :class:`SchemaBase`, Literal['top', 'middle', 'bottom']
-    """
+    """Baseline schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Baseline"}
 
@@ -41082,10 +40053,7 @@ class Baseline(TextBaseline):
 
 
 class TextDef(VegaLiteSchema):
-    """TextDef schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """TextDef schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TextDef"}
 
@@ -41095,8 +40063,6 @@ class TextDef(VegaLiteSchema):
 
 class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
     """FieldOrDatumDefWithConditionStringDatumDefText schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -41276,8 +40242,6 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
 
 class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     """FieldOrDatumDefWithConditionStringFieldDefText schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -41668,10 +40632,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
 
 
 class TextDirection(VegaLiteSchema):
-    """TextDirection schema wrapper
-
-    :class:`SchemaBase`, Literal['ltr', 'rtl']
-    """
+    """TextDirection schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TextDirection"}
 
@@ -41681,8 +40642,6 @@ class TextDirection(VegaLiteSchema):
 
 class TickConfig(AnyMarkConfig):
     """TickConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -42899,11 +41858,7 @@ class TickConfig(AnyMarkConfig):
 
 
 class TickCount(VegaLiteSchema):
-    """TickCount schema wrapper
-
-    dict, float, :class:`SchemaBase`, Literal['millisecond', 'second', 'minute', 'hour', 'day',
-    'week', 'month', 'year']
-    """
+    """TickCount schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TickCount"}
 
@@ -42912,11 +41867,7 @@ class TickCount(VegaLiteSchema):
 
 
 class TimeInterval(TickCount):
-    """TimeInterval schema wrapper
-
-    :class:`SchemaBase`, Literal['millisecond', 'second', 'minute', 'hour', 'day', 'week',
-    'month', 'year']
-    """
+    """TimeInterval schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TimeInterval"}
 
@@ -42926,8 +41877,6 @@ class TimeInterval(TickCount):
 
 class TimeIntervalStep(TickCount):
     """TimeIntervalStep schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -42964,8 +41913,6 @@ class TimeIntervalStep(TickCount):
 
 class TimeLocale(VegaLiteSchema):
     """TimeLocale schema wrapper
-
-    dict, :class:`SchemaBase`
     Locale definition for formatting dates and times.
 
     Parameters
@@ -43017,28 +41964,7 @@ class TimeLocale(VegaLiteSchema):
 
 
 class TimeUnit(VegaLiteSchema):
-    """TimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date',
-    'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth',
-    'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds',
-    'utcmilliseconds'], Literal['yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate',
-    'yearmonthdatehours', 'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds',
-    'yearweek', 'yearweekday', 'yearweekdayhours', 'yearweekdayhoursminutes',
-    'yearweekdayhoursminutesseconds', 'yeardayofyear', 'quartermonth', 'monthdate',
-    'monthdatehours', 'monthdatehoursminutes', 'monthdatehoursminutesseconds', 'weekday',
-    'weeksdayhours', 'weekdayhoursminutes', 'weekdayhoursminutesseconds', 'dayhours',
-    'dayhoursminutes', 'dayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds',
-    'minutesseconds', 'secondsmilliseconds'], Literal['utcyearquarter', 'utcyearquartermonth',
-    'utcyearmonth', 'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes',
-    'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday',
-    'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds',
-    'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours',
-    'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday',
-    'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds',
-    'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes',
-    'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-    """
+    """TimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TimeUnit"}
 
@@ -43047,26 +41973,7 @@ class TimeUnit(VegaLiteSchema):
 
 
 class MultiTimeUnit(TimeUnit):
-    """MultiTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['yearquarter', 'yearquartermonth', 'yearmonth',
-    'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes',
-    'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours',
-    'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear',
-    'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes',
-    'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes',
-    'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds',
-    'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'],
-    Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate',
-    'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes',
-    'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday',
-    'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds',
-    'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours',
-    'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday',
-    'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds',
-    'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes',
-    'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-    """
+    """MultiTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/MultiTimeUnit"}
 
@@ -43075,17 +41982,7 @@ class MultiTimeUnit(TimeUnit):
 
 
 class LocalMultiTimeUnit(MultiTimeUnit):
-    """LocalMultiTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['yearquarter', 'yearquartermonth', 'yearmonth',
-    'yearmonthdate', 'yearmonthdatehours', 'yearmonthdatehoursminutes',
-    'yearmonthdatehoursminutesseconds', 'yearweek', 'yearweekday', 'yearweekdayhours',
-    'yearweekdayhoursminutes', 'yearweekdayhoursminutesseconds', 'yeardayofyear',
-    'quartermonth', 'monthdate', 'monthdatehours', 'monthdatehoursminutes',
-    'monthdatehoursminutesseconds', 'weekday', 'weeksdayhours', 'weekdayhoursminutes',
-    'weekdayhoursminutesseconds', 'dayhours', 'dayhoursminutes', 'dayhoursminutesseconds',
-    'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
-    """
+    """LocalMultiTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LocalMultiTimeUnit"}
 
@@ -43094,13 +41991,7 @@ class LocalMultiTimeUnit(MultiTimeUnit):
 
 
 class SingleTimeUnit(TimeUnit):
-    """SingleTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date',
-    'hours', 'minutes', 'seconds', 'milliseconds'], Literal['utcyear', 'utcquarter', 'utcmonth',
-    'utcweek', 'utcday', 'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds',
-    'utcmilliseconds']
-    """
+    """SingleTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/SingleTimeUnit"}
 
@@ -43109,11 +42000,7 @@ class SingleTimeUnit(TimeUnit):
 
 
 class LocalSingleTimeUnit(SingleTimeUnit):
-    """LocalSingleTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['year', 'quarter', 'month', 'week', 'day', 'dayofyear', 'date',
-    'hours', 'minutes', 'seconds', 'milliseconds']
-    """
+    """LocalSingleTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/LocalSingleTimeUnit"}
 
@@ -43123,8 +42010,6 @@ class LocalSingleTimeUnit(SingleTimeUnit):
 
 class TimeUnitParams(VegaLiteSchema):
     """TimeUnitParams schema wrapper
-
-    dict, :class:`SchemaBase`
     Time Unit Params for encoding predicate, which can specified if the data is  already
     "binned".
 
@@ -43255,8 +42140,6 @@ class TimeUnitParams(VegaLiteSchema):
 class TimeUnitTransformParams(VegaLiteSchema):
     """TimeUnitTransformParams schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -43377,10 +42260,7 @@ class TimeUnitTransformParams(VegaLiteSchema):
 
 
 class TitleAnchor(VegaLiteSchema):
-    """TitleAnchor schema wrapper
-
-    :class:`SchemaBase`, Literal[None, 'start', 'middle', 'end']
-    """
+    """TitleAnchor schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TitleAnchor"}
 
@@ -43390,8 +42270,6 @@ class TitleAnchor(VegaLiteSchema):
 
 class TitleConfig(VegaLiteSchema):
     """TitleConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -43934,10 +42812,7 @@ class TitleConfig(VegaLiteSchema):
 
 
 class TitleFrame(VegaLiteSchema):
-    """TitleFrame schema wrapper
-
-    :class:`SchemaBase`, Literal['bounds', 'group']
-    """
+    """TitleFrame schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TitleFrame"}
 
@@ -43946,10 +42821,7 @@ class TitleFrame(VegaLiteSchema):
 
 
 class TitleOrient(VegaLiteSchema):
-    """TitleOrient schema wrapper
-
-    :class:`SchemaBase`, Literal['none', 'left', 'right', 'top', 'bottom']
-    """
+    """TitleOrient schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TitleOrient"}
 
@@ -43959,8 +42831,6 @@ class TitleOrient(VegaLiteSchema):
 
 class TitleParams(VegaLiteSchema):
     """TitleParams schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -44527,8 +43397,6 @@ class TitleParams(VegaLiteSchema):
 class TooltipContent(VegaLiteSchema):
     """TooltipContent schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -44547,10 +43415,7 @@ class TooltipContent(VegaLiteSchema):
 
 
 class TopLevelParameter(VegaLiteSchema):
-    """TopLevelParameter schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """TopLevelParameter schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TopLevelParameter"}
 
@@ -44560,8 +43425,6 @@ class TopLevelParameter(VegaLiteSchema):
 
 class TopLevelSelectionParameter(TopLevelParameter):
     """TopLevelSelectionParameter schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -44637,8 +43500,6 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
 class TopLevelSpec(VegaLiteSchema):
     """TopLevelSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     A Vega-Lite top-level specification. This is the root class for all Vega-Lite
     specifications. (The json schema is generated from this type.)
     """
@@ -44651,8 +43512,6 @@ class TopLevelSpec(VegaLiteSchema):
 
 class TopLevelConcatSpec(TopLevelSpec):
     """TopLevelConcatSpec schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -44990,8 +43849,6 @@ class TopLevelConcatSpec(TopLevelSpec):
 
 class TopLevelFacetSpec(TopLevelSpec):
     """TopLevelFacetSpec schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -45338,8 +44195,6 @@ class TopLevelFacetSpec(TopLevelSpec):
 class TopLevelHConcatSpec(TopLevelSpec):
     """TopLevelHConcatSpec schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -45628,8 +44483,6 @@ class TopLevelHConcatSpec(TopLevelSpec):
 
 class TopLevelLayerSpec(TopLevelSpec):
     """TopLevelLayerSpec schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -45956,10 +44809,7 @@ class TopLevelLayerSpec(TopLevelSpec):
 
 
 class TopLevelRepeatSpec(TopLevelSpec):
-    """TopLevelRepeatSpec schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """TopLevelRepeatSpec schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TopLevelRepeatSpec"}
 
@@ -45969,8 +44819,6 @@ class TopLevelRepeatSpec(TopLevelSpec):
 
 class TopLevelUnitSpec(TopLevelSpec):
     """TopLevelUnitSpec schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -46374,8 +45222,6 @@ class TopLevelUnitSpec(TopLevelSpec):
 class TopLevelVConcatSpec(TopLevelSpec):
     """TopLevelVConcatSpec schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -46665,8 +45511,6 @@ class TopLevelVConcatSpec(TopLevelSpec):
 class TopoDataFormat(DataFormat):
     """TopoDataFormat schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -46721,10 +45565,7 @@ class TopoDataFormat(DataFormat):
 
 
 class Transform(VegaLiteSchema):
-    """Transform schema wrapper
-
-    dict, :class:`SchemaBase`
-    """
+    """Transform schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Transform"}
 
@@ -46734,8 +45575,6 @@ class Transform(VegaLiteSchema):
 
 class AggregateTransform(Transform):
     """AggregateTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -46764,8 +45603,6 @@ class AggregateTransform(Transform):
 
 class BinTransform(Transform):
     """BinTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -46796,8 +45633,6 @@ class BinTransform(Transform):
 class CalculateTransform(Transform):
     """CalculateTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -46816,8 +45651,6 @@ class CalculateTransform(Transform):
 
 class DensityTransform(Transform):
     """DensityTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -46898,8 +45731,6 @@ class DensityTransform(Transform):
 class ExtentTransform(Transform):
     """ExtentTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -46922,8 +45753,6 @@ class ExtentTransform(Transform):
 
 class FilterTransform(Transform):
     """FilterTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -46969,8 +45798,6 @@ class FilterTransform(Transform):
 class FlattenTransform(Transform):
     """FlattenTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -46998,8 +45825,6 @@ class FlattenTransform(Transform):
 class FoldTransform(Transform):
     """FoldTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -47022,8 +45847,6 @@ class FoldTransform(Transform):
 
 class ImputeTransform(Transform):
     """ImputeTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47098,8 +45921,6 @@ class ImputeTransform(Transform):
 class JoinAggregateTransform(Transform):
     """JoinAggregateTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -47127,8 +45948,6 @@ class JoinAggregateTransform(Transform):
 
 class LoessTransform(Transform):
     """LoessTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47169,8 +45988,6 @@ class LoessTransform(Transform):
 class LookupTransform(Transform):
     """LookupTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -47207,8 +46024,6 @@ class LookupTransform(Transform):
 
 class PivotTransform(Transform):
     """PivotTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47278,8 +46093,6 @@ class PivotTransform(Transform):
 class QuantileTransform(Transform):
     """QuantileTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -47318,8 +46131,6 @@ class QuantileTransform(Transform):
 
 class RegressionTransform(Transform):
     """RegressionTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47388,8 +46199,6 @@ class RegressionTransform(Transform):
 class SampleTransform(Transform):
     """SampleTransform schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -47407,8 +46216,6 @@ class SampleTransform(Transform):
 
 class StackTransform(Transform):
     """StackTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47452,8 +46259,6 @@ class StackTransform(Transform):
 
 class TimeUnitTransform(Transform):
     """TimeUnitTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47571,8 +46376,6 @@ class TimeUnitTransform(Transform):
 
 class Type(VegaLiteSchema):
     """Type schema wrapper
-
-    :class:`SchemaBase`, Literal['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson']
     Data type based on level of measurement
     """
 
@@ -47583,10 +46386,7 @@ class Type(VegaLiteSchema):
 
 
 class TypeForShape(VegaLiteSchema):
-    """TypeForShape schema wrapper
-
-    :class:`SchemaBase`, Literal['nominal', 'ordinal', 'geojson']
-    """
+    """TypeForShape schema wrapper"""
 
     _schema = {"$ref": "#/definitions/TypeForShape"}
 
@@ -47596,8 +46396,6 @@ class TypeForShape(VegaLiteSchema):
 
 class TypedFieldDef(VegaLiteSchema):
     """TypedFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
@@ -47932,10 +46730,7 @@ class TypedFieldDef(VegaLiteSchema):
 
 
 class URI(VegaLiteSchema):
-    """URI schema wrapper
-
-    str, :class:`SchemaBase`
-    """
+    """URI schema wrapper"""
 
     _schema = {"$ref": "#/definitions/URI"}
 
@@ -47945,8 +46740,6 @@ class URI(VegaLiteSchema):
 
 class UnitSpec(VegaLiteSchema):
     """UnitSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a unit (single-view) specification.
 
     Parameters
@@ -48033,8 +46826,6 @@ class UnitSpec(VegaLiteSchema):
 
 class UnitSpecWithFrame(VegaLiteSchema):
     """UnitSpecWithFrame schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -48171,8 +46962,6 @@ class UnitSpecWithFrame(VegaLiteSchema):
 class UrlData(DataSource):
     """UrlData schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -48198,18 +46987,7 @@ class UrlData(DataSource):
 
 
 class UtcMultiTimeUnit(MultiTimeUnit):
-    """UtcMultiTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['utcyearquarter', 'utcyearquartermonth', 'utcyearmonth',
-    'utcyearmonthdate', 'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes',
-    'utcyearmonthdatehoursminutesseconds', 'utcyearweek', 'utcyearweekday',
-    'utcyearweekdayhours', 'utcyearweekdayhoursminutes', 'utcyearweekdayhoursminutesseconds',
-    'utcyeardayofyear', 'utcquartermonth', 'utcmonthdate', 'utcmonthdatehours',
-    'utcmonthdatehoursminutes', 'utcmonthdatehoursminutesseconds', 'utcweekday',
-    'utcweeksdayhours', 'utcweekdayhoursminutes', 'utcweekdayhoursminutesseconds',
-    'utcdayhours', 'utcdayhoursminutes', 'utcdayhoursminutesseconds', 'utchoursminutes',
-    'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds']
-    """
+    """UtcMultiTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/UtcMultiTimeUnit"}
 
@@ -48218,11 +46996,7 @@ class UtcMultiTimeUnit(MultiTimeUnit):
 
 
 class UtcSingleTimeUnit(SingleTimeUnit):
-    """UtcSingleTimeUnit schema wrapper
-
-    :class:`SchemaBase`, Literal['utcyear', 'utcquarter', 'utcmonth', 'utcweek', 'utcday',
-    'utcdayofyear', 'utcdate', 'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds']
-    """
+    """UtcSingleTimeUnit schema wrapper"""
 
     _schema = {"$ref": "#/definitions/UtcSingleTimeUnit"}
 
@@ -48232,8 +47006,6 @@ class UtcSingleTimeUnit(SingleTimeUnit):
 
 class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
     """VConcatSpecGenericSpec schema wrapper
-
-    dict, :class:`SchemaBase`
     Base interface for a vertical concatenation specification.
 
     Parameters
@@ -48315,8 +47087,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
 ):
     """ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -48351,8 +47121,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
     MarkPropDefstringnullTypeForShape, ShapeDef
 ):
     """ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -48389,8 +47157,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
 ):
     """ValueDefWithConditionMarkPropFieldOrDatumDefnumber schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -48426,8 +47192,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
 ):
     """ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -48460,8 +47224,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
 
 class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
     """ValueDefWithConditionMarkPropFieldOrDatumDefstringnull schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -48496,8 +47258,6 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
 class ValueDefWithConditionStringFieldDefText(TextDef):
     """ValueDefWithConditionStringFieldDefText schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -48528,8 +47288,6 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
 
 class ValueDefnumber(OffsetDef):
     """ValueDefnumber schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -48550,8 +47308,6 @@ class ValueDefnumber(OffsetDef):
 
 class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     """ValueDefnumberwidthheightExprRef schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -48578,8 +47334,6 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
 
 class VariableParameter(TopLevelParameter):
     """VariableParameter schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -48619,10 +47373,7 @@ class VariableParameter(TopLevelParameter):
 
 
 class Vector10string(VegaLiteSchema):
-    """Vector10string schema wrapper
-
-    Sequence[str], :class:`SchemaBase`
-    """
+    """Vector10string schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector10<string>"}
 
@@ -48631,10 +47382,7 @@ class Vector10string(VegaLiteSchema):
 
 
 class Vector12string(VegaLiteSchema):
-    """Vector12string schema wrapper
-
-    Sequence[str], :class:`SchemaBase`
-    """
+    """Vector12string schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector12<string>"}
 
@@ -48643,10 +47391,7 @@ class Vector12string(VegaLiteSchema):
 
 
 class Vector2DateTime(SelectionInitInterval):
-    """Vector2DateTime schema wrapper
-
-    :class:`SchemaBase`, Sequence[dict, :class:`SchemaBase`]
-    """
+    """Vector2DateTime schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector2<DateTime>"}
 
@@ -48655,10 +47400,7 @@ class Vector2DateTime(SelectionInitInterval):
 
 
 class Vector2Vector2number(VegaLiteSchema):
-    """Vector2Vector2number schema wrapper
-
-    :class:`SchemaBase`, Sequence[Sequence[float], :class:`SchemaBase`]
-    """
+    """Vector2Vector2number schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector2<Vector2<number>>"}
 
@@ -48667,10 +47409,7 @@ class Vector2Vector2number(VegaLiteSchema):
 
 
 class Vector2boolean(SelectionInitInterval):
-    """Vector2boolean schema wrapper
-
-    Sequence[bool], :class:`SchemaBase`
-    """
+    """Vector2boolean schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector2<boolean>"}
 
@@ -48679,10 +47418,7 @@ class Vector2boolean(SelectionInitInterval):
 
 
 class Vector2number(SelectionInitInterval):
-    """Vector2number schema wrapper
-
-    Sequence[float], :class:`SchemaBase`
-    """
+    """Vector2number schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector2<number>"}
 
@@ -48691,10 +47427,7 @@ class Vector2number(SelectionInitInterval):
 
 
 class Vector2string(SelectionInitInterval):
-    """Vector2string schema wrapper
-
-    Sequence[str], :class:`SchemaBase`
-    """
+    """Vector2string schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector2<string>"}
 
@@ -48703,10 +47436,7 @@ class Vector2string(SelectionInitInterval):
 
 
 class Vector3number(VegaLiteSchema):
-    """Vector3number schema wrapper
-
-    Sequence[float], :class:`SchemaBase`
-    """
+    """Vector3number schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector3<number>"}
 
@@ -48715,10 +47445,7 @@ class Vector3number(VegaLiteSchema):
 
 
 class Vector7string(VegaLiteSchema):
-    """Vector7string schema wrapper
-
-    Sequence[str], :class:`SchemaBase`
-    """
+    """Vector7string schema wrapper"""
 
     _schema = {"$ref": "#/definitions/Vector7<string>"}
 
@@ -48728,8 +47455,6 @@ class Vector7string(VegaLiteSchema):
 
 class ViewBackground(VegaLiteSchema):
     """ViewBackground schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -49214,8 +47939,6 @@ class ViewBackground(VegaLiteSchema):
 
 class ViewConfig(VegaLiteSchema):
     """ViewConfig schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -49726,13 +48449,7 @@ class ViewConfig(VegaLiteSchema):
 
 
 class WindowEventType(VegaLiteSchema):
-    """WindowEventType schema wrapper
-
-    str, :class:`SchemaBase`, Literal['click', 'dblclick', 'dragenter', 'dragleave', 'dragover',
-    'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover',
-    'mouseup', 'mousewheel', 'pointerdown', 'pointermove', 'pointerout', 'pointerover',
-    'pointerup', 'timer', 'touchend', 'touchmove', 'touchstart', 'wheel']
-    """
+    """WindowEventType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/WindowEventType"}
 
@@ -49741,13 +48458,7 @@ class WindowEventType(VegaLiteSchema):
 
 
 class EventType(WindowEventType):
-    """EventType schema wrapper
-
-    :class:`SchemaBase`, Literal['click', 'dblclick', 'dragenter', 'dragleave', 'dragover',
-    'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover',
-    'mouseup', 'mousewheel', 'pointerdown', 'pointermove', 'pointerout', 'pointerover',
-    'pointerup', 'timer', 'touchend', 'touchmove', 'touchstart', 'wheel']
-    """
+    """EventType schema wrapper"""
 
     _schema = {"$ref": "#/definitions/EventType"}
 
@@ -49757,8 +48468,6 @@ class EventType(WindowEventType):
 
 class WindowFieldDef(VegaLiteSchema):
     """WindowFieldDef schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -49835,11 +48544,7 @@ class WindowFieldDef(VegaLiteSchema):
 
 
 class WindowOnlyOp(VegaLiteSchema):
-    """WindowOnlyOp schema wrapper
-
-    :class:`SchemaBase`, Literal['row_number', 'rank', 'dense_rank', 'percent_rank',
-    'cume_dist', 'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value']
-    """
+    """WindowOnlyOp schema wrapper"""
 
     _schema = {"$ref": "#/definitions/WindowOnlyOp"}
 
@@ -49849,8 +48554,6 @@ class WindowOnlyOp(VegaLiteSchema):
 
 class WindowTransform(Transform):
     """WindowTransform schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------

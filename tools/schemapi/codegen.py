@@ -196,10 +196,6 @@ class SchemaGenerator:
         info = self.info
         doc = [
             "{} schema wrapper".format(self.classname),
-            "",
-            info.get_python_type_representation(
-                altair_classes_prefix=self.altair_classes_prefix
-            ),
         ]
         if info.description:
             doc += self._process_description(  # remove condition description

@@ -133,8 +133,6 @@ class DatumChannelMixin:
 class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Angle schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -3003,8 +3001,6 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """AngleDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -3200,8 +3196,6 @@ class AngleValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
     """AngleValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -3749,8 +3743,6 @@ class Color(
     core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull,
 ):
     """Color schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -6622,8 +6614,6 @@ class ColorDatum(
 ):
     """ColorDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -6820,8 +6810,6 @@ class ColorValue(
     core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull,
 ):
     """ColorValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -7366,8 +7354,6 @@ class ColorValue(
 @with_property_setters
 class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Column schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -8690,8 +8676,6 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Description schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -9500,8 +9484,6 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """DescriptionValue schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -10045,8 +10027,6 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
 @with_property_setters
 class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """Detail schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
@@ -10766,8 +10746,6 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 @with_property_setters
 class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     """Facet schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -12173,8 +12151,6 @@ class Fill(
     core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull,
 ):
     """Fill schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -15046,8 +15022,6 @@ class FillDatum(
 ):
     """FillDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -15244,8 +15218,6 @@ class FillValue(
     core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull,
 ):
     """FillValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -15792,8 +15764,6 @@ class FillOpacity(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
     """FillOpacity schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -18665,8 +18635,6 @@ class FillOpacityDatum(
 ):
     """FillOpacityDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -18862,8 +18830,6 @@ class FillOpacityValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
     """FillOpacityValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -19408,8 +19374,6 @@ class FillOpacityValue(
 @with_property_setters
 class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Href schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -20219,8 +20183,6 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """HrefValue schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -20764,8 +20726,6 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
 @with_property_setters
 class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """Key schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
@@ -21486,8 +21446,6 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 class Latitude(FieldChannelMixin, core.LatLongFieldDef):
     """Latitude schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -22173,8 +22131,6 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     """LatitudeDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -22324,8 +22280,6 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Latitude2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -22939,8 +22893,6 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     """Latitude2Datum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -23090,8 +23042,6 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Latitude2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -23114,8 +23064,6 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
     """Longitude schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -23802,8 +23750,6 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     """LongitudeDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -23953,8 +23899,6 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Longitude2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -24568,8 +24512,6 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     """Longitude2Datum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -24719,8 +24661,6 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
     """Longitude2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -24745,8 +24685,6 @@ class Opacity(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
     """Opacity schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -27616,8 +27554,6 @@ class Opacity(
 class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """OpacityDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -27813,8 +27749,6 @@ class OpacityValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
     """OpacityValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -28359,8 +28293,6 @@ class OpacityValue(
 @with_property_setters
 class Order(FieldChannelMixin, core.OrderFieldDef):
     """Order schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -29090,8 +29022,6 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 class OrderValue(ValueChannelMixin, core.OrderValueDef):
     """OrderValue schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -29150,8 +29080,6 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
 @with_property_setters
 class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     """Radius schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -30642,8 +30570,6 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """RadiusDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -31357,8 +31283,6 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 @with_property_setters
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
     """RadiusValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -31381,8 +31305,6 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
     """Radius2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -31996,8 +31918,6 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 class Radius2Datum(DatumChannelMixin, core.DatumDef):
     """Radius2Datum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -32147,8 +32067,6 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
     """Radius2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -32171,8 +32089,6 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     """Row schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -33497,8 +33413,6 @@ class Shape(
     core.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull,
 ):
     """Shape schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -36366,8 +36280,6 @@ class ShapeDatum(
 ):
     """ShapeDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -36564,8 +36476,6 @@ class ShapeValue(
     core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull,
 ):
     """ShapeValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -37106,8 +37016,6 @@ class ShapeValue(
 @with_property_setters
 class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
     """Size schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -39977,8 +39885,6 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
     """SizeDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -40174,8 +40080,6 @@ class SizeValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
     """SizeValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -40723,8 +40627,6 @@ class Stroke(
     core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull,
 ):
     """Stroke schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -43596,8 +43498,6 @@ class StrokeDatum(
 ):
     """StrokeDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -43794,8 +43694,6 @@ class StrokeValue(
     core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull,
 ):
     """StrokeValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -44342,8 +44240,6 @@ class StrokeDash(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
 ):
     """StrokeDash schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47215,8 +47111,6 @@ class StrokeDashDatum(
 ):
     """StrokeDashDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -47412,8 +47306,6 @@ class StrokeDashValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray
 ):
     """StrokeDashValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -47960,8 +47852,6 @@ class StrokeOpacity(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
     """StrokeOpacity schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -50833,8 +50723,6 @@ class StrokeOpacityDatum(
 ):
     """StrokeOpacityDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -51030,8 +50918,6 @@ class StrokeOpacityValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
     """StrokeOpacityValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -51580,8 +51466,6 @@ class StrokeWidth(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
     """StrokeWidth schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -54453,8 +54337,6 @@ class StrokeWidthDatum(
 ):
     """StrokeWidthDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -54650,8 +54532,6 @@ class StrokeWidthValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
     """StrokeWidthValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -55196,8 +55076,6 @@ class StrokeWidthValue(
 @with_property_setters
 class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefText):
     """Text schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -56005,8 +55883,6 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumDefText):
     """TextDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -56250,8 +56126,6 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 @with_property_setters
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
     """TextValue schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -56659,8 +56533,6 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
 @with_property_setters
 class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     """Theta schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -58151,8 +58023,6 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     """ThetaDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -58866,8 +58736,6 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 @with_property_setters
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
     """ThetaValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -58890,8 +58758,6 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
     """Theta2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -59505,8 +59371,6 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 class Theta2Datum(DatumChannelMixin, core.DatumDef):
     """Theta2Datum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -59656,8 +59520,6 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
     """Theta2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -59680,8 +59542,6 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Tooltip schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -60491,8 +60351,6 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """TooltipValue schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -61036,8 +60894,6 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
 @with_property_setters
 class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Url schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -61847,8 +61703,6 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """UrlValue schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -62392,8 +62246,6 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
 @with_property_setters
 class X(FieldChannelMixin, core.PositionFieldDef):
     """X schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -65019,8 +64871,6 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 class XDatum(DatumChannelMixin, core.PositionDatumDef):
     """XDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -66869,8 +66719,6 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 @with_property_setters
 class XValue(ValueChannelMixin, core.PositionValueDef):
     """XValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -66893,8 +66741,6 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class X2(FieldChannelMixin, core.SecondaryFieldDef):
     """X2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -67508,8 +67354,6 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 class X2Datum(DatumChannelMixin, core.DatumDef):
     """X2Datum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -67659,8 +67503,6 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class X2Value(ValueChannelMixin, core.PositionValueDef):
     """X2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -67683,8 +67525,6 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class XError(FieldChannelMixin, core.SecondaryFieldDef):
     """XError schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -68297,8 +68137,6 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 @with_property_setters
 class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """XErrorValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -68321,8 +68159,6 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
 @with_property_setters
 class XError2(FieldChannelMixin, core.SecondaryFieldDef):
     """XError2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -68935,8 +68771,6 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 @with_property_setters
 class XError2Value(ValueChannelMixin, core.ValueDefnumber):
     """XError2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -68959,8 +68793,6 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
 @with_property_setters
 class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     """XOffset schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -70396,8 +70228,6 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """XOffsetDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -71060,8 +70890,6 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 @with_property_setters
 class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """XOffsetValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -71084,8 +70912,6 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
 @with_property_setters
 class Y(FieldChannelMixin, core.PositionFieldDef):
     """Y schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -73711,8 +73537,6 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 class YDatum(DatumChannelMixin, core.PositionDatumDef):
     """YDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -75561,8 +75385,6 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 @with_property_setters
 class YValue(ValueChannelMixin, core.PositionValueDef):
     """YValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -75585,8 +75407,6 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class Y2(FieldChannelMixin, core.SecondaryFieldDef):
     """Y2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -76200,8 +76020,6 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 class Y2Datum(DatumChannelMixin, core.DatumDef):
     """Y2Datum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -76351,8 +76169,6 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 @with_property_setters
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
     """Y2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -76375,8 +76191,6 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
 @with_property_setters
 class YError(FieldChannelMixin, core.SecondaryFieldDef):
     """YError schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -76989,8 +76803,6 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 @with_property_setters
 class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
     """YErrorValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -77013,8 +76825,6 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
 @with_property_setters
 class YError2(FieldChannelMixin, core.SecondaryFieldDef):
     """YError2 schema wrapper
-
-    dict, :class:`SchemaBase`
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
@@ -77627,8 +77437,6 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 @with_property_setters
 class YError2Value(ValueChannelMixin, core.ValueDefnumber):
     """YError2Value schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
@@ -77651,8 +77459,6 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
 @with_property_setters
 class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     """YOffset schema wrapper
-
-    dict, :class:`SchemaBase`
 
     Parameters
     ----------
@@ -79088,8 +78894,6 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     """YOffsetDatum schema wrapper
 
-    dict, :class:`SchemaBase`
-
     Parameters
     ----------
 
@@ -79752,8 +79556,6 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 @with_property_setters
 class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
     """YOffsetValue schema wrapper
-
-    dict, :class:`SchemaBase`
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
