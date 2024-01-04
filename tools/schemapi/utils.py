@@ -286,7 +286,9 @@ class SchemaInfo:
         else:
             raise ValueError("No Python type representation available for this schema")
 
-        type_representations = sorted(set(flatten(type_representations)))
+        # Shorter types are usually the more relevant ones, e.g. `str` instead
+        # of `SchemaBase`
+        type_representations = sorted(set(flatten(type_representations)), key=len)
         if return_as_str:
             type_representations_str = ", ".join(type_representations)
             # If it's not for_type_hints but instead for the docstrings, we don't want
