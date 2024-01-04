@@ -184,6 +184,7 @@ class SchemaInfo:
         for_type_hints: bool = False,
         altair_classes_prefix: Optional[str] = None,
         return_as_str: bool = True,
+        additional_type_hints: Optional[List[str]] = None,
     ) -> Union[str, List[str]]:
         # This is a list of all types which can be used for the current SchemaInfo.
         # This includes Altair classes, standard Python types, etc.
@@ -302,6 +303,9 @@ class SchemaInfo:
             type_representations,
             key=len,
         )  # Primary sort
+        if additional_type_hints:
+            type_representations.extend(additional_type_hints)
+
         if return_as_str:
             type_representations_str = ", ".join(type_representations)
             # If it's not for_type_hints but instead for the docstrings, we don't want
