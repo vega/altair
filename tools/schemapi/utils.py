@@ -188,9 +188,10 @@ class SchemaInfo:
         # This includes Altair classes, standard Python types, etc.
         type_representations: List[str] = []
         if self.title:
-            # Add the name of the current Altair class
             if for_type_hints:
-                class_names = [self.title]
+                # To keep type hints simple, we only use the SchemaBase class
+                # as the type hint for all classes which inherit from it.
+                class_names = ["SchemaBase"]
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
                     # We use the _Parameter to indicate this although this

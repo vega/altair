@@ -118,7 +118,7 @@ class AggregatedFieldDef(VegaLiteSchema):
         self,
         op: Union[
             Union[
-                "AggregateOp",
+                "SchemaBase",
                 Literal[
                     "argmax",
                     "argmin",
@@ -147,7 +147,7 @@ class AggregatedFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         **kwds,
     ):
         super(AggregatedFieldDef, self).__init__(op=op, field=field, **kwds)
@@ -592,32 +592,32 @@ class AreaConfig(AnyMarkConfig):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -625,8 +625,9 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -646,16 +647,16 @@ class AreaConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -807,37 +808,33 @@ class AreaConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -877,39 +874,39 @@ class AreaConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -1061,37 +1058,32 @@ class AreaConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -1112,20 +1104,20 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -1149,62 +1141,61 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
-        line: Union[
-            Union[Union["OverlayMarkDef", dict], bool], UndefinedType
-        ] = Undefined,
+        line: Union[Union[Union["SchemaBase", dict], bool], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[Union["OverlayMarkDef", dict], bool, str], UndefinedType
+            Union[Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -1356,72 +1347,69 @@ class AreaConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -1429,23 +1417,23 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -1540,7 +1528,7 @@ class ArgmaxDef(Aggregate):
     _schema = {"$ref": "#/definitions/ArgmaxDef"}
 
     def __init__(
-        self, argmax: Union[Union["FieldName", str], UndefinedType] = Undefined, **kwds
+        self, argmax: Union[Union["SchemaBase", str], UndefinedType] = Undefined, **kwds
     ):
         super(ArgmaxDef, self).__init__(argmax=argmax, **kwds)
 
@@ -1560,7 +1548,7 @@ class ArgminDef(Aggregate):
     _schema = {"$ref": "#/definitions/ArgminDef"}
 
     def __init__(
-        self, argmin: Union[Union["FieldName", str], UndefinedType] = Undefined, **kwds
+        self, argmin: Union[Union["SchemaBase", str], UndefinedType] = Undefined, **kwds
     ):
         super(ArgminDef, self).__init__(argmin=argmin, **kwds)
 
@@ -1603,7 +1591,7 @@ class AutoSizeParams(VegaLiteSchema):
         contains: Union[Literal["content", "padding"], UndefinedType] = Undefined,
         resize: Union[bool, UndefinedType] = Undefined,
         type: Union[
-            Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+            Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -2007,31 +1995,31 @@ class Axis(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         domainColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -2183,7 +2171,7 @@ class Axis(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -2191,37 +2179,38 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         gridColor: Union[
             Union[
-                Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -2373,7 +2362,7 @@ class Axis(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -2383,72 +2372,72 @@ class Axis(VegaLiteSchema):
         gridDash: Union[
             Union[
                 Sequence[float],
-                Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         gridOpacity: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         gridWidth: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ConditionalAxisLabelAlign", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ConditionalAxisLabelBaseline", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union[bool, float]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union[bool, float]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             Union[
-                Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -2600,7 +2589,7 @@ class Axis(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -2610,38 +2599,35 @@ class Axis(VegaLiteSchema):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
-                Union["ConditionalAxisString", dict],
-                Union["ExprRef", "_Parameter", dict],
-                str,
+                Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", dict], str
             ],
             UndefinedType,
         ] = Undefined,
         labelFontSize: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union["ConditionalAxisLabelFontStyle", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["FontStyle", str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
+                Union["SchemaBase", str],
             ],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ConditionalAxisLabelFontWeight", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -2658,90 +2644,91 @@ class Axis(VegaLiteSchema):
                         900,
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelOpacity: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
+                Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["AxisOrient", Literal["top", "bottom", "left", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["top", "bottom", "left", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[Literal["center", "extent"], Union["ExprRef", "_Parameter", dict]],
+            Union[Literal["center", "extent"], Union["SchemaBase", "_Parameter", dict]],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         tickColor: Union[
             Union[
-                Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -2893,7 +2880,7 @@ class Axis(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -2902,9 +2889,9 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TimeInterval",
+                    "SchemaBase",
                     Literal[
                         "millisecond",
                         "second",
@@ -2916,7 +2903,7 @@ class Axis(VegaLiteSchema):
                         "year",
                     ],
                 ],
-                Union["TimeIntervalStep", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
@@ -2924,30 +2911,30 @@ class Axis(VegaLiteSchema):
         tickDash: Union[
             Union[
                 Sequence[float],
-                Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
@@ -2955,47 +2942,47 @@ class Axis(VegaLiteSchema):
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickWidth: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -3003,13 +2990,13 @@ class Axis(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -3161,7 +3148,7 @@ class Axis(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -3169,20 +3156,20 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -3203,33 +3190,33 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
-                Sequence[Union["DateTime", dict]],
+                Sequence[Union["SchemaBase", dict]],
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -3703,32 +3690,32 @@ class AxisConfig(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         domainColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -3880,7 +3867,7 @@ class AxisConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -3888,37 +3875,38 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         domainDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         gridColor: Union[
             Union[
-                Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -4070,7 +4058,7 @@ class AxisConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -4080,72 +4068,72 @@ class AxisConfig(VegaLiteSchema):
         gridDash: Union[
             Union[
                 Sequence[float],
-                Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         gridDashOffset: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         gridOpacity: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         gridWidth: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ConditionalAxisLabelAlign", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ConditionalAxisLabelBaseline", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union[bool, float]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union[bool, float]],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             Union[
-                Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -4297,7 +4285,7 @@ class AxisConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -4307,38 +4295,35 @@ class AxisConfig(VegaLiteSchema):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[Union[bool, float], UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFont: Union[
             Union[
-                Union["ConditionalAxisString", dict],
-                Union["ExprRef", "_Parameter", dict],
-                str,
+                Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", dict], str
             ],
             UndefinedType,
         ] = Undefined,
         labelFontSize: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelFontStyle: Union[
             Union[
-                Union["ConditionalAxisLabelFontStyle", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["FontStyle", str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
+                Union["SchemaBase", str],
             ],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ConditionalAxisLabelFontWeight", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -4355,90 +4340,91 @@ class AxisConfig(VegaLiteSchema):
                         900,
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelOpacity: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
+                Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minExtent: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["AxisOrient", Literal["top", "bottom", "left", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["top", "bottom", "left", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tickBand: Union[
-            Union[Literal["center", "extent"], Union["ExprRef", "_Parameter", dict]],
+            Union[Literal["center", "extent"], Union["SchemaBase", "_Parameter", dict]],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         tickColor: Union[
             Union[
-                Union["ConditionalAxisColor", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -4590,7 +4576,7 @@ class AxisConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -4599,9 +4585,9 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TimeInterval",
+                    "SchemaBase",
                     Literal[
                         "millisecond",
                         "second",
@@ -4613,7 +4599,7 @@ class AxisConfig(VegaLiteSchema):
                         "year",
                     ],
                 ],
-                Union["TimeIntervalStep", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
@@ -4621,30 +4607,30 @@ class AxisConfig(VegaLiteSchema):
         tickDash: Union[
             Union[
                 Sequence[float],
-                Union["ConditionalAxisNumberArray", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         tickDashOffset: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tickOpacity: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
@@ -4652,47 +4638,47 @@ class AxisConfig(VegaLiteSchema):
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         tickWidth: Union[
             Union[
-                Union["ConditionalAxisNumber", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -4700,13 +4686,13 @@ class AxisConfig(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -4858,7 +4844,7 @@ class AxisConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -4866,20 +4852,20 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -4900,33 +4886,33 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleX: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleY: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         values: Union[
             Union[
-                Sequence[Union["DateTime", dict]],
+                Sequence[Union["SchemaBase", dict]],
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -5048,10 +5034,10 @@ class AxisResolveMap(VegaLiteSchema):
     def __init__(
         self,
         x: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -5459,32 +5445,32 @@ class BarConfig(AnyMarkConfig):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -5493,8 +5479,9 @@ class BarConfig(AnyMarkConfig):
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -5514,16 +5501,16 @@ class BarConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -5675,41 +5662,37 @@ class BarConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -5749,42 +5732,42 @@ class BarConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[Union["RelativeBandSize", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -5936,37 +5919,32 @@ class BarConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -5987,20 +5965,20 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -6024,59 +6002,60 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -6228,72 +6207,69 @@ class BarConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -6301,23 +6277,23 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -6488,38 +6464,38 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
     def __init__(
         self,
         align: Union[
-            Union["Align", Literal["left", "center", "right"]], UndefinedType
+            Union["SchemaBase", Literal["left", "center", "right"]], UndefinedType
         ] = Undefined,
         anchor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                "TextBaseline",
-                Union["Baseline", Literal["top", "middle", "bottom"]],
+                "SchemaBase",
+                Union["SchemaBase", Literal["top", "middle", "bottom"]],
                 str,
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -6671,7 +6647,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -6679,26 +6655,26 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -6720,36 +6696,36 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ] = Undefined,
         frame: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["TitleFrame", Literal["bounds", "group"]], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", Literal["bounds", "group"]], str],
             ],
             UndefinedType,
         ] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleOrient", Literal["none", "left", "right", "top", "bottom"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["none", "left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         subtitleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -6901,7 +6877,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -6909,20 +6885,20 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         subtitleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -6943,13 +6919,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -7055,9 +7031,7 @@ class BinParams(VegaLiteSchema):
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
             Union[
-                "BinExtent",
-                Sequence[float],
-                Union["ParameterExtent", "_Parameter", dict],
+                "SchemaBase", Sequence[float], Union["SchemaBase", "_Parameter", dict]
             ],
             UndefinedType,
         ] = Undefined,
@@ -7126,7 +7100,7 @@ class BindCheckbox(Binding):
         self,
         input: Union[str, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
-        element: Union[Union["Element", str], UndefinedType] = Undefined,
+        element: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -7162,7 +7136,9 @@ class BindDirect(Binding):
 
     def __init__(
         self,
-        element: Union[Union[Union["Element", str], dict], UndefinedType] = Undefined,
+        element: Union[
+            Union[Union["SchemaBase", str], dict], UndefinedType
+        ] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         event: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -7208,7 +7184,7 @@ class BindInput(Binding):
         self,
         autocomplete: Union[str, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
-        element: Union[Union["Element", str], UndefinedType] = Undefined,
+        element: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         input: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         placeholder: Union[str, UndefinedType] = Undefined,
@@ -7259,7 +7235,7 @@ class BindRadioSelect(Binding):
         input: Union[Literal["radio", "select"], UndefinedType] = Undefined,
         options: Union[Sequence[Any], UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
-        element: Union[Union["Element", str], UndefinedType] = Undefined,
+        element: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         labels: Union[Sequence[str], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -7312,7 +7288,7 @@ class BindRange(Binding):
         self,
         input: Union[str, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
-        element: Union[Union["Element", str], UndefinedType] = Undefined,
+        element: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         max: Union[float, UndefinedType] = Undefined,
         min: Union[float, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
@@ -7406,81 +7382,21 @@ class BoxPlotConfig(VegaLiteSchema):
     def __init__(
         self,
         box: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         extent: Union[Union[float, str], UndefinedType] = Undefined,
         median: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         outliers: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         rule: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         ticks: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -7536,7 +7452,7 @@ class BrushConfig(VegaLiteSchema):
         self,
         cursor: Union[
             Union[
-                "Cursor",
+                "SchemaBase",
                 Literal[
                     "auto",
                     "default",
@@ -7580,9 +7496,9 @@ class BrushConfig(VegaLiteSchema):
         ] = Undefined,
         fill: Union[
             Union[
-                "Color",
+                "SchemaBase",
                 Union[
-                    "ColorName",
+                    "SchemaBase",
                     Literal[
                         "black",
                         "silver",
@@ -7734,7 +7650,7 @@ class BrushConfig(VegaLiteSchema):
                         "rebeccapurple",
                     ],
                 ],
-                Union["HexColor", str],
+                Union["SchemaBase", str],
                 str,
             ],
             UndefinedType,
@@ -7742,9 +7658,9 @@ class BrushConfig(VegaLiteSchema):
         fillOpacity: Union[float, UndefinedType] = Undefined,
         stroke: Union[
             Union[
-                "Color",
+                "SchemaBase",
                 Union[
-                    "ColorName",
+                    "SchemaBase",
                     Literal[
                         "black",
                         "silver",
@@ -7896,7 +7812,7 @@ class BrushConfig(VegaLiteSchema):
                         "rebeccapurple",
                     ],
                 ],
-                Union["HexColor", str],
+                Union["SchemaBase", str],
                 str,
             ],
             UndefinedType,
@@ -8206,29 +8122,18 @@ class BoxPlotDef(CompositeMarkDef):
 
     def __init__(
         self,
-        type: Union[Union["BoxPlot", str], UndefinedType] = Undefined,
+        type: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         box: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -8380,84 +8285,31 @@ class BoxPlotDef(CompositeMarkDef):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         extent: Union[Union[float, str], UndefinedType] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         median: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outliers: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         rule: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         ticks: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -9154,14 +9006,12 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -9186,24 +9036,25 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -9238,45 +9089,46 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -9309,54 +9161,52 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -9576,33 +9426,17 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -9627,23 +9461,24 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -9678,45 +9513,46 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -9749,54 +9585,52 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -9863,16 +9697,12 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
                 str,
             ],
             UndefinedType,
@@ -9911,35 +9741,17 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
                 str,
             ],
             UndefinedType,
@@ -9988,10 +9800,11 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -10025,29 +9838,16 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -10095,7 +9895,7 @@ class ConditionalParameterValueDefnumber(ConditionalValueDefnumber):
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10127,23 +9927,9 @@ class ConditionalPredicateValueDefnumber(ConditionalValueDefnumber):
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -10196,9 +9982,10 @@ class ConditionalParameterValueDefnumberArrayExprRef(
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10234,28 +10021,15 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         **kwds,
     ):
@@ -10301,9 +10075,9 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10335,28 +10109,14 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -10402,9 +10162,9 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10436,28 +10196,14 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -10507,9 +10253,9 @@ class ConditionalParameterValueDefstringnullExprRef(
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[None, Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -10545,28 +10291,14 @@ class ConditionalPredicateValueDefstringnullExprRef(
         self,
         test: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[None, Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -10857,44 +10589,45 @@ class Config(VegaLiteSchema):
 
     def __init__(
         self,
-        arc: Union[Union["RectConfig", dict], UndefinedType] = Undefined,
-        area: Union[Union["AreaConfig", dict], UndefinedType] = Undefined,
+        arc: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        area: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         aria: Union[bool, UndefinedType] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        axis: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisBand: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisBottom: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisDiscrete: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisLeft: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisPoint: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisQuantitative: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisRight: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisTemporal: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisTop: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisX: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisXBand: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisXDiscrete: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisXPoint: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisXQuantitative: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisXTemporal: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisY: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisYBand: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisYDiscrete: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisYPoint: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisYQuantitative: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
-        axisYTemporal: Union[Union["AxisConfig", dict], UndefinedType] = Undefined,
+        axis: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisBand: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisBottom: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisDiscrete: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisLeft: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisPoint: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisQuantitative: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisRight: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisTemporal: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisTop: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisX: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisXBand: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisXDiscrete: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisXPoint: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisXQuantitative: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisXTemporal: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisY: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisYBand: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisYDiscrete: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisYPoint: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisYQuantitative: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        axisYTemporal: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -11046,74 +10779,69 @@ class Config(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        bar: Union[Union["BarConfig", dict], UndefinedType] = Undefined,
-        boxplot: Union[Union["BoxPlotConfig", dict], UndefinedType] = Undefined,
-        circle: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        concat: Union[Union["CompositionConfig", dict], UndefinedType] = Undefined,
+        bar: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        boxplot: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        circle: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        concat: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         countTitle: Union[str, UndefinedType] = Undefined,
         customFormatTypes: Union[bool, UndefinedType] = Undefined,
-        errorband: Union[Union["ErrorBandConfig", dict], UndefinedType] = Undefined,
-        errorbar: Union[Union["ErrorBarConfig", dict], UndefinedType] = Undefined,
-        facet: Union[Union["CompositionConfig", dict], UndefinedType] = Undefined,
+        errorband: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        errorbar: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        facet: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         fieldTitle: Union[
             Literal["verbal", "functional", "plain"], UndefinedType
         ] = Undefined,
         font: Union[str, UndefinedType] = Undefined,
-        geoshape: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        header: Union[Union["HeaderConfig", dict], UndefinedType] = Undefined,
-        headerColumn: Union[Union["HeaderConfig", dict], UndefinedType] = Undefined,
-        headerFacet: Union[Union["HeaderConfig", dict], UndefinedType] = Undefined,
-        headerRow: Union[Union["HeaderConfig", dict], UndefinedType] = Undefined,
-        image: Union[Union["RectConfig", dict], UndefinedType] = Undefined,
-        legend: Union[Union["LegendConfig", dict], UndefinedType] = Undefined,
-        line: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
+        geoshape: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        header: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        headerColumn: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        headerFacet: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        headerRow: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        image: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        legend: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        line: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
-        locale: Union[Union["Locale", dict], UndefinedType] = Undefined,
-        mark: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
+        locale: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        mark: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         normalizedNumberFormat: Union[str, UndefinedType] = Undefined,
         normalizedNumberFormatType: Union[str, UndefinedType] = Undefined,
         numberFormat: Union[str, UndefinedType] = Undefined,
         numberFormatType: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
-            UndefinedType,
-        ] = Undefined,
-        params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
             ],
             UndefinedType,
         ] = Undefined,
-        point: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        projection: Union[Union["ProjectionConfig", dict], UndefinedType] = Undefined,
-        range: Union[Union["RangeConfig", dict], UndefinedType] = Undefined,
-        rect: Union[Union["RectConfig", dict], UndefinedType] = Undefined,
-        rule: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        scale: Union[Union["ScaleConfig", dict], UndefinedType] = Undefined,
-        selection: Union[Union["SelectionConfig", dict], UndefinedType] = Undefined,
-        square: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        style: Union[Union["StyleConfigIndex", dict], UndefinedType] = Undefined,
-        text: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        tick: Union[Union["TickConfig", dict], UndefinedType] = Undefined,
+        params: Union[
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
+        ] = Undefined,
+        point: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        range: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        rect: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        rule: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        scale: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        selection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        square: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        style: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        text: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        tick: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         timeFormat: Union[str, UndefinedType] = Undefined,
         timeFormatType: Union[str, UndefinedType] = Undefined,
-        title: Union[Union["TitleConfig", dict], UndefinedType] = Undefined,
-        tooltipFormat: Union[Union["FormatConfig", dict], UndefinedType] = Undefined,
-        trail: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
-        view: Union[Union["ViewConfig", dict], UndefinedType] = Undefined,
+        title: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        tooltipFormat: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        trail: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        view: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(Config, self).__init__(
@@ -11286,7 +11014,7 @@ class CsvDataFormat(DataFormat):
 
     def __init__(
         self,
-        parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
+        parse: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         type: Union[Literal["csv", "tsv"], UndefinedType] = Undefined,
         **kwds,
     ):
@@ -11428,7 +11156,7 @@ class DomainUnionWith(VegaLiteSchema):
     def __init__(
         self,
         unionWith: Union[
-            Sequence[Union[Union["DateTime", dict], bool, float, str]], UndefinedType
+            Sequence[Union[Union["SchemaBase", dict], bool, float, str]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -11475,7 +11203,7 @@ class DsvDataFormat(DataFormat):
     def __init__(
         self,
         delimiter: Union[str, UndefinedType] = Undefined,
-        parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
+        parse: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -11700,319 +11428,102 @@ class Encoding(VegaLiteSchema):
     def __init__(
         self,
         angle: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         color: Union[
-            Union[
-                "ColorDef",
-                Union["FieldOrDatumDefWithConditionDatumDefGradientstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        description: Union[
-            Union[
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
-            UndefinedType,
-        ] = Undefined,
+        description: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         detail: Union[
-            Union[
-                Sequence[Union["FieldDefWithoutScale", dict]],
-                Union["FieldDefWithoutScale", dict],
-            ],
+            Union[Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         fill: Union[
-            Union[
-                "ColorDef",
-                Union["FieldOrDatumDefWithConditionDatumDefGradientstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         fillOpacity: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        href: Union[
-            Union[
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
-            UndefinedType,
-        ] = Undefined,
-        key: Union[Union["FieldDefWithoutScale", dict], UndefinedType] = Undefined,
+        href: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        key: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         latitude: Union[
-            Union[
-                "LatLongDef", Union["DatumDef", dict], Union["LatLongFieldDef", dict]
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         latitude2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         longitude: Union[
-            Union[
-                "LatLongDef", Union["DatumDef", dict], Union["LatLongFieldDef", dict]
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         longitude2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         order: Union[
-            Union[
-                Sequence[Union["OrderFieldDef", dict]],
-                Union["OrderFieldDef", dict],
-                Union["OrderOnlyDef", dict],
-                Union["OrderValueDef", dict],
-            ],
+            Union[Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         radius: Union[
-            Union[
-                "PolarDef",
-                Union["PositionDatumDefBase", dict],
-                Union["PositionFieldDefBase", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union[
-                "ShapeDef",
-                Union["FieldOrDatumDefWithConditionDatumDefstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union[
-                "ColorDef",
-                Union["FieldOrDatumDefWithConditionDatumDefGradientstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[
-                "NumericArrayMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumberArray", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[
-                "TextDef",
-                Union["FieldOrDatumDefWithConditionStringDatumDefText", dict],
-                Union["FieldOrDatumDefWithConditionStringFieldDefText", dict],
-                Union["ValueDefWithConditionStringFieldDefText", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[
-                "PolarDef",
-                Union["PositionDatumDefBase", dict],
-                Union["PositionFieldDefBase", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         tooltip: Union[
-            Union[
-                None,
-                Sequence[Union["StringFieldDef", dict]],
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
+            Union[None, Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
-        url: Union[
-            Union[
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
-            UndefinedType,
-        ] = Undefined,
+        url: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         x: Union[
-            Union[
-                "PositionDef",
-                Union["PositionDatumDef", dict],
-                Union["PositionFieldDef", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        xError: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
-        xError2: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
+        xError: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        xError2: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         xOffset: Union[
-            Union[
-                "OffsetDef",
-                Union["ScaleDatumDef", dict],
-                Union["ScaleFieldDef", dict],
-                Union["ValueDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[
-                "PositionDef",
-                Union["PositionDatumDef", dict],
-                Union["PositionFieldDef", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        yError: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
-        yError2: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
+        yError: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        yError2: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         yOffset: Union[
-            Union[
-                "OffsetDef",
-                Union["ScaleDatumDef", dict],
-                Union["ScaleFieldDef", dict],
-                Union["ValueDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -12126,42 +11637,17 @@ class ErrorBandConfig(VegaLiteSchema):
     def __init__(
         self,
         band: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         borders: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         extent: Union[
-            Union["ErrorBarExtent", Literal["ci", "iqr", "stderr", "stdev"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["ci", "iqr", "stderr", "stdev"]], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                "Interpolate",
+                "SchemaBase",
                 Literal[
                     "basis",
                     "basis-open",
@@ -12275,44 +11761,21 @@ class ErrorBandDef(CompositeMarkDef):
 
     def __init__(
         self,
-        type: Union[Union["ErrorBand", str], UndefinedType] = Undefined,
+        type: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         band: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         borders: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -12464,25 +11927,19 @@ class ErrorBandDef(CompositeMarkDef):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         extent: Union[
-            Union["ErrorBarExtent", Literal["ci", "iqr", "stderr", "stdev"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["ci", "iqr", "stderr", "stdev"]], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                "Interpolate",
+                "SchemaBase",
                 Literal[
                     "basis",
                     "basis-open",
@@ -12505,7 +11962,7 @@ class ErrorBandDef(CompositeMarkDef):
         ] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         tension: Union[float, UndefinedType] = Undefined,
         **kwds,
@@ -12572,40 +12029,15 @@ class ErrorBarConfig(VegaLiteSchema):
     def __init__(
         self,
         extent: Union[
-            Union["ErrorBarExtent", Literal["ci", "iqr", "stderr", "stdev"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["ci", "iqr", "stderr", "stdev"]], UndefinedType
         ] = Undefined,
         rule: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         ticks: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -12678,14 +12110,15 @@ class ErrorBarDef(CompositeMarkDef):
 
     def __init__(
         self,
-        type: Union[Union["ErrorBar", str], UndefinedType] = Undefined,
+        type: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -12837,57 +12270,27 @@ class ErrorBarDef(CompositeMarkDef):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         extent: Union[
-            Union["ErrorBarExtent", Literal["ci", "iqr", "stderr", "stdev"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["ci", "iqr", "stderr", "stdev"]], UndefinedType
         ] = Undefined,
         opacity: Union[float, UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         rule: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         size: Union[float, UndefinedType] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         ticks: Union[
-            Union[
-                Union[
-                    "AnyMarkConfig",
-                    Union["AreaConfig", dict],
-                    Union["BarConfig", dict],
-                    Union["LineConfig", dict],
-                    Union["MarkConfig", dict],
-                    Union["RectConfig", dict],
-                    Union["TickConfig", dict],
-                ],
-                bool,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -13203,15 +12606,13 @@ class FacetEncodingFieldDef(VegaLiteSchema):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -13236,52 +12637,55 @@ class FacetEncodingFieldDef(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        header: Union[Union[None, Union["Header", dict]], UndefinedType] = Undefined,
+        header: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
         sort: Union[
             Union[
                 None,
-                Union["EncodingSortField", dict],
+                Union["SchemaBase", Literal["ascending", "descending"]],
                 Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
                     Sequence[bool],
                     Sequence[float],
                     Sequence[str],
                 ],
-                Union["SortOrder", Literal["ascending", "descending"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -13316,45 +12720,46 @@ class FacetEncodingFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -13387,54 +12792,52 @@ class FacetEncodingFieldDef(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -13651,11 +13054,9 @@ class FacetFieldDef(VegaLiteSchema):
         self,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -13680,37 +13081,40 @@ class FacetFieldDef(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        header: Union[Union[None, Union["Header", dict]], UndefinedType] = Undefined,
+        header: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
         sort: Union[
             Union[
                 None,
-                Union["EncodingSortField", dict],
+                Union["SchemaBase", Literal["ascending", "descending"]],
                 Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
                     Sequence[bool],
                     Sequence[float],
                     Sequence[str],
                 ],
-                Union["SortOrder", Literal["ascending", "descending"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -13745,45 +13149,46 @@ class FacetFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -13816,54 +13221,52 @@ class FacetFieldDef(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -13901,8 +13304,8 @@ class FacetMapping(VegaLiteSchema):
 
     def __init__(
         self,
-        column: Union[Union["FacetFieldDef", dict], UndefinedType] = Undefined,
-        row: Union[Union["FacetFieldDef", dict], UndefinedType] = Undefined,
+        column: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        row: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(FacetMapping, self).__init__(column=column, row=row, **kwds)
@@ -14120,324 +13523,105 @@ class FacetedEncoding(VegaLiteSchema):
     def __init__(
         self,
         angle: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         color: Union[
-            Union[
-                "ColorDef",
-                Union["FieldOrDatumDefWithConditionDatumDefGradientstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        column: Union[
-            Union["RowColumnEncodingFieldDef", dict], UndefinedType
-        ] = Undefined,
-        description: Union[
-            Union[
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
-            UndefinedType,
-        ] = Undefined,
+        column: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        description: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         detail: Union[
-            Union[
-                Sequence[Union["FieldDefWithoutScale", dict]],
-                Union["FieldDefWithoutScale", dict],
-            ],
+            Union[Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
-        facet: Union[Union["FacetEncodingFieldDef", dict], UndefinedType] = Undefined,
+        facet: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         fill: Union[
-            Union[
-                "ColorDef",
-                Union["FieldOrDatumDefWithConditionDatumDefGradientstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         fillOpacity: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        href: Union[
-            Union[
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
-            UndefinedType,
-        ] = Undefined,
-        key: Union[Union["FieldDefWithoutScale", dict], UndefinedType] = Undefined,
+        href: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        key: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         latitude: Union[
-            Union[
-                "LatLongDef", Union["DatumDef", dict], Union["LatLongFieldDef", dict]
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         latitude2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         longitude: Union[
-            Union[
-                "LatLongDef", Union["DatumDef", dict], Union["LatLongFieldDef", dict]
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         longitude2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         order: Union[
-            Union[
-                Sequence[Union["OrderFieldDef", dict]],
-                Union["OrderFieldDef", dict],
-                Union["OrderOnlyDef", dict],
-                Union["OrderValueDef", dict],
-            ],
+            Union[Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         radius: Union[
-            Union[
-                "PolarDef",
-                Union["PositionDatumDefBase", dict],
-                Union["PositionFieldDefBase", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        row: Union[Union["RowColumnEncodingFieldDef", dict], UndefinedType] = Undefined,
+        row: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         shape: Union[
-            Union[
-                "ShapeDef",
-                Union["FieldOrDatumDefWithConditionDatumDefstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         size: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union[
-                "ColorDef",
-                Union["FieldOrDatumDefWithConditionDatumDefGradientstringnull", dict],
-                Union[
-                    "FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull",
-                    dict,
-                ],
-                Union[
-                    "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
-                    dict,
-                ],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union[
-                "NumericArrayMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumberArray", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[
-                "NumericMarkPropDef",
-                Union["FieldOrDatumDefWithConditionDatumDefnumber", dict],
-                Union["FieldOrDatumDefWithConditionMarkPropFieldDefnumber", dict],
-                Union["ValueDefWithConditionMarkPropFieldOrDatumDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         text: Union[
-            Union[
-                "TextDef",
-                Union["FieldOrDatumDefWithConditionStringDatumDefText", dict],
-                Union["FieldOrDatumDefWithConditionStringFieldDefText", dict],
-                Union["ValueDefWithConditionStringFieldDefText", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union[
-                "PolarDef",
-                Union["PositionDatumDefBase", dict],
-                Union["PositionFieldDefBase", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         tooltip: Union[
-            Union[
-                None,
-                Sequence[Union["StringFieldDef", dict]],
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
+            Union[None, Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
-        url: Union[
-            Union[
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
-            UndefinedType,
-        ] = Undefined,
+        url: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         x: Union[
-            Union[
-                "PositionDef",
-                Union["PositionDatumDef", dict],
-                Union["PositionFieldDef", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        xError: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
-        xError2: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
+        xError: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        xError2: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         xOffset: Union[
-            Union[
-                "OffsetDef",
-                Union["ScaleDatumDef", dict],
-                Union["ScaleFieldDef", dict],
-                Union["ValueDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[
-                "PositionDef",
-                Union["PositionDatumDef", dict],
-                Union["PositionFieldDef", dict],
-                Union["PositionValueDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[
-                "Position2Def",
-                Union["DatumDef", dict],
-                Union["PositionValueDef", dict],
-                Union["SecondaryFieldDef", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        yError: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
-        yError2: Union[
-            Union[Union["SecondaryFieldDef", dict], Union["ValueDefnumber", dict]],
-            UndefinedType,
-        ] = Undefined,
+        yError: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        yError2: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         yOffset: Union[
-            Union[
-                "OffsetDef",
-                Union["ScaleDatumDef", dict],
-                Union["ScaleFieldDef", dict],
-                Union["ValueDefnumber", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -14515,23 +13699,11 @@ class Feature(VegaLiteSchema):
     def __init__(
         self,
         geometry: Union[
-            Union[
-                "Geometry",
-                Union["GeometryCollection", dict],
-                Union["LineString", dict],
-                Union["MultiLineString", dict],
-                Union["MultiPoint", dict],
-                Union["MultiPolygon", dict],
-                Union["Point", dict],
-                Union["Polygon", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        properties: Union[
-            Union["GeoJsonProperties", None, dict], UndefinedType
-        ] = Undefined,
+        properties: Union[Union["SchemaBase", None, dict], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
         **kwds,
     ):
@@ -14567,11 +13739,9 @@ class FeatureCollection(VegaLiteSchema):
 
     def __init__(
         self,
-        features: Union[
-            Sequence[Union["FeatureGeometryGeoJsonProperties", dict]], UndefinedType
-        ] = Undefined,
+        features: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(FeatureCollection, self).__init__(
@@ -14608,23 +13778,11 @@ class FeatureGeometryGeoJsonProperties(VegaLiteSchema):
     def __init__(
         self,
         geometry: Union[
-            Union[
-                "Geometry",
-                Union["GeometryCollection", dict],
-                Union["LineString", dict],
-                Union["MultiLineString", dict],
-                Union["MultiPoint", dict],
-                Union["MultiPolygon", dict],
-                Union["Point", dict],
-                Union["Polygon", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        properties: Union[
-            Union["GeoJsonProperties", None, dict], UndefinedType
-        ] = Undefined,
+        properties: Union[Union["SchemaBase", None, dict], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
         **kwds,
     ):
@@ -14814,15 +13972,13 @@ class FieldDefWithoutScale(VegaLiteSchema):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -14847,21 +14003,22 @@ class FieldDefWithoutScale(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -14896,45 +14053,46 @@ class FieldDefWithoutScale(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -14967,54 +14125,52 @@ class FieldDefWithoutScale(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -15250,11 +14406,9 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         self,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -15279,40 +14433,31 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringExprRef",
-                        Union["ConditionalParameterValueDefstringExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefstringExprRef",
-                    Union["ConditionalParameterValueDefstringExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -15347,45 +14492,46 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -15418,54 +14564,52 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -15685,21 +14829,9 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         self,
         mark: Union[
             Union[
-                "AnyMark",
+                "SchemaBase",
                 Union[
-                    "CompositeMark",
-                    Union["BoxPlot", str],
-                    Union["ErrorBand", str],
-                    Union["ErrorBar", str],
-                ],
-                Union[
-                    "CompositeMarkDef",
-                    Union["BoxPlotDef", dict],
-                    Union["ErrorBandDef", dict],
-                    Union["ErrorBarDef", dict],
-                ],
-                Union[
-                    "Mark",
+                    "SchemaBase",
                     Literal[
                         "arc",
                         "area",
@@ -15717,68 +14849,30 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
                         "geoshape",
                     ],
                 ],
-                Union["MarkDef", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
+                Union["SchemaBase", Union["SchemaBase", str]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        params: Union[
-            Sequence[Union["SelectionParameter", dict]], UndefinedType
-        ] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
+        params: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -15825,23 +14919,11 @@ class GeoJsonFeature(Fit):
     def __init__(
         self,
         geometry: Union[
-            Union[
-                "Geometry",
-                Union["GeometryCollection", dict],
-                Union["LineString", dict],
-                Union["MultiLineString", dict],
-                Union["MultiPoint", dict],
-                Union["MultiPolygon", dict],
-                Union["Point", dict],
-                Union["Polygon", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        properties: Union[
-            Union["GeoJsonProperties", None, dict], UndefinedType
-        ] = Undefined,
+        properties: Union[Union["SchemaBase", None, dict], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         id: Union[Union[float, str], UndefinedType] = Undefined,
         **kwds,
     ):
@@ -15877,11 +14959,9 @@ class GeoJsonFeatureCollection(Fit):
 
     def __init__(
         self,
-        features: Union[
-            Sequence[Union["FeatureGeometryGeoJsonProperties", dict]], UndefinedType
-        ] = Undefined,
+        features: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(GeoJsonFeatureCollection, self).__init__(
@@ -15941,22 +15021,10 @@ class GeometryCollection(Geometry):
     def __init__(
         self,
         geometries: Union[
-            Sequence[
-                Union[
-                    "Geometry",
-                    Union["GeometryCollection", dict],
-                    Union["LineString", dict],
-                    Union["MultiLineString", dict],
-                    Union["MultiPoint", dict],
-                    Union["MultiPolygon", dict],
-                    Union["Point", dict],
-                    Union["Polygon", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(GeometryCollection, self).__init__(
@@ -15997,9 +15065,9 @@ class GradientStop(VegaLiteSchema):
         self,
         color: Union[
             Union[
-                "Color",
+                "SchemaBase",
                 Union[
-                    "ColorName",
+                    "SchemaBase",
                     Literal[
                         "black",
                         "silver",
@@ -16151,7 +15219,7 @@ class GradientStop(VegaLiteSchema):
                         "rebeccapurple",
                     ],
                 ],
-                Union["HexColor", str],
+                Union["SchemaBase", str],
                 str,
             ],
             UndefinedType,
@@ -16181,7 +15249,7 @@ class GraticuleGenerator(Generator):
     def __init__(
         self,
         graticule: Union[
-            Union[Union["GraticuleParams", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -16224,33 +15292,24 @@ class GraticuleParams(VegaLiteSchema):
     def __init__(
         self,
         extent: Union[
-            Union[
-                "Vector2Vector2number",
-                Sequence[Union["Vector2number", Sequence[float]]],
-            ],
+            Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             UndefinedType,
         ] = Undefined,
         extentMajor: Union[
-            Union[
-                "Vector2Vector2number",
-                Sequence[Union["Vector2number", Sequence[float]]],
-            ],
+            Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             UndefinedType,
         ] = Undefined,
         extentMinor: Union[
-            Union[
-                "Vector2Vector2number",
-                Sequence[Union["Vector2number", Sequence[float]]],
-            ],
+            Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             UndefinedType,
         ] = Undefined,
         precision: Union[float, UndefinedType] = Undefined,
-        step: Union[Union["Vector2number", Sequence[float]], UndefinedType] = Undefined,
+        step: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         stepMajor: Union[
-            Union["Vector2number", Sequence[float]], UndefinedType
+            Union["SchemaBase", Sequence[float]], UndefinedType
         ] = Undefined,
         stepMinor: Union[
-            Union["Vector2number", Sequence[float]], UndefinedType
+            Union["SchemaBase", Sequence[float]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -16434,25 +15493,25 @@ class Header(VegaLiteSchema):
 
     def __init__(
         self,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         labelAnchor: Union[
-            Union["TitleAnchor", Literal[None, "start", "middle", "end"]], UndefinedType
+            Union["SchemaBase", Literal[None, "start", "middle", "end"]], UndefinedType
         ] = Undefined,
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -16460,10 +15519,11 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         labelColor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -16615,29 +15675,28 @@ class Header(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -16658,41 +15717,43 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
-            Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
+            Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
+            UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
-            Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
+            Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
+            UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
-            Union["TitleAnchor", Literal[None, "start", "middle", "end"]], UndefinedType
+            Union["SchemaBase", Literal[None, "start", "middle", "end"]], UndefinedType
         ] = Undefined,
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -16700,10 +15761,11 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -16855,28 +15917,27 @@ class Header(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -16897,16 +15958,17 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
-            Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
+            Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
+            UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -17096,25 +16158,25 @@ class HeaderConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         labelAnchor: Union[
-            Union["TitleAnchor", Literal[None, "start", "middle", "end"]], UndefinedType
+            Union["SchemaBase", Literal[None, "start", "middle", "end"]], UndefinedType
         ] = Undefined,
         labelAngle: Union[float, UndefinedType] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -17122,10 +16184,11 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         labelColor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -17277,29 +16340,28 @@ class HeaderConfig(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -17320,39 +16382,41 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOrient: Union[
-            Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
+            Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
+            UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
-            Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
+            Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
+            UndefinedType,
         ] = Undefined,
         title: Union[None, UndefinedType] = Undefined,
         titleAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
-            Union["TitleAnchor", Literal[None, "start", "middle", "end"]], UndefinedType
+            Union["SchemaBase", Literal[None, "start", "middle", "end"]], UndefinedType
         ] = Undefined,
         titleAngle: Union[float, UndefinedType] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -17360,10 +16424,11 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -17515,28 +16580,27 @@ class HeaderConfig(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -17557,16 +16621,17 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
-            Union["Orient", Literal["left", "right", "top", "bottom"]], UndefinedType
+            Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
+            UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -17675,10 +16740,10 @@ class ImputeParams(VegaLiteSchema):
         self,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[Sequence[Any], Union["ImputeSequence", dict]], UndefinedType
+            Union[Sequence[Any], Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         method: Union[
-            Union["ImputeMethod", Literal["value", "median", "max", "min", "mean"]],
+            Union["SchemaBase", Literal["value", "median", "max", "min", "mean"]],
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
@@ -17742,7 +16807,7 @@ class InlineData(DataSource):
         self,
         values: Union[
             Union[
-                "InlineDataset",
+                "SchemaBase",
                 Sequence[bool],
                 Sequence[dict],
                 Sequence[float],
@@ -17753,14 +16818,7 @@ class InlineData(DataSource):
             UndefinedType,
         ] = Undefined,
         format: Union[
-            Union[
-                "DataFormat",
-                Union["CsvDataFormat", dict],
-                Union["DsvDataFormat", dict],
-                Union["JsonDataFormat", dict],
-                Union["TopoDataFormat", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -17906,22 +16964,13 @@ class IntervalSelectionConfig(VegaLiteSchema):
         self,
         type: Union[str, UndefinedType] = Undefined,
         clear: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                bool,
-                str,
-            ],
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool, str],
             UndefinedType,
         ] = Undefined,
         encodings: Union[
             Sequence[
                 Union[
-                    "SingleDefUnitChannel",
+                    "SchemaBase",
                     Literal[
                         "x",
                         "y",
@@ -17958,23 +17007,13 @@ class IntervalSelectionConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        mark: Union[Union["BrushConfig", dict], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
+        mark: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         on: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                str,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], str], UndefinedType
         ] = Undefined,
         resolve: Union[
-            Union["SelectionResolution", Literal["global", "union", "intersect"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["global", "union", "intersect"]], UndefinedType
         ] = Undefined,
         translate: Union[Union[bool, str], UndefinedType] = Undefined,
         zoom: Union[Union[bool, str], UndefinedType] = Undefined,
@@ -18094,22 +17133,13 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
     def __init__(
         self,
         clear: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                bool,
-                str,
-            ],
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool, str],
             UndefinedType,
         ] = Undefined,
         encodings: Union[
             Sequence[
                 Union[
-                    "SingleDefUnitChannel",
+                    "SchemaBase",
                     Literal[
                         "x",
                         "y",
@@ -18146,23 +17176,13 @@ class IntervalSelectionConfigWithoutType(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        mark: Union[Union["BrushConfig", dict], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
+        mark: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         on: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                str,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], str], UndefinedType
         ] = Undefined,
         resolve: Union[
-            Union["SelectionResolution", Literal["global", "union", "intersect"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["global", "union", "intersect"]], UndefinedType
         ] = Undefined,
         translate: Union[Union[bool, str], UndefinedType] = Undefined,
         zoom: Union[Union[bool, str], UndefinedType] = Undefined,
@@ -18206,7 +17226,7 @@ class JoinAggregateFieldDef(VegaLiteSchema):
         self,
         op: Union[
             Union[
-                "AggregateOp",
+                "SchemaBase",
                 Literal[
                     "argmax",
                     "argmin",
@@ -18235,7 +17255,7 @@ class JoinAggregateFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         **kwds,
     ):
         super(JoinAggregateFieldDef, self).__init__(op=op, field=field, **kwds)
@@ -18281,7 +17301,7 @@ class JsonDataFormat(DataFormat):
 
     def __init__(
         self,
-        parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
+        parse: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         property: Union[str, UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -18479,15 +17499,13 @@ class LatLongFieldDef(LatLongDef):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -18512,19 +17530,20 @@ class LatLongFieldDef(LatLongDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[None, UndefinedType] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -18559,45 +17578,46 @@ class LatLongFieldDef(LatLongDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -18630,49 +17650,48 @@ class LatLongFieldDef(LatLongDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -19036,35 +18055,35 @@ class Legend(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         fillColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -19216,30 +18235,30 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -19391,7 +18410,7 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -19399,31 +18418,31 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gridAlign: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["LayoutAlign", Literal["all", "each", "none"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -19431,13 +18450,13 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         labelColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -19589,7 +18608,7 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -19598,20 +18617,20 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -19632,38 +18651,38 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
+                Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         legendX: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                "LegendOrient",
+                "SchemaBase",
                 Literal[
                     "none",
                     "left",
@@ -19679,20 +18698,20 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -19844,7 +18863,7 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -19852,20 +18871,21 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -20017,7 +19037,7 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -20025,26 +19045,26 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -20196,7 +19216,7 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -20204,19 +19224,19 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["SymbolShape", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TickCount",
+                    "SchemaBase",
                     Union[
-                        "TimeInterval",
+                        "SchemaBase",
                         Literal[
                             "millisecond",
                             "second",
@@ -20228,38 +19248,38 @@ class Legend(VegaLiteSchema):
                             "year",
                         ],
                     ],
-                    Union["TimeIntervalStep", dict],
+                    Union["SchemaBase", dict],
                     float,
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         titleAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -20267,13 +19287,13 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -20425,7 +19445,7 @@ class Legend(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -20433,20 +19453,20 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -20467,32 +19487,32 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Orient", Literal["left", "right", "top", "bottom"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             Union[
-                Sequence[Union["DateTime", dict]],
+                Sequence[Union["SchemaBase", dict]],
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -20868,36 +19888,36 @@ class LegendConfig(VegaLiteSchema):
     def __init__(
         self,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         columns: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         direction: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         fillColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -21049,7 +20069,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -21058,34 +20078,34 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         gradientDirection: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Orientation", Literal["horizontal", "vertical"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["horizontal", "vertical"]],
             ],
             UndefinedType,
         ] = Undefined,
         gradientHorizontalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientHorizontalMinLength: Union[float, UndefinedType] = Undefined,
         gradientLabelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientLabelOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientLength: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -21237,7 +20257,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -21245,33 +20265,33 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         gradientVerticalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientVerticalMinLength: Union[float, UndefinedType] = Undefined,
         gridAlign: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["LayoutAlign", Literal["all", "each", "none"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
             ],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -21279,13 +20299,13 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         labelColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -21437,7 +20457,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -21445,20 +20465,20 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         labelFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -21479,39 +20499,41 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelOverlap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["LabelOverlap", bool, str]
+                Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", bool, str]
             ],
             UndefinedType,
         ] = Undefined,
         labelPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
-        layout: Union[Union["ExprRef", "_Parameter", dict], UndefinedType] = Undefined,
+        layout: Union[
+            Union["SchemaBase", "_Parameter", dict], UndefinedType
+        ] = Undefined,
         legendX: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         legendY: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                "LegendOrient",
+                "SchemaBase",
                 Literal[
                     "none",
                     "left",
@@ -21527,20 +20549,20 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -21692,7 +20714,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -21700,20 +20722,21 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolBaseFillColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -21865,7 +20888,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -21874,13 +20897,13 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         symbolBaseStrokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -22032,7 +21055,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -22040,27 +21063,28 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         symbolDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolDirection: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Orientation", Literal["horizontal", "vertical"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["horizontal", "vertical"]],
             ],
             UndefinedType,
         ] = Undefined,
         symbolFillColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -22212,7 +21236,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -22220,26 +21244,26 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -22391,7 +21415,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -22399,19 +21423,19 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         symbolType: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["SymbolShape", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         tickCount: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TickCount",
+                    "SchemaBase",
                     Union[
-                        "TimeInterval",
+                        "SchemaBase",
                         Literal[
                             "millisecond",
                             "second",
@@ -22423,7 +21447,7 @@ class LegendConfig(VegaLiteSchema):
                             "year",
                         ],
                     ],
-                    Union["TimeIntervalStep", dict],
+                    Union["SchemaBase", dict],
                     float,
                 ],
             ],
@@ -22432,24 +21456,24 @@ class LegendConfig(VegaLiteSchema):
         title: Union[None, UndefinedType] = Undefined,
         titleAlign: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -22457,13 +21481,13 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         titleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -22615,7 +21639,7 @@ class LegendConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -22623,20 +21647,20 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         titleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -22657,27 +21681,27 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         titleOrient: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Orient", Literal["left", "right", "top", "bottom"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         unselectedOpacity: Union[float, UndefinedType] = Undefined,
         zindex: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -22811,37 +21835,37 @@ class LegendResolveMap(VegaLiteSchema):
     def __init__(
         self,
         angle: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         fillOpacity: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         size: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -22878,16 +21902,7 @@ class LegendStreamBinding(LegendBinding):
     def __init__(
         self,
         legend: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                str,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -23279,32 +22294,32 @@ class LineConfig(AnyMarkConfig):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -23312,8 +22327,9 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -23333,16 +22349,16 @@ class LineConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -23494,37 +22510,33 @@ class LineConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -23564,39 +22576,39 @@ class LineConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -23748,37 +22760,32 @@ class LineConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -23799,20 +22806,20 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -23836,59 +22843,60 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[Union["OverlayMarkDef", dict], bool, str], UndefinedType
+            Union[Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -24040,72 +23048,69 @@ class LineConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -24113,23 +23118,23 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -24231,10 +23236,10 @@ class LineString(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Sequence[Union["Position", Sequence[float]]], UndefinedType
+            Sequence[Union["SchemaBase", Sequence[float]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(LineString, self).__init__(
@@ -24279,7 +23284,7 @@ class LinearGradient(Gradient):
     def __init__(
         self,
         gradient: Union[str, UndefinedType] = Undefined,
-        stops: Union[Sequence[Union["GradientStop", dict]], UndefinedType] = Undefined,
+        stops: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         id: Union[str, UndefinedType] = Undefined,
         x1: Union[float, UndefinedType] = Undefined,
         x2: Union[float, UndefinedType] = Undefined,
@@ -24310,8 +23315,8 @@ class Locale(VegaLiteSchema):
 
     def __init__(
         self,
-        number: Union[Union["NumberLocale", dict], UndefinedType] = Undefined,
-        time: Union[Union["TimeLocale", dict], UndefinedType] = Undefined,
+        number: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        time: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(Locale, self).__init__(number=number, time=time, **kwds)
@@ -24339,25 +23344,11 @@ class LookupData(VegaLiteSchema):
     def __init__(
         self,
         data: Union[
-            Union[
-                "Data",
-                Union[
-                    "DataSource",
-                    Union["InlineData", dict],
-                    Union["NamedData", dict],
-                    Union["UrlData", dict],
-                ],
-                Union[
-                    "Generator",
-                    Union["GraticuleGenerator", dict],
-                    Union["SequenceGenerator", dict],
-                    Union["SphereGenerator", dict],
-                ],
-            ],
+            Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             UndefinedType,
         ] = Undefined,
-        key: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        key: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
@@ -24384,9 +23375,9 @@ class LookupSelection(VegaLiteSchema):
 
     def __init__(
         self,
-        key: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
-        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        key: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(LookupSelection, self).__init__(
@@ -24778,32 +23769,32 @@ class MarkConfig(AnyMarkConfig):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -24811,8 +23802,9 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -24832,16 +23824,16 @@ class MarkConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -24993,37 +23985,33 @@ class MarkConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -25063,39 +24051,39 @@ class MarkConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -25247,37 +24235,32 @@ class MarkConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -25298,20 +24281,20 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -25335,56 +24318,57 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -25536,72 +24520,69 @@ class MarkConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -25609,23 +24590,23 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -26169,7 +25150,7 @@ class MarkDef(AnyMark):
         self,
         type: Union[
             Union[
-                "Mark",
+                "SchemaBase",
                 Literal[
                     "arc",
                     "area",
@@ -26191,33 +25172,33 @@ class MarkDef(AnyMark):
         ] = Undefined,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -26226,8 +25207,9 @@ class MarkDef(AnyMark):
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -26247,17 +25229,17 @@ class MarkDef(AnyMark):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -26409,41 +25391,37 @@ class MarkDef(AnyMark):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -26483,39 +25461,39 @@ class MarkDef(AnyMark):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[Union["RelativeBandSize", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -26667,37 +25645,32 @@ class MarkDef(AnyMark):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -26719,24 +25692,24 @@ class MarkDef(AnyMark):
         ] = Undefined,
         height: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["RelativeBandSize", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -26760,68 +25733,67 @@ class MarkDef(AnyMark):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
-        line: Union[
-            Union[Union["OverlayMarkDef", dict], bool], UndefinedType
-        ] = Undefined,
+        line: Union[Union[Union["SchemaBase", dict], bool], UndefinedType] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         point: Union[
-            Union[Union["OverlayMarkDef", dict], bool, str], UndefinedType
+            Union[Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -26973,71 +25945,68 @@ class MarkDef(AnyMark):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
@@ -27045,8 +26014,8 @@ class MarkDef(AnyMark):
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -27054,40 +26023,40 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["RelativeBandSize", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -27321,46 +26290,25 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefGradientstringnullExprRef",
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefGradientstringnullExprRef",
-                    Union[
-                        "ConditionalParameterValueDefGradientstringnullExprRef", dict
-                    ],
-                    Union[
-                        "ConditionalPredicateValueDefGradientstringnullExprRef", dict
-                    ],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -27613,15 +26561,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -27646,71 +26592,44 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefGradientstringnullExprRef",
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefGradientstringnullExprRef",
-                    Union[
-                        "ConditionalParameterValueDefGradientstringnullExprRef", dict
-                    ],
-                    Union[
-                        "ConditionalPredicateValueDefGradientstringnullExprRef", dict
-                    ],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        legend: Union[Union[None, Union["Legend", dict]], UndefinedType] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        legend: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -27726,24 +26645,33 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -27778,45 +26706,46 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -27849,54 +26778,52 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -28014,10 +26941,10 @@ class MultiLineString(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Sequence[Sequence[Union["Position", Sequence[float]]]], UndefinedType
+            Sequence[Sequence[Union["SchemaBase", Sequence[float]]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(MultiLineString, self).__init__(
@@ -28048,10 +26975,10 @@ class MultiPoint(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Sequence[Union["Position", Sequence[float]]], UndefinedType
+            Sequence[Union["SchemaBase", Sequence[float]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(MultiPoint, self).__init__(
@@ -28082,11 +27009,11 @@ class MultiPolygon(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Sequence[Sequence[Sequence[Union["Position", Sequence[float]]]]],
+            Sequence[Sequence[Sequence[Union["SchemaBase", Sequence[float]]]]],
             UndefinedType,
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(MultiPolygon, self).__init__(
@@ -28119,14 +27046,7 @@ class NamedData(DataSource):
         self,
         name: Union[str, UndefinedType] = Undefined,
         format: Union[
-            Union[
-                "DataFormat",
-                Union["CsvDataFormat", dict],
-                Union["DsvDataFormat", dict],
-                Union["JsonDataFormat", dict],
-                Union["TopoDataFormat", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -28196,17 +27116,13 @@ class NumberLocale(VegaLiteSchema):
 
     def __init__(
         self,
-        currency: Union[
-            Union["Vector2string", Sequence[str]], UndefinedType
-        ] = Undefined,
+        currency: Union[Union["SchemaBase", Sequence[str]], UndefinedType] = Undefined,
         decimal: Union[str, UndefinedType] = Undefined,
         grouping: Union[Sequence[float], UndefinedType] = Undefined,
         thousands: Union[str, UndefinedType] = Undefined,
         minus: Union[str, UndefinedType] = Undefined,
         nan: Union[str, UndefinedType] = Undefined,
-        numerals: Union[
-            Union["Vector10string", Sequence[str]], UndefinedType
-        ] = Undefined,
+        numerals: Union[Union["SchemaBase", Sequence[str]], UndefinedType] = Undefined,
         percent: Union[str, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -28359,36 +27275,25 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumberArrayExprRef",
-                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefnumberArrayExprRef",
-                    Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                    Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -28640,15 +27545,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -28673,61 +27576,44 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumberArrayExprRef",
-                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefnumberArrayExprRef",
-                    Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                    Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        legend: Union[Union[None, Union["Legend", dict]], UndefinedType] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        legend: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -28743,24 +27629,33 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -28795,45 +27690,46 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -28866,54 +27762,52 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -29070,36 +27964,25 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumberExprRef",
-                        Union["ConditionalParameterValueDefnumberExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefnumberExprRef",
-                    Union["ConditionalParameterValueDefnumberExprRef", dict],
-                    Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -29351,15 +28234,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -29384,61 +28265,44 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumberExprRef",
-                        Union["ConditionalParameterValueDefnumberExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefnumberExprRef",
-                    Union["ConditionalParameterValueDefnumberExprRef", dict],
-                    Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        legend: Union[Union[None, Union["Legend", dict]], UndefinedType] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        legend: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -29454,24 +28318,33 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -29506,45 +28379,46 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -29577,54 +28451,52 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -29825,15 +28697,13 @@ class OrderFieldDef(VegaLiteSchema):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -29858,24 +28728,25 @@ class OrderFieldDef(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         sort: Union[
-            Union["SortOrder", Literal["ascending", "descending"]], UndefinedType
+            Union["SchemaBase", Literal["ascending", "descending"]], UndefinedType
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -29910,45 +28781,46 @@ class OrderFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -29981,54 +28853,52 @@ class OrderFieldDef(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -30065,7 +28935,7 @@ class OrderOnlyDef(VegaLiteSchema):
     def __init__(
         self,
         sort: Union[
-            Union["SortOrder", Literal["ascending", "descending"]], UndefinedType
+            Union["SchemaBase", Literal["ascending", "descending"]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -30098,22 +28968,12 @@ class OrderValueDef(VegaLiteSchema):
     def __init__(
         self,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumber",
-                        Union["ConditionalParameterValueDefnumber", dict],
-                        Union["ConditionalPredicateValueDefnumber", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefnumber",
-                    Union["ConditionalParameterValueDefnumber", dict],
-                    Union["ConditionalPredicateValueDefnumber", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -30548,32 +29408,32 @@ class OverlayMarkDef(VegaLiteSchema):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -30581,8 +29441,9 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -30602,17 +29463,17 @@ class OverlayMarkDef(VegaLiteSchema):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         clip: Union[bool, UndefinedType] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -30764,37 +29625,33 @@ class OverlayMarkDef(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -30834,39 +29691,39 @@ class OverlayMarkDef(VegaLiteSchema):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -31018,37 +29875,32 @@ class OverlayMarkDef(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -31069,20 +29921,20 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -31106,62 +29958,63 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -31313,79 +30166,76 @@ class OverlayMarkDef(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -31393,35 +30243,35 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -31596,10 +30446,10 @@ class Point(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Union["Position", Sequence[float]], UndefinedType
+            Union["SchemaBase", Sequence[float]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(Point, self).__init__(
@@ -31716,22 +30566,13 @@ class PointSelectionConfig(VegaLiteSchema):
         self,
         type: Union[str, UndefinedType] = Undefined,
         clear: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                bool,
-                str,
-            ],
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool, str],
             UndefinedType,
         ] = Undefined,
         encodings: Union[
             Sequence[
                 Union[
-                    "SingleDefUnitChannel",
+                    "SchemaBase",
                     Literal[
                         "x",
                         "y",
@@ -31768,23 +30609,13 @@ class PointSelectionConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
         on: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                str,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], str], UndefinedType
         ] = Undefined,
         resolve: Union[
-            Union["SelectionResolution", Literal["global", "union", "intersect"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["global", "union", "intersect"]], UndefinedType
         ] = Undefined,
         toggle: Union[Union[bool, str], UndefinedType] = Undefined,
         **kwds,
@@ -31902,22 +30733,13 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
     def __init__(
         self,
         clear: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                bool,
-                str,
-            ],
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], bool, str],
             UndefinedType,
         ] = Undefined,
         encodings: Union[
             Sequence[
                 Union[
-                    "SingleDefUnitChannel",
+                    "SchemaBase",
                     Literal[
                         "x",
                         "y",
@@ -31954,23 +30776,13 @@ class PointSelectionConfigWithoutType(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        fields: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        fields: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         nearest: Union[bool, UndefinedType] = Undefined,
         on: Union[
-            Union[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ],
-                str,
-            ],
-            UndefinedType,
+            Union[Union["SchemaBase", Union["SchemaBase", dict]], str], UndefinedType
         ] = Undefined,
         resolve: Union[
-            Union["SelectionResolution", Literal["global", "union", "intersect"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["global", "union", "intersect"]], UndefinedType
         ] = Undefined,
         toggle: Union[Union[bool, str], UndefinedType] = Undefined,
         **kwds,
@@ -32023,10 +30835,10 @@ class Polygon(Geometry):
     def __init__(
         self,
         coordinates: Union[
-            Sequence[Sequence[Union["Position", Sequence[float]]]], UndefinedType
+            Sequence[Sequence[Union["SchemaBase", Sequence[float]]]], UndefinedType
         ] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
-        bbox: Union[Union["BBox", Sequence[float]], UndefinedType] = Undefined,
+        bbox: Union[Union["SchemaBase", Sequence[float]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(Polygon, self).__init__(
@@ -32175,19 +30987,18 @@ class DatumDef(LatLongDef, Position2Def):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -32355,26 +31166,25 @@ class PositionDatumDefBase(PolarDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         stack: Union[
             Union[
-                None, Union["StackOffset", Literal["zero", "center", "normalize"]], bool
+                None, Union["SchemaBase", Literal["zero", "center", "normalize"]], bool
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -32575,33 +31385,32 @@ class PositionDatumDef(PositionDef):
 
     def __init__(
         self,
-        axis: Union[Union[None, Union["Axis", dict]], UndefinedType] = Undefined,
+        axis: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         impute: Union[
-            Union[None, Union["ImputeParams", dict]], UndefinedType
+            Union[None, Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         stack: Union[
             Union[
-                None, Union["StackOffset", Literal["zero", "center", "normalize"]], bool
+                None, Union["SchemaBase", Literal["zero", "center", "normalize"]], bool
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -32884,15 +31693,13 @@ class PositionFieldDef(PositionDef):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -32917,47 +31724,38 @@ class PositionFieldDef(PositionDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        axis: Union[Union[None, Union["Axis", dict]], UndefinedType] = Undefined,
+        axis: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         impute: Union[
-            Union[None, Union["ImputeParams", dict]], UndefinedType
+            Union[None, Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -32973,30 +31771,39 @@ class PositionFieldDef(PositionDef):
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         stack: Union[
             Union[
-                None, Union["StackOffset", Literal["zero", "center", "normalize"]], bool
+                None, Union["SchemaBase", Literal["zero", "center", "normalize"]], bool
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -33031,45 +31838,46 @@ class PositionFieldDef(PositionDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -33102,54 +31910,52 @@ class PositionFieldDef(PositionDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -33419,15 +32225,13 @@ class PositionFieldDefBase(PolarDef):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -33452,43 +32256,34 @@ class PositionFieldDefBase(PolarDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -33504,30 +32299,39 @@ class PositionFieldDefBase(PolarDef):
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         stack: Union[
             Union[
-                None, Union["StackOffset", Literal["zero", "center", "normalize"]], bool
+                None, Union["SchemaBase", Literal["zero", "center", "normalize"]], bool
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -33562,45 +32366,46 @@ class PositionFieldDefBase(PolarDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -33633,54 +32438,52 @@ class PositionFieldDefBase(PolarDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -33723,7 +32526,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     def __init__(
         self,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -33844,19 +32647,19 @@ class FieldEqualPredicate(Predicate):
         self,
         equal: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -33891,45 +32694,46 @@ class FieldEqualPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -33962,44 +32766,43 @@ class FieldEqualPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34030,11 +32833,11 @@ class FieldGTEPredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         gte: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
                 str,
             ],
@@ -34043,7 +32846,7 @@ class FieldGTEPredicate(Predicate):
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -34078,45 +32881,46 @@ class FieldGTEPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -34149,44 +32953,43 @@ class FieldGTEPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34217,11 +33020,11 @@ class FieldGTPredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         gt: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
                 str,
             ],
@@ -34230,7 +33033,7 @@ class FieldGTPredicate(Predicate):
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -34265,45 +33068,46 @@ class FieldGTPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -34336,44 +33140,43 @@ class FieldGTPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34404,11 +33207,11 @@ class FieldLTEPredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         lte: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
                 str,
             ],
@@ -34417,7 +33220,7 @@ class FieldLTEPredicate(Predicate):
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -34452,45 +33255,46 @@ class FieldLTEPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -34523,44 +33327,43 @@ class FieldLTEPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34591,11 +33394,11 @@ class FieldLTPredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         lt: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 float,
                 str,
             ],
@@ -34604,7 +33407,7 @@ class FieldLTPredicate(Predicate):
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -34639,45 +33442,46 @@ class FieldLTPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -34710,44 +33514,43 @@ class FieldLTPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34779,10 +33582,10 @@ class FieldOneOfPredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         oneOf: Union[
             Union[
-                Sequence[Union["DateTime", dict]],
+                Sequence[Union["SchemaBase", dict]],
                 Sequence[bool],
                 Sequence[float],
                 Sequence[str],
@@ -34792,7 +33595,7 @@ class FieldOneOfPredicate(Predicate):
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -34827,45 +33630,46 @@ class FieldOneOfPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -34898,44 +33702,43 @@ class FieldOneOfPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -34967,25 +33770,25 @@ class FieldRangePredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         None,
-                        Union["DateTime", dict],
-                        Union["ExprRef", "_Parameter", dict],
+                        Union["SchemaBase", "_Parameter", dict],
+                        Union["SchemaBase", dict],
                         float,
                     ]
                 ],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -35020,45 +33823,46 @@ class FieldRangePredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -35091,44 +33895,43 @@ class FieldRangePredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35161,12 +33964,12 @@ class FieldValidPredicate(Predicate):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         valid: Union[bool, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -35201,45 +34004,46 @@ class FieldValidPredicate(Predicate):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -35272,44 +34076,43 @@ class FieldValidPredicate(Predicate):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35339,7 +34142,7 @@ class ParameterPredicate(Predicate):
 
     def __init__(
         self,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -35462,37 +34265,31 @@ class Projection(VegaLiteSchema):
         self,
         center: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Vector2number", Sequence[float]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         clipAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         clipExtent: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Vector2Vector2number",
-                    Sequence[Union["Vector2number", Sequence[float]]],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             ],
             UndefinedType,
         ] = Undefined,
         coefficient: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         distance: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         extent: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Vector2Vector2number",
-                    Sequence[Union["Vector2number", Sequence[float]]],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35500,90 +34297,86 @@ class Projection(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Fit",
-                        Sequence[Union["GeoJsonFeature", dict]],
-                        Union["GeoJsonFeature", dict],
-                        Union["GeoJsonFeatureCollection", dict],
+                        "SchemaBase",
+                        Sequence[Union["SchemaBase", dict]],
+                        Union["SchemaBase", dict],
                     ]
                 ],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Fit",
-                    Sequence[Union["GeoJsonFeature", dict]],
-                    Union["GeoJsonFeature", dict],
-                    Union["GeoJsonFeatureCollection", dict],
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         fraction: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lobes: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallel: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         pointRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         precision: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ratio: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         reflectX: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         reflectY: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         rotate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    Union["Vector2number", Sequence[float]],
-                    Union["Vector3number", Sequence[float]],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         scale: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         size: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Vector2number", Sequence[float]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         spacing: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tilt: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Vector2number", Sequence[float]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         type: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "ProjectionType",
+                    "SchemaBase",
                     Literal[
                         "albers",
                         "albersUsa",
@@ -35753,37 +34546,31 @@ class ProjectionConfig(VegaLiteSchema):
         self,
         center: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Vector2number", Sequence[float]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         clipAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         clipExtent: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Vector2Vector2number",
-                    Sequence[Union["Vector2number", Sequence[float]]],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             ],
             UndefinedType,
         ] = Undefined,
         coefficient: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         distance: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         extent: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Vector2Vector2number",
-                    Sequence[Union["Vector2number", Sequence[float]]],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[Union["SchemaBase", Sequence[float]]]],
             ],
             UndefinedType,
         ] = Undefined,
@@ -35791,90 +34578,86 @@ class ProjectionConfig(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Fit",
-                        Sequence[Union["GeoJsonFeature", dict]],
-                        Union["GeoJsonFeature", dict],
-                        Union["GeoJsonFeatureCollection", dict],
+                        "SchemaBase",
+                        Sequence[Union["SchemaBase", dict]],
+                        Union["SchemaBase", dict],
                     ]
                 ],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Fit",
-                    Sequence[Union["GeoJsonFeature", dict]],
-                    Union["GeoJsonFeature", dict],
-                    Union["GeoJsonFeatureCollection", dict],
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ],
             ],
             UndefinedType,
         ] = Undefined,
         fraction: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lobes: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallel: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         parallels: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         pointRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         precision: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ratio: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         reflectX: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         reflectY: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         rotate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    Union["Vector2number", Sequence[float]],
-                    Union["Vector3number", Sequence[float]],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         scale: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         size: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Vector2number", Sequence[float]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         spacing: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tilt: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         translate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["Vector2number", Sequence[float]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[float]],
             ],
             UndefinedType,
         ] = Undefined,
         type: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "ProjectionType",
+                    "SchemaBase",
                     Literal[
                         "albers",
                         "albersUsa",
@@ -35994,7 +34777,7 @@ class RadialGradient(Gradient):
     def __init__(
         self,
         gradient: Union[str, UndefinedType] = Undefined,
-        stops: Union[Sequence[Union["GradientStop", dict]], UndefinedType] = Undefined,
+        stops: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         id: Union[str, UndefinedType] = Undefined,
         r1: Union[float, UndefinedType] = Undefined,
         r2: Union[float, UndefinedType] = Undefined,
@@ -36054,9 +34837,9 @@ class RangeConfig(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -36208,14 +34991,14 @@ class RangeConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ]
                 ],
                 Union[
-                    "RangeScheme",
+                    "SchemaBase",
                     Union[
-                        "RangeEnum",
+                        "SchemaBase",
                         Literal[
                             "width",
                             "height",
@@ -36228,11 +35011,11 @@ class RangeConfig(VegaLiteSchema):
                         ],
                     ],
                     Union[
-                        "RangeRaw",
+                        "SchemaBase",
                         Sequence[
                             Union[
                                 None,
-                                Union["RangeRawArray", Sequence[float]],
+                                Union["SchemaBase", Sequence[float]],
                                 bool,
                                 float,
                                 str,
@@ -36248,9 +35031,9 @@ class RangeConfig(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -36402,14 +35185,14 @@ class RangeConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ]
                 ],
                 Union[
-                    "RangeScheme",
+                    "SchemaBase",
                     Union[
-                        "RangeEnum",
+                        "SchemaBase",
                         Literal[
                             "width",
                             "height",
@@ -36422,11 +35205,11 @@ class RangeConfig(VegaLiteSchema):
                         ],
                     ],
                     Union[
-                        "RangeRaw",
+                        "SchemaBase",
                         Sequence[
                             Union[
                                 None,
-                                Union["RangeRawArray", Sequence[float]],
+                                Union["SchemaBase", Sequence[float]],
                                 bool,
                                 float,
                                 str,
@@ -36442,9 +35225,9 @@ class RangeConfig(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -36596,14 +35379,14 @@ class RangeConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ]
                 ],
                 Union[
-                    "RangeScheme",
+                    "SchemaBase",
                     Union[
-                        "RangeEnum",
+                        "SchemaBase",
                         Literal[
                             "width",
                             "height",
@@ -36616,11 +35399,11 @@ class RangeConfig(VegaLiteSchema):
                         ],
                     ],
                     Union[
-                        "RangeRaw",
+                        "SchemaBase",
                         Sequence[
                             Union[
                                 None,
-                                Union["RangeRawArray", Sequence[float]],
+                                Union["SchemaBase", Sequence[float]],
                                 bool,
                                 float,
                                 str,
@@ -36636,9 +35419,9 @@ class RangeConfig(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -36790,14 +35573,14 @@ class RangeConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ]
                 ],
                 Union[
-                    "RangeScheme",
+                    "SchemaBase",
                     Union[
-                        "RangeEnum",
+                        "SchemaBase",
                         Literal[
                             "width",
                             "height",
@@ -36810,11 +35593,11 @@ class RangeConfig(VegaLiteSchema):
                         ],
                     ],
                     Union[
-                        "RangeRaw",
+                        "SchemaBase",
                         Sequence[
                             Union[
                                 None,
-                                Union["RangeRawArray", Sequence[float]],
+                                Union["SchemaBase", Sequence[float]],
                                 bool,
                                 float,
                                 str,
@@ -36830,9 +35613,9 @@ class RangeConfig(VegaLiteSchema):
             Union[
                 Sequence[
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -36984,14 +35767,14 @@ class RangeConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ]
                 ],
                 Union[
-                    "RangeScheme",
+                    "SchemaBase",
                     Union[
-                        "RangeEnum",
+                        "SchemaBase",
                         Literal[
                             "width",
                             "height",
@@ -37004,11 +35787,11 @@ class RangeConfig(VegaLiteSchema):
                         ],
                     ],
                     Union[
-                        "RangeRaw",
+                        "SchemaBase",
                         Sequence[
                             Union[
                                 None,
-                                Union["RangeRawArray", Sequence[float]],
+                                Union["SchemaBase", Sequence[float]],
                                 bool,
                                 float,
                                 str,
@@ -37020,7 +35803,7 @@ class RangeConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        symbol: Union[Sequence[Union["SymbolShape", str]], UndefinedType] = Undefined,
+        symbol: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(RangeConfig, self).__init__(
@@ -37469,32 +36252,32 @@ class RectConfig(AnyMarkConfig):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -37503,8 +36286,9 @@ class RectConfig(AnyMarkConfig):
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -37524,16 +36308,16 @@ class RectConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -37685,38 +36469,34 @@ class RectConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -37756,42 +36536,42 @@ class RectConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         discreteBandSize: Union[
-            Union[Union["RelativeBandSize", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -37943,37 +36723,32 @@ class RectConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -37994,20 +36769,20 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -38031,59 +36806,60 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -38235,72 +37011,69 @@ class RectConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -38308,23 +37081,23 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -38498,9 +37271,9 @@ class Resolve(VegaLiteSchema):
 
     def __init__(
         self,
-        axis: Union[Union["AxisResolveMap", dict], UndefinedType] = Undefined,
-        legend: Union[Union["LegendResolveMap", dict], UndefinedType] = Undefined,
-        scale: Union[Union["ScaleResolveMap", dict], UndefinedType] = Undefined,
+        axis: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        legend: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        scale: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(Resolve, self).__init__(axis=axis, legend=legend, scale=scale, **kwds)
@@ -38537,10 +37310,10 @@ class RowColLayoutAlign(VegaLiteSchema):
     def __init__(
         self,
         column: Union[
-            Union["LayoutAlign", Literal["all", "each", "none"]], UndefinedType
+            Union["SchemaBase", Literal["all", "each", "none"]], UndefinedType
         ] = Undefined,
         row: Union[
-            Union["LayoutAlign", Literal["all", "each", "none"]], UndefinedType
+            Union["SchemaBase", Literal["all", "each", "none"]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -38814,15 +37587,13 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -38847,34 +37618,37 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
-            Union["LayoutAlign", Literal["all", "each", "none"]], UndefinedType
+            Union["SchemaBase", Literal["all", "each", "none"]], UndefinedType
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        header: Union[Union[None, Union["Header", dict]], UndefinedType] = Undefined,
+        header: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
         sort: Union[
             Union[
                 None,
-                Union["EncodingSortField", dict],
+                Union["SchemaBase", Literal["ascending", "descending"]],
                 Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
                     Sequence[bool],
                     Sequence[float],
                     Sequence[str],
                 ],
-                Union["SortOrder", Literal["ascending", "descending"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -38882,7 +37656,7 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -38917,45 +37691,46 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -38988,54 +37763,52 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -39328,62 +38101,69 @@ class Scale(VegaLiteSchema):
     def __init__(
         self,
         align: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         base: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bins: Union[
-            Union["ScaleBins", Sequence[float], Union["ScaleBinParams", dict]],
+            Union["SchemaBase", Sequence[float], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         clamp: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         constant: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domain: Union[
             Union[
                 Sequence[
                     Union[
                         None,
-                        Union["DateTime", dict],
-                        Union["ExprRef", "_Parameter", dict],
+                        Union["SchemaBase", "_Parameter", dict],
+                        Union["SchemaBase", dict],
                         bool,
                         float,
                         str,
                     ]
                 ],
-                Union["DomainUnionWith", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["ParameterExtent", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 str,
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            Union[Union["DateTime", dict], Union["ExprRef", "_Parameter", dict], float],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
+                float,
+            ],
             UndefinedType,
         ] = Undefined,
         domainMid: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         domainMin: Union[
-            Union[Union["DateTime", dict], Union["ExprRef", "_Parameter", dict], float],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
+                float,
+            ],
             UndefinedType,
         ] = Undefined,
         domainRaw: Union[
-            Union["ExprRef", "_Parameter", dict], UndefinedType
+            Union["SchemaBase", "_Parameter", dict], UndefinedType
         ] = Undefined,
         exponent: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "ScaleInterpolateEnum",
+                    "SchemaBase",
                     Literal[
                         "rgb",
                         "lab",
@@ -39395,15 +38175,15 @@ class Scale(VegaLiteSchema):
                         "cubehelix-long",
                     ],
                 ],
-                Union["ScaleInterpolateParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         nice: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TimeInterval",
+                    "SchemaBase",
                     Literal[
                         "millisecond",
                         "second",
@@ -39415,34 +38195,33 @@ class Scale(VegaLiteSchema):
                         "year",
                     ],
                 ],
-                Union["TimeIntervalStep", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
             ],
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         range: Union[
             Union[
                 Sequence[
                     Union[
                         Sequence[float],
-                        Union["ExprRef", "_Parameter", dict],
+                        Union["SchemaBase", "_Parameter", dict],
                         float,
                         str,
                     ]
                 ],
-                Union["FieldRange", dict],
                 Union[
-                    "RangeEnum",
+                    "SchemaBase",
                     Literal[
                         "width",
                         "height",
@@ -39454,27 +38233,29 @@ class Scale(VegaLiteSchema):
                         "heatmap",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         reverse: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         scheme: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "ColorScheme",
+                    "SchemaBase",
                     Union[
-                        "Categorical",
+                        "SchemaBase",
                         Literal[
                             "accent",
                             "category10",
@@ -39492,9 +38273,8 @@ class Scale(VegaLiteSchema):
                             "tableau20",
                         ],
                     ],
-                    Union["Cyclical", Literal["rainbow", "sinebow"]],
                     Union[
-                        "Diverging",
+                        "SchemaBase",
                         Literal[
                             "blueorange",
                             "blueorange-3",
@@ -39599,7 +38379,23 @@ class Scale(VegaLiteSchema):
                         ],
                     ],
                     Union[
-                        "SequentialMultiHue",
+                        "SchemaBase",
+                        Literal[
+                            "blues",
+                            "tealblues",
+                            "teals",
+                            "greens",
+                            "browns",
+                            "greys",
+                            "purples",
+                            "warmgreys",
+                            "reds",
+                            "oranges",
+                        ],
+                    ],
+                    Union["SchemaBase", Literal["rainbow", "sinebow"]],
+                    Union[
+                        "SchemaBase",
                         Literal[
                             "turbo",
                             "viridis",
@@ -39809,30 +38605,14 @@ class Scale(VegaLiteSchema):
                             "lighttealblue-9",
                         ],
                     ],
-                    Union[
-                        "SequentialSingleHue",
-                        Literal[
-                            "blues",
-                            "tealblues",
-                            "teals",
-                            "greens",
-                            "browns",
-                            "greys",
-                            "purples",
-                            "warmgreys",
-                            "reds",
-                            "oranges",
-                        ],
-                    ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union["SchemeParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         type: Union[
             Union[
-                "ScaleType",
+                "SchemaBase",
                 Literal[
                     "linear",
                     "log",
@@ -39855,7 +38635,7 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -40076,25 +38856,25 @@ class ScaleConfig(VegaLiteSchema):
     def __init__(
         self,
         bandPaddingInner: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bandPaddingOuter: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingInner: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingOuter: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         barBandPaddingInner: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         clamp: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         continuousPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         maxBandSize: Union[float, UndefinedType] = Undefined,
         maxFontSize: Union[float, UndefinedType] = Undefined,
@@ -40107,25 +38887,25 @@ class ScaleConfig(VegaLiteSchema):
         minSize: Union[float, UndefinedType] = Undefined,
         minStrokeWidth: Union[float, UndefinedType] = Undefined,
         offsetBandPaddingInner: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offsetBandPaddingOuter: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         pointPadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         quantileCount: Union[float, UndefinedType] = Undefined,
         quantizeCount: Union[float, UndefinedType] = Undefined,
         rectBandPaddingInner: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         round: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         useUnaggregatedDomain: Union[bool, UndefinedType] = Undefined,
         xReverse: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         zero: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -40287,20 +39067,19 @@ class ScaleDatumDef(OffsetDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -40532,15 +39311,13 @@ class ScaleFieldDef(OffsetDef):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -40565,43 +39342,34 @@ class ScaleFieldDef(OffsetDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -40617,24 +39385,33 @@ class ScaleFieldDef(OffsetDef):
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -40669,45 +39446,46 @@ class ScaleFieldDef(OffsetDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -40740,54 +39518,52 @@ class ScaleFieldDef(OffsetDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -40897,55 +39673,55 @@ class ScaleResolveMap(VegaLiteSchema):
     def __init__(
         self,
         angle: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         color: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         fill: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         fillOpacity: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         shape: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         size: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         stroke: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         strokeDash: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         theta: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         x: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         xOffset: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         y: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         yOffset: Union[
-            Union["ResolveMode", Literal["independent", "shared"]], UndefinedType
+            Union["SchemaBase", Literal["independent", "shared"]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -41014,9 +39790,9 @@ class SchemeParams(VegaLiteSchema):
         self,
         name: Union[
             Union[
-                "ColorScheme",
+                "SchemaBase",
                 Union[
-                    "Categorical",
+                    "SchemaBase",
                     Literal[
                         "accent",
                         "category10",
@@ -41034,9 +39810,8 @@ class SchemeParams(VegaLiteSchema):
                         "tableau20",
                     ],
                 ],
-                Union["Cyclical", Literal["rainbow", "sinebow"]],
                 Union[
-                    "Diverging",
+                    "SchemaBase",
                     Literal[
                         "blueorange",
                         "blueorange-3",
@@ -41141,7 +39916,23 @@ class SchemeParams(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "SequentialMultiHue",
+                    "SchemaBase",
+                    Literal[
+                        "blues",
+                        "tealblues",
+                        "teals",
+                        "greens",
+                        "browns",
+                        "greys",
+                        "purples",
+                        "warmgreys",
+                        "reds",
+                        "oranges",
+                    ],
+                ],
+                Union["SchemaBase", Literal["rainbow", "sinebow"]],
+                Union[
+                    "SchemaBase",
                     Literal[
                         "turbo",
                         "viridis",
@@ -41351,21 +40142,6 @@ class SchemeParams(VegaLiteSchema):
                         "lighttealblue-9",
                     ],
                 ],
-                Union[
-                    "SequentialSingleHue",
-                    Literal[
-                        "blues",
-                        "tealblues",
-                        "teals",
-                        "greens",
-                        "browns",
-                        "greys",
-                        "purples",
-                        "warmgreys",
-                        "reds",
-                        "oranges",
-                    ],
-                ],
             ],
             UndefinedType,
         ] = Undefined,
@@ -41474,15 +40250,13 @@ class SecondaryFieldDef(Position2Def):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -41507,19 +40281,20 @@ class SecondaryFieldDef(Position2Def):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[None, UndefinedType] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -41554,45 +40329,46 @@ class SecondaryFieldDef(Position2Def):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -41625,49 +40401,48 @@ class SecondaryFieldDef(Position2Def):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -41713,12 +40488,8 @@ class SelectionConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        interval: Union[
-            Union["IntervalSelectionConfigWithoutType", dict], UndefinedType
-        ] = Undefined,
-        point: Union[
-            Union["PointSelectionConfigWithoutType", dict], UndefinedType
-        ] = Undefined,
+        interval: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        point: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(SelectionConfig, self).__init__(interval=interval, point=point, **kwds)
@@ -41783,11 +40554,11 @@ class DateTime(SelectionInit):
     def __init__(
         self,
         date: Union[float, UndefinedType] = Undefined,
-        day: Union[Union[Union["Day", float], str], UndefinedType] = Undefined,
+        day: Union[Union[Union["SchemaBase", float], str], UndefinedType] = Undefined,
         hours: Union[float, UndefinedType] = Undefined,
         milliseconds: Union[float, UndefinedType] = Undefined,
         minutes: Union[float, UndefinedType] = Undefined,
-        month: Union[Union[Union["Month", float], str], UndefinedType] = Undefined,
+        month: Union[Union[Union["SchemaBase", float], str], UndefinedType] = Undefined,
         quarter: Union[float, UndefinedType] = Undefined,
         seconds: Union[float, UndefinedType] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
@@ -41909,26 +40680,18 @@ class SelectionParameter(VegaLiteSchema):
 
     def __init__(
         self,
-        name: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        name: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         select: Union[
             Union[
-                Union["IntervalSelectionConfig", dict],
-                Union["PointSelectionConfig", dict],
-                Union["SelectionType", Literal["point", "interval"]],
+                Union["SchemaBase", Literal["point", "interval"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bind: Union[
             Union[
-                Union[
-                    "Binding",
-                    Union["BindCheckbox", dict],
-                    Union["BindDirect", dict],
-                    Union["BindInput", dict],
-                    Union["BindRadioSelect", dict],
-                    Union["BindRange", dict],
-                ],
-                Union["LegendBinding", Union["LegendStreamBinding", dict], str],
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", Union["SchemaBase", dict]],
                 dict,
                 str,
             ],
@@ -41936,13 +40699,13 @@ class SelectionParameter(VegaLiteSchema):
         ] = Undefined,
         value: Union[
             Union[
-                Sequence[Union["SelectionInitMapping", dict]],
+                Sequence[Union["SchemaBase", dict]],
                 Union[
-                    "SelectionInit",
-                    Union["DateTime", dict],
-                    Union["PrimitiveValue", None, bool, float, str],
+                    "SchemaBase",
+                    Union["SchemaBase", None, bool, float, str],
+                    Union["SchemaBase", dict],
                 ],
-                Union["SelectionInitIntervalMapping", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -41995,7 +40758,7 @@ class SequenceGenerator(Generator):
 
     def __init__(
         self,
-        sequence: Union[Union["SequenceParams", dict], UndefinedType] = Undefined,
+        sequence: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -42237,36 +41000,25 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefstringnullExprRef",
-                    Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -42519,15 +41271,13 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -42552,61 +41302,44 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefstringnullExprRef",
-                    Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        legend: Union[Union[None, Union["Legend", dict]], UndefinedType] = Undefined,
-        scale: Union[Union[None, Union["Scale", dict]], UndefinedType] = Undefined,
+        legend: Union[
+            Union[None, Union["SchemaBase", dict]], UndefinedType
+        ] = Undefined,
+        scale: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         sort: Union[
             Union[
-                "Sort",
+                "SchemaBase",
                 None,
                 Union[
-                    "AllSortString",
+                    "SchemaBase",
+                    Sequence[Union["SchemaBase", dict]],
+                    Sequence[bool],
+                    Sequence[float],
+                    Sequence[str],
+                ],
+                Union[
+                    "SchemaBase",
                     Union[
-                        "SortByChannel",
-                        Literal[
-                            "x",
-                            "y",
-                            "color",
-                            "fill",
-                            "stroke",
-                            "strokeWidth",
-                            "size",
-                            "shape",
-                            "fillOpacity",
-                            "strokeOpacity",
-                            "opacity",
-                            "text",
-                        ],
-                    ],
-                    Union[
-                        "SortByChannelDesc",
+                        "SchemaBase",
                         Literal[
                             "-x",
                             "-y",
@@ -42622,24 +41355,33 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
                             "-text",
                         ],
                     ],
-                    Union["SortOrder", Literal["ascending", "descending"]],
+                    Union["SchemaBase", Literal["ascending", "descending"]],
+                    Union[
+                        "SchemaBase",
+                        Literal[
+                            "x",
+                            "y",
+                            "color",
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "size",
+                            "shape",
+                            "fillOpacity",
+                            "strokeOpacity",
+                            "opacity",
+                            "text",
+                        ],
+                    ],
                 ],
-                Union["EncodingSortField", dict],
-                Union[
-                    "SortArray",
-                    Sequence[Union["DateTime", dict]],
-                    Sequence[bool],
-                    Sequence[float],
-                    Sequence[str],
-                ],
-                Union["SortByEncoding", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -42674,45 +41416,46 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -42745,53 +41488,51 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
-            Union["TypeForShape", Literal["nominal", "ordinal", "geojson"]],
-            UndefinedType,
+            Union["SchemaBase", Literal["nominal", "ordinal", "geojson"]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -42925,10 +41666,7 @@ class SharedEncoding(VegaLiteSchema):
         color: Union[dict, UndefinedType] = Undefined,
         description: Union[dict, UndefinedType] = Undefined,
         detail: Union[
-            Union[
-                Sequence[Union["FieldDefWithoutScale", dict]],
-                Union["FieldDefWithoutScale", dict],
-            ],
+            Union[Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         fill: Union[dict, UndefinedType] = Undefined,
@@ -42941,12 +41679,7 @@ class SharedEncoding(VegaLiteSchema):
         longitude2: Union[dict, UndefinedType] = Undefined,
         opacity: Union[dict, UndefinedType] = Undefined,
         order: Union[
-            Union[
-                Sequence[Union["OrderFieldDef", dict]],
-                Union["OrderFieldDef", dict],
-                Union["OrderOnlyDef", dict],
-                Union["OrderValueDef", dict],
-            ],
+            Union[Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         radius: Union[dict, UndefinedType] = Undefined,
@@ -42961,12 +41694,7 @@ class SharedEncoding(VegaLiteSchema):
         theta: Union[dict, UndefinedType] = Undefined,
         theta2: Union[dict, UndefinedType] = Undefined,
         tooltip: Union[
-            Union[
-                None,
-                Sequence[Union["StringFieldDef", dict]],
-                Union["StringFieldDefWithCondition", dict],
-                Union["StringValueDefWithCondition", dict],
-            ],
+            Union[None, Sequence[Union["SchemaBase", dict]], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         url: Union[dict, UndefinedType] = Undefined,
@@ -43109,12 +41837,12 @@ class EncodingSortField(Sort):
     def __init__(
         self,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         op: Union[
             Union[
-                "NonArgAggregateOp",
+                "SchemaBase",
                 Literal[
                     "average",
                     "count",
@@ -43142,7 +41870,7 @@ class EncodingSortField(Sort):
             UndefinedType,
         ] = Undefined,
         order: Union[
-            Union[None, Union["SortOrder", Literal["ascending", "descending"]]],
+            Union[None, Union["SchemaBase", Literal["ascending", "descending"]]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -43212,7 +41940,7 @@ class SortByEncoding(Sort):
         self,
         encoding: Union[
             Union[
-                "SortByChannel",
+                "SchemaBase",
                 Literal[
                     "x",
                     "y",
@@ -43231,7 +41959,7 @@ class SortByEncoding(Sort):
             UndefinedType,
         ] = Undefined,
         order: Union[
-            Union[None, Union["SortOrder", Literal["ascending", "descending"]]],
+            Union[None, Union["SchemaBase", Literal["ascending", "descending"]]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -43259,9 +41987,9 @@ class SortField(VegaLiteSchema):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         order: Union[
-            Union[None, Union["SortOrder", Literal["ascending", "descending"]]],
+            Union[None, Union["SchemaBase", Literal["ascending", "descending"]]],
             UndefinedType,
         ] = Undefined,
         **kwds,
@@ -43395,91 +42123,44 @@ class ConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         concat: Union[
             Sequence[
                 Union[
-                    "Spec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
-                    Union[
-                        "RepeatSpec",
-                        Union["LayerRepeatSpec", dict],
-                        Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
+                    "SchemaBase",
+                    Union["SchemaBase", Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -43599,83 +42280,39 @@ class FacetSpec(Spec, NonNormalizedSpec):
 
     def __init__(
         self,
-        facet: Union[
-            Union[Union["FacetFieldDef", dict], Union["FacetMapping", dict]],
-            UndefinedType,
-        ] = Undefined,
-        spec: Union[
-            Union[Union["FacetedUnitSpec", dict], Union["LayerSpec", dict]],
-            UndefinedType,
-        ] = Undefined,
+        facet: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        spec: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -43831,21 +42468,9 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
         self,
         mark: Union[
             Union[
-                "AnyMark",
+                "SchemaBase",
                 Union[
-                    "CompositeMark",
-                    Union["BoxPlot", str],
-                    Union["ErrorBand", str],
-                    Union["ErrorBar", str],
-                ],
-                Union[
-                    "CompositeMarkDef",
-                    Union["BoxPlotDef", dict],
-                    Union["ErrorBandDef", dict],
-                    Union["ErrorBarDef", dict],
-                ],
-                Union[
-                    "Mark",
+                    "SchemaBase",
                     Literal[
                         "arc",
                         "area",
@@ -43863,89 +42488,53 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
                         "geoshape",
                     ],
                 ],
-                Union["MarkDef", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
+                Union["SchemaBase", Union["SchemaBase", str]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["FacetedEncoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         height: Union[
-            Union[Union["Step", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        params: Union[
-            Sequence[Union["SelectionParameter", dict]], UndefinedType
-        ] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        params: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
-        width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
+        view: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        width: Union[
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
+        ] = Undefined,
         **kwds,
     ):
         super(FacetedUnitSpec, self).__init__(
@@ -44024,18 +42613,9 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         hconcat: Union[
             Sequence[
                 Union[
-                    "Spec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
-                    Union[
-                        "RepeatSpec",
-                        Union["LayerRepeatSpec", dict],
-                        Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
+                    "SchemaBase",
+                    Union["SchemaBase", Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ]
             ],
             UndefinedType,
@@ -44045,58 +42625,20 @@ class HConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -44201,72 +42743,33 @@ class LayerSpec(Spec, NonNormalizedSpec):
 
     def __init__(
         self,
-        layer: Union[
-            Sequence[Union[Union["LayerSpec", dict], Union["UnitSpec", dict]]],
-            UndefinedType,
-        ] = Undefined,
+        layer: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["SharedEncoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         height: Union[
-            Union[Union["Step", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
-        width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
+        view: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        width: Union[
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
+        ] = Undefined,
         **kwds,
     ):
         super(LayerSpec, self).__init__(
@@ -44399,80 +42902,39 @@ class LayerRepeatSpec(RepeatSpec):
 
     def __init__(
         self,
-        repeat: Union[Union["LayerRepeatMapping", dict], UndefinedType] = Undefined,
-        spec: Union[
-            Union[Union["LayerSpec", dict], Union["UnitSpecWithFrame", dict]],
-            UndefinedType,
-        ] = Undefined,
+        repeat: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        spec: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -44596,94 +43058,47 @@ class NonLayerRepeatSpec(RepeatSpec):
     def __init__(
         self,
         repeat: Union[
-            Union[Sequence[str], Union["RepeatMapping", dict]], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         spec: Union[
             Union[
-                "NonNormalizedSpec",
-                Union["ConcatSpecGenericSpec", dict],
-                Union["FacetSpec", dict],
-                Union["FacetedUnitSpec", dict],
-                Union["HConcatSpecGenericSpec", dict],
-                Union["LayerSpec", dict],
-                Union[
-                    "RepeatSpec",
-                    Union["LayerRepeatSpec", dict],
-                    Union["NonLayerRepeatSpec", dict],
-                ],
-                Union["VConcatSpecGenericSpec", dict],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -44832,34 +43247,21 @@ class DerivedStream(Stream):
     def __init__(
         self,
         stream: Union[
-            Union[
-                "Stream",
-                Union["DerivedStream", dict],
-                Union["EventStream", dict],
-                Union["MergedStream", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         between: Union[
-            Sequence[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         consume: Union[bool, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         filter: Union[
-            Union[Sequence[Union["Expr", str]], Union["Expr", str]], UndefinedType
+            Union[Sequence[Union["SchemaBase", str]], Union["SchemaBase", str]],
+            UndefinedType,
         ] = Undefined,
         markname: Union[str, UndefinedType] = Undefined,
         marktype: Union[
             Union[
-                "MarkType",
+                "SchemaBase",
                 Literal[
                     "arc",
                     "area",
@@ -44936,36 +43338,21 @@ class MergedStream(Stream):
     def __init__(
         self,
         merge: Union[
-            Sequence[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         between: Union[
-            Sequence[
-                Union[
-                    "Stream",
-                    Union["DerivedStream", dict],
-                    Union["EventStream", dict],
-                    Union["MergedStream", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         consume: Union[bool, UndefinedType] = Undefined,
         debounce: Union[float, UndefinedType] = Undefined,
         filter: Union[
-            Union[Sequence[Union["Expr", str]], Union["Expr", str]], UndefinedType
+            Union[Sequence[Union["SchemaBase", str]], Union["SchemaBase", str]],
+            UndefinedType,
         ] = Undefined,
         markname: Union[str, UndefinedType] = Undefined,
         marktype: Union[
             Union[
-                "MarkType",
+                "SchemaBase",
                 Literal[
                     "arc",
                     "area",
@@ -45195,11 +43582,9 @@ class StringFieldDef(VegaLiteSchema):
         self,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -45224,23 +43609,24 @@ class StringFieldDef(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -45275,45 +43661,46 @@ class StringFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -45346,54 +43733,52 @@ class StringFieldDef(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -45617,15 +44002,13 @@ class StringFieldDefWithCondition(VegaLiteSchema):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -45650,40 +44033,31 @@ class StringFieldDefWithCondition(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringExprRef",
-                        Union["ConditionalParameterValueDefstringExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefstringExprRef",
-                    Union["ConditionalParameterValueDefstringExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -45718,45 +44092,46 @@ class StringFieldDefWithCondition(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -45789,54 +44164,52 @@ class StringFieldDefWithCondition(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -45880,28 +44253,13 @@ class StringValueDefWithCondition(VegaLiteSchema):
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalMarkPropFieldOrDatumDef",
-                    Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
-                    Union["ConditionalPredicateMarkPropFieldOrDatumDef", dict],
-                ],
-                Union[
-                    "ConditionalValueDefstringnullExprRef",
-                    Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[None, Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -45986,21 +44344,21 @@ class StyleConfigIndex(VegaLiteSchema):
 
     def __init__(
         self,
-        arc: Union[Union["RectConfig", dict], UndefinedType] = Undefined,
-        area: Union[Union["AreaConfig", dict], UndefinedType] = Undefined,
-        bar: Union[Union["BarConfig", dict], UndefinedType] = Undefined,
-        circle: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        geoshape: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        image: Union[Union["RectConfig", dict], UndefinedType] = Undefined,
-        line: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
-        mark: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        point: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        rect: Union[Union["RectConfig", dict], UndefinedType] = Undefined,
-        rule: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        square: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        text: Union[Union["MarkConfig", dict], UndefinedType] = Undefined,
-        tick: Union[Union["TickConfig", dict], UndefinedType] = Undefined,
-        trail: Union[Union["LineConfig", dict], UndefinedType] = Undefined,
+        arc: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        area: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        bar: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        circle: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        geoshape: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        image: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        line: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        mark: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        point: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        rect: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        rule: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        square: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        text: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        tick: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        trail: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(StyleConfigIndex, self).__init__(
@@ -46240,38 +44598,27 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         bandPosition: Union[float, UndefinedType] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefTextExprRef",
-                        Union["ConditionalParameterValueDefTextExprRef", dict],
-                        Union["ConditionalPredicateValueDefTextExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefTextExprRef",
-                    Union["ConditionalParameterValueDefTextExprRef", dict],
-                    Union["ConditionalPredicateValueDefTextExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         datum: Union[
             Union[
-                Union["DateTime", dict],
-                Union["ExprRef", "_Parameter", dict],
-                Union["PrimitiveValue", None, bool, float, str],
-                Union["RepeatRef", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", None, bool, float, str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "Type",
+                "SchemaBase",
                 Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
             ],
             UndefinedType,
@@ -46496,15 +44843,13 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
     def __init__(
         self,
         shorthand: Union[
-            Union[Sequence[str], Union["RepeatRef", dict], str], UndefinedType
+            Union[Sequence[str], Union["SchemaBase", dict], str], UndefinedType
         ] = Undefined,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -46529,40 +44874,31 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefTextExprRef",
-                        Union["ConditionalParameterValueDefTextExprRef", dict],
-                        Union["ConditionalPredicateValueDefTextExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalValueDefTextExprRef",
-                    Union["ConditionalParameterValueDefTextExprRef", dict],
-                    Union["ConditionalPredicateValueDefTextExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
-        format: Union[Union[Union["Dict", dict], str], UndefinedType] = Undefined,
+        format: Union[Union[Union["SchemaBase", dict], str], UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -46597,45 +44933,46 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -46668,54 +45005,52 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -47128,33 +45463,33 @@ class TickConfig(AnyMarkConfig):
         self,
         align: Union[
             Union[
-                Union["Align", Literal["left", "center", "right"]],
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["left", "center", "right"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         ariaRole: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         aspect: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "TextBaseline",
-                    Union["Baseline", Literal["top", "middle", "bottom"]],
+                    "SchemaBase",
+                    Union["SchemaBase", Literal["top", "middle", "bottom"]],
                     str,
                 ],
             ],
@@ -47162,8 +45497,9 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         blend: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Blend",
+                    "SchemaBase",
                     Literal[
                         None,
                         "multiply",
@@ -47183,16 +45519,16 @@ class TickConfig(AnyMarkConfig):
                         "luminosity",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -47344,37 +45680,33 @@ class TickConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Cursor",
+                    "SchemaBase",
                     Literal[
                         "auto",
                         "default",
@@ -47414,39 +45746,39 @@ class TickConfig(AnyMarkConfig):
                         "grabbing",
                     ],
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         dir: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TextDirection", Literal["ltr", "rtl"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["ltr", "rtl"]],
             ],
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         ellipsis: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         endAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -47598,37 +45930,32 @@ class TickConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -47649,20 +45976,20 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         href: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         innerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         interpolate: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Interpolate",
+                    "SchemaBase",
                     Literal[
                         "basis",
                         "basis-open",
@@ -47686,56 +46013,57 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineBreak: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         order: Union[Union[None, bool], UndefinedType] = Undefined,
         orient: Union[
-            Union["Orientation", Literal["horizontal", "vertical"]], UndefinedType
+            Union["SchemaBase", Literal["horizontal", "vertical"]], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         padAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         radius2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         shape: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["SymbolShape", str], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", str], str],
             ],
             UndefinedType,
         ] = Undefined,
         size: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         smooth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         startAngle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -47887,64 +46215,61 @@ class TickConfig(AnyMarkConfig):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         tension: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         theta: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         theta2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
@@ -47952,8 +46277,8 @@ class TickConfig(AnyMarkConfig):
         tooltip: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union["TooltipContent", dict],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict],
                 bool,
                 float,
                 str,
@@ -47961,23 +46286,23 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         url: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["URI", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         width: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         x: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         x2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         y2: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -48104,7 +46429,7 @@ class TimeIntervalStep(TickCount):
         self,
         interval: Union[
             Union[
-                "TimeInterval",
+                "SchemaBase",
                 Literal[
                     "millisecond",
                     "second",
@@ -48158,18 +46483,12 @@ class TimeLocale(VegaLiteSchema):
         self,
         date: Union[str, UndefinedType] = Undefined,
         dateTime: Union[str, UndefinedType] = Undefined,
-        days: Union[Union["Vector7string", Sequence[str]], UndefinedType] = Undefined,
-        months: Union[
-            Union["Vector12string", Sequence[str]], UndefinedType
-        ] = Undefined,
-        periods: Union[
-            Union["Vector2string", Sequence[str]], UndefinedType
-        ] = Undefined,
-        shortDays: Union[
-            Union["Vector7string", Sequence[str]], UndefinedType
-        ] = Undefined,
+        days: Union[Union["SchemaBase", Sequence[str]], UndefinedType] = Undefined,
+        months: Union[Union["SchemaBase", Sequence[str]], UndefinedType] = Undefined,
+        periods: Union[Union["SchemaBase", Sequence[str]], UndefinedType] = Undefined,
+        shortDays: Union[Union["SchemaBase", Sequence[str]], UndefinedType] = Undefined,
         shortMonths: Union[
-            Union["Vector12string", Sequence[str]], UndefinedType
+            Union["SchemaBase", Sequence[str]], UndefinedType
         ] = Undefined,
         time: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -48329,45 +46648,46 @@ class TimeUnitParams(VegaLiteSchema):
         step: Union[float, UndefinedType] = Undefined,
         unit: Union[
             Union[
-                "TimeUnit",
+                "SchemaBase",
                 Union[
-                    "MultiTimeUnit",
+                    "SchemaBase",
                     Union[
-                        "LocalMultiTimeUnit",
+                        "SchemaBase",
                         Literal[
-                            "yearquarter",
-                            "yearquartermonth",
-                            "yearmonth",
-                            "yearmonthdate",
-                            "yearmonthdatehours",
-                            "yearmonthdatehoursminutes",
-                            "yearmonthdatehoursminutesseconds",
-                            "yearweek",
-                            "yearweekday",
-                            "yearweekdayhours",
-                            "yearweekdayhoursminutes",
-                            "yearweekdayhoursminutesseconds",
-                            "yeardayofyear",
-                            "quartermonth",
-                            "monthdate",
-                            "monthdatehours",
-                            "monthdatehoursminutes",
-                            "monthdatehoursminutesseconds",
-                            "weekday",
-                            "weeksdayhours",
-                            "weekdayhoursminutes",
-                            "weekdayhoursminutesseconds",
-                            "dayhours",
-                            "dayhoursminutes",
-                            "dayhoursminutesseconds",
-                            "hoursminutes",
-                            "hoursminutesseconds",
-                            "minutesseconds",
-                            "secondsmilliseconds",
+                            "utcyear",
+                            "utcquarter",
+                            "utcmonth",
+                            "utcweek",
+                            "utcday",
+                            "utcdayofyear",
+                            "utcdate",
+                            "utchours",
+                            "utcminutes",
+                            "utcseconds",
+                            "utcmilliseconds",
                         ],
                     ],
                     Union[
-                        "UtcMultiTimeUnit",
+                        "SchemaBase",
+                        Literal[
+                            "year",
+                            "quarter",
+                            "month",
+                            "week",
+                            "day",
+                            "dayofyear",
+                            "date",
+                            "hours",
+                            "minutes",
+                            "seconds",
+                            "milliseconds",
+                        ],
+                    ],
+                ],
+                Union[
+                    "SchemaBase",
+                    Union[
+                        "SchemaBase",
                         Literal[
                             "utcyearquarter",
                             "utcyearquartermonth",
@@ -48400,39 +46720,38 @@ class TimeUnitParams(VegaLiteSchema):
                             "utcsecondsmilliseconds",
                         ],
                     ],
-                ],
-                Union[
-                    "SingleTimeUnit",
                     Union[
-                        "LocalSingleTimeUnit",
+                        "SchemaBase",
                         Literal[
-                            "year",
-                            "quarter",
-                            "month",
-                            "week",
-                            "day",
-                            "dayofyear",
-                            "date",
-                            "hours",
-                            "minutes",
-                            "seconds",
-                            "milliseconds",
-                        ],
-                    ],
-                    Union[
-                        "UtcSingleTimeUnit",
-                        Literal[
-                            "utcyear",
-                            "utcquarter",
-                            "utcmonth",
-                            "utcweek",
-                            "utcday",
-                            "utcdayofyear",
-                            "utcdate",
-                            "utchours",
-                            "utcminutes",
-                            "utcseconds",
-                            "utcmilliseconds",
+                            "yearquarter",
+                            "yearquartermonth",
+                            "yearmonth",
+                            "yearmonthdate",
+                            "yearmonthdatehours",
+                            "yearmonthdatehoursminutes",
+                            "yearmonthdatehoursminutesseconds",
+                            "yearweek",
+                            "yearweekday",
+                            "yearweekdayhours",
+                            "yearweekdayhoursminutes",
+                            "yearweekdayhoursminutesseconds",
+                            "yeardayofyear",
+                            "quartermonth",
+                            "monthdate",
+                            "monthdatehours",
+                            "monthdatehoursminutes",
+                            "monthdatehoursminutesseconds",
+                            "weekday",
+                            "weeksdayhours",
+                            "weekdayhoursminutes",
+                            "weekdayhoursminutesseconds",
+                            "dayhours",
+                            "dayhoursminutes",
+                            "dayhoursminutesseconds",
+                            "hoursminutes",
+                            "hoursminutesseconds",
+                            "minutesseconds",
+                            "secondsmilliseconds",
                         ],
                     ],
                 ],
@@ -48473,45 +46792,46 @@ class TimeUnitTransformParams(VegaLiteSchema):
         step: Union[float, UndefinedType] = Undefined,
         unit: Union[
             Union[
-                "TimeUnit",
+                "SchemaBase",
                 Union[
-                    "MultiTimeUnit",
+                    "SchemaBase",
                     Union[
-                        "LocalMultiTimeUnit",
+                        "SchemaBase",
                         Literal[
-                            "yearquarter",
-                            "yearquartermonth",
-                            "yearmonth",
-                            "yearmonthdate",
-                            "yearmonthdatehours",
-                            "yearmonthdatehoursminutes",
-                            "yearmonthdatehoursminutesseconds",
-                            "yearweek",
-                            "yearweekday",
-                            "yearweekdayhours",
-                            "yearweekdayhoursminutes",
-                            "yearweekdayhoursminutesseconds",
-                            "yeardayofyear",
-                            "quartermonth",
-                            "monthdate",
-                            "monthdatehours",
-                            "monthdatehoursminutes",
-                            "monthdatehoursminutesseconds",
-                            "weekday",
-                            "weeksdayhours",
-                            "weekdayhoursminutes",
-                            "weekdayhoursminutesseconds",
-                            "dayhours",
-                            "dayhoursminutes",
-                            "dayhoursminutesseconds",
-                            "hoursminutes",
-                            "hoursminutesseconds",
-                            "minutesseconds",
-                            "secondsmilliseconds",
+                            "utcyear",
+                            "utcquarter",
+                            "utcmonth",
+                            "utcweek",
+                            "utcday",
+                            "utcdayofyear",
+                            "utcdate",
+                            "utchours",
+                            "utcminutes",
+                            "utcseconds",
+                            "utcmilliseconds",
                         ],
                     ],
                     Union[
-                        "UtcMultiTimeUnit",
+                        "SchemaBase",
+                        Literal[
+                            "year",
+                            "quarter",
+                            "month",
+                            "week",
+                            "day",
+                            "dayofyear",
+                            "date",
+                            "hours",
+                            "minutes",
+                            "seconds",
+                            "milliseconds",
+                        ],
+                    ],
+                ],
+                Union[
+                    "SchemaBase",
+                    Union[
+                        "SchemaBase",
                         Literal[
                             "utcyearquarter",
                             "utcyearquartermonth",
@@ -48544,39 +46864,38 @@ class TimeUnitTransformParams(VegaLiteSchema):
                             "utcsecondsmilliseconds",
                         ],
                     ],
-                ],
-                Union[
-                    "SingleTimeUnit",
                     Union[
-                        "LocalSingleTimeUnit",
+                        "SchemaBase",
                         Literal[
-                            "year",
-                            "quarter",
-                            "month",
-                            "week",
-                            "day",
-                            "dayofyear",
-                            "date",
-                            "hours",
-                            "minutes",
-                            "seconds",
-                            "milliseconds",
-                        ],
-                    ],
-                    Union[
-                        "UtcSingleTimeUnit",
-                        Literal[
-                            "utcyear",
-                            "utcquarter",
-                            "utcmonth",
-                            "utcweek",
-                            "utcday",
-                            "utcdayofyear",
-                            "utcdate",
-                            "utchours",
-                            "utcminutes",
-                            "utcseconds",
-                            "utcmilliseconds",
+                            "yearquarter",
+                            "yearquartermonth",
+                            "yearmonth",
+                            "yearmonthdate",
+                            "yearmonthdatehours",
+                            "yearmonthdatehoursminutes",
+                            "yearmonthdatehoursminutesseconds",
+                            "yearweek",
+                            "yearweekday",
+                            "yearweekdayhours",
+                            "yearweekdayhoursminutes",
+                            "yearweekdayhoursminutesseconds",
+                            "yeardayofyear",
+                            "quartermonth",
+                            "monthdate",
+                            "monthdatehours",
+                            "monthdatehoursminutes",
+                            "monthdatehoursminutesseconds",
+                            "weekday",
+                            "weeksdayhours",
+                            "weekdayhoursminutes",
+                            "weekdayhoursminutesseconds",
+                            "dayhours",
+                            "dayhoursminutes",
+                            "dayhoursminutesseconds",
+                            "hoursminutes",
+                            "hoursminutesseconds",
+                            "minutesseconds",
+                            "secondsmilliseconds",
                         ],
                     ],
                 ],
@@ -48691,38 +47010,38 @@ class TitleConfig(VegaLiteSchema):
     def __init__(
         self,
         align: Union[
-            Union["Align", Literal["left", "center", "right"]], UndefinedType
+            Union["SchemaBase", Literal["left", "center", "right"]], UndefinedType
         ] = Undefined,
         anchor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleAnchor", Literal[None, "start", "middle", "end"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal[None, "start", "middle", "end"]],
             ],
             UndefinedType,
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                "TextBaseline",
-                Union["Baseline", Literal["top", "middle", "bottom"]],
+                "SchemaBase",
+                Union["SchemaBase", Literal["top", "middle", "bottom"]],
                 str,
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -48874,7 +47193,7 @@ class TitleConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -48882,26 +47201,26 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -48923,36 +47242,36 @@ class TitleConfig(VegaLiteSchema):
         ] = Undefined,
         frame: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["TitleFrame", Literal["bounds", "group"]], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", Literal["bounds", "group"]], str],
             ],
             UndefinedType,
         ] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleOrient", Literal["none", "left", "right", "top", "bottom"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["none", "left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         subtitleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -49104,7 +47423,7 @@ class TitleConfig(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -49112,20 +47431,20 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         subtitleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -49146,13 +47465,13 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -49319,39 +47638,40 @@ class TitleParams(VegaLiteSchema):
         self,
         text: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
-            Union["Align", Literal["left", "center", "right"]], UndefinedType
+            Union["SchemaBase", Literal["left", "center", "right"]], UndefinedType
         ] = Undefined,
         anchor: Union[
-            Union["TitleAnchor", Literal[None, "start", "middle", "end"]], UndefinedType
+            Union["SchemaBase", Literal[None, "start", "middle", "end"]], UndefinedType
         ] = Undefined,
         angle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         aria: Union[
-            Union[Union["ExprRef", "_Parameter", dict], bool], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], bool], UndefinedType
         ] = Undefined,
         baseline: Union[
             Union[
-                "TextBaseline",
-                Union["Baseline", Literal["top", "middle", "bottom"]],
+                "SchemaBase",
+                Union["SchemaBase", Literal["top", "middle", "bottom"]],
                 str,
             ],
             UndefinedType,
         ] = Undefined,
         color: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -49503,7 +47823,7 @@ class TitleParams(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -49511,26 +47831,26 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         dx: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         dy: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         font: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         fontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         fontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -49552,38 +47872,40 @@ class TitleParams(VegaLiteSchema):
         ] = Undefined,
         frame: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union[Union["TitleFrame", Literal["bounds", "group"]], str],
+                Union["SchemaBase", "_Parameter", dict],
+                Union[Union["SchemaBase", Literal["bounds", "group"]], str],
             ],
             UndefinedType,
         ] = Undefined,
         limit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         offset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         orient: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["TitleOrient", Literal["none", "left", "right", "top", "bottom"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["none", "left", "right", "top", "bottom"]],
             ],
             UndefinedType,
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
-        subtitle: Union[Union["Text", Sequence[str], str], UndefinedType] = Undefined,
+        subtitle: Union[
+            Union["SchemaBase", Sequence[str], str], UndefinedType
+        ] = Undefined,
         subtitleColor: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
                     None,
                     Union[
-                        "Color",
+                        "SchemaBase",
                         Union[
-                            "ColorName",
+                            "SchemaBase",
                             Literal[
                                 "black",
                                 "silver",
@@ -49735,7 +48057,7 @@ class TitleParams(VegaLiteSchema):
                                 "rebeccapurple",
                             ],
                         ],
-                        Union["HexColor", str],
+                        Union["SchemaBase", str],
                         str,
                     ],
                 ],
@@ -49743,20 +48065,20 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            Union[Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["FontStyle", str]],
+            Union[Union["SchemaBase", "_Parameter", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         subtitleFontWeight: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "FontWeight",
+                    "SchemaBase",
                     Literal[
                         "normal",
                         "bold",
@@ -49777,10 +48099,10 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
@@ -49907,26 +48229,18 @@ class TopLevelSelectionParameter(TopLevelParameter):
 
     def __init__(
         self,
-        name: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        name: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         select: Union[
             Union[
-                Union["IntervalSelectionConfig", dict],
-                Union["PointSelectionConfig", dict],
-                Union["SelectionType", Literal["point", "interval"]],
+                Union["SchemaBase", Literal["point", "interval"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bind: Union[
             Union[
-                Union[
-                    "Binding",
-                    Union["BindCheckbox", dict],
-                    Union["BindDirect", dict],
-                    Union["BindInput", dict],
-                    Union["BindRadioSelect", dict],
-                    Union["BindRange", dict],
-                ],
-                Union["LegendBinding", Union["LegendStreamBinding", dict], str],
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", Union["SchemaBase", dict]],
                 dict,
                 str,
             ],
@@ -49934,13 +48248,13 @@ class TopLevelSelectionParameter(TopLevelParameter):
         ] = Undefined,
         value: Union[
             Union[
-                Sequence[Union["SelectionInitMapping", dict]],
+                Sequence[Union["SchemaBase", dict]],
                 Union[
-                    "SelectionInit",
-                    Union["DateTime", dict],
-                    Union["PrimitiveValue", None, bool, float, str],
+                    "SchemaBase",
+                    Union["SchemaBase", None, bool, float, str],
+                    Union["SchemaBase", dict],
                 ],
-                Union["SelectionInitIntervalMapping", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -50100,42 +48414,34 @@ class TopLevelConcatSpec(TopLevelSpec):
         concat: Union[
             Sequence[
                 Union[
-                    "NonNormalizedSpec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
-                    Union[
-                        "RepeatSpec",
-                        Union["LayerRepeatSpec", dict],
-                        Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
+                    "SchemaBase",
+                    Union["SchemaBase", Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -50287,93 +48593,50 @@ class TopLevelConcatSpec(TopLevelSpec):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        config: Union[Union["Config", dict], UndefinedType] = Undefined,
+        config: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
-        datasets: Union[Union["Datasets", dict], UndefinedType] = Undefined,
+        datasets: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
+            ],
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
+        usermeta: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(TopLevelConcatSpec, self).__init__(
@@ -50536,52 +48799,33 @@ class TopLevelFacetSpec(TopLevelSpec):
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
-        facet: Union[
-            Union[Union["FacetFieldDef", dict], Union["FacetMapping", dict]],
-            UndefinedType,
-        ] = Undefined,
-        spec: Union[
-            Union[Union["LayerSpec", dict], Union["UnitSpecWithFrame", dict]],
-            UndefinedType,
-        ] = Undefined,
+        facet: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        spec: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -50733,72 +48977,43 @@ class TopLevelFacetSpec(TopLevelSpec):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
         columns: Union[float, UndefinedType] = Undefined,
-        config: Union[Union["Config", dict], UndefinedType] = Undefined,
-        datasets: Union[Union["Datasets", dict], UndefinedType] = Undefined,
+        config: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        datasets: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
+            ],
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
+        usermeta: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(TopLevelFacetSpec, self).__init__(
@@ -50914,35 +49129,27 @@ class TopLevelHConcatSpec(TopLevelSpec):
         hconcat: Union[
             Sequence[
                 Union[
-                    "NonNormalizedSpec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
-                    Union[
-                        "RepeatSpec",
-                        Union["LayerRepeatSpec", dict],
-                        Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
+                    "SchemaBase",
+                    Union["SchemaBase", Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -51094,88 +49301,45 @@ class TopLevelHConcatSpec(TopLevelSpec):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
-        config: Union[Union["Config", dict], UndefinedType] = Undefined,
+        config: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
-        datasets: Union[Union["Datasets", dict], UndefinedType] = Undefined,
+        datasets: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
+            ],
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
+        usermeta: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(TopLevelHConcatSpec, self).__init__(
@@ -51319,23 +49483,21 @@ class TopLevelLayerSpec(TopLevelSpec):
 
     def __init__(
         self,
-        layer: Union[
-            Sequence[Union[Union["LayerSpec", dict], Union["UnitSpec", dict]]],
-            UndefinedType,
-        ] = Undefined,
+        layer: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -51487,92 +49649,51 @@ class TopLevelLayerSpec(TopLevelSpec):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
-        config: Union[Union["Config", dict], UndefinedType] = Undefined,
+        config: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
-        datasets: Union[Union["Datasets", dict], UndefinedType] = Undefined,
+        datasets: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["SharedEncoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         height: Union[
-            Union[Union["Step", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
+            ],
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
-        view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
-        width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
+        usermeta: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        view: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        width: Union[
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
+        ] = Undefined,
         **kwds,
     ):
         super(TopLevelLayerSpec, self).__init__(
@@ -51777,41 +49898,15 @@ class TopLevelUnitSpec(TopLevelSpec):
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         mark: Union[
             Union[
-                "AnyMark",
+                "SchemaBase",
                 Union[
-                    "CompositeMark",
-                    Union["BoxPlot", str],
-                    Union["ErrorBand", str],
-                    Union["ErrorBar", str],
-                ],
-                Union[
-                    "CompositeMarkDef",
-                    Union["BoxPlotDef", dict],
-                    Union["ErrorBandDef", dict],
-                    Union["ErrorBarDef", dict],
-                ],
-                Union[
-                    "Mark",
+                    "SchemaBase",
                     Literal[
                         "arc",
                         "area",
@@ -51829,30 +49924,33 @@ class TopLevelUnitSpec(TopLevelSpec):
                         "geoshape",
                     ],
                 ],
-                Union["MarkDef", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
+                Union["SchemaBase", Union["SchemaBase", str]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         align: Union[
             Union[
-                Union["LayoutAlign", Literal["all", "each", "none"]],
-                Union["RowColLayoutAlign", dict],
+                Union["SchemaBase", Literal["all", "each", "none"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -52004,78 +50102,51 @@ class TopLevelUnitSpec(TopLevelSpec):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[
-            Union[Union["RowColboolean", dict], bool], UndefinedType
+            Union[Union["SchemaBase", dict], bool], UndefinedType
         ] = Undefined,
-        config: Union[Union["Config", dict], UndefinedType] = Undefined,
-        datasets: Union[Union["Datasets", dict], UndefinedType] = Undefined,
+        config: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        datasets: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["FacetedEncoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         height: Union[
-            Union[Union["Step", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
+            ],
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[
-            Union[Union["RowColnumber", dict], float], UndefinedType
+            Union[Union["SchemaBase", dict], float], UndefinedType
         ] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
-        view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
-        width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
+        usermeta: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        view: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        width: Union[
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
+        ] = Undefined,
         **kwds,
     ):
         super(TopLevelUnitSpec, self).__init__(
@@ -52194,35 +50265,27 @@ class TopLevelVConcatSpec(TopLevelSpec):
         vconcat: Union[
             Sequence[
                 Union[
-                    "NonNormalizedSpec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
-                    Union[
-                        "RepeatSpec",
-                        Union["LayerRepeatSpec", dict],
-                        Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
+                    "SchemaBase",
+                    Union["SchemaBase", Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ]
             ],
             UndefinedType,
         ] = Undefined,
         autosize: Union[
             Union[
-                Union["AutoSizeParams", dict],
-                Union["AutosizeType", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", Literal["pad", "none", "fit", "fit-x", "fit-y"]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         background: Union[
             Union[
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -52374,88 +50437,45 @@ class TopLevelVConcatSpec(TopLevelSpec):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bounds: Union[Literal["full", "flush"], UndefinedType] = Undefined,
         center: Union[bool, UndefinedType] = Undefined,
-        config: Union[Union["Config", dict], UndefinedType] = Undefined,
+        config: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
-        datasets: Union[Union["Datasets", dict], UndefinedType] = Undefined,
+        datasets: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            Union[Union["ExprRef", "_Parameter", dict], Union["Padding", dict, float]],
+            Union[
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", dict, float],
+            ],
             UndefinedType,
         ] = Undefined,
         params: Union[
-            Sequence[
-                Union[
-                    "TopLevelParameter",
-                    Union["TopLevelSelectionParameter", dict],
-                    Union["VariableParameter", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        usermeta: Union[Union["Dict", dict], UndefinedType] = Undefined,
+        usermeta: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         **kwds,
     ):
         super(TopLevelVConcatSpec, self).__init__(
@@ -52529,7 +50549,7 @@ class TopoDataFormat(DataFormat):
         self,
         feature: Union[str, UndefinedType] = Undefined,
         mesh: Union[str, UndefinedType] = Undefined,
-        parse: Union[Union[None, Union["Parse", dict]], UndefinedType] = Undefined,
+        parse: Union[Union[None, Union["SchemaBase", dict]], UndefinedType] = Undefined,
         type: Union[str, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -52582,9 +50602,9 @@ class AggregateTransform(Transform):
     def __init__(
         self,
         aggregate: Union[
-            Sequence[Union["AggregatedFieldDef", dict]], UndefinedType
+            Sequence[Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(AggregateTransform, self).__init__(
@@ -52616,8 +50636,8 @@ class BinTransform(Transform):
 
     def __init__(
         self,
-        bin: Union[Union[Union["BinParams", dict], bool], UndefinedType] = Undefined,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        bin: Union[Union[Union["SchemaBase", dict], bool], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         **kwds,
     ):
         super(BinTransform, self).__init__(bin=bin, field=field, **kwds)
@@ -52700,12 +50720,12 @@ class DensityTransform(Transform):
 
     def __init__(
         self,
-        density: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        density: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
         counts: Union[bool, UndefinedType] = Undefined,
         cumulative: Union[bool, UndefinedType] = Undefined,
         extent: Union[Sequence[float], UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         maxsteps: Union[float, UndefinedType] = Undefined,
         minsteps: Union[float, UndefinedType] = Undefined,
         steps: Union[float, UndefinedType] = Undefined,
@@ -52743,8 +50763,8 @@ class ExtentTransform(Transform):
 
     def __init__(
         self,
-        extent: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        param: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        extent: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        param: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         **kwds,
     ):
         super(ExtentTransform, self).__init__(extent=extent, param=param, **kwds)
@@ -52794,23 +50814,9 @@ class FilterTransform(Transform):
         self,
         filter: Union[
             Union[
-                "PredicateComposition",
-                Union["LogicalAndPredicate", dict],
-                Union["LogicalNotPredicate", dict],
-                Union["LogicalOrPredicate", dict],
-                Union[
-                    "Predicate",
-                    Union["FieldEqualPredicate", dict],
-                    Union["FieldGTEPredicate", dict],
-                    Union["FieldGTPredicate", dict],
-                    Union["FieldLTEPredicate", dict],
-                    Union["FieldLTPredicate", dict],
-                    Union["FieldOneOfPredicate", dict],
-                    Union["FieldRangePredicate", dict],
-                    Union["FieldValidPredicate", dict],
-                    Union["ParameterPredicate", dict],
-                    str,
-                ],
+                "SchemaBase",
+                Union["SchemaBase", Union["SchemaBase", dict], str],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -52842,7 +50848,7 @@ class FlattenTransform(Transform):
 
     def __init__(
         self,
-        flatten: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        flatten: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(FlattenTransform, self).__init__(flatten=flatten, **kwds)
@@ -52867,7 +50873,7 @@ class FoldTransform(Transform):
 
     def __init__(
         self,
-        fold: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        fold: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(FoldTransform, self).__init__(fold=fold, **kwds)
@@ -52923,15 +50929,15 @@ class ImputeTransform(Transform):
 
     def __init__(
         self,
-        impute: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        key: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        impute: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        key: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         keyvals: Union[
-            Union[Sequence[Any], Union["ImputeSequence", dict]], UndefinedType
+            Union[Sequence[Any], Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         method: Union[
-            Union["ImputeMethod", Literal["value", "median", "max", "min", "mean"]],
+            Union["SchemaBase", Literal["value", "median", "max", "min", "mean"]],
             UndefinedType,
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
@@ -52969,9 +50975,9 @@ class JoinAggregateTransform(Transform):
     def __init__(
         self,
         joinaggregate: Union[
-            Sequence[Union["JoinAggregateFieldDef", dict]], UndefinedType
+            Sequence[Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(JoinAggregateTransform, self).__init__(
@@ -53009,10 +51015,10 @@ class LoessTransform(Transform):
 
     def __init__(
         self,
-        loess: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        on: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        loess: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        on: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         bandwidth: Union[float, UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(LoessTransform, self).__init__(
@@ -53089,13 +51095,13 @@ class PivotTransform(Transform):
 
     def __init__(
         self,
-        pivot: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        value: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        pivot: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        value: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         limit: Union[float, UndefinedType] = Undefined,
         op: Union[
             Union[
-                "AggregateOp",
+                "SchemaBase",
                 Literal[
                     "argmax",
                     "argmin",
@@ -53161,8 +51167,8 @@ class QuantileTransform(Transform):
 
     def __init__(
         self,
-        quantile: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        quantile: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         probs: Union[Sequence[float], UndefinedType] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         **kwds,
@@ -53218,10 +51224,10 @@ class RegressionTransform(Transform):
 
     def __init__(
         self,
-        on: Union[Union["FieldName", str], UndefinedType] = Undefined,
-        regression: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        on: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
+        regression: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         extent: Union[Sequence[float], UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         method: Union[
             Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
         ] = Undefined,
@@ -53293,12 +51299,12 @@ class StackTransform(Transform):
 
     def __init__(
         self,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
-        stack: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
+        stack: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         offset: Union[
             Literal["zero", "center", "normalize"], UndefinedType
         ] = Undefined,
-        sort: Union[Sequence[Union["SortField", dict]], UndefinedType] = Undefined,
+        sort: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(StackTransform, self).__init__(
@@ -53326,49 +51332,50 @@ class TimeUnitTransform(Transform):
 
     def __init__(
         self,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -53401,44 +51408,43 @@ class TimeUnitTransform(Transform):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitTransformParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
@@ -53635,11 +51641,9 @@ class TypedFieldDef(VegaLiteSchema):
         self,
         aggregate: Union[
             Union[
-                "Aggregate",
-                Union["ArgmaxDef", dict],
-                Union["ArgminDef", dict],
+                "SchemaBase",
                 Union[
-                    "NonArgAggregateOp",
+                    "SchemaBase",
                     Literal[
                         "average",
                         "count",
@@ -53664,21 +51668,22 @@ class TypedFieldDef(VegaLiteSchema):
                         "variancep",
                     ],
                 ],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         bin: Union[
-            Union[None, Union["BinParams", dict], bool, str], UndefinedType
+            Union[None, Union["SchemaBase", dict], bool, str], UndefinedType
         ] = Undefined,
         field: Union[
-            Union["Field", Union["FieldName", str], Union["RepeatRef", dict]],
+            Union["SchemaBase", Union["SchemaBase", dict], Union["SchemaBase", str]],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
             Union[
                 Union[
-                    "BinnedTimeUnit",
+                    "SchemaBase",
                     Literal[
                         "binnedutcyear",
                         "binnedutcyearquarter",
@@ -53713,45 +51718,46 @@ class TypedFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "TimeUnit",
+                    "SchemaBase",
                     Union[
-                        "MultiTimeUnit",
+                        "SchemaBase",
                         Union[
-                            "LocalMultiTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "yearquarter",
-                                "yearquartermonth",
-                                "yearmonth",
-                                "yearmonthdate",
-                                "yearmonthdatehours",
-                                "yearmonthdatehoursminutes",
-                                "yearmonthdatehoursminutesseconds",
-                                "yearweek",
-                                "yearweekday",
-                                "yearweekdayhours",
-                                "yearweekdayhoursminutes",
-                                "yearweekdayhoursminutesseconds",
-                                "yeardayofyear",
-                                "quartermonth",
-                                "monthdate",
-                                "monthdatehours",
-                                "monthdatehoursminutes",
-                                "monthdatehoursminutesseconds",
-                                "weekday",
-                                "weeksdayhours",
-                                "weekdayhoursminutes",
-                                "weekdayhoursminutesseconds",
-                                "dayhours",
-                                "dayhoursminutes",
-                                "dayhoursminutesseconds",
-                                "hoursminutes",
-                                "hoursminutesseconds",
-                                "minutesseconds",
-                                "secondsmilliseconds",
+                                "utcyear",
+                                "utcquarter",
+                                "utcmonth",
+                                "utcweek",
+                                "utcday",
+                                "utcdayofyear",
+                                "utcdate",
+                                "utchours",
+                                "utcminutes",
+                                "utcseconds",
+                                "utcmilliseconds",
                             ],
                         ],
                         Union[
-                            "UtcMultiTimeUnit",
+                            "SchemaBase",
+                            Literal[
+                                "year",
+                                "quarter",
+                                "month",
+                                "week",
+                                "day",
+                                "dayofyear",
+                                "date",
+                                "hours",
+                                "minutes",
+                                "seconds",
+                                "milliseconds",
+                            ],
+                        ],
+                    ],
+                    Union[
+                        "SchemaBase",
+                        Union[
+                            "SchemaBase",
                             Literal[
                                 "utcyearquarter",
                                 "utcyearquartermonth",
@@ -53784,54 +51790,52 @@ class TypedFieldDef(VegaLiteSchema):
                                 "utcsecondsmilliseconds",
                             ],
                         ],
-                    ],
-                    Union[
-                        "SingleTimeUnit",
                         Union[
-                            "LocalSingleTimeUnit",
+                            "SchemaBase",
                             Literal[
-                                "year",
-                                "quarter",
-                                "month",
-                                "week",
-                                "day",
-                                "dayofyear",
-                                "date",
-                                "hours",
-                                "minutes",
-                                "seconds",
-                                "milliseconds",
-                            ],
-                        ],
-                        Union[
-                            "UtcSingleTimeUnit",
-                            Literal[
-                                "utcyear",
-                                "utcquarter",
-                                "utcmonth",
-                                "utcweek",
-                                "utcday",
-                                "utcdayofyear",
-                                "utcdate",
-                                "utchours",
-                                "utcminutes",
-                                "utcseconds",
-                                "utcmilliseconds",
+                                "yearquarter",
+                                "yearquartermonth",
+                                "yearmonth",
+                                "yearmonthdate",
+                                "yearmonthdatehours",
+                                "yearmonthdatehoursminutes",
+                                "yearmonthdatehoursminutesseconds",
+                                "yearweek",
+                                "yearweekday",
+                                "yearweekdayhours",
+                                "yearweekdayhoursminutes",
+                                "yearweekdayhoursminutesseconds",
+                                "yeardayofyear",
+                                "quartermonth",
+                                "monthdate",
+                                "monthdatehours",
+                                "monthdatehoursminutes",
+                                "monthdatehoursminutesseconds",
+                                "weekday",
+                                "weeksdayhours",
+                                "weekdayhoursminutes",
+                                "weekdayhoursminutesseconds",
+                                "dayhours",
+                                "dayhoursminutes",
+                                "dayhoursminutesseconds",
+                                "hoursminutes",
+                                "hoursminutesseconds",
+                                "minutesseconds",
+                                "secondsmilliseconds",
                             ],
                         ],
                     ],
                 ],
-                Union["TimeUnitParams", dict],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         title: Union[
-            Union[None, Union["Text", Sequence[str], str]], UndefinedType
+            Union[None, Union["SchemaBase", Sequence[str], str]], UndefinedType
         ] = Undefined,
         type: Union[
             Union[
-                "StandardType",
-                Literal["quantitative", "ordinal", "temporal", "nominal"],
+                "SchemaBase", Literal["quantitative", "ordinal", "temporal", "nominal"]
             ],
             UndefinedType,
         ] = Undefined,
@@ -53903,21 +51907,9 @@ class UnitSpec(VegaLiteSchema):
         self,
         mark: Union[
             Union[
-                "AnyMark",
+                "SchemaBase",
                 Union[
-                    "CompositeMark",
-                    Union["BoxPlot", str],
-                    Union["ErrorBand", str],
-                    Union["ErrorBar", str],
-                ],
-                Union[
-                    "CompositeMarkDef",
-                    Union["BoxPlotDef", dict],
-                    Union["ErrorBandDef", dict],
-                    Union["ErrorBarDef", dict],
-                ],
-                Union[
-                    "Mark",
+                    "SchemaBase",
                     Literal[
                         "arc",
                         "area",
@@ -53935,68 +51927,30 @@ class UnitSpec(VegaLiteSchema):
                         "geoshape",
                     ],
                 ],
-                Union["MarkDef", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
+                Union["SchemaBase", Union["SchemaBase", str]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        params: Union[
-            Sequence[Union["SelectionParameter", dict]], UndefinedType
-        ] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
+        params: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54099,21 +52053,9 @@ class UnitSpecWithFrame(VegaLiteSchema):
         self,
         mark: Union[
             Union[
-                "AnyMark",
+                "SchemaBase",
                 Union[
-                    "CompositeMark",
-                    Union["BoxPlot", str],
-                    Union["ErrorBand", str],
-                    Union["ErrorBar", str],
-                ],
-                Union[
-                    "CompositeMarkDef",
-                    Union["BoxPlotDef", dict],
-                    Union["ErrorBandDef", dict],
-                    Union["ErrorBarDef", dict],
-                ],
-                Union[
-                    "Mark",
+                    "SchemaBase",
                     Literal[
                         "arc",
                         "area",
@@ -54131,74 +52073,38 @@ class UnitSpecWithFrame(VegaLiteSchema):
                         "geoshape",
                     ],
                 ],
-                Union["MarkDef", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
+                Union["SchemaBase", Union["SchemaBase", str]],
+                Union["SchemaBase", dict],
             ],
             UndefinedType,
         ] = Undefined,
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
-        encoding: Union[Union["Encoding", dict], UndefinedType] = Undefined,
+        encoding: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         height: Union[
-            Union[Union["Step", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        params: Union[
-            Sequence[Union["SelectionParameter", dict]], UndefinedType
-        ] = Undefined,
-        projection: Union[Union["Projection", dict], UndefinedType] = Undefined,
+        params: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
+        projection: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
-        view: Union[Union["ViewBackground", dict], UndefinedType] = Undefined,
-        width: Union[Union[Union["Step", dict], float, str], UndefinedType] = Undefined,
+        view: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
+        width: Union[
+            Union[Union["SchemaBase", dict], float, str], UndefinedType
+        ] = Undefined,
         **kwds,
     ):
         super(UnitSpecWithFrame, self).__init__(
@@ -54241,14 +52147,7 @@ class UrlData(DataSource):
         self,
         url: Union[str, UndefinedType] = Undefined,
         format: Union[
-            Union[
-                "DataFormat",
-                Union["CsvDataFormat", dict],
-                Union["DsvDataFormat", dict],
-                Union["JsonDataFormat", dict],
-                Union["TopoDataFormat", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         **kwds,
@@ -54344,18 +52243,9 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         vconcat: Union[
             Sequence[
                 Union[
-                    "Spec",
-                    Union["ConcatSpecGenericSpec", dict],
-                    Union["FacetSpec", dict],
-                    Union["FacetedUnitSpec", dict],
-                    Union["HConcatSpecGenericSpec", dict],
-                    Union["LayerSpec", dict],
-                    Union[
-                        "RepeatSpec",
-                        Union["LayerRepeatSpec", dict],
-                        Union["NonLayerRepeatSpec", dict],
-                    ],
-                    Union["VConcatSpecGenericSpec", dict],
+                    "SchemaBase",
+                    Union["SchemaBase", Union["SchemaBase", dict]],
+                    Union["SchemaBase", dict],
                 ]
             ],
             UndefinedType,
@@ -54365,58 +52255,20 @@ class VConcatSpecGenericSpec(Spec, NonNormalizedSpec):
         data: Union[
             Union[
                 None,
-                Union[
-                    "Data",
-                    Union[
-                        "DataSource",
-                        Union["InlineData", dict],
-                        Union["NamedData", dict],
-                        Union["UrlData", dict],
-                    ],
-                    Union[
-                        "Generator",
-                        Union["GraticuleGenerator", dict],
-                        Union["SequenceGenerator", dict],
-                        Union["SphereGenerator", dict],
-                    ],
-                ],
+                Union["SchemaBase", Union["SchemaBase", Union["SchemaBase", dict]]],
             ],
             UndefinedType,
         ] = Undefined,
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
-        resolve: Union[Union["Resolve", dict], UndefinedType] = Undefined,
+        resolve: Union[Union["SchemaBase", dict], UndefinedType] = Undefined,
         spacing: Union[float, UndefinedType] = Undefined,
         title: Union[
-            Union[Union["Text", Sequence[str], str], Union["TitleParams", dict]],
+            Union[Union["SchemaBase", Sequence[str], str], Union["SchemaBase", dict]],
             UndefinedType,
         ] = Undefined,
         transform: Union[
-            Sequence[
-                Union[
-                    "Transform",
-                    Union["AggregateTransform", dict],
-                    Union["BinTransform", dict],
-                    Union["CalculateTransform", dict],
-                    Union["DensityTransform", dict],
-                    Union["ExtentTransform", dict],
-                    Union["FilterTransform", dict],
-                    Union["FlattenTransform", dict],
-                    Union["FoldTransform", dict],
-                    Union["ImputeTransform", dict],
-                    Union["JoinAggregateTransform", dict],
-                    Union["LoessTransform", dict],
-                    Union["LookupTransform", dict],
-                    Union["PivotTransform", dict],
-                    Union["QuantileTransform", dict],
-                    Union["RegressionTransform", dict],
-                    Union["SampleTransform", dict],
-                    Union["StackTransform", dict],
-                    Union["TimeUnitTransform", dict],
-                    Union["WindowTransform", dict],
-                ]
-            ],
-            UndefinedType,
+            Sequence[Union["SchemaBase", Union["SchemaBase", dict]]], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54461,45 +52313,16 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefGradientstringnullExprRef",
-                        Union[
-                            "ConditionalParameterValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                        Union[
-                            "ConditionalPredicateValueDefGradientstringnullExprRef",
-                            dict,
-                        ],
-                    ]
-                ],
-                Union[
-                    "ConditionalMarkPropFieldOrDatumDef",
-                    Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
-                    Union["ConditionalPredicateMarkPropFieldOrDatumDef", dict],
-                ],
-                Union[
-                    "ConditionalValueDefGradientstringnullExprRef",
-                    Union[
-                        "ConditionalParameterValueDefGradientstringnullExprRef", dict
-                    ],
-                    Union[
-                        "ConditionalPredicateValueDefGradientstringnullExprRef", dict
-                    ],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
             Union[
                 None,
-                Union["ExprRef", "_Parameter", dict],
-                Union[
-                    "Gradient",
-                    Union["LinearGradient", dict],
-                    Union["RadialGradient", dict],
-                ],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Union["SchemaBase", dict]],
                 str,
             ],
             UndefinedType,
@@ -54537,32 +52360,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalMarkPropFieldOrDatumDefTypeForShape",
-                    Union[
-                        "ConditionalParameterMarkPropFieldOrDatumDefTypeForShape", dict
-                    ],
-                    Union[
-                        "ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape", dict
-                    ],
-                ],
-                Union[
-                    "ConditionalValueDefstringnullExprRef",
-                    Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[None, Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54597,28 +52401,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumberExprRef",
-                        Union["ConditionalParameterValueDefnumberExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalMarkPropFieldOrDatumDef",
-                    Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
-                    Union["ConditionalPredicateMarkPropFieldOrDatumDef", dict],
-                ],
-                Union[
-                    "ConditionalValueDefnumberExprRef",
-                    Union["ConditionalParameterValueDefnumberExprRef", dict],
-                    Union["ConditionalPredicateValueDefnumberExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54653,28 +52442,14 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefnumberArrayExprRef",
-                        Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                        Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalMarkPropFieldOrDatumDef",
-                    Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
-                    Union["ConditionalPredicateMarkPropFieldOrDatumDef", dict],
-                ],
-                Union[
-                    "ConditionalValueDefnumberArrayExprRef",
-                    Union["ConditionalParameterValueDefnumberArrayExprRef", dict],
-                    Union["ConditionalPredicateValueDefnumberArrayExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         **kwds,
     ):
@@ -54707,28 +52482,13 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefstringnullExprRef",
-                        Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                        Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalMarkPropFieldOrDatumDef",
-                    Union["ConditionalParameterMarkPropFieldOrDatumDef", dict],
-                    Union["ConditionalPredicateMarkPropFieldOrDatumDef", dict],
-                ],
-                Union[
-                    "ConditionalValueDefstringnullExprRef",
-                    Union["ConditionalParameterValueDefstringnullExprRef", dict],
-                    Union["ConditionalPredicateValueDefstringnullExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
-            Union[None, Union["ExprRef", "_Parameter", dict], str], UndefinedType
+            Union[None, Union["SchemaBase", "_Parameter", dict], str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54759,29 +52519,15 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         self,
         condition: Union[
             Union[
-                Sequence[
-                    Union[
-                        "ConditionalValueDefTextExprRef",
-                        Union["ConditionalParameterValueDefTextExprRef", dict],
-                        Union["ConditionalPredicateValueDefTextExprRef", dict],
-                    ]
-                ],
-                Union[
-                    "ConditionalStringFieldDef",
-                    Union["ConditionalParameterStringFieldDef", dict],
-                    Union["ConditionalPredicateStringFieldDef", dict],
-                ],
-                Union[
-                    "ConditionalValueDefTextExprRef",
-                    Union["ConditionalParameterValueDefTextExprRef", dict],
-                    Union["ConditionalPredicateValueDefTextExprRef", dict],
-                ],
+                Sequence[Union["SchemaBase", Union["SchemaBase", dict]]],
+                Union["SchemaBase", Union["SchemaBase", dict]],
             ],
             UndefinedType,
         ] = Undefined,
         value: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict], Union["Text", Sequence[str], str]
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Sequence[str], str],
             ],
             UndefinedType,
         ] = Undefined,
@@ -54835,7 +52581,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     def __init__(
         self,
         value: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float, str], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float, str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -54873,19 +52619,11 @@ class VariableParameter(TopLevelParameter):
 
     def __init__(
         self,
-        name: Union[Union["ParameterName", str], UndefinedType] = Undefined,
+        name: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         bind: Union[
-            Union[
-                "Binding",
-                Union["BindCheckbox", dict],
-                Union["BindDirect", dict],
-                Union["BindInput", dict],
-                Union["BindRadioSelect", dict],
-                Union["BindRange", dict],
-            ],
-            UndefinedType,
+            Union["SchemaBase", Union["SchemaBase", dict]], UndefinedType
         ] = Undefined,
-        expr: Union[Union["Expr", str], UndefinedType] = Undefined,
+        expr: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -55071,11 +52809,11 @@ class ViewBackground(VegaLiteSchema):
     def __init__(
         self,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
-                "Cursor",
+                "SchemaBase",
                 Literal[
                     "auto",
                     "default",
@@ -55120,10 +52858,11 @@ class ViewBackground(VegaLiteSchema):
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -55275,26 +53014,26 @@ class ViewBackground(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -55446,41 +53185,41 @@ class ViewBackground(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         style: Union[Union[Sequence[str], str], UndefinedType] = Undefined,
         **kwds,
@@ -55593,11 +53332,11 @@ class ViewConfig(VegaLiteSchema):
         continuousHeight: Union[float, UndefinedType] = Undefined,
         continuousWidth: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         cursor: Union[
             Union[
-                "Cursor",
+                "SchemaBase",
                 Literal[
                     "auto",
                     "default",
@@ -55644,10 +53383,11 @@ class ViewConfig(VegaLiteSchema):
         fill: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -55799,27 +53539,27 @@ class ViewConfig(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         opacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         stroke: Union[
             Union[
                 None,
+                Union["SchemaBase", "_Parameter", dict],
                 Union[
-                    "Color",
+                    "SchemaBase",
                     Union[
-                        "ColorName",
+                        "SchemaBase",
                         Literal[
                             "black",
                             "silver",
@@ -55971,41 +53711,41 @@ class ViewConfig(VegaLiteSchema):
                             "rebeccapurple",
                         ],
                     ],
-                    Union["HexColor", str],
+                    Union["SchemaBase", str],
                     str,
                 ],
-                Union["ExprRef", "_Parameter", dict],
             ],
             UndefinedType,
         ] = Undefined,
         strokeCap: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeCap", Literal["butt", "round", "square"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["butt", "round", "square"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            Union[Sequence[float], Union["ExprRef", "_Parameter", dict]], UndefinedType
+            Union[Sequence[float], Union["SchemaBase", "_Parameter", dict]],
+            UndefinedType,
         ] = Undefined,
         strokeDashOffset: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             Union[
-                Union["ExprRef", "_Parameter", dict],
-                Union["StrokeJoin", Literal["miter", "round", "bevel"]],
+                Union["SchemaBase", "_Parameter", dict],
+                Union["SchemaBase", Literal["miter", "round", "bevel"]],
             ],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            Union[Union["ExprRef", "_Parameter", dict], float], UndefinedType
+            Union[Union["SchemaBase", "_Parameter", dict], float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -56097,7 +53837,7 @@ class WindowFieldDef(VegaLiteSchema):
         op: Union[
             Union[
                 Union[
-                    "AggregateOp",
+                    "SchemaBase",
                     Literal[
                         "argmax",
                         "argmin",
@@ -56125,7 +53865,7 @@ class WindowFieldDef(VegaLiteSchema):
                     ],
                 ],
                 Union[
-                    "WindowOnlyOp",
+                    "SchemaBase",
                     Literal[
                         "row_number",
                         "rank",
@@ -56143,7 +53883,7 @@ class WindowFieldDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        field: Union[Union["FieldName", str], UndefinedType] = Undefined,
+        field: Union[Union["SchemaBase", str], UndefinedType] = Undefined,
         param: Union[float, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -56214,13 +53954,11 @@ class WindowTransform(Transform):
 
     def __init__(
         self,
-        window: Union[
-            Sequence[Union["WindowFieldDef", dict]], UndefinedType
-        ] = Undefined,
+        window: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         frame: Union[Sequence[Union[None, float]], UndefinedType] = Undefined,
-        groupby: Union[Sequence[Union["FieldName", str]], UndefinedType] = Undefined,
+        groupby: Union[Sequence[Union["SchemaBase", str]], UndefinedType] = Undefined,
         ignorePeers: Union[bool, UndefinedType] = Undefined,
-        sort: Union[Sequence[Union["SortField", dict]], UndefinedType] = Undefined,
+        sort: Union[Sequence[Union["SchemaBase", dict]], UndefinedType] = Undefined,
         **kwds,
     ):
         super(WindowTransform, self).__init__(
