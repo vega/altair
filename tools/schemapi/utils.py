@@ -221,9 +221,7 @@ class SchemaInfo:
                 type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs
-                # To keep type hints simple, we only use the SchemaBase class
-                # as the type hint for all classes which inherit from it.
-                type_representations.append(rst_syntax_for_class("SchemaBase"))
+                type_representations.append(rst_syntax_for_class(self.title))
 
         if self.is_empty():
             type_representations.append("Any")
