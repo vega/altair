@@ -431,7 +431,7 @@ def param(
             name=parameter.name,
             bind=bind,
             value=value,
-            expr=expr,  # type: ignore[arg-type]
+            expr=expr,
             **kwds,
         )
         parameter.param_type = "variable"
