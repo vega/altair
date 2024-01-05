@@ -63,3 +63,12 @@ def test_json_renderer_embed_options(chart, renderer="json"):
             assert set(bundle.keys()) == {mimetype, "text/plain"}
             assert bundle[mimetype] == spec
             assert metadata == {mimetype: {"option": "foo"}}
+
+
+def test_jupyter_renderer_mimetype(chart, renderer="jupyter"):
+    """Test that we get the expected widget mimetype when the jupyter renderer is enabled"""
+    with alt.renderers.enable(renderer):
+        assert (
+            "application/vnd.jupyter.widget-view+json"
+            in chart._repr_mimebundle_(None, None)[0]
+        )
