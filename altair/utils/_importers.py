@@ -7,10 +7,14 @@ def import_vegafusion() -> ModuleType:
     min_version = "1.5.0"
     try:
         version = importlib_version("vegafusion")
-        if Version(version) < Version(min_version):
+        embed_version = importlib_version("vegafusion-python-embed")
+        if version != embed_version or Version(version) < Version(min_version):
             raise RuntimeError(
-                f"The vegafusion package must be version {min_version} or greater. "
-                f"Found version {version}"
+                "The versions of the vegafusion and vegafusion-python-embed packages must match\n"
+                f"and must be version {min_version} or greater.\n"
+                f"Found:\n"
+                f" - vegafusion=={version}\n"
+                f" - vegafusion-python-embed=={embed_version}\n"
             )
         import vegafusion as vf  # type: ignore
 

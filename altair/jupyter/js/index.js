@@ -35,10 +35,11 @@ export async function render({ model, el }) {
             model.save_changes();
             return;
         }
+        let embedOptions = structuredClone(model.get("embed_options")) ?? undefined;
 
         let api;
         try {
-            api = await vegaEmbed(el, spec);
+            api = await vegaEmbed(el, spec, embedOptions);
         } catch (error) {
             showError(error)
             return;
@@ -139,6 +140,7 @@ export async function render({ model, el }) {
     }
 
     model.on('change:spec', reembed);
+    model.on('change:embed_options', reembed);
     model.on('change:debounce_wait', reembed);
     model.on('change:max_wait', reembed);
     await reembed();

@@ -2,7 +2,7 @@ import json
 import anywidget
 import traitlets
 import pathlib
-from typing import Any, Set
+from typing import Any, Set, Optional
 
 import altair as alt
 from altair.utils._vegafusion_data import (
@@ -113,6 +113,7 @@ class JupyterChart(anywidget.AnyWidget):
     max_wait = traitlets.Bool(default_value=True).tag(sync=True)
     local_tz = traitlets.Unicode(default_value=None, allow_none=True).tag(sync=True)
     debug = traitlets.Bool(default_value=False)
+    embed_options = traitlets.Dict(default_value=None, allow_none=True).tag(sync=True)
 
     # Internal selection traitlets
     _selection_types = traitlets.Dict()
@@ -184,6 +185,7 @@ class JupyterChart(anywidget.AnyWidget):
         debounce_wait: int = 10,
         max_wait: bool = True,
         debug: bool = False,
+        embed_options: Optional[dict] = None,
         **kwargs: Any,
     ):
         """
@@ -203,6 +205,9 @@ class JupyterChart(anywidget.AnyWidget):
              sent until chart interactions have completed.
         debug: bool
              If True, debug messages will be printed
+        embed_options: dict
+             Options to pass to vega-embed.
+             See https://github.com/vega/vega-embed?tab=readme-ov-file#options
         """
         self.params = Params({})
         self.selections = Selections({})
@@ -211,6 +216,7 @@ class JupyterChart(anywidget.AnyWidget):
             debounce_wait=debounce_wait,
             max_wait=max_wait,
             debug=debug,
+            embed_options=embed_options,
             **kwargs,
         )
 
