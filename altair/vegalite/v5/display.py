@@ -90,6 +90,13 @@ def jupyter_renderer(spec: dict, **metadata):
     """Render chart using the JupyterChart Jupyter Widget"""
     from altair import Chart, JupyterChart
 
+    # Configure offline mode
+    offline = metadata.get("offline", False)
+
+    # mypy doesn't see the enable_offline class method for some reason
+    JupyterChart.enable_offline(offline=offline)  # type: ignore[attr-defined]
+
+    # propagate embed options
     embed_options = metadata.get("embed_options", None)
 
     # Need to ignore attr-defined mypy rule because mypy doesn't see _repr_mimebundle_

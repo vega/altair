@@ -1,6 +1,11 @@
 import vegaEmbed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.16.3";
 import lodashDebounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 
+// Note: For offline support, the import lines above are removed and the remaining script
+// is bundled using vl-convert's javascript_bundle function. See the documentation of
+// the javascript_bundle function for details on the available imports and their names.
+// If an additional import is required in the future, it will need to be added to vl-convert
+// in order to preserve offline support.
 export async function render({ model, el }) {
     let finalize;
 

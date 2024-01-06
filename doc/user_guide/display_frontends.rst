@@ -50,6 +50,11 @@ The most used built-in renderers are:
   object explicitly following the instructions in the :ref:`user-guide-jupyterchart`
   documentation.
 
+``alt.renderers.enable("jupyter", offline=True)``
+  *(added in version 5.3):* Same as the ``"jupyter"`` renderer above, but loads JavaScript
+  dependencies from the ``vl-convert-python`` package (rather than from an online CDN)
+  so that an internet connection is not required.
+
 In addition, Altair includes the following renderers:
 
 - ``"default"``, ``"colab"``, ``"kaggle"``, ``"zeppelin"``: identical to ``"html"``
