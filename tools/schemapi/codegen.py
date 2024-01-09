@@ -196,10 +196,6 @@ class SchemaGenerator:
         info = self.info
         doc = [
             "{} schema wrapper".format(self.classname),
-            "",
-            info.get_python_type_representation(
-                altair_classes_prefix=self.altair_classes_prefix
-            ),
         ]
         if info.description:
             doc += self._process_description(  # remove condition description
@@ -275,9 +271,10 @@ class SchemaGenerator:
             + ", ".join(
                 [
                     *additional_types,
-                    info.properties[p].get_python_type_representation(
+                    *info.properties[p].get_python_type_representation(
                         for_type_hints=True,
                         altair_classes_prefix=self.altair_classes_prefix,
+                        return_as_str=False,
                     ),
                     "UndefinedType",
                 ]
@@ -310,12 +307,13 @@ class SchemaGenerator:
         if prop_infos:
             contents.extend(
                 [
-                    f"{p}: Union["
+                    f"{p}: "
                     + info.get_python_type_representation(
                         for_type_hints=True,
                         altair_classes_prefix=self.altair_classes_prefix,
+                        additional_type_hints=["UndefinedType"],
                     )
-                    + ", UndefinedType] = Undefined"
+                    + " = Undefined"
                     for p, info in prop_infos.items()
                 ]
             )

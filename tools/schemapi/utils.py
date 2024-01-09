@@ -183,14 +183,17 @@ class SchemaInfo:
         self,
         for_type_hints: bool = False,
         altair_classes_prefix: Optional[str] = None,
-    ) -> str:
+        return_as_str: bool = True,
+        additional_type_hints: Optional[List[str]] = None,
+    ) -> Union[str, List[str]]:
         # This is a list of all types which can be used for the current SchemaInfo.
         # This includes Altair classes, standard Python types, etc.
         type_representations: List[str] = []
         if self.title:
-            # Add the name of the current Altair class
             if for_type_hints:
-                class_names = [self.title]
+                # To keep type hints simple, we only use the SchemaBase class
+                # as the type hint for all classes which inherit from it.
+                class_names = ["SchemaBase"]
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
                     # We use the _Parameter to indicate this although this
@@ -232,6 +235,7 @@ class SchemaInfo:
                     s.get_python_type_representation(
                         for_type_hints=for_type_hints,
                         altair_classes_prefix=altair_classes_prefix,
+                        return_as_str=False,
                     )
                     for s in self.anyOf
                 ]
@@ -250,13 +254,7 @@ class SchemaInfo:
                 )
             type_representations.extend(options)
         elif self.is_object():
-            if for_type_hints:
-                type_representations.append("dict")
-            else:
-                type_r = "Dict"
-                if self.required:
-                    type_r += "[required=[{}]]".format(", ".join(self.required))
-                type_representations.append(type_r)
+            type_representations.append("dict")
         elif self.is_array():
             # A list is invariant in its type parameter. This means that e.g.
             # List[str] is not a subtype of List[Union[core.FieldName, str]]
@@ -287,13 +285,34 @@ class SchemaInfo:
         else:
             raise ValueError("No Python type representation available for this schema")
 
-        type_representations = sorted(set(flatten(type_representations)))
-        type_representations_str = ", ".join(type_representations)
-        # If it's not for_type_hints but instead for the docstrings, we don't want
-        # to include Union as it just clutters the docstrings.
-        if len(type_representations) > 1 and for_type_hints:
-            type_representations_str = f"Union[{type_representations_str}]"
-        return type_representations_str
+        # Shorter types are usually the more relevant ones, e.g. `str` instead
+        # of `SchemaBase`. Output order from set is non-deterministic -> If
+        # types have same length names, order would be non-deterministic as it is
+        # returned from sort. Hence, we sort as well by type name as a tie-breaker,
+        # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
+        # for more infos.
+        type_representations = sorted(
+            # Using lower as we don't want to prefer uppercase such as "None" over
+            # "str"
+            set(flatten(type_representations)),
+            key=lambda x: x.lower(),
+        )  # Secondary sort
+        type_representations = sorted(
+            type_representations,
+            key=len,
+        )  # Primary sort
+        if additional_type_hints:
+            type_representations.extend(additional_type_hints)
+
+        if return_as_str:
+            type_representations_str = ", ".join(type_representations)
+            # If it's not for_type_hints but instead for the docstrings, we don't want
+            # to include Union as it just clutters the docstrings.
+            if len(type_representations) > 1 and for_type_hints:
+                type_representations_str = f"Union[{type_representations_str}]"
+            return type_representations_str
+        else:
+            return type_representations
 
     @property
     def properties(self) -> SchemaProperties:

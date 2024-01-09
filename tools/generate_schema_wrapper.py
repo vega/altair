@@ -658,11 +658,13 @@ def generate_vegalite_mark_mixin(
         arg_info.kwds -= {"type"}
 
         def_args = ["self"] + [
-            f"{p}: Union["
+            f"{p}: "
             + info.properties[p].get_python_type_representation(
-                for_type_hints=True, altair_classes_prefix="core"
+                for_type_hints=True,
+                altair_classes_prefix="core",
+                additional_type_hints=["UndefinedType"],
             )
-            + ", UndefinedType] = Undefined"
+            + " = Undefined"
             for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
         dict_args = [
