@@ -161,7 +161,7 @@ This allows you to e.g. select data points and update another part of the dashbo
 Package                                                                                                                              Displays interactive Altair charts   Supports reading out parameters
 ===================================================================================================================================  ===================================  =============================
 `Panel <https://panel.holoviz.org/reference/panes/Vega.html#altair>`_                                                                ✔                                    ✔
-`Plotly Dash <https://dash.plotly.com/>`_ using `dash_vega_components <https://github.com/altair-viz/dash-vega-components>`_         ✔                                    ✔
+`Plotly Dash <https://dash.plotly.com/dash-vega-components?utm_medium=altair>`_                                                      ✔                                    ✔
 `Jupyter Voila <https://voila.readthedocs.io/en/stable/>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`                       ✔                                    ✔
 `Shiny <https://shiny.posit.co/py/docs/ipywidgets.html#quick-start>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`            ✔                                    ✔
 `Solara <https://solara.dev/api/altair>`_                                                                                            ✔                                    ✔
