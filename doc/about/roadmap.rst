@@ -36,9 +36,9 @@ Areas of focus:
 
 * Standardize the API of methods that convert charts into other formats (``alt.Chart().to_<format>``).
 
-* Add type hints to the public API and most of the internals so that users can type check their Altair
+* **Released in 5.2:** *Add type hints to the public API and most of the internals so that users can type check their Altair
   code with a static type  checker such as mypy. This will also make it easier for other packages to
-  integrate with Altair.
+  integrate with Altair.*
 
 Documentation
 -------------
@@ -106,8 +106,8 @@ Areas of focus:
 Map Tile Support
 ----------------
 We want Vega-Altair to provide first-class support for displaying map tiles from
-xyz tile providers like OpenStreetMap. Early development is in progress in the
-`altair_tiles <https://github.com/altair-viz/altair_tiles>`_ repository.
+xyz tile providers like OpenStreetMap. We've released a first version of
+`altair_tiles <https://github.com/altair-viz/altair_tiles>`_ to accomplish this. Feedback is very welcome!
 
 Scale/Performance Improvements
 ------------------------------
@@ -150,9 +150,9 @@ workflows.
 
 Areas of focus:
 
-* Support configurable pixel density in PNG image export *(VC)*.
+* **Released in 5.1:** *Support configurable pixel density in PNG image export* *(VC)*.
 
-* Support exporting charts to vector PDF files with embedded text *(VC)*.
+* **Released in 5.2:** *Support exporting charts to vector PDF files with embedded text* *(VC)*.
 
 .. toctree::
    :maxdepth: 1
