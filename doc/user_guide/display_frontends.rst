@@ -163,6 +163,7 @@ Package                                                                         
 `Panel <https://panel.holoviz.org/reference/panes/Vega.html#altair>`_                                                                ✔                                    ✔
 `Plotly Dash <https://dash.plotly.com/dash-vega-components?utm_medium=altair>`_                                                      ✔                                    ✔
 `Jupyter Voila <https://voila.readthedocs.io/en/stable/>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`                       ✔                                    ✔
+`Marimo <https://docs.marimo.io/guides/plotting.html>`_                                                                              ✔                                    ✔
 `Shiny <https://shiny.posit.co/py/docs/ipywidgets.html#quick-start>`_ using :ref:`JupyterChart <user-guide-jupyterchart>`            ✔                                    ✔
 `Solara <https://solara.dev/api/altair>`_                                                                                            ✔                                    ✔
 `Streamlit <https://docs.streamlit.io/library/api-reference/charts/st.altair_chart>`_                                                ✔                                              
