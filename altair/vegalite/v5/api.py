@@ -1003,7 +1003,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def to_json(
         self,
         validate: bool = True,
-        indent: int = 2,
+        indent: Optional[Union[int, str]] = 2,
         sort_keys: bool = True,
         *,
         format: str = "vega-lite",
