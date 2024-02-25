@@ -3,12 +3,9 @@ Multi-Line Tooltip
 ==================
 This example shows how you can use selections and layers to create a
 tooltip-like behavior tied to the x position of the cursor.
-If you are looking for more standard tooltips, it is recommended to use the
-tooltip encoding channel as shown in the
-`Scatter Plot With Tooltips <https://altair-viz.github.io/gallery/scatter_tooltips.html>`_
-example.
+If you are looking for more standard tooltips, see the :ref:`gallery_multiline_tooltip_standard` example.
 
-The following example employs a little trick to isolate the x-position of the
+In this example, we'll employ a little trick to isolate the x-position of the
 cursor: we add some transparent points with only an x encoding (no y encoding)
 and tie a *nearest* selection to these, tied to the "x" field.
 """
