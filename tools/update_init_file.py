@@ -2,6 +2,7 @@
 This script updates the attribute __all__ in altair/__init__.py
 based on the updated Altair schema.
 """
+
 import inspect
 import sys
 from os.path import abspath, dirname, join

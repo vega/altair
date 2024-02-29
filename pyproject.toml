@@ -59,7 +59,7 @@ Source = "https://github.com/altair-viz/altair"
 [project.optional-dependencies]
 dev = [
     "hatch",
-    "ruff>=0.1.3",
+    "ruff>=0.3.0",
     "ipython",
     "pytest",
     "pytest-cov",
@@ -195,7 +195,7 @@ indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "lf"
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 18
 
 [tool.pytest.ini_options]

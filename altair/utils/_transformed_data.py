@@ -56,8 +56,7 @@ def transformed_data(
     chart: Union[Chart, FacetChart],
     row_limit: Optional[int] = None,
     exclude: Optional[Iterable[str]] = None,
-) -> Optional[DataFrameLike]:
-    ...
+) -> Optional[DataFrameLike]: ...
 
 
 @overload
@@ -65,8 +64,7 @@ def transformed_data(
     chart: Union[LayerChart, HConcatChart, VConcatChart, ConcatChart],
     row_limit: Optional[int] = None,
     exclude: Optional[Iterable[str]] = None,
-) -> List[DataFrameLike]:
-    ...
+) -> List[DataFrameLike]: ...
 
 
 def transformed_data(chart, row_limit=None, exclude=None):

@@ -1,4 +1,5 @@
 """Generate a schema wrapper from a schema"""
+
 import argparse
 import copy
 import json
