@@ -1,4 +1,5 @@
 """Code generation utilities"""
+
 import re
 import textwrap
 from typing import Set, Final, Optional, List, Union, Dict, Tuple

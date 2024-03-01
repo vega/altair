@@ -1,6 +1,7 @@
 """
 Magic functions for rendering vega-lite specifications
 """
+
 __all__ = ["vegalite"]
 
 import json

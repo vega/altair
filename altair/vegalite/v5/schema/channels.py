@@ -384,28 +384,23 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "variancep",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Angle":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Angle": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Angle":
-        ...
+    def bin(self, _: bool, **kwds) -> "Angle": ...
 
     @overload
     def bin(
@@ -423,12 +418,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Angle":
-        ...
+    def bin(self, _: None, **kwds) -> "Angle": ...
 
     @overload
     def condition(
@@ -438,8 +431,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def condition(
@@ -450,18 +442,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Angle":
-        ...
+    def field(self, _: str, **kwds) -> "Angle": ...
 
     @overload
     def field(
@@ -470,8 +459,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def legend(
@@ -1849,12 +1837,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Angle":
-        ...
+    def legend(self, _: None, **kwds) -> "Angle": ...
 
     @overload
     def scale(
@@ -2343,32 +2329,25 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Angle":
-        ...
+    def scale(self, _: None, **kwds) -> "Angle": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Angle":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Angle": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Angle":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Angle": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Angle":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Angle": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Angle":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Angle": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Angle":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Angle": ...
 
     @overload
     def sort(
@@ -2388,8 +2367,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "text",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def sort(
@@ -2409,8 +2387,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "-text",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def sort(
@@ -2447,8 +2424,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def sort(
@@ -2475,12 +2451,10 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Angle":
-        ...
+    def sort(self, _: None, **kwds) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2499,8 +2473,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "milliseconds",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2519,8 +2492,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2557,8 +2529,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2595,8 +2566,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2618,8 +2588,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2641,8 +2610,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
     def timeUnit(
@@ -2744,26 +2712,21 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Angle":
-        ...
+    def title(self, _: str, **kwds) -> "Angle": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Angle":
-        ...
+    def title(self, _: List[str], **kwds) -> "Angle": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Angle":
-        ...
+    def title(self, _: None, **kwds) -> "Angle": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Angle":
-        ...
+    ) -> "Angle": ...
 
     def __init__(
         self,
@@ -3112,8 +3075,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     _encoding_name = "angle"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "AngleDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "AngleDatum": ...
 
     @overload
     def condition(
@@ -3123,8 +3085,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "AngleDatum":
-        ...
+    ) -> "AngleDatum": ...
 
     @overload
     def condition(
@@ -3135,34 +3096,28 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "AngleDatum":
-        ...
+    ) -> "AngleDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "AngleDatum":
-        ...
+    ) -> "AngleDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "AngleDatum":
-        ...
+    def title(self, _: str, **kwds) -> "AngleDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "AngleDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "AngleDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "AngleDatum":
-        ...
+    def title(self, _: None, **kwds) -> "AngleDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "AngleDatum":
-        ...
+    ) -> "AngleDatum": ...
 
     def __init__(
         self,
@@ -3421,8 +3376,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     @overload
     def condition(
@@ -3450,8 +3404,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     @overload
     def condition(
@@ -3664,8 +3617,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     @overload
     def condition(
@@ -3694,8 +3646,7 @@ class AngleValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     @overload
     def condition(
@@ -3705,8 +3656,7 @@ class AngleValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     @overload
     def condition(
@@ -3717,14 +3667,12 @@ class AngleValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "AngleValue":
-        ...
+    ) -> "AngleValue": ...
 
     def __init__(
         self,
@@ -3995,28 +3943,23 @@ class Color(
             "variancep",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Color":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Color": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Color":
-        ...
+    def bin(self, _: bool, **kwds) -> "Color": ...
 
     @overload
     def bin(
@@ -4034,12 +3977,10 @@ class Color(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Color":
-        ...
+    def bin(self, _: None, **kwds) -> "Color": ...
 
     @overload
     def condition(
@@ -4049,8 +3990,7 @@ class Color(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def condition(
@@ -4061,18 +4001,15 @@ class Color(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Color":
-        ...
+    def field(self, _: str, **kwds) -> "Color": ...
 
     @overload
     def field(
@@ -4081,8 +4018,7 @@ class Color(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def legend(
@@ -5460,12 +5396,10 @@ class Color(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Color":
-        ...
+    def legend(self, _: None, **kwds) -> "Color": ...
 
     @overload
     def scale(
@@ -5954,32 +5888,25 @@ class Color(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Color":
-        ...
+    def scale(self, _: None, **kwds) -> "Color": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Color":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Color": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Color":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Color": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Color":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Color": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Color":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Color": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Color":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Color": ...
 
     @overload
     def sort(
@@ -5999,8 +5926,7 @@ class Color(
             "text",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def sort(
@@ -6020,8 +5946,7 @@ class Color(
             "-text",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def sort(
@@ -6058,8 +5983,7 @@ class Color(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def sort(
@@ -6086,12 +6010,10 @@ class Color(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Color":
-        ...
+    def sort(self, _: None, **kwds) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6110,8 +6032,7 @@ class Color(
             "milliseconds",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6130,8 +6051,7 @@ class Color(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6168,8 +6088,7 @@ class Color(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6206,8 +6125,7 @@ class Color(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6229,8 +6147,7 @@ class Color(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6252,8 +6169,7 @@ class Color(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
     def timeUnit(
@@ -6355,26 +6271,21 @@ class Color(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Color":
-        ...
+    def title(self, _: str, **kwds) -> "Color": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Color":
-        ...
+    def title(self, _: List[str], **kwds) -> "Color": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Color":
-        ...
+    def title(self, _: None, **kwds) -> "Color": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Color":
-        ...
+    ) -> "Color": ...
 
     def __init__(
         self,
@@ -6725,8 +6636,7 @@ class ColorDatum(
     _encoding_name = "color"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "ColorDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "ColorDatum": ...
 
     @overload
     def condition(
@@ -6736,8 +6646,7 @@ class ColorDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ColorDatum":
-        ...
+    ) -> "ColorDatum": ...
 
     @overload
     def condition(
@@ -6748,34 +6657,28 @@ class ColorDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ColorDatum":
-        ...
+    ) -> "ColorDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "ColorDatum":
-        ...
+    ) -> "ColorDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "ColorDatum":
-        ...
+    def title(self, _: str, **kwds) -> "ColorDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "ColorDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "ColorDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "ColorDatum":
-        ...
+    def title(self, _: None, **kwds) -> "ColorDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "ColorDatum":
-        ...
+    ) -> "ColorDatum": ...
 
     def __init__(
         self,
@@ -7035,8 +6938,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     @overload
     def condition(
@@ -7064,8 +6966,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     @overload
     def condition(
@@ -7278,8 +7179,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     @overload
     def condition(
@@ -7308,8 +7208,7 @@ class ColorValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     @overload
     def condition(
@@ -7319,8 +7218,7 @@ class ColorValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     @overload
     def condition(
@@ -7331,14 +7229,12 @@ class ColorValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "ColorValue":
-        ...
+    ) -> "ColorValue": ...
 
     def __init__(
         self,
@@ -7592,32 +7488,26 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
-    def align(self, _: Literal["all", "each", "none"], **kwds) -> "Column":
-        ...
+    def align(self, _: Literal["all", "each", "none"], **kwds) -> "Column": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Column":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Column": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Column":
-        ...
+    def bin(self, _: bool, **kwds) -> "Column": ...
 
     @overload
     def bin(
@@ -7635,20 +7525,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Column":
-        ...
+    def bin(self, _: None, **kwds) -> "Column": ...
 
     @overload
-    def center(self, _: bool, **kwds) -> "Column":
-        ...
+    def center(self, _: bool, **kwds) -> "Column": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Column":
-        ...
+    def field(self, _: str, **kwds) -> "Column": ...
 
     @overload
     def field(
@@ -7657,8 +7543,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def header(
@@ -8110,32 +7995,25 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
-    def header(self, _: None, **kwds) -> "Column":
-        ...
+    def header(self, _: None, **kwds) -> "Column": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Column":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Column": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Column":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Column": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Column":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Column": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Column":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Column": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Column":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Column": ...
 
     @overload
     def sort(
@@ -8172,16 +8050,13 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Column":
-        ...
+    def sort(self, _: None, **kwds) -> "Column": ...
 
     @overload
-    def spacing(self, _: float, **kwds) -> "Column":
-        ...
+    def spacing(self, _: float, **kwds) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8200,8 +8075,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8220,8 +8094,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8258,8 +8131,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8296,8 +8168,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8319,8 +8190,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8342,8 +8212,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
     def timeUnit(
@@ -8445,26 +8314,21 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Column":
-        ...
+    def title(self, _: str, **kwds) -> "Column": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Column":
-        ...
+    def title(self, _: List[str], **kwds) -> "Column": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Column":
-        ...
+    def title(self, _: None, **kwds) -> "Column": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Column":
-        ...
+    ) -> "Column": ...
 
     def __init__(
         self,
@@ -8900,28 +8764,23 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variancep",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Description":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Description": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Description":
-        ...
+    def bin(self, _: bool, **kwds) -> "Description": ...
 
     @overload
     def bin(
@@ -8939,16 +8798,13 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Description":
-        ...
+    def bin(self, _: str, **kwds) -> "Description": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Description":
-        ...
+    def bin(self, _: None, **kwds) -> "Description": ...
 
     @overload
     def condition(
@@ -8958,8 +8814,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def condition(
@@ -8970,18 +8825,15 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Description":
-        ...
+    def field(self, _: str, **kwds) -> "Description": ...
 
     @overload
     def field(
@@ -8990,20 +8842,16 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
-    def format(self, _: str, **kwds) -> "Description":
-        ...
+    def format(self, _: str, **kwds) -> "Description": ...
 
     @overload
-    def format(self, _: dict, **kwds) -> "Description":
-        ...
+    def format(self, _: dict, **kwds) -> "Description": ...
 
     @overload
-    def formatType(self, _: str, **kwds) -> "Description":
-        ...
+    def formatType(self, _: str, **kwds) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9022,8 +8870,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9042,8 +8889,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9080,8 +8926,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9118,8 +8963,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9141,8 +8985,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9164,8 +9007,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
     def timeUnit(
@@ -9267,26 +9109,21 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Description":
-        ...
+    def title(self, _: str, **kwds) -> "Description": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Description":
-        ...
+    def title(self, _: List[str], **kwds) -> "Description": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Description":
-        ...
+    def title(self, _: None, **kwds) -> "Description": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Description":
-        ...
+    ) -> "Description": ...
 
     def __init__(
         self,
@@ -9708,8 +9545,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     @overload
     def condition(
@@ -9737,8 +9573,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     @overload
     def condition(
@@ -9951,8 +9786,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     @overload
     def condition(
@@ -9981,8 +9815,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     @overload
     def condition(
@@ -9992,8 +9825,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     @overload
     def condition(
@@ -10004,14 +9836,12 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "DescriptionValue":
-        ...
+    ) -> "DescriptionValue": ...
 
     def __init__(
         self,
@@ -10212,28 +10042,23 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "variancep",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Detail":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Detail": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Detail":
-        ...
+    def bin(self, _: bool, **kwds) -> "Detail": ...
 
     @overload
     def bin(
@@ -10251,20 +10076,16 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Detail":
-        ...
+    def bin(self, _: str, **kwds) -> "Detail": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Detail":
-        ...
+    def bin(self, _: None, **kwds) -> "Detail": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Detail":
-        ...
+    def field(self, _: str, **kwds) -> "Detail": ...
 
     @overload
     def field(
@@ -10273,8 +10094,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10293,8 +10113,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10313,8 +10132,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10351,8 +10169,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10389,8 +10206,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10412,8 +10228,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10435,8 +10250,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
     def timeUnit(
@@ -10538,26 +10352,21 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Detail":
-        ...
+    def title(self, _: str, **kwds) -> "Detail": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Detail":
-        ...
+    def title(self, _: List[str], **kwds) -> "Detail": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Detail":
-        ...
+    def title(self, _: None, **kwds) -> "Detail": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Detail":
-        ...
+    ) -> "Detail": ...
 
     def __init__(
         self,
@@ -11022,24 +10831,20 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def align(self, _: Literal["all", "each", "none"], **kwds) -> "Facet":
-        ...
+    def align(self, _: Literal["all", "each", "none"], **kwds) -> "Facet": ...
 
     @overload
     def align(
@@ -11051,16 +10856,13 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             core.SchemaBase, Literal["all", "each", "none"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Facet":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Facet": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Facet":
-        ...
+    def bin(self, _: bool, **kwds) -> "Facet": ...
 
     @overload
     def bin(
@@ -11078,20 +10880,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Facet":
-        ...
+    def bin(self, _: None, **kwds) -> "Facet": ...
 
     @overload
-    def bounds(self, _: Literal["full", "flush"], **kwds) -> "Facet":
-        ...
+    def bounds(self, _: Literal["full", "flush"], **kwds) -> "Facet": ...
 
     @overload
-    def center(self, _: bool, **kwds) -> "Facet":
-        ...
+    def center(self, _: bool, **kwds) -> "Facet": ...
 
     @overload
     def center(
@@ -11099,16 +10897,13 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         column: Union[bool, UndefinedType] = Undefined,
         row: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def columns(self, _: float, **kwds) -> "Facet":
-        ...
+    def columns(self, _: float, **kwds) -> "Facet": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Facet":
-        ...
+    def field(self, _: str, **kwds) -> "Facet": ...
 
     @overload
     def field(
@@ -11117,8 +10912,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def header(
@@ -11570,32 +11364,25 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def header(self, _: None, **kwds) -> "Facet":
-        ...
+    def header(self, _: None, **kwds) -> "Facet": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Facet":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Facet": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Facet":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Facet": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Facet":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Facet": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Facet":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Facet": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Facet":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Facet": ...
 
     @overload
     def sort(
@@ -11632,16 +11419,13 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Facet":
-        ...
+    def sort(self, _: None, **kwds) -> "Facet": ...
 
     @overload
-    def spacing(self, _: float, **kwds) -> "Facet":
-        ...
+    def spacing(self, _: float, **kwds) -> "Facet": ...
 
     @overload
     def spacing(
@@ -11649,8 +11433,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         column: Union[float, UndefinedType] = Undefined,
         row: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11669,8 +11452,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11689,8 +11471,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11727,8 +11508,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11765,8 +11545,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11788,8 +11567,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11811,8 +11589,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
     def timeUnit(
@@ -11914,26 +11691,21 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Facet":
-        ...
+    def title(self, _: str, **kwds) -> "Facet": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Facet":
-        ...
+    def title(self, _: List[str], **kwds) -> "Facet": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Facet":
-        ...
+    def title(self, _: None, **kwds) -> "Facet": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Facet":
-        ...
+    ) -> "Facet": ...
 
     def __init__(
         self,
@@ -12403,28 +12175,23 @@ class Fill(
             "variancep",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Fill":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Fill": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Fill":
-        ...
+    def bin(self, _: bool, **kwds) -> "Fill": ...
 
     @overload
     def bin(
@@ -12442,12 +12209,10 @@ class Fill(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Fill":
-        ...
+    def bin(self, _: None, **kwds) -> "Fill": ...
 
     @overload
     def condition(
@@ -12457,8 +12222,7 @@ class Fill(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def condition(
@@ -12469,18 +12233,15 @@ class Fill(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Fill":
-        ...
+    def field(self, _: str, **kwds) -> "Fill": ...
 
     @overload
     def field(
@@ -12489,8 +12250,7 @@ class Fill(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def legend(
@@ -13868,12 +13628,10 @@ class Fill(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Fill":
-        ...
+    def legend(self, _: None, **kwds) -> "Fill": ...
 
     @overload
     def scale(
@@ -14362,32 +14120,25 @@ class Fill(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Fill":
-        ...
+    def scale(self, _: None, **kwds) -> "Fill": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Fill":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Fill": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Fill":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Fill": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Fill":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Fill": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Fill":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Fill": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Fill":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Fill": ...
 
     @overload
     def sort(
@@ -14407,8 +14158,7 @@ class Fill(
             "text",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def sort(
@@ -14428,8 +14178,7 @@ class Fill(
             "-text",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def sort(
@@ -14466,8 +14215,7 @@ class Fill(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def sort(
@@ -14494,12 +14242,10 @@ class Fill(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Fill":
-        ...
+    def sort(self, _: None, **kwds) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14518,8 +14264,7 @@ class Fill(
             "milliseconds",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14538,8 +14283,7 @@ class Fill(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14576,8 +14320,7 @@ class Fill(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14614,8 +14357,7 @@ class Fill(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14637,8 +14379,7 @@ class Fill(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14660,8 +14401,7 @@ class Fill(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
     def timeUnit(
@@ -14763,26 +14503,21 @@ class Fill(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Fill":
-        ...
+    def title(self, _: str, **kwds) -> "Fill": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Fill":
-        ...
+    def title(self, _: List[str], **kwds) -> "Fill": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Fill":
-        ...
+    def title(self, _: None, **kwds) -> "Fill": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Fill":
-        ...
+    ) -> "Fill": ...
 
     def __init__(
         self,
@@ -15133,8 +14868,7 @@ class FillDatum(
     _encoding_name = "fill"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "FillDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "FillDatum": ...
 
     @overload
     def condition(
@@ -15144,8 +14878,7 @@ class FillDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillDatum":
-        ...
+    ) -> "FillDatum": ...
 
     @overload
     def condition(
@@ -15156,34 +14889,28 @@ class FillDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillDatum":
-        ...
+    ) -> "FillDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "FillDatum":
-        ...
+    ) -> "FillDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "FillDatum":
-        ...
+    def title(self, _: str, **kwds) -> "FillDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "FillDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "FillDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "FillDatum":
-        ...
+    def title(self, _: None, **kwds) -> "FillDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "FillDatum":
-        ...
+    ) -> "FillDatum": ...
 
     def __init__(
         self,
@@ -15443,8 +15170,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     @overload
     def condition(
@@ -15472,8 +15198,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     @overload
     def condition(
@@ -15686,8 +15411,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     @overload
     def condition(
@@ -15716,8 +15440,7 @@ class FillValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     @overload
     def condition(
@@ -15727,8 +15450,7 @@ class FillValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     @overload
     def condition(
@@ -15739,14 +15461,12 @@ class FillValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "FillValue":
-        ...
+    ) -> "FillValue": ...
 
     def __init__(
         self,
@@ -16016,28 +15736,23 @@ class FillOpacity(
             "variancep",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "FillOpacity":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "FillOpacity": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "FillOpacity":
-        ...
+    def bin(self, _: bool, **kwds) -> "FillOpacity": ...
 
     @overload
     def bin(
@@ -16055,12 +15770,10 @@ class FillOpacity(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "FillOpacity":
-        ...
+    def bin(self, _: None, **kwds) -> "FillOpacity": ...
 
     @overload
     def condition(
@@ -16070,8 +15783,7 @@ class FillOpacity(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def condition(
@@ -16082,18 +15794,15 @@ class FillOpacity(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "FillOpacity":
-        ...
+    def field(self, _: str, **kwds) -> "FillOpacity": ...
 
     @overload
     def field(
@@ -16102,8 +15811,7 @@ class FillOpacity(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def legend(
@@ -17481,12 +17189,10 @@ class FillOpacity(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "FillOpacity":
-        ...
+    def legend(self, _: None, **kwds) -> "FillOpacity": ...
 
     @overload
     def scale(
@@ -17975,32 +17681,25 @@ class FillOpacity(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "FillOpacity":
-        ...
+    def scale(self, _: None, **kwds) -> "FillOpacity": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "FillOpacity":
-        ...
+    def sort(self, _: List[float], **kwds) -> "FillOpacity": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "FillOpacity":
-        ...
+    def sort(self, _: List[str], **kwds) -> "FillOpacity": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "FillOpacity":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "FillOpacity": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "FillOpacity":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "FillOpacity": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "FillOpacity":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "FillOpacity": ...
 
     @overload
     def sort(
@@ -18020,8 +17719,7 @@ class FillOpacity(
             "text",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def sort(
@@ -18041,8 +17739,7 @@ class FillOpacity(
             "-text",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def sort(
@@ -18079,8 +17776,7 @@ class FillOpacity(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def sort(
@@ -18107,12 +17803,10 @@ class FillOpacity(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "FillOpacity":
-        ...
+    def sort(self, _: None, **kwds) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18131,8 +17825,7 @@ class FillOpacity(
             "milliseconds",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18151,8 +17844,7 @@ class FillOpacity(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18189,8 +17881,7 @@ class FillOpacity(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18227,8 +17918,7 @@ class FillOpacity(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18250,8 +17940,7 @@ class FillOpacity(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18273,8 +17962,7 @@ class FillOpacity(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
     def timeUnit(
@@ -18376,26 +18064,21 @@ class FillOpacity(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "FillOpacity":
-        ...
+    def title(self, _: str, **kwds) -> "FillOpacity": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "FillOpacity":
-        ...
+    def title(self, _: List[str], **kwds) -> "FillOpacity": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "FillOpacity":
-        ...
+    def title(self, _: None, **kwds) -> "FillOpacity": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "FillOpacity":
-        ...
+    ) -> "FillOpacity": ...
 
     def __init__(
         self,
@@ -18746,8 +18429,7 @@ class FillOpacityDatum(
     _encoding_name = "fillOpacity"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "FillOpacityDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "FillOpacityDatum": ...
 
     @overload
     def condition(
@@ -18757,8 +18439,7 @@ class FillOpacityDatum(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityDatum":
-        ...
+    ) -> "FillOpacityDatum": ...
 
     @overload
     def condition(
@@ -18769,34 +18450,28 @@ class FillOpacityDatum(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityDatum":
-        ...
+    ) -> "FillOpacityDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "FillOpacityDatum":
-        ...
+    ) -> "FillOpacityDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "FillOpacityDatum":
-        ...
+    def title(self, _: str, **kwds) -> "FillOpacityDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "FillOpacityDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "FillOpacityDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "FillOpacityDatum":
-        ...
+    def title(self, _: None, **kwds) -> "FillOpacityDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "FillOpacityDatum":
-        ...
+    ) -> "FillOpacityDatum": ...
 
     def __init__(
         self,
@@ -19055,8 +18730,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     @overload
     def condition(
@@ -19084,8 +18758,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     @overload
     def condition(
@@ -19298,8 +18971,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     @overload
     def condition(
@@ -19328,8 +19000,7 @@ class FillOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     @overload
     def condition(
@@ -19339,8 +19010,7 @@ class FillOpacityValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     @overload
     def condition(
@@ -19351,14 +19021,12 @@ class FillOpacityValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "FillOpacityValue":
-        ...
+    ) -> "FillOpacityValue": ...
 
     def __init__(
         self,
@@ -19599,28 +19267,23 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variancep",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Href":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Href": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Href":
-        ...
+    def bin(self, _: bool, **kwds) -> "Href": ...
 
     @overload
     def bin(
@@ -19638,16 +19301,13 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Href":
-        ...
+    def bin(self, _: str, **kwds) -> "Href": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Href":
-        ...
+    def bin(self, _: None, **kwds) -> "Href": ...
 
     @overload
     def condition(
@@ -19657,8 +19317,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def condition(
@@ -19669,18 +19328,15 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Href":
-        ...
+    def field(self, _: str, **kwds) -> "Href": ...
 
     @overload
     def field(
@@ -19689,20 +19345,16 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
-    def format(self, _: str, **kwds) -> "Href":
-        ...
+    def format(self, _: str, **kwds) -> "Href": ...
 
     @overload
-    def format(self, _: dict, **kwds) -> "Href":
-        ...
+    def format(self, _: dict, **kwds) -> "Href": ...
 
     @overload
-    def formatType(self, _: str, **kwds) -> "Href":
-        ...
+    def formatType(self, _: str, **kwds) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19721,8 +19373,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19741,8 +19392,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19779,8 +19429,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19817,8 +19466,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19840,8 +19488,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19863,8 +19510,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
     def timeUnit(
@@ -19966,26 +19612,21 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Href":
-        ...
+    def title(self, _: str, **kwds) -> "Href": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Href":
-        ...
+    def title(self, _: List[str], **kwds) -> "Href": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Href":
-        ...
+    def title(self, _: None, **kwds) -> "Href": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Href":
-        ...
+    ) -> "Href": ...
 
     def __init__(
         self,
@@ -20407,8 +20048,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     @overload
     def condition(
@@ -20436,8 +20076,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     @overload
     def condition(
@@ -20650,8 +20289,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     @overload
     def condition(
@@ -20680,8 +20318,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     @overload
     def condition(
@@ -20691,8 +20328,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     @overload
     def condition(
@@ -20703,14 +20339,12 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "HrefValue":
-        ...
+    ) -> "HrefValue": ...
 
     def __init__(
         self,
@@ -20911,28 +20545,23 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "variancep",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Key":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Key": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Key":
-        ...
+    def bin(self, _: bool, **kwds) -> "Key": ...
 
     @overload
     def bin(
@@ -20950,20 +20579,16 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Key":
-        ...
+    def bin(self, _: str, **kwds) -> "Key": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Key":
-        ...
+    def bin(self, _: None, **kwds) -> "Key": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Key":
-        ...
+    def field(self, _: str, **kwds) -> "Key": ...
 
     @overload
     def field(
@@ -20972,8 +20597,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -20992,8 +20616,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -21012,8 +20635,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -21050,8 +20672,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -21088,8 +20709,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -21111,8 +20731,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -21134,8 +20753,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
     def timeUnit(
@@ -21237,26 +20855,21 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Key":
-        ...
+    def title(self, _: str, **kwds) -> "Key": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Key":
-        ...
+    def title(self, _: List[str], **kwds) -> "Key": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Key":
-        ...
+    def title(self, _: None, **kwds) -> "Key": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Key":
-        ...
+    ) -> "Key": ...
 
     def __init__(
         self,
@@ -21629,32 +21242,26 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Latitude":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Latitude": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Latitude":
-        ...
+    def bin(self, _: None, **kwds) -> "Latitude": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Latitude":
-        ...
+    def field(self, _: str, **kwds) -> "Latitude": ...
 
     @overload
     def field(
@@ -21663,8 +21270,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21683,8 +21289,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21703,8 +21308,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21741,8 +21345,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21779,8 +21382,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21802,8 +21404,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21825,8 +21426,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
     def timeUnit(
@@ -21928,24 +21528,19 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Latitude":
-        ...
+    ) -> "Latitude": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Latitude":
-        ...
+    def title(self, _: str, **kwds) -> "Latitude": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Latitude":
-        ...
+    def title(self, _: List[str], **kwds) -> "Latitude": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Latitude":
-        ...
+    def title(self, _: None, **kwds) -> "Latitude": ...
 
     @overload
-    def type(self, _: str, **kwds) -> "Latitude":
-        ...
+    def type(self, _: str, **kwds) -> "Latitude": ...
 
     def __init__(
         self,
@@ -22235,28 +21830,23 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "latitude"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "LatitudeDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "LatitudeDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "LatitudeDatum":
-        ...
+    def title(self, _: str, **kwds) -> "LatitudeDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "LatitudeDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "LatitudeDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "LatitudeDatum":
-        ...
+    def title(self, _: None, **kwds) -> "LatitudeDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "LatitudeDatum":
-        ...
+    ) -> "LatitudeDatum": ...
 
     def __init__(
         self,
@@ -22397,32 +21987,26 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Latitude2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Latitude2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Latitude2":
-        ...
+    def bin(self, _: None, **kwds) -> "Latitude2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Latitude2":
-        ...
+    def field(self, _: str, **kwds) -> "Latitude2": ...
 
     @overload
     def field(
@@ -22431,8 +22015,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22451,8 +22034,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22471,8 +22053,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22509,8 +22090,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22547,8 +22127,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22570,8 +22149,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22593,8 +22171,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
     def timeUnit(
@@ -22696,20 +22273,16 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Latitude2":
-        ...
+    ) -> "Latitude2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Latitude2":
-        ...
+    def title(self, _: str, **kwds) -> "Latitude2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Latitude2":
-        ...
+    def title(self, _: List[str], **kwds) -> "Latitude2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Latitude2":
-        ...
+    def title(self, _: None, **kwds) -> "Latitude2": ...
 
     def __init__(
         self,
@@ -22997,28 +22570,23 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "latitude2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Latitude2Datum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Latitude2Datum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Latitude2Datum":
-        ...
+    def title(self, _: str, **kwds) -> "Latitude2Datum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Latitude2Datum":
-        ...
+    def title(self, _: List[str], **kwds) -> "Latitude2Datum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Latitude2Datum":
-        ...
+    def title(self, _: None, **kwds) -> "Latitude2Datum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "Latitude2Datum":
-        ...
+    ) -> "Latitude2Datum": ...
 
     def __init__(
         self,
@@ -23248,32 +22816,26 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Longitude":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Longitude": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Longitude":
-        ...
+    def bin(self, _: None, **kwds) -> "Longitude": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Longitude":
-        ...
+    def field(self, _: str, **kwds) -> "Longitude": ...
 
     @overload
     def field(
@@ -23282,8 +22844,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23302,8 +22863,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23322,8 +22882,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23360,8 +22919,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23398,8 +22956,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23421,8 +22978,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23444,8 +23000,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
     def timeUnit(
@@ -23547,24 +23102,19 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Longitude":
-        ...
+    ) -> "Longitude": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Longitude":
-        ...
+    def title(self, _: str, **kwds) -> "Longitude": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Longitude":
-        ...
+    def title(self, _: List[str], **kwds) -> "Longitude": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Longitude":
-        ...
+    def title(self, _: None, **kwds) -> "Longitude": ...
 
     @overload
-    def type(self, _: str, **kwds) -> "Longitude":
-        ...
+    def type(self, _: str, **kwds) -> "Longitude": ...
 
     def __init__(
         self,
@@ -23854,28 +23404,23 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "longitude"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "LongitudeDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "LongitudeDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "LongitudeDatum":
-        ...
+    def title(self, _: str, **kwds) -> "LongitudeDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "LongitudeDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "LongitudeDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "LongitudeDatum":
-        ...
+    def title(self, _: None, **kwds) -> "LongitudeDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "LongitudeDatum":
-        ...
+    ) -> "LongitudeDatum": ...
 
     def __init__(
         self,
@@ -24016,32 +23561,26 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Longitude2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Longitude2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Longitude2":
-        ...
+    def bin(self, _: None, **kwds) -> "Longitude2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Longitude2":
-        ...
+    def field(self, _: str, **kwds) -> "Longitude2": ...
 
     @overload
     def field(
@@ -24050,8 +23589,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24070,8 +23608,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24090,8 +23627,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24128,8 +23664,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24166,8 +23701,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24189,8 +23723,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24212,8 +23745,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
     def timeUnit(
@@ -24315,20 +23847,16 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Longitude2":
-        ...
+    ) -> "Longitude2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Longitude2":
-        ...
+    def title(self, _: str, **kwds) -> "Longitude2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Longitude2":
-        ...
+    def title(self, _: List[str], **kwds) -> "Longitude2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Longitude2":
-        ...
+    def title(self, _: None, **kwds) -> "Longitude2": ...
 
     def __init__(
         self,
@@ -24616,28 +24144,23 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "longitude2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Longitude2Datum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Longitude2Datum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Longitude2Datum":
-        ...
+    def title(self, _: str, **kwds) -> "Longitude2Datum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Longitude2Datum":
-        ...
+    def title(self, _: List[str], **kwds) -> "Longitude2Datum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Longitude2Datum":
-        ...
+    def title(self, _: None, **kwds) -> "Longitude2Datum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "Longitude2Datum":
-        ...
+    ) -> "Longitude2Datum": ...
 
     def __init__(
         self,
@@ -24937,28 +24460,23 @@ class Opacity(
             "variancep",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Opacity":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Opacity": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Opacity":
-        ...
+    def bin(self, _: bool, **kwds) -> "Opacity": ...
 
     @overload
     def bin(
@@ -24976,12 +24494,10 @@ class Opacity(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Opacity":
-        ...
+    def bin(self, _: None, **kwds) -> "Opacity": ...
 
     @overload
     def condition(
@@ -24991,8 +24507,7 @@ class Opacity(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def condition(
@@ -25003,18 +24518,15 @@ class Opacity(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Opacity":
-        ...
+    def field(self, _: str, **kwds) -> "Opacity": ...
 
     @overload
     def field(
@@ -25023,8 +24535,7 @@ class Opacity(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def legend(
@@ -26402,12 +25913,10 @@ class Opacity(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Opacity":
-        ...
+    def legend(self, _: None, **kwds) -> "Opacity": ...
 
     @overload
     def scale(
@@ -26896,32 +26405,25 @@ class Opacity(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Opacity":
-        ...
+    def scale(self, _: None, **kwds) -> "Opacity": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Opacity":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Opacity": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Opacity":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Opacity": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Opacity":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Opacity": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Opacity":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Opacity": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Opacity":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Opacity": ...
 
     @overload
     def sort(
@@ -26941,8 +26443,7 @@ class Opacity(
             "text",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def sort(
@@ -26962,8 +26463,7 @@ class Opacity(
             "-text",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def sort(
@@ -27000,8 +26500,7 @@ class Opacity(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def sort(
@@ -27028,12 +26527,10 @@ class Opacity(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Opacity":
-        ...
+    def sort(self, _: None, **kwds) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27052,8 +26549,7 @@ class Opacity(
             "milliseconds",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27072,8 +26568,7 @@ class Opacity(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27110,8 +26605,7 @@ class Opacity(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27148,8 +26642,7 @@ class Opacity(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27171,8 +26664,7 @@ class Opacity(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27194,8 +26686,7 @@ class Opacity(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
     def timeUnit(
@@ -27297,26 +26788,21 @@ class Opacity(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Opacity":
-        ...
+    def title(self, _: str, **kwds) -> "Opacity": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Opacity":
-        ...
+    def title(self, _: List[str], **kwds) -> "Opacity": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Opacity":
-        ...
+    def title(self, _: None, **kwds) -> "Opacity": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Opacity":
-        ...
+    ) -> "Opacity": ...
 
     def __init__(
         self,
@@ -27665,8 +27151,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     _encoding_name = "opacity"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "OpacityDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "OpacityDatum": ...
 
     @overload
     def condition(
@@ -27676,8 +27161,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "OpacityDatum":
-        ...
+    ) -> "OpacityDatum": ...
 
     @overload
     def condition(
@@ -27688,34 +27172,28 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "OpacityDatum":
-        ...
+    ) -> "OpacityDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "OpacityDatum":
-        ...
+    ) -> "OpacityDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "OpacityDatum":
-        ...
+    def title(self, _: str, **kwds) -> "OpacityDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "OpacityDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "OpacityDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "OpacityDatum":
-        ...
+    def title(self, _: None, **kwds) -> "OpacityDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "OpacityDatum":
-        ...
+    ) -> "OpacityDatum": ...
 
     def __init__(
         self,
@@ -27974,8 +27452,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     @overload
     def condition(
@@ -28003,8 +27480,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     @overload
     def condition(
@@ -28217,8 +27693,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     @overload
     def condition(
@@ -28247,8 +27722,7 @@ class OpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     @overload
     def condition(
@@ -28258,8 +27732,7 @@ class OpacityValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     @overload
     def condition(
@@ -28270,14 +27743,12 @@ class OpacityValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "OpacityValue":
-        ...
+    ) -> "OpacityValue": ...
 
     def __init__(
         self,
@@ -28479,28 +27950,23 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Order":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Order": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Order":
-        ...
+    def bin(self, _: bool, **kwds) -> "Order": ...
 
     @overload
     def bin(
@@ -28518,20 +27984,16 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Order":
-        ...
+    def bin(self, _: str, **kwds) -> "Order": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Order":
-        ...
+    def bin(self, _: None, **kwds) -> "Order": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Order":
-        ...
+    def field(self, _: str, **kwds) -> "Order": ...
 
     @overload
     def field(
@@ -28540,12 +28002,10 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Order":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28564,8 +28024,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28584,8 +28043,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28622,8 +28080,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28660,8 +28117,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28683,8 +28139,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28706,8 +28161,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
     def timeUnit(
@@ -28809,26 +28263,21 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Order":
-        ...
+    def title(self, _: str, **kwds) -> "Order": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Order":
-        ...
+    def title(self, _: List[str], **kwds) -> "Order": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Order":
-        ...
+    def title(self, _: None, **kwds) -> "Order": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Order":
-        ...
+    ) -> "Order": ...
 
     def __init__(
         self,
@@ -29047,8 +28496,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "OrderValue":
-        ...
+    ) -> "OrderValue": ...
 
     @overload
     def condition(
@@ -29057,14 +28505,12 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "OrderValue":
-        ...
+    ) -> "OrderValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumber], **kwds
-    ) -> "OrderValue":
-        ...
+    ) -> "OrderValue": ...
 
     def __init__(
         self,
@@ -29347,28 +28793,23 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "variancep",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Radius":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Radius": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Radius":
-        ...
+    def bin(self, _: bool, **kwds) -> "Radius": ...
 
     @overload
     def bin(
@@ -29386,20 +28827,16 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Radius":
-        ...
+    def bin(self, _: str, **kwds) -> "Radius": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Radius":
-        ...
+    def bin(self, _: None, **kwds) -> "Radius": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Radius":
-        ...
+    def field(self, _: str, **kwds) -> "Radius": ...
 
     @overload
     def field(
@@ -29408,8 +28845,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def scale(
@@ -29898,32 +29334,25 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Radius":
-        ...
+    def scale(self, _: None, **kwds) -> "Radius": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Radius":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Radius": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Radius":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Radius": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Radius":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Radius": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Radius":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Radius": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Radius":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Radius": ...
 
     @overload
     def sort(
@@ -29943,8 +29372,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "text",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def sort(
@@ -29964,8 +29392,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "-text",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def sort(
@@ -30002,8 +29429,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def sort(
@@ -30030,24 +29456,19 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Radius":
-        ...
+    def sort(self, _: None, **kwds) -> "Radius": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Radius":
-        ...
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Radius": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "Radius":
-        ...
+    def stack(self, _: None, **kwds) -> "Radius": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "Radius":
-        ...
+    def stack(self, _: bool, **kwds) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30066,8 +29487,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30086,8 +29506,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30124,8 +29543,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30162,8 +29580,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30185,8 +29602,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30208,8 +29624,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
     def timeUnit(
@@ -30311,26 +29726,21 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Radius":
-        ...
+    def title(self, _: str, **kwds) -> "Radius": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Radius":
-        ...
+    def title(self, _: List[str], **kwds) -> "Radius": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Radius":
-        ...
+    def title(self, _: None, **kwds) -> "Radius": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Radius":
-        ...
+    ) -> "Radius": ...
 
     def __init__(
         self,
@@ -30718,8 +30128,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _encoding_name = "radius"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "RadiusDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "RadiusDatum": ...
 
     @overload
     def scale(
@@ -31208,44 +30617,37 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "RadiusDatum":
-        ...
+    ) -> "RadiusDatum": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "RadiusDatum":
-        ...
+    def scale(self, _: None, **kwds) -> "RadiusDatum": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "RadiusDatum":
-        ...
+    def stack(
+        self, _: Literal["zero", "center", "normalize"], **kwds
+    ) -> "RadiusDatum": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "RadiusDatum":
-        ...
+    def stack(self, _: None, **kwds) -> "RadiusDatum": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "RadiusDatum":
-        ...
+    def stack(self, _: bool, **kwds) -> "RadiusDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "RadiusDatum":
-        ...
+    def title(self, _: str, **kwds) -> "RadiusDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "RadiusDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "RadiusDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "RadiusDatum":
-        ...
+    def title(self, _: None, **kwds) -> "RadiusDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "RadiusDatum":
-        ...
+    ) -> "RadiusDatum": ...
 
     def __init__(
         self,
@@ -31422,32 +30824,26 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Radius2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Radius2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Radius2":
-        ...
+    def bin(self, _: None, **kwds) -> "Radius2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Radius2":
-        ...
+    def field(self, _: str, **kwds) -> "Radius2": ...
 
     @overload
     def field(
@@ -31456,8 +30852,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31476,8 +30871,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31496,8 +30890,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31534,8 +30927,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31572,8 +30964,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31595,8 +30986,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31618,8 +31008,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
     def timeUnit(
@@ -31721,20 +31110,16 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Radius2":
-        ...
+    ) -> "Radius2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Radius2":
-        ...
+    def title(self, _: str, **kwds) -> "Radius2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Radius2":
-        ...
+    def title(self, _: List[str], **kwds) -> "Radius2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Radius2":
-        ...
+    def title(self, _: None, **kwds) -> "Radius2": ...
 
     def __init__(
         self,
@@ -32022,28 +31407,23 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "radius2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Radius2Datum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Radius2Datum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Radius2Datum":
-        ...
+    def title(self, _: str, **kwds) -> "Radius2Datum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Radius2Datum":
-        ...
+    def title(self, _: List[str], **kwds) -> "Radius2Datum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Radius2Datum":
-        ...
+    def title(self, _: None, **kwds) -> "Radius2Datum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "Radius2Datum":
-        ...
+    ) -> "Radius2Datum": ...
 
     def __init__(
         self,
@@ -32327,32 +31707,26 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
-    def align(self, _: Literal["all", "each", "none"], **kwds) -> "Row":
-        ...
+    def align(self, _: Literal["all", "each", "none"], **kwds) -> "Row": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Row":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Row": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Row":
-        ...
+    def bin(self, _: bool, **kwds) -> "Row": ...
 
     @overload
     def bin(
@@ -32370,20 +31744,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Row":
-        ...
+    def bin(self, _: None, **kwds) -> "Row": ...
 
     @overload
-    def center(self, _: bool, **kwds) -> "Row":
-        ...
+    def center(self, _: bool, **kwds) -> "Row": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Row":
-        ...
+    def field(self, _: str, **kwds) -> "Row": ...
 
     @overload
     def field(
@@ -32392,8 +31762,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def header(
@@ -32845,32 +32214,25 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
-    def header(self, _: None, **kwds) -> "Row":
-        ...
+    def header(self, _: None, **kwds) -> "Row": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Row":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Row": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Row":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Row": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Row":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Row": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Row":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Row": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Row":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Row": ...
 
     @overload
     def sort(
@@ -32907,16 +32269,13 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Row":
-        ...
+    def sort(self, _: None, **kwds) -> "Row": ...
 
     @overload
-    def spacing(self, _: float, **kwds) -> "Row":
-        ...
+    def spacing(self, _: float, **kwds) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -32935,8 +32294,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -32955,8 +32313,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -32993,8 +32350,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -33031,8 +32387,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -33054,8 +32409,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -33077,8 +32431,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
     def timeUnit(
@@ -33180,26 +32533,21 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Row":
-        ...
+    def title(self, _: str, **kwds) -> "Row": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Row":
-        ...
+    def title(self, _: List[str], **kwds) -> "Row": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Row":
-        ...
+    def title(self, _: None, **kwds) -> "Row": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Row":
-        ...
+    ) -> "Row": ...
 
     def __init__(
         self,
@@ -33665,28 +33013,23 @@ class Shape(
             "variancep",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Shape":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Shape": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Shape":
-        ...
+    def bin(self, _: bool, **kwds) -> "Shape": ...
 
     @overload
     def bin(
@@ -33704,12 +33047,10 @@ class Shape(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Shape":
-        ...
+    def bin(self, _: None, **kwds) -> "Shape": ...
 
     @overload
     def condition(
@@ -33719,8 +33060,7 @@ class Shape(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def condition(
@@ -33731,18 +33071,15 @@ class Shape(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Shape":
-        ...
+    def field(self, _: str, **kwds) -> "Shape": ...
 
     @overload
     def field(
@@ -33751,8 +33088,7 @@ class Shape(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def legend(
@@ -35130,12 +34466,10 @@ class Shape(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Shape":
-        ...
+    def legend(self, _: None, **kwds) -> "Shape": ...
 
     @overload
     def scale(
@@ -35624,32 +34958,25 @@ class Shape(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Shape":
-        ...
+    def scale(self, _: None, **kwds) -> "Shape": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Shape":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Shape": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Shape":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Shape": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Shape":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Shape": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Shape":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Shape": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Shape":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Shape": ...
 
     @overload
     def sort(
@@ -35669,8 +34996,7 @@ class Shape(
             "text",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def sort(
@@ -35690,8 +35016,7 @@ class Shape(
             "-text",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def sort(
@@ -35728,8 +35053,7 @@ class Shape(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def sort(
@@ -35756,12 +35080,10 @@ class Shape(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Shape":
-        ...
+    def sort(self, _: None, **kwds) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -35780,8 +35102,7 @@ class Shape(
             "milliseconds",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -35800,8 +35121,7 @@ class Shape(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -35838,8 +35158,7 @@ class Shape(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -35876,8 +35195,7 @@ class Shape(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -35899,8 +35217,7 @@ class Shape(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -35922,8 +35239,7 @@ class Shape(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
     def timeUnit(
@@ -36025,24 +35341,19 @@ class Shape(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Shape":
-        ...
+    ) -> "Shape": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Shape":
-        ...
+    def title(self, _: str, **kwds) -> "Shape": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Shape":
-        ...
+    def title(self, _: List[str], **kwds) -> "Shape": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Shape":
-        ...
+    def title(self, _: None, **kwds) -> "Shape": ...
 
     @overload
-    def type(self, _: Literal["nominal", "ordinal", "geojson"], **kwds) -> "Shape":
-        ...
+    def type(self, _: Literal["nominal", "ordinal", "geojson"], **kwds) -> "Shape": ...
 
     def __init__(
         self,
@@ -36391,8 +35702,7 @@ class ShapeDatum(
     _encoding_name = "shape"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "ShapeDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "ShapeDatum": ...
 
     @overload
     def condition(
@@ -36402,8 +35712,7 @@ class ShapeDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ShapeDatum":
-        ...
+    ) -> "ShapeDatum": ...
 
     @overload
     def condition(
@@ -36414,34 +35723,28 @@ class ShapeDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ShapeDatum":
-        ...
+    ) -> "ShapeDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "ShapeDatum":
-        ...
+    ) -> "ShapeDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "ShapeDatum":
-        ...
+    def title(self, _: str, **kwds) -> "ShapeDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "ShapeDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "ShapeDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "ShapeDatum":
-        ...
+    def title(self, _: None, **kwds) -> "ShapeDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "ShapeDatum":
-        ...
+    ) -> "ShapeDatum": ...
 
     def __init__(
         self,
@@ -36699,8 +36002,7 @@ class ShapeValue(
             core.SchemaBase, Literal["nominal", "ordinal", "geojson"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     @overload
     def condition(
@@ -36728,8 +36030,7 @@ class ShapeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     @overload
     def condition(
@@ -36940,8 +36241,7 @@ class ShapeValue(
             core.SchemaBase, Literal["nominal", "ordinal", "geojson"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     @overload
     def condition(
@@ -36970,8 +36270,7 @@ class ShapeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     @overload
     def condition(
@@ -36981,8 +36280,7 @@ class ShapeValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     @overload
     def condition(
@@ -36993,14 +36291,12 @@ class ShapeValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "ShapeValue":
-        ...
+    ) -> "ShapeValue": ...
 
     def __init__(
         self,
@@ -37268,28 +36564,23 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "variancep",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Size":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Size": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Size":
-        ...
+    def bin(self, _: bool, **kwds) -> "Size": ...
 
     @overload
     def bin(
@@ -37307,12 +36598,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Size":
-        ...
+    def bin(self, _: None, **kwds) -> "Size": ...
 
     @overload
     def condition(
@@ -37322,8 +36611,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def condition(
@@ -37334,18 +36622,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Size":
-        ...
+    def field(self, _: str, **kwds) -> "Size": ...
 
     @overload
     def field(
@@ -37354,8 +36639,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def legend(
@@ -38733,12 +38017,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Size":
-        ...
+    def legend(self, _: None, **kwds) -> "Size": ...
 
     @overload
     def scale(
@@ -39227,32 +38509,25 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Size":
-        ...
+    def scale(self, _: None, **kwds) -> "Size": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Size":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Size": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Size":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Size": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Size":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Size": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Size":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Size": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Size":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Size": ...
 
     @overload
     def sort(
@@ -39272,8 +38547,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "text",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def sort(
@@ -39293,8 +38567,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "-text",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def sort(
@@ -39331,8 +38604,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def sort(
@@ -39359,12 +38631,10 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Size":
-        ...
+    def sort(self, _: None, **kwds) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39383,8 +38653,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "milliseconds",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39403,8 +38672,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39441,8 +38709,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39479,8 +38746,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39502,8 +38768,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39525,8 +38790,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
     def timeUnit(
@@ -39628,26 +38892,21 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Size":
-        ...
+    def title(self, _: str, **kwds) -> "Size": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Size":
-        ...
+    def title(self, _: List[str], **kwds) -> "Size": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Size":
-        ...
+    def title(self, _: None, **kwds) -> "Size": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Size":
-        ...
+    ) -> "Size": ...
 
     def __init__(
         self,
@@ -39996,8 +39255,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     _encoding_name = "size"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "SizeDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "SizeDatum": ...
 
     @overload
     def condition(
@@ -40007,8 +39265,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "SizeDatum":
-        ...
+    ) -> "SizeDatum": ...
 
     @overload
     def condition(
@@ -40019,34 +39276,28 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "SizeDatum":
-        ...
+    ) -> "SizeDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "SizeDatum":
-        ...
+    ) -> "SizeDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "SizeDatum":
-        ...
+    def title(self, _: str, **kwds) -> "SizeDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "SizeDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "SizeDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "SizeDatum":
-        ...
+    def title(self, _: None, **kwds) -> "SizeDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "SizeDatum":
-        ...
+    ) -> "SizeDatum": ...
 
     def __init__(
         self,
@@ -40305,8 +39556,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     @overload
     def condition(
@@ -40334,8 +39584,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     @overload
     def condition(
@@ -40548,8 +39797,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     @overload
     def condition(
@@ -40578,8 +39826,7 @@ class SizeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     @overload
     def condition(
@@ -40589,8 +39836,7 @@ class SizeValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     @overload
     def condition(
@@ -40601,14 +39847,12 @@ class SizeValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "SizeValue":
-        ...
+    ) -> "SizeValue": ...
 
     def __init__(
         self,
@@ -40879,28 +40123,23 @@ class Stroke(
             "variancep",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Stroke":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Stroke": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Stroke":
-        ...
+    def bin(self, _: bool, **kwds) -> "Stroke": ...
 
     @overload
     def bin(
@@ -40918,12 +40157,10 @@ class Stroke(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Stroke":
-        ...
+    def bin(self, _: None, **kwds) -> "Stroke": ...
 
     @overload
     def condition(
@@ -40933,8 +40170,7 @@ class Stroke(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def condition(
@@ -40945,18 +40181,15 @@ class Stroke(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Stroke":
-        ...
+    def field(self, _: str, **kwds) -> "Stroke": ...
 
     @overload
     def field(
@@ -40965,8 +40198,7 @@ class Stroke(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def legend(
@@ -42344,12 +41576,10 @@ class Stroke(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "Stroke":
-        ...
+    def legend(self, _: None, **kwds) -> "Stroke": ...
 
     @overload
     def scale(
@@ -42838,32 +42068,25 @@ class Stroke(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Stroke":
-        ...
+    def scale(self, _: None, **kwds) -> "Stroke": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Stroke":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Stroke": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Stroke":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Stroke": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Stroke":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Stroke": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Stroke":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Stroke": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Stroke":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Stroke": ...
 
     @overload
     def sort(
@@ -42883,8 +42106,7 @@ class Stroke(
             "text",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def sort(
@@ -42904,8 +42126,7 @@ class Stroke(
             "-text",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def sort(
@@ -42942,8 +42163,7 @@ class Stroke(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def sort(
@@ -42970,12 +42190,10 @@ class Stroke(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Stroke":
-        ...
+    def sort(self, _: None, **kwds) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -42994,8 +42212,7 @@ class Stroke(
             "milliseconds",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -43014,8 +42231,7 @@ class Stroke(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -43052,8 +42268,7 @@ class Stroke(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -43090,8 +42305,7 @@ class Stroke(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -43113,8 +42327,7 @@ class Stroke(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -43136,8 +42349,7 @@ class Stroke(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
     def timeUnit(
@@ -43239,26 +42451,21 @@ class Stroke(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Stroke":
-        ...
+    def title(self, _: str, **kwds) -> "Stroke": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Stroke":
-        ...
+    def title(self, _: List[str], **kwds) -> "Stroke": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Stroke":
-        ...
+    def title(self, _: None, **kwds) -> "Stroke": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Stroke":
-        ...
+    ) -> "Stroke": ...
 
     def __init__(
         self,
@@ -43609,8 +42816,7 @@ class StrokeDatum(
     _encoding_name = "stroke"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeDatum": ...
 
     @overload
     def condition(
@@ -43620,8 +42826,7 @@ class StrokeDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDatum":
-        ...
+    ) -> "StrokeDatum": ...
 
     @overload
     def condition(
@@ -43632,34 +42837,28 @@ class StrokeDatum(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDatum":
-        ...
+    ) -> "StrokeDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "StrokeDatum":
-        ...
+    ) -> "StrokeDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeDatum":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeDatum":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "StrokeDatum":
-        ...
+    ) -> "StrokeDatum": ...
 
     def __init__(
         self,
@@ -43919,8 +43118,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     @overload
     def condition(
@@ -43948,8 +43146,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     @overload
     def condition(
@@ -44162,8 +43359,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     @overload
     def condition(
@@ -44192,8 +43388,7 @@ class StrokeValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     @overload
     def condition(
@@ -44203,8 +43398,7 @@ class StrokeValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     @overload
     def condition(
@@ -44215,14 +43409,12 @@ class StrokeValue(
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefGradientstringnullExprRef], **kwds
-    ) -> "StrokeValue":
-        ...
+    ) -> "StrokeValue": ...
 
     def __init__(
         self,
@@ -44492,28 +43684,23 @@ class StrokeDash(
             "variancep",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeDash":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeDash": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "StrokeDash":
-        ...
+    def bin(self, _: bool, **kwds) -> "StrokeDash": ...
 
     @overload
     def bin(
@@ -44531,12 +43718,10 @@ class StrokeDash(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "StrokeDash":
-        ...
+    def bin(self, _: None, **kwds) -> "StrokeDash": ...
 
     @overload
     def condition(
@@ -44546,8 +43731,7 @@ class StrokeDash(
             dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def condition(
@@ -44558,18 +43742,15 @@ class StrokeDash(
             dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "StrokeDash":
-        ...
+    def field(self, _: str, **kwds) -> "StrokeDash": ...
 
     @overload
     def field(
@@ -44578,8 +43759,7 @@ class StrokeDash(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def legend(
@@ -45957,12 +45137,10 @@ class StrokeDash(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "StrokeDash":
-        ...
+    def legend(self, _: None, **kwds) -> "StrokeDash": ...
 
     @overload
     def scale(
@@ -46451,32 +45629,25 @@ class StrokeDash(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "StrokeDash":
-        ...
+    def scale(self, _: None, **kwds) -> "StrokeDash": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "StrokeDash":
-        ...
+    def sort(self, _: List[float], **kwds) -> "StrokeDash": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "StrokeDash":
-        ...
+    def sort(self, _: List[str], **kwds) -> "StrokeDash": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "StrokeDash":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "StrokeDash": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "StrokeDash":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "StrokeDash": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeDash":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeDash": ...
 
     @overload
     def sort(
@@ -46496,8 +45667,7 @@ class StrokeDash(
             "text",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def sort(
@@ -46517,8 +45687,7 @@ class StrokeDash(
             "-text",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def sort(
@@ -46555,8 +45724,7 @@ class StrokeDash(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def sort(
@@ -46583,12 +45751,10 @@ class StrokeDash(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "StrokeDash":
-        ...
+    def sort(self, _: None, **kwds) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46607,8 +45773,7 @@ class StrokeDash(
             "milliseconds",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46627,8 +45792,7 @@ class StrokeDash(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46665,8 +45829,7 @@ class StrokeDash(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46703,8 +45866,7 @@ class StrokeDash(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46726,8 +45888,7 @@ class StrokeDash(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46749,8 +45910,7 @@ class StrokeDash(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
     def timeUnit(
@@ -46852,26 +46012,21 @@ class StrokeDash(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeDash":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeDash": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeDash":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeDash": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeDash":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeDash": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "StrokeDash":
-        ...
+    ) -> "StrokeDash": ...
 
     def __init__(
         self,
@@ -47222,8 +46377,7 @@ class StrokeDashDatum(
     _encoding_name = "strokeDash"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeDashDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeDashDatum": ...
 
     @overload
     def condition(
@@ -47233,8 +46387,7 @@ class StrokeDashDatum(
             dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashDatum":
-        ...
+    ) -> "StrokeDashDatum": ...
 
     @overload
     def condition(
@@ -47245,34 +46398,28 @@ class StrokeDashDatum(
             dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashDatum":
-        ...
+    ) -> "StrokeDashDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds
-    ) -> "StrokeDashDatum":
-        ...
+    ) -> "StrokeDashDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeDashDatum":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeDashDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeDashDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeDashDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeDashDatum":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeDashDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "StrokeDashDatum":
-        ...
+    ) -> "StrokeDashDatum": ...
 
     def __init__(
         self,
@@ -47531,8 +46678,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     @overload
     def condition(
@@ -47560,8 +46706,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     @overload
     def condition(
@@ -47774,8 +46919,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     @overload
     def condition(
@@ -47804,8 +46948,7 @@ class StrokeDashValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     @overload
     def condition(
@@ -47815,8 +46958,7 @@ class StrokeDashValue(
             dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     @overload
     def condition(
@@ -47827,14 +46969,12 @@ class StrokeDashValue(
             dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberArrayExprRef], **kwds
-    ) -> "StrokeDashValue":
-        ...
+    ) -> "StrokeDashValue": ...
 
     def __init__(
         self,
@@ -48104,28 +47244,23 @@ class StrokeOpacity(
             "variancep",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeOpacity":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "StrokeOpacity":
-        ...
+    def bin(self, _: bool, **kwds) -> "StrokeOpacity": ...
 
     @overload
     def bin(
@@ -48143,12 +47278,10 @@ class StrokeOpacity(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "StrokeOpacity":
-        ...
+    def bin(self, _: None, **kwds) -> "StrokeOpacity": ...
 
     @overload
     def condition(
@@ -48158,8 +47291,7 @@ class StrokeOpacity(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def condition(
@@ -48170,18 +47302,15 @@ class StrokeOpacity(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "StrokeOpacity":
-        ...
+    def field(self, _: str, **kwds) -> "StrokeOpacity": ...
 
     @overload
     def field(
@@ -48190,8 +47319,7 @@ class StrokeOpacity(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def legend(
@@ -49569,12 +48697,10 @@ class StrokeOpacity(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "StrokeOpacity":
-        ...
+    def legend(self, _: None, **kwds) -> "StrokeOpacity": ...
 
     @overload
     def scale(
@@ -50063,32 +49189,27 @@ class StrokeOpacity(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "StrokeOpacity":
-        ...
+    def scale(self, _: None, **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "StrokeOpacity":
-        ...
+    def sort(self, _: List[float], **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "StrokeOpacity":
-        ...
+    def sort(self, _: List[str], **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "StrokeOpacity":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "StrokeOpacity":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeOpacity":
-        ...
+    def sort(
+        self, _: Literal["ascending", "descending"], **kwds
+    ) -> "StrokeOpacity": ...
 
     @overload
     def sort(
@@ -50108,8 +49229,7 @@ class StrokeOpacity(
             "text",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def sort(
@@ -50129,8 +49249,7 @@ class StrokeOpacity(
             "-text",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def sort(
@@ -50167,8 +49286,7 @@ class StrokeOpacity(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def sort(
@@ -50195,12 +49313,10 @@ class StrokeOpacity(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "StrokeOpacity":
-        ...
+    def sort(self, _: None, **kwds) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50219,8 +49335,7 @@ class StrokeOpacity(
             "milliseconds",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50239,8 +49354,7 @@ class StrokeOpacity(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50277,8 +49391,7 @@ class StrokeOpacity(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50315,8 +49428,7 @@ class StrokeOpacity(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50338,8 +49450,7 @@ class StrokeOpacity(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50361,8 +49472,7 @@ class StrokeOpacity(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
     def timeUnit(
@@ -50464,26 +49574,21 @@ class StrokeOpacity(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeOpacity":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeOpacity":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeOpacity": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeOpacity":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeOpacity": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "StrokeOpacity":
-        ...
+    ) -> "StrokeOpacity": ...
 
     def __init__(
         self,
@@ -50834,8 +49939,7 @@ class StrokeOpacityDatum(
     _encoding_name = "strokeOpacity"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeOpacityDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeOpacityDatum": ...
 
     @overload
     def condition(
@@ -50845,8 +49949,7 @@ class StrokeOpacityDatum(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityDatum":
-        ...
+    ) -> "StrokeOpacityDatum": ...
 
     @overload
     def condition(
@@ -50857,34 +49960,28 @@ class StrokeOpacityDatum(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityDatum":
-        ...
+    ) -> "StrokeOpacityDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "StrokeOpacityDatum":
-        ...
+    ) -> "StrokeOpacityDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeOpacityDatum":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeOpacityDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeOpacityDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeOpacityDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeOpacityDatum":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeOpacityDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "StrokeOpacityDatum":
-        ...
+    ) -> "StrokeOpacityDatum": ...
 
     def __init__(
         self,
@@ -51143,8 +50240,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     @overload
     def condition(
@@ -51172,8 +50268,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     @overload
     def condition(
@@ -51386,8 +50481,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     @overload
     def condition(
@@ -51416,8 +50510,7 @@ class StrokeOpacityValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     @overload
     def condition(
@@ -51427,8 +50520,7 @@ class StrokeOpacityValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     @overload
     def condition(
@@ -51439,14 +50531,12 @@ class StrokeOpacityValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "StrokeOpacityValue":
-        ...
+    ) -> "StrokeOpacityValue": ...
 
     def __init__(
         self,
@@ -51718,28 +50808,23 @@ class StrokeWidth(
             "variancep",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeWidth":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeWidth": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "StrokeWidth":
-        ...
+    def bin(self, _: bool, **kwds) -> "StrokeWidth": ...
 
     @overload
     def bin(
@@ -51757,12 +50842,10 @@ class StrokeWidth(
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "StrokeWidth":
-        ...
+    def bin(self, _: None, **kwds) -> "StrokeWidth": ...
 
     @overload
     def condition(
@@ -51772,8 +50855,7 @@ class StrokeWidth(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def condition(
@@ -51784,18 +50866,15 @@ class StrokeWidth(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "StrokeWidth":
-        ...
+    def field(self, _: str, **kwds) -> "StrokeWidth": ...
 
     @overload
     def field(
@@ -51804,8 +50883,7 @@ class StrokeWidth(
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def legend(
@@ -53183,12 +52261,10 @@ class StrokeWidth(
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def legend(self, _: None, **kwds) -> "StrokeWidth":
-        ...
+    def legend(self, _: None, **kwds) -> "StrokeWidth": ...
 
     @overload
     def scale(
@@ -53677,32 +52753,25 @@ class StrokeWidth(
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "StrokeWidth":
-        ...
+    def scale(self, _: None, **kwds) -> "StrokeWidth": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "StrokeWidth":
-        ...
+    def sort(self, _: List[float], **kwds) -> "StrokeWidth": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "StrokeWidth":
-        ...
+    def sort(self, _: List[str], **kwds) -> "StrokeWidth": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "StrokeWidth":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "StrokeWidth": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "StrokeWidth":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "StrokeWidth": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeWidth":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "StrokeWidth": ...
 
     @overload
     def sort(
@@ -53722,8 +52791,7 @@ class StrokeWidth(
             "text",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def sort(
@@ -53743,8 +52811,7 @@ class StrokeWidth(
             "-text",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def sort(
@@ -53781,8 +52848,7 @@ class StrokeWidth(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def sort(
@@ -53809,12 +52875,10 @@ class StrokeWidth(
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "StrokeWidth":
-        ...
+    def sort(self, _: None, **kwds) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -53833,8 +52897,7 @@ class StrokeWidth(
             "milliseconds",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -53853,8 +52916,7 @@ class StrokeWidth(
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -53891,8 +52953,7 @@ class StrokeWidth(
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -53929,8 +52990,7 @@ class StrokeWidth(
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -53952,8 +53012,7 @@ class StrokeWidth(
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -53975,8 +53034,7 @@ class StrokeWidth(
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
     def timeUnit(
@@ -54078,26 +53136,21 @@ class StrokeWidth(
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeWidth":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeWidth": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeWidth":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeWidth": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeWidth":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeWidth": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "StrokeWidth":
-        ...
+    ) -> "StrokeWidth": ...
 
     def __init__(
         self,
@@ -54448,8 +53501,7 @@ class StrokeWidthDatum(
     _encoding_name = "strokeWidth"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "StrokeWidthDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "StrokeWidthDatum": ...
 
     @overload
     def condition(
@@ -54459,8 +53511,7 @@ class StrokeWidthDatum(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthDatum":
-        ...
+    ) -> "StrokeWidthDatum": ...
 
     @overload
     def condition(
@@ -54471,34 +53522,28 @@ class StrokeWidthDatum(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthDatum":
-        ...
+    ) -> "StrokeWidthDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "StrokeWidthDatum":
-        ...
+    ) -> "StrokeWidthDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "StrokeWidthDatum":
-        ...
+    def title(self, _: str, **kwds) -> "StrokeWidthDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "StrokeWidthDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "StrokeWidthDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "StrokeWidthDatum":
-        ...
+    def title(self, _: None, **kwds) -> "StrokeWidthDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "StrokeWidthDatum":
-        ...
+    ) -> "StrokeWidthDatum": ...
 
     def __init__(
         self,
@@ -54757,8 +53802,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     @overload
     def condition(
@@ -54786,8 +53830,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     @overload
     def condition(
@@ -55000,8 +54043,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     @overload
     def condition(
@@ -55030,8 +54072,7 @@ class StrokeWidthValue(
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     @overload
     def condition(
@@ -55041,8 +54082,7 @@ class StrokeWidthValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     @overload
     def condition(
@@ -55053,14 +54093,12 @@ class StrokeWidthValue(
             dict, float, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefnumberExprRef], **kwds
-    ) -> "StrokeWidthValue":
-        ...
+    ) -> "StrokeWidthValue": ...
 
     def __init__(
         self,
@@ -55301,28 +54339,23 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "variancep",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Text":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Text": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Text":
-        ...
+    def bin(self, _: bool, **kwds) -> "Text": ...
 
     @overload
     def bin(
@@ -55340,16 +54373,13 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Text":
-        ...
+    def bin(self, _: str, **kwds) -> "Text": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Text":
-        ...
+    def bin(self, _: None, **kwds) -> "Text": ...
 
     @overload
     def condition(
@@ -55359,8 +54389,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def condition(
@@ -55371,16 +54400,15 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
-    def condition(self, _: List[core.ConditionalValueDefTextExprRef], **kwds) -> "Text":
-        ...
+    def condition(
+        self, _: List[core.ConditionalValueDefTextExprRef], **kwds
+    ) -> "Text": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Text":
-        ...
+    def field(self, _: str, **kwds) -> "Text": ...
 
     @overload
     def field(
@@ -55389,20 +54417,16 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
-    def format(self, _: str, **kwds) -> "Text":
-        ...
+    def format(self, _: str, **kwds) -> "Text": ...
 
     @overload
-    def format(self, _: dict, **kwds) -> "Text":
-        ...
+    def format(self, _: dict, **kwds) -> "Text": ...
 
     @overload
-    def formatType(self, _: str, **kwds) -> "Text":
-        ...
+    def formatType(self, _: str, **kwds) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55421,8 +54445,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "milliseconds",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55441,8 +54464,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55479,8 +54501,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55517,8 +54538,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55540,8 +54560,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55563,8 +54582,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
     def timeUnit(
@@ -55666,26 +54684,21 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Text":
-        ...
+    def title(self, _: str, **kwds) -> "Text": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Text":
-        ...
+    def title(self, _: List[str], **kwds) -> "Text": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Text":
-        ...
+    def title(self, _: None, **kwds) -> "Text": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Text":
-        ...
+    ) -> "Text": ...
 
     def __init__(
         self,
@@ -56028,8 +55041,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     _encoding_name = "text"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "TextDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "TextDatum": ...
 
     @overload
     def condition(
@@ -56039,8 +55051,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
             str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "TextDatum":
-        ...
+    ) -> "TextDatum": ...
 
     @overload
     def condition(
@@ -56051,46 +55062,37 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
             str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "TextDatum":
-        ...
+    ) -> "TextDatum": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefTextExprRef], **kwds
-    ) -> "TextDatum":
-        ...
+    ) -> "TextDatum": ...
 
     @overload
-    def format(self, _: str, **kwds) -> "TextDatum":
-        ...
+    def format(self, _: str, **kwds) -> "TextDatum": ...
 
     @overload
-    def format(self, _: dict, **kwds) -> "TextDatum":
-        ...
+    def format(self, _: dict, **kwds) -> "TextDatum": ...
 
     @overload
-    def formatType(self, _: str, **kwds) -> "TextDatum":
-        ...
+    def formatType(self, _: str, **kwds) -> "TextDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "TextDatum":
-        ...
+    def title(self, _: str, **kwds) -> "TextDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "TextDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "TextDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "TextDatum":
-        ...
+    def title(self, _: None, **kwds) -> "TextDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "TextDatum":
-        ...
+    ) -> "TextDatum": ...
 
     def __init__(
         self,
@@ -56312,8 +55314,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "TextValue":
-        ...
+    ) -> "TextValue": ...
 
     @overload
     def condition(
@@ -56487,8 +55488,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "TextValue":
-        ...
+    ) -> "TextValue": ...
 
     @overload
     def condition(
@@ -56498,8 +55498,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "TextValue":
-        ...
+    ) -> "TextValue": ...
 
     @overload
     def condition(
@@ -56510,14 +55509,12 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "TextValue":
-        ...
+    ) -> "TextValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefTextExprRef], **kwds
-    ) -> "TextValue":
-        ...
+    ) -> "TextValue": ...
 
     def __init__(
         self,
@@ -56800,28 +55797,23 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "variancep",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Theta":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Theta": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Theta":
-        ...
+    def bin(self, _: bool, **kwds) -> "Theta": ...
 
     @overload
     def bin(
@@ -56839,20 +55831,16 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Theta":
-        ...
+    def bin(self, _: str, **kwds) -> "Theta": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Theta":
-        ...
+    def bin(self, _: None, **kwds) -> "Theta": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Theta":
-        ...
+    def field(self, _: str, **kwds) -> "Theta": ...
 
     @overload
     def field(
@@ -56861,8 +55849,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def scale(
@@ -57351,32 +56338,25 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Theta":
-        ...
+    def scale(self, _: None, **kwds) -> "Theta": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Theta":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Theta": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Theta":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Theta": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Theta":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Theta": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Theta":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Theta": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Theta":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Theta": ...
 
     @overload
     def sort(
@@ -57396,8 +56376,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "text",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def sort(
@@ -57417,8 +56396,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "-text",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def sort(
@@ -57455,8 +56433,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def sort(
@@ -57483,24 +56460,19 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Theta":
-        ...
+    def sort(self, _: None, **kwds) -> "Theta": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Theta":
-        ...
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Theta": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "Theta":
-        ...
+    def stack(self, _: None, **kwds) -> "Theta": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "Theta":
-        ...
+    def stack(self, _: bool, **kwds) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57519,8 +56491,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57539,8 +56510,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57577,8 +56547,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57615,8 +56584,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57638,8 +56606,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57661,8 +56628,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
     def timeUnit(
@@ -57764,26 +56730,21 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Theta":
-        ...
+    def title(self, _: str, **kwds) -> "Theta": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Theta":
-        ...
+    def title(self, _: List[str], **kwds) -> "Theta": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Theta":
-        ...
+    def title(self, _: None, **kwds) -> "Theta": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Theta":
-        ...
+    ) -> "Theta": ...
 
     def __init__(
         self,
@@ -58171,8 +57132,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     _encoding_name = "theta"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "ThetaDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "ThetaDatum": ...
 
     @overload
     def scale(
@@ -58661,44 +57621,37 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "ThetaDatum":
-        ...
+    ) -> "ThetaDatum": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "ThetaDatum":
-        ...
+    def scale(self, _: None, **kwds) -> "ThetaDatum": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "ThetaDatum":
-        ...
+    def stack(
+        self, _: Literal["zero", "center", "normalize"], **kwds
+    ) -> "ThetaDatum": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "ThetaDatum":
-        ...
+    def stack(self, _: None, **kwds) -> "ThetaDatum": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "ThetaDatum":
-        ...
+    def stack(self, _: bool, **kwds) -> "ThetaDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "ThetaDatum":
-        ...
+    def title(self, _: str, **kwds) -> "ThetaDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "ThetaDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "ThetaDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "ThetaDatum":
-        ...
+    def title(self, _: None, **kwds) -> "ThetaDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "ThetaDatum":
-        ...
+    ) -> "ThetaDatum": ...
 
     def __init__(
         self,
@@ -58875,32 +57828,26 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Theta2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Theta2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Theta2":
-        ...
+    def bin(self, _: None, **kwds) -> "Theta2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Theta2":
-        ...
+    def field(self, _: str, **kwds) -> "Theta2": ...
 
     @overload
     def field(
@@ -58909,8 +57856,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -58929,8 +57875,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -58949,8 +57894,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -58987,8 +57931,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -59025,8 +57968,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -59048,8 +57990,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -59071,8 +58012,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
     def timeUnit(
@@ -59174,20 +58114,16 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Theta2":
-        ...
+    ) -> "Theta2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Theta2":
-        ...
+    def title(self, _: str, **kwds) -> "Theta2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Theta2":
-        ...
+    def title(self, _: List[str], **kwds) -> "Theta2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Theta2":
-        ...
+    def title(self, _: None, **kwds) -> "Theta2": ...
 
     def __init__(
         self,
@@ -59475,28 +58411,23 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "theta2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Theta2Datum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Theta2Datum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Theta2Datum":
-        ...
+    def title(self, _: str, **kwds) -> "Theta2Datum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Theta2Datum":
-        ...
+    def title(self, _: List[str], **kwds) -> "Theta2Datum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Theta2Datum":
-        ...
+    def title(self, _: None, **kwds) -> "Theta2Datum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "Theta2Datum":
-        ...
+    ) -> "Theta2Datum": ...
 
     def __init__(
         self,
@@ -59767,28 +58698,23 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variancep",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Tooltip":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Tooltip": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Tooltip":
-        ...
+    def bin(self, _: bool, **kwds) -> "Tooltip": ...
 
     @overload
     def bin(
@@ -59806,16 +58732,13 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Tooltip":
-        ...
+    def bin(self, _: str, **kwds) -> "Tooltip": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Tooltip":
-        ...
+    def bin(self, _: None, **kwds) -> "Tooltip": ...
 
     @overload
     def condition(
@@ -59825,8 +58748,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def condition(
@@ -59837,18 +58759,15 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Tooltip":
-        ...
+    def field(self, _: str, **kwds) -> "Tooltip": ...
 
     @overload
     def field(
@@ -59857,20 +58776,16 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
-    def format(self, _: str, **kwds) -> "Tooltip":
-        ...
+    def format(self, _: str, **kwds) -> "Tooltip": ...
 
     @overload
-    def format(self, _: dict, **kwds) -> "Tooltip":
-        ...
+    def format(self, _: dict, **kwds) -> "Tooltip": ...
 
     @overload
-    def formatType(self, _: str, **kwds) -> "Tooltip":
-        ...
+    def formatType(self, _: str, **kwds) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -59889,8 +58804,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -59909,8 +58823,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -59947,8 +58860,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -59985,8 +58897,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -60008,8 +58919,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -60031,8 +58941,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
     def timeUnit(
@@ -60134,26 +59043,21 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Tooltip":
-        ...
+    def title(self, _: str, **kwds) -> "Tooltip": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Tooltip":
-        ...
+    def title(self, _: List[str], **kwds) -> "Tooltip": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Tooltip":
-        ...
+    def title(self, _: None, **kwds) -> "Tooltip": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Tooltip":
-        ...
+    ) -> "Tooltip": ...
 
     def __init__(
         self,
@@ -60575,8 +59479,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     @overload
     def condition(
@@ -60604,8 +59507,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     @overload
     def condition(
@@ -60818,8 +59720,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     @overload
     def condition(
@@ -60848,8 +59749,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     @overload
     def condition(
@@ -60859,8 +59759,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     @overload
     def condition(
@@ -60871,14 +59770,12 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "TooltipValue":
-        ...
+    ) -> "TooltipValue": ...
 
     def __init__(
         self,
@@ -61119,28 +60016,23 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "variancep",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Url":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Url": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Url":
-        ...
+    def bin(self, _: bool, **kwds) -> "Url": ...
 
     @overload
     def bin(
@@ -61158,16 +60050,13 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Url":
-        ...
+    def bin(self, _: str, **kwds) -> "Url": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Url":
-        ...
+    def bin(self, _: None, **kwds) -> "Url": ...
 
     @overload
     def condition(
@@ -61177,8 +60066,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def condition(
@@ -61189,18 +60077,15 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             str, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringExprRef], **kwds
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Url":
-        ...
+    def field(self, _: str, **kwds) -> "Url": ...
 
     @overload
     def field(
@@ -61209,20 +60094,16 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
-    def format(self, _: str, **kwds) -> "Url":
-        ...
+    def format(self, _: str, **kwds) -> "Url": ...
 
     @overload
-    def format(self, _: dict, **kwds) -> "Url":
-        ...
+    def format(self, _: dict, **kwds) -> "Url": ...
 
     @overload
-    def formatType(self, _: str, **kwds) -> "Url":
-        ...
+    def formatType(self, _: str, **kwds) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61241,8 +60122,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61261,8 +60141,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61299,8 +60178,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61337,8 +60215,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61360,8 +60237,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61383,8 +60259,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
     def timeUnit(
@@ -61486,26 +60361,21 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Url":
-        ...
+    def title(self, _: str, **kwds) -> "Url": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Url":
-        ...
+    def title(self, _: List[str], **kwds) -> "Url": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Url":
-        ...
+    def title(self, _: None, **kwds) -> "Url": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Url":
-        ...
+    ) -> "Url": ...
 
     def __init__(
         self,
@@ -61927,8 +60797,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     @overload
     def condition(
@@ -61956,8 +60825,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     @overload
     def condition(
@@ -62170,8 +61038,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     @overload
     def condition(
@@ -62200,8 +61067,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             UndefinedType,
         ] = Undefined,
         **kwds,
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     @overload
     def condition(
@@ -62211,8 +61077,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     @overload
     def condition(
@@ -62223,14 +61088,12 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     @overload
     def condition(
         self, _: List[core.ConditionalValueDefstringnullExprRef], **kwds
-    ) -> "UrlValue":
-        ...
+    ) -> "UrlValue": ...
 
     def __init__(
         self,
@@ -62530,20 +61393,17 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def axis(
@@ -63633,20 +62493,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
-    def axis(self, _: None, **kwds) -> "X":
-        ...
+    def axis(self, _: None, **kwds) -> "X": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "X":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "X": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "X":
-        ...
+    def bin(self, _: bool, **kwds) -> "X": ...
 
     @overload
     def bin(
@@ -63664,20 +62520,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "X":
-        ...
+    def bin(self, _: str, **kwds) -> "X": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "X":
-        ...
+    def bin(self, _: None, **kwds) -> "X": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "X":
-        ...
+    def field(self, _: str, **kwds) -> "X": ...
 
     @overload
     def field(
@@ -63686,8 +62538,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def impute(
@@ -63701,12 +62552,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
-    def impute(self, _: None, **kwds) -> "X":
-        ...
+    def impute(self, _: None, **kwds) -> "X": ...
 
     @overload
     def scale(
@@ -64195,32 +63044,25 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "X":
-        ...
+    def scale(self, _: None, **kwds) -> "X": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "X":
-        ...
+    def sort(self, _: List[float], **kwds) -> "X": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "X":
-        ...
+    def sort(self, _: List[str], **kwds) -> "X": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "X":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "X": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "X":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "X": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "X":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "X": ...
 
     @overload
     def sort(
@@ -64240,8 +63082,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "text",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def sort(
@@ -64261,8 +63102,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "-text",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def sort(
@@ -64299,8 +63139,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def sort(
@@ -64327,24 +63166,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "X":
-        ...
+    def sort(self, _: None, **kwds) -> "X": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "X":
-        ...
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "X": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "X":
-        ...
+    def stack(self, _: None, **kwds) -> "X": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "X":
-        ...
+    def stack(self, _: bool, **kwds) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64363,8 +63197,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64383,8 +63216,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64421,8 +63253,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64459,8 +63290,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64482,8 +63312,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64505,8 +63334,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
     def timeUnit(
@@ -64608,26 +63436,21 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "X":
-        ...
+    def title(self, _: str, **kwds) -> "X": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "X":
-        ...
+    def title(self, _: List[str], **kwds) -> "X": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "X":
-        ...
+    def title(self, _: None, **kwds) -> "X": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "X":
-        ...
+    ) -> "X": ...
 
     def __init__(
         self,
@@ -66123,16 +64946,13 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "XDatum":
-        ...
+    ) -> "XDatum": ...
 
     @overload
-    def axis(self, _: None, **kwds) -> "XDatum":
-        ...
+    def axis(self, _: None, **kwds) -> "XDatum": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "XDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "XDatum": ...
 
     @overload
     def impute(
@@ -66146,12 +64966,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
         **kwds,
-    ) -> "XDatum":
-        ...
+    ) -> "XDatum": ...
 
     @overload
-    def impute(self, _: None, **kwds) -> "XDatum":
-        ...
+    def impute(self, _: None, **kwds) -> "XDatum": ...
 
     @overload
     def scale(
@@ -66640,44 +65458,35 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XDatum":
-        ...
+    ) -> "XDatum": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "XDatum":
-        ...
+    def scale(self, _: None, **kwds) -> "XDatum": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "XDatum":
-        ...
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "XDatum": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "XDatum":
-        ...
+    def stack(self, _: None, **kwds) -> "XDatum": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "XDatum":
-        ...
+    def stack(self, _: bool, **kwds) -> "XDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "XDatum":
-        ...
+    def title(self, _: str, **kwds) -> "XDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "XDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "XDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "XDatum":
-        ...
+    def title(self, _: None, **kwds) -> "XDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "XDatum":
-        ...
+    ) -> "XDatum": ...
 
     def __init__(
         self,
@@ -66858,32 +65667,26 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "X2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "X2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "X2":
-        ...
+    def bin(self, _: None, **kwds) -> "X2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "X2":
-        ...
+    def field(self, _: str, **kwds) -> "X2": ...
 
     @overload
     def field(
@@ -66892,8 +65695,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -66912,8 +65714,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -66932,8 +65733,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -66970,8 +65770,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -67008,8 +65807,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -67031,8 +65829,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -67054,8 +65851,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
     def timeUnit(
@@ -67157,20 +65953,16 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "X2":
-        ...
+    ) -> "X2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "X2":
-        ...
+    def title(self, _: str, **kwds) -> "X2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "X2":
-        ...
+    def title(self, _: List[str], **kwds) -> "X2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "X2":
-        ...
+    def title(self, _: None, **kwds) -> "X2": ...
 
     def __init__(
         self,
@@ -67458,28 +66250,23 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "x2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "X2Datum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "X2Datum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "X2Datum":
-        ...
+    def title(self, _: str, **kwds) -> "X2Datum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "X2Datum":
-        ...
+    def title(self, _: List[str], **kwds) -> "X2Datum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "X2Datum":
-        ...
+    def title(self, _: None, **kwds) -> "X2Datum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "X2Datum":
-        ...
+    ) -> "X2Datum": ...
 
     def __init__(
         self,
@@ -67642,32 +66429,26 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "XError":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "XError": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "XError":
-        ...
+    def bin(self, _: None, **kwds) -> "XError": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "XError":
-        ...
+    def field(self, _: str, **kwds) -> "XError": ...
 
     @overload
     def field(
@@ -67676,8 +66457,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67696,8 +66476,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67716,8 +66495,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67754,8 +66532,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67792,8 +66569,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67815,8 +66591,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67838,8 +66613,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
     def timeUnit(
@@ -67941,20 +66715,16 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "XError":
-        ...
+    ) -> "XError": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "XError":
-        ...
+    def title(self, _: str, **kwds) -> "XError": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "XError":
-        ...
+    def title(self, _: List[str], **kwds) -> "XError": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "XError":
-        ...
+    def title(self, _: None, **kwds) -> "XError": ...
 
     def __init__(
         self,
@@ -68276,32 +67046,26 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "XError2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "XError2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "XError2":
-        ...
+    def bin(self, _: None, **kwds) -> "XError2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "XError2":
-        ...
+    def field(self, _: str, **kwds) -> "XError2": ...
 
     @overload
     def field(
@@ -68310,8 +67074,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68330,8 +67093,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68350,8 +67112,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68388,8 +67149,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68426,8 +67186,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68449,8 +67208,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68472,8 +67230,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
     def timeUnit(
@@ -68575,20 +67332,16 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "XError2":
-        ...
+    ) -> "XError2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "XError2":
-        ...
+    def title(self, _: str, **kwds) -> "XError2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "XError2":
-        ...
+    def title(self, _: List[str], **kwds) -> "XError2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "XError2":
-        ...
+    def title(self, _: None, **kwds) -> "XError2": ...
 
     def __init__(
         self,
@@ -69029,28 +67782,23 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "XOffset":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "XOffset": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "XOffset":
-        ...
+    def bin(self, _: bool, **kwds) -> "XOffset": ...
 
     @overload
     def bin(
@@ -69068,16 +67816,13 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "XOffset":
-        ...
+    def bin(self, _: None, **kwds) -> "XOffset": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "XOffset":
-        ...
+    def field(self, _: str, **kwds) -> "XOffset": ...
 
     @overload
     def field(
@@ -69086,8 +67831,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def scale(
@@ -69576,32 +68320,25 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "XOffset":
-        ...
+    def scale(self, _: None, **kwds) -> "XOffset": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "XOffset":
-        ...
+    def sort(self, _: List[float], **kwds) -> "XOffset": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "XOffset":
-        ...
+    def sort(self, _: List[str], **kwds) -> "XOffset": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "XOffset":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "XOffset": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "XOffset":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "XOffset": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "XOffset":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "XOffset": ...
 
     @overload
     def sort(
@@ -69621,8 +68358,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "text",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def sort(
@@ -69642,8 +68378,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "-text",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def sort(
@@ -69680,8 +68415,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def sort(
@@ -69708,12 +68442,10 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "XOffset":
-        ...
+    def sort(self, _: None, **kwds) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69732,8 +68464,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69752,8 +68483,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69790,8 +68520,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69828,8 +68557,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69851,8 +68579,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69874,8 +68601,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
     def timeUnit(
@@ -69977,26 +68703,21 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "XOffset":
-        ...
+    def title(self, _: str, **kwds) -> "XOffset": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "XOffset":
-        ...
+    def title(self, _: List[str], **kwds) -> "XOffset": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "XOffset":
-        ...
+    def title(self, _: None, **kwds) -> "XOffset": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "XOffset":
-        ...
+    ) -> "XOffset": ...
 
     def __init__(
         self,
@@ -70345,8 +69066,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _encoding_name = "xOffset"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "XOffsetDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "XOffsetDatum": ...
 
     @overload
     def scale(
@@ -70835,32 +69555,26 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "XOffsetDatum":
-        ...
+    ) -> "XOffsetDatum": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "XOffsetDatum":
-        ...
+    def scale(self, _: None, **kwds) -> "XOffsetDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "XOffsetDatum":
-        ...
+    def title(self, _: str, **kwds) -> "XOffsetDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "XOffsetDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "XOffsetDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "XOffsetDatum":
-        ...
+    def title(self, _: None, **kwds) -> "XOffsetDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "XOffsetDatum":
-        ...
+    ) -> "XOffsetDatum": ...
 
     def __init__(
         self,
@@ -71196,20 +69910,17 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def axis(
@@ -72299,20 +71010,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
-    def axis(self, _: None, **kwds) -> "Y":
-        ...
+    def axis(self, _: None, **kwds) -> "Y": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Y":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Y": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "Y":
-        ...
+    def bin(self, _: bool, **kwds) -> "Y": ...
 
     @overload
     def bin(
@@ -72330,20 +71037,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
-    def bin(self, _: str, **kwds) -> "Y":
-        ...
+    def bin(self, _: str, **kwds) -> "Y": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Y":
-        ...
+    def bin(self, _: None, **kwds) -> "Y": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Y":
-        ...
+    def field(self, _: str, **kwds) -> "Y": ...
 
     @overload
     def field(
@@ -72352,8 +71055,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def impute(
@@ -72367,12 +71069,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
-    def impute(self, _: None, **kwds) -> "Y":
-        ...
+    def impute(self, _: None, **kwds) -> "Y": ...
 
     @overload
     def scale(
@@ -72861,32 +71561,25 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "Y":
-        ...
+    def scale(self, _: None, **kwds) -> "Y": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "Y":
-        ...
+    def sort(self, _: List[float], **kwds) -> "Y": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "Y":
-        ...
+    def sort(self, _: List[str], **kwds) -> "Y": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "Y":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "Y": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "Y":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "Y": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Y":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "Y": ...
 
     @overload
     def sort(
@@ -72906,8 +71599,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "text",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def sort(
@@ -72927,8 +71619,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "-text",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def sort(
@@ -72965,8 +71656,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def sort(
@@ -72993,24 +71683,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "Y":
-        ...
+    def sort(self, _: None, **kwds) -> "Y": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Y":
-        ...
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "Y": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "Y":
-        ...
+    def stack(self, _: None, **kwds) -> "Y": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "Y":
-        ...
+    def stack(self, _: bool, **kwds) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73029,8 +71714,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73049,8 +71733,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73087,8 +71770,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73125,8 +71807,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73148,8 +71829,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73171,8 +71851,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
     def timeUnit(
@@ -73274,26 +71953,21 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Y":
-        ...
+    def title(self, _: str, **kwds) -> "Y": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Y":
-        ...
+    def title(self, _: List[str], **kwds) -> "Y": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Y":
-        ...
+    def title(self, _: None, **kwds) -> "Y": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "Y":
-        ...
+    ) -> "Y": ...
 
     def __init__(
         self,
@@ -74789,16 +73463,13 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
-    ) -> "YDatum":
-        ...
+    ) -> "YDatum": ...
 
     @overload
-    def axis(self, _: None, **kwds) -> "YDatum":
-        ...
+    def axis(self, _: None, **kwds) -> "YDatum": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "YDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "YDatum": ...
 
     @overload
     def impute(
@@ -74812,12 +73483,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         value: Union[Any, UndefinedType] = Undefined,
         **kwds,
-    ) -> "YDatum":
-        ...
+    ) -> "YDatum": ...
 
     @overload
-    def impute(self, _: None, **kwds) -> "YDatum":
-        ...
+    def impute(self, _: None, **kwds) -> "YDatum": ...
 
     @overload
     def scale(
@@ -75306,44 +73975,35 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YDatum":
-        ...
+    ) -> "YDatum": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "YDatum":
-        ...
+    def scale(self, _: None, **kwds) -> "YDatum": ...
 
     @overload
-    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "YDatum":
-        ...
+    def stack(self, _: Literal["zero", "center", "normalize"], **kwds) -> "YDatum": ...
 
     @overload
-    def stack(self, _: None, **kwds) -> "YDatum":
-        ...
+    def stack(self, _: None, **kwds) -> "YDatum": ...
 
     @overload
-    def stack(self, _: bool, **kwds) -> "YDatum":
-        ...
+    def stack(self, _: bool, **kwds) -> "YDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "YDatum":
-        ...
+    def title(self, _: str, **kwds) -> "YDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "YDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "YDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "YDatum":
-        ...
+    def title(self, _: None, **kwds) -> "YDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "YDatum":
-        ...
+    ) -> "YDatum": ...
 
     def __init__(
         self,
@@ -75524,32 +74184,26 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Y2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Y2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "Y2":
-        ...
+    def bin(self, _: None, **kwds) -> "Y2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "Y2":
-        ...
+    def field(self, _: str, **kwds) -> "Y2": ...
 
     @overload
     def field(
@@ -75558,8 +74212,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75578,8 +74231,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75598,8 +74250,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75636,8 +74287,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75674,8 +74324,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75697,8 +74346,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75720,8 +74368,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
     def timeUnit(
@@ -75823,20 +74470,16 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "Y2":
-        ...
+    ) -> "Y2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Y2":
-        ...
+    def title(self, _: str, **kwds) -> "Y2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Y2":
-        ...
+    def title(self, _: List[str], **kwds) -> "Y2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Y2":
-        ...
+    def title(self, _: None, **kwds) -> "Y2": ...
 
     def __init__(
         self,
@@ -76124,28 +74767,23 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
     _encoding_name = "y2"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "Y2Datum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "Y2Datum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "Y2Datum":
-        ...
+    def title(self, _: str, **kwds) -> "Y2Datum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "Y2Datum":
-        ...
+    def title(self, _: List[str], **kwds) -> "Y2Datum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "Y2Datum":
-        ...
+    def title(self, _: None, **kwds) -> "Y2Datum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "Y2Datum":
-        ...
+    ) -> "Y2Datum": ...
 
     def __init__(
         self,
@@ -76308,32 +74946,26 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "YError":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "YError": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "YError":
-        ...
+    def bin(self, _: None, **kwds) -> "YError": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "YError":
-        ...
+    def field(self, _: str, **kwds) -> "YError": ...
 
     @overload
     def field(
@@ -76342,8 +74974,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76362,8 +74993,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76382,8 +75012,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76420,8 +75049,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76458,8 +75086,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76481,8 +75108,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76504,8 +75130,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
     def timeUnit(
@@ -76607,20 +75232,16 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "YError":
-        ...
+    ) -> "YError": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "YError":
-        ...
+    def title(self, _: str, **kwds) -> "YError": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "YError":
-        ...
+    def title(self, _: List[str], **kwds) -> "YError": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "YError":
-        ...
+    def title(self, _: None, **kwds) -> "YError": ...
 
     def __init__(
         self,
@@ -76942,32 +75563,26 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "YError2":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "YError2": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "YError2":
-        ...
+    def bin(self, _: None, **kwds) -> "YError2": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "YError2":
-        ...
+    def field(self, _: str, **kwds) -> "YError2": ...
 
     @overload
     def field(
@@ -76976,8 +75591,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -76996,8 +75610,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -77016,8 +75629,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -77054,8 +75666,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -77092,8 +75703,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -77115,8 +75725,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -77138,8 +75747,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
     def timeUnit(
@@ -77241,20 +75849,16 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "YError2":
-        ...
+    ) -> "YError2": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "YError2":
-        ...
+    def title(self, _: str, **kwds) -> "YError2": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "YError2":
-        ...
+    def title(self, _: List[str], **kwds) -> "YError2": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "YError2":
-        ...
+    def title(self, _: None, **kwds) -> "YError2": ...
 
     def __init__(
         self,
@@ -77695,28 +76299,23 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "variancep",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def aggregate(
         self, argmax: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def aggregate(
         self, argmin: Union[str, core.SchemaBase, UndefinedType] = Undefined, **kwds
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "YOffset":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "YOffset": ...
 
     @overload
-    def bin(self, _: bool, **kwds) -> "YOffset":
-        ...
+    def bin(self, _: bool, **kwds) -> "YOffset": ...
 
     @overload
     def bin(
@@ -77734,16 +76333,13 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         step: Union[float, UndefinedType] = Undefined,
         steps: Union[Sequence[float], UndefinedType] = Undefined,
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
-    def bin(self, _: None, **kwds) -> "YOffset":
-        ...
+    def bin(self, _: None, **kwds) -> "YOffset": ...
 
     @overload
-    def field(self, _: str, **kwds) -> "YOffset":
-        ...
+    def field(self, _: str, **kwds) -> "YOffset": ...
 
     @overload
     def field(
@@ -77752,8 +76348,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             Literal["row", "column", "repeat", "layer"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def scale(
@@ -78242,32 +76837,25 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "YOffset":
-        ...
+    def scale(self, _: None, **kwds) -> "YOffset": ...
 
     @overload
-    def sort(self, _: List[float], **kwds) -> "YOffset":
-        ...
+    def sort(self, _: List[float], **kwds) -> "YOffset": ...
 
     @overload
-    def sort(self, _: List[str], **kwds) -> "YOffset":
-        ...
+    def sort(self, _: List[str], **kwds) -> "YOffset": ...
 
     @overload
-    def sort(self, _: List[bool], **kwds) -> "YOffset":
-        ...
+    def sort(self, _: List[bool], **kwds) -> "YOffset": ...
 
     @overload
-    def sort(self, _: List[core.DateTime], **kwds) -> "YOffset":
-        ...
+    def sort(self, _: List[core.DateTime], **kwds) -> "YOffset": ...
 
     @overload
-    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "YOffset":
-        ...
+    def sort(self, _: Literal["ascending", "descending"], **kwds) -> "YOffset": ...
 
     @overload
     def sort(
@@ -78287,8 +76875,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "text",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def sort(
@@ -78308,8 +76895,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "-text",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def sort(
@@ -78346,8 +76932,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def sort(
@@ -78374,12 +76959,10 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             None, core.SchemaBase, Literal["ascending", "descending"], UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
-    def sort(self, _: None, **kwds) -> "YOffset":
-        ...
+    def sort(self, _: None, **kwds) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78398,8 +76981,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "milliseconds",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78418,8 +77000,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcmilliseconds",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78456,8 +77037,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "secondsmilliseconds",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78494,8 +77074,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcsecondsmilliseconds",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78517,8 +77096,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedyeardayofyear",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78540,8 +77118,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "binnedutcyeardayofyear",
         ],
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
     def timeUnit(
@@ -78643,26 +77220,21 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ] = Undefined,
         utc: Union[bool, UndefinedType] = Undefined,
         **kwds,
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "YOffset":
-        ...
+    def title(self, _: str, **kwds) -> "YOffset": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "YOffset":
-        ...
+    def title(self, _: List[str], **kwds) -> "YOffset": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "YOffset":
-        ...
+    def title(self, _: None, **kwds) -> "YOffset": ...
 
     @overload
     def type(
         self, _: Literal["quantitative", "ordinal", "temporal", "nominal"], **kwds
-    ) -> "YOffset":
-        ...
+    ) -> "YOffset": ...
 
     def __init__(
         self,
@@ -79011,8 +77583,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     _encoding_name = "yOffset"
 
     @overload
-    def bandPosition(self, _: float, **kwds) -> "YOffsetDatum":
-        ...
+    def bandPosition(self, _: float, **kwds) -> "YOffsetDatum": ...
 
     @overload
     def scale(
@@ -79501,32 +78072,26 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             bool, dict, core._Parameter, core.SchemaBase, UndefinedType
         ] = Undefined,
         **kwds,
-    ) -> "YOffsetDatum":
-        ...
+    ) -> "YOffsetDatum": ...
 
     @overload
-    def scale(self, _: None, **kwds) -> "YOffsetDatum":
-        ...
+    def scale(self, _: None, **kwds) -> "YOffsetDatum": ...
 
     @overload
-    def title(self, _: str, **kwds) -> "YOffsetDatum":
-        ...
+    def title(self, _: str, **kwds) -> "YOffsetDatum": ...
 
     @overload
-    def title(self, _: List[str], **kwds) -> "YOffsetDatum":
-        ...
+    def title(self, _: List[str], **kwds) -> "YOffsetDatum": ...
 
     @overload
-    def title(self, _: None, **kwds) -> "YOffsetDatum":
-        ...
+    def title(self, _: None, **kwds) -> "YOffsetDatum": ...
 
     @overload
     def type(
         self,
         _: Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"],
         **kwds,
-    ) -> "YOffsetDatum":
-        ...
+    ) -> "YOffsetDatum": ...
 
     def __init__(
         self,

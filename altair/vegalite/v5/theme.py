@@ -1,4 +1,5 @@
 """Tools for enabling and registering chart themes"""
+
 from typing import Dict, Union, Final
 
 from ...utils.theme import ThemeRegistry

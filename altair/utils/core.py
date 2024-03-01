@@ -1,6 +1,7 @@
 """
 Utility routines
 """
+
 from collections.abc import Mapping, MutableMapping
 from copy import deepcopy
 import json
@@ -48,8 +49,7 @@ P = ParamSpec("P")
 class DataFrameLike(Protocol):
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
-    ) -> DfiDataFrame:
-        ...
+    ) -> DfiDataFrame: ...
 
 
 TYPECODE_MAP = {

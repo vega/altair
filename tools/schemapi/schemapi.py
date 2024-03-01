@@ -98,8 +98,7 @@ def validate_jsonschema(
     rootschema: Optional[Dict[str, Any]] = ...,
     *,
     raise_error: Literal[True] = ...,
-) -> None:
-    ...
+) -> None: ...
 
 
 @overload
@@ -109,8 +108,7 @@ def validate_jsonschema(
     rootschema: Optional[Dict[str, Any]] = ...,
     *,
     raise_error: Literal[False],
-) -> Optional[jsonschema.exceptions.ValidationError]:
-    ...
+) -> Optional[jsonschema.exceptions.ValidationError]: ...
 
 
 def validate_jsonschema(
@@ -386,9 +384,9 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
     was set although no additional properties are allowed then "validator" is
     `"additionalProperties`, etc.
     """
-    errors_by_validator: DefaultDict[
-        str, ValidationErrorList
-    ] = collections.defaultdict(list)
+    errors_by_validator: DefaultDict[str, ValidationErrorList] = (
+        collections.defaultdict(list)
+    )
     for err in errors:
         # Ignore mypy error as err.validator as it wrongly sees err.validator
         # as of type Optional[Validator] instead of str which it is according
@@ -980,7 +978,7 @@ class SchemaBase:
     def to_json(
         self,
         validate: bool = True,
-        indent: int = 2,
+        indent: Optional[Union[int, str]] = 2,
         sort_keys: bool = True,
         *,
         ignore: Optional[List[str]] = None,
