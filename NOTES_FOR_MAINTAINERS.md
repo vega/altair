@@ -73,3 +73,7 @@ with the new minimum required version of vl-convert.
 
 To cut a new release of Altair, follow the steps outlined in
 [RELEASING.md](RELEASING.md).
+
+## Web analytics
+We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
+It is hosted on [https://views.scientific-python.org](https://views.scientific-python.org). To view the stats, you need an account. Ask another maintainer to invite you.
