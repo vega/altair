@@ -2,6 +2,7 @@
 This script fills the contents of doc/user_guide/api.rst
 based on the updated Altair schema.
 """
+
 import sys
 import types
 from os.path import abspath, dirname, join
