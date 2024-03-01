@@ -4,6 +4,7 @@ A Simple server used to show altair graphics from a prompt or script.
 This is adapted from the mpld3 package; see
 https://github.com/mpld3/mpld3/blob/master/mpld3/_server.py
 """
+
 import sys
 import threading
 import webbrowser
