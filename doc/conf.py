@@ -161,9 +161,7 @@ html_theme_options = {
     "announcement": """This website is for version 5. You can find the documentation for version 4 <a href='https://altair-viz.github.io/altair-viz-v4/'>here</a>.""",
     "analytics": {
         "plausible_analytics_domain": "altair-viz.github.io",
-        "plausible_analytics_url": (
-            "https://views.scientific-python.org/js/script.js"
-        ),
+        "plausible_analytics_url": ("https://views.scientific-python.org/js/script.js"),
     },
 }
 
