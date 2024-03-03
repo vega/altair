@@ -1,3 +1,16 @@
+"""
+Multiple Interactions
+=====================
+This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows:
+
+* Dropdown: Filters the movies by genre
+* Radio Buttons: Highlights certain films by Worldwide Gross
+* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning.
+
+
+
+"""
+
 import altair as alt
 from vega_datasets import data
 
