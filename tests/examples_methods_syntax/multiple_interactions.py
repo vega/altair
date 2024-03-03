@@ -1,16 +1,3 @@
-"""
-Multiple Interactions
-=====================
-This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows:
-
-* Dropdown: Filters the movies by genre
-* Radio Buttons: Highlights certain films by Worldwide Gross
-* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning.
-
-
-
-"""
-# category: interactive charts
 import altair as alt
 from vega_datasets import data
 
@@ -27,8 +14,8 @@ genres = [
 
 base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transform_calculate(
     Rounded_IMDB_Rating = "floor(datum.IMDB_Rating)",
-    Hundred_Million_Production =  "datum.Production_Budget > 100000000.0 ? 100 : 10",
-    Release_Year = "year(datum.Release_Date)"
+    Hundred_Million_Production =  "datum.Production_Budget > 100000000.0 ? 1 : 0", 
+    Release_Year = "year(datum.Release_Date)",
 ).transform_filter(
     alt.datum.IMDB_Rating > 0
 ).transform_filter(
@@ -79,9 +66,11 @@ highlight_ratings = base.add_params(
 input_checkbox = alt.binding_checkbox(name="Big Budget Films ")
 checkbox_selection = alt.param(bind=input_checkbox)
 
+legend_labels = ("datum.label == 0  ? 'Below $100 Mil.' : 'Above $100 Mil.'") # labels for both legend entries within alt.Size condition
+
 size_checkbox_condition = alt.condition(
     checkbox_selection,
-    alt.Size('Hundred_Million_Production:Q'),
+    alt.Size('Hundred_Million_Production:N', title='Big Budget Status').legend(labelExpr=legend_labels).scale(range=[25,150]), # scale can be used to manually adjust mark size difference between two levels of budget status
     alt.SizeValue(25)
 )
 
