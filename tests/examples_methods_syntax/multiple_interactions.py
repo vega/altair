@@ -5,9 +5,8 @@ This example shows how multiple user inputs can be layered onto a chart. The fou
 
 * Dropdown: Filters the movies by genre
 * Radio Buttons: Highlights certain films by Worldwide Gross
-* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning.
-
-
+* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning
+* Checkbox: Scales the marker size of big budget films
 
 """
 # category: interactive charts
@@ -27,7 +26,7 @@ genres = [
 
 base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transform_calculate(
     Rounded_IMDB_Rating = "floor(datum.IMDB_Rating)",
-    Hundred_Million_Production =  "datum.Production_Budget > 100000000.0 ? 1 : 0", 
+    Big_Budget_Film =  "datum.Production_Budget > 100000000 ? 'Yes' : 'No'", 
     Release_Year = "year(datum.Release_Date)",
 ).transform_filter(
     alt.datum.IMDB_Rating > 0
@@ -59,7 +58,7 @@ filter_genres = base.add_params(
     genre_select
 ).properties(title="Dropdown Filtering")
 
-#color changing marks
+# Color changing marks
 rating_radio = alt.binding_radio(options=ratings, name="Rating")
 rating_select = alt.selection_point(fields=['MPAA_Rating'], bind=rating_radio)
 
@@ -79,11 +78,9 @@ highlight_ratings = base.add_params(
 input_checkbox = alt.binding_checkbox(name="Big Budget Films ")
 checkbox_selection = alt.param(bind=input_checkbox)
 
-legend_labels = ("datum.label == 0  ? 'Below $100 Mil.' : 'Above $100 Mil.'") # labels for both legend entries within alt.Size condition
-
 size_checkbox_condition = alt.condition(
     checkbox_selection,
-    alt.Size('Hundred_Million_Production:N', title='Big Budget Status').legend(labelExpr=legend_labels).scale(range=[25,150]), # scale can be used to manually adjust mark size difference between two levels of budget status
+    alt.Size('Big_Budget_Film:N').scale(range=[25, 150]),
     alt.SizeValue(25)
 )
 
@@ -93,4 +90,4 @@ budget_sizing = base.add_params(
     size=size_checkbox_condition
 ).properties(title="Checkbox Formatting")
 
-(filter_year | filter_genres) & (highlight_ratings | budget_sizing)
+(filter_year | budget_sizing) & (highlight_ratings | filter_genres)
