@@ -535,7 +535,7 @@ where a drop-down is used to highlight cars of a specific ``Origin``:
 
 .. altair-plot::
 
-    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'], name='Region ')
+    input_dropdown = alt.binding_select(options=['Europe', 'Japan', 'USA'], name='Region ')
     selection = alt.selection_point(fields=['Origin'], bind=input_dropdown)
     color = alt.condition(
         selection,
@@ -932,6 +932,27 @@ Another option to include an expression within a chart specification is as a val
         alt.Y('yval')
     ).add_params(
         param_width,
+    )
+
+If we want our chart title to reflect the value from a selection parameter,
+it is not enough to reference only the name of the parameter.
+Instead, we need to explicitly include the field specified by the selection parameter
+(i.e. ``Origin`` in the example below):
+
+.. altair-plot::
+
+    input_dropdown = alt.binding_select(options=['Europe', 'Japan', 'USA'], name='Region ')
+    selection = alt.selection_point(fields=['Origin'], bind=input_dropdown, value='Europe')
+
+    title = alt.Title(alt.expr(f'"Cars from " + {selection.name}.Origin'))
+
+    alt.Chart(cars, title=title).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+    ).add_params(
+        selection
+    ).transform_filter(
+        selection
     )
 
 Now that we know the basics of expressions,
