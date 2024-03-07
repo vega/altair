@@ -115,7 +115,7 @@ test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
 
 [tool.hatch.envs.doc]
-features = ["dev", "doc"]
+features = ["all", "dev", "doc"]
 
 [tool.hatch.envs.doc.scripts]
 clean = "rm -rf doc/_build"
