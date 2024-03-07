@@ -103,7 +103,7 @@ include = ["/altair"]
 artifacts = ["altair/jupyter/js/index.js"]
 
 [tool.hatch.envs.default]
-features = ["dev"]
+features = ["all", "dev"]
 
 [tool.hatch.envs.default.scripts]
 test = [
