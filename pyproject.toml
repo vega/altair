@@ -62,8 +62,7 @@ all = [
     "vl-convert-python>=1.1.0",
     "pyarrow>=11",
     "vegafusion[embed]>=1.5.0",
-    "anywidget>=0.9.0",
-    "altair_tiles>=0.2.0"
+    "anywidget>=0.9.0"
 ]
 dev = [
     "hatch",
