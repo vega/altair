@@ -35,11 +35,11 @@ every time you open a new Python interpreter
 
 ```cmd
 cd altair/ 
-python -m pip install -e .[dev]
+python -m pip install -e ".[all, dev]"
 ```
 
-'[dev]' indicates that pip should also install the development requirements
-which you can find in `pyproject.toml` (`[project.optional-dependencies]/dev`)
+'[all, dev]' indicates that pip should also install the optional and development requirements
+which you can find in `pyproject.toml` (`[project.optional-dependencies]/all` and `[project.optional-dependencies]/dev`)
 
 ### Creating a Branch
 

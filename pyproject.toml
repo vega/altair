@@ -57,6 +57,14 @@ Documentation = "https://altair-viz.github.io"
 Source = "https://github.com/altair-viz/altair"
 
 [project.optional-dependencies]
+all = [
+    "vega_datasets>=0.9.0",
+    "vl-convert-python>=1.1.0",
+    "pyarrow>=11",
+    "vegafusion[embed]>=1.5.0",
+    "anywidget>=0.9.0",
+    "altair_tiles>=0.2.0"
+]
 dev = [
     "hatch",
     "ruff>=0.3.0",
@@ -64,15 +72,10 @@ dev = [
     "pytest",
     "pytest-cov",
     "m2r",
-    "vega_datasets",
-    "vl-convert-python>=1.1.0",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
-    "pyarrow>=11",
-    "vegafusion[embed]>=1.5.0",
-    "anywidget",
     "geopandas",
 ]
 doc = [
