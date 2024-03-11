@@ -9,7 +9,7 @@ Altair can be installed, along with the example datasets in vega_datasets_, usin
 
 .. code-block:: bash
 
-    pip install altair vega_datasets
+    pip install "altair[all]"
 
 If you are using the conda_ package manager, the equivalent is:
 
@@ -33,11 +33,11 @@ from the root of the repository to install the main version of Altair:
 
     pip install -e .
 
-To install development dependencies as well, run
+To install optional and development dependencies as well, run
 
 .. code-block:: bash
 
-    pip install -e .[dev]
+    pip install -e ".[all, dev]"
 
 If you do not wish to clone the source repository, you can install the
 development version directly from GitHub using:

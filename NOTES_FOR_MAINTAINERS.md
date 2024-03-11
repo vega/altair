@@ -69,6 +69,9 @@ an issue](https://github.com/vega/vl-convert/issues) if this version hasn't been
 included in a released yet.). Update the vl-convert version check in `altair/utils/_importers.py` 
 with the new minimum required version of vl-convert.
 
+Also, the version bound of the `vl-convert-python` package should be updated in the 
+`[project.optional-dependencies]/all` dependency group in `pyproject.toml`.
+
 ## Releasing the Package
 
 To cut a new release of Altair, follow the steps outlined in
