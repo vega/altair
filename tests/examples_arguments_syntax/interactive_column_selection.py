@@ -29,7 +29,7 @@ ex_ts = pd.DataFrame(
 select_x = alt.selection_point(fields=['level_0'], name='select_x', value='b')
 select_y = alt.selection_point(fields=['level_1'], name='select_y', value='d')
 heatmap = alt.Chart(
-    ex_ts.drop(columns='date').corr().stack().reset_index(name='correlation'),
+    ex_ts.drop(columns='date').corr().stack().reset_index().rename(columns={0: 'correlation'}),
     title='Click a tile to compare timeseries',
     height=250,
     width=250,
