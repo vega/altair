@@ -381,7 +381,7 @@ def test_save_html(basic_chart, inline):
 
 
 def test_to_url(basic_chart):
-    share_url = basic_chart.to_url(open_browser=False)
+    share_url = basic_chart.to_url()
     expected_vegalite_encoding = "N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaAOwA2ABwAWFi1NyTcgEb7TtuabAswc-XTZhMczLdNDAEYQGRA1OQAnAGtlQgBPAAdNZBAnSNDuTChIOhIkVBAAD2V4TAAbOi0lbgTkrSgINRI5csyQeNKsSq1bEFqklJAAR1I5IjhFYjRNaW4AEkowRkwIrTFCRMpkAHodmYQ5ADoEScZSWyO4CB2llYj9zEPdcsnMfYBWI6DDI5YjgBWlGg-W0CjklEwhEoyh0cgMJnMlmsxjsDicLjcHi8Pj8AWCKAA2qAlKkAIKgvrIABMxhkJK0ACFKSgPh96SBSSAAMIs5DmDlcgAifIAnEFBVoAKJ84wSzgM1IAMT5HxYktSAHE+UFRRqQIJZfp9QBJVXUyQAXWkQA"
 
     assert (
@@ -390,7 +390,7 @@ def test_to_url(basic_chart):
     )
 
     # Check fullscreen
-    fullscreen_share_url = basic_chart.to_url(open_browser=False, fullscreen=True)
+    fullscreen_share_url = basic_chart.to_url(fullscreen=True)
     assert (
         fullscreen_share_url
         == f"https://vega.github.io/editor/#/url/vega-lite/{expected_vegalite_encoding}/view"
