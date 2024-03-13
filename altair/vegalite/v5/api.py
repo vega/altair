@@ -1104,7 +1104,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **kwargs,
         )
 
-    def to_url(self, *, fullscreen: bool = False) -> str:
+    def to_url(self, *, open_browser: bool = True, fullscreen: bool = False) -> str:
         """Convert a chart to a URL that opens the chart specification in the Vega chart editor
         The chart specification (including any inline data) is encoded in the URL.
 
@@ -1112,6 +1112,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Parameters
         ----------
+        open_browser : bool
+            If True, the default browser will be launched to open the url. Default True
         fullscreen : bool
             If True, editor will open chart in fullscreen mode. Default False
         """
@@ -1119,9 +1121,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         vlc = import_vl_convert()
         if _using_vegafusion():
-            return vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
+            url = vlc.vega_to_url(self.to_dict(format="vega"), fullscreen=fullscreen)
         else:
-            return vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
+            url = vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
+        if open_browser:
+            import webbrowser
+
+            webbrowser.open(url)
+        return url
 
     def save(
         self,
