@@ -13,6 +13,7 @@ Enhancements
   for more information.
 - Docs: Add :ref:`section on dashboards <display_dashboards>` which have support for Altair (#3299)
 - Support restrictive FIPS-compliant environment (#3291)
+- Support opening charts in the Vega editor with ``chart.open_editor()`` (#3358)
 
 Bug Fixes
 ~~~~~~~~~
