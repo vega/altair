@@ -1133,7 +1133,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         import webbrowser
 
-        webbrowser.open(self.to_url(fullscreen = fullscreen))
+        webbrowser.open(self.to_url(fullscreen=fullscreen))
 
     def save(
         self,
