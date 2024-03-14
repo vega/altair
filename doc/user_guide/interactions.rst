@@ -784,36 +784,6 @@ where the user can choose the colors of the chart interactively:
         color_usa, color_europe, color_japan
     )
 
-.. _encoding-channel-binding:
-
-Encoding Channel Binding
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-There is no direct way to map an encoding channel to a widget in order to dynamically display different charts based on different column choices, such as ``y=column_param``. The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365, and in the meantime, you can use parameters for a convenient workaround which let's you achieve the same functionality and change the plotted columns based on a widget selection (the x-axis title cannot be changed dynamically, but a text mark could be used instead if desired):
-
-.. altair-plot::
-
-    dropdown = alt.binding_select(
-        options=['Horsepower', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
-        name='X-axis column '
-    )
-    xcol_param = alt.param(
-        value='Horsepower',
-        bind=dropdown
-    )
-
-    alt.Chart(data.cars.url).mark_circle().encode(
-        x=alt.X('x:Q').title(''),
-        y='Miles_per_Gallon:Q',
-        color='Origin:N'
-    ).transform_calculate(
-        x=f'datum[{xcol_param.name}]'
-    ).add_params(
-        xcol_param
-    )
-
-It was possible to achieve something similar before the introduction of parameters in Altair 5 by using ``transform_fold`` and ``transform_filter``, but the spec for this is more complex (as can be seen in `this SO answer <https://stackoverflow.com/a/70950329/2166823>`_) so the solution above is to prefer.
-
 .. _legend-binding:
 
 Legend Binding
@@ -864,6 +834,64 @@ which creates a scale-bound selection more concisely:
         y='Miles_per_Gallon:Q',
         color='Origin:N',
     ).interactive()
+
+.. _encoding-channel-binding:
+
+Encoding Channel Binding
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+To update which columns are displayed in a chart
+based on the selection in a widget,
+we would need to bind the widget to an encoding channel.
+In contrast to legend and scale bindings,
+it is not possible to setup a binding to an encoding channel
+in the selection initialization
+(e.g. by typing ``bind='x'``).
+Instead,
+parameters can be used to pass the value of a selection
+to an encoding channel.
+This gives more flexibility,
+but requires the use of a separate calculation transform
+(as in the example below)
+until https://github.com/vega/vega-lite/issues/7365 is resolved.
+
+In this example,
+we access the parameter value by referencing the parameter by name.
+By indexing the data with the parameter value (via ``datum[]``)
+we can extract the data column that matches the selected value of the parameter,
+and populate the x-channel with the values from this data column.
+
+.. altair-plot::
+
+    dropdown = alt.binding_select(
+        options=['Horsepower', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
+        name='X-axis column '
+    )
+    xcol_param = alt.param(
+        value='Horsepower',
+        bind=dropdown
+    )
+
+    alt.Chart(data.cars.url).mark_circle().encode(
+        x=alt.X('x:Q').title(''),
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    ).transform_calculate(
+        x=f'datum[{xcol_param.name}]'
+    ).add_params(
+        xcol_param
+    )
+
+Using parameters inside calculate transforms allows us to define dynamic computations
+(e.g. subtracting different pairs of columns),
+as you can see in this gallery example :ref:`gallery_interactive_column_selection`.
+In that example,
+the chart title is also dynamically updated using a parameter inside an expression
+which is described in more detail further down in this page :ref:`accessing-parameter-values`.
+Note that it is currently not possible to change the axis titles dynamically based on the selected parameter value,
+but a text mark could be used instead
+(as in `this SO answer <https://stackoverflow.com/questions/71210072/can-i-turn-altair-axis-titles-into-links>`_),
+until https://github.com/vega/vega-lite/issues/7264 is resolved.
 
 .. _expressions:
 
