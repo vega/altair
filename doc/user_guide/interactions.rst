@@ -908,7 +908,7 @@ Expressions inside Parameters
 In the following example, we define a range connected to a parameter named ``param_width``. We then assign two expressions via ``param`` using both JavaScript and Python-syntax.
 As previously,
 we access the parameter values by referencing the parameters by name;
-in JavaScript that is done via `f"{param_width.name}"`
+in JavaScript that is done via ``f"{param_width.name}"``
 whereas in Python it is sufficient to just type the variable name.
 Using these two expressions defined as a parameter, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below ``200``, then the color is ``red``; otherwise, the color is ``blue``.
 
