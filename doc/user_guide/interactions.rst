@@ -902,7 +902,7 @@ Altair allows custom interactions by utilizing the `expression language of Vega 
 To simplify building these expressions in Python, Altair provides the ``expr`` module, which offers constants and functions to construct expressions using Python syntax. Both JavaScript-syntax and Python-syntax are supported within Altair to define an expression
 and an introductory example of each is available in the :ref:`user-guide-calculate-transform` transform documentation so we recommend checking out that page before continuing.
 
-Expressions inside parameters
+Expressions inside Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the following example, we define a range connected to a parameter named ``param_width``. We then assign two expressions via ``param`` using both JavaScript and Python-syntax.
@@ -934,7 +934,7 @@ Using these two expressions defined as a parameter, we can connect them to an en
 In the example above, we used a JavaScript-style ternary operator ``f"{param_width.name} < 200 ? 'red' : 'blue'"`` which is equivalent to the Python function ``expr.if_(param_width < 200, 'red', 'blue')``.
 The expressions defined as parameters also needed to be added to the chart within ``.add_params()``.
 
-Expressions inline
+Inline Expressions
 ^^^^^^^^^^^^^^^^^^
 
 In addition to assigning an expression within a parameter definition as shown above,
@@ -974,7 +974,7 @@ via this alternate approach:
 
 .. _accessing-parameter-values:
 
-Inline expressions in titles
+Inline Expressions in Titles
 ----------------------------
 
 It is possible to directly access the current value of a parameter
@@ -1022,7 +1022,7 @@ We also need to reference the field specified by the selection parameter
     )
 
 
-A regex search widget
+A Regex Search Widget
 ---------------------
 
 Now that we know the basics of expressions,
@@ -1066,6 +1066,9 @@ You can save this chart as an HTML file or put it on a static site generator suc
 and anyone can interact with it without having to install Python.
 Quite powerful!
 
+Summary of Expressions
+^^^^^^^^^^^^^^^^^^^^^^
+
 To summarize expressions:
 
 - Altair can utilize the expression language of Vega for writing basic formulas to enable custom interactions.
@@ -1084,7 +1087,7 @@ For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
 <https://vega.github.io/vega-lite/docs/selection.html>`_.
 
-Access Params From Python
+Access Params from Python
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 As of Vega-Altair 5.1, it's now possible to access the values of variable and selection parameters
 from Python using the :ref:`user-guide-jupyterchart` class.
