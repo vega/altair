@@ -1092,6 +1092,7 @@ Access Params from Python
 As of Vega-Altair 5.1, it's now possible to access the values of variable and selection parameters
 from Python using the :ref:`user-guide-jupyterchart` class.
 
-Additionally, the dashboarding package ``Panel`` includes support for processing Altair selections
+Additionally, the dashboarding packages ``Panel`` and ``Dash`` include support for processing Altair selections
 with custom callbacks. See the
-`Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_.
+`Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_
+and the `Dash documentation <https://dash.plotly.com/dash-vega-components>`.
