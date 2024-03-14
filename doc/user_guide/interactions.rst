@@ -884,10 +884,10 @@ and populate the x-channel with the values from this data column.
 
 Using parameters inside calculate transforms allows us to define dynamic computations
 (e.g. subtracting different pairs of columns),
-as you can see in this gallery example :ref:`gallery_interactive_column_selection`.
+as you can see in the :ref:`gallery_interactive_column_selection` gallery example.
 In that example,
 the chart title is also dynamically updated using a parameter inside an expression
-which is described in more detail further down in this page :ref:`accessing-parameter-values`.
+which is described in more detail in :ref:`accessing-parameter-values`.
 Note that it is currently not possible to change the axis titles dynamically based on the selected parameter value,
 but a text mark could be used instead
 (as in `this SO answer <https://stackoverflow.com/questions/71210072/can-i-turn-altair-axis-titles-into-links>`_),
