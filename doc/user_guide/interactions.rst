@@ -902,7 +902,14 @@ Altair allows custom interactions by utilizing the `expression language of Vega 
 To simplify building these expressions in Python, Altair provides the ``expr`` module, which offers constants and functions to construct expressions using Python syntax. Both JavaScript-syntax and Python-syntax are supported within Altair to define an expression
 and an introductory example of each is available in the :ref:`user-guide-calculate-transform` transform documentation so we recommend checking out that page before continuing.
 
+Expressions inside parameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 In the following example, we define a range connected to a parameter named ``param_width``. We then assign two expressions via ``param`` using both JavaScript and Python-syntax.
+As previously,
+we access the parameter values by referencing the parameters by name;
+in JavaScript that is done via `f"{param_width.name}"`
+whereas in Python it is sufficient to just type the variable name.
 Using these two expressions defined as a parameter, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below ``200``, then the color is ``red``; otherwise, the color is ``blue``.
 
 .. altair-plot::
@@ -927,25 +934,53 @@ Using these two expressions defined as a parameter, we can connect them to an en
 In the example above, we used a JavaScript-style ternary operator ``f"{param_width.name} < 200 ? 'red' : 'blue'"`` which is equivalent to the Python function ``expr.if_(param_width < 200, 'red', 'blue')``.
 The expressions defined as parameters also needed to be added to the chart within ``.add_params()``.
 
+Expressions inline
+^^^^^^^^^^^^^^^^^^
+
 In addition to assigning an expression within a parameter definition as shown above,
-the ``expr()`` utility function allows us to define expressions inline,
-``add_params``.
-In the next example, we modify the chart above to change the size of the points based on an inline expression. Instead of creating a conditional statement, we use the value of the expression as the size directly and therefore only need to specify the name of the parameter.
+the ``expr()`` utility function allows us to define inline expressions.
+Inline expressions are not parameters,
+so they can be added directly in the chart spec instead of via ``add_params``,
+which is a convenient shorthand for writing out the full parameter code.
+
+In this example, we modify the chart above to change the size of the points based on an inline expression. Instead of creating a conditional statement, we use the value of the expression as the size directly and therefore only need to specify the name of the parameter.
 
 .. altair-plot::
 
     chart.mark_point(size=alt.expr(param_width.name))
 
-Inline expressions defined by ``expr(...)`` are not parameters
-so they can be added directly in the chart spec instead of via ``add_params``.
-
-Another option to include an expression within a chart specification is as a value definition to an encoding channel. Here, we make the exact same modification to the chart as in the previous example via this alternate approach:
+In addition to modify the ``mark_*`` parameters,
+inline expressions can be passed to encoding channels as a value definition.
+Here, we make the exact same modification to the chart as in the previous example
+via this alternate approach:
 
 .. altair-plot::
 
     chart.encode(size=alt.value(alt.expr(param_width.name)))
 
-`Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart. In the example below, we also modify the chart title to show the value of the parameter:
+`Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart.
+
+.. altair-plot::
+
+    bind_range = alt.binding_range(min=100, max=300, name='Chart width: ')
+    param_width = alt.param('width', bind=bind_range)
+
+    alt.Chart(df).mark_point().encode(
+        alt.X('xval'),
+        alt.Y('yval')
+    ).add_params(
+        param_width
+    )
+
+.. _accessing-parameter-values:
+
+Inline expressions in titles
+----------------------------
+
+It is possible to directly access the current value of a parameter
+and use it explicitly in a chart spec.
+Here we extend the code from the previous example
+by updating the chart title to show the current value of the parameter:
 
 .. altair-plot::
 
@@ -959,12 +994,15 @@ Another option to include an expression within a chart specification is as a val
         alt.X('xval'),
         alt.Y('yval')
     ).add_params(
-        param_width,
+        param_width
     )
 
-If we want our chart title to reflect the value from a selection parameter,
+In the example above,
+we accessed the value of a variable parameter
+and inserted it into the chart title.
+If we instead want our chart title to reflect the value from a selection parameter,
 it is not enough to reference only the name of the parameter.
-Instead, we need to explicitly include the field specified by the selection parameter
+We also need to reference the field specified by the selection parameter
 (i.e. ``Origin`` in the example below):
 
 .. altair-plot::
@@ -983,9 +1021,13 @@ Instead, we need to explicitly include the field specified by the selection para
         selection
     )
 
+
+A regex search widget
+---------------------
+
 Now that we know the basics of expressions,
 let's see how we can improve on our search input example
-and make the search string match via a regex pattern.
+to make the search string match via a regex pattern.
 To do this we need to use ``expr.regex`` to define the regex string,
 and ``expr.test`` to test it against another string
 (in this case the string in the ``Name`` column).
