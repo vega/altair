@@ -504,8 +504,8 @@ data in pandas, and create a small multiples chart via concatenation. For exampl
         columns=3
     ).resolve_scale(color="independent")
 
-Interaction
-^^^^^^^^^^^
+Interactions
+^^^^^^^^^^^^
 Often a map does not come alone, but is used in combination with another chart.
 Here we provide an example of an interactive visualization of a bar chart and a map.
 
@@ -559,9 +559,11 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
 
 
 The interaction is two-directional. If you click (shift-click for multi-selection) on a geometry or bar the selection receive an ``opacity`` of ``1`` and the remaining an ``opacity`` of ``0.2``.
+It is also possible to create charts with interval selections,
+as can be seen in the :ref:`gallery_interval_selection_map_quakes` gallery example.
 
-Expression
-^^^^^^^^^^
+Expressions
+^^^^^^^^^^^
 Altair expressions can be used within a geographical visualization. The following example
 visualize earthquakes on the globe using an ``orthographic`` projection. Where we can rotate
 the earth on a single-axis. (``rotate0``). The utility function :func:`sphere` is adopted to
@@ -630,3 +632,9 @@ We use here an elegant way to access the nested point coordinates from the geome
 
 The earthquakes are displayed using a ``mark_geoshape`` and filtered once out of sight of
 the visible part of the world. A hover highlighting is added to get more insight of each earthquake.
+
+Tile-based Maps
+^^^^^^^^^^^^^^^
+
+To use tile-based maps (such as OpenStreetMap) as the background for ``mark_geoshape``,
+you can use the package `Altair Tiles <https://altair-viz.github.io/altair_tiles>` together with Altair.
