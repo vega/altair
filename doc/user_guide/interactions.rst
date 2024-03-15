@@ -956,7 +956,7 @@ In this example, we modify the chart above to change the size of the points base
 
     chart.mark_point(size=alt.expr(param_width.name))
 
-In addition to modify the ``mark_*`` parameters,
+In addition to modifying the ``mark_*`` parameters,
 inline expressions can be passed to encoding channels as a value definition.
 Here, we make the exact same modification to the chart as in the previous example
 via this alternate approach:
@@ -984,10 +984,12 @@ via this alternate approach:
 Inline Expressions in Titles
 ----------------------------
 
-It is possible to directly access the current value of a parameter
-and use it explicitly in a chart spec.
-Here we extend the code from the previous example
-by updating the chart title to show the current value of the parameter:
+An inline expression can be used to
+update the chart title to show the current value of the parameter.
+Here, we extend the code from the previous example
+by using an f-string inside an inline expression.
+The additional quotations and plus signs are needed
+for the parameter value to be interpreted correctly.
 
 .. altair-plot::
 
@@ -1075,8 +1077,6 @@ Quite powerful!
 
 Summary of Expressions
 ^^^^^^^^^^^^^^^^^^^^^^
-
-To summarize expressions:
 
 - Altair can utilize the expression language of Vega for writing basic formulas to enable custom interactions.
 - Both JavaScript-style syntax and Python-style syntax are supported in Altair to define expressions.
