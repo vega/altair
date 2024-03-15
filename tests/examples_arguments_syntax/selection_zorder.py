@@ -1,7 +1,7 @@
 """
 Selection zorder
 ================
-This example shows how to bring selected point to the front/foreground
+This example shows how to bring selected points to the front/foreground
 by using a condition to change the point's (z)order
 as it is hovered over with the pointer.
 This prevents that the selected points are obscured

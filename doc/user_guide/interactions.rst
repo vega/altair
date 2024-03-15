@@ -247,6 +247,13 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 
     chart | chart.encode(x='Acceleration:Q')
 
+As you might have noticed,
+the selected points are sometimes obscured by some of the unselected points.
+To bring the selected points to the foreground,
+we can change the order in which they are laid out via the following
+encoding: ``order=alt.condition(hover, alt.value(1), alt.value(0))``.
+You can see and example of this in the :ref:`gallery_selection_zorder` gallery example.
+
 Filtering Data
 ^^^^^^^^^^^^^^
 
