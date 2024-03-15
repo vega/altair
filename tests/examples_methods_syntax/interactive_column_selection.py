@@ -7,6 +7,8 @@ and then compute the difference of the selected columns.
 It also illustrates how to use `indexof` to filter
 columns based on active selection values.
 """
+# category: interactive charts
+
 import pandas as pd
 import numpy as np
 import altair as alt

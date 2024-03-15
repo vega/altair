@@ -247,6 +247,13 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 
     chart | chart.encode(x='Acceleration:Q')
 
+As you might have noticed,
+the selected points are sometimes obscured by some of the unselected points.
+To bring the selected points to the foreground,
+we can change the order in which they are laid out via the following
+encoding: ``order=alt.condition(hover, alt.value(1), alt.value(0))``.
+You can see and example of this in the :ref:`gallery_selection_zorder` gallery example.
+
 Filtering Data
 ^^^^^^^^^^^^^^
 
@@ -784,36 +791,6 @@ where the user can choose the colors of the chart interactively:
         color_usa, color_europe, color_japan
     )
 
-.. _encoding-channel-binding:
-
-Encoding Channel Binding
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-There is no direct way to map an encoding channel to a widget in order to dynamically display different charts based on different column choices, such as ``y=column_param``. The underlying reason this is not possible is that in Vega-Lite, the ``field`` property does not accept a parameter as value; see the `field Vega-Lite documentation <https://vega.github.io/vega-lite/docs/field.html>`_. You can follow the discussion in this issue https://github.com/vega/vega-lite/issues/7365, and in the meantime, you can use parameters for a convenient workaround which let's you achieve the same functionality and change the plotted columns based on a widget selection (the x-axis title cannot be changed dynamically, but a text mark could be used instead if desired):
-
-.. altair-plot::
-
-    dropdown = alt.binding_select(
-        options=['Horsepower', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
-        name='X-axis column '
-    )
-    xcol_param = alt.param(
-        value='Horsepower',
-        bind=dropdown
-    )
-
-    alt.Chart(data.cars.url).mark_circle().encode(
-        x=alt.X('x:Q').title(''),
-        y='Miles_per_Gallon:Q',
-        color='Origin:N'
-    ).transform_calculate(
-        x=f'datum[{xcol_param.name}]'
-    ).add_params(
-        xcol_param
-    )
-
-It was possible to achieve something similar before the introduction of parameters in Altair 5 by using ``transform_fold`` and ``transform_filter``, but the spec for this is more complex (as can be seen in `this SO answer <https://stackoverflow.com/a/70950329/2166823>`_) so the solution above is to prefer.
-
 .. _legend-binding:
 
 Legend Binding
@@ -865,6 +842,64 @@ which creates a scale-bound selection more concisely:
         color='Origin:N',
     ).interactive()
 
+.. _encoding-channel-binding:
+
+Encoding Channel Binding
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+To update which columns are displayed in a chart
+based on the selection in a widget,
+we would need to bind the widget to an encoding channel.
+In contrast to legend and scale bindings,
+it is not possible to setup a binding to an encoding channel
+in the selection initialization
+(e.g. by typing ``bind='x'``).
+Instead,
+parameters can be used to pass the value of a selection
+to an encoding channel.
+This gives more flexibility,
+but requires the use of a separate calculation transform
+(as in the example below)
+until https://github.com/vega/vega-lite/issues/7365 is resolved.
+
+In this example,
+we access the parameter value by referencing the parameter by name.
+By indexing the data with the parameter value (via ``datum[]``)
+we can extract the data column that matches the selected value of the parameter,
+and populate the x-channel with the values from this data column.
+
+.. altair-plot::
+
+    dropdown = alt.binding_select(
+        options=['Horsepower', 'Displacement', 'Weight_in_lbs', 'Acceleration'],
+        name='X-axis column '
+    )
+    xcol_param = alt.param(
+        value='Horsepower',
+        bind=dropdown
+    )
+
+    alt.Chart(data.cars.url).mark_circle().encode(
+        x=alt.X('x:Q').title(''),
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    ).transform_calculate(
+        x=f'datum[{xcol_param.name}]'
+    ).add_params(
+        xcol_param
+    )
+
+Using parameters inside calculate transforms allows us to define dynamic computations
+(e.g. subtracting different pairs of columns),
+as you can see in the :ref:`gallery_interactive_column_selection` gallery example.
+In that example,
+the chart title is also dynamically updated using a parameter inside an expression
+which is described in more detail in :ref:`accessing-parameter-values`.
+Note that it is currently not possible to change the axis titles dynamically based on the selected parameter value,
+but a text mark could be used instead
+(as in `this SO answer <https://stackoverflow.com/questions/71210072/can-i-turn-altair-axis-titles-into-links>`_),
+until https://github.com/vega/vega-lite/issues/7264 is resolved.
+
 .. _expressions:
 
 Expressions
@@ -874,8 +909,15 @@ Altair allows custom interactions by utilizing the `expression language of Vega 
 To simplify building these expressions in Python, Altair provides the ``expr`` module, which offers constants and functions to construct expressions using Python syntax. Both JavaScript-syntax and Python-syntax are supported within Altair to define an expression
 and an introductory example of each is available in the :ref:`user-guide-calculate-transform` transform documentation so we recommend checking out that page before continuing.
 
+Expressions inside Parameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 In the following example, we define a range connected to a parameter named ``param_width``. We then assign two expressions via ``param`` using both JavaScript and Python-syntax.
-Using these two expressions defined as a parameter, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below ``200``, then the color is ``red``; otherwise, the color is ``blue``.
+As previously,
+we access the parameter values by referencing the parameters by name;
+in JavaScript that is done via ``f"{param_width.name}"``
+whereas in Python it is sufficient to just type the variable name.
+Using these two expressions defined inside parameters, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below ``200``, then the color is ``red``; otherwise, the color is ``blue``.
 
 .. altair-plot::
 
@@ -899,25 +941,55 @@ Using these two expressions defined as a parameter, we can connect them to an en
 In the example above, we used a JavaScript-style ternary operator ``f"{param_width.name} < 200 ? 'red' : 'blue'"`` which is equivalent to the Python function ``expr.if_(param_width < 200, 'red', 'blue')``.
 The expressions defined as parameters also needed to be added to the chart within ``.add_params()``.
 
+Inline Expressions
+^^^^^^^^^^^^^^^^^^
+
 In addition to assigning an expression within a parameter definition as shown above,
-the ``expr()`` utility function allows us to define expressions inline,
-``add_params``.
-In the next example, we modify the chart above to change the size of the points based on an inline expression. Instead of creating a conditional statement, we use the value of the expression as the size directly and therefore only need to specify the name of the parameter.
+the ``expr()`` utility function allows us to define inline expressions.
+Inline expressions are not parameters,
+so they can be added directly in the chart spec instead of via ``add_params``,
+which is a convenient shorthand for writing out the full parameter code.
+
+In this example, we modify the chart above to change the size of the points based on an inline expression. Instead of creating a conditional statement, we use the value of the expression as the size directly and therefore only need to specify the name of the parameter.
 
 .. altair-plot::
 
     chart.mark_point(size=alt.expr(param_width.name))
 
-Inline expressions defined by ``expr(...)`` are not parameters
-so they can be added directly in the chart spec instead of via ``add_params``.
-
-Another option to include an expression within a chart specification is as a value definition to an encoding channel. Here, we make the exact same modification to the chart as in the previous example via this alternate approach:
+In addition to modifying the ``mark_*`` parameters,
+inline expressions can be passed to encoding channels as a value definition.
+Here, we make the exact same modification to the chart as in the previous example
+via this alternate approach:
 
 .. altair-plot::
 
     chart.encode(size=alt.value(alt.expr(param_width.name)))
 
-`Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart. In the example below, we also modify the chart title to show the value of the parameter:
+`Some parameter names have special meaning in Vega-Lite <https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters>`_, for example, naming a parameter ``width`` will automatically link it to the width of the chart.
+
+.. altair-plot::
+
+    bind_range = alt.binding_range(min=100, max=300, name='Chart width: ')
+    param_width = alt.param('width', bind=bind_range)
+
+    alt.Chart(df).mark_point().encode(
+        alt.X('xval'),
+        alt.Y('yval')
+    ).add_params(
+        param_width
+    )
+
+.. _accessing-parameter-values:
+
+Inline Expressions in Titles
+----------------------------
+
+An inline expression can be used to
+update the chart title to show the current value of the parameter.
+Here, we extend the code from the previous example
+by using an f-string inside an inline expression.
+The additional quotations and plus signs are needed
+for the parameter value to be interpreted correctly.
 
 .. altair-plot::
 
@@ -931,12 +1003,15 @@ Another option to include an expression within a chart specification is as a val
         alt.X('xval'),
         alt.Y('yval')
     ).add_params(
-        param_width,
+        param_width
     )
 
-If we want our chart title to reflect the value from a selection parameter,
+In the example above,
+we accessed the value of a variable parameter
+and inserted it into the chart title.
+If we instead want our chart title to reflect the value from a selection parameter,
 it is not enough to reference only the name of the parameter.
-Instead, we need to explicitly include the field specified by the selection parameter
+We also need to reference the field specified by the selection parameter
 (i.e. ``Origin`` in the example below):
 
 .. altair-plot::
@@ -955,9 +1030,13 @@ Instead, we need to explicitly include the field specified by the selection para
         selection
     )
 
+
+A Regex Search Widget
+---------------------
+
 Now that we know the basics of expressions,
 let's see how we can improve on our search input example
-and make the search string match via a regex pattern.
+to make the search string match via a regex pattern.
 To do this we need to use ``expr.regex`` to define the regex string,
 and ``expr.test`` to test it against another string
 (in this case the string in the ``Name`` column).
@@ -996,7 +1075,8 @@ You can save this chart as an HTML file or put it on a static site generator suc
 and anyone can interact with it without having to install Python.
 Quite powerful!
 
-To summarize expressions:
+Summary of Expressions
+^^^^^^^^^^^^^^^^^^^^^^
 
 - Altair can utilize the expression language of Vega for writing basic formulas to enable custom interactions.
 - Both JavaScript-style syntax and Python-style syntax are supported in Altair to define expressions.
@@ -1014,11 +1094,12 @@ For more information on how to fine-tune selections, including specifying other
 mouse and keystroke options, see the `Vega-Lite Selection documentation
 <https://vega.github.io/vega-lite/docs/selection.html>`_.
 
-Access Params From Python
+Access Params from Python
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 As of Vega-Altair 5.1, it's now possible to access the values of variable and selection parameters
 from Python using the :ref:`user-guide-jupyterchart` class.
 
-Additionally, the dashboarding package ``Panel`` includes support for processing Altair selections
+Additionally, the dashboarding packages ``Panel`` and ``Dash`` include support for processing Altair selections
 with custom callbacks. See the
-`Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_.
+`Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_
+and the `Dash documentation <https://dash.plotly.com/dash-vega-components>`_.
