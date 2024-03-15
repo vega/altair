@@ -6,7 +6,7 @@ import lodashDebounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 // the javascript_bundle function for details on the available imports and their names.
 // If an additional import is required in the future, it will need to be added to vl-convert
 // in order to preserve offline support.
-export async function render({ model, el }) {
+async function render({ model, el }) {
     let finalize;
 
     function showError(error){
@@ -226,3 +226,5 @@ function trap(view, fn) {
         }
     };
 }
+
+export default { render }
