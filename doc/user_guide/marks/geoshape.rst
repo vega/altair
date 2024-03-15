@@ -466,8 +466,8 @@ The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method
 provides a convenient interface for a particular type of horizontal or vertical
 concatenation of a dataset where one field contain multiple ``variables``.
 
-Unfortunately, the following open issue https://github.com/altair-viz/altair/issues/2369
-will make the following not work for geographic visualization:
+Unfortunately, until https://github.com/altair-viz/altair/issues/2369 is resolved
+regular faceting will not work for geographic visualization:
 
 .. altair-plot::
 
@@ -483,8 +483,15 @@ will make the following not work for geographic visualization:
         height=130
     ).resolve_scale('independent')
 
-For now, the following workaround can be adopted to facet a map, manually filter the
-data in pandas, and create a small multiples chart via concatenation. For example:
+For now,
+there are two possible workarounds.
+You can either pass the geographic data
+via a transform lookup instead of via ``alt.Chart``
+as in the :ref:`gallery_us_incomebrackets_by_state_facet` gallery example.
+Or,
+you can manually filter the data in pandas,
+and create a small multiples chart via concatenation
+as in the following example:
 
 .. altair-plot::
 
