@@ -486,7 +486,7 @@ regular faceting will not work for geographic visualization:
 For now,
 there are two possible workarounds.
 You can either pass the geographic data
-via a transform lookup instead of via ``alt.Chart``
+via a transform lookup instead of via :class:`Chart`
 as in the :ref:`gallery_us_incomebrackets_by_state_facet` gallery example.
 Or,
 you can manually filter the data in pandas,
