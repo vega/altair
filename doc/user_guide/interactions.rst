@@ -1102,4 +1102,4 @@ from Python using the :ref:`user-guide-jupyterchart` class.
 Additionally, the dashboarding packages ``Panel`` and ``Dash`` include support for processing Altair selections
 with custom callbacks. See the
 `Panel documentation <https://panel.holoviz.org/reference/panes/Vega.html#selections>`_
-and the `Dash documentation <https://dash.plotly.com/dash-vega-components>`.
+and the `Dash documentation <https://dash.plotly.com/dash-vega-components>`_.
