@@ -644,4 +644,4 @@ Tile-based Maps
 ^^^^^^^^^^^^^^^
 
 To use tile-based maps (such as OpenStreetMap) as the background for ``mark_geoshape``,
-you can use the package `Altair Tiles <https://altair-viz.github.io/altair_tiles>` together with Altair.
+you can use the package `Altair Tiles <https://altair-viz.github.io/altair_tiles>`_ together with Altair.
