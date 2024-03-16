@@ -357,7 +357,7 @@ via mouse actions. By default, points are selected on click:
     point = alt.selection_point()
     make_example(point)
 
-By changing some arguments, we can select points on pointerover rather than on
+By changing some arguments, we can select points when hovering over them rather than on
 click. We can also set the ``nearest`` flag to ``True`` so that the nearest
 point is highlighted:
 
