@@ -2830,9 +2830,10 @@ class Chart(
     data : Data
         An object describing the data source
     mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a
-         MarkDef object.
+        A `MarkDef` or `CompositeMarkDef` object, or a string describing the mark type
+        (one of `"arc"`, `"area"`, `"bar"`, `"circle"`, `"geoshape"`, `"image"`,
+        `"line"`, `"point"`, `"rule"`, `"rect"`, `"square"`, `"text"`, `"tick"`,
+        `"trail"`, `"boxplot"`, `"errorband"`, and `"errorbar"`).
     encoding : FacetedEncoding
         A key-value mapping between encoding channels and definition of fields.
     autosize : anyOf(AutosizeType, AutoSizeParams)
