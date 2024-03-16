@@ -385,18 +385,21 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue
-        elif dtype_name in {
-            "Int8",
-            "Int16",
-            "Int32",
-            "Int64",
-            "UInt8",
-            "UInt16",
-            "UInt32",
-            "UInt64",
-            "Float32",
-            "Float64",
-        }:  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
+        elif (
+            dtype_name
+            in {
+                "Int8",
+                "Int16",
+                "Int32",
+                "Int64",
+                "UInt8",
+                "UInt16",
+                "UInt32",
+                "UInt64",
+                "Float32",
+                "Float64",
+            }
+        ):  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
