@@ -14,6 +14,11 @@ Enhancements
 - Docs: Add :ref:`section on dashboards <display_dashboards>` which have support for Altair (#3299)
 - Support restrictive FIPS-compliant environment (#3291)
 - Support opening charts in the Vega editor with ``chart.open_editor()`` (#3358)
+- Simplify type-hints to improve the readability of the function signature and docstring (#3307)
+- Support installation of all optional dependencies via ``python -m pip install altair[all]`` (#3354)
+    - ``conda install altair-all`` will be added in `this conda feedstock PR <https://github.com/conda-forge/altair-feedstock/pull/53>`_)
+- Add privacy friendly web-analytics for the documentation (#3350)
+- Additional gallery examples and documentation clarifications (#3233, #3266, #3276, #3282, #3298, #3299, #3323, #3334, #3324, #3340, #3350, #3353, #3357, #3362, #3363) 
 
 Bug Fixes
 ~~~~~~~~~
