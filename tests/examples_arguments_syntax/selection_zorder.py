@@ -15,7 +15,7 @@ from vega_datasets import data
 
 cars = data.cars.url
 
-hover = alt.selection_point(on='mouseover', nearest=True, empty=False)
+hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
 
 chart = alt.Chart(cars, title='Selection obscured by other points').mark_circle(opacity=1).encode(
     x='Horsepower:Q',
