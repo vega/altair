@@ -8,9 +8,11 @@ you’ll learn how to display images stored as Numpy arrays
 in tooltips with any Altair chart.
 
 First,
-we create some example image arrays with blobs of different sizes.
+we create some example image arrays with blobs (objects)
+of different sizes and shapes (circular and square).
 We measure the area of the blobs
-in order to have a quantitative measurement to plot.
+in order to have a quantitative measurement
+to compare them with in our charts.
 
 .. altair-plot::
     :output: repr
