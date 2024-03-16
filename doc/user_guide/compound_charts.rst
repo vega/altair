@@ -363,7 +363,7 @@ layered chart with a hover selection:
 
 .. altair-plot::
 
-    hover = alt.selection_point(on='mouseover', nearest=True, empty=False)
+    hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
 
     base = alt.Chart(iris).encode(
         x='petalLength:Q',

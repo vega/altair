@@ -580,7 +580,7 @@ def selection_interval(
         pressing the left/right arrow keys) will be supported in future
         versions.
         The default value is True, which corresponds to
-        [mousedown, window:mouseup] > window:mousemove!
+        [pointerdown, window:pointerup] > window:pointermove!
         This default allows users to click and drag within an interval
         selection to reposition it.
     zoom : string or boolean (optional)

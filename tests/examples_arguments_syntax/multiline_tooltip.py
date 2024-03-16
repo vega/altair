@@ -23,7 +23,7 @@ source = pd.DataFrame(
 source = source.reset_index().melt("x", var_name="category", value_name="y")
 
 # Create a selection that chooses the nearest point & selects based on x-value
-nearest = alt.selection_point(nearest=True, on="mouseover",
+nearest = alt.selection_point(nearest=True, on="pointerover",
                               fields=["x"], empty=False)
 
 # The basic line

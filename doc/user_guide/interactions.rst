@@ -357,13 +357,13 @@ via mouse actions. By default, points are selected on click:
     point = alt.selection_point()
     make_example(point)
 
-By changing some arguments, we can select points on mouseover rather than on
+By changing some arguments, we can select points on pointerover rather than on
 click. We can also set the ``nearest`` flag to ``True`` so that the nearest
 point is highlighted:
 
 .. altair-plot::
 
-    point_nearest = alt.selection_point(on='mouseover', nearest=True)
+    point_nearest = alt.selection_point(on='pointerover', nearest=True)
     make_example(point_nearest)
 
 Point selections also allow for multiple chart objects to be selected.
@@ -470,11 +470,11 @@ selection
 .. altair-plot::
 
     alex = alt.selection_interval(
-        on="[mousedown[event.altKey], mouseup] > mousemove",
+        on="[pointerdown[event.altKey], pointerup] > pointermove",
         name='alex'
     )
     morgan = alt.selection_interval(
-        on="[mousedown[event.shiftKey], mouseup] > mousemove",
+        on="[pointerdown[event.shiftKey], pointerup] > pointermove",
         mark=alt.BrushConfig(fill="#fdbb84", fillOpacity=0.5, stroke="#e34a33"),
         name='morgan'
     )

@@ -3,7 +3,7 @@ Connections Among U.S. Airports Interactive
 -------------------------------------------
 This example shows all the connections between major U.S. airports. Lookup transformations 
 are used to find the coordinates of each airport and connecting airports. Connections 
-are displayed on mouseover via a single selection.
+are displayed on pointerover via a single selection.
 """
 # category: case studies
 import altair as alt
@@ -15,9 +15,9 @@ flights_airport = data.flights_airport.url
 
 states = alt.topo_feature(data.us_10m.url, feature="states")
 
-# Create mouseover selection
+# Create pointerover selection
 select_city = alt.selection_point(
-    on="mouseover", nearest=True, fields=["origin"], empty=False
+    on="pointerover", nearest=True, fields=["origin"], empty=False
 )
 
 # Define which attributes to lookup from airports.csv

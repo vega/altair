@@ -590,7 +590,7 @@ We use here an elegant way to access the nested point coordinates from the geome
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5, name='rotate longitude ')
     rotate0 = alt.param(value=120, bind=range0)
-    hover = alt.selection_point(on="mouseover", clear="mouseout")
+    hover = alt.selection_point(on="pointerover", clear="pointerout")
 
     # world disk
     sphere = alt.Chart(alt.sphere()).mark_geoshape(
