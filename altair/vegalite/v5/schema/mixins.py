@@ -77,7 +77,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -998,7 +1000,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -1919,7 +1923,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -2840,7 +2846,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -3761,7 +3769,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -4682,7 +4692,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -5603,7 +5615,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -6524,7 +6538,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -7445,7 +7461,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -8366,7 +8384,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -9287,7 +9307,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -10208,7 +10230,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -11129,7 +11153,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,
@@ -12050,7 +12076,9 @@ class MarkMethodMixin:
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
+        clip: Union[
+            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+        ] = Undefined,
         color: Union[
             str,
             dict,

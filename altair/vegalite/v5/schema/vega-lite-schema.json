@@ -39,7 +39,9 @@
         "valid",
         "values",
         "variance",
-        "variancep"
+        "variancep",
+        "exponential",
+        "exponentialb"
       ],
       "type": "string"
     },
@@ -15591,7 +15593,7 @@
         "monthdatehoursminutes",
         "monthdatehoursminutesseconds",
         "weekday",
-        "weeksdayhours",
+        "weekdayhours",
         "weekdayhoursminutes",
         "weekdayhoursminutesseconds",
         "dayhours",
@@ -16747,8 +16749,15 @@
           ]
         },
         "clip": {
-          "description": "Whether a mark be clipped to the enclosing group’s width and height.",
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "Whether a mark be clipped to the enclosing group’s width and height."
         },
         "color": {
           "anyOf": [
@@ -17882,7 +17891,9 @@
         "valid",
         "values",
         "variance",
-        "variancep"
+        "variancep",
+        "exponential",
+        "exponentialb"
       ],
       "type": "string"
     },
@@ -18296,8 +18307,15 @@
           ]
         },
         "clip": {
-          "description": "Whether a mark be clipped to the enclosing group’s width and height.",
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/ExprRef"
+            }
+          ],
+          "description": "Whether a mark be clipped to the enclosing group’s width and height."
         },
         "color": {
           "anyOf": [
@@ -21923,6 +21941,12 @@
           "anyOf": [
             {
               "$ref": "#/definitions/ColorScheme"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
             },
             {
               "$ref": "#/definitions/SchemeParams"

@@ -31,7 +31,7 @@ from schemapi.utils import (  # noqa: E402
     indent_docstring,
 )
 
-SCHEMA_VERSION: Final = "v5.16.3"
+SCHEMA_VERSION: Final = "v5.17.0"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
