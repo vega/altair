@@ -1123,6 +1123,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             return vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
 
+    def open_editor(self, *, fullscreen: bool = False) -> None:
+        """Opens the chart specification in the Vega chart editor using the default browser.
+
+        Parameters
+        ----------
+        fullscreen : bool
+            If True, editor will open chart in fullscreen mode. Default False
+        """
+        import webbrowser
+
+        webbrowser.open(self.to_url(fullscreen=fullscreen))
+
     def save(
         self,
         fp: Union[str, IO],
