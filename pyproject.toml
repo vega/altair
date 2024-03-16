@@ -59,7 +59,7 @@ Source = "https://github.com/altair-viz/altair"
 [project.optional-dependencies]
 all = [
     "vega_datasets>=0.9.0",
-    "vl-convert-python>=1.1.0",
+    "vl-convert-python>=1.3.0",
     "pyarrow>=11",
     "vegafusion[embed]>=1.5.0",
     "anywidget>=0.9.0",
