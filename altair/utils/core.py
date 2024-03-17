@@ -88,6 +88,8 @@ AGGREGATES = [
     "values",
     "variance",
     "variancep",
+    "exponential",
+    "exponentialb",
 ]
 
 # window aggregates from vega-lite version 4.6.0
@@ -138,6 +140,7 @@ TIMEUNITS = [
     "monthdatehoursminutesseconds",
     "weekday",
     "weeksdayhours",
+    "weekdayhours",
     "weekdayhoursminutes",
     "weekdayhoursminutesseconds",
     "dayhours",
