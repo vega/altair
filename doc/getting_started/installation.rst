@@ -5,7 +5,7 @@
 Installation
 ============
 
-Altair can be installed, along with the example datasets in vega_datasets_, using:
+Altair can be installed, along with all its optional dependencies, using:
 
 .. code-block:: bash
 
@@ -15,12 +15,14 @@ If you are using the conda_ package manager, the equivalent is:
 
 .. code-block:: bash
 
-    conda install -c conda-forge altair vega_datasets
+    conda install -c conda-forge altair-all
 
-At this point, you should be able to open `Jupyter Notebook`_ or `JupyterLab`_
+At this point, you should be able to open any IDE compatible with Jupyter Notebooks,
 and execute any of the code from the :ref:`example-gallery`.
 For more information on how to display charts in various notebook environments
 and non-notebook IDEs, see :ref:`displaying-charts`.
+If you wish to install Altair with only the required dependencies,
+you can omit the ``[all]``/``-all`` suffix.
 
 Development Installation
 ========================
