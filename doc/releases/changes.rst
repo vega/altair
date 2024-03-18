@@ -11,6 +11,8 @@ Version 5.3.0 (unreleased month day, year)
 Enhancements
 ~~~~~~~~~~~~
 - Add "jupyter" renderer which uses JupyterChart for rendering (#3283). See :ref:`renderers` for more information.
+- Add integration of VegaFusion and JupyterChart to support data transformations in the Python kernel for interactive charts (##3281). See :ref:`vegafusion-data-transformer` for more information.
+- Add ``embed_options`` argument to JupyterChart to allow customization of Vega Embed options (##3304)
 - Add offline support for JupyterChart and the new "jupyter" renderer. See :ref:`user-guide-jupyterchart-offline`
   for more information.
 - Docs: Add :ref:`section on dashboards <display_dashboards>` which have support for Altair (#3299)
@@ -25,6 +27,7 @@ Enhancements
 Bug Fixes
 ~~~~~~~~~
 - Fix type hints for libraries such as Polars where Altair uses the dataframe interchange protocol (#3297)
+- Fix anywidget deprecation warning (#3364)
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
