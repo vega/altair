@@ -320,7 +320,7 @@ def preprocess_embed_options(embed_options: dict) -> dict:
     embed_opts : dict
         The preprocessed embed options dictionary.
     """
-    embed_options = embed_options.copy()
+    embed_options = (embed_options or {}).copy()
 
     # Convert locale strings to objects compatible with Vega Embed using vl-convert
     format_locale = embed_options.get("formatLocale", None)
