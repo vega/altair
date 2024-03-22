@@ -65,6 +65,21 @@ def test_json_renderer_embed_options(chart, renderer="json"):
             assert metadata == {mimetype: {"option": "foo"}}
 
 
+def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
+    # Check that setting embed_options to None doesn't crash
+    from altair.utils.mimebundle import spec_to_mimebundle
+
+    spec = chart.to_dict()
+    with alt.renderers.enable(renderer, embed_options=None):
+        bundle = spec_to_mimebundle(
+            spec=spec,
+            mode="vega-lite",
+            format="svg",
+            embed_options=None,
+        )
+        assert bundle["image/svg+xml"].startswith("<svg")
+
+
 def test_jupyter_renderer_mimetype(chart, renderer="jupyter"):
     """Test that we get the expected widget mimetype when the jupyter renderer is enabled"""
     with alt.renderers.enable(renderer):
