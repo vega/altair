@@ -430,7 +430,7 @@ def sanitize_arrow_table(pa_table):
     for name in schema.names:
         array = pa_table[name]
         dtype_name = str(schema.field(name).type)
-        if dtype_name.startswith("timestamp") or dtype_name.startswith("date32"):
+        if dtype_name.startswith("timestamp") or dtype_name.startswith("date"):
             arrays.append(pc.strftime(array))
         elif dtype_name.startswith("duration"):
             raise ValueError(
