@@ -26,6 +26,7 @@ Enhancements
 
 Bug Fixes
 ~~~~~~~~~
+- Fix error when embed_options are None (#3376)
 - Fix type hints for libraries such as Polars where Altair uses the dataframe interchange protocol (#3297)
 - Fix anywidget deprecation warning (#3364)
 
