@@ -429,15 +429,15 @@ def sanitize_arrow_table(pa_table):
     schema = pa_table.schema
     for name in schema.names:
         array = pa_table[name]
-        dtype = schema.field(name).type
-        if str(dtype).startswith("timestamp"):
+        dtype_name = str(schema.field(name).type)
+        if dtype_name.startswith("timestamp") or dtype_name.startswith("date32"):
             arrays.append(pc.strftime(array))
-        elif str(dtype).startswith("duration"):
+        elif dtype_name.startswith("duration"):
             raise ValueError(
                 'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=name, dtype=dtype)
+                "".format(col_name=name, dtype=dtype_name)
             )
         else:
             arrays.append(array)
