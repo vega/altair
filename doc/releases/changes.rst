@@ -28,7 +28,7 @@ Bug Fixes
 ~~~~~~~~~
 - Fix type hints for libraries such as Polars where Altair uses the dataframe interchange protocol (#3297)
 - Fix anywidget deprecation warning (#3364)
-- Fix handling of Date32 columns in arrow tables (#3377)
+- Fix handling of Date32 columns in arrow tables and Polars DataFrames (#3377)
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
