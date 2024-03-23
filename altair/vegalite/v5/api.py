@@ -26,6 +26,7 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
+from ...utils._show import open_html_in_browser
 from ...utils.core import DataFrameLike
 from ...utils.data import DataType
 
@@ -2678,29 +2679,29 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def show(
-        self, embed_opt: Optional[dict] = None, open_browser: Optional[bool] = None
+        self,
+        embed_options: Optional[dict] = None,
+        using: Union[str, Iterable[str], None] = None,
+        port: Optional[int] = None,
     ) -> None:
-        """Show the chart in an external browser window.
+        """Show the chart in an external browser tab.
 
-        This requires a recent version of the altair_viewer package.
+        This requires the vl-convert-python package to be installed
 
         Parameters
         ----------
-        embed_opt : dict (optional)
+        embed_options : dict (optional)
             The Vega embed options that control the display of the chart.
-        open_browser : bool (optional)
-            Specify whether a browser window should be opened. If not specified,
-            a browser window will be opened only if the server is not already
-            connected to a browser.
+        using: str or iterable of str
+            Name of the web browser to open (e.g. "chrome", "firefox", etc.).
+            If an iterable, choose the first browser available on the system.
+            If None, choose the system default browser.
+        port: int
+            Port to use. Defaults to a random port
         """
-        try:
-            import altair_viewer
-        except ImportError as err:
-            raise ValueError(
-                "'show' method requires the altair_viewer package. "
-                "See http://github.com/altair-viz/altair_viewer"
-            ) from err
-        altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
+        buffer = io.StringIO()
+        self.save(buffer, format="html", embed_options=embed_options, inline=True)
+        open_html_in_browser(buffer.getvalue(), using=using, port=port)
 
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
