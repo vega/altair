@@ -37,7 +37,7 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol, TYPE_CHECKING
+from typing import Literal, Protocol, TYPE_CHECKING, runtime_checkable
 
 if TYPE_CHECKING:
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
@@ -46,6 +46,7 @@ V = TypeVar("V")
 P = ParamSpec("P")
 
 
+@runtime_checkable
 class DataFrameLike(Protocol):
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
@@ -429,15 +430,15 @@ def sanitize_arrow_table(pa_table):
     schema = pa_table.schema
     for name in schema.names:
         array = pa_table[name]
-        dtype = schema.field(name).type
-        if str(dtype).startswith("timestamp"):
+        dtype_name = str(schema.field(name).type)
+        if dtype_name.startswith("timestamp") or dtype_name.startswith("date"):
             arrays.append(pc.strftime(array))
-        elif str(dtype).startswith("duration"):
+        elif dtype_name.startswith("duration"):
             raise ValueError(
                 'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=name, dtype=dtype)
+                "".format(col_name=name, dtype=dtype_name)
             )
         else:
             arrays.append(array)
@@ -588,7 +589,7 @@ def parse_shorthand(
 
     # if data is specified and type is not, infer type from data
     if "type" not in attrs:
-        if pyarrow_available() and data is not None and hasattr(data, "__dataframe__"):
+        if pyarrow_available() and data is not None and isinstance(data, DataFrameLike):
             dfi = data.__dataframe__()
             if "field" in attrs:
                 unescaped_field = attrs["field"].replace("\\", "")
