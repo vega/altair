@@ -71,6 +71,7 @@ DEBUG_MODE: bool = True
 
 jsonschema_version_str = importlib_version("jsonschema")
 
+
 def enable_debug_mode() -> None:
     global DEBUG_MODE
     DEBUG_MODE = True
