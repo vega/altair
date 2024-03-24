@@ -238,8 +238,8 @@ def to_values(data: DataType) -> ToValuesReturnType:
 
 
 def check_data_type(data: DataType) -> None:
-    if not isinstance(data, (dict, pd.DataFrame)) and not any(
-        hasattr(data, attr) for attr in ["__geo_interface__", "__dataframe__"]
+    if not isinstance(data, (dict, pd.DataFrame, DataFrameLike)) and not any(
+        hasattr(data, attr) for attr in ["__geo_interface__"]
     ):
         raise TypeError(
             "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(

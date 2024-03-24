@@ -589,7 +589,7 @@ def parse_shorthand(
 
     # if data is specified and type is not, infer type from data
     if "type" not in attrs:
-        if pyarrow_available() and data is not None and hasattr(data, "__dataframe__"):
+        if pyarrow_available() and data is not None and isinstance(data, DataFrameLike):
             dfi = data.__dataframe__()
             if "field" in attrs:
                 unescaped_field = attrs["field"].replace("\\", "")

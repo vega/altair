@@ -114,7 +114,7 @@ def _prepare_data(data, context=None):
     elif isinstance(data, str):
         data = core.UrlData(data)
 
-    elif hasattr(data, "__dataframe__"):
+    elif isinstance(data, DataFrameLike):
         data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
