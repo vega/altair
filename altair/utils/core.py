@@ -208,6 +208,7 @@ def infer_vegalite_type(
     data: object
     """
     from altair.utils._importers import import_pandas
+
     pd = import_pandas()
     typ = pd.api.types.infer_dtype(data, skipna=False)
 
@@ -318,6 +319,7 @@ def sanitize_dataframe(df: "pd.DataFrame") -> "pd.DataFrame":  # noqa: C901
     * Raise a ValueError for TimeDelta dtypes
     """
     from altair.utils._importers import import_pandas
+
     pd = import_pandas()
     df = df.copy()
 

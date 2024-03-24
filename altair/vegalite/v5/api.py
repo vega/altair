@@ -88,9 +88,11 @@ def _consolidate_data(data, context):
 
     return data
 
+
 def _is_pandas_dataframe(obj: Any) -> bool:
     """Check if the object is an instance of a pandas DataFrame."""
-    return all(attr in dir(obj) for attr in ['iloc', 'columns', 'index'])
+    return all(attr in dir(obj) for attr in ["iloc", "columns", "index"])
+
 
 def _prepare_data(data, context=None):
     """Convert input data to data for use within schema

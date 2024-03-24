@@ -47,9 +47,11 @@ else:
 if TYPE_CHECKING:
     pass
 
+
 class _PandasTimestamp:
     def isoformat(self):
         return "dummy_isoformat"  # Return a dummy ISO format string
+
 
 TSchemaBase = TypeVar("TSchemaBase", bound=Type["SchemaBase"])
 
@@ -486,6 +488,7 @@ def _todict(obj: Any, context: Optional[Dict[str, Any]]) -> Any:
         return float(obj)
     elif isinstance(obj, (_PandasTimestamp, np.datetime64)):
         import pandas as pd
+
         return pd.Timestamp(obj).isoformat()
     else:
         return obj

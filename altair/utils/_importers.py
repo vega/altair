@@ -96,6 +96,7 @@ def pyarrow_available() -> bool:
     except ImportError:
         return False
 
+
 def import_pandas() -> ModuleType:
     min_version = "0.25"
     try:
