@@ -22,6 +22,7 @@ from typing import (
     overload,
     Literal,
     TypeVar,
+    TYPE_CHECKING,
 )
 from itertools import zip_longest
 from importlib.metadata import version as importlib_version
@@ -31,7 +32,6 @@ import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import numpy as np
-import pandas as pd
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -44,6 +44,13 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
+if TYPE_CHECKING:
+    import pandas as pd
+
+class _PandasTimestamp:
+    def isoformat(self):
+        return "dummy_isoformat"  # Return a dummy ISO format string
+    
 TSchemaBase = TypeVar("TSchemaBase", bound=Type["SchemaBase"])
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
@@ -477,7 +484,8 @@ def _todict(obj: Any, context: Optional[Dict[str, Any]]) -> Any:
         return obj.to_dict()
     elif isinstance(obj, np.number):
         return float(obj)
-    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
+    elif isinstance(obj, (_PandasTimestamp, np.datetime64)):
+        import pandas as pd
         return pd.Timestamp(obj).isoformat()
     else:
         return obj
@@ -936,7 +944,7 @@ class SchemaBase:
             # parsed_shorthand is removed from context if it exists so that it is
             # not passed to child to_dict function calls
             parsed_shorthand = context.pop("parsed_shorthand", {})
-            # Prevent that pandas categorical data is automatically sorted
+            # Prevent that categorical data is automatically sorted
             # when a non-ordinal data type is specifed manually
             # or if the encoding channel does not support sorting
             if "sort" in parsed_shorthand and (
