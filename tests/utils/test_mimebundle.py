@@ -241,7 +241,7 @@ def check_pre_transformed_vega_spec(vega_spec):
 
     # Check that the bin transform has been applied
     row0 = data_0["values"][0]
-    assert row0 == {"a": "A", "b": 28, "b_end": 28.0, "b_start": 0.0}
+    assert row0 == {"a": "A", "b_end": 28.0, "b_start": 0.0}
 
     # And no transforms remain
     assert len(data_0.get("transform", [])) == 0
