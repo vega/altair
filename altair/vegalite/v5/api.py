@@ -2678,30 +2678,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             http_server=http_server,
         )
 
-    def show(
-        self,
-        embed_options: Optional[dict] = None,
-        using: Union[str, Iterable[str], None] = None,
-        port: Optional[int] = None,
-    ) -> None:
-        """Show the chart in an external browser tab.
+    def show(self) -> None:
+        """Display the chart using the active renderer"""
+        if renderers.active == "browser":
+            # Opens browser window as side-effect.
+            # We use a special case here so that IPython is not required
+            self._repr_mimebundle_()
+        else:
+            # Mime-bundle based renderer, requires running in an IPython session
+            from IPython.display import display
 
-        This requires the vl-convert-python package to be installed
-
-        Parameters
-        ----------
-        embed_options : dict (optional)
-            The Vega embed options that control the display of the chart.
-        using: str or iterable of str
-            Name of the web browser to open (e.g. "chrome", "firefox", etc.).
-            If an iterable, choose the first browser available on the system.
-            If None, choose the system default browser.
-        port: int
-            Port to use. Defaults to a random port
-        """
-        buffer = io.StringIO()
-        self.save(buffer, format="html", embed_options=embed_options, inline=True)
-        _open_html_in_browser(buffer.getvalue(), using=using, port=port)
+            display(self)
 
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
