@@ -26,7 +26,6 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from ...utils._show import open_html_in_browser as _open_html_in_browser
 from ...utils.core import DataFrameLike
 from ...utils.data import DataType
 

@@ -122,6 +122,10 @@ def browser_renderer(
         vegalite_version=VEGALITE_VERSION,
         **metadata,
     )
+
+    if isinstance(mimebundle, tuple):
+        mimebundle = mimebundle[0]
+
     html = mimebundle["text/html"]
     open_html_in_browser(html, using=using, port=port)
     return {}
