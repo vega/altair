@@ -69,6 +69,7 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
 
+jsonschema_version_str = importlib_version("jsonschema")
 
 def enable_debug_mode() -> None:
     global DEBUG_MODE
@@ -201,7 +202,6 @@ def _get_json_schema_draft_url(schema: dict) -> str:
 def _use_referencing_library() -> bool:
     """In version 4.18.0, the jsonschema package deprecated RefResolver in
     favor of the referencing library."""
-    jsonschema_version_str = importlib_version("jsonschema")
     return Version(jsonschema_version_str) >= Version("4.18")
 
 
