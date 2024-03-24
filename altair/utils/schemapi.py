@@ -45,12 +45,12 @@ else:
     from typing_extensions import Self
 
 if TYPE_CHECKING:
-    import pandas as pd
+    pass
 
 class _PandasTimestamp:
     def isoformat(self):
         return "dummy_isoformat"  # Return a dummy ISO format string
-    
+
 TSchemaBase = TypeVar("TSchemaBase", bound=Type["SchemaBase"])
 
 ValidationErrorList = List[jsonschema.exceptions.ValidationError]
