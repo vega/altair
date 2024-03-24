@@ -4,7 +4,6 @@ import hashlib
 import io
 import json
 import jsonschema
-import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
@@ -89,6 +88,9 @@ def _consolidate_data(data, context):
 
     return data
 
+def _is_pandas_dataframe(obj: Any) -> bool:
+    """Check if the object is an instance of a pandas DataFrame."""
+    return all(attr in dir(obj) for attr in ['iloc', 'columns', 'index'])
 
 def _prepare_data(data, context=None):
     """Convert input data to data for use within schema
@@ -106,15 +108,15 @@ def _prepare_data(data, context=None):
     if data is Undefined:
         return data
 
-    # convert dataframes  or objects with __geo_interface__ to dict
-    elif isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
+    # convert dataframes or objects with __geo_interface__ to dict
+    elif isinstance(data, DataFrameLike) or hasattr(data, "__geo_interface__"):
         data = _pipe(data, data_transformers.get())
 
     # convert string input to a URLData
     elif isinstance(data, str):
         data = core.UrlData(data)
 
-    elif isinstance(data, DataFrameLike):
+    elif _is_pandas_dataframe(data):
         data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
