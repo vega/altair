@@ -25,7 +25,7 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from ...utils.core import DataFrameLike
+from ...utils.core import DataFrameLike, _is_pandas_dataframe
 from ...utils.data import DataType
 
 if sys.version_info >= (3, 11):
@@ -87,11 +87,6 @@ def _consolidate_data(data, context):
         context.setdefault("datasets", {})[name] = values
 
     return data
-
-
-def _is_pandas_dataframe(obj: Any) -> bool:
-    """Check if the object is an instance of a pandas DataFrame."""
-    return all(attr in dir(obj) for attr in ["iloc", "columns", "index"])
 
 
 def _prepare_data(data, context=None):

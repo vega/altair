@@ -9,11 +9,10 @@ import warnings
 
 import IPython
 from IPython.core import magic_arguments
-from altair.utils.core import DataFrameLike
+from altair.utils.core import DataFrameLike, _is_pandas_dataframe
 from toolz import curried
 
 from altair.vegalite import v5 as vegalite_v5
-from altair.vegalite.api import _is_pandas_dataframe
 
 try:
     import yaml

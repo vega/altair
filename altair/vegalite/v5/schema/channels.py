@@ -11,6 +11,7 @@
 
 import sys
 from . import core
+from altair.utils.core import DataFrameLike
 from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters
 from altair.utils import parse_shorthand
 from typing import Any, overload, Sequence, List, Literal, Union, Optional

@@ -52,6 +52,11 @@ class DataFrameLike(Protocol):
     ) -> DfiDataFrame: ...
 
 
+def _is_pandas_dataframe(obj: Any) -> bool:
+    """Check if the object is an instance of a pandas DataFrame."""
+    return all(attr in dir(obj) for attr in ["iloc", "columns", "index"])
+
+
 TYPECODE_MAP = {
     "ordinal": "O",
     "nominal": "N",
@@ -606,7 +611,7 @@ def parse_shorthand(
                         # Fall back to pandas-based inference.
                         # Note: The AttributeError catch is a workaround for
                         # https://github.com/pandas-dev/pandas/issues/55332
-                        if isinstance(data, "pd.DataFrame"):
+                        if _is_pandas_dataframe(data):
                             attrs["type"] = infer_vegalite_type(data[unescaped_field])
                         else:
                             raise
@@ -614,7 +619,7 @@ def parse_shorthand(
                     if isinstance(attrs["type"], tuple):
                         attrs["sort"] = attrs["type"][1]
                         attrs["type"] = attrs["type"][0]
-        elif isinstance(data, "pd.DataFrame"):
+        elif _is_pandas_dataframe(data):
             # Fallback if pyarrow is not installed or if pandas is older than 1.5
             #
             # Remove escape sequences so that types can be inferred for columns with special characters

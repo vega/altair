@@ -9,7 +9,12 @@ from toolz import curried
 from typing import TypeVar
 
 from ._importers import import_pyarrow_interchange
-from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
+from .core import (
+    sanitize_dataframe,
+    sanitize_arrow_table,
+    DataFrameLike,
+    _is_pandas_dataframe,
+)
 from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
@@ -110,7 +115,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
             # mypy gets confused as it doesn't see Dict[Any, Any]
             # as equivalent to TDataType
             return data  # type: ignore[return-value]
-    elif isinstance(data, "pd.DataFrame"):
+    elif _is_pandas_dataframe(data):
         values = data
 
     if max_rows is not None and len(values) > max_rows:
@@ -149,7 +154,7 @@ def sample(
         else:
             # Maybe this should raise an error or return something useful?
             return None
-    elif isinstance(data, "pd.DataFrame"):
+    elif _is_pandas_dataframe(data):
         return data.sample(n=n, frac=frac)
     else:
         # Maybe this should raise an error or return something useful? Currently,
@@ -216,7 +221,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
-        if isinstance(data, "pd.DataFrame"):
+        if _is_pandas_dataframe(data):
             data = sanitize_dataframe(data)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
@@ -229,7 +234,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
         return data
-    elif isinstance(data, "pd.DataFrame"):
+    elif _is_pandas_dataframe(data):
         data = sanitize_dataframe(data)
         return {"values": data.to_dict(orient="records")}
 
@@ -260,7 +265,7 @@ def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
-        if isinstance(data, "pd.DataFrame"):
+        if _is_pandas_dataframe(data):
             data = sanitize_dataframe(data)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
@@ -273,7 +278,7 @@ def _data_to_json_string(data: DataType) -> str:
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
         return json.dumps(data["values"], sort_keys=True)
-    elif isinstance(data, "pd.DataFrame"):
+    elif _is_pandas_dataframe(data):
         data = sanitize_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
     else:
@@ -302,7 +307,7 @@ def _data_to_csv_string(data: Union[dict, DataFrameLike, "pd.DataFrame"]) -> str
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present")
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
-    elif isinstance(data, "pd.DataFrame"):
+    elif _is_pandas_dataframe(data):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
     else:
