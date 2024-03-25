@@ -243,8 +243,10 @@ def to_values(data: DataType) -> ToValuesReturnType:
 
 
 def check_data_type(data: DataType) -> None:
-    if not isinstance(data, (dict, DataFrameLike)) and not _is_pandas_dataframe(data) and not any(
-        hasattr(data, attr) for attr in ["__geo_interface__"]
+    if (
+        not isinstance(data, (dict, DataFrameLike))
+        and not _is_pandas_dataframe(data)
+        and not any(hasattr(data, attr) for attr in ["__geo_interface__"])
     ):
         raise TypeError(
             "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
@@ -299,6 +301,7 @@ def _data_to_csv_string(data: Union[dict, DataFrameLike, "pd.DataFrame"]) -> str
         return data.to_csv(index=False)
     elif isinstance(data, dict):
         from altair.utils._importers import import_pandas
+
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present")
         pd = import_pandas()
