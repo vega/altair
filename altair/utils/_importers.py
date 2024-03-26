@@ -93,5 +93,5 @@ def pyarrow_available() -> bool:
     try:
         import_pyarrow_interchange()
         return True
-    except ImportError:
+    except (ImportError, RuntimeError):
         return False
