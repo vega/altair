@@ -107,11 +107,11 @@ def jupyter_renderer(spec: dict, **metadata):
 
 
 def browser_renderer(
-    spec: dict, inline=False, using=None, port=0, **metadata
+    spec: dict, offline=False, using=None, port=0, **metadata
 ) -> Dict[str, str]:
     from altair.utils._show import open_html_in_browser
 
-    if inline:
+    if offline:
         metadata["template"] = "inline"
     mimebundle = spec_to_mimebundle(
         spec,
