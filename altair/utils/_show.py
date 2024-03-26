@@ -14,8 +14,6 @@ def open_html_in_browser(
     Instantiates a simple http server and uses the webbrowser module to
     open the server's URL
 
-    Based on
-
     Parameters
     ----------
     html: str
