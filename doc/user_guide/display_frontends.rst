@@ -240,9 +240,9 @@ The ``"browser"`` renderer supports the following keyword argument configuration
   specified, the system default browser is used.
 - The ``offline`` argument may be used to specify whether JavaScript dependencies should
   be loaded from an online CDN or embedded alongside the chart specification. When ``offline``
-  is ``False`` (The default), JavaScript dependencies are loaded from an online CDN, and so
+  is ``False`` (the default), JavaScript dependencies are loaded from an online CDN, and so
   an internet connection is required. When ``offline`` is ``True``, JavaScript dependencies
-  are embedded alongside chart specification and so no internet connection is required. Setting
+  are embedded alongside the chart specification and so no internet connection is required. Setting
   ``offline`` to ``True`` requires the optional ``vl-convert-python`` dependency.
 - The ``port`` argument may be used to configure the system port that the chart HTML is served
   on. Defaults to a random open port.
@@ -250,7 +250,7 @@ The ``"browser"`` renderer supports the following keyword argument configuration
 Limitations:
 
 - The ``"browser"`` renderer sets up a temporary web server that serves the chart exactly once,
-  then opens the designated browser pointing to this server's URL. This approach does not require
+  then opens the designated browser pointing to the server's URL. This approach does not require
   the creation of temporary HTML files on disk, and it's memory efficient as there are no long-lived
   web server processes required. A limitation of this approach is that the chart will be lost if the
   browser is refreshed, and it's not possible to copy the chart URL and paste it in another browser
@@ -259,7 +259,7 @@ Limitations:
   chart in the browser when the chart is the final value of the cell or command. This behavior is not
   available in the standard ``python`` REPL. In this case, the ``chart.show()`` method may be used to
   manually invoke the active renderer and open the chart in the browser.
-- This renderer is not compatible with remote environments like Binder or Colab.
+- This renderer is not compatible with remote environments like `Binder`_ or `Colab`_.
 
 
 Manual ``save()`` and display
@@ -709,6 +709,7 @@ see :ref:`display-general`.
 .. _Vega: https://vega.github.io/vega/
 .. _VSCode-Python: https://code.visualstudio.com/docs/python/python-tutorial
 .. _Zeppelin: https://zeppelin.apache.org/
+.. _Binder: https://mybinder.org/
 .. _IPython: https://ipython.org/
 .. _Spyder: https://www.spyder-ide.org/
 .. _IPython QtConsole: https://qtconsole.readthedocs.io/en/stable/
