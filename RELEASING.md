@@ -96,8 +96,8 @@ Bug Fixes
 - Fix error when embed_options are None (#3376)
 - Fix type hints for libraries such as Polars where Altair uses the dataframe interchange protocol (#3297)
 - Fix anywidget deprecation warning (#3364)
+- Fix handling of Date32 columns in arrow tables and Polars DataFrames (#3377)
 
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Changed hash function from ``md5`` to a truncated ``sha256`` non-cryptograhic hash (#3291)
-

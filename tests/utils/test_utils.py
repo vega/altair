@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from altair.utils import infer_vegalite_type, sanitize_dataframe
+from altair.utils import infer_vegalite_type, sanitize_dataframe, sanitize_arrow_table
 
 try:
     import pyarrow as pa
@@ -118,6 +118,53 @@ def test_sanitize_dataframe_arrow_columns():
 
     # Make sure we can serialize to JSON without error
     json.dumps(records)
+
+
+@pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+def test_sanitize_pyarrow_table_columns():
+    # create a dataframe with various types
+    df = pd.DataFrame(
+        {
+            "s": list("abcde"),
+            "f": np.arange(5, dtype=float),
+            "i": np.arange(5, dtype=int),
+            "b": np.array([True, False, True, True, False]),
+            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "c": pd.Series(list("ababc"), dtype="category"),
+            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+        }
+    )
+
+    # Create pyarrow table with explicit schema so that date32 type is preserved
+    pa_table = pa.Table.from_pandas(
+        df,
+        pa.schema(
+            [
+                pa.field("s", pa.string()),
+                pa.field("f", pa.float64()),
+                pa.field("i", pa.int64()),
+                pa.field("b", pa.bool_()),
+                pa.field("d", pa.date32()),
+                pa.field("c", pa.dictionary(pa.int8(), pa.string())),
+                pa.field("p", pa.timestamp("ns", tz="UTC")),
+            ]
+        ),
+    )
+    sanitized = sanitize_arrow_table(pa_table)
+    values = sanitized.to_pylist()
+
+    assert values[0] == {
+        "s": "a",
+        "f": 0.0,
+        "i": 0,
+        "b": True,
+        "d": "2012-01-01T00:00:00",
+        "c": "a",
+        "p": "2012-01-01T00:00:00.000000000",
+    }
+
+    # Make sure we can serialize to JSON without error
+    json.dumps(values)
 
 
 def test_sanitize_dataframe_colnames():

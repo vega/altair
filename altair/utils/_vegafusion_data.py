@@ -45,7 +45,7 @@ def vegafusion_data_transformer(
         # Use default transformer for geo interface objects
         # # (e.g. a geopandas GeoDataFrame)
         return default_data_transformer(data)
-    elif hasattr(data, "__dataframe__"):
+    elif isinstance(data, DataFrameLike):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
         extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}

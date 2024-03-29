@@ -56,7 +56,7 @@ def _dataset_name(values: Union[dict, list, core.InlineDataset]) -> str:
         values = values.to_dict()
     if values == [{}]:
         return "empty"
-    values_json = json.dumps(values, sort_keys=True)
+    values_json = json.dumps(values, sort_keys=True, default=str)
     hsh = hashlib.sha256(values_json.encode()).hexdigest()[:32]
     return "data-" + hsh
 
@@ -114,7 +114,7 @@ def _prepare_data(data, context=None):
     elif isinstance(data, str):
         data = core.UrlData(data)
 
-    elif hasattr(data, "__dataframe__"):
+    elif isinstance(data, DataFrameLike):
         data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
