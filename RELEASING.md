@@ -82,6 +82,8 @@ Enhancements
 - Add ``embed_options`` argument to JupyterChart to allow customization of Vega Embed options (##3304)
 - Add offline support for JupyterChart and the new "jupyter" renderer. See :ref:`user-guide-jupyterchart-offline`
   for more information.
+- Add ``"browser"`` renderer to support displaying Altair charts in an external web browser.
+  See :ref:`display-browser` for more information (#3379).
 - Docs: Add :ref:`section on dashboards <display_dashboards>` which have support for Altair (#3299)
 - Support restrictive FIPS-compliant environment (#3291)
 - Support opening charts in the Vega editor with ``chart.open_editor()`` (#3358)
@@ -101,3 +103,4 @@ Bug Fixes
 Backward-Incompatible Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Changed hash function from ``md5`` to a truncated ``sha256`` non-cryptograhic hash (#3291)
+- Updated ``chart.show()`` method to invoke the active renderer rather than depend on ``altair_saver`` (Which was never updated for use with Altair 5) (#3379).
