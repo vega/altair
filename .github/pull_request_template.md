@@ -1,6 +1,8 @@
+<!-- Click "Preview" to read this message; then delete it. -->
+
 Thanks for contributing to Altair!
 
-Read the PR guidelines below and then delete this message before submitting your PR.
+Please follow these guidelines when submitting your PR:
 
 - Describe the purpose of the changes in PR, so that it is easy to understand the implication of the suggested changes.
     - Here is a [helpful article about writing effective PR descriptions](https://medium.com/@greenberg/writing-pull-requests-your-coworkers-might-enjoy-reading-9d0307e93da3).
