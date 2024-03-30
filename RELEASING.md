@@ -1,5 +1,8 @@
-1. Create a new virtual environment following the instructions in `CONTRIBUTING.md`.
-   Make sure to also install all dependencies for the documentation.
+1. Make sure to have an environment set up with `hatch` installed. See `CONTRIBUTING.md`.
+   Remove any existing environments managed by `hatch` so that it will create new ones
+   with the latest dependencies when executing the commands further below:
+   
+       hatch env prune
 
 2. Make certain your branch is in sync with head:
  
@@ -14,59 +17,51 @@
    Navigate to http://localhost:8000 and ensure it looks OK (particularly
    do a visual scan of the gallery thumbnails).
 
-4. Make sure changes.rst is up to date for the release: compare against PRs
-   merged since the last release & update top heading with release date.
-
-5. Update version to, e.g. 5.0.0:
+4. Update version to, e.g. 5.0.0:
 
    - in ``altair/__init__.py``
    - in ``doc/conf.py``
 
-6. Double-check that all vega-lite/vega/vega-embed versions are up-to-date:
-
-   - URLs in ``doc/conf.py``
-   - versions in ``altair/vegalite/v5/display.py``
-
-7. Commit change and push to main:
+5. Commit change and push to main:
 
        git add . -u
        git commit -m "MAINT: bump version to 5.0.0"
        git push upstream main
 
-8. Tag the release:
+6. Tag the release:
 
        git tag -a v5.0.0 -m "version 5.0.0 release"
        git push upstream v5.0.0
 
-9. Build source & wheel distributions:
+7. Build source & wheel distributions:
 
        hatch clean  # clean old builds & distributions
        hatch build  # create a source distribution and universal wheel
 
-10. publish to PyPI (Requires correct PyPI owner permissions):
+8. publish to PyPI (Requires correct PyPI owner permissions):
 
         hatch publish
 
-11. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
+9. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io):
 
         hatch run doc:publish-clean-build
 
-12. update version to, e.g. 5.1.0dev:
+10. update version to, e.g. 5.1.0dev:
 
     - in ``altair/__init__.py``
     - in ``doc/conf.py``
 
-12. Commit change and push to main:
+11. Commit change and push to main:
 
         git add . -u
         git commit -m "MAINT: bump version to 5.1.0dev"
         git push upstream main
 
-13. Double-check that a conda-forge pull request is generated from the updated
+12. Double-check that a conda-forge pull request is generated from the updated
     pip package by the conda-forge bot (may take up to ~an hour):
     https://github.com/conda-forge/altair-feedstock/pulls
 
-14. Publish a new release in https://github.com/altair-viz/altair/releases/
+13. Publish a new release in https://github.com/altair-viz/altair/releases/
 
 **Temporary until we have released Version 5.3.0**. Here some draft release notes.
 
