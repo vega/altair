@@ -31,4 +31,4 @@ body:
       description: Use `alt.__version__` to find out
   - type: markdown
     attributes:
-      value: By submitting this issue, you agree to follow our [Code of Conduct](../../CODE_OF_CONDUCT.md).
+      value: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/altair-viz/altair/blob/main/CODE_OF_CONDUCT.md).
