@@ -9,4 +9,3 @@ Please follow these guidelines when submitting your PR:
 - Include unit tests and documentation for new features
 - Ensure that the title is a concise [semantic commit message](https://www.conventionalcommits.org/) (e.g. "feat: Add `embed_options` to charts").
     - Append `!` if the change is breaking (e.g. "fix!: Raise error when `embed_options` is `None`")
-- By submitting this PR, you agree to follow our [Code of Conduct](https://github.com/altair-viz/altair/blob/main/CODE_OF_CONDUCT.md).
