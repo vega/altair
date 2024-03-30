@@ -89,7 +89,7 @@ is in the form of an image and render it appropriately.
         return f"data:image/png;base64,{img_str}"
 
     # The column with the base64 image string must be called "image" in order for it to trigger the image rendering in the tooltip
-    df['image'] = df[['image1', 'image2']].map(create_tooltip_image, axis=1)
+    df['image'] = df[['image1', 'image2']].apply(create_tooltip_image, axis=1)
 
     # Dropping the image arrays since they are large an no longer needed
     df_plot = df.drop(columns=['image1', 'image2'])
