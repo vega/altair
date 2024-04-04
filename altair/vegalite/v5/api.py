@@ -3819,7 +3819,7 @@ class Chart(
         bind_x: bool = True,
         bind_y: bool = True,
         tooltip: bool = True,
-        legend: Union[bool, list] = False,
+        legend: Union[bool, list] = True,
         legend_opacity: tuple = (0.7, 0.1),
     ) -> Self:
         """Add common interactive elements to the chart
@@ -3836,7 +3836,9 @@ class Chart(
         tooltip : boolean, default True,
             Add a tooltip containing the encodings used in the chart
         legend : boolean or list, default True
-            Make the legend clickable and control the opacity of the marks
+            Make the legend clickable and control the opacity of the marks.
+            Can be set to a list indicating which encodings the legend
+            interactivity should include.
         legend_opacity : tuple, default (0.7, 0.1)
             The default opacity values for the clicked and unclicked marks
 
@@ -3851,11 +3853,20 @@ class Chart(
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        if not legend:
-            return self.add_params(
-                selection_interval(bind="scales", encodings=encodings)
-            ).configure_mark(tooltip=tooltip)
-        else:
+        interactive_chart = self.add_params(
+            selection_interval(bind="scales", encodings=encodings)
+        ).copy()
+        # We can't simply use configure_mark since configure methods
+        # are not allowed in layered specs
+        if tooltip:
+            if isinstance(interactive_chart.mark, str):
+                interactive_chart.mark = {
+                    "type": interactive_chart.mark,
+                    "tooltip": tooltip,
+                }
+            else:
+                interactive_chart.mark.tooltip = tooltip
+        if legend:
             if not isinstance(legend, list):
                 # Detect common legend encodings used in the spec
                 legend = [
@@ -3873,20 +3884,16 @@ class Chart(
                     ]
                 ]
             legend_selection = selection_point(bind="legend", encodings=legend)
-            return (
-                self
-                .configure_mark(tooltip=tooltip)
-                .add_params(
-                    selection_interval(bind="scales", encodings=encodings),
+            interactive_chart = interactive_chart.add_params(
+                legend_selection,
+            ).encode(
+                opacity=condition(
                     legend_selection,
-                ).encode(
-                    opacity=condition(
-                        legend_selection,
-                        value(legend_opacity[0]),
-                        value(legend_opacity[1]),
-                    )
+                    value(legend_opacity[0]),
+                    value(legend_opacity[1]),
                 )
             )
+        return interactive_chart
 
 
 def _check_if_valid_subspec(
