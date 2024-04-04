@@ -3868,21 +3868,31 @@ class Chart(
                 interactive_chart.mark.tooltip = tooltip
         if legend:
             if not isinstance(legend, list):
-                # Detect common legend encodings used in the spec
+                # Set the legend to commonly used encodings by default
                 legend = [
-                    enc
-                    for enc in self.encoding.to_dict().keys()
-                    if enc
-                    in [
-                        "angle",
-                        "radius",
-                        "color",
-                        "fill",
-                        "shape",
-                        "size",
-                        "stroke",
-                    ]
+                    "angle",
+                    "radius",
+                    "color",
+                    "fill",
+                    "shape",
+                    "size",
+                    "stroke",
                 ]
+                # Detect common legend encodings used in the spec
+                # legend = [
+                #     enc
+                #     for enc in interactive_chart.encoding.to_dict(validate=False).keys()
+                #     if enc
+                #     in [
+                #         "angle",
+                #         "radius",
+                #         "color",
+                #         "fill",
+                #         "shape",
+                #         "size",
+                #         "stroke",
+                #     ]
+                # ]
             legend_selection = selection_point(bind="legend", encodings=legend)
             interactive_chart = interactive_chart.add_params(
                 legend_selection,
