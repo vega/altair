@@ -7,17 +7,18 @@ vs the clicked values in the legend,
 and assigns a lower order (0)
 if there is a match.
 The use of "indexOf" checks for equality in an array,
-which here allows for mutliple segments to be reordered
+which here allows for multiple segments to be reordered
 by holding down the shift key while clicking the legend.
 """
 # category: interactive charts
 import altair as alt
 from vega_datasets import data
 
-
 selection = alt.selection_point(fields=['site'], bind='legend')
 
-alt.Chart(data.barley.url).mark_bar().transform_calculate(
+source = data.barley.url
+
+alt.Chart(source).mark_bar().transform_calculate(
     site_order=f"if({selection.name}.site && indexof({selection.name}.site, datum.site) !== -1, 0, 1)"
 ).encode(
     x='sum(yield):Q',
