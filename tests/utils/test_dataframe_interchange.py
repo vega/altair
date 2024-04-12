@@ -24,7 +24,7 @@ def windows_has_tzdata():
 
 
 # Skip test on Windows when the tz database is not configured.
-# See https://github.com/altair-viz/altair/issues/3050.
+# See https://github.com/vega/altair/issues/3050.
 @pytest.mark.skipif(
     sys.platform == "win32" and not windows_has_tzdata(),
     reason="Timezone database is not installed on Windows",

@@ -54,7 +54,7 @@ classifiers = [
 
 [project.urls]
 Documentation = "https://altair-viz.github.io"
-Source = "https://github.com/altair-viz/altair"
+Source = "https://github.com/vega/altair"
 
 [project.optional-dependencies]
 all = [

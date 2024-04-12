@@ -12,9 +12,9 @@ or by viewing the full site :ref:`genindex`.
 In addition to reading this documentation page,
 it can be helpful to also browse the `Vega-Lite documentation <https://vega.github.io/vega-lite/docs/>`_.
 
-.. _GitHub: http://github.com/altair-viz/altair
-.. _Git Issues: http://github.com/altair-viz/altair/issues
+.. _GitHub: http://github.com/vega/altair
+.. _Git Issues: http://github.com/vega/altair/issues
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
-.. _bugs and feature requests: https://github.com/altair-viz/altair/issues/new/choose
+.. _bugs and feature requests: https://github.com/vega/altair/issues/new/choose
 .. _StackOverflow: https://stackoverflow.com/tags/altair

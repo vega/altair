@@ -371,7 +371,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # This is because Javascript parses date-only times in UTC, but
             # parses full ISO-8601 dates as local time, and dates in Vega and
             # Vega-Lite are displayed in local time by default.
-            # (see https://github.com/altair-viz/altair/issues/1027)
+            # (see https://github.com/vega/altair/issues/1027)
             df[col_name] = (
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
             )

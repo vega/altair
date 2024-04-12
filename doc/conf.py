@@ -146,7 +146,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/altair-viz/altair",
+            "url": "https://github.com/vega/altair",
             "icon": "fab fa-github fa-lg",
             "type": "fontawesome",
         },

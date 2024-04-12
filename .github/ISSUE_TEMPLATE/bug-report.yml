@@ -9,7 +9,7 @@ body:
         
         Note that since Altair is a Python wrapper around the Vega-Lite visualization grammar, [most bugs should be reported directly to Vega-Lite](https://github.com/vega/vega-lite/issues). You can click the Action Button (`...`) of your Altair chart and "Open in Vega Editor" to see if you get the same error in the Vega Editor.
         
-        If you can't reproduce the bug in the Vega Editor, then make sure you are using [the latest version of Altair](https://github.com/altair-viz/altair/releases) and search for duplicate issues before filling out the form below.
+        If you can't reproduce the bug in the Vega Editor, then make sure you are using [the latest version of Altair](https://github.com/vega/altair/releases) and search for duplicate issues before filling out the form below.
   - type: textarea
     id: what-happened
     attributes:

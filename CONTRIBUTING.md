@@ -1,7 +1,7 @@
 # Feedback and Contribution
 
 We welcome any input, feedback, bug reports, and contributions via [Altair's
-GitHub Repository](http://github.com/altair-viz/altair/). In particular, we
+GitHub Repository](http://github.com/vega/altair/). In particular, we
 welcome companion efforts from other visualization libraries to render the
 Vega-Lite specifications output by Altair. We see this portion of the effort
 as much bigger than Altair itself: the Vega and Vega-Lite specifications are

@@ -61,4 +61,4 @@
     pip package by the conda-forge bot (may take up to ~an hour):
     https://github.com/conda-forge/altair-feedstock/pulls
 
-13. Publish a new release in https://github.com/altair-viz/altair/releases/
+13. Publish a new release in https://github.com/vega/altair/releases/
