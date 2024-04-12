@@ -17,7 +17,7 @@ Interactive Data Lab](https://idl.cs.washington.edu/).*
 
 ## Documentation
 
-See [Vega-Altair's Documentation Site](https://altair-viz.github.io) as well as the [Tutorial Notebooks](https://github.com/vega/altair_notebooks). You can
+See [Vega-Altair's Documentation Site](https://altair-viz.github.io) as well as the [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks). You can
 run the notebooks directly in your browser by clicking on one of the following badges:
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)

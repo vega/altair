@@ -9,7 +9,7 @@ perhaps the best existing candidates for a principled *lingua franca* of data
 visualization.
 
 We are also seeking contributions of additional Jupyter notebook-based examples
-in our separate GitHub repository: https://github.com/vega/altair_notebooks.
+in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
 All contributions, suggestions, and feedback you submitted are accepted under the [Project's license](./LICENSE). You represent that if you do not own copyright in the code that you have the authority to submit it under the [Project's license](./LICENSE). All feedback, suggestions, or contributions are not confidential. The Project abides by the Vega Organization's [code of conduct](https://github.com/vega/.github/blob/main/CODE_OF_CONDUCT.md) and [governance](https://github.com/vega/.github/blob/main/project-docs/GOVERNANCE.md).
 
