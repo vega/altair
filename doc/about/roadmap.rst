@@ -8,7 +8,7 @@ informed by the needs of the Vega-Altair community, and the priorities of the ac
 project contributors. It's designed to communicate the direction of the project,
 but it's not a commitment that these items will be completed in a particular timeframe.
 If you would like to help contribute to any of these areas, or suggest new ones,
-please `start a discussion <https://github.com/altair-viz/altair/discussions>`_.
+please `start a discussion <https://github.com/vega/altair/discussions>`_.
 
 Vega-Altair is deeply integrated with other components in the Vega ecosystem,
 and as such many items on the roadmap will require work in other projects.
@@ -107,7 +107,7 @@ Map Tile Support
 ----------------
 We want Vega-Altair to provide first-class support for displaying map tiles from
 xyz tile providers like OpenStreetMap. We've released a first version of
-`altair_tiles <https://github.com/altair-viz/altair_tiles>`_ to accomplish this. Feedback is very welcome!
+`altair_tiles <https://github.com/vega/altair_tiles>`_ to accomplish this. Feedback is very welcome!
 
 Scale/Performance Improvements
 ------------------------------

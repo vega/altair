@@ -36,7 +36,7 @@ jobs:
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
         # Uninstalling for Python 3.8 is an arbitrary choice.
-        # Also see https://github.com/altair-viz/altair/pull/3114
+        # Also see https://github.com/vega/altair/pull/3114
         if: ${{ matrix.python-version == '3.8' }}
         run: |
           pip uninstall -y pyarrow vegafusion vegafusion-python-embed

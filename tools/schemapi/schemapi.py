@@ -267,7 +267,7 @@ def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
     """Drop in replacement for the .json_path property of the jsonschema
     ValidationError class, which is not available as property for
     ValidationError with jsonschema<4.0.1.
-    More info, see https://github.com/altair-viz/altair/issues/3038
+    More info, see https://github.com/vega/altair/issues/3038
     """
     path = "$"
     for elem in err.absolute_path:

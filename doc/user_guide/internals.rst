@@ -110,7 +110,7 @@ Altair's python object structure and Vega-Lite's schema definition structure.
 One of the nice features of Altair is that this low-level object hierarchy is not
 constructed by hand, but rather *programmatically generated* from the Vega-Lite
 schema, using the ``generate_schema_wrapper.py`` script that you can find in
-`Altair's repository <https://github.com/altair-viz/altair/blob/main/tools/generate_schema_wrapper.py>`_.
+`Altair's repository <https://github.com/vega/altair/blob/main/tools/generate_schema_wrapper.py>`_.
 This auto-generation of code propagates descriptions from the vega-lite schema
 into the Python class docstrings, from which the
 `API Reference <http://altair-viz.github.io/user_guide/API.html>`_

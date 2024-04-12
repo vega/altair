@@ -20,7 +20,7 @@ Tested environments include:
 
 .. note::
     If you try ``JupyterChart`` in another environment that supports Jupyter Widgets,
-    `let us know how it goes <https://github.com/altair-viz/altair/issues>`_ so that we can keep
+    `let us know how it goes <https://github.com/vega/altair/issues>`_ so that we can keep
     this list up to date.
 
 Basic Usage

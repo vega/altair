@@ -803,7 +803,7 @@ def _create_encode_signature(
 
         # dict stands for the return types of alt.datum, alt.value as well as
         # the dictionary representation of an encoding channel class. See
-        # discussions in https://github.com/altair-viz/altair/pull/3208
+        # discussions in https://github.com/vega/altair/pull/3208
         # for more background.
         union_types = ["str", field_class_name, "dict"]
         docstring_union_types = ["str", rst_syntax_for_class(field_class_name), "Dict"]

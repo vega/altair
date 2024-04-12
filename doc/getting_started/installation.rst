@@ -46,9 +46,9 @@ development version directly from GitHub using:
 
 .. code-block:: bash
 
-    pip install -e git+https://github.com/altair-viz/altair.git
+    pip install -e git+https://github.com/vega/altair.git
 
-Please see `CONTRIBUTING.md <https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md>`_
+Please see `CONTRIBUTING.md <https://github.com/vega/altair/blob/main/CONTRIBUTING.md>`_
 for details on how to contribute to the Altair project.
 
 .. _conda: https://docs.conda.io/
@@ -56,4 +56,4 @@ for details on how to contribute to the Altair project.
 .. _vega_datasets: https://github.com/altair-viz/vega_datasets
 .. _JupyterLab: http://jupyterlab.readthedocs.io/
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/
-.. _Altair source repository: http://github.com/altair-viz/altair
+.. _Altair source repository: http://github.com/vega/altair

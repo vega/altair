@@ -1,6 +1,6 @@
 # Vega-Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
-[![github actions](https://github.com/altair-viz/altair/workflows/build/badge.svg)](https://github.com/altair-viz/altair/actions?query=workflow%3Abuild)
+[![github actions](https://github.com/vega/altair/workflows/build/badge.svg)](https://github.com/vega/altair/actions?query=workflow%3Abuild)
 [![typedlib_mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://www.mypy-lang.org)
 [![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/altair)](https://pypi.org/project/altair)
@@ -17,7 +17,7 @@ Interactive Data Lab](https://idl.cs.washington.edu/).*
 
 ## Documentation
 
-See [Vega-Altair's Documentation Site](https://altair-viz.github.io) as well as the [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks). You can
+See [Vega-Altair's Documentation Site](https://altair-viz.github.io) as well as the [Tutorial Notebooks](https://github.com/vega/altair_notebooks). You can
 run the notebooks directly in your browser by clicking on one of the following badges:
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
@@ -105,7 +105,7 @@ For full installation instructions, please see [the documentation](https://altai
 
 If you have a question that is not addressed in the documentation, 
 you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag.
-For bugs and feature requests, please open a [Github Issue](https://github.com/altair-viz/altair/issues).
+For bugs and feature requests, please open a [Github Issue](https://github.com/vega/altair/issues).
 
 ## Development
 
@@ -122,7 +122,7 @@ hatch run test
 ```
 
 For information on how to contribute your developments back to the Vega-Altair repository, see
-[`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/main/CONTRIBUTING.md)
+[`CONTRIBUTING.md`](https://github.com/vega/altair/blob/main/CONTRIBUTING.md)
 
 ## Citing Vega-Altair
 

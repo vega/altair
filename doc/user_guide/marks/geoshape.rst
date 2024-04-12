@@ -466,7 +466,7 @@ The :class:`FacetChart` pattern, accessible via the :meth:`Chart.facet` method
 provides a convenient interface for a particular type of horizontal or vertical
 concatenation of a dataset where one field contain multiple ``variables``.
 
-Unfortunately, until https://github.com/altair-viz/altair/issues/2369 is resolved
+Unfortunately, until https://github.com/vega/altair/issues/2369 is resolved
 regular faceting will not work for geographic visualization:
 
 .. altair-plot::
