@@ -204,9 +204,9 @@ class SchemaInfo:
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
-                    class_names.append("_Parameter")
+                    class_names.append("Parameter")
                 if self.title == "ParameterExtent":
-                    class_names.append("_Parameter")
+                    class_names.append("Parameter")
 
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
@@ -217,7 +217,12 @@ class SchemaInfo:
                 if not prefix:
                     class_names = [f'"{n}"' for n in class_names]
                 else:
-                    class_names = [f"{prefix}{n}" for n in class_names]
+                    # If it's Parameter, we still use the deferred type annotation
+                    # as it's imported in a TYPE_CHECKING block.
+                    class_names = [
+                        f"{prefix}{n}" if n != "Parameter" else f'"{prefix}{n}"'
+                        for n in class_names
+                    ]
                 type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs

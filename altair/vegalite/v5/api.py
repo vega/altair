@@ -190,9 +190,6 @@ def _get_channels_mapping() -> TypingDict[TypingType[core.SchemaBase], str]:
 class Parameter(_expr_core.OperatorMixin):
     """A Parameter object"""
 
-    # NOTE: If you change this class, make sure that the protocol in
-    # altair/vegalite/v5/schema/core.py is updated accordingly if needed.
-
     _counter: int = 0
 
     @classmethod
@@ -231,9 +228,9 @@ class Parameter(_expr_core.OperatorMixin):
             return {"expr": self.name}
         elif self.param_type == "selection":
             return {
-                "param": self.name.to_dict()
-                if hasattr(self.name, "to_dict")
-                else self.name
+                "param": (
+                    self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
+                )
             }
         else:
             raise ValueError(f"Unrecognized parameter type: {self.param_type}")

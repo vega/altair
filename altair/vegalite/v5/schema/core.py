@@ -1,10 +1,13 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-from typing import Any, Literal, Union, Protocol, Sequence, List
+from typing import Any, Literal, Union, Protocol, Sequence, List, TYPE_CHECKING
 from typing import Dict as TypingDict
 from typing import Generator as TypingGenerator
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
+
+if TYPE_CHECKING:
+    from altair.vegalite.v5.api import Parameter
 
 import pkgutil
 import json
@@ -16,23 +19,6 @@ def load_schema() -> dict:
     if schema_bytes is None:
         raise ValueError("Unable to load vega-lite-schema.json")
     return json.loads(schema_bytes.decode("utf-8"))
-
-
-class _Parameter(Protocol):
-    # This protocol represents a Parameter as defined in api.py
-    # It would be better if we could directly use the Parameter class,
-    # but that would create a circular import.
-    # The protocol does not need to have all the attributes and methods of this
-    # class but the actual api.Parameter just needs to pass a type check
-    # as a core._Parameter.
-
-    _counter: int
-
-    def _get_name(cls) -> str: ...
-
-    def to_dict(self) -> TypingDict[str, Union[str, dict]]: ...
-
-    def _to_expr(self) -> str: ...
 
 
 class VegaLiteSchema(SchemaBase):
@@ -552,35 +538,31 @@ class AreaConfig(AnyMarkConfig):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -605,7 +587,7 @@ class AreaConfig(AnyMarkConfig):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -760,23 +742,23 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -819,24 +801,24 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -991,19 +973,19 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -1023,15 +1005,15 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -1053,49 +1035,45 @@ class AreaConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         line: Union[bool, dict, "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         point: Union[str, bool, dict, "SchemaBase", UndefinedType] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -1251,68 +1229,64 @@ class AreaConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -1861,17 +1835,17 @@ class Axis(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         bandPosition: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
@@ -1880,7 +1854,7 @@ class Axis(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -2035,23 +2009,23 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         format: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
@@ -2060,7 +2034,7 @@ class Axis(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -2215,43 +2189,43 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         gridDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gridOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gridWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            bool, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -2408,20 +2382,20 @@ class Axis(VegaLiteSchema):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[bool, float, UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -2441,53 +2415,53 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         minExtent: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "bottom", "left", "right"],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tickBand: Union[
-            dict, "_Parameter", "SchemaBase", Literal["center", "extent"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["center", "extent"], UndefinedType
         ] = Undefined,
         tickCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
@@ -2496,7 +2470,7 @@ class Axis(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -2653,7 +2627,7 @@ class Axis(VegaLiteSchema):
         tickCount: Union[
             dict,
             float,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "millisecond",
@@ -2668,51 +2642,51 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         tickDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         titleAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -2721,7 +2695,7 @@ class Axis(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -2876,17 +2850,17 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -2906,29 +2880,29 @@ class Axis(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleX: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleY: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         translate: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         values: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[str],
             Sequence[bool],
@@ -3403,18 +3377,18 @@ class AxisConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         bandPosition: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         disable: Union[bool, UndefinedType] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
@@ -3423,7 +3397,7 @@ class AxisConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -3578,23 +3552,23 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         format: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
@@ -3603,7 +3577,7 @@ class AxisConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -3758,43 +3732,43 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         gridDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gridOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gridWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            bool, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -3951,20 +3925,20 @@ class AxisConfig(VegaLiteSchema):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[bool, float, UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -3984,53 +3958,53 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         minExtent: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "bottom", "left", "right"],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tickBand: Union[
-            dict, "_Parameter", "SchemaBase", Literal["center", "extent"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["center", "extent"], UndefinedType
         ] = Undefined,
         tickCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
@@ -4039,7 +4013,7 @@ class AxisConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -4196,7 +4170,7 @@ class AxisConfig(VegaLiteSchema):
         tickCount: Union[
             dict,
             float,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "millisecond",
@@ -4211,51 +4185,51 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         tickDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         titleAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -4264,7 +4238,7 @@ class AxisConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -4419,17 +4393,17 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -4449,29 +4423,29 @@ class AxisConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleX: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleY: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         translate: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         values: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[str],
             Sequence[bool],
@@ -4999,28 +4973,24 @@ class BarConfig(AnyMarkConfig):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -5028,7 +4998,7 @@ class BarConfig(AnyMarkConfig):
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -5053,7 +5023,7 @@ class BarConfig(AnyMarkConfig):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -5209,26 +5179,26 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -5271,25 +5241,25 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
         discreteBandSize: Union[dict, float, "SchemaBase", UndefinedType] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -5444,19 +5414,19 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -5476,15 +5446,15 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -5506,50 +5476,46 @@ class BarConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -5705,68 +5671,64 @@ class BarConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -5939,15 +5901,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         ] = Undefined,
         anchor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str, "SchemaBase", Literal["top", "middle", "bottom"], UndefinedType
         ] = Undefined,
@@ -5955,7 +5915,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -6109,18 +6069,18 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -6142,23 +6102,21 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         frame: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["bounds", "group"],
             UndefinedType,
         ] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["none", "left", "right", "top", "bottom"],
             UndefinedType,
@@ -6167,7 +6125,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -6322,17 +6280,17 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -6352,13 +6310,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         zindex: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -6458,7 +6416,7 @@ class BinParams(VegaLiteSchema):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -7348,7 +7306,7 @@ class BoxPlotDef(CompositeMarkDef):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -8689,7 +8647,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
         self,
         param: Union[str, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -8723,7 +8681,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
         self,
         test: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -8764,7 +8722,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         self,
         param: Union[str, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -8794,7 +8752,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         self,
         test: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -8906,7 +8864,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
         self,
         param: Union[str, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -8940,7 +8898,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
         self,
         test: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -8980,9 +8938,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
     def __init__(
         self,
         param: Union[str, "SchemaBase", UndefinedType] = Undefined,
-        value: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        value: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -9010,9 +8966,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
     def __init__(
         self,
         test: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
-        value: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        value: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         **kwds,
     ):
         super(ConditionalPredicateValueDefnumberExprRef, self).__init__(
@@ -9051,7 +9005,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
     def __init__(
         self,
         param: Union[str, "SchemaBase", UndefinedType] = Undefined,
-        value: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        value: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
     ):
@@ -9079,7 +9033,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
     def __init__(
         self,
         test: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
-        value: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        value: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         **kwds,
     ):
         super(ConditionalPredicateValueDefstringExprRef, self).__init__(
@@ -9123,7 +9077,7 @@ class ConditionalParameterValueDefstringnullExprRef(
         self,
         param: Union[str, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -9157,7 +9111,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
         self,
         test: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -9480,7 +9434,7 @@ class Config(VegaLiteSchema):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -9656,7 +9610,7 @@ class Config(VegaLiteSchema):
         legend: Union[dict, "SchemaBase", UndefinedType] = Undefined,
         line: Union[dict, "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         locale: Union[dict, "SchemaBase", UndefinedType] = Undefined,
         mark: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -9665,7 +9619,7 @@ class Config(VegaLiteSchema):
         numberFormat: Union[str, UndefinedType] = Undefined,
         numberFormatType: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         point: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -10465,7 +10419,7 @@ class ErrorBandDef(CompositeMarkDef):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -10787,7 +10741,7 @@ class ErrorBarDef(CompositeMarkDef):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -13816,7 +13770,7 @@ class Header(VegaLiteSchema):
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
@@ -13828,7 +13782,7 @@ class Header(VegaLiteSchema):
         labelBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -13836,7 +13790,7 @@ class Header(VegaLiteSchema):
         labelColor: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -13992,17 +13946,17 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -14022,16 +13976,16 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOrient: Union[
             "SchemaBase", Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -14040,7 +13994,7 @@ class Header(VegaLiteSchema):
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         titleAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
@@ -14052,7 +14006,7 @@ class Header(VegaLiteSchema):
         titleBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -14060,7 +14014,7 @@ class Header(VegaLiteSchema):
         titleColor: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -14215,17 +14169,17 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -14245,16 +14199,16 @@ class Header(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             "SchemaBase", Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -14446,7 +14400,7 @@ class HeaderConfig(VegaLiteSchema):
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
@@ -14458,7 +14412,7 @@ class HeaderConfig(VegaLiteSchema):
         labelBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -14466,7 +14420,7 @@ class HeaderConfig(VegaLiteSchema):
         labelColor: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -14622,17 +14576,17 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -14652,16 +14606,16 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOrient: Union[
             "SchemaBase", Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -14670,7 +14624,7 @@ class HeaderConfig(VegaLiteSchema):
         title: Union[None, UndefinedType] = Undefined,
         titleAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
@@ -14682,7 +14636,7 @@ class HeaderConfig(VegaLiteSchema):
         titleBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -14690,7 +14644,7 @@ class HeaderConfig(VegaLiteSchema):
         titleColor: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -14845,17 +14799,17 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -14875,16 +14829,16 @@ class HeaderConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             "SchemaBase", Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -16214,21 +16168,21 @@ class Legend(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         clipHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         direction: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
@@ -16237,7 +16191,7 @@ class Legend(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -16394,16 +16348,16 @@ class Legend(VegaLiteSchema):
         format: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -16558,21 +16512,21 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
@@ -16580,7 +16534,7 @@ class Legend(VegaLiteSchema):
         labelBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -16589,7 +16543,7 @@ class Legend(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -16745,17 +16699,17 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -16775,31 +16729,31 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             "SchemaBase",
@@ -16817,16 +16771,16 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -16981,16 +16935,16 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -17145,22 +17099,22 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -17315,15 +17269,15 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "millisecond",
@@ -17338,19 +17292,19 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         titleAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
@@ -17358,7 +17312,7 @@ class Legend(VegaLiteSchema):
         titleBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -17367,7 +17321,7 @@ class Legend(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -17522,17 +17476,17 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -17552,28 +17506,28 @@ class Legend(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[str],
             Sequence[bool],
@@ -17947,21 +17901,21 @@ class LegendConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         clipHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         direction: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
@@ -17971,7 +17925,7 @@ class LegendConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -18127,7 +18081,7 @@ class LegendConfig(VegaLiteSchema):
         ] = Undefined,
         gradientDirection: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["horizontal", "vertical"],
             UndefinedType,
@@ -18135,22 +18089,22 @@ class LegendConfig(VegaLiteSchema):
         gradientHorizontalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientHorizontalMinLength: Union[float, UndefinedType] = Undefined,
         gradientLabelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientLabelOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientLength: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -18305,23 +18259,23 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         gradientVerticalMaxLength: Union[float, UndefinedType] = Undefined,
         gradientVerticalMinLength: Union[float, UndefinedType] = Undefined,
         gridAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
@@ -18329,7 +18283,7 @@ class LegendConfig(VegaLiteSchema):
         labelBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -18338,7 +18292,7 @@ class LegendConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -18493,17 +18447,17 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -18523,32 +18477,32 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        layout: Union[dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        layout: Union[dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         legendX: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             "SchemaBase",
@@ -18566,16 +18520,16 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -18730,16 +18684,16 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolBaseFillColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -18897,7 +18851,7 @@ class LegendConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -19052,14 +19006,14 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolDirection: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["horizontal", "vertical"],
             UndefinedType,
@@ -19068,7 +19022,7 @@ class LegendConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -19223,22 +19177,22 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -19393,15 +19347,15 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "millisecond",
@@ -19418,14 +19372,14 @@ class LegendConfig(VegaLiteSchema):
         title: Union[None, UndefinedType] = Undefined,
         titleAlign: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
@@ -19433,7 +19387,7 @@ class LegendConfig(VegaLiteSchema):
         titleBaseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -19442,7 +19396,7 @@ class LegendConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -19597,17 +19551,17 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -19627,27 +19581,27 @@ class LegendConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         unselectedOpacity: Union[float, UndefinedType] = Undefined,
         zindex: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -20226,35 +20180,31 @@ class LineConfig(AnyMarkConfig):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -20279,7 +20229,7 @@ class LineConfig(AnyMarkConfig):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -20434,23 +20384,23 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -20493,24 +20443,24 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -20665,19 +20615,19 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -20697,15 +20647,15 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -20727,48 +20677,44 @@ class LineConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         point: Union[str, bool, dict, "SchemaBase", UndefinedType] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -20924,68 +20870,64 @@ class LineConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -21602,35 +21544,31 @@ class MarkConfig(AnyMarkConfig):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -21655,7 +21593,7 @@ class MarkConfig(AnyMarkConfig):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -21810,23 +21748,23 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -21869,24 +21807,24 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -22041,19 +21979,19 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -22073,15 +22011,15 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -22103,47 +22041,43 @@ class MarkConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -22299,68 +22233,64 @@ class MarkConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -22922,29 +22852,25 @@ class MarkDef(AnyMark):
         ] = Undefined,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -22952,7 +22878,7 @@ class MarkDef(AnyMark):
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -22974,11 +22900,11 @@ class MarkDef(AnyMark):
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        clip: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -23134,26 +23060,26 @@ class MarkDef(AnyMark):
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusEnd: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -23196,22 +23122,22 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
         discreteBandSize: Union[dict, float, "SchemaBase", UndefinedType] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -23366,19 +23292,19 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -23398,15 +23324,15 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -23428,55 +23354,51 @@ class MarkDef(AnyMark):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         line: Union[bool, dict, "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         point: Union[str, bool, dict, "SchemaBase", UndefinedType] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -23632,88 +23554,84 @@ class MarkDef(AnyMark):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         xOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         yOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -23941,7 +23859,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         type: Union[
@@ -24797,7 +24715,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         type: Union[
@@ -25407,7 +25325,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         type: Union[
@@ -26291,9 +26209,7 @@ class OrderValueDef(VegaLiteSchema):
 
     def __init__(
         self,
-        value: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        value: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         condition: Union[
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
@@ -26720,35 +26636,31 @@ class OverlayMarkDef(VegaLiteSchema):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -26770,11 +26682,11 @@ class OverlayMarkDef(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        clip: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        clip: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -26929,23 +26841,23 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -26988,24 +26900,24 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -27160,19 +27072,19 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -27192,15 +27104,15 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -27222,53 +27134,49 @@ class OverlayMarkDef(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radiusOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -27424,87 +27332,83 @@ class OverlayMarkDef(VegaLiteSchema):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         theta2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         thetaOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         xOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2Offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         yOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -28172,7 +28076,7 @@ class DatumDef(LatLongDef, Position2Def):
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         type: Union[
@@ -28340,7 +28244,7 @@ class PositionDatumDefBase(PolarDef):
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         scale: Union[dict, None, "SchemaBase", UndefinedType] = Undefined,
         stack: Union[
@@ -28549,7 +28453,7 @@ class PositionDatumDef(PositionDef):
         axis: Union[dict, None, "SchemaBase", UndefinedType] = Undefined,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         impute: Union[dict, None, "SchemaBase", UndefinedType] = Undefined,
         scale: Union[dict, None, "SchemaBase", UndefinedType] = Undefined,
@@ -29571,7 +29475,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
     def __init__(
         self,
         value: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -29663,7 +29567,7 @@ class FieldEqualPredicate(Predicate):
     def __init__(
         self,
         equal: Union[
-            str, bool, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         field: Union[str, "SchemaBase", UndefinedType] = Undefined,
         timeUnit: Union[
@@ -29818,7 +29722,7 @@ class FieldGTEPredicate(Predicate):
         self,
         field: Union[str, "SchemaBase", UndefinedType] = Undefined,
         gte: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnit: Union[
             dict,
@@ -29972,7 +29876,7 @@ class FieldGTPredicate(Predicate):
         self,
         field: Union[str, "SchemaBase", UndefinedType] = Undefined,
         gt: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnit: Union[
             dict,
@@ -30126,7 +30030,7 @@ class FieldLTEPredicate(Predicate):
         self,
         field: Union[str, "SchemaBase", UndefinedType] = Undefined,
         lte: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnit: Union[
             dict,
@@ -30280,7 +30184,7 @@ class FieldLTPredicate(Predicate):
         self,
         field: Union[str, "SchemaBase", UndefinedType] = Undefined,
         lt: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnit: Union[
             dict,
@@ -30595,9 +30499,9 @@ class FieldRangePredicate(Predicate):
         field: Union[str, "SchemaBase", UndefinedType] = Undefined,
         range: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
-            Sequence[Union[dict, None, float, "_Parameter", "SchemaBase"]],
+            Sequence[Union[dict, None, float, "Parameter", "SchemaBase"]],
             UndefinedType,
         ] = Undefined,
         timeUnit: Union[
@@ -31023,88 +30927,82 @@ class Projection(VegaLiteSchema):
     def __init__(
         self,
         center: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         clipAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         clipExtent: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[Union["SchemaBase", Sequence[float]]],
             UndefinedType,
         ] = Undefined,
         coefficient: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         distance: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         extent: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[Union["SchemaBase", Sequence[float]]],
             UndefinedType,
         ] = Undefined,
         fit: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[Union[dict, "SchemaBase"]],
             Sequence[Union[dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]]]],
             UndefinedType,
         ] = Undefined,
         fraction: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        lobes: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        lobes: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         parallel: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         parallels: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         pointRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         precision: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        ratio: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        ratio: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         reflectX: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         reflectY: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         rotate: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
-        scale: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        scale: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         size: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         spacing: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        tilt: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        tilt: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         translate: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         type: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "albers",
@@ -31270,88 +31168,82 @@ class ProjectionConfig(VegaLiteSchema):
     def __init__(
         self,
         center: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         clipAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         clipExtent: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[Union["SchemaBase", Sequence[float]]],
             UndefinedType,
         ] = Undefined,
         coefficient: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         distance: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         extent: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[Union["SchemaBase", Sequence[float]]],
             UndefinedType,
         ] = Undefined,
         fit: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[Union[dict, "SchemaBase"]],
             Sequence[Union[dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]]]],
             UndefinedType,
         ] = Undefined,
         fraction: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        lobes: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        lobes: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         parallel: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         parallels: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         pointRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         precision: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        ratio: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        ratio: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         reflectX: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         reflectY: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         rotate: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
-        scale: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        scale: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         size: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         spacing: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        tilt: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        tilt: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         translate: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         type: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "albers",
@@ -32808,28 +32700,24 @@ class RectConfig(AnyMarkConfig):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
@@ -32837,7 +32725,7 @@ class RectConfig(AnyMarkConfig):
         binSpacing: Union[float, UndefinedType] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -32862,7 +32750,7 @@ class RectConfig(AnyMarkConfig):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -33018,23 +32906,23 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         continuousBandSize: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -33077,25 +32965,25 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
         discreteBandSize: Union[dict, float, "SchemaBase", UndefinedType] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -33250,19 +33138,19 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -33282,15 +33170,15 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -33312,50 +33200,46 @@ class RectConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         minBandSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -33511,68 +33395,64 @@ class RectConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -34512,39 +34392,37 @@ class Scale(VegaLiteSchema):
 
     def __init__(
         self,
-        align: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        base: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        align: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        base: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         bins: Union[dict, "SchemaBase", Sequence[float], UndefinedType] = Undefined,
-        clamp: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        clamp: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         constant: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
-            Sequence[Union[str, bool, dict, None, float, "_Parameter", "SchemaBase"]],
+            Sequence[Union[str, bool, dict, None, float, "Parameter", "SchemaBase"]],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        domainRaw: Union[dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        domainRaw: Union[dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         exponent: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "rgb",
@@ -34562,7 +34440,7 @@ class Scale(VegaLiteSchema):
             bool,
             dict,
             float,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "millisecond",
@@ -34577,19 +34455,19 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             "SchemaBase",
             Sequence[
-                Union[str, dict, float, "_Parameter", "SchemaBase", Sequence[float]]
+                Union[str, dict, float, "Parameter", "SchemaBase", Sequence[float]]
             ],
             Literal[
                 "width",
@@ -34604,18 +34482,18 @@ class Scale(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        round: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        round: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         scheme: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Sequence[str],
             Literal["rainbow", "sinebow"],
@@ -34981,7 +34859,7 @@ class Scale(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        zero: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        zero: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         **kwds,
     ):
         super(Scale, self).__init__(
@@ -35194,23 +35072,23 @@ class ScaleConfig(VegaLiteSchema):
     def __init__(
         self,
         bandPaddingInner: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         bandPaddingOuter: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingInner: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         bandWithNestedOffsetPaddingOuter: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         barBandPaddingInner: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        clamp: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        clamp: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         continuousPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         maxBandSize: Union[float, UndefinedType] = Undefined,
         maxFontSize: Union[float, UndefinedType] = Undefined,
@@ -35223,23 +35101,23 @@ class ScaleConfig(VegaLiteSchema):
         minSize: Union[float, UndefinedType] = Undefined,
         minStrokeWidth: Union[float, UndefinedType] = Undefined,
         offsetBandPaddingInner: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offsetBandPaddingOuter: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         pointPadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         quantileCount: Union[float, UndefinedType] = Undefined,
         quantizeCount: Union[float, UndefinedType] = Undefined,
         rectBandPaddingInner: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        round: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        round: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         useUnaggregatedDomain: Union[bool, UndefinedType] = Undefined,
         xReverse: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
+            bool, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         zero: Union[bool, UndefinedType] = Undefined,
         **kwds,
@@ -35398,7 +35276,7 @@ class ScaleDatumDef(OffsetDef):
         self,
         bandPosition: Union[float, UndefinedType] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         scale: Union[dict, None, "SchemaBase", UndefinedType] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
@@ -37108,7 +36986,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         title: Union[str, None, "SchemaBase", Sequence[str], UndefinedType] = Undefined,
         type: Union[
@@ -39944,7 +39822,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -40258,7 +40136,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         datum: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         format: Union[str, dict, "SchemaBase", UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
@@ -41061,36 +40939,32 @@ class TickConfig(AnyMarkConfig):
         self,
         align: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ariaRole: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         ariaRoleDescription: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        aspect: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        aspect: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         bandSize: Union[float, UndefinedType] = Undefined,
         baseline: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         blend: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 None,
@@ -41115,7 +40989,7 @@ class TickConfig(AnyMarkConfig):
         color: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -41270,23 +41144,23 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusBottomRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopLeft: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cornerRadiusTopRight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "auto",
@@ -41329,24 +41203,24 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         description: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         dir: Union[
-            dict, "_Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
+            dict, "Parameter", "SchemaBase", Literal["ltr", "rtl"], UndefinedType
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         ellipsis: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         endAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fill: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -41501,19 +41375,19 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -41533,15 +41407,15 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         height: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        href: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        href: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         innerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "basis",
@@ -41563,47 +41437,43 @@ class TickConfig(AnyMarkConfig):
             UndefinedType,
         ] = Undefined,
         invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineBreak: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         order: Union[bool, None, UndefinedType] = Undefined,
         orient: Union[
             "SchemaBase", Literal["horizontal", "vertical"], UndefinedType
         ] = Undefined,
         outerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         padAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         radius2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        shape: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        size: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        smooth: Union[
-            bool, dict, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        shape: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        size: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        smooth: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         startAngle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -41759,69 +41629,65 @@ class TickConfig(AnyMarkConfig):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         tension: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
-        theta: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        theta: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         theta2: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         thickness: Union[float, UndefinedType] = Undefined,
         timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
         timeUnitBandSize: Union[float, UndefinedType] = Undefined,
         tooltip: Union[
-            str, bool, dict, None, float, "_Parameter", "SchemaBase", UndefinedType
+            str, bool, dict, None, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
-        url: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        width: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        url: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        width: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         x: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         x2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         y2: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -42402,15 +42268,13 @@ class TitleConfig(VegaLiteSchema):
         ] = Undefined,
         anchor: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str, "SchemaBase", Literal["top", "middle", "bottom"], UndefinedType
         ] = Undefined,
@@ -42418,7 +42282,7 @@ class TitleConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -42572,18 +42436,18 @@ class TitleConfig(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -42605,23 +42469,21 @@ class TitleConfig(VegaLiteSchema):
         frame: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["bounds", "group"],
             UndefinedType,
         ] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["none", "left", "right", "top", "bottom"],
             UndefinedType,
@@ -42630,7 +42492,7 @@ class TitleConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -42785,17 +42647,17 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -42815,13 +42677,13 @@ class TitleConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         zindex: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -42979,7 +42841,7 @@ class TitleParams(VegaLiteSchema):
     def __init__(
         self,
         text: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
         align: Union[
             "SchemaBase", Literal["left", "center", "right"], UndefinedType
@@ -42987,10 +42849,8 @@ class TitleParams(VegaLiteSchema):
         anchor: Union[
             "SchemaBase", Literal[None, "start", "middle", "end"], UndefinedType
         ] = Undefined,
-        angle: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
-        aria: Union[bool, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        angle: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        aria: Union[bool, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         baseline: Union[
             str, "SchemaBase", Literal["top", "middle", "bottom"], UndefinedType
         ] = Undefined,
@@ -42998,7 +42858,7 @@ class TitleParams(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -43152,18 +43012,18 @@ class TitleParams(VegaLiteSchema):
             ],
             UndefinedType,
         ] = Undefined,
-        dx: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        dy: Union[dict, float, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
-        font: Union[str, dict, "_Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dx: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        dy: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
+        font: Union[str, dict, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         fontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         fontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -43185,23 +43045,21 @@ class TitleParams(VegaLiteSchema):
         frame: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["bounds", "group"],
             UndefinedType,
         ] = Undefined,
-        limit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        limit: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         lineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["none", "left", "right", "top", "bottom"],
             UndefinedType,
@@ -43212,7 +43070,7 @@ class TitleParams(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -43367,17 +43225,17 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleFont: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontSize: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontStyle: Union[
-            str, dict, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitleFontWeight: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "normal",
@@ -43397,10 +43255,10 @@ class TitleParams(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         subtitleLineHeight: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         subtitlePadding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         zindex: Union[float, UndefinedType] = Undefined,
         **kwds,
@@ -43692,7 +43550,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -43855,7 +43713,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         resolve: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -44037,7 +43895,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -44199,7 +44057,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         resolve: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -44329,7 +44187,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -44491,7 +44349,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         resolve: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -44652,7 +44510,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -44814,7 +44672,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         height: Union[str, dict, float, "SchemaBase", UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         projection: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -45057,7 +44915,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -45220,7 +45078,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         height: Union[str, dict, float, "SchemaBase", UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         projection: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -45356,7 +45214,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         background: Union[
             str,
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -45518,7 +45376,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         description: Union[str, UndefinedType] = Undefined,
         name: Union[str, UndefinedType] = Undefined,
         padding: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         params: Union[Sequence[Union[dict, "SchemaBase"]], UndefinedType] = Undefined,
         resolve: Union[dict, "SchemaBase", UndefinedType] = Undefined,
@@ -47156,7 +47014,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -47191,7 +47049,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -47225,9 +47083,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         condition: Union[
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
-        value: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
-        ] = Undefined,
+        value: Union[dict, float, "Parameter", "SchemaBase", UndefinedType] = Undefined,
         **kwds,
     ):
         super(ValueDefWithConditionMarkPropFieldOrDatumDefnumber, self).__init__(
@@ -47261,7 +47117,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         value: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -47294,7 +47150,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         value: Union[
-            str, dict, None, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, None, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -47325,7 +47181,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
             dict, "SchemaBase", Sequence[Union[dict, "SchemaBase"]], UndefinedType
         ] = Undefined,
         value: Union[
-            str, dict, "_Parameter", "SchemaBase", Sequence[str], UndefinedType
+            str, dict, "Parameter", "SchemaBase", Sequence[str], UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -47373,7 +47229,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
     def __init__(
         self,
         value: Union[
-            str, dict, float, "_Parameter", "SchemaBase", UndefinedType
+            str, dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):
@@ -47568,7 +47424,7 @@ class ViewBackground(VegaLiteSchema):
     def __init__(
         self,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             "SchemaBase",
@@ -47616,7 +47472,7 @@ class ViewBackground(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -47771,16 +47627,16 @@ class ViewBackground(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -47936,32 +47792,32 @@ class ViewBackground(VegaLiteSchema):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         **kwds,
@@ -48072,7 +47928,7 @@ class ViewConfig(VegaLiteSchema):
         continuousHeight: Union[float, UndefinedType] = Undefined,
         continuousWidth: Union[float, UndefinedType] = Undefined,
         cornerRadius: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         cursor: Union[
             "SchemaBase",
@@ -48122,7 +47978,7 @@ class ViewConfig(VegaLiteSchema):
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -48277,17 +48133,17 @@ class ViewConfig(VegaLiteSchema):
             UndefinedType,
         ] = Undefined,
         fillOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         opacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         step: Union[float, UndefinedType] = Undefined,
         stroke: Union[
             str,
             dict,
             None,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal[
                 "black",
@@ -48443,32 +48299,32 @@ class ViewConfig(VegaLiteSchema):
         ] = Undefined,
         strokeCap: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
         strokeDash: Union[
-            dict, "_Parameter", "SchemaBase", Sequence[float], UndefinedType
+            dict, "Parameter", "SchemaBase", Sequence[float], UndefinedType
         ] = Undefined,
         strokeDashOffset: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeJoin: Union[
             dict,
-            "_Parameter",
+            "Parameter",
             "SchemaBase",
             Literal["miter", "round", "bevel"],
             UndefinedType,
         ] = Undefined,
         strokeMiterLimit: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeOpacity: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         strokeWidth: Union[
-            dict, float, "_Parameter", "SchemaBase", UndefinedType
+            dict, float, "Parameter", "SchemaBase", UndefinedType
         ] = Undefined,
         **kwds,
     ):

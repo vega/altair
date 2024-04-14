@@ -412,7 +412,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -430,7 +430,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Angle": ...
@@ -441,7 +441,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Angle": ...
@@ -467,22 +467,22 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -491,8 +491,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -648,17 +648,17 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -812,30 +812,30 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -843,8 +843,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -999,18 +999,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -1029,31 +1029,31 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -1071,17 +1071,17 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -1235,17 +1235,17 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -1399,23 +1399,23 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -1569,16 +1569,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -1592,30 +1592,30 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -1623,8 +1623,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -1778,18 +1778,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -1808,32 +1808,32 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -1848,47 +1848,47 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -1905,8 +1905,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -1920,20 +1920,20 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -1949,22 +1949,22 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -2329,7 +2329,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Angle": ...
@@ -3089,7 +3089,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleDatum": ...
@@ -3100,7 +3100,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleDatum": ...
@@ -3397,8 +3397,8 @@ class AngleValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -3640,8 +3640,8 @@ class AngleValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -3664,7 +3664,7 @@ class AngleValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleValue": ...
@@ -3675,7 +3675,7 @@ class AngleValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "AngleValue": ...
@@ -3982,7 +3982,7 @@ class Color(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -4000,7 +4000,7 @@ class Color(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Color": ...
@@ -4011,7 +4011,7 @@ class Color(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Color": ...
@@ -4037,22 +4037,22 @@ class Color(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -4061,8 +4061,8 @@ class Color(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -4218,17 +4218,17 @@ class Color(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -4382,30 +4382,30 @@ class Color(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -4413,8 +4413,8 @@ class Color(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -4569,18 +4569,18 @@ class Color(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -4599,31 +4599,31 @@ class Color(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -4641,17 +4641,17 @@ class Color(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -4805,17 +4805,17 @@ class Color(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -4969,23 +4969,23 @@ class Color(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -5139,16 +5139,16 @@ class Color(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -5162,30 +5162,30 @@ class Color(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -5193,8 +5193,8 @@ class Color(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -5348,18 +5348,18 @@ class Color(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -5378,32 +5378,32 @@ class Color(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -5418,47 +5418,47 @@ class Color(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -5475,8 +5475,8 @@ class Color(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -5490,20 +5490,20 @@ class Color(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -5519,22 +5519,22 @@ class Color(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -5899,7 +5899,7 @@ class Color(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Color": ...
@@ -6661,7 +6661,7 @@ class ColorDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ColorDatum": ...
@@ -6672,7 +6672,7 @@ class ColorDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ColorDatum": ...
@@ -6970,8 +6970,8 @@ class ColorValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -7213,8 +7213,8 @@ class ColorValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -7237,7 +7237,7 @@ class ColorValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ColorValue": ...
@@ -7248,7 +7248,7 @@ class ColorValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ColorValue": ...
@@ -7541,7 +7541,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -7576,8 +7576,8 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
@@ -7588,16 +7588,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -7752,18 +7752,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -7782,16 +7782,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOrient: Union[
             core.SchemaBase, Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -7802,8 +7802,8 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
@@ -7814,16 +7814,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         titleColor: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -7977,18 +7977,18 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -8007,16 +8007,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             core.SchemaBase, Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Column": ...
@@ -8820,7 +8820,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -8841,7 +8841,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Description": ...
@@ -8852,7 +8852,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Description": ...
@@ -9591,8 +9591,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -9834,8 +9834,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -9858,7 +9858,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "DescriptionValue": ...
@@ -9869,7 +9869,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "DescriptionValue": ...
@@ -10106,7 +10106,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -10914,7 +10914,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -10963,8 +10963,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
@@ -10975,16 +10975,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -11139,18 +11139,18 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -11169,16 +11169,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOrient: Union[
             core.SchemaBase, Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -11189,8 +11189,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
@@ -11201,16 +11201,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         titleColor: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -11364,18 +11364,18 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -11394,16 +11394,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             core.SchemaBase, Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Facet": ...
@@ -12249,7 +12249,7 @@ class Fill(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -12267,7 +12267,7 @@ class Fill(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Fill": ...
@@ -12278,7 +12278,7 @@ class Fill(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Fill": ...
@@ -12304,22 +12304,22 @@ class Fill(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -12328,8 +12328,8 @@ class Fill(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -12485,17 +12485,17 @@ class Fill(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -12649,30 +12649,30 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -12680,8 +12680,8 @@ class Fill(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -12836,18 +12836,18 @@ class Fill(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -12866,31 +12866,31 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -12908,17 +12908,17 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -13072,17 +13072,17 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -13236,23 +13236,23 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -13406,16 +13406,16 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -13429,30 +13429,30 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -13460,8 +13460,8 @@ class Fill(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -13615,18 +13615,18 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -13645,32 +13645,32 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -13685,47 +13685,47 @@ class Fill(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -13742,8 +13742,8 @@ class Fill(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -13757,20 +13757,20 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -13786,22 +13786,22 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -14166,7 +14166,7 @@ class Fill(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Fill": ...
@@ -14928,7 +14928,7 @@ class FillDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillDatum": ...
@@ -14939,7 +14939,7 @@ class FillDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillDatum": ...
@@ -15237,8 +15237,8 @@ class FillValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -15480,8 +15480,8 @@ class FillValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -15504,7 +15504,7 @@ class FillValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillValue": ...
@@ -15515,7 +15515,7 @@ class FillValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillValue": ...
@@ -15821,7 +15821,7 @@ class FillOpacity(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -15839,7 +15839,7 @@ class FillOpacity(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacity": ...
@@ -15850,7 +15850,7 @@ class FillOpacity(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacity": ...
@@ -15876,22 +15876,22 @@ class FillOpacity(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -15900,8 +15900,8 @@ class FillOpacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -16057,17 +16057,17 @@ class FillOpacity(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -16221,30 +16221,30 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -16252,8 +16252,8 @@ class FillOpacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -16408,18 +16408,18 @@ class FillOpacity(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -16438,31 +16438,31 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -16480,17 +16480,17 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -16644,17 +16644,17 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -16808,23 +16808,23 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -16978,16 +16978,16 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -17001,30 +17001,30 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -17032,8 +17032,8 @@ class FillOpacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -17187,18 +17187,18 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -17217,32 +17217,32 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -17257,47 +17257,47 @@ class FillOpacity(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -17314,8 +17314,8 @@ class FillOpacity(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -17329,20 +17329,20 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -17358,22 +17358,22 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -17738,7 +17738,7 @@ class FillOpacity(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacity": ...
@@ -18500,7 +18500,7 @@ class FillOpacityDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityDatum": ...
@@ -18511,7 +18511,7 @@ class FillOpacityDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityDatum": ...
@@ -18808,8 +18808,8 @@ class FillOpacityValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -19051,8 +19051,8 @@ class FillOpacityValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -19075,7 +19075,7 @@ class FillOpacityValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityValue": ...
@@ -19086,7 +19086,7 @@ class FillOpacityValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "FillOpacityValue": ...
@@ -19363,7 +19363,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -19384,7 +19384,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Href": ...
@@ -19395,7 +19395,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Href": ...
@@ -20134,8 +20134,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -20377,8 +20377,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -20401,7 +20401,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "HrefValue": ...
@@ -20412,7 +20412,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "HrefValue": ...
@@ -20649,7 +20649,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -24584,7 +24584,7 @@ class Opacity(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -24602,7 +24602,7 @@ class Opacity(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Opacity": ...
@@ -24613,7 +24613,7 @@ class Opacity(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Opacity": ...
@@ -24639,22 +24639,22 @@ class Opacity(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -24663,8 +24663,8 @@ class Opacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -24820,17 +24820,17 @@ class Opacity(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -24984,30 +24984,30 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -25015,8 +25015,8 @@ class Opacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -25171,18 +25171,18 @@ class Opacity(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -25201,31 +25201,31 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -25243,17 +25243,17 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -25407,17 +25407,17 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -25571,23 +25571,23 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -25741,16 +25741,16 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -25764,30 +25764,30 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -25795,8 +25795,8 @@ class Opacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -25950,18 +25950,18 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -25980,32 +25980,32 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -26020,47 +26020,47 @@ class Opacity(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -26077,8 +26077,8 @@ class Opacity(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -26092,20 +26092,20 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -26121,22 +26121,22 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -26501,7 +26501,7 @@ class Opacity(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Opacity": ...
@@ -27261,7 +27261,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityDatum": ...
@@ -27272,7 +27272,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityDatum": ...
@@ -27569,8 +27569,8 @@ class OpacityValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -27812,8 +27812,8 @@ class OpacityValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -27836,7 +27836,7 @@ class OpacityValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityValue": ...
@@ -27847,7 +27847,7 @@ class OpacityValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "OpacityValue": ...
@@ -28085,7 +28085,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -28932,7 +28932,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -28964,47 +28964,47 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -29021,8 +29021,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -29036,20 +29036,20 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -29065,22 +29065,22 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -29445,7 +29445,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Radius": ...
@@ -30252,47 +30252,47 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -30309,8 +30309,8 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -30324,20 +30324,20 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -30353,22 +30353,22 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -30733,7 +30733,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "RadiusDatum": ...
@@ -31861,7 +31861,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -31896,8 +31896,8 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         formatType: Union[str, UndefinedType] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
@@ -31908,16 +31908,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -32072,18 +32072,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -32102,16 +32102,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOrient: Union[
             core.SchemaBase, Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         orient: Union[
@@ -32122,8 +32122,8 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
@@ -32134,16 +32134,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         titleColor: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -32297,18 +32297,18 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -32327,16 +32327,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             core.SchemaBase, Literal["left", "right", "top", "bottom"], UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Row": ...
@@ -33170,7 +33170,7 @@ class Shape(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -33188,7 +33188,7 @@ class Shape(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Shape": ...
@@ -33199,7 +33199,7 @@ class Shape(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Shape": ...
@@ -33225,22 +33225,22 @@ class Shape(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -33249,8 +33249,8 @@ class Shape(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -33406,17 +33406,17 @@ class Shape(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -33570,30 +33570,30 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -33601,8 +33601,8 @@ class Shape(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -33757,18 +33757,18 @@ class Shape(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -33787,31 +33787,31 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -33829,17 +33829,17 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -33993,17 +33993,17 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -34157,23 +34157,23 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -34327,16 +34327,16 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -34350,30 +34350,30 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -34381,8 +34381,8 @@ class Shape(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -34536,18 +34536,18 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -34566,32 +34566,32 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -34606,47 +34606,47 @@ class Shape(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -34663,8 +34663,8 @@ class Shape(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -34678,20 +34678,20 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -34707,22 +34707,22 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -35087,7 +35087,7 @@ class Shape(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Shape": ...
@@ -35845,7 +35845,7 @@ class ShapeDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeDatum": ...
@@ -35856,7 +35856,7 @@ class ShapeDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeDatum": ...
@@ -36152,8 +36152,8 @@ class ShapeValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -36393,8 +36393,8 @@ class ShapeValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -36417,7 +36417,7 @@ class ShapeValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeValue": ...
@@ -36428,7 +36428,7 @@ class ShapeValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ShapeValue": ...
@@ -36732,7 +36732,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -36750,7 +36750,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Size": ...
@@ -36761,7 +36761,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Size": ...
@@ -36787,22 +36787,22 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -36811,8 +36811,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -36968,17 +36968,17 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -37132,30 +37132,30 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -37163,8 +37163,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -37319,18 +37319,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -37349,31 +37349,31 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -37391,17 +37391,17 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -37555,17 +37555,17 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -37719,23 +37719,23 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -37889,16 +37889,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -37912,30 +37912,30 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -37943,8 +37943,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -38098,18 +38098,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -38128,32 +38128,32 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -38168,47 +38168,47 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -38225,8 +38225,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -38240,20 +38240,20 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -38269,22 +38269,22 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -38649,7 +38649,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Size": ...
@@ -39409,7 +39409,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeDatum": ...
@@ -39420,7 +39420,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeDatum": ...
@@ -39717,8 +39717,8 @@ class SizeValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -39960,8 +39960,8 @@ class SizeValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -39984,7 +39984,7 @@ class SizeValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeValue": ...
@@ -39995,7 +39995,7 @@ class SizeValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "SizeValue": ...
@@ -40302,7 +40302,7 @@ class Stroke(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -40320,7 +40320,7 @@ class Stroke(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Stroke": ...
@@ -40331,7 +40331,7 @@ class Stroke(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Stroke": ...
@@ -40357,22 +40357,22 @@ class Stroke(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -40381,8 +40381,8 @@ class Stroke(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -40538,17 +40538,17 @@ class Stroke(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -40702,30 +40702,30 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -40733,8 +40733,8 @@ class Stroke(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -40889,18 +40889,18 @@ class Stroke(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -40919,31 +40919,31 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -40961,17 +40961,17 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -41125,17 +41125,17 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -41289,23 +41289,23 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -41459,16 +41459,16 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -41482,30 +41482,30 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -41513,8 +41513,8 @@ class Stroke(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -41668,18 +41668,18 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -41698,32 +41698,32 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -41738,47 +41738,47 @@ class Stroke(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -41795,8 +41795,8 @@ class Stroke(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -41810,20 +41810,20 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -41839,22 +41839,22 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -42219,7 +42219,7 @@ class Stroke(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Stroke": ...
@@ -42981,7 +42981,7 @@ class StrokeDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDatum": ...
@@ -42992,7 +42992,7 @@ class StrokeDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDatum": ...
@@ -43290,8 +43290,8 @@ class StrokeValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -43533,8 +43533,8 @@ class StrokeValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -43557,7 +43557,7 @@ class StrokeValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeValue": ...
@@ -43568,7 +43568,7 @@ class StrokeValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeValue": ...
@@ -43874,7 +43874,7 @@ class StrokeDash(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -43892,7 +43892,7 @@ class StrokeDash(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDash": ...
@@ -43903,7 +43903,7 @@ class StrokeDash(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDash": ...
@@ -43929,22 +43929,22 @@ class StrokeDash(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -43953,8 +43953,8 @@ class StrokeDash(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -44110,17 +44110,17 @@ class StrokeDash(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -44274,30 +44274,30 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -44305,8 +44305,8 @@ class StrokeDash(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -44461,18 +44461,18 @@ class StrokeDash(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -44491,31 +44491,31 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -44533,17 +44533,17 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -44697,17 +44697,17 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -44861,23 +44861,23 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -45031,16 +45031,16 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -45054,30 +45054,30 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -45085,8 +45085,8 @@ class StrokeDash(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -45240,18 +45240,18 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -45270,32 +45270,32 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -45310,47 +45310,47 @@ class StrokeDash(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -45367,8 +45367,8 @@ class StrokeDash(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -45382,20 +45382,20 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -45411,22 +45411,22 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -45791,7 +45791,7 @@ class StrokeDash(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDash": ...
@@ -46553,7 +46553,7 @@ class StrokeDashDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDashDatum": ...
@@ -46564,7 +46564,7 @@ class StrokeDashDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDashDatum": ...
@@ -46861,8 +46861,8 @@ class StrokeDashValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -47104,8 +47104,8 @@ class StrokeDashValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -47128,7 +47128,7 @@ class StrokeDashValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDashValue": ...
@@ -47139,7 +47139,7 @@ class StrokeDashValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeDashValue": ...
@@ -47445,7 +47445,7 @@ class StrokeOpacity(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -47463,7 +47463,7 @@ class StrokeOpacity(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacity": ...
@@ -47474,7 +47474,7 @@ class StrokeOpacity(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacity": ...
@@ -47500,22 +47500,22 @@ class StrokeOpacity(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -47524,8 +47524,8 @@ class StrokeOpacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -47681,17 +47681,17 @@ class StrokeOpacity(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -47845,30 +47845,30 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -47876,8 +47876,8 @@ class StrokeOpacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -48032,18 +48032,18 @@ class StrokeOpacity(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -48062,31 +48062,31 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -48104,17 +48104,17 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -48268,17 +48268,17 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -48432,23 +48432,23 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -48602,16 +48602,16 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -48625,30 +48625,30 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -48656,8 +48656,8 @@ class StrokeOpacity(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -48811,18 +48811,18 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -48841,32 +48841,32 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -48881,47 +48881,47 @@ class StrokeOpacity(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -48938,8 +48938,8 @@ class StrokeOpacity(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -48953,20 +48953,20 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -48982,22 +48982,22 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -49362,7 +49362,7 @@ class StrokeOpacity(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacity": ...
@@ -50126,7 +50126,7 @@ class StrokeOpacityDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityDatum": ...
@@ -50137,7 +50137,7 @@ class StrokeOpacityDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityDatum": ...
@@ -50434,8 +50434,8 @@ class StrokeOpacityValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -50677,8 +50677,8 @@ class StrokeOpacityValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -50701,7 +50701,7 @@ class StrokeOpacityValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityValue": ...
@@ -50712,7 +50712,7 @@ class StrokeOpacityValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeOpacityValue": ...
@@ -51020,7 +51020,7 @@ class StrokeWidth(
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -51038,7 +51038,7 @@ class StrokeWidth(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidth": ...
@@ -51049,7 +51049,7 @@ class StrokeWidth(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidth": ...
@@ -51075,22 +51075,22 @@ class StrokeWidth(
     def legend(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         clipHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columnPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         columns: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         direction: Union[
             core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
@@ -51099,8 +51099,8 @@ class StrokeWidth(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -51256,17 +51256,17 @@ class StrokeWidth(
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         gradientLength: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -51420,30 +51420,30 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         gradientStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gradientThickness: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["all", "each", "none"],
             UndefinedType,
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -51451,8 +51451,8 @@ class StrokeWidth(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -51607,18 +51607,18 @@ class StrokeWidth(
         ] = Undefined,
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -51637,31 +51637,31 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         legendY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             core.SchemaBase,
@@ -51679,17 +51679,17 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rowPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         strokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -51843,17 +51843,17 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         symbolDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         symbolDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolFillColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -52007,23 +52007,23 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         symbolLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolStrokeColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -52177,16 +52177,16 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         symbolStrokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         symbolType: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -52200,30 +52200,30 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         title: Union[
             str, None, Sequence[str], core.SchemaBase, UndefinedType
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -52231,8 +52231,8 @@ class StrokeWidth(
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -52386,18 +52386,18 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -52416,32 +52416,32 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOrient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "right", "top", "bottom"],
             UndefinedType,
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         type: Union[Literal["symbol", "gradient"], UndefinedType] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -52456,47 +52456,47 @@ class StrokeWidth(
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -52513,8 +52513,8 @@ class StrokeWidth(
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -52528,20 +52528,20 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -52557,22 +52557,22 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -52937,7 +52937,7 @@ class StrokeWidth(
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidth": ...
@@ -53699,7 +53699,7 @@ class StrokeWidthDatum(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthDatum": ...
@@ -53710,7 +53710,7 @@ class StrokeWidthDatum(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthDatum": ...
@@ -54007,8 +54007,8 @@ class StrokeWidthValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -54250,8 +54250,8 @@ class StrokeWidthValue(
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -54274,7 +54274,7 @@ class StrokeWidthValue(
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthValue": ...
@@ -54285,7 +54285,7 @@ class StrokeWidthValue(
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "StrokeWidthValue": ...
@@ -54562,7 +54562,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -54583,7 +54583,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, Sequence[str], core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Text": ...
@@ -54594,7 +54594,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, Sequence[str], core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Text": ...
@@ -55247,7 +55247,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, Sequence[str], core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TextDatum": ...
@@ -55258,7 +55258,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, Sequence[str], core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TextDatum": ...
@@ -55698,7 +55698,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, Sequence[str], core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TextValue": ...
@@ -55709,7 +55709,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, Sequence[str], core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TextValue": ...
@@ -56028,7 +56028,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -56060,47 +56060,47 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -56117,8 +56117,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -56132,20 +56132,20 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -56161,22 +56161,22 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -56541,7 +56541,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Theta": ...
@@ -57348,47 +57348,47 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -57405,8 +57405,8 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -57420,20 +57420,20 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -57449,22 +57449,22 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -57829,7 +57829,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "ThetaDatum": ...
@@ -58941,7 +58941,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -58962,7 +58962,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Tooltip": ...
@@ -58973,7 +58973,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Tooltip": ...
@@ -59712,8 +59712,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -59955,8 +59955,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -59979,7 +59979,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TooltipValue": ...
@@ -59990,7 +59990,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "TooltipValue": ...
@@ -60267,7 +60267,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -60288,7 +60288,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Url": ...
@@ -60299,7 +60299,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Url": ...
@@ -61038,8 +61038,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         legend: Union[dict, None, core.SchemaBase, UndefinedType] = Undefined,
@@ -61281,8 +61281,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict,
             None,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             UndefinedType,
         ] = Undefined,
         empty: Union[bool, UndefinedType] = Undefined,
@@ -61305,7 +61305,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         test: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "UrlValue": ...
@@ -61316,7 +61316,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         empty: Union[bool, UndefinedType] = Undefined,
         param: Union[str, core.SchemaBase, UndefinedType] = Undefined,
         value: Union[
-            str, dict, None, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, None, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "UrlValue": ...
@@ -61642,19 +61642,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def axis(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -61662,8 +61662,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -61817,24 +61817,24 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -61842,8 +61842,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -61997,44 +61997,44 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         gridDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            bool, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -62190,21 +62190,21 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[bool, float, UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -62223,58 +62223,58 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         minExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "bottom", "left", "right"],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tickBand: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["center", "extent"],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -62282,8 +62282,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -62439,8 +62439,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -62454,27 +62454,27 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         tickDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
@@ -62482,26 +62482,26 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -62509,8 +62509,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -62664,18 +62664,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -62694,33 +62694,33 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         translate: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -62745,7 +62745,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -62794,47 +62794,47 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -62851,8 +62851,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -62866,20 +62866,20 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -62895,22 +62895,22 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -63275,7 +63275,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "X": ...
@@ -64100,19 +64100,19 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def axis(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -64120,8 +64120,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -64275,24 +64275,24 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -64300,8 +64300,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -64455,44 +64455,44 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         gridDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            bool, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -64648,21 +64648,21 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[bool, float, UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -64681,58 +64681,58 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         minExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "bottom", "left", "right"],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tickBand: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["center", "extent"],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -64740,8 +64740,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -64897,8 +64897,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -64912,27 +64912,27 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         tickDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
@@ -64940,26 +64940,26 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -64967,8 +64967,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -65122,18 +65122,18 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -65152,33 +65152,33 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         translate: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -65213,47 +65213,47 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -65270,8 +65270,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -65285,20 +65285,20 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -65314,22 +65314,22 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -65694,7 +65694,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "XDatum": ...
@@ -68061,7 +68061,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -68090,47 +68090,47 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -68147,8 +68147,8 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -68162,20 +68162,20 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -68191,22 +68191,22 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -68571,7 +68571,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "XOffset": ...
@@ -69330,47 +69330,47 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -69387,8 +69387,8 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -69402,20 +69402,20 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -69431,22 +69431,22 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -69811,7 +69811,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "XOffsetDatum": ...
@@ -70187,19 +70187,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def axis(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -70207,8 +70207,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -70362,24 +70362,24 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -70387,8 +70387,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -70542,44 +70542,44 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         gridDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            bool, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -70735,21 +70735,21 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[bool, float, UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -70768,58 +70768,58 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         minExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "bottom", "left", "right"],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tickBand: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["center", "extent"],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -70827,8 +70827,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -70984,8 +70984,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -70999,27 +70999,27 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         tickDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
@@ -71027,26 +71027,26 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -71054,8 +71054,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -71209,18 +71209,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -71239,33 +71239,33 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         translate: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -71290,7 +71290,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -71339,47 +71339,47 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -71396,8 +71396,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -71411,20 +71411,20 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -71440,22 +71440,22 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -71820,7 +71820,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "Y": ...
@@ -72645,19 +72645,19 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def axis(
         self,
         aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bandPosition: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[bool, UndefinedType] = Undefined,
         domainCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -72665,8 +72665,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -72820,24 +72820,24 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         domainDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         domainDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         format: Union[str, dict, core.SchemaBase, UndefinedType] = Undefined,
         formatType: Union[str, UndefinedType] = Undefined,
         grid: Union[bool, UndefinedType] = Undefined,
         gridCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -72845,8 +72845,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -73000,44 +73000,44 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         gridDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         gridDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         gridWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         labelAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
         labelBound: Union[
-            bool, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelColor: Union[
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -73193,21 +73193,21 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelExpr: Union[str, UndefinedType] = Undefined,
         labelFlush: Union[bool, float, UndefinedType] = Undefined,
         labelFlushOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -73226,58 +73226,58 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         labelLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelOverlap: Union[
-            str, bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelPadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labelSeparation: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         labels: Union[bool, UndefinedType] = Undefined,
         maxExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         minExtent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         orient: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "bottom", "left", "right"],
             UndefinedType,
         ] = Undefined,
         position: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         style: Union[str, Sequence[str], UndefinedType] = Undefined,
         tickBand: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["center", "extent"],
             UndefinedType,
         ] = Undefined,
         tickCap: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["butt", "round", "square"],
             UndefinedType,
         ] = Undefined,
@@ -73285,8 +73285,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -73442,8 +73442,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         tickCount: Union[
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -73457,27 +73457,27 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         tickDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         tickDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickExtra: Union[bool, UndefinedType] = Undefined,
         tickMinStep: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickRound: Union[bool, UndefinedType] = Undefined,
         tickSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         tickWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         ticks: Union[bool, UndefinedType] = Undefined,
         title: Union[
@@ -73485,26 +73485,26 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ] = Undefined,
         titleAlign: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["left", "center", "right"],
             UndefinedType,
         ] = Undefined,
         titleAnchor: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[None, "start", "middle", "end"],
             UndefinedType,
         ] = Undefined,
         titleAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleBaseline: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["top", "middle", "bottom"],
             UndefinedType,
         ] = Undefined,
@@ -73512,8 +73512,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             str,
             dict,
             None,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "black",
                 "silver",
@@ -73667,18 +73667,18 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         titleFont: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleFontWeight: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "normal",
                 "bold",
@@ -73697,33 +73697,33 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         titleLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleLineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titlePadding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleX: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         titleY: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         translate: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         values: Union[
             dict,
             Sequence[str],
             Sequence[bool],
-            core._Parameter,
             core.SchemaBase,
             Sequence[float],
+            "core.Parameter",
             Sequence[Union[dict, core.SchemaBase]],
             UndefinedType,
         ] = Undefined,
@@ -73758,47 +73758,47 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -73815,8 +73815,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -73830,20 +73830,20 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -73859,22 +73859,22 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -74239,7 +74239,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "YDatum": ...
@@ -76606,7 +76606,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: Union[bool, UndefinedType] = Undefined,
         divide: Union[Sequence[float], UndefinedType] = Undefined,
         extent: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
+            dict, core.SchemaBase, Sequence[float], "core.Parameter", UndefinedType
         ] = Undefined,
         maxbins: Union[float, UndefinedType] = Undefined,
         minstep: Union[float, UndefinedType] = Undefined,
@@ -76635,47 +76635,47 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -76692,8 +76692,8 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -76707,20 +76707,20 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -76736,22 +76736,22 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -77116,7 +77116,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "YOffset": ...
@@ -77875,47 +77875,47 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     def scale(
         self,
         align: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         base: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         bins: Union[dict, core.SchemaBase, Sequence[float], UndefinedType] = Undefined,
         clamp: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         constant: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domain: Union[
             str,
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Sequence[
-                Union[str, bool, dict, None, float, core._Parameter, core.SchemaBase]
+                Union[str, bool, dict, None, float, core.SchemaBase, "core.Parameter"]
             ],
             UndefinedType,
         ] = Undefined,
         domainMax: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMid: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainMin: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         domainRaw: Union[
-            dict, core._Parameter, core.SchemaBase, UndefinedType
+            dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         exponent: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         interpolate: Union[
             dict,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "rgb",
                 "lab",
@@ -77932,8 +77932,8 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             bool,
             dict,
             float,
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal[
                 "millisecond",
                 "second",
@@ -77947,20 +77947,20 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         padding: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingInner: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         paddingOuter: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         range: Union[
             dict,
             core.SchemaBase,
             Sequence[
                 Union[
-                    str, dict, float, core._Parameter, core.SchemaBase, Sequence[float]
+                    str, dict, float, core.SchemaBase, Sequence[float], "core.Parameter"
                 ]
             ],
             Literal[
@@ -77976,22 +77976,22 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         rangeMax: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         rangeMin: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
+            str, dict, float, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         reverse: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         round: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         scheme: Union[
             dict,
             Sequence[str],
-            core._Parameter,
             core.SchemaBase,
+            "core.Parameter",
             Literal["rainbow", "sinebow"],
             Literal[
                 "blues",
@@ -78356,7 +78356,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             UndefinedType,
         ] = Undefined,
         zero: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
+            bool, dict, core.SchemaBase, "core.Parameter", UndefinedType
         ] = Undefined,
         **kwds,
     ) -> "YOffsetDatum": ...
