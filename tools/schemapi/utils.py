@@ -211,18 +211,18 @@ class SchemaInfo:
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
                 )
+                if prefix:
+                    class_names = [f"{prefix}{n}" for n in class_names]
+
                 # If there is no prefix, it might be that the class is defined
                 # in the same script and potentially after this line -> We use
-                # deferred type annotations using quotation marks.
-                if not prefix:
-                    class_names = [f'"{n}"' for n in class_names]
-                else:
-                    # If it's Parameter, we still use the deferred type annotation
-                    # as it's imported in a TYPE_CHECKING block.
-                    class_names = [
-                        f"{prefix}{n}" if n != "Parameter" else f'"{prefix}{n}"'
-                        for n in class_names
-                    ]
+                # deferred type annotations using quotation marks. We also do this
+                # for types which are imported as part of a TYPE_CHECKING block which
+                # is something we sometimes do to prevent circular imports.
+                class_names = [
+                    (f'"{n}"' if not prefix or n.endswith(".Parameter") else n)
+                    for n in class_names
+                ]
                 type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs

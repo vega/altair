@@ -489,6 +489,8 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
         "from typing import Dict as TypingDict",
         "from typing import Generator as TypingGenerator" "",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
+        # See https://mypy.readthedocs.io/en/stable/runtime_troubles.html#import-cycles
+        # on why this solves circular import issues we would otherwise have.
         "if TYPE_CHECKING:",
         "    from altair.vegalite.v5.api import Parameter",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
