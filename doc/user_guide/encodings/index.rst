@@ -280,9 +280,9 @@ in some data structures.
 The recommended thing to do when you have special characters in a column name
 is to rename your columns.
 For example, in pandas you could replace ``:`` with ``_``
-via ``df.rename(columns = lambda x: x.replace(':', '_'))``.
+via ``df.rename(columns=lambda x: x.replace(':', '_'))``.
 If you don't want to rename your columns
-you will need to escape the special characters using a backslash:
+you will need to escape the special characters using a raw string with a backslash:
 
 .. altair-plot::
 
@@ -295,11 +295,11 @@ you will need to escape the special characters using a backslash:
     })
 
     alt.Chart(source).mark_bar().encode(
-        x='col\:colon',
+        x=r'col\:colon',
         # Remove the backslash in the title
-        y=alt.Y('col\.period').title('col.period'),
+        y=alt.Y(r'col\.period').title('col.period'),
         # Specify the data type
-        color='col\[brackets\]:N',
+        color=r'col\[brackets\]:N',
     )
 
 As can be seen above,
