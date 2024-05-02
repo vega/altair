@@ -1,6 +1,5 @@
 import json
 import os
-import random
 import hashlib
 import warnings
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
@@ -17,6 +16,7 @@ from .plugin_registry import PluginRegistry
 
 
 from typing import Protocol, TypedDict, Literal
+import secrets
 
 
 if TYPE_CHECKING:
@@ -136,7 +136,7 @@ def sample(
                         "frac cannot be None if n is None and data is a dictionary"
                     )
                 n = int(frac * len(values))
-            values = random.sample(values, n)
+            values = secrets.SystemRandom().sample(values, n)
             return {"values": values}
         else:
             # Maybe this should raise an error or return something useful?
@@ -149,7 +149,7 @@ def sample(
                     "frac cannot be None if n is None with this data input type"
                 )
             n = int(frac * len(pa_table))
-        indices = random.sample(range(len(pa_table)), n)
+        indices = secrets.SystemRandom().sample(range(len(pa_table)), n)
         return pa_table.take(indices)
     else:
         # Maybe this should raise an error or return something useful? Currently,

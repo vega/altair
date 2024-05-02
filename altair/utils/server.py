@@ -12,7 +12,7 @@ import socket
 from http import server
 from io import BytesIO as IO
 import itertools
-import random
+import secrets
 
 JUPYTER_WARNING = """
 Note: if you're in the Jupyter notebook, Chart.serve() is not the best
@@ -70,7 +70,7 @@ def generate_handler(html, files=None):
 def find_open_port(ip, port, n=50):
     """Find an open port near the specified port"""
     ports = itertools.chain(
-        (port + i for i in range(n)), (port + random.randint(-2 * n, 2 * n))
+        (port + i for i in range(n)), (port + secrets.SystemRandom().randint(-2 * n, 2 * n))
     )
 
     for port in ports:
