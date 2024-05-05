@@ -1,7 +1,7 @@
 # ruff: noqa
 
 from .core import *
-from .channels import *  # type: ignore[assignment]
+from .channels import *
 
 SCHEMA_VERSION = "v5.17.0"
 
