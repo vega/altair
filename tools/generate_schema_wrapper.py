@@ -508,7 +508,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
     # precedent in the generated __init__.py file one level up where core.py
     # and channels.py are imported. Importing both confuses type checkers.
     all_ = [
-        c for c in definitions if not c.startswith("_") and not c in ("Color", "Text")
+        c for c in definitions if not c.startswith("_") and c not in ("Color", "Text")
     ] + [
         "Root",
         "VegaLiteSchema",
