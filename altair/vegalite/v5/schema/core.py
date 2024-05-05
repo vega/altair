@@ -352,7 +352,6 @@ __all__ = [
     "StrokeJoin",
     "StyleConfigIndex",
     "SymbolShape",
-    "Text",
     "TextBaseline",
     "TextDef",
     "TextDirection",

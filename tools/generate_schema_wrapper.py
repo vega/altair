@@ -503,11 +503,13 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
                 assert isinstance(child.basename, list)
                 child.basename.append(name)
 
-    # Specify __all__ explicitly so that we can exclude Color from the list
-    # of exported classes as it's also a channel in the channels module and would
-    # be overwritten in the generated __init__.py file one level up where core.py
+    # Specify __all__ explicitly so that we can exclude the ones from the list
+    # of exported classes which are also defined in the channels module which takes
+    # precedent in the generated __init__.py file one level up where core.py
     # and channels.py are imported. Importing both confuses type checkers.
-    all_ = [c for c in definitions if not c.startswith("_") and not c == "Color"] + [
+    all_ = [
+        c for c in definitions if not c.startswith("_") and not c in ("Color", "Text")
+    ] + [
         "Root",
         "VegaLiteSchema",
         "SchemaBase",
