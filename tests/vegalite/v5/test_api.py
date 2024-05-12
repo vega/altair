@@ -336,10 +336,11 @@ def test_save(format, engine, basic_chart):
             os.remove(fp)
 
 
-# Only test inline=False as altair_viewer is required for inline=True
-# but that package has not yet been released with support for Altair 5
-@pytest.mark.parametrize("inline", [False])
+@pytest.mark.parametrize("inline", [False, True])
 def test_save_html(basic_chart, inline):
+    if vlc is None:
+        pytest.skip("vl_convert not importable; cannot run this test")
+
     out = io.StringIO()
     basic_chart.save(out, format="html", inline=inline)
     out.seek(0)
