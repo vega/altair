@@ -8,6 +8,7 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
+import pathlib
 from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO
 
 # Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
@@ -1141,7 +1142,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp: Union[str, IO],
+        fp: Union[str, pathlib.Path, IO],
         format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
