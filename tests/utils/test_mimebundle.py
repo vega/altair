@@ -168,7 +168,6 @@ def vega_spec():
     }
 
 
-@pytest.mark.save_engine
 @pytest.mark.parametrize("engine", ["vl-convert", None])
 def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
     if engine == "vl-convert" and vlc is None:

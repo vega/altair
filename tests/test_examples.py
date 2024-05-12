@@ -78,11 +78,6 @@ def test_from_and_to_json_roundtrip(syntax_module):
             ) from err
 
 
-# We do not apply the save_engine mark to this test. This mark is used in
-# the build GitHub Action workflow to select the tests which should be rerun
-# with some of the saving engines uninstalled. This would not make sense for this test
-# as here it is only interesting to run it with all saving engines installed.
-# Furthermore, the runtime of this test is rather long.
 @pytest.mark.parametrize("engine", ["vl-convert"])
 @pytest.mark.parametrize(
     "syntax_module", [examples_arguments_syntax, examples_methods_syntax]

@@ -285,7 +285,6 @@ def test_selection_expression():
         getattr(selection, magic_attr)
 
 
-@pytest.mark.save_engine
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
 @pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
