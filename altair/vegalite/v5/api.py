@@ -4102,6 +4102,7 @@ ChartType = Union[
 
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:
+    """Return `True` if the object is basic or compound `Chart`."""
     return isinstance(
         obj,
         (
