@@ -17,6 +17,7 @@ __all__ = [
     "AggregatedFieldDef",
     "Align",
     "AllSortString",
+    "AltairDeprecationWarning",
     "Angle",
     "AngleDatum",
     "AngleValue",
