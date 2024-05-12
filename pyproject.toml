@@ -213,8 +213,6 @@ warn_unused_ignores = true
 module = [
     "vega_datasets.*",
     "toolz.*",
-    "altair_viewer.*",
-    "altair_saver.*",
     "pyarrow.*",
     "yaml.*",
     "vl_convert.*",
