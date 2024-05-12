@@ -129,6 +129,7 @@ def save(
     if json_kwds is None:
         json_kwds = {}
     fp = pathlib.Path(fp) if isinstance(fp, str) else fp  # type: ignore[assignment]
+    encoding = kwargs.get("encoding", "utf-8")
 
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
@@ -141,9 +142,7 @@ def save(
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
-            write_file_or_filename(
-                fp, json_spec, mode="w", encoding=kwargs.get("encoding", "utf-8")
-            )
+            write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
@@ -159,12 +158,9 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp,
-                mimebundle["text/html"],
-                mode="w",
-                encoding=kwargs.get("encoding", "utf-8"),
+                fp, mimebundle["text/html"], mode="w", encoding=encoding
             )
-        elif format in ["png", "svg", "pdf", "vega"]:
+        elif format in {"png", "svg", "pdf", "vega"}:
             mimebundle = spec_to_mimebundle(
                 spec=spec,
                 format=format,
@@ -183,7 +179,6 @@ def save(
             elif format == "pdf":
                 write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
             else:
-                encoding = kwargs.get("encoding", "utf-8")
                 write_file_or_filename(
                     fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
                 )
