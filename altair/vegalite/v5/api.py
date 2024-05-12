@@ -29,6 +29,10 @@ from ...utils._vegafusion_data import (
 from ...utils.core import DataFrameLike
 from ...utils.data import DataType
 
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
@@ -4089,3 +4093,23 @@ def graticule(**kwds):
 def sphere() -> core.SphereGenerator:
     """Sphere generator."""
     return core.SphereGenerator(sphere=True)
+
+
+ChartType = Union[
+    Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
+]
+
+
+def is_chart_type(obj: Any) -> TypeIs[ChartType]:
+    return isinstance(
+        obj,
+        (
+            Chart,
+            RepeatChart,
+            ConcatChart,
+            HConcatChart,
+            VConcatChart,
+            FacetChart,
+            LayerChart,
+        ),
+    )
