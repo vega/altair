@@ -14,11 +14,6 @@ import pandas as pd
 import altair.vegalite.v5 as alt
 
 try:
-    import altair_saver  # noqa: F401
-except ImportError:
-    altair_saver = None
-
-try:
     import vl_convert as vlc  # noqa: F401
 except ImportError:
     vlc = None
@@ -292,7 +287,7 @@ def test_selection_expression():
 
 @pytest.mark.save_engine
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
-@pytest.mark.parametrize("engine", ["altair_saver", "vl-convert"])
+@pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
     if format in ["pdf", "png"]:
         out = io.BytesIO()
@@ -302,26 +297,7 @@ def test_save(format, engine, basic_chart):
         mode = "r"
 
     if format in ["svg", "png", "pdf", "bogus"]:
-        if engine == "altair_saver":
-            if format == "bogus":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"Unsupported format: '{format}'" in str(err.value)
-                return
-            elif altair_saver is None:
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "altair_saver" in str(err.value)
-                return
-            elif format not in altair_saver.available_formats():
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"No enabled saver found that supports format='{format}'" in str(
-                    err.value
-                )
-                return
-
-        elif engine == "vl-convert":
+        if engine == "vl-convert":
             if format == "bogus":
                 with pytest.raises(ValueError) as err:
                     basic_chart.save(out, format=format, engine=engine)

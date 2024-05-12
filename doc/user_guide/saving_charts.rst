@@ -172,10 +172,9 @@ To save an Altair chart object as a PNG, SVG, or PDF image, you can use
     chart.save('chart.svg')
     chart.save('chart.pdf')
 
-Saving these images requires an additional extension to run the
+Saving these images requires an additional extension vl-convert_ to run the
 javascript code necessary to interpret the Vega-Lite specification and output
-it in the form of an image. There are two packages that can be used to enable
-image export: vl-convert_ or altair_saver_.
+it in the form of an image.
 
 .. _install-vl-convert:
 
@@ -189,7 +188,7 @@ or::
 
     pip install vl-convert-python
 
-Unlike altair_saver_, vl-convert_ does not require any external dependencies.
+vl-convert_ does not require any external dependencies.
 See the vl-convert documentation for information and for known
 `limitations <https://github.com/vega/vl-convert#limitations>`_.
 
@@ -198,28 +197,7 @@ altair_saver
 
 .. note::
    
-   altair_saver does not yet support Altair 5.
-
-
-The altair_saver_ package can be installed with::
-
-    conda install -c conda-forge altair_saver
-
-or::
-
-    pip install altair_saver
-
-See the altair_saver_ documentation for information about additional installation
-requirements.
-
-Engine Argument
-^^^^^^^^^^^^^^^
-If both vl-convert and altair_saver are installed, vl-convert will take precedence.
-The engine argument to :meth:`Chart.save` can be used to override this default
-behavior. For example, to use altair_saver for PNG export when vl-convert is also
-installed you can use::
-
-    chart.save('chart.png', engine="altair_saver")
+   altair_saver was used in Altair 4 and earlier versions. It is no longer maintained and got superseded by vl-convert_ which provides a superior user experience and performance.
 
 
 PNG Figure Size/Resolution
@@ -231,10 +209,6 @@ to save the image with a resolution of 200 pixels-per-inch::
 
     chart.save('chart.png', ppi=200)
 
-.. note::
-
-    The ``ppi`` argument is only supported by the ``vl-convert`` engine. It will be ignored if
-    the ``altair_saver`` engine is enabled.
 
 To change the physical size of the resulting image while preserving the resolution, the
 ``scale_factor`` argument may be used. For example, to save the image at double the default
@@ -262,6 +236,5 @@ specification in the online Vega editor_.
     chart.to_url()
 
 .. _vl-convert: https://github.com/vega/vl-convert
-.. _altair_saver: http://github.com/altair-viz/altair_saver/
 .. _vegaEmbed: https://github.com/vega/vega-embed
 .. _editor: https://vega.github.io/editor/

@@ -80,7 +80,7 @@ def save(
     json_kwds: Optional[dict] = None,
     webdriver: Optional[Literal["chrome", "firefox"]] = None,
     scale_factor: float = 1,
-    engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
+    engine: Optional[Literal["vl-convert"]] = None,
     inline: bool = False,
     **kwargs,
 ) -> None:
@@ -117,7 +117,7 @@ def save(
         Webdriver to use for png, svg, or pdf output when using altair_saver engine
     scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
-    engine: string {'vl-convert', 'altair_saver'}
+    engine: string {'vl-convert'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats
     inline: bool (optional)
         If False (default), the required JavaScript libraries are loaded

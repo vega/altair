@@ -15,7 +15,7 @@ def spec_to_mimebundle(
     vegaembed_version: Optional[str] = None,
     vegalite_version: Optional[str] = None,
     embed_options: Optional[dict] = None,
-    engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
+    engine: Optional[Literal["vl-convert"]] = None,
     **kwargs,
 ) -> Union[dict, Tuple[dict, dict]]:
     """Convert a vega-lite specification to a mimebundle
@@ -41,7 +41,7 @@ def spec_to_mimebundle(
         The vegaEmbed options dictionary. Defaults to the embed options set with
         alt.renderers.set_embed_options().
         (See https://github.com/vega/vega-embed for details)
-    engine: string {'vl-convert', 'altair_saver'}
+    engine: string {'vl-convert'}
         the conversion engine to use for 'png', 'svg', 'pdf', and 'vega' formats
     **kwargs :
         Additional arguments will be passed to the generating function
@@ -53,7 +53,7 @@ def spec_to_mimebundle(
 
     Note
     ----
-    The png, svg, pdf, and vega outputs require the altair_saver package
+    The png, svg, pdf, and vega outputs require the vl-convert package
     """
     # Local import to avoid circular ImportError
     from altair.utils.display import (
@@ -130,7 +130,7 @@ def _spec_to_mimebundle_with_engine(
         the format of the mimebundle to be returned
     mode : string {'vega-lite', 'vega'}
         The rendering mode.
-    engine: string {'vl-convert', 'altair_saver'}
+    engine: string {'vl-convert'}
         the conversion engine to use
     format_locale : str or dict
         d3-format locale name or dictionary. Defaults to "en-US" for United States English.
@@ -221,16 +221,6 @@ def _spec_to_mimebundle_with_engine(
             # This should be validated above
             # but raise exception for the sake of future development
             raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
-    elif normalized_engine == "altairsaver":
-        warnings.warn(
-            "The altair_saver export engine is deprecated and will be removed in a future version.\n"
-            "Please migrate to the vl-convert engine",
-            AltairDeprecationWarning,
-            stacklevel=1,
-        )
-        import altair_saver
-
-        return altair_saver.render(spec, format, mode=mode, **kwargs)
     else:
         # This should be validated above
         # but raise exception for the sake of future development
@@ -240,12 +230,12 @@ def _spec_to_mimebundle_with_engine(
 
 
 def _validate_normalize_engine(
-    engine: Optional[Literal["vl-convert", "altair_saver"]],
+    engine: Optional[Literal["vl-convert"]],
     format: Literal["png", "svg", "pdf", "vega"],
 ) -> str:
     """Helper to validate and normalize the user-provided engine
 
-    engine : {None, 'vl-convert', 'altair_saver'}
+    engine : {None, 'vl-convert'}
         the user-provided engine string
     format : string {'png', 'svg', 'pdf', 'vega'}
         the format of the mimebundle to be returned
@@ -255,12 +245,6 @@ def _validate_normalize_engine(
         vlc = import_vl_convert()
     except ImportError:
         vlc = None
-
-    # Try to import altair_saver
-    try:
-        import altair_saver
-    except ImportError:
-        altair_saver = None
 
     # Normalize engine string by lower casing and removing underscores and hyphens
     normalized_engine = (
@@ -273,25 +257,20 @@ def _validate_normalize_engine(
             raise ValueError(
                 "The 'vl-convert' conversion engine requires the vl-convert-python package"
             )
-    elif normalized_engine == "altairsaver":
-        if altair_saver is None:
-            raise ValueError(
-                "The 'altair_saver' conversion engine requires the altair_saver package"
-            )
     elif normalized_engine is None:
         if vlc is not None:
             normalized_engine = "vlconvert"
-        elif altair_saver is not None:
-            normalized_engine = "altairsaver"
         else:
             raise ValueError(
-                "Saving charts in {fmt!r} format requires the vl-convert-python or altair_saver package: "
-                "see http://github.com/altair-viz/altair_saver/".format(fmt=format)
+                "Saving charts in {fmt!r} format requires the vl-convert-python package: "
+                "see https://altair-viz.github.io/user_guide/saving_charts.html#png-svg-and-pdf-format".format(
+                    fmt=format
+                )
             )
     else:
         raise ValueError(
-            "Invalid conversion engine {engine!r}. Expected one of {valid!r}".format(
-                engine=engine, valid=("vl-convert", "altair_saver")
+            "Invalid conversion engine {engine!r}. Expected vl-convert".format(
+                engine=engine
             )
         )
     return normalized_engine
