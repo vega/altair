@@ -9,14 +9,14 @@ from altair.utils._vegafusion_data import using_vegafusion
 
 
 def write_file_or_filename(
-    fp: Union[str, pathlib.PurePath, IO],
+    fp: Union[pathlib.Path, IO],
     content: Union[str, bytes],
     mode: str = "w",
     encoding: Optional[str] = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
-    if isinstance(fp, str) or isinstance(fp, pathlib.PurePath):
+    if isinstance(fp, pathlib.Path):
         with open(file=fp, mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
@@ -24,13 +24,11 @@ def write_file_or_filename(
 
 
 def set_inspect_format_argument(
-    format: Optional[str], fp: Union[str, pathlib.PurePath, IO], inline: bool
+    format: Optional[str], fp: Union[pathlib.Path, IO], inline: bool
 ) -> str:
     """Inspect the format argument in the save function"""
     if format is None:
-        if isinstance(fp, str):
-            format = fp.split(".")[-1]
-        elif isinstance(fp, pathlib.PurePath):
+        if isinstance(fp, pathlib.Path):
             format = fp.suffix.lstrip(".")
         else:
             raise ValueError(
@@ -70,7 +68,7 @@ def set_inspect_mode_argument(
 
 def save(
     chart,
-    fp: Union[str, pathlib.PurePath, IO],
+    fp: Union[str, pathlib.Path, IO],
     vega_version: Optional[str],
     vegaembed_version: Optional[str],
     format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
@@ -130,6 +128,7 @@ def save(
     """
     if json_kwds is None:
         json_kwds = {}
+    fp = pathlib.Path(fp) if isinstance(fp, str) else fp  # type: ignore[assignment]
 
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
