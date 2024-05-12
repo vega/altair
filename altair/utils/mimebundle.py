@@ -1,10 +1,8 @@
 from typing import Literal, Optional, Union, cast, Tuple
 
-from .deprecation import AltairDeprecationWarning
 from .html import spec_to_html
 from ._importers import import_vl_convert, vl_version_for_vl_convert
 import struct
-import warnings
 
 
 def spec_to_mimebundle(
