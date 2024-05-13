@@ -4096,12 +4096,12 @@ def sphere() -> core.SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-ChartType = Union[
+_ChartType = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
 
 
-def is_chart_type(obj: Any) -> TypeIs[ChartType]:
+def _is_chart_type(obj: Any) -> TypeIs[_ChartType]:
     """Return `True` if the object is basic or compound `Chart`."""
     return isinstance(
         obj,
