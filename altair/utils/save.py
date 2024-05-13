@@ -128,7 +128,7 @@ def save(
     """
     if json_kwds is None:
         json_kwds = {}
-    fp = pathlib.Path(fp) if isinstance(fp, str) else fp  # type: ignore[assignment]
+    fp = pathlib.Path(fp) if isinstance(fp, str) else fp
     encoding = kwargs.get("encoding", "utf-8")
 
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
