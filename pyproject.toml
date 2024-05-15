@@ -76,7 +76,7 @@ dev = [
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
-    "geopandas",
+    "geopandas<=0.14.3",
 ]
 doc = [
     "sphinx",
