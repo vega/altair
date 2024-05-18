@@ -168,9 +168,8 @@ def vega_spec():
     }
 
 
-@pytest.mark.parametrize("engine", ["vl-convert", None])
-def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
-    if engine == "vl-convert" and vlc is None:
+def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
+    if vlc is None:
         pytest.skip("vl_convert not importable; cannot run mimebundle tests")
 
     bundle = spec_to_mimebundle(
@@ -180,7 +179,7 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
         vega_version=alt.VEGA_VERSION,
         vegalite_version=alt.VEGALITE_VERSION,
         vegaembed_version=alt.VEGAEMBED_VERSION,
-        engine=engine,
+        engine="vl-convert",
     )
 
     assert bundle == {"application/vnd.vega.v5+json": vega_spec}
