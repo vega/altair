@@ -202,9 +202,6 @@ line-ending = "lf"
 max-complexity = 18
 
 [tool.pytest.ini_options]
-markers = [
-    "save_engine: marks some of the tests which are using an external package to save a chart to e.g. a png file. This mark is used to run those tests selectively in the build GitHub Action.",
-]
 # Pytest does not need to search these folders for test functions.
 # They contain examples which are being executed by the
 # test_examples tests.
@@ -217,8 +214,6 @@ warn_unused_ignores = true
 module = [
     "vega_datasets.*",
     "toolz.*",
-    "altair_viewer.*",
-    "altair_saver.*",
     "pyarrow.*",
     "yaml.*",
     "vl_convert.*",
