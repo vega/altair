@@ -21,7 +21,13 @@ except ImportError:
 
 def iter_examples_filenames(syntax_module):
     for _importer, modname, ispkg in pkgutil.iter_modules(syntax_module.__path__):
-        if ispkg or modname.startswith("_"):
+        if (
+            ispkg
+            or modname.startswith("_")
+            # Temporarily skip this test until https://github.com/vega/altair/issues/3418
+            # is fixed
+            or modname == "interval_selection_map_quakes"
+        ):
             continue
         yield modname + ".py"
 
