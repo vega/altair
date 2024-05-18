@@ -76,7 +76,7 @@ dev = [
     "pandas-stubs",
     "types-jsonschema",
     "types-setuptools",
-    "geopandas<=0.14.3",
+    "geopandas",
 ]
 doc = [
     "sphinx",
@@ -200,6 +200,12 @@ line-ending = "lf"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 18
+
+[tool.pytest.ini_options]
+# Pytest does not need to search these folders for test functions.
+# They contain examples which are being executed by the
+# test_examples tests.
+norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
 
 [tool.mypy]
 warn_unused_ignores = true
