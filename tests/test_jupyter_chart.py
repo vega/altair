@@ -1,12 +1,21 @@
 import altair as alt
-from altair.jupyter.jupyter_chart import (
-    IntervalSelection,
-    IndexSelection,
-    PointSelection,
-)
 from vega_datasets import data
 import pandas as pd
 import pytest
+
+# If anywidget is not installed, we will skip the tests in this file.
+try:
+    import anywidget  # noqa: F401
+
+    has_anywidget = True
+except ImportError:
+    has_anywidget = False
+
+if has_anywidget:
+    from altair.jupyter import jupyter_chart
+else:
+    jupyter_chart = None
+
 
 try:
     import vegafusion  # type: ignore # noqa: F401
@@ -18,6 +27,9 @@ except ImportError:
 
 @pytest.mark.parametrize("transformer", transformers)
 def test_chart_with_no_interactivity(transformer):
+    if not has_anywidget:
+        pytest.skip("anywidget not importable; skipping test")
+
     with alt.data_transformers.enable(transformer):
         source = pd.DataFrame(
             {
@@ -44,6 +56,9 @@ def test_chart_with_no_interactivity(transformer):
 
 @pytest.mark.parametrize("transformer", transformers)
 def test_interval_selection_example(transformer):
+    if not has_anywidget:
+        pytest.skip("anywidget not importable; skipping test")
+
     with alt.data_transformers.enable(transformer):
         source = data.cars()
         brush = alt.selection_interval(name="interval")
@@ -73,7 +88,7 @@ def test_interval_selection_example(transformer):
 
         # Check initial interval selection
         selection = widget.selections.interval
-        assert isinstance(selection, IntervalSelection)
+        assert isinstance(selection, jupyter_chart.IntervalSelection)
         assert selection.value == {}
         assert selection.store == []
 
@@ -102,7 +117,7 @@ def test_interval_selection_example(transformer):
         }
 
         selection = widget.selections.interval
-        assert isinstance(selection, IntervalSelection)
+        assert isinstance(selection, jupyter_chart.IntervalSelection)
         assert selection.value == {
             "Horsepower": [40.0, 100],
             "Miles_per_Gallon": [25, 30],
@@ -112,6 +127,9 @@ def test_interval_selection_example(transformer):
 
 @pytest.mark.parametrize("transformer", transformers)
 def test_index_selection_example(transformer):
+    if not has_anywidget:
+        pytest.skip("anywidget not importable; skipping test")
+
     with alt.data_transformers.enable(transformer):
         source = data.cars()
         brush = alt.selection_point(name="index")
@@ -141,7 +159,7 @@ def test_index_selection_example(transformer):
 
         # Check initial interval selection
         selection = widget.selections.index
-        assert isinstance(selection, IndexSelection)
+        assert isinstance(selection, jupyter_chart.IndexSelection)
         assert selection.value == []
         assert selection.store == []
 
@@ -165,13 +183,16 @@ def test_index_selection_example(transformer):
         }
 
         selection = widget.selections.index
-        assert isinstance(selection, IndexSelection)
+        assert isinstance(selection, jupyter_chart.IndexSelection)
         assert selection.value == [219, 329, 340]
         assert selection.store == store
 
 
 @pytest.mark.parametrize("transformer", transformers)
 def test_point_selection(transformer):
+    if not has_anywidget:
+        pytest.skip("anywidget not importable; skipping test")
+
     with alt.data_transformers.enable(transformer):
         source = data.cars()
         brush = alt.selection_point(name="point", encodings=["color"], bind="legend")
@@ -201,7 +222,7 @@ def test_point_selection(transformer):
 
         # Check initial interval selection
         selection = widget.selections.point
-        assert isinstance(selection, PointSelection)
+        assert isinstance(selection, jupyter_chart.PointSelection)
         assert selection.value == []
         assert selection.store == []
 
@@ -228,13 +249,16 @@ def test_point_selection(transformer):
         }
 
         selection = widget.selections.point
-        assert isinstance(selection, PointSelection)
+        assert isinstance(selection, jupyter_chart.PointSelection)
         assert selection.value == [{"Cylinders": 4}, {"Cylinders": 5}]
         assert selection.store == store
 
 
 @pytest.mark.parametrize("transformer", transformers)
 def test_param_updates(transformer):
+    if not has_anywidget:
+        pytest.skip("anywidget not importable; skipping test")
+
     with alt.data_transformers.enable(transformer):
         source = data.cars()
         size_param = alt.param(
