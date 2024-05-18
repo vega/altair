@@ -14,7 +14,7 @@ except ImportError:
 if has_anywidget:
     from altair.jupyter import jupyter_chart
 else:
-    jupyter_chart = None
+    jupyter_chart = None  # type: ignore
 
 
 try:

@@ -16,7 +16,7 @@ try:
     import anywidget  # noqa: F401
 
 except ImportError:
-    anywidget = None
+    anywidget = None  # type: ignore
 
 
 @pytest.fixture
