@@ -16,10 +16,16 @@ def iter_examples_methods_syntax():
     examples_methods_syntax_dir = os.path.abspath(os.path.dirname(__file__))
     for filename in os.listdir(examples_methods_syntax_dir):
         name, ext = os.path.splitext(filename)
-        if name.startswith("_") or ext != ".py":
+        if (
+            name.startswith("_")
+            or ext != ".py"
+            # Temporarily skip this test until https://github.com/vega/altair/issues/3418
+            # is fixed
+            or name == "interval_selection_map_quakes"
+        ):
             continue
         yield {
             "name": name,
             "filename": os.path.join(examples_methods_syntax_dir, filename),
-            "use_svg": name in SVG_EXAMPLES
+            "use_svg": name in SVG_EXAMPLES,
         }
