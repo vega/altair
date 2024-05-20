@@ -152,6 +152,7 @@ API Functions
    condition
    graticule
    hconcat
+   is_chart_type
    layer
    param
    repeat
