@@ -77,7 +77,6 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "geopandas",
-    "fiona<=1.9.5",
 ]
 doc = [
     "sphinx",
