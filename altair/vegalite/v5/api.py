@@ -9,6 +9,7 @@ from toolz.curried import pipe as _pipe
 import itertools
 import sys
 import pathlib
+import typing
 from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO
 
 # Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
@@ -236,9 +237,9 @@ class Parameter(_expr_core.OperatorMixin):
             return {"expr": self.name}
         elif self.param_type == "selection":
             return {
-                "param": self.name.to_dict()
-                if hasattr(self.name, "to_dict")
-                else self.name
+                "param": (
+                    self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
+                )
             }
         else:
             raise ValueError(f"Unrecognized parameter type: {self.param_type}")
@@ -4096,22 +4097,16 @@ def sphere() -> core.SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-_ChartType = Union[
+ChartType = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
 
 
-def _is_chart_type(obj: Any) -> TypeIs[_ChartType]:
-    """Return `True` if the object is basic or compound `Chart`."""
+def is_chart_type(obj: Any) -> TypeIs[ChartType]:
+    """Return `True` if the object is an Altair chart. This can be a basic chart
+    but also a repeat, concat, or facet chart.
+    """
     return isinstance(
         obj,
-        (
-            Chart,
-            RepeatChart,
-            ConcatChart,
-            HConcatChart,
-            VConcatChart,
-            FacetChart,
-            LayerChart,
-        ),
+        typing.get_args(ChartType),
     )
