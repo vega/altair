@@ -67,7 +67,8 @@ jobs:
       - name: Test Vega Datasets with GeoPandas
         run: python -c "from vega_datasets import data; import geopandas as gpd; assert not gpd.read_file(data.earthquakes.url, driver='GeoJSON').empty"        
       - name: Test Fiona
-        run: python -c "import fiona; with fiona.open('/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json') as features: print(len(features.schema['properties']))"
+        run: |
+          python -c "import fiona; exec(\"\"\"with fiona.open('/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json') as features: print(len(features.schema['properties']))\"\"\")"
       # - name: Temporarily debug gpd-3284; test gdal
       #   run: |
       #     python -c "import os; import subprocess; os.environ['CPL_CURL_VERBOSE'] = 'YES'; subprocess.run(['ogrinfo', '-ro', '-al', '-so', '/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json'])"
