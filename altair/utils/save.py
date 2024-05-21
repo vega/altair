@@ -160,7 +160,7 @@ def save(
             write_file_or_filename(
                 fp, mimebundle["text/html"], mode="w", encoding=encoding
             )
-        elif format in {"png", "svg", "pdf", "vega"}:
+        elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
                 spec=spec,
                 format=format,
