@@ -7,6 +7,18 @@ import pytest
 import altair.vegalite.v5 as alt
 
 
+try:
+    import vl_convert as vlc  # noqa: F401
+except ImportError:
+    vlc = None
+
+try:
+    import anywidget  # noqa: F401
+
+except ImportError:
+    anywidget = None  # type: ignore
+
+
 @pytest.fixture
 def chart():
     return alt.Chart("data.csv").mark_point()
@@ -66,6 +78,9 @@ def test_json_renderer_embed_options(chart, renderer="json"):
 
 
 def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
+    if vlc is None:
+        pytest.skip("vl_convert not importable; cannot run this test")
+
     # Check that setting embed_options to None doesn't crash
     from altair.utils.mimebundle import spec_to_mimebundle
 
@@ -82,6 +97,9 @@ def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
 
 def test_jupyter_renderer_mimetype(chart, renderer="jupyter"):
     """Test that we get the expected widget mimetype when the jupyter renderer is enabled"""
+    if not anywidget:
+        pytest.skip("anywidget not importable; skipping test")
+
     with alt.renderers.enable(renderer):
         assert (
             "application/vnd.jupyter.widget-view+json"

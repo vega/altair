@@ -6,6 +6,7 @@ from typing import IO, Union, Optional, Literal
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
 from altair.utils._vegafusion_data import using_vegafusion
+from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def write_file_or_filename(
@@ -78,7 +79,7 @@ def save(
     json_kwds: Optional[dict] = None,
     webdriver: Optional[Literal["chrome", "firefox"]] = None,
     scale_factor: float = 1,
-    engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
+    engine: Optional[Literal["vl-convert"]] = None,
     inline: bool = False,
     **kwargs,
 ) -> None:
@@ -112,10 +113,10 @@ def save(
         Additional keyword arguments are passed to the output method
         associated with the specified format.
     webdriver : string {'chrome' | 'firefox'} (optional)
-        Webdriver to use for png, svg, or pdf output when using altair_saver engine
+        This argument is deprecated as it's not relevant for the new vl-convert engine.
     scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
-    engine: string {'vl-convert', 'altair_saver'}
+    engine: string {'vl-convert'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats
     inline: bool (optional)
         If False (default), the required JavaScript libraries are loaded
@@ -126,6 +127,15 @@ def save(
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
+    if webdriver is not None:
+        warnings.warn(
+            "The webdriver argument is deprecated as it's not relevant for"
+            + " the new vl-convert engine which replaced altair_saver."
+            + " The argument will be removed in a future release.",
+            AltairDeprecationWarning,
+            stacklevel=1,
+        )
+
     if json_kwds is None:
         json_kwds = {}
     fp = pathlib.Path(fp) if isinstance(fp, str) else fp
@@ -169,7 +179,6 @@ def save(
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
                 embed_options=embed_options,
-                webdriver=webdriver,
                 scale_factor=scale_factor,
                 engine=engine,
                 **kwargs,

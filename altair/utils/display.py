@@ -38,13 +38,6 @@ class RendererRegistry(PluginRegistry[RendererType]):
             for more information.
             """
         ),
-        "altair_viewer": textwrap.dedent(
-            """
-            To use the 'altair_viewer' renderer, you must install the altair_viewer
-            package; see http://github.com/altair-viz/altair_viewer/
-            for more information.
-            """
-        ),
     }
 
     def set_embed_options(
