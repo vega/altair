@@ -62,6 +62,9 @@ jobs:
               echo $files
               exit 1
           fi
+      - name: Test Fiona and Geopandas
+        run: |
+        python -c "import fiona; import geopandas as gpd; exec(\"\"\"with fiona.open('/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json') as features: print(len(features.schema['properties']))\"\"\"); assert not gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON').empty"
       - name: Test GeoPandas
         run: python -c "import geopandas as gpd; assert not gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON').empty"
       - name: Test Vega Datasets with GeoPandas
