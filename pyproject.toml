@@ -164,6 +164,7 @@ exclude = [
 ]
 
 [tool.ruff.lint]
+extend-safe-fixes=["SIM101"]
 select = [
     # flake8-bugbear
     "B",
@@ -177,6 +178,8 @@ select = [
     "F",
     # flake8-tidy-imports
     "TID",
+    # flake8-simplify
+    "SIM101"
 ]
 ignore = [  
     # Whitespace before ':'
