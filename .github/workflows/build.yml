@@ -68,6 +68,9 @@ jobs:
       - name: Test GeoPandas
         run: |
           python -c "import geopandas as gpd; print(len(gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON')))"
+      - name: Test Get content-length
+        run: |
+          python -c "import urllib.request; url='https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json'; print(urllib.request.urlopen(urllib.request.Request(url, method='HEAD')).headers['Content-Length'])"
       - name: Test Fiona
         run: |
           python -c "import logging; logging.basicConfig(level=logging.DEBUG); import fiona; exec(\"\"\"with fiona.Env(CPL_DEBUG=True, CPL_CURL_VERBOSE=True, CPL_TIMESTAMP=True): features = fiona.open('/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json'); print(len(features.schema['properties']))\"\"\")"
