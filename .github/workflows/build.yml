@@ -64,10 +64,13 @@ jobs:
           fi
       - name: Temporarily debug gpd-3284; test geopandas
         run: |
-          python -c "import geopandas as gpd; gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON')"
+          python -c "import geopandas as gpd; gdf = gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON'); assert gdf"
+      - name: Temporarily debug gpd-3284; test fiona
+        run: |
+          python -c "import fiona; exec(\"\"\"with fiona.open('/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json') as features: columns = list(features.schema['properties']); print(len(columns))\"\"\")"
       - name: Temporarily debug gpd-3284; test gdal
         run: |
-          CPL_CURL_VERBOSE=YES ogrinfo -ro -al -so /vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json
+          python -c "import os; import subprocess; os.environ['CPL_CURL_VERBOSE'] = 'YES'; subprocess.run(['ogrinfo', '-ro', '-al', '-so', '/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json'])"
       - name: Test with pytest
         run: |
           pytest --doctest-modules tests
