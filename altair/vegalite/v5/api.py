@@ -28,6 +28,7 @@ from ...utils._vegafusion_data import (
 )
 from ...utils.core import DataFrameLike
 from ...utils.data import DataType
+from ...utils.deprecation import AltairDeprecationWarning
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -231,9 +232,9 @@ class Parameter(_expr_core.OperatorMixin):
             return {"expr": self.name}
         elif self.param_type == "selection":
             return {
-                "param": self.name.to_dict()
-                if hasattr(self.name, "to_dict")
-                else self.name
+                "param": (
+                    self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
+                )
             }
         else:
             raise ValueError(f"Unrecognized parameter type: {self.param_type}")
@@ -1155,7 +1156,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg, pdf; the last three require
-        the altair_saver package to be installed.
+        the vl-convert-python package to be installed.
 
         Parameters
         ----------
@@ -1187,7 +1188,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         webdriver : string {'chrome' | 'firefox'} (optional)
-            Webdriver to use for png, svg, or pdf output when using altair_saver engine
+            This argument is deprecated as it's not relevant for the new vl-convert engine.
         engine: string {'vl-convert', 'altair_saver'}
             the conversion engine to use for 'png', 'svg', and 'pdf' formats
         inline: bool (optional)
@@ -1199,6 +1200,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs :
             additional kwargs passed to spec_to_mimebundle.
         """
+        if webdriver is not None:
+            warnings.warn(
+                "The webdriver argument is deprecated as it's not relevant for"
+                + " the new vl-convert engine which replaced altair_saver."
+                + " The argument will be removed in a future release.",
+                AltairDeprecationWarning,
+                stacklevel=1,
+            )
+
         from ...utils.save import save
 
         kwds = dict(
@@ -1212,7 +1222,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             vegaembed_version=vegaembed_version,
             embed_options=embed_options,
             json_kwds=json_kwds,
-            webdriver=webdriver,
             engine=engine,
             inline=inline,
             **kwargs,

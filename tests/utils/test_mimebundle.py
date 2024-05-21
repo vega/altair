@@ -5,11 +5,6 @@ from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
-    import altair_saver  # noqa: F401
-except ImportError:
-    altair_saver = None
-
-try:
     import vl_convert as vlc  # noqa: F401
 except ImportError:
     vlc = None
@@ -173,18 +168,9 @@ def vega_spec():
     }
 
 
-@pytest.mark.save_engine
-@pytest.mark.parametrize("engine", ["vl-convert", "altair_saver", None])
-def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
-    if engine == "vl-convert" and vlc is None:
+def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
+    if vlc is None:
         pytest.skip("vl_convert not importable; cannot run mimebundle tests")
-    elif engine == "altair_saver" and altair_saver is None:
-        pytest.skip("altair_saver not importable; cannot run mimebundle tests")
-    elif vlc is None and altair_saver is None:
-        pytest.skip(
-            "Neither altair_saver nor vl_convert are importable;"
-            + " cannot run mimebundle tests"
-        )
 
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
@@ -193,7 +179,7 @@ def test_vegalite_to_vega_mimebundle(engine, vegalite_spec, vega_spec):
         vega_version=alt.VEGA_VERSION,
         vegalite_version=alt.VEGALITE_VERSION,
         vegaembed_version=alt.VEGAEMBED_VERSION,
-        engine=engine,
+        engine="vl-convert",
     )
 
     assert bundle == {"application/vnd.vega.v5+json": vega_spec}

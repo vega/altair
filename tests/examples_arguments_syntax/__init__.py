@@ -23,5 +23,5 @@ def iter_examples_arguments_syntax():
         yield {
             "name": name,
             "filename": os.path.join(examples_arguments_syntax_dir, filename),
-            "use_svg": name in SVG_EXAMPLES
+            "use_svg": name in SVG_EXAMPLES,
         }

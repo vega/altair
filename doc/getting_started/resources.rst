@@ -88,14 +88,6 @@ VegaFusion provides server-side scaling for Altair charts, which can accelerate 
 .. List of links.
 .. _VegaFusion: https://vegafusion.io/
 
-altair_saver_
-~~~~~~~~~~~~~
-
-Enables saving charts to a variety of output types.
-
-.. List of links.
-.. _altair_saver: https://github.com/altair-viz/altair_saver
-
 altair_data_server_
 ~~~~~~~~~~~~~~~~~~~
 
