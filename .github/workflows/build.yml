@@ -64,7 +64,7 @@ jobs:
           fi
       - name: Temporarily debug gpd-3284; test geopandas
         run: |
-          python -c "import geopandas as gpd; gdf = gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON'); assert gdf"
+          python -c "import geopandas as gpd; gdf = gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON'); assert not gdf.empty"
       - name: Temporarily debug gpd-3284; test fiona
         run: |
           python -c "import fiona; exec(\"\"\"with fiona.open('/vsicurl/https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json') as features: columns = list(features.schema['properties']); print(len(columns))\"\"\")"
