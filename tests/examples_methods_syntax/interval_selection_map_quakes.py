@@ -10,6 +10,7 @@ import altair as alt
 from vega_datasets import data
 import geopandas as gpd
 
+gpd.options.io_engine = "fiona"
 # load data
 gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
 gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
