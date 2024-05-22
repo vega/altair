@@ -67,7 +67,7 @@ jobs:
           python -c "from vega_datasets import data; import geopandas as gpd; print(len(gpd.read_file(data.earthquakes.url, driver='GeoJSON')))"
       - name: Test GeoPandas
         run: |
-          python -c "import geopandas as gpd; print(len(gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON')))"
+          python -c "import geopandas as gpd; gpd.options.io_engine = "fiona"; print(len(gpd.read_file('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json', driver='GeoJSON')))"
       - name: Test Get content-length
         run: |
           python -c "import urllib.request; url='https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/earthquakes.json'; print(urllib.request.urlopen(urllib.request.Request(url, method='HEAD')).headers['Content-Length'])"
