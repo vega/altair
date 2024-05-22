@@ -75,8 +75,8 @@ dev = [
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
-    "types-setuptools",
-    "geopandas",
+    "types-setuptools",    
+    "geopandas @ git+https://github.com/mattijn/geopandas.git@read_file_adaptation",
 ]
 doc = [
     "sphinx",
