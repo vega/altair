@@ -10,14 +10,14 @@ from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def write_file_or_filename(
-    fp: Union[str, pathlib.PurePath, IO],
+    fp: Union[str, pathlib.Path, IO],
     content: Union[str, bytes],
     mode: str = "w",
     encoding: Optional[str] = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
-    if isinstance(fp, str) or isinstance(fp, pathlib.PurePath):
+    if isinstance(fp, (str, pathlib.Path)):
         with open(file=fp, mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
@@ -25,14 +25,12 @@ def write_file_or_filename(
 
 
 def set_inspect_format_argument(
-    format: Optional[str], fp: Union[str, pathlib.PurePath, IO], inline: bool
+    format: Optional[str], fp: Union[str, pathlib.Path, IO], inline: bool
 ) -> str:
     """Inspect the format argument in the save function"""
     if format is None:
-        if isinstance(fp, str):
-            format = fp.split(".")[-1]
-        elif isinstance(fp, pathlib.PurePath):
-            format = fp.suffix.lstrip(".")
+        if isinstance(fp, (str, pathlib.Path)):
+            format = pathlib.Path(fp).suffix.lstrip(".")
         else:
             raise ValueError(
                 "must specify file format: "
@@ -71,7 +69,7 @@ def set_inspect_mode_argument(
 
 def save(
     chart,
-    fp: Union[str, pathlib.PurePath, IO],
+    fp: Union[str, pathlib.Path, IO],
     vega_version: Optional[str],
     vegaembed_version: Optional[str],
     format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
@@ -140,7 +138,7 @@ def save(
 
     if json_kwds is None:
         json_kwds = {}
-
+    encoding = kwargs.get("encoding", "utf-8")
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
     def perform_save():
@@ -152,9 +150,7 @@ def save(
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
-            write_file_or_filename(
-                fp, json_spec, mode="w", encoding=kwargs.get("encoding", "utf-8")
-            )
+            write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
@@ -170,10 +166,7 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp,
-                mimebundle["text/html"],
-                mode="w",
-                encoding=kwargs.get("encoding", "utf-8"),
+                fp, mimebundle["text/html"], mode="w", encoding=encoding
             )
         elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
@@ -193,7 +186,6 @@ def save(
             elif format == "pdf":
                 write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
             else:
-                encoding = kwargs.get("encoding", "utf-8")
                 write_file_or_filename(
                     fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
                 )

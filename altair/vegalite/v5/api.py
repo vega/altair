@@ -8,6 +8,8 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
+import pathlib
+import typing
 from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO
 
 # Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
@@ -30,6 +32,10 @@ from ...utils.core import DataFrameLike
 from ...utils.data import DataType
 from ...utils.deprecation import AltairDeprecationWarning
 
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
@@ -1138,7 +1144,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp: Union[str, IO],
+        fp: Union[str, pathlib.Path, IO],
         format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
@@ -4098,3 +4104,18 @@ def graticule(**kwds):
 def sphere() -> core.SphereGenerator:
     """Sphere generator."""
     return core.SphereGenerator(sphere=True)
+
+
+ChartType = Union[
+    Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
+]
+
+
+def is_chart_type(obj: Any) -> TypeIs[ChartType]:
+    """Return `True` if the object is an Altair chart. This can be a basic chart
+    but also a repeat, concat, or facet chart.
+    """
+    return isinstance(
+        obj,
+        typing.get_args(ChartType),
+    )
