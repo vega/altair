@@ -10,14 +10,14 @@ from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def write_file_or_filename(
-    fp: Union[pathlib.Path, IO],
+    fp: Union[str, pathlib.Path, IO],
     content: Union[str, bytes],
     mode: str = "w",
     encoding: Optional[str] = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
-    if isinstance(fp, pathlib.Path):
+    if isinstance(fp, (str, pathlib.Path)):
         with open(file=fp, mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
@@ -25,12 +25,12 @@ def write_file_or_filename(
 
 
 def set_inspect_format_argument(
-    format: Optional[str], fp: Union[pathlib.Path, IO], inline: bool
+    format: Optional[str], fp: Union[str, pathlib.Path, IO], inline: bool
 ) -> str:
     """Inspect the format argument in the save function"""
     if format is None:
-        if isinstance(fp, pathlib.Path):
-            format = fp.suffix.lstrip(".")
+        if isinstance(fp, (str, pathlib.Path)):
+            format = pathlib.Path(fp).suffix.lstrip(".")
         else:
             raise ValueError(
                 "must specify file format: "
@@ -138,9 +138,7 @@ def save(
 
     if json_kwds is None:
         json_kwds = {}
-    fp = pathlib.Path(fp) if isinstance(fp, str) else fp
     encoding = kwargs.get("encoding", "utf-8")
-
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
     def perform_save():
