@@ -8,6 +8,8 @@ import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
 import sys
+import pathlib
+import typing
 from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO
 
 # Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
@@ -28,7 +30,12 @@ from ...utils._vegafusion_data import (
 )
 from ...utils.core import DataFrameLike
 from ...utils.data import DataType
+from ...utils.deprecation import AltairDeprecationWarning
 
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
@@ -1134,7 +1141,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp: Union[str, IO],
+        fp: Union[str, pathlib.Path, IO],
         format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
@@ -1152,7 +1159,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg, pdf; the last three require
-        the altair_saver package to be installed.
+        the vl-convert-python package to be installed.
 
         Parameters
         ----------
@@ -1184,7 +1191,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         webdriver : string {'chrome' | 'firefox'} (optional)
-            Webdriver to use for png, svg, or pdf output when using altair_saver engine
+            This argument is deprecated as it's not relevant for the new vl-convert engine.
         engine: string {'vl-convert', 'altair_saver'}
             the conversion engine to use for 'png', 'svg', and 'pdf' formats
         inline: bool (optional)
@@ -1196,6 +1203,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs :
             additional kwargs passed to spec_to_mimebundle.
         """
+        if webdriver is not None:
+            warnings.warn(
+                "The webdriver argument is deprecated as it's not relevant for"
+                + " the new vl-convert engine which replaced altair_saver."
+                + " The argument will be removed in a future release.",
+                AltairDeprecationWarning,
+                stacklevel=1,
+            )
+
         from ...utils.save import save
 
         kwds = dict(
@@ -1209,7 +1225,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             vegaembed_version=vegaembed_version,
             embed_options=embed_options,
             json_kwds=json_kwds,
-            webdriver=webdriver,
             engine=engine,
             inline=inline,
             **kwargs,
@@ -4086,3 +4101,18 @@ def graticule(**kwds):
 def sphere() -> core.SphereGenerator:
     """Sphere generator."""
     return core.SphereGenerator(sphere=True)
+
+
+ChartType = Union[
+    Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
+]
+
+
+def is_chart_type(obj: Any) -> TypeIs[ChartType]:
+    """Return `True` if the object is an Altair chart. This can be a basic chart
+    but also a repeat, concat, or facet chart.
+    """
+    return isinstance(
+        obj,
+        typing.get_args(ChartType),
+    )

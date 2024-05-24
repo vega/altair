@@ -483,8 +483,22 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
                 assert isinstance(child.basename, list)
                 child.basename.append(name)
 
+    # Specify __all__ explicitly so that we can exclude the ones from the list
+    # of exported classes which are also defined in the channels module which takes
+    # precedent in the generated __init__.py file one level up where core.py
+    # and channels.py are imported. Importing both confuses type checkers.
+    all_ = [
+        c for c in definitions if not c.startswith("_") and c not in ("Color", "Text")
+    ] + [
+        "Root",
+        "VegaLiteSchema",
+        "SchemaBase",
+        "load_schema",
+    ]
+
     contents = [
         HEADER,
+        "__all__ = {}".format(all_),
         "from typing import Any, Literal, Union, Protocol, Sequence, List, TYPE_CHECKING",
         "from typing import Dict as TypingDict",
         "from typing import Generator as TypingGenerator" "",
@@ -716,7 +730,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     print("Writing {}".format(outfile))
     content = [
         "# ruff: noqa\n",
-        "from .core import *\nfrom .channels import *  # type: ignore[assignment]\n",
+        "from .core import *\nfrom .channels import *\n",
         f"SCHEMA_VERSION = '{version}'\n",
         "SCHEMA_URL = {!r}\n" "".format(schema_url(version)),
     ]

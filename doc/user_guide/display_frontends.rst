@@ -701,7 +701,6 @@ see :ref:`display-general`.
 .. _nteract: https://nteract.io
 .. _nbconvert: https://nbconvert.readthedocs.io/
 .. _nbviewer: https://nbviewer.jupyter.org/
-.. _Altair Viewer: https://github.com/altair-viz/altair_viewer/
 .. _Colab: https://colab.research.google.com
 .. _Hydrogen: https://github.com/nteract/hydrogen
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/

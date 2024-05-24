@@ -6,17 +6,18 @@ from typing import IO, Union, Optional, Literal
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
 from altair.utils._vegafusion_data import using_vegafusion
+from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def write_file_or_filename(
-    fp: Union[str, pathlib.PurePath, IO],
+    fp: Union[str, pathlib.Path, IO],
     content: Union[str, bytes],
     mode: str = "w",
     encoding: Optional[str] = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
-    if isinstance(fp, str) or isinstance(fp, pathlib.PurePath):
+    if isinstance(fp, (str, pathlib.Path)):
         with open(file=fp, mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
@@ -24,14 +25,12 @@ def write_file_or_filename(
 
 
 def set_inspect_format_argument(
-    format: Optional[str], fp: Union[str, pathlib.PurePath, IO], inline: bool
+    format: Optional[str], fp: Union[str, pathlib.Path, IO], inline: bool
 ) -> str:
     """Inspect the format argument in the save function"""
     if format is None:
-        if isinstance(fp, str):
-            format = fp.split(".")[-1]
-        elif isinstance(fp, pathlib.PurePath):
-            format = fp.suffix.lstrip(".")
+        if isinstance(fp, (str, pathlib.Path)):
+            format = pathlib.Path(fp).suffix.lstrip(".")
         else:
             raise ValueError(
                 "must specify file format: "
@@ -70,7 +69,7 @@ def set_inspect_mode_argument(
 
 def save(
     chart,
-    fp: Union[str, pathlib.PurePath, IO],
+    fp: Union[str, pathlib.Path, IO],
     vega_version: Optional[str],
     vegaembed_version: Optional[str],
     format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
@@ -80,7 +79,7 @@ def save(
     json_kwds: Optional[dict] = None,
     webdriver: Optional[Literal["chrome", "firefox"]] = None,
     scale_factor: float = 1,
-    engine: Optional[Literal["vl-convert", "altair_saver"]] = None,
+    engine: Optional[Literal["vl-convert"]] = None,
     inline: bool = False,
     **kwargs,
 ) -> None:
@@ -114,10 +113,10 @@ def save(
         Additional keyword arguments are passed to the output method
         associated with the specified format.
     webdriver : string {'chrome' | 'firefox'} (optional)
-        Webdriver to use for png, svg, or pdf output when using altair_saver engine
+        This argument is deprecated as it's not relevant for the new vl-convert engine.
     scale_factor : float (optional)
         scale_factor to use to change size/resolution of png or svg output
-    engine: string {'vl-convert', 'altair_saver'}
+    engine: string {'vl-convert'}
         the conversion engine to use for 'png', 'svg', and 'pdf' formats
     inline: bool (optional)
         If False (default), the required JavaScript libraries are loaded
@@ -128,9 +127,18 @@ def save(
     **kwargs :
         additional kwargs passed to spec_to_mimebundle.
     """
+    if webdriver is not None:
+        warnings.warn(
+            "The webdriver argument is deprecated as it's not relevant for"
+            + " the new vl-convert engine which replaced altair_saver."
+            + " The argument will be removed in a future release.",
+            AltairDeprecationWarning,
+            stacklevel=1,
+        )
+
     if json_kwds is None:
         json_kwds = {}
-
+    encoding = kwargs.get("encoding", "utf-8")
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
     def perform_save():
@@ -142,9 +150,7 @@ def save(
 
         if format == "json":
             json_spec = json.dumps(spec, **json_kwds)
-            write_file_or_filename(
-                fp, json_spec, mode="w", encoding=kwargs.get("encoding", "utf-8")
-            )
+            write_file_or_filename(fp, json_spec, mode="w", encoding=encoding)
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
@@ -160,10 +166,7 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp,
-                mimebundle["text/html"],
-                mode="w",
-                encoding=kwargs.get("encoding", "utf-8"),
+                fp, mimebundle["text/html"], mode="w", encoding=encoding
             )
         elif format in ["png", "svg", "pdf", "vega"]:
             mimebundle = spec_to_mimebundle(
@@ -174,7 +177,6 @@ def save(
                 vegalite_version=vegalite_version,
                 vegaembed_version=vegaembed_version,
                 embed_options=embed_options,
-                webdriver=webdriver,
                 scale_factor=scale_factor,
                 engine=engine,
                 **kwargs,
@@ -184,7 +186,6 @@ def save(
             elif format == "pdf":
                 write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
             else:
-                encoding = kwargs.get("encoding", "utf-8")
                 write_file_or_filename(
                     fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
                 )

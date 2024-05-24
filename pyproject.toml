@@ -15,7 +15,7 @@ build-backend = "hatchling.build"
 name = "altair"
 authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
-    "typing_extensions>=4.0.1; python_version<\"3.11\"",
+    "typing_extensions>=4.10.0; python_version<\"3.13\"",
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
@@ -164,6 +164,7 @@ exclude = [
 ]
 
 [tool.ruff.lint]
+extend-safe-fixes=["SIM101"]
 select = [
     # flake8-bugbear
     "B",
@@ -177,6 +178,8 @@ select = [
     "F",
     # flake8-tidy-imports
     "TID",
+    # flake8-simplify
+    "SIM101"
 ]
 ignore = [  
     # Whitespace before ':'
@@ -202,9 +205,10 @@ line-ending = "lf"
 max-complexity = 18
 
 [tool.pytest.ini_options]
-markers = [
-    "save_engine: marks some of the tests which are using an external package to save a chart to e.g. a png file. This mark is used to run those tests selectively in the build GitHub Action.",
-]
+# Pytest does not need to search these folders for test functions.
+# They contain examples which are being executed by the
+# test_examples tests.
+norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
 
 [tool.mypy]
 warn_unused_ignores = true
@@ -213,8 +217,6 @@ warn_unused_ignores = true
 module = [
     "vega_datasets.*",
     "toolz.*",
-    "altair_viewer.*",
-    "altair_saver.*",
     "pyarrow.*",
     "yaml.*",
     "vl_convert.*",

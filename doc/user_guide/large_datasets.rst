@@ -296,8 +296,7 @@ prerender the visualization and send only a static image to your notebook. This 
 greatly reduce the amount of data that is being transmitted. The downside with this approach is,
 that you loose all interactivity features of Altair.
 
-Both renderers require you to install either the `vl-convert`_ or the `altair_saver`_ package, see :ref:`saving-png`,
-whereas `vl-convert`_ is expected to provide the better performance.
+Both renderers require you to install the `vl-convert`_ package, see :ref:`saving-png`.
 
 .. _preaggregate-and-filter:
 
@@ -469,4 +468,3 @@ summary statistics to Altair instead of the full dataset.
 .. _DuckDB: https://duckdb.org/
 .. _VegaFusion DuckDB: https://vegafusion.io/duckdb.html
 .. _vl-convert: https://github.com/vega/vl-convert
-.. _altair_saver: https://github.com/altair-viz/altair_saver/

@@ -180,8 +180,8 @@ def name_views(
         List of the names of the charts and subcharts
     """
     exclude = set(exclude) if exclude is not None else set()
-    if isinstance(chart, _chart_class_mapping[Chart]) or isinstance(
-        chart, _chart_class_mapping[FacetChart]
+    if isinstance(
+        chart, (_chart_class_mapping[Chart], _chart_class_mapping[FacetChart])
     ):
         if chart.name not in exclude:
             if chart.name in (None, Undefined):

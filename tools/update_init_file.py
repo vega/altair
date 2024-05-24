@@ -21,6 +21,10 @@ from typing import (
     cast,
 )
 
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
@@ -97,6 +101,7 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr is Protocol
         or attr is Sequence
         or attr is IO
+        or attr is TypeIs
         or attr_name == "TypingDict"
         or attr_name == "TypingGenerator"
         or attr_name == "ValueOrDatum"

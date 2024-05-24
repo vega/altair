@@ -1191,7 +1191,7 @@ class _FromDict:
                     return frozenset((k, _freeze(v)) for k, v in val.items())
                 elif isinstance(val, set):
                     return frozenset(map(_freeze, val))
-                elif isinstance(val, list) or isinstance(val, tuple):
+                elif isinstance(val, (list, tuple)):
                     return tuple(map(_freeze, val))
                 else:
                     return val
