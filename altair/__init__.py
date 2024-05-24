@@ -446,7 +446,6 @@ __all__ = [
     "StyleConfigIndex",
     "SymbolShape",
     "TOPLEVEL_ONLY_KEYS",
-    "TYPE_CHECKING",
     "Text",
     "TextBaseline",
     "TextDatum",

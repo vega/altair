@@ -19,6 +19,7 @@ from typing import (
     TypeVar,
     Union,
     cast,
+    TYPE_CHECKING,
 )
 
 if sys.version_info >= (3, 13):
@@ -102,6 +103,7 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr is Sequence
         or attr is IO
         or attr is TypeIs
+        or attr is TYPE_CHECKING
         or attr_name == "TypingDict"
         or attr_name == "TypingGenerator"
         or attr_name == "ValueOrDatum"
