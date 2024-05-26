@@ -72,8 +72,15 @@ def is_data_type(obj: Any) -> TypeIs[DataType]:
 # form.
 # ==============================================================================
 class DataTransformerType(Protocol):
-    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict:
-        pass
+    @overload
+    def __call__(
+        self, data: Literal[None] = None, **kwargs
+    ) -> "DataTransformerType": ...
+    @overload
+    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict: ...
+    def __call__(
+        self, data: Optional[DataType] = None, **kwargs
+    ) -> Union["DataTransformerType", VegaLiteDataDict]: ...
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
