@@ -3,7 +3,22 @@ import os
 import random
 import hashlib
 import warnings
-from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
+from typing import (
+    Union,
+    MutableMapping,
+    Optional,
+    Dict,
+    Sequence,
+    TYPE_CHECKING,
+    List,
+    TypeVar,
+    Protocol,
+    TypedDict,
+    Literal,
+    overload,
+    runtime_checkable,
+    Any,
+)
 
 import pandas as pd
 from toolz import curried
@@ -15,14 +30,16 @@ from .core import sanitize_geo_interface
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
-
-from typing import Protocol, TypedDict, Literal
-
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 
 if TYPE_CHECKING:
     import pyarrow.lib
 
 
+@runtime_checkable
 class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
@@ -32,6 +49,8 @@ TDataType = TypeVar("TDataType", bound=DataType)
 
 VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
 ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+def is_data_type(obj: Any) -> TypeIs[DataType]:
+    return isinstance(obj, (dict, pd.DataFrame, DataFrameLike, SupportsGeoInterface))
 
 
 # ==============================================================================
