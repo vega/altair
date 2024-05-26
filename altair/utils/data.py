@@ -1,10 +1,10 @@
 from functools import partial
 import json
-import os
 import random
 import hashlib
 import warnings
 import sys
+from pathlib import Path
 from typing import (
     Union,
     MutableMapping,
@@ -48,6 +48,7 @@ class SupportsGeoInterface(Protocol):
 
 DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, DataFrameLike]
 TDataType = TypeVar("TDataType", bound=DataType)
+NonGeoDataType = Union[dict, pd.DataFrame, DataFrameLike]
 
 VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
 ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
@@ -199,58 +200,109 @@ def sample(
         return None
 
 
-class _JsonFormatDict(TypedDict):
-    type: Literal["json"]
+_FormatType = Literal["csv", "json"]
 
 
-class _CsvFormatDict(TypedDict):
-    type: Literal["csv"]
+class _FormatDict(TypedDict):
+    type: _FormatType
 
 
-class _ToJsonReturnUrlDict(TypedDict):
+class _ToFormatReturnUrlDict(TypedDict):
     url: str
-    format: _JsonFormatDict
+    format: _FormatDict
 
 
-class _ToCsvReturnUrlDict(TypedDict):
-    url: str
-    format: _CsvFormatDict
+@overload
+def to_json(
+    data: Literal[None] = ...,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
+) -> partial: ...
 
 
-@curried.curry
+@overload
 def to_json(
     data: DataType,
+    prefix: str,
+    extension: str,
+    filename: str,
+    urlpath: str,
+) -> _ToFormatReturnUrlDict: ...
+
+
+def to_json(
+    data: Optional[DataType] = None,
     prefix: str = "altair-data",
     extension: str = "json",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> _ToJsonReturnUrlDict:
+) -> Union[partial, _ToFormatReturnUrlDict]:
     """
     Write the data model to a .json file and return a url based data model.
     """
-    data_json = _data_to_json_string(data)
-    data_hash = _compute_data_hash(data_json)
-    filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    with open(filename, "w") as f:
-        f.write(data_json)
-    return {"url": os.path.join(urlpath, filename), "format": {"type": "json"}}
+    kwds = _to_text_kwds(prefix, extension, filename, urlpath)
+    if data is None:
+        return partial(to_json, **kwds)
+    else:
+        data_str = _data_to_json_string(data)
+        return _to_text(data_str, **kwds, format=_FormatDict(type="json"))
 
 
-@curried.curry
+@overload
 def to_csv(
-    data: Union[dict, pd.DataFrame, DataFrameLike],
+    data: Literal[None] = ...,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
+) -> partial: ...
+
+
+@overload
+def to_csv(
+    data: NonGeoDataType,
+    prefix: str,
+    extension: str,
+    filename: str,
+    urlpath: str,
+) -> _ToFormatReturnUrlDict: ...
+
+
+def to_csv(
+    data: Optional[NonGeoDataType] = None,
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> _ToCsvReturnUrlDict:
+) -> Union[partial, _ToFormatReturnUrlDict]:
     """Write the data model to a .csv file and return a url based data model."""
-    data_csv = _data_to_csv_string(data)
-    data_hash = _compute_data_hash(data_csv)
+    kwds = _to_text_kwds(prefix, extension, filename, urlpath)
+    if data is None:
+        return partial(to_csv, **kwds)
+    else:
+        data_str = _data_to_csv_string(data)
+        return _to_text(data_str, **kwds, format=_FormatDict(type="csv"))
+
+
+def _to_text(
+    data: str,
+    prefix: str,
+    extension: str,
+    filename: str,
+    urlpath: str,
+    format: _FormatDict,
+) -> _ToFormatReturnUrlDict:
+    data_hash = _compute_data_hash(data)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    with open(filename, "w") as f:
-        f.write(data_csv)
-    return {"url": os.path.join(urlpath, filename), "format": {"type": "csv"}}
+    Path(filename).write_text(data)
+    url = str(Path(urlpath, filename))
+    return _ToFormatReturnUrlDict({"url": url, "format": format})
+
+
+def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -> Dict[str, str]:  # fmt: skip
+    return {"prefix": prefix, "extension": extension, "filename": filename, "urlpath": urlpath}  # fmt: skip
 
 
 def to_values(data: DataType) -> ToValuesReturnType:
