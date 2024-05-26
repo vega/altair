@@ -230,7 +230,6 @@ def to_csv(
     return {"url": os.path.join(urlpath, filename), "format": {"type": "csv"}}
 
 
-@curried.curry
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
