@@ -1,3 +1,4 @@
+from functools import partial
 import json
 import os
 import random
@@ -89,12 +90,19 @@ class MaxRowsError(Exception):
     pass
 
 
-@curried.curry
-def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
+@overload
+def limit_rows(data: Literal[None] = ..., max_rows: Optional[int] = ...) -> partial: ...
+@overload
+def limit_rows(data: DataType, max_rows: Optional[int]) -> DataType: ...
+def limit_rows(
+    data: Optional[DataType] = None, max_rows: Optional[int] = 5000
+) -> Union[partial, DataType]:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
     """
+    if data is None:
+        return partial(limit_rows, max_rows=max_rows)
     check_data_type(data)
 
     def raise_max_rows_error():
@@ -111,7 +119,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
             "on how to plot large datasets."
         )
 
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         if data.__geo_interface__["type"] == "FeatureCollection":
             values = data.__geo_interface__["features"]
         else:
@@ -122,9 +130,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
         if "values" in data:
             values = data["values"]
         else:
-            # mypy gets confused as it doesn't see Dict[Any, Any]
-            # as equivalent to TDataType
-            return data  # type: ignore[return-value]
+            return data
     elif isinstance(data, DataFrameLike):
         pa_table = arrow_table_from_dfi_dataframe(data)
         if max_rows is not None and pa_table.num_rows > max_rows:
