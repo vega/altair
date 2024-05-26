@@ -51,6 +51,11 @@ TDataType = TypeVar("TDataType", bound=DataType)
 
 VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
 ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+SampleReturnType = Optional[
+    Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]
+]
+
+
 def is_data_type(obj: Any) -> TypeIs[DataType]:
     return isinstance(obj, (dict, pd.DataFrame, DataFrameLike, SupportsGeoInterface))
 
@@ -145,11 +150,22 @@ def limit_rows(
     return data
 
 
-@curried.curry
+@overload
 def sample(
-    data: DataType, n: Optional[int] = None, frac: Optional[float] = None
-) -> Optional[Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]]:
+    data: Literal[None] = ..., n: Optional[int] = ..., frac: Optional[float] = ...
+) -> partial: ...
+@overload
+def sample(
+    data: DataType, n: Optional[int], frac: Optional[float]
+) -> SampleReturnType: ...
+def sample(
+    data: Optional[DataType] = None,
+    n: Optional[int] = None,
+    frac: Optional[float] = None,
+) -> Union[partial, SampleReturnType]:
     """Reduce the size of the data model by sampling without replacement."""
+    if data is None:
+        return partial(sample, n=n, frac=frac)
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
         return data.sample(n=n, frac=frac)
