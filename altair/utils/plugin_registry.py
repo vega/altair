@@ -1,7 +1,6 @@
 from functools import partial
-from typing import Any, Dict, List, Optional, Generic, TypeVar, Union, cast
+from typing import Any, Dict, List, Optional, Generic, TypeVar, Union, cast, Callable
 from types import TracebackType
-from collections.abc import Callable
 from importlib.metadata import entry_points
 
 

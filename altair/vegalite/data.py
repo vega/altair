@@ -13,8 +13,7 @@ from ..utils.data import (
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
 from ..utils.data import DataType, ToValuesReturnType
 from ..utils.plugin_registry import PluginEnabler
-from typing import Optional, Literal, Union, overload
-from collections.abc import Callable
+from typing import Optional, Literal, Union, overload, Callable
 
 
 @overload

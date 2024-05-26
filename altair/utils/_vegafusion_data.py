@@ -1,6 +1,5 @@
 import uuid
 from weakref import WeakValueDictionary
-
 from typing import (
     Any,
     Literal,
@@ -13,8 +12,8 @@ from typing import (
     Final,
     TYPE_CHECKING,
     overload,
+    Callable,
 )
-from collections.abc import Callable
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
