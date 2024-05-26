@@ -3,6 +3,7 @@ import os
 import random
 import hashlib
 import warnings
+import sys
 from typing import (
     Union,
     MutableMapping,
@@ -256,9 +257,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
 
 
 def check_data_type(data: DataType) -> None:
-    if not isinstance(data, (dict, pd.DataFrame, DataFrameLike)) and not any(
-        hasattr(data, attr) for attr in ["__geo_interface__"]
-    ):
+    if not is_data_type(data):
         raise TypeError(
             "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
                 type(data)
