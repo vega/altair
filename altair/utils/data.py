@@ -47,6 +47,7 @@ class SupportsGeoInterface(Protocol):
 DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, DataFrameLike]
 TDataType = TypeVar("TDataType", bound=DataType)
 NonGeoDataType = Union[dict, pd.DataFrame, DataFrameLike]
+NonLikeDataType = Union[dict, pd.DataFrame, SupportsGeoInterface]
 
 VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
 ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
