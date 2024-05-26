@@ -23,8 +23,6 @@ from typing import (
 )
 
 import pandas as pd
-from toolz import curried
-from typing import TypeVar
 
 from ._importers import import_pyarrow_interchange
 from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
@@ -414,7 +412,9 @@ def pipe(data, *funcs):
         AltairDeprecationWarning,
         stacklevel=1,
     )
-    return curried.pipe(data, *funcs)
+    from toolz.curried import pipe
+
+    return pipe(data, *funcs)
 
 
 def curry(*args, **kwargs):
@@ -428,7 +428,9 @@ def curry(*args, **kwargs):
         AltairDeprecationWarning,
         stacklevel=1,
     )
-    return curried.curry(*args, **kwargs)
+    from toolz.curried import curry
+
+    return curry(*args, **kwargs)
 
 
 def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> "pyarrow.lib.Table":
