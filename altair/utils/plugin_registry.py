@@ -6,6 +6,7 @@ from importlib.metadata import entry_points
 
 
 PluginType = TypeVar("PluginType")
+T = TypeVar("T", bound=Callable)
 
 
 class NoSuchEntryPoint(Exception):
@@ -70,7 +71,7 @@ class PluginRegistry(Generic[PluginType]):
     # in the registry rather than passed to the plugins
     _global_settings = {}  # type: Dict[str, Any]
 
-    def __init__(self, entry_point_group: str = "", plugin_type: type[Any] = Callable):
+    def __init__(self, entry_point_group: str = "", plugin_type: type[T] = Callable):  # type: ignore[assignment]
         """Create a PluginRegistry for a named entry point group.
 
         Parameters
