@@ -233,7 +233,7 @@ def to_csv(
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
         # Maybe the type could be further clarified here that it is
@@ -276,7 +276,7 @@ def _compute_data_hash(data_str: str) -> str:
 def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
         # Maybe the type could be further clarified here that it is
@@ -302,7 +302,7 @@ def _data_to_json_string(data: DataType) -> str:
 def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         raise NotImplementedError(
             "to_csv does not work with data that "
             "contains the __geo_interface__ attribute"
