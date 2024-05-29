@@ -10,7 +10,7 @@ import itertools
 import sys
 import pathlib
 import typing
-from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO
+from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO, overload
 
 # Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
 from typing import Type as TypingType
@@ -344,6 +344,10 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 
     return False
 
+
+_PredicateType = Union[
+    Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
+]
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
@@ -790,11 +794,17 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
+@overload
+def condition(
+    predicate: _PredicateType, if_true: Any, if_false: core.SchemaBase, **kwargs
+) -> core.SchemaBase: ...
+@overload
+def condition(
+    predicate: _PredicateType, if_true: Any, if_false: Any, **kwargs
+) -> dict: ...
 # TODO: update the docstring
 def condition(
-    predicate: Union[
-        Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
-    ],
+    predicate: _PredicateType,
     # Types of these depends on where the condition is used so we probably
     # can't be more specific here.
     if_true: Any,

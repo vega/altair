@@ -103,7 +103,7 @@ def api_functions() -> List[str]:
     altair_api_functions = [
         obj_name
         for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
-        if obj_name != "cast"
+        if obj_name not in {"cast", "overload"}
     ]
     return sorted(altair_api_functions)
 
