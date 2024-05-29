@@ -588,7 +588,6 @@ __all__ = [
     "load_ipython_extension",
     "load_schema",
     "mixins",
-    "overload",
     "param",
     "parse_shorthand",
     "pipe",
