@@ -348,6 +348,7 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 _PredicateType = Union[
     Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
 ]
+_StatementType = Union[core.SchemaBase, dict, str]
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
@@ -796,19 +797,33 @@ def binding_range(**kwargs):
 
 @overload
 def condition(
-    predicate: _PredicateType, if_true: Any, if_false: core.SchemaBase, **kwargs
+    predicate: _PredicateType,
+    if_true: _StatementType,
+    if_false: core.SchemaBase,
+    **kwargs,
 ) -> core.SchemaBase: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: Any, if_false: Any, **kwargs
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+) -> typing.NoReturn: ...
+@overload
+def condition(
+    predicate: _PredicateType,
+    if_true: Union[core.SchemaBase, dict],
+    if_false: Union[dict, str],
+    **kwargs,
+) -> dict: ...
+@overload
+def condition(
+    predicate: _PredicateType, if_true: Union[dict, str], if_false: dict, **kwargs
 ) -> dict: ...
 # TODO: update the docstring
 def condition(
     predicate: _PredicateType,
     # Types of these depends on where the condition is used so we probably
     # can't be more specific here.
-    if_true: Any,
-    if_false: Any,
+    if_true: _StatementType,
+    if_false: _StatementType,
     **kwargs,
 ) -> Union[dict, core.SchemaBase]:
     """A conditional attribute or encoding
