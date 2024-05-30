@@ -402,6 +402,71 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
 def _get_predicate_expr(p: Parameter) -> Union[Any, UndefinedType]:
     return getattr(p.param, "expr", Undefined)
 
+def _predicate_to_condition(
+    predicate: _PredicateType, **kwargs: Any
+) -> Tuple[_ConditionType, TypingDict[str, Any]]:
+    # - Empty is only popped when `Parameter`
+    # - Otherwise, its added to `if_true`, `if_false` later
+    # - Needs to be preserved in either case, as there are 2 sites,
+    #   where its used for updating a `dict`
+    condition: _ConditionType
+    if isinstance(predicate, Parameter):
+        if (
+            predicate.param_type == "selection"
+            or _get_predicate_expr(predicate) is Undefined
+        ):
+            condition = {"param": predicate.name}
+            if "empty" in kwargs:
+                condition["empty"] = kwargs.pop("empty")
+            elif isinstance(predicate.empty, bool):
+                condition["empty"] = predicate.empty
+        else:
+            condition = {"test": _get_predicate_expr(predicate)}
+    elif _is_test_predicate(predicate):
+        condition = {"test": predicate}
+    elif isinstance(predicate, dict):
+        condition = predicate
+    else:
+        msg = "condition predicate of type {}" "".format(type(predicate))
+        raise NotImplementedError(msg)
+    return condition, kwargs
+
+
+def _condition_to_selection(
+    condition: _ConditionType,
+    if_true: _StatementType,
+    if_false: _StatementType,
+    **kwargs: Any,
+) -> _SelectionType:
+    selection: _SelectionType
+    if isinstance(if_true, core.SchemaBase):
+        # NOTE: Removed an outdated comment
+        if_true = if_true.to_dict()
+    elif isinstance(if_true, str):
+        if isinstance(if_false, str):
+            msg = (
+                "A field cannot be used for both the `if_true` and `if_false` "
+                "values of a condition. "
+                "One of them has to specify a `value` or `datum` definition."
+            )
+            raise ValueError(msg)
+        else:
+            if_true = utils.parse_shorthand(if_true)
+            if_true.update(kwargs)
+    condition.update(if_true)
+    if isinstance(if_false, core.SchemaBase):
+        # For the selection, the channel definitions all allow selections
+        # already. So use this SchemaBase wrapper if possible.
+        selection = if_false.copy()
+        selection.condition = condition
+    elif isinstance(if_false, str):
+        selection = {"condition": condition, "shorthand": if_false}
+        selection.update(kwargs)
+    else:
+        selection = dict(condition=condition, **if_false)
+    return selection
+
+
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
