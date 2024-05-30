@@ -1,3 +1,4 @@
+# ruff: noqa: F811
 import warnings
 
 import hashlib
@@ -30,7 +31,7 @@ from typing import Dict as TypingDict
 from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
 
 from .data import data_transformers
-from ... import utils, expr
+from ... import utils, expr  # noqa: F401 [No longer needed here, but keeping to prevent breakage elsewhere]
 from ...expr import core as _expr_core
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
