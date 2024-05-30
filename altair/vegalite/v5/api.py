@@ -853,24 +853,22 @@ def condition(
 ) -> typing.NoReturn: ...
 @overload
 def condition(
-    predicate: _PredicateType,
-    if_true: Union[core.SchemaBase, dict],
-    if_false: Union[dict, str],
-    **kwargs,
-) -> dict: ...
+    predicate: _PredicateType, if_true: _DictOrSchema, if_false: _DictOrStr, **kwargs
+) -> TypingDict[str, Union[_ConditionType, Any]]: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: Union[dict, str], if_false: dict, **kwargs
-) -> dict: ...
+    predicate: _PredicateType,
+    if_true: _DictOrStr,
+    if_false: TypingDict[str, Any],
+    **kwargs,
+) -> TypingDict[str, Union[_ConditionType, Any]]: ...
 # TODO: update the docstring
 def condition(
     predicate: _PredicateType,
-    # Types of these depends on where the condition is used so we probably
-    # can't be more specific here.
     if_true: _StatementType,
     if_false: _StatementType,
     **kwargs,
-) -> Union[dict, core.SchemaBase]:
+) -> _SelectionType:
     """A conditional attribute or encoding
 
     Parameters
