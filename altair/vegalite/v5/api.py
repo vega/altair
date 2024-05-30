@@ -403,6 +403,7 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
 def _get_predicate_expr(p: Parameter) -> Union[Any, UndefinedType]:
     return getattr(p.param, "expr", Undefined)
 
+
 def _predicate_to_condition(
     predicate: _PredicateType, **kwargs: Any
 ) -> Tuple[_ConditionType, TypingDict[str, Any]]:
