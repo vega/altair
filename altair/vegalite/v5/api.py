@@ -961,62 +961,8 @@ def condition(
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    test_predicates = (str, expr.Expression, core.PredicateComposition)
-
-    condition: TypingDict[
-        str,
-        Union[
-            bool, str, _expr_core.Expression, core.PredicateComposition, UndefinedType
-        ],
-    ]
-    if isinstance(predicate, Parameter):
-        if (
-            predicate.param_type == "selection"
-            or getattr(predicate.param, "expr", Undefined) is Undefined
-        ):
-            condition = {"param": predicate.name}
-            if "empty" in kwargs:
-                condition["empty"] = kwargs.pop("empty")
-            elif isinstance(predicate.empty, bool):
-                condition["empty"] = predicate.empty
-        else:
-            condition = {"test": getattr(predicate.param, "expr", Undefined)}
-    elif isinstance(predicate, test_predicates):
-        condition = {"test": predicate}
-    elif isinstance(predicate, dict):
-        condition = predicate
-    else:
-        raise NotImplementedError(
-            "condition predicate of type {}" "".format(type(predicate))
-        )
-
-    if isinstance(if_true, core.SchemaBase):
-        # convert to dict for now; the from_dict call below will wrap this
-        # dict in the appropriate schema
-        if_true = if_true.to_dict()
-    elif isinstance(if_true, str):
-        if isinstance(if_false, str):
-            raise ValueError(
-                "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
-            )
-        else:
-            if_true = utils.parse_shorthand(if_true)
-            if_true.update(kwargs)
-    condition.update(if_true)
-
-    selection: Union[dict, core.SchemaBase]
-    if isinstance(if_false, core.SchemaBase):
-        # For the selection, the channel definitions all allow selections
-        # already. So use this SchemaBase wrapper if possible.
-        selection = if_false.copy()
-        selection.condition = condition
-    elif isinstance(if_false, str):
-        selection = {"condition": condition, "shorthand": if_false}
-        selection.update(kwargs)
-    else:
-        selection = dict(condition=condition, **if_false)
-
-    return selection
+    condition, kwargs = _predicate_to_condition(predicate, **kwargs)
+    return _condition_to_selection(condition, if_true, if_false, **kwargs)
 
 
 # --------------------------------------------------------------------
