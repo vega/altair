@@ -10,7 +10,18 @@ import itertools
 import sys
 import pathlib
 import typing
-from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO, overload
+from typing import (
+    cast,
+    List,
+    Optional,
+    Any,
+    Iterable,
+    Union,
+    Literal,
+    IO,
+    overload,
+    Tuple,
+)
 
 # Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
 from typing import Type as TypingType
