@@ -356,10 +356,44 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     return False
 
 
-_PredicateType = Union[
-    Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
-]
-_StatementType = Union[core.SchemaBase, dict, str]
+# -------------------------------------------------------------------------
+# Tools for working with conditions
+_TestPredicateType = Union[str, _expr_core.Expression, core.PredicateComposition]
+"""TODO
+
+Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `test` predicate: ...
+"""
+
+_PredicateType = Union[Parameter, core.Expr, TypingDict[str, Any], _TestPredicateType]
+"""Permitted types for `predicate`."""
+
+_DictOrStr = Union[TypingDict[str, Any], str]
+_DictOrSchema = Union[core.SchemaBase, TypingDict[str, Any]]
+
+_StatementType = Union[core.SchemaBase, _DictOrStr]
+"""Permitted types for `if_true`/`if_false`.
+
+In python terms:
+```py
+if _PredicateType:
+    return _StatementType
+elif _PredicateType:
+    return _StatementType
+else:
+    return _StatementType
+```
+"""
+
+_ConditionType = TypingDict[str, Union[_TestPredicateType, UndefinedType, Any]]
+"""Intermediate type representing a converted `_PredicateType`.
+
+Prior to parsing any `_StatementType`.
+"""
+
+_SelectionType = Union[core.SchemaBase, TypingDict[str, Union[_ConditionType, Any]]]
+"""Returned type of `alt.condition`.
+"""
+
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
