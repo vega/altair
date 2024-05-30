@@ -395,6 +395,13 @@ _SelectionType = Union[core.SchemaBase, TypingDict[str, Union[_ConditionType, An
 """
 
 
+def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
+    return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
+
+
+def _get_predicate_expr(p: Parameter) -> Union[Any, UndefinedType]:
+    return getattr(p.param, "expr", Undefined)
+
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
