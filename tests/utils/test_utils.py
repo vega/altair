@@ -1,7 +1,7 @@
 import io
 import json
 import warnings
-
+import sys
 import numpy as np
 import pandas as pd
 import pytest
@@ -121,6 +121,9 @@ def test_sanitize_dataframe_arrow_columns():
 
 
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
+@pytest.mark.skipif(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
 def test_sanitize_pyarrow_table_columns():
     # create a dataframe with various types
     df = pd.DataFrame(
