@@ -559,6 +559,9 @@ class _Then:
         conditions = self._conditions.copy()
         return _ChainedWhen(conditions, condition, kwargs)
 
+    def to_dict(self, *args: Any, **kwargs: Any) -> _Conditions:
+        return self._conditions.copy()
+
 
 class _ChainedWhen:
     """Simplifies from the prior `_ChainedThen` case.
