@@ -461,11 +461,13 @@ def _condition_to_selection(
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
         selection.condition = condition
-    elif isinstance(if_false, str):
-        selection = {"condition": condition, "shorthand": if_false}
-        selection.update(kwargs)
-    else:
+    elif isinstance(if_false, (str, dict)):
+        if isinstance(if_false, str):
+            if_false = utils.parse_shorthand(if_false)
+            if_false.update(kwargs)
         selection = dict(condition=condition, **if_false)
+    else:
+        raise TypeError(if_false)
     return selection
 
 
