@@ -45,9 +45,13 @@ from ...utils.data import DataType
 from ...utils.deprecation import AltairDeprecationWarning
 
 if sys.version_info >= (3, 13):
-    from typing import TypeIs
+    from typing import TypeIs, Required as _Required, TypedDict as _TypedDict
 else:
-    from typing_extensions import TypeIs
+    from typing_extensions import (
+        TypeIs,
+        Required as _Required,
+        TypedDict as _TypedDict,
+    )
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
@@ -474,6 +478,11 @@ def _condition_to_selection(
     else:
         raise TypeError(if_false)
     return selection
+
+
+class _Conditions(_TypedDict, total=False):
+    condition: _Required[list[_ConditionType]]
+    value: Any
 
 
 # ------------------------------------------------------------------------
