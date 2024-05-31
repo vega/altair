@@ -249,6 +249,104 @@ def test_chart_operations():
     assert len(chart.vconcat) == 4
 
 
+def test_when() -> None:
+    from altair.vegalite.v5 import api as _alt
+
+    select = alt.selection_point(name="select", on="click")
+    condition, kwargs = _alt._predicate_to_condition(select, empty=False)
+    when = _alt._when(select, empty=False)
+
+    assert isinstance(when, _alt._When)
+    assert condition == when._condition
+    assert kwargs == when._kwargs
+    with pytest.raises(NotImplementedError):
+        _alt._when([1, 2, 3])  # type: ignore[arg-type]
+
+
+def test_when_then() -> None:
+    from altair.vegalite.v5 import api as _alt
+
+    select = alt.selection_point(name="select", on="click")
+    when = _alt._when(select)
+    when_then = when.then(alt.value(5))
+
+    assert isinstance(when_then, _alt._Then)
+    condition = when_then._conditions["condition"]
+    assert isinstance(condition, list)
+    last = condition.pop()
+    assert last.get("value") == 5
+    with pytest.raises(TypeError):
+        when.then(pathlib.Path("some"))  # type: ignore[arg-type]
+
+
+def test_when_then_otherwise() -> None:
+    from altair.vegalite.v5 import api as _alt
+
+    select = alt.selection_point(name="select", on="click")
+    when_then = _alt._when(select).then(alt.value(2, empty=False))
+    when_then_otherwise = when_then.otherwise(alt.value(0))
+    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+
+    # Needed to modify to a list of conditions,
+    # which isn't possible in `condition`
+    single_condition = expected.pop("condition")
+    expected["condition"] = [single_condition]
+
+    assert expected == when_then_otherwise
+    with pytest.raises(TypeError):
+        when_then.otherwise([1, 2, 3])  # type: ignore[arg-type]
+
+
+def test_when_then_when_then_otherwise() -> None:
+    """Test for [#3301](https://github.com/vega/altair/issues/3301)."""
+    from altair.vegalite.v5 import api as _alt
+
+    data = {
+        "values": [
+            {"a": "A", "b": 28},
+            {"a": "B", "b": 55},
+            {"a": "C", "b": 43},
+            {"a": "D", "b": 91},
+            {"a": "E", "b": 81},
+            {"a": "F", "b": 53},
+            {"a": "G", "b": 19},
+            {"a": "H", "b": 87},
+            {"a": "I", "b": 52},
+        ]
+    }
+
+    select = alt.selection_point(name="select", on="click")
+    highlight = alt.selection_point(name="highlight", on="pointerover")
+    fill_opacity = alt.condition(select, if_true=alt.value(1), if_false=alt.value(0.3))
+    when_then_when_then = (
+        _alt._when(select)
+        .then(alt.value(2, empty=False))
+        .when(highlight)
+        .then(alt.value(1, empty=False))
+    )
+    actual_stroke = when_then_when_then.otherwise(alt.value(0))
+    expected_stroke = {
+        "condition": [
+            {"param": "select", "empty": False, "value": 2},
+            {"param": "highlight", "empty": False, "value": 1},
+        ],
+        "value": 0,
+    }
+
+    assert expected_stroke == actual_stroke
+    chart = (
+        alt.Chart(data)
+        .mark_bar(fill="#4C78A8", stroke="black", cursor="pointer")
+        .encode(x="a:O", y="b:Q", fillOpacity=fill_opacity, strokeWidth=actual_stroke)
+        .configure_scale(bandPaddingInner=0.2)
+        .add_params(select, highlight)
+    )
+    assert isinstance(chart, alt.Chart)
+    chart.to_dict()
+    with pytest.raises(TypeError):
+        when_then_when_then.otherwise({"five", "six"})  # type: ignore[arg-type]
+
+
 def test_selection_to_dict():
     brush = alt.selection_interval()
 
