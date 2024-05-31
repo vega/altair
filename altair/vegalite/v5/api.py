@@ -396,6 +396,10 @@ _SelectionType = Union[core.SchemaBase, TypingDict[str, Union[_ConditionType, An
 """
 
 
+def _is_statement_type(obj: Any) -> TypeIs[_StatementType]:
+    return isinstance(obj, (core.SchemaBase, dict, str))
+
+
 def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
