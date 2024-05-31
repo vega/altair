@@ -193,6 +193,17 @@ TIMEUNITS = [
     "utcsecondsmilliseconds",
 ]
 
+VALID_TYPECODES = list(itertools.chain(iter(TYPECODE_MAP), iter(INV_TYPECODE_MAP)))
+
+SHORTHAND_UNITS = {
+    "field": "(?P<field>.*)",
+    "type": "(?P<type>{})".format("|".join(VALID_TYPECODES)),
+    "agg_count": "(?P<aggregate>count)",
+    "op_count": "(?P<op>count)",
+    "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+    "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+    "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+}
 
 InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
@@ -533,18 +544,6 @@ def parse_shorthand(
     if not shorthand:
         return {}
 
-    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
-
-    units = {
-        "field": "(?P<field>.*)",
-        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
-        "agg_count": "(?P<aggregate>count)",
-        "op_count": "(?P<op>count)",
-        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    }
-
     patterns = []
 
     if parse_aggregates:
@@ -562,7 +561,8 @@ def parse_shorthand(
         patterns = list(itertools.chain(*((p + ":{type}", p) for p in patterns)))
 
     regexps = (
-        re.compile(r"\A" + p.format(**units) + r"\Z", re.DOTALL) for p in patterns
+        re.compile(r"\A" + p.format(**SHORTHAND_UNITS) + r"\Z", re.DOTALL)
+        for p in patterns
     )
 
     # find matches depending on valid fields passed
