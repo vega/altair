@@ -58,6 +58,15 @@ class DataFrameLike(Protocol):
     ) -> DfiDataFrame: ...
 
 
+@runtime_checkable
+class _ThenLike(Protocol):
+    # Helper for extracting the intermediate representation,
+    # whilst still allowing further clauses to be added.
+    def otherwise(self, *args: Any, **kwargs: Any) -> Any: ...
+    def to_dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]: ...
+    def when(self, *args: Any, **kwargs: Any) -> Any: ...
+
+
 TYPECODE_MAP = {
     "ordinal": "O",
     "nominal": "N",
@@ -831,6 +840,10 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
             obj = {"shorthand": obj}
         elif isinstance(obj, (list, tuple)):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
+        elif isinstance(obj, _ThenLike):
+            # NOTE: Temporary solution while `when-then-otherwise` is not
+            # related to any other `altair` classes.
+            obj = obj.to_dict()
 
         if encoding not in name_to_channel:
             warnings.warn(
