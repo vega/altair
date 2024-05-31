@@ -827,11 +827,9 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
     def _wrap_in_channel_class(obj, encoding):
         if isinstance(obj, SchemaBase):
             return obj
-
-        if isinstance(obj, str):
+        elif isinstance(obj, str):
             obj = {"shorthand": obj}
-
-        if isinstance(obj, (list, tuple)):
+        elif isinstance(obj, (list, tuple)):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
