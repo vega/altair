@@ -485,6 +485,133 @@ class _Conditions(_TypedDict, total=False):
     value: Any
 
 
+def _parse_then(
+    statement: _StatementType, kwargs: TypingDict[str, Any]
+) -> TypingDict[str, Any]:
+    if not _is_statement_type(statement):
+        raise TypeError(statement)
+    if isinstance(statement, core.SchemaBase):
+        then = statement.to_dict()
+    elif isinstance(statement, str):
+        then = utils.parse_shorthand(statement)
+        then.update(kwargs)
+    else:
+        then = statement
+    return then
+
+
+class _When:
+    def __init__(self, condition: _ConditionType, kwargs: TypingDict[str, Any]) -> None:
+        self._condition = condition
+        self._kwargs = kwargs
+
+    def then(self, statement: _StatementType) -> "_Then":
+        then = _parse_then(statement, self._kwargs)
+        condition = self._condition.copy()
+        condition.update(then)
+        return _Then(_Conditions({"condition": [condition]}))
+
+
+# TODO:
+# - Needs a MixIn to return `self._conditions` when used as an argument
+# - Thought `SchemaBase`, but this isn't a schema wrapper
+class _Then:
+    """Trying to make all intermediates be valid conditions.
+
+
+    Notes
+    -----
+    - Otherwise is optional in both `vega-lite` and `polars` (which this is based on).
+    - `if_false` is not optional in `alt.condition`
+    - but knowing both `if_true` & `if_false` is required to test if they are both `str`
+
+
+    Gives 3 options:
+    1. Allow `_Then` as a type accepted where `_SelectionType` would be used
+            - Evaluating when used there
+    2. Having an intermediate representation dict returned by `_When.then`
+            - Which is valid on its own, but can be modifified further with more clauses
+    3. Modify `_condition_to_selection` `if_false` to be optional
+    """
+
+    def __init__(self, conditions: _Conditions) -> None:
+        self._conditions = conditions
+
+    def otherwise(
+        self, statement: _StatementType
+    ) -> Union[core.SchemaBase, _Conditions]:
+        # reaching `otherwise` means `kwargs` are already inserted
+        if not _is_statement_type(statement):
+            raise TypeError(statement)
+        selection: Union[core.SchemaBase, _Conditions]
+        if isinstance(statement, core.SchemaBase):
+            selection = statement.copy()
+            selection.condition = self._conditions["condition"]
+        else:
+            if isinstance(statement, str):
+                statement = utils.parse_shorthand(statement)
+            selection = self._conditions.copy()
+            selection.update(**statement)  # type: ignore[call-arg]
+        return selection
+
+    def when(self, predicate: _PredicateType, **kwargs: Any) -> "_ChainedWhen":
+        condition, kwargs = _predicate_to_condition(predicate, **kwargs)
+        conditions = self._conditions.copy()
+        return _ChainedWhen(conditions, condition, kwargs)
+
+
+class _ChainedWhen:
+    """Simplifies from the prior `_ChainedThen` case.
+
+    - A singular `Then` class which always accepts the same argument.
+    - The list keyed to `conditions['condition']` can be one or more
+    - Extra keys are preserved alongside
+
+
+    References
+    ----------
+    [polars.expr.whenthen](https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py)
+    """
+
+    def __init__(
+        self,
+        conditions: _Conditions,
+        next_condition: _ConditionType,
+        kwargs: TypingDict[str, Any],
+    ) -> None:
+        self._conditions = conditions
+        self._next_condition = next_condition
+        self._kwargs = kwargs
+
+    def then(self, statement: _StatementType) -> _Then:
+        then = _parse_then(statement, self._kwargs)
+        condition = self._next_condition
+        condition.update(then)
+        conditions = self._conditions.copy()
+        conditions["condition"].append(condition)
+        return _Then(conditions)
+
+
+def _when(predicate: _PredicateType, **kwargs: Any) -> _When:
+    """TODO docs.
+
+    Notes
+    -----
+    - Directly inspired by the `when-then-otherwise` syntax used in `polars.when`.
+    - Similar to `alt.condition` but:
+        - Allows a single condition/ only `if_true`
+        - Allows 3 or more conditions
+        ((`if_true_0`, `then`), (`if_true_1`,`then`), ..., `if_false`)
+
+    References
+    ----------
+    [polars.when](https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html)
+    """
+    # TODO: make public when utility classes are stable.
+    condition, kwargs = _predicate_to_condition(predicate, **kwargs)
+    return _When(condition, kwargs)
+
+
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
