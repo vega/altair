@@ -891,7 +891,7 @@ class SchemaBase:
         *,
         ignore: Optional[List[str]] = None,
         context: Optional[Dict[str, Any]] = None,
-    ) -> dict:
+    ) -> Dict[str, Any]:
         """Return a dictionary representation of the object
 
         Parameters
