@@ -481,7 +481,7 @@ def _condition_to_selection(
 
 
 class _Conditions(_TypedDict, total=False):
-    condition: _Required[list[_ConditionType]]
+    condition: _Required[List[_ConditionType]]
     value: Any
 
 
