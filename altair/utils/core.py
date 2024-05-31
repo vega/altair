@@ -21,6 +21,8 @@ from typing import (
     Sequence,
     Type,
     cast,
+    Literal,
+    TYPE_CHECKING,
 )
 from types import ModuleType
 
@@ -32,12 +34,15 @@ from pandas.api.types import infer_dtype
 from altair.utils.schemapi import SchemaBase
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
 
+if sys.version_info >= (3, 12):
+    from typing import runtime_checkable, Protocol
+else:
+    from typing_extensions import runtime_checkable, Protocol
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol, TYPE_CHECKING, runtime_checkable
 
 if TYPE_CHECKING:
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
