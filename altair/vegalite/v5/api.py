@@ -405,6 +405,7 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
 
 
 def _get_predicate_expr(p: Parameter) -> Union[Any, UndefinedType]:
+    # https://vega.github.io/vega-lite/docs/predicate.html
     return getattr(p.param, "expr", Undefined)
 
 
