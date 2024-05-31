@@ -279,6 +279,16 @@ def test_when_then() -> None:
         when.then(pathlib.Path("some"))  # type: ignore[arg-type]
 
 
+def test_when_then_only(basic_chart) -> None:
+    """`_Then` is an acceptable encode argument."""
+    from altair.vegalite.v5 import api as _alt
+
+    select = alt.selection_point(name="select", on="click")
+    when_then = _alt._when(select).then(alt.value(5))
+
+    basic_chart.encode(fillOpacity=when_then).to_dict()
+
+
 def test_when_then_otherwise() -> None:
     from altair.vegalite.v5 import api as _alt
 
