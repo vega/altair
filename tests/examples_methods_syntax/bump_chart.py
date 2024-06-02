@@ -12,7 +12,7 @@ from vega_datasets import data
 import pandas as pd
 
 stocks = data.stocks()
-source = stocks.groupby([pd.Grouper(key="date", freq="6M"),"symbol"]).mean().reset_index()
+source = stocks.groupby([pd.Grouper(key="date", freq="6ME"),"symbol"]).mean().reset_index()
 
 alt.Chart(source).mark_line(point=True).encode(
     x=alt.X("date:O").timeUnit("yearmonth").title("date"),

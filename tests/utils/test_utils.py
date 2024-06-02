@@ -46,11 +46,11 @@ def test_sanitize_dataframe():
             "f": np.arange(5, dtype=float),
             "i": np.arange(5, dtype=int),
             "b": np.array([True, False, True, True, False]),
-            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "d": pd.date_range("2012-01-01", periods=5, freq="h"),
             "c": pd.Series(list("ababc"), dtype="category"),
             "c2": pd.Series([1, "A", 2.5, "B", None], dtype="category"),
             "o": pd.Series([np.array(i) for i in range(5)]),
-            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+            "p": pd.date_range("2012-01-01", periods=5, freq="h").tz_localize("UTC"),
         }
     )
 
@@ -98,9 +98,9 @@ def test_sanitize_dataframe_arrow_columns():
             "f": np.arange(5, dtype=float),
             "i": np.arange(5, dtype=int),
             "b": np.array([True, False, True, True, False]),
-            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "d": pd.date_range("2012-01-01", periods=5, freq="h"),
             "c": pd.Series(list("ababc"), dtype="category"),
-            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+            "p": pd.date_range("2012-01-01", periods=5, freq="h").tz_localize("UTC"),
         }
     )
     df_arrow = pa.Table.from_pandas(df).to_pandas(types_mapper=pd.ArrowDtype)
