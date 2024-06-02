@@ -57,7 +57,21 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import Self
 
+T = typing.TypeVar("T")
 ChartDataType = Union[DataType, core.Data, str, core.Generator, UndefinedType]
+
+
+_AltOptional = Union[T, UndefinedType]
+"""Like `typing.Optional[T]`, but for `Undefined`."""
+
+_LiteralValue = Union[str, bool, float, int]
+"""Primitive python value types."""
+
+_OneOrSeqLiteralValue = Union[_LiteralValue, typing.Sequence[_LiteralValue]]
+"""Primitive python value types, or a `Sequence` of such.
+
+For restricting inputs passed to `alt.value`.
+"""
 
 
 # ------------------------------------------------------------------------
@@ -372,6 +386,11 @@ Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `t
 _PredicateType = Union[Parameter, core.Expr, TypingDict[str, Any], _TestPredicateType]
 """Permitted types for `predicate`."""
 
+_ComposablePredicateType = Union[
+    _expr_core.OperatorMixin, SelectionPredicateComposition
+]
+"""Permitted types for `AND` reduced predicates."""
+
 _DictOrStr = Union[TypingDict[str, Any], str]
 _DictOrSchema = Union[core.SchemaBase, TypingDict[str, Any]]
 
@@ -388,6 +407,9 @@ else:
     return _StatementType
 ```
 """
+
+_StatementOrLiteralType = Union[_StatementType, _OneOrSeqLiteralValue]
+"""Extended types when allowing input to be wrapped in `alt.value`."""
 
 _ConditionType = TypingDict[str, Union[_TestPredicateType, Any]]
 """Intermediate type representing a converted `_PredicateType`.
@@ -406,6 +428,20 @@ def _is_statement_type(obj: Any) -> TypeIs[_StatementType]:
 
 def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
+
+
+def _is_composable_type(obj: Any) -> TypeIs[_ComposablePredicateType]:
+    return isinstance(obj, (_expr_core.OperatorMixin, SelectionPredicateComposition))
+
+
+def _is_literal(obj: Any) -> TypeIs[_LiteralValue]:
+    return isinstance(obj, (str, bool, float, int))
+
+
+def _is_one_or_seq_literal(obj: Any) -> TypeIs[_OneOrSeqLiteralValue]:
+    return _is_literal(obj) or (
+        isinstance(obj, typing.Sequence) and all(_is_literal(el) for el in obj)
+    )
 
 
 def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
