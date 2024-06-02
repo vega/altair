@@ -622,7 +622,7 @@ def _when(predicate: _PredicateType, **kwargs: Any) -> _When:
 # Top-Level Functions
 
 
-def value(value, **kwargs) -> dict:
+def value(value, **kwargs) -> TypingDict[str, Any]:
     """Specify a value for use in an encoding"""
     return dict(value=value, **kwargs)
 
