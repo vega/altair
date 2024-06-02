@@ -253,14 +253,34 @@ def test_when() -> None:
     from altair.vegalite.v5 import api as _alt
 
     select = alt.selection_point(name="select", on="click")
-    condition, kwargs = _alt._predicate_to_condition(select, empty=False)
+    condition = _alt._predicate_to_condition(select, empty=False)
     when = _alt._when(select, empty=False)
+    when_constraint = _alt._when(Origin="Europe")
+    when_constraints = _alt._when(
+        Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01"
+    )
+    expected_constraint = alt.datum.Origin == "Europe"
+    expected_constraints = (
+        (alt.datum.Name == "Name_1")
+        & (alt.datum.Color == "Green")
+        & (alt.datum.Age == 25)
+        & (alt.datum.StartDate == "2000-10-01")
+    )
 
     assert isinstance(when, _alt._When)
     assert condition == when._condition
-    assert kwargs == when._kwargs
-    with pytest.raises(NotImplementedError):
-        _alt._when([1, 2, 3])  # type: ignore[arg-type]
+    assert isinstance(when_constraint, _alt._When)
+    assert when_constraint._condition["test"] == expected_constraint
+    assert when_constraints._condition["test"] == expected_constraints
+    with pytest.raises((NotImplementedError, TypeError)) as err:
+        _alt._when([1, 2, 3])  # type: ignore
+    assert "list" in str(err.value)
+    with pytest.raises(TypeError) as err:
+        _alt._when()
+    assert "Undefined" in str(err.value)
+    with pytest.raises(TypeError) as err:
+        _alt._when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+    assert "int" in str(err.value)
 
 
 def test_when_then() -> None:
@@ -273,10 +293,16 @@ def test_when_then() -> None:
     assert isinstance(when_then, _alt._Then)
     condition = when_then._conditions["condition"]
     assert isinstance(condition, list)
-    last = condition.pop()
-    assert last.get("value") == 5
-    with pytest.raises(TypeError):
-        when.then(pathlib.Path("some"))  # type: ignore[arg-type]
+    assert condition[-1].get("value") == 5
+    with pytest.raises(TypeError) as err:
+        when.then(pathlib.Path("some"), wrap_value=False)  # type: ignore
+    assert "Path" in str(err.value)
+    with pytest.raises(TypeError) as err:
+        when.then(pathlib.Path("some"))  # type: ignore
+    assert "literal" in str(err.value)
+    with pytest.raises(TypeError) as err:
+        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
+    assert "float" in str(err.value)
 
 
 def test_when_then_only(basic_chart) -> None:
@@ -284,9 +310,14 @@ def test_when_then_only(basic_chart) -> None:
     from altair.vegalite.v5 import api as _alt
 
     select = alt.selection_point(name="select", on="click")
-    when_then = _alt._when(select).then(alt.value(5))
+    when = _alt._when(select)
+    when_then = when.then(alt.value(5))
 
+    assert when_then.to_dict() == when.then(5).to_dict()
     basic_chart.encode(fillOpacity=when_then).to_dict()
+    with pytest.raises(TypeError) as err:
+        when.then(5, wrap_value=False)  # type: ignore
+    assert "int" in str(err.value)
 
 
 def test_when_then_otherwise() -> None:
@@ -295,8 +326,10 @@ def test_when_then_otherwise() -> None:
     select = alt.selection_point(name="select", on="click")
     when_then = _alt._when(select).then(alt.value(2, empty=False))
     when_then_otherwise = when_then.otherwise(alt.value(0))
+    short = _alt._when(select).then(2, empty=False).otherwise(0)
     expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
 
+    assert when_then_otherwise == short
     # Needed to modify to a list of conditions,
     # which isn't possible in `condition`
     single_condition = expected.pop("condition")
@@ -304,7 +337,7 @@ def test_when_then_otherwise() -> None:
 
     assert expected == when_then_otherwise
     with pytest.raises(TypeError):
-        when_then.otherwise([1, 2, 3])  # type: ignore[arg-type]
+        when_then.otherwise([1, 2, 3], wrap_value=False)  # type: ignore
 
 
 def test_when_then_when_then_otherwise() -> None:
@@ -327,7 +360,6 @@ def test_when_then_when_then_otherwise() -> None:
 
     select = alt.selection_point(name="select", on="click")
     highlight = alt.selection_point(name="highlight", on="pointerover")
-    fill_opacity = alt.condition(select, if_true=alt.value(1), if_false=alt.value(0.3))
     when_then_when_then = (
         _alt._when(select)
         .then(alt.value(2, empty=False))
@@ -347,14 +379,19 @@ def test_when_then_when_then_otherwise() -> None:
     chart = (
         alt.Chart(data)
         .mark_bar(fill="#4C78A8", stroke="black", cursor="pointer")
-        .encode(x="a:O", y="b:Q", fillOpacity=fill_opacity, strokeWidth=actual_stroke)
+        .encode(
+            x="a:O",
+            y="b:Q",
+            fillOpacity=_alt._when(select).then(1).otherwise(0.3),
+            strokeWidth=actual_stroke,
+        )
         .configure_scale(bandPaddingInner=0.2)
         .add_params(select, highlight)
     )
     assert isinstance(chart, alt.Chart)
     chart.to_dict()
     with pytest.raises(TypeError):
-        when_then_when_then.otherwise({"five", "six"})  # type: ignore[arg-type]
+        when_then_when_then.otherwise({"five", "six"}, wrap_value=False)  # type: ignore
 
 
 def test_selection_to_dict():
