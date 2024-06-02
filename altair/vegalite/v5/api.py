@@ -458,7 +458,6 @@ def _condition_to_selection(
 ) -> _SelectionType:
     selection: _SelectionType
     if isinstance(if_true, core.SchemaBase):
-        # NOTE: Removed an outdated comment
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
         if isinstance(if_false, str):
@@ -519,9 +518,6 @@ class _When:
         return _Then(_Conditions({"condition": [condition]}))
 
 
-# TODO:
-# - Needs a MixIn to return `self._conditions` when used as an argument
-# - Thought `SchemaBase`, but this isn't a schema wrapper
 class _Then:
     """Trying to make all intermediates be valid conditions.
 
