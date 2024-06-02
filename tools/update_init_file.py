@@ -33,6 +33,7 @@ else:
     from typing_extensions import Self
 
 from typing import Final, Literal
+from typing_extensions import Protocol as te_Protocol
 
 ROOT_DIR: Final = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, abspath(dirname(__file__)))
@@ -106,6 +107,8 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr is TypeIs
         or attr is overload
         or attr is Tuple
+        or attr is te_Protocol
+        or (isinstance(attr, TypeVar) and len(attr.__name__) <= 4)
         or attr_name == "TypingDict"
         or attr_name == "TypingGenerator"
         or attr_name == "ValueOrDatum"
