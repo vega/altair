@@ -328,6 +328,7 @@ def test_when_then_otherwise() -> None:
     when_then_otherwise = when_then.otherwise(alt.value(0))
     short = _alt._when(select).then(2, empty=False).otherwise(0)
     expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    when_then.otherwise([1, 2, 3])
 
     assert when_then_otherwise == short
     # Needed to modify to a list of conditions,
@@ -336,8 +337,9 @@ def test_when_then_otherwise() -> None:
     expected["condition"] = [single_condition]
 
     assert expected == when_then_otherwise
-    with pytest.raises(TypeError):
+    with pytest.raises(TypeError) as err:
         when_then.otherwise([1, 2, 3], wrap_value=False)  # type: ignore
+    assert "list" in str(err.value)
 
 
 def test_when_then_when_then_otherwise() -> None:
@@ -390,8 +392,9 @@ def test_when_then_when_then_otherwise() -> None:
     )
     assert isinstance(chart, alt.Chart)
     chart.to_dict()
-    with pytest.raises(TypeError):
+    with pytest.raises(TypeError) as err:
         when_then_when_then.otherwise({"five", "six"}, wrap_value=False)  # type: ignore
+    assert "set" in str(err.value)
 
 
 def test_selection_to_dict():
