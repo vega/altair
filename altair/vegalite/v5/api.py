@@ -389,7 +389,7 @@ else:
 ```
 """
 
-_ConditionType = TypingDict[str, Union[_TestPredicateType, UndefinedType, Any]]
+_ConditionType = TypingDict[str, Union[_TestPredicateType, Any]]
 """Intermediate type representing a converted `_PredicateType`.
 
 Prior to parsing any `_StatementType`.
@@ -408,7 +408,20 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
 
-def _get_predicate_expr(p: Parameter) -> Union[Any, UndefinedType]:
+def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
+    """Type-safe singleton check for `UndefinedType`.
+
+    Notes
+    -----
+    - Using `obj is Undefined` does not narrow from `UndefinedType` in a union.
+        - Due to the assumption that other `UndefinedType`'s could exist.
+    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an `Enum`.
+        - Otherwise, requires an explicit guard to inform the type checker.
+    """
+    return obj is Undefined
+
+
+def _get_predicate_expr(p: Parameter) -> Union[str, core.SchemaBase, UndefinedType]:
     # https://vega.github.io/vega-lite/docs/predicate.html
     return getattr(p.param, "expr", Undefined)
 
@@ -422,23 +435,21 @@ def _predicate_to_condition(
     #   where its used for updating a `dict`
     condition: _ConditionType
     if isinstance(predicate, Parameter):
-        if (
-            predicate.param_type == "selection"
-            or _get_predicate_expr(predicate) is Undefined
-        ):
+        predicate_expr = _get_predicate_expr(predicate)
+        if predicate.param_type == "selection" or _is_undefined(predicate_expr):
             condition = {"param": predicate.name}
             if "empty" in kwargs:
                 condition["empty"] = kwargs.pop("empty")
             elif isinstance(predicate.empty, bool):
                 condition["empty"] = predicate.empty
         else:
-            condition = {"test": _get_predicate_expr(predicate)}
+            condition = {"test": predicate_expr}
     elif _is_test_predicate(predicate):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
         condition = predicate
     else:
-        msg = "condition predicate of type {}" "".format(type(predicate))
+        msg = f"condition predicate of type {type(predicate).__name__!r}"
         raise NotImplementedError(msg)
     return condition, kwargs
 
