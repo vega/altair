@@ -230,3 +230,6 @@ module = [
     "schemapi.*"
 ]
 ignore_missing_imports = true
+
+[tool.pyright]
+extraPaths=["./tools"]
