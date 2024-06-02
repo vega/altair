@@ -427,19 +427,15 @@ def _get_predicate_expr(p: Parameter) -> Union[str, core.SchemaBase, UndefinedTy
 
 
 def _predicate_to_condition(
-    predicate: _PredicateType, **kwargs: Any
-) -> Tuple[_ConditionType, TypingDict[str, Any]]:
-    # - Empty is only popped when `Parameter`
-    # - Otherwise, its added to `if_true`, `if_false` later
-    # - Needs to be preserved in either case, as there are 2 sites,
-    #   where its used for updating a `dict`
+    predicate: _PredicateType, *, empty: Union[bool, UndefinedType] = Undefined
+) -> _ConditionType:
     condition: _ConditionType
     if isinstance(predicate, Parameter):
         predicate_expr = _get_predicate_expr(predicate)
         if predicate.param_type == "selection" or _is_undefined(predicate_expr):
             condition = {"param": predicate.name}
-            if "empty" in kwargs:
-                condition["empty"] = kwargs.pop("empty")
+            if isinstance(empty, bool):
+                condition["empty"] = empty
             elif isinstance(predicate.empty, bool):
                 condition["empty"] = predicate.empty
         else:
@@ -451,7 +447,7 @@ def _predicate_to_condition(
     else:
         msg = f"condition predicate of type {type(predicate).__name__!r}"
         raise NotImplementedError(msg)
-    return condition, kwargs
+    return condition
 
 
 def _condition_to_selection(
@@ -1119,7 +1115,8 @@ def condition(
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    condition, kwargs = _predicate_to_condition(predicate, **kwargs)
+    empty = kwargs.pop("empty", Undefined)
+    condition = _predicate_to_condition(predicate, empty=empty)
     return _condition_to_selection(condition, if_true, if_false, **kwargs)
 
 
