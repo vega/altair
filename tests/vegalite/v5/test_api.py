@@ -420,8 +420,8 @@ def test_when_labels_position_based_on_condition() -> None:
 
     # Examples of how to write both js and python expressions
     param_color_js_expr = alt.param(expr=f"{param_width.name} < 200 ? 'red' : 'black'")
-    param_color_py_expr = alt.param(  # noqa: F841
-        expr=alt.expr.if_(param_width_lt_200, "red", "black")
+    param_color_py_expr = alt.param(
+        expr=alt.expr.if_(param_width_lt_200, "red", "black")  # type: ignore
     )
     when = (
         _alt._when(param_width_lt_200)
@@ -441,10 +441,11 @@ def test_when_labels_position_based_on_condition() -> None:
         .add_params(param_width, param_color_js_expr, param_color_py_when)
     )
     chart.to_dict()
+    fail_condition = alt.condition(
+        param_width < 200, alt.value("red"), alt.value("black")
+    )
     with pytest.raises(SchemaValidationError) as err:
-        alt.param(
-            expr=alt.condition(param_width < 200, alt.value("red"), alt.value("black"))
-        )
+        alt.param(expr=fail_condition)  # type: ignore
     assert "invalid value for `expr`" in str(err.value)
 
 
@@ -464,7 +465,7 @@ def test_when_expressions_inside_parameters() -> None:
         .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
     )
     when_then_otherwise = _alt._when(alt.datum.b >= 0).then(10).otherwise(-20)
-    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
+    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))  # type: ignore
     actual = _alt._condition_to_expr_ref(when_then_otherwise)
     assert expected == actual
 
@@ -485,22 +486,22 @@ def test_when_convert_expr() -> None:
     assert isinstance(converted, alt.ExprRef)
 
     with pytest.raises(TypeError) as err:
-        _alt._condition_to_expr_ref(9)
+        _alt._condition_to_expr_ref(9)  # type: ignore
     assert "int" in str(err.value)
 
-    with pytest.raises(KeyError) as err:
+    with pytest.raises(KeyError) as err:  # type: ignore
         _alt._condition_to_expr_ref(_alt._when(Color="Green").then(5).to_dict())
     assert "Missing `value`" in str(err.value)
 
-    with pytest.raises(KeyError) as err:
+    with pytest.raises(KeyError) as err:  # type: ignore
         _alt._condition_to_expr_ref({"value": 10})
     assert "Missing `condition`" in str(err.value)
 
     with pytest.raises(TypeError) as err:
-        _alt._condition_to_expr_ref({"value": 10, "condition": "words"})
+        _alt._condition_to_expr_ref({"value": 10, "condition": "words"})  # type: ignore
     assert "'str'" in str(err.value)
 
-    with pytest.raises(KeyError) as err:
+    with pytest.raises(KeyError) as err:  # type: ignore
         _alt._condition_to_expr_ref(
             _alt._when(alt.selection_point("name")).then(33).otherwise(11)
         )
@@ -516,7 +517,7 @@ def test_when_convert_expr() -> None:
         .otherwise(0)
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # type: ignore
         _alt._condition_to_expr_ref(long)
     assert "3" in str(err.value)
 

@@ -683,6 +683,7 @@ def _parse_otherwise(
     lit: _LiteralConfig,
     /,
 ) -> Union[core.SchemaBase, _Conditions]:
+    selection: Union[core.SchemaBase, _Conditions]
     if isinstance(statement, core.SchemaBase):
         selection = statement.copy()
         conditions.update(**kwargs)  # type: ignore[call-arg]
