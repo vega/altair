@@ -386,7 +386,13 @@ _TestPredicateType = Union[str, _expr_core.Expression, core.PredicateComposition
 Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `test` predicate: ...
 """
 
-_PredicateType = Union[Parameter, core.Expr, TypingDict[str, Any], _TestPredicateType]
+_PredicateType = Union[
+    Parameter,
+    core.Expr,
+    TypingDict[str, Any],
+    _TestPredicateType,
+    _expr_core.OperatorMixin,
+]
 """Permitted types for `predicate`."""
 
 _ComposablePredicateType = Union[
@@ -483,6 +489,8 @@ def _predicate_to_condition(
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
         condition = predicate
+    elif isinstance(predicate, _expr_core.OperatorMixin):
+        condition = {"test": predicate._to_expr()}
     else:
         msg = f"condition predicate of type {type(predicate).__name__!r}"
         raise NotImplementedError(msg)
