@@ -892,6 +892,58 @@ def _when(
     return _When(condition)
 
 
+def _condition_to_expr_str(c: Union[_SelectionType, _Conditions], /) -> str:
+    """Convert the output of `alt.condition`/`when-then-otherwise` to an expression string."""
+    return _condition_to_expr_ref(c).expr
+
+
+def _condition_to_expr_ref(c: Union[_SelectionType, _Conditions], /) -> core.ExprRef:
+    """Convert the output of `alt.condition`/`when-then-otherwise` to an `ExprRef`.
+
+    Notes
+    -----
+    - Purely to demonstrate how the translation could occur
+    - Ideally, the logic would live elsewhere
+    """
+    if isinstance(c, core.SchemaBase):
+        c = c.to_dict()
+    if not isinstance(c, dict):
+        msg = f"Expected condition of type `dict`, but got: {type(c).__name__!r}."
+        raise TypeError(msg)
+    elif "value" in c:
+        # Had to change due to 0 returning False
+        otherwise = c.get("value")
+        if conditions := c.get("condition"):
+            if not isinstance(conditions, (dict, list)):
+                msg = f"Expected nested condition of type `dict | list`, but got: {type(conditions).__name__!r}."
+                raise TypeError(msg)
+            elif isinstance(conditions, dict):
+                condition = conditions
+            elif isinstance(conditions, list) and len(conditions) == 1:
+                condition = conditions[0]
+            else:
+                msg = (
+                    f"Condition specifies {len(conditions)!r} `when-then` clauses.\n"
+                    f"`alt.expr.if_` supports only `1`, followed by an `otherwise`.\n\n"
+                    f"{c!r}"
+                )
+                raise ValueError(msg)
+
+            if when := condition.get("test"):
+                then = condition["value"]
+                expr = _expr_core.FunctionExpression("if", (when, then, otherwise))
+                return core.ExprRef(expr.to_dict())
+            else:
+                msg = f"Missing `test` key, unable to convert to `ExprRef.\n\n{c!r}"
+                raise KeyError(msg)
+        else:
+            msg = f"Missing `condition` key, equivalent to `when`, `then` clauses.\n\n{c!r}"
+            raise KeyError(msg)
+    else:
+        msg = f"Missing `value` key, equivalent to `otherwise` clause.\n\n{c!r}"
+        raise KeyError(msg)
+
+
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
