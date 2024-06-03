@@ -294,12 +294,15 @@ def test_when_then() -> None:
     condition = when_then._conditions["condition"]
     assert isinstance(condition, list)
     assert condition[-1].get("value") == 5
+
     with pytest.raises(TypeError) as err:
-        when.then(pathlib.Path("some"), wrap_value=False)  # type: ignore
+        when.then(pathlib.Path("some"))  # type: ignore
     assert "Path" in str(err.value)
+
     with pytest.raises(TypeError) as err:
         when.then(pathlib.Path("some"))  # type: ignore
     assert "literal" in str(err.value)
+
     with pytest.raises(TypeError) as err:
         when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
     assert "float" in str(err.value)
@@ -316,8 +319,8 @@ def test_when_then_only(basic_chart) -> None:
     assert when_then.to_dict() == when.then(5).to_dict()
     basic_chart.encode(fillOpacity=when_then).to_dict()
     with pytest.raises(TypeError) as err:
-        when.then(5, wrap_value=False)  # type: ignore
-    assert "int" in str(err.value)
+        when.then([5], seq_as_lit=False)  # type: ignore
+    assert "list" in str(err.value)
 
 
 def test_when_then_otherwise() -> None:
@@ -338,7 +341,7 @@ def test_when_then_otherwise() -> None:
 
     assert expected == when_then_otherwise
     with pytest.raises(TypeError) as err:
-        when_then.otherwise([1, 2, 3], wrap_value=False)  # type: ignore
+        when_then.otherwise([1, 2, 3], seq_as_lit=False)  # type: ignore
     assert "list" in str(err.value)
 
 
@@ -393,7 +396,7 @@ def test_when_then_when_then_otherwise() -> None:
     assert isinstance(chart, alt.Chart)
     chart.to_dict()
     with pytest.raises(TypeError) as err:
-        when_then_when_then.otherwise({"five", "six"}, wrap_value=False)  # type: ignore
+        when_then_when_then.otherwise({"five", "six"})  # type: ignore
     assert "set" in str(err.value)
 
 
