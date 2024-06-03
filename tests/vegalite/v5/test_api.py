@@ -400,6 +400,127 @@ def test_when_then_when_then_otherwise() -> None:
     assert "set" in str(err.value)
 
 
+def test_when_labels_position_based_on_condition() -> None:
+    """Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+
+    Original [labels-position-based-on-condition](https://altair-viz.github.io/user_guide/marks/text.html#labels-position-based-on-condition)
+    """
+    import numpy as np
+    import pandas as pd
+    from altair.utils.schemapi import SchemaValidationError
+
+    from altair.vegalite.v5 import api as _alt
+
+    rand = np.random.RandomState(42)
+    df = pd.DataFrame({"xval": range(100), "yval": rand.randn(100).cumsum()})
+
+    bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
+    param_width = alt.param(bind=bind_range)
+    param_width_lt_200 = param_width < 200
+
+    # Examples of how to write both js and python expressions
+    param_color_js_expr = alt.param(expr=f"{param_width.name} < 200 ? 'red' : 'black'")
+    param_color_py_expr = alt.param(  # noqa: F841
+        expr=alt.expr.if_(param_width_lt_200, "red", "black")
+    )
+    when = (
+        _alt._when(param_width_lt_200)
+        .then(alt.value("red"))
+        .otherwise("black", str_as_lit=True)
+    )
+    param_color_py_when = alt.param(expr=_alt._condition_to_expr_str(when))
+    assert param_color_py_expr.expr == param_color_py_when.expr
+
+    chart = (
+        alt.Chart(df)
+        .mark_point()
+        .encode(
+            alt.X("xval").axis(titleColor=param_color_js_expr),
+            alt.Y("yval").axis(titleColor=param_color_py_when),
+        )
+        .add_params(param_width, param_color_js_expr, param_color_py_when)
+    )
+    chart.to_dict()
+    with pytest.raises(SchemaValidationError) as err:
+        alt.param(
+            expr=alt.condition(param_width < 200, alt.value("red"), alt.value("black"))
+        )
+    assert "invalid value for `expr`" in str(err.value)
+
+
+def test_when_expressions_inside_parameters() -> None:
+    """Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+
+    Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
+    """
+    from altair.vegalite.v5 import api as _alt
+    import pandas as pd
+
+    source = pd.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
+
+    bar = (
+        alt.Chart(source)
+        .mark_bar()
+        .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
+    )
+    when_then_otherwise = _alt._when(alt.datum.b >= 0).then(10).otherwise(-20)
+    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
+    actual = _alt._condition_to_expr_ref(when_then_otherwise)
+    assert expected == actual
+
+    text_conditioned = bar.mark_text(align="left", baseline="middle", dx=actual).encode(
+        text="b"
+    )
+
+    chart = bar + text_conditioned
+    chart.to_dict()
+
+
+def test_when_convert_expr() -> None:
+    from altair.vegalite.v5 import api as _alt
+
+    when = _alt._when(Color="Green").then(5).otherwise(10)
+    converted = _alt._condition_to_expr_ref(when)
+
+    assert isinstance(converted, alt.ExprRef)
+
+    with pytest.raises(TypeError) as err:
+        _alt._condition_to_expr_ref(9)
+    assert "int" in str(err.value)
+
+    with pytest.raises(KeyError) as err:
+        _alt._condition_to_expr_ref(_alt._when(Color="Green").then(5).to_dict())
+    assert "Missing `value`" in str(err.value)
+
+    with pytest.raises(KeyError) as err:
+        _alt._condition_to_expr_ref({"value": 10})
+    assert "Missing `condition`" in str(err.value)
+
+    with pytest.raises(TypeError) as err:
+        _alt._condition_to_expr_ref({"value": 10, "condition": "words"})
+    assert "'str'" in str(err.value)
+
+    with pytest.raises(KeyError) as err:
+        _alt._condition_to_expr_ref(
+            _alt._when(alt.selection_point("name")).then(33).otherwise(11)
+        )
+    assert "Missing `test`" in str(err.value)
+
+    long = (
+        _alt._when(Color="red")
+        .then(1)
+        .when(Color="blue")
+        .then(2)
+        .when(Color="green")
+        .then(3)
+        .otherwise(0)
+    )
+
+    with pytest.raises(ValueError) as err:
+        _alt._condition_to_expr_ref(long)
+    assert "3" in str(err.value)
+
+
 def test_selection_to_dict():
     brush = alt.selection_interval()
 
