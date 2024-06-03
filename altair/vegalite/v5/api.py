@@ -67,7 +67,13 @@ ChartDataType = Union[DataType, core.Data, str, core.Generator, UndefinedType]
 _AltOptional = Union[T, UndefinedType]
 """Like `typing.Optional[T]`, but for `Undefined`."""
 
-_LiteralValue = Union[str, bool, float, int]
+_LiteralNumeric = Union[bool, float, int]
+"""Non-string primitive python value types.
+
+Special-cases `str`, for use in `parse_shorthand`.
+"""
+
+_LiteralValue = Union[str, _LiteralNumeric]
 """Primitive python value types."""
 
 _OneOrSeqLiteralValue = Union[_LiteralValue, typing.Sequence[_LiteralValue]]
@@ -443,13 +449,13 @@ def _is_composable_type(obj: Any) -> TypeIs[_ComposablePredicateType]:
     return isinstance(obj, (_expr_core.OperatorMixin, SelectionPredicateComposition))
 
 
-def _is_literal(obj: Any) -> TypeIs[_LiteralValue]:
+def _is_literal_value(obj: Any) -> TypeIs[_LiteralValue]:
     return isinstance(obj, (str, bool, float, int))
 
 
-def _is_one_or_seq_literal(obj: Any) -> TypeIs[_OneOrSeqLiteralValue]:
-    return _is_literal(obj) or (
-        isinstance(obj, typing.Sequence) and all(_is_literal(el) for el in obj)
+def _is_one_or_seq_literal_value(obj: Any) -> TypeIs[_OneOrSeqLiteralValue]:
+    return _is_literal_value(obj) or (
+        isinstance(obj, typing.Sequence) and all(_is_literal_value(el) for el in obj)
     )
 
 
@@ -538,6 +544,26 @@ class _Conditions(_TypedDict, total=False):
     value: Any
 
 
+class _LiteralConfig(typing.NamedTuple):
+    """Settings for parsing literal python values in conditions.
+
+    Parameters
+    ----------
+    str_as_lit
+        Wrap strings in `alt.value` instead of passing to `utils.parse_shorthand`.
+    seq_as_lit
+        Wrap lists of literals in `alt.value`, otherwise raise.
+
+    Notes
+    -----
+    - Numeric literals are always wrapped in `alt.value`
+    - A `list` may not be valid in all places `alt.value` is accepted.
+    """
+
+    str_as_lit: bool = False
+    seq_as_lit: bool = True
+
+
 def _parse_when_constraints(
     constraints: TypingDict[str, Any], /
 ) -> typing.Iterator[_expr_core.BinaryExpression]:
@@ -622,61 +648,48 @@ def _parse_when(
     return _predicate_to_condition(composed, empty=empty)
 
 
-def _validate_statement(statement: Any, *, wrap_value: bool) -> _StatementType:
-    # Validation shared by `then`, `otherwise`
-    if not _is_statement_type(statement):
-        if wrap_value:
-            if _is_one_or_seq_literal(statement):
-                statement = value(statement)
-            else:
-                msg = (
-                    f"Expected one or more literal values, "
-                    f"but got: {type(statement).__name__!r}."
-                )
-                raise TypeError(msg)
-        else:
-            msg = (
-                f"Expected statement of type `SchemaBase`, `dict`, `str`, "
-                f"but got: {type(statement).__name__!r}.\n"
-                f"Try passing `wrap_value=True` to wrap literal values."
-            )
-            raise TypeError(msg)
-    return statement
+def _parse_literal(
+    val: Any, *, str_as_lit: bool, seq_as_lit: bool
+) -> TypingDict[str, Any]:
+    """Reordering from `then-otherwise` to allow config disable `parse_shorthand`"""
+    if isinstance(val, str) and not str_as_lit:
+        return utils.parse_shorthand(val)
+    elif _is_literal_value(val) or (seq_as_lit and _is_one_or_seq_literal_value(val)):
+        return value(val)
+    else:
+        msg = "one or more literal values" if seq_as_lit else "a single literal value"
+        msg = f"Expected {msg}, but got: {type(val).__name__!r}"
+        raise TypeError(msg)
 
 
 def _parse_then(
     statement: _StatementOrLiteralType,
     kwargs: TypingDict[str, Any],
-    *,
-    wrap_value: bool,
+    lit: _LiteralConfig,
+    /,
 ) -> TypingDict[str, Any]:
-    statement = _validate_statement(statement, wrap_value=wrap_value)
     if isinstance(statement, core.SchemaBase):
-        then = statement.to_dict()
-    elif isinstance(statement, str):
-        then = utils.parse_shorthand(statement)
-    else:
-        then = statement
-    then.update(kwargs)
-    return then
+        statement = statement.to_dict()
+    elif not isinstance(statement, dict):
+        statement = _parse_literal(statement, **lit._asdict())
+    statement.update(kwargs)
+    return statement
 
 
 def _parse_otherwise(
     statement: _StatementOrLiteralType,
     conditions: _Conditions,
     kwargs: TypingDict[str, Any],
-    *,
-    wrap_value: bool,
+    lit: _LiteralConfig,
+    /,
 ) -> Union[core.SchemaBase, _Conditions]:
-    selection: Union[core.SchemaBase, _Conditions]
-    statement = _validate_statement(statement, wrap_value=wrap_value)
     if isinstance(statement, core.SchemaBase):
         selection = statement.copy()
         conditions.update(**kwargs)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
     else:
-        if isinstance(statement, str):
-            statement = utils.parse_shorthand(statement)
+        if not isinstance(statement, dict):
+            statement = _parse_literal(statement, **lit._asdict())
         selection = conditions
         selection.update(**statement, **kwargs)  # type: ignore[call-arg]
     return selection
@@ -690,11 +703,11 @@ class _BaseWhen(typing.Protocol):
         self,
         statement: _StatementOrLiteralType,
         kwargs: TypingDict[str, Any],
-        *,
-        wrap_value: bool,
+        lit: _LiteralConfig,
+        /,
     ) -> _ConditionType:
         condition = _deepcopy(self._condition)
-        then = _parse_then(statement, kwargs, wrap_value=wrap_value)
+        then = _parse_then(statement, kwargs, lit)
         condition.update(then)
         return condition
 
@@ -719,7 +732,8 @@ class _When(_BaseWhen):
         self,
         statement: _StatementOrLiteralType,
         *,
-        wrap_value: Literal[True] = ...,
+        str_as_lit: bool = ...,
+        seq_as_lit: Literal[True] = ...,
         **kwargs: Any,
     ) -> "_Then": ...
     @overload
@@ -727,17 +741,20 @@ class _When(_BaseWhen):
         self,
         statement: _StatementType,
         *,
-        wrap_value: Literal[False],
+        str_as_lit: bool,
+        seq_as_lit: Literal[False],
         **kwargs: Any,
     ) -> "_Then": ...
     def then(
         self,
         statement: _StatementOrLiteralType,
         *,
-        wrap_value: bool = True,
+        str_as_lit: bool = False,
+        seq_as_lit: bool = True,
         **kwargs: Any,
     ) -> "_Then":
-        condition = self._when_then(statement, kwargs, wrap_value=wrap_value)
+        lit = _LiteralConfig(str_as_lit, seq_as_lit)
+        condition = self._when_then(statement, kwargs, lit)
         return _Then(_Conditions({"condition": [condition]}))
 
 
@@ -764,7 +781,8 @@ class _Then:
         self,
         statement: _StatementOrLiteralType,
         *,
-        wrap_value: Literal[True] = ...,
+        str_as_lit: bool = ...,
+        seq_as_lit: Literal[True] = ...,
         **kwargs: Any,
     ) -> _Conditions: ...
     @overload
@@ -772,7 +790,8 @@ class _Then:
         self,
         statement: core.SchemaBase,
         *,
-        wrap_value: Literal[False],
+        str_as_lit: bool,
+        seq_as_lit: Literal[False],
         **kwargs: Any,
     ) -> core.SchemaBase: ...
     @overload
@@ -780,19 +799,20 @@ class _Then:
         self,
         statement: _DictOrStr,
         *,
-        wrap_value: bool,
+        str_as_lit: bool,
+        seq_as_lit: bool,
         **kwargs: Any,
     ) -> _Conditions: ...
     def otherwise(
         self,
         statement: _StatementOrLiteralType,
         *,
-        wrap_value: bool = True,
+        str_as_lit: bool = False,
+        seq_as_lit: bool = True,
         **kwargs: Any,
     ) -> Union[core.SchemaBase, _Conditions]:
-        return _parse_otherwise(
-            statement, self.to_dict(), kwargs, wrap_value=wrap_value
-        )
+        lit = _LiteralConfig(str_as_lit, seq_as_lit)
+        return _parse_otherwise(statement, self.to_dict(), kwargs, lit)
 
     def when(
         self,
@@ -830,7 +850,8 @@ class _ChainedWhen(_BaseWhen):
         self,
         statement: _StatementOrLiteralType,
         *,
-        wrap_value: Literal[True] = ...,
+        str_as_lit: bool = ...,
+        seq_as_lit: Literal[True] = ...,
         **kwargs: Any,
     ) -> _Then: ...
     @overload
@@ -838,17 +859,20 @@ class _ChainedWhen(_BaseWhen):
         self,
         statement: _StatementType,
         *,
-        wrap_value: Literal[False],
+        str_as_lit: bool,
+        seq_as_lit: Literal[False],
         **kwargs: Any,
     ) -> _Then: ...
     def then(
         self,
         statement: _StatementOrLiteralType,
         *,
-        wrap_value: bool = True,
+        str_as_lit: bool = False,
+        seq_as_lit: bool = True,
         **kwargs: Any,
     ) -> _Then:
-        condition = self._when_then(statement, kwargs, wrap_value=wrap_value)
+        lit = _LiteralConfig(str_as_lit, seq_as_lit)
+        condition = self._when_then(statement, kwargs, lit)
         conditions = self._conditions.copy()
         conditions["condition"].append(condition)
         return _Then(conditions)
