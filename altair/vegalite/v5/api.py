@@ -3815,6 +3815,8 @@ def _combine_subchart_data(data, subcharts):
             data = subdata
             subcharts = [remove_data(c) for c in subcharts]
     elif all(c.data is Undefined or c.data is data for c in subcharts):
+        # Top level has data; subchart data must be either
+        # undefined or identical to proceed.
         subcharts = [remove_data(c) for c in subcharts]
 
     return data, subcharts
@@ -4049,6 +4051,8 @@ def _remove_layer_props(chart, subcharts, layer_props):
             getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop]
             for c in subcharts
         ):
+            # Top level has this prop; subchart must either not have the prop
+            # or it must be Undefined or identical to proceed.
             output_dict[prop] = chart[prop]
         else:
             msg = f"There are inconsistent values {values} for {prop}"

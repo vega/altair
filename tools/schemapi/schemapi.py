@@ -213,8 +213,15 @@ def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
     schema = copy.deepcopy(schema)
 
     def _prepare_refs(d: Dict[str, Any]) -> Dict[str, Any]:
-        """Add _VEGA_LITE_ROOT_URI in front of all $ref values. This function
-        recursively iterates through the whole dictionary."""
+        """Add _VEGA_LITE_ROOT_URI in front of all $ref values.
+
+        This function recursively iterates through the whole dictionary.
+
+        $ref values can only be nested in dictionaries or lists
+        as the passed in `d` dictionary comes from the Vega-Lite json schema
+        and in json we only have arrays (-> lists in Python) and objects
+        (-> dictionaries in Python) which we need to iterate through.
+        """
         for key, value in d.items():
             if key == "$ref":
                 d[key] = _VEGA_LITE_ROOT_URI + d[key]
