@@ -75,12 +75,11 @@ def update__all__variable() -> None:
         + [relevant_attributes_str]
         + lines[last_definition_line + 1 :]
     )
-    # Format file content with black
+    # Format file content with ruff
     new_file_content = ruff_format_str("\n".join(new_lines))
 
     # Write new version of altair/__init__.py
-    with open(init_path, "w") as f:
-        f.write(new_file_content)
+    Path(init_path).write_text(new_file_content)
 
 
 def _is_relevant_attribute(attr_name: str) -> bool:

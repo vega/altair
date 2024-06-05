@@ -1,6 +1,7 @@
 import hashlib
 import os
 import json
+from pathlib import Path
 import random
 import collections
 from operator import itemgetter
@@ -314,7 +315,7 @@ def main(app):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
-    examples = sorted(examples, key=lambda x: x["title"])
+    examples = sorted(examples, key=itemgetter("title"))
     examples_toc = collections.OrderedDict(
         {
             "Simple Charts": [],
@@ -336,15 +337,14 @@ def main(app):
         examples_toc[d["category"]].append(d)
 
     # Write the gallery index file
-    with open(os.path.join(target_dir, "index.rst"), "w") as f:
-        f.write(
-            GALLERY_TEMPLATE.render(
-                title=gallery_title,
-                examples=examples_toc.items(),
-                image_dir="/_static",
-                gallery_ref=gallery_ref,
-            )
+    Path(target_dir, "index.rst").write_text(
+        GALLERY_TEMPLATE.render(
+            title=gallery_title,
+            examples=examples_toc.items(),
+            image_dir="/_static",
+            gallery_ref=gallery_ref,
         )
+    )
 
     # save the images to file
     save_example_pngs(examples, image_dir)
@@ -355,9 +355,9 @@ def main(app):
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
-        target_filename = os.path.join(target_dir, example["name"] + ".rst")
-        with open(os.path.join(target_filename), "w", encoding="utf-8") as f:
-            f.write(EXAMPLE_TEMPLATE.render(example))
+        Path(target_dir, f"{example["name"]}.rst").write_text(
+            EXAMPLE_TEMPLATE.render(example), encoding="utf-8"
+        )
 
 
 def setup(app):

@@ -130,7 +130,7 @@ def build_row(item, rootschema):
     md_parser = Parser()
     # str_descr = "***Required.*** " if required else ""
     description = SchemaInfo(propschema, rootschema).deep_description
-    description = description if description else " "
+    description = description or " "
     str_descr = ""
     str_descr += description
     str_descr = fix_docstring_issues(str_descr)

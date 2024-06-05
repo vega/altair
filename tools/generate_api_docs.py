@@ -3,6 +3,7 @@ This script fills the contents of doc/user_guide/api.rst
 based on the updated Altair schema.
 """
 
+from pathlib import Path
 import sys
 import types
 from os.path import abspath, dirname, join
@@ -121,15 +122,14 @@ def lowlevel_wrappers() -> List[str]:
 def write_api_file() -> None:
     print(f"Updating API docs\n  ->{API_FILENAME}")
     sep = "\n   "
-    with open(API_FILENAME, "w") as f:
-        f.write(
-            API_TEMPLATE.format(
-                toplevel_charts=sep.join(toplevel_charts()),
-                api_functions=sep.join(api_functions()),
-                encoding_wrappers=sep.join(encoding_wrappers()),
-                lowlevel_wrappers=sep.join(lowlevel_wrappers()),
-            )
+    Path(API_FILENAME).write_text(
+        API_TEMPLATE.format(
+            toplevel_charts=sep.join(toplevel_charts()),
+            api_functions=sep.join(api_functions()),
+            encoding_wrappers=sep.join(encoding_wrappers()),
+            lowlevel_wrappers=sep.join(lowlevel_wrappers()),
         )
+    )
 
 
 if __name__ == "__main__":

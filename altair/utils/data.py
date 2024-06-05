@@ -1,9 +1,9 @@
 import json
-import os
 import random
 import hashlib
 import warnings
 from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
+from pathlib import Path
 
 import pandas as pd
 from toolz import curried
@@ -186,9 +186,8 @@ def to_json(
     data_json = _data_to_json_string(data)
     data_hash = _compute_data_hash(data_json)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    with open(filename, "w") as f:
-        f.write(data_json)
-    return {"url": os.path.join(urlpath, filename), "format": {"type": "json"}}
+    Path(filename).write_text(data_json)
+    return {"url": str(Path(urlpath, filename)), "format": {"type": "json"}}
 
 
 @curried.curry
@@ -203,9 +202,8 @@ def to_csv(
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    with open(filename, "w") as f:
-        f.write(data_csv)
-    return {"url": os.path.join(urlpath, filename), "format": {"type": "csv"}}
+    Path(filename).write_text(data_csv)
+    return {"url": str(Path(urlpath, filename)), "format": {"type": "csv"}}
 
 
 @curried.curry

@@ -349,8 +349,9 @@ class SchemaGenerator:
         if has_overload:
             lines.append("@overload")
         args = ", ".join(self.get_args(sub_si))
-        lines.append(f"def {attr}({args}) -> '{self.classname}':")
-        lines.append(indent * " " + "...\n")
+        lines.extend(
+            (f"def {attr}({args}) -> '{self.classname}':", indent * " " + "...\n")
+        )
         return lines
 
     def setter_hint(self, attr: str, indent: int) -> List[str]:

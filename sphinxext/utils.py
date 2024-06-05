@@ -2,6 +2,7 @@ import ast
 import hashlib
 import itertools
 import json
+from pathlib import Path
 import re
 
 
@@ -66,9 +67,7 @@ def _parse_source_file(filename):
     This function adapted from the sphinx-gallery project; license: BSD-3
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
-
-    with open(filename, encoding="utf-8") as fid:
-        content = fid.read()
+    content = Path(filename).read_text(encoding="utf-8")
     # change from Windows format to UNIX for uniformity
     content = content.replace("\r\n", "\n")
 

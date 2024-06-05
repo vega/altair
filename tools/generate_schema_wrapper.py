@@ -4,6 +4,7 @@ import argparse
 import copy
 import json
 import os
+from pathlib import Path
 import re
 import sys
 import textwrap
@@ -33,8 +34,8 @@ from schemapi.utils import (  # noqa: E402
 
 SCHEMA_VERSION: Final = "v5.17.0"
 
-reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.M)
-reSpecial = re.compile(r"[*_]{2,3}|`", re.M)
+reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
+reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)
 
 HEADER: Final = """\
 # The contents of this file are automatically written by
@@ -528,14 +529,16 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
     ]
-    contents.append(PARAMETER_PROTOCOL)
-    contents.append(BASE_SCHEMA.format(basename=basename))
-    contents.append(
-        schema_class(
-            "Root",
-            schema=rootschema,
-            basename=basename,
-            schemarepr=CodeSnippet(f"{basename}._rootschema"),
+    contents.extend(
+        (
+            PARAMETER_PROTOCOL,
+            BASE_SCHEMA.format(basename=basename),
+            schema_class(
+                "Root",
+                schema=rootschema,
+                basename=basename,
+                schemarepr=CodeSnippet(f"{basename}._rootschema"),
+            ),
         )
     )
 
@@ -573,9 +576,7 @@ def generate_vegalite_channel_wrappers(
     contents = [HEADER]
     contents.append(CHANNEL_MYPY_IGNORE_STATEMENTS)
     contents.extend(imports)
-    contents.append("")
-
-    contents.append(CHANNEL_MIXINS)
+    contents.extend(("", CHANNEL_MIXINS))
 
     encoding_def = "FacetedEncoding"
 
@@ -753,22 +754,19 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"SCHEMA_VERSION = '{version}'\n",
         f"SCHEMA_URL = {schema_url(version)!r}\n" "",
     ]
-    with open(outfile, "w", encoding="utf8") as f:
-        f.write(ruff_format_str(content))
+    Path(outfile).write_text(ruff_format_str(content), encoding="utf8")
 
     # Generate the core schema wrappers
     outfile = join(schemapath, "core.py")
     print(f"Generating\n {schemafile}\n  ->{outfile}")
     file_contents = generate_vegalite_schema_wrapper(schemafile)
-    with open(outfile, "w", encoding="utf8") as f:
-        f.write(ruff_format_str(file_contents))
+    Path(outfile).write_text(ruff_format_str(file_contents), encoding="utf8")
 
     # Generate the channel wrappers
     outfile = join(schemapath, "channels.py")
     print(f"Generating\n {schemafile}\n  ->{outfile}")
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
-    with open(outfile, "w", encoding="utf8") as f:
-        f.write(ruff_format_str(code))
+    Path(outfile).write_text(ruff_format_str(code), encoding="utf8")
 
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
@@ -796,8 +794,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n\n",
         config_mixin,
     ]
-    with open(outfile, "w", encoding="utf8") as f:
-        f.write(ruff_format_str(content))
+    Path(outfile).write_text(ruff_format_str(content), encoding="utf8")
 
 
 def _create_encode_signature(
@@ -837,8 +834,12 @@ def _create_encode_signature(
 
         signature_args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
 
-        docstring_parameters.append(f"{channel} : {', '.join(docstring_union_types)}")
-        docstring_parameters.append(f"    {process_description(info.deep_description)}")
+        docstring_parameters.extend(
+            (
+                f"{channel} : {', '.join(docstring_union_types)}",
+                f"    {process_description(info.deep_description)}",
+            )
+        )
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
