@@ -426,7 +426,7 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
 
 
 def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict:
-    def_dict: Dict[str, Optional[str]] = {k: None for k in ("field", "datum", "value")}
+    def_dict: Dict[str, Optional[str]] = dict.fromkeys(("field", "datum", "value"))
     schema = propschema.schema
     if propschema.is_reference() and "properties" in schema:
         if "field" in schema["properties"]:

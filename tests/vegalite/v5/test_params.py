@@ -112,8 +112,8 @@ def test_parameter_naming():
     assert res
 
     num = int(res[1])
-    assert prm1.param.name == f"param_{num+1}"
-    assert prm2.param.name == f"param_{num+2}"
+    assert prm1.param.name == f"param_{num + 1}"
+    assert prm2.param.name == f"param_{num + 2}"
 
 
 def test_selection_expression():

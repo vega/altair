@@ -3840,10 +3840,7 @@ def _needs_name(subchart):
         return False
 
     # Variable parameters won't receive a views property.
-    if all(isinstance(p, core.VariableParameter) for p in subchart.params):
-        return False
-
-    return True
+    return not all(isinstance(p, core.VariableParameter) for p in subchart.params)
 
 
 # Convert SelectionParameters to TopLevelSelectionParameters with a views property.

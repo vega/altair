@@ -6,4 +6,4 @@ from .schemapi import SchemaBase, Undefined
 from .utils import SchemaInfo
 
 
-__all__ = ("SchemaBase", "Undefined", "SchemaInfo")
+__all__ = ("SchemaBase", "SchemaInfo", "Undefined")

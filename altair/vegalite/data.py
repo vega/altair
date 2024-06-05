@@ -36,14 +36,14 @@ class DataTransformerRegistry(_DataTransformerRegistry):
 __all__ = (
     "DataTransformerRegistry",
     "MaxRowsError",
+    "check_data_type",
     "curry",
-    "sanitize_dataframe",
     "default_data_transformer",
     "limit_rows",
     "pipe",
     "sample",
+    "sanitize_dataframe",
     "to_csv",
     "to_json",
     "to_values",
-    "check_data_type",
 )

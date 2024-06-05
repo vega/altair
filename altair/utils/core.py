@@ -418,7 +418,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
             col = df[col_name]
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
-        elif dtype == object:
+        elif dtype == object:  # noqa: E721
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
             col = df[col_name].astype(object).apply(to_list_if_array)

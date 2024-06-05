@@ -639,7 +639,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         for ch in column_heights:
             param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
             column_max_widths.append(
-                max([len(param_name) for param_name in param_names_columns[-1]])
+                max(len(param_name) for param_name in param_names_columns[-1])
             )
             last_end_idx = ch + last_end_idx
 

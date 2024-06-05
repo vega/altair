@@ -16,17 +16,17 @@ from .schemapi import Undefined
 
 
 __all__ = (
-    "infer_vegalite_type",
-    "infer_encoding_types",
-    "sanitize_dataframe",
-    "sanitize_arrow_table",
-    "spec_to_html",
-    "parse_shorthand",
-    "use_signature",
-    "update_nested",
-    "display_traceback",
     "AltairDeprecationWarning",
+    "PluginRegistry",
     "SchemaBase",
     "Undefined",
-    "PluginRegistry",
+    "display_traceback",
+    "infer_encoding_types",
+    "infer_vegalite_type",
+    "parse_shorthand",
+    "sanitize_arrow_table",
+    "sanitize_dataframe",
+    "spec_to_html",
+    "update_nested",
+    "use_signature",
 )
