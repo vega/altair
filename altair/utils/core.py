@@ -211,19 +211,19 @@ def infer_vegalite_type(
     """
     typ = infer_dtype(data, skipna=False)
 
-    if typ in [
+    if typ in {
         "floating",
         "mixed-integer-float",
         "integer",
         "mixed-integer",
         "complex",
-    ]:
+    }:
         return "quantitative"
     elif typ == "categorical" and hasattr(data, "cat") and data.cat.ordered:
         return ("ordinal", data.cat.categories.tolist())
-    elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
+    elif typ in {"string", "bytes", "categorical", "boolean", "mixed", "unicode"}:
         return "nominal"
-    elif typ in [
+    elif typ in {
         "datetime",
         "datetime64",
         "timedelta",
@@ -231,7 +231,7 @@ def infer_vegalite_type(
         "date",
         "time",
         "period",
-    ]:
+    }:
         return "temporal"
     else:
         warnings.warn(
@@ -674,9 +674,9 @@ def infer_vegalite_type_for_dfi_column(
         categories_column = column.describe_categorical["categories"]
         categories_array = column_to_array(categories_column)
         return "ordinal", categories_array.to_pylist()
-    if kind in (DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL):
+    if kind in {DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL}:
         return "nominal"
-    elif kind in (DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT):
+    elif kind in {DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT}:
         return "quantitative"
     elif kind == DtypeKind.DATETIME:
         return "temporal"

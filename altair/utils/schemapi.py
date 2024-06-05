@@ -220,20 +220,15 @@ def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
         for key, value in d.items():
             if key == "$ref":
                 d[key] = _VEGA_LITE_ROOT_URI + d[key]
-            else:
-                # $ref values can only be nested in dictionaries or lists
-                # as the passed in `d` dictionary comes from the Vega-Lite json schema
-                # and in json we only have arrays (-> lists in Python) and objects
-                # (-> dictionaries in Python) which we need to iterate through.
-                if isinstance(value, dict):
-                    d[key] = _prepare_refs(value)
-                elif isinstance(value, list):
-                    prepared_values = []
-                    for v in value:
-                        if isinstance(v, dict):
-                            v = _prepare_refs(v)
-                        prepared_values.append(v)
-                    d[key] = prepared_values
+            elif isinstance(value, dict):
+                d[key] = _prepare_refs(value)
+            elif isinstance(value, list):
+                prepared_values = []
+                for v in value:
+                    if isinstance(v, dict):
+                        v = _prepare_refs(v)
+                    prepared_values.append(v)
+                d[key] = prepared_values
         return d
 
     schema = _prepare_refs(schema)
@@ -616,7 +611,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             *[
                 (name, len(name))
                 for name in param_dict_keys
-                if name not in ["kwds", "self"]
+                if name not in {"kwds", "self"}
             ]
         )
         # Worst case scenario with the same longest param name in the same
@@ -712,7 +707,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         # considered so far. This is not expected to be used but more exists
         # as a fallback for cases which were not known during development.
         for validator, errors in errors_by_validator.items():
-            if validator not in ("enum", "type"):
+            if validator not in {"enum", "type"}:
                 message += "\n".join([e.message for e in errors])
 
         return message
@@ -762,7 +757,7 @@ class SchemaBase:
         if kwds:
             assert len(args) == 0
         else:
-            assert len(args) in [0, 1]
+            assert len(args) in {0, 1}
 
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, "_args", args)
@@ -942,7 +937,7 @@ class SchemaBase:
             # when a non-ordinal data type is specifed manually
             # or if the encoding channel does not support sorting
             if "sort" in parsed_shorthand and (
-                "sort" not in kwds or kwds["type"] not in ["ordinal", Undefined]
+                "sort" not in kwds or kwds["type"] not in {"ordinal", Undefined}
             ):
                 parsed_shorthand.pop("sort")
 
@@ -954,7 +949,7 @@ class SchemaBase:
                 }
             )
             kwds = {
-                k: v for k, v in kwds.items() if k not in [*list(ignore), "shorthand"]
+                k: v for k, v in kwds.items() if k not in {*list(ignore), "shorthand"}
             }
             if "mark" in kwds and isinstance(kwds["mark"], str):
                 kwds["mark"] = {"type": kwds["mark"]}

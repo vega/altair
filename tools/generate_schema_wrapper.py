@@ -385,9 +385,8 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
             }
             if "required" not in defschema:
                 defschema["required"] = ["shorthand"]
-            else:
-                if "shorthand" not in defschema["required"]:
-                    defschema["required"].append("shorthand")
+            elif "shorthand" not in defschema["required"]:
+                defschema["required"].append("shorthand")
             schema["definitions"][field_ref.split("/")[-1]] = defschema
     return schema
 
@@ -512,7 +511,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
     # precedent in the generated __init__.py file one level up where core.py
     # and channels.py are imported. Importing both confuses type checkers.
     all_ = [
-        c for c in definitions if not c.startswith("_") and c not in ("Color", "Text")
+        c for c in definitions if not c.startswith("_") and c not in {"Color", "Text"}
     ] + [
         "Root",
         "VegaLiteSchema",

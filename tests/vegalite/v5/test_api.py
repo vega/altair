@@ -48,7 +48,7 @@ def _make_chart_type(chart_type):
         )
     )
 
-    if chart_type in ["layer", "hconcat", "vconcat", "concat"]:
+    if chart_type in {"layer", "hconcat", "vconcat", "concat"}:
         func = getattr(alt, chart_type)
         return func(base.mark_square(), base.mark_circle())
     elif chart_type == "facet":
@@ -289,14 +289,14 @@ def test_selection_expression():
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
 @pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
-    if format in ["pdf", "png"]:
+    if format in {"pdf", "png"}:
         out = io.BytesIO()
         mode = "rb"
     else:
         out = io.StringIO()
         mode = "r"
 
-    if format in ["svg", "png", "pdf", "bogus"] and engine == "vl-convert":
+    if format in {"svg", "png", "pdf", "bogus"} and engine == "vl-convert":
         if format == "bogus":
             with pytest.raises(ValueError) as err:
                 basic_chart.save(out, format=format, engine=engine)
@@ -605,9 +605,10 @@ def test_transforms():
 
     # kwargs don't maintain order in Python < 3.6, so window list can
     # be reversed
-    assert chart.transform == [
-        alt.WindowTransform(frame=[None, 0], window=window)
-    ] or chart.transform == [alt.WindowTransform(frame=[None, 0], window=window[::-1])]
+    assert chart.transform in (
+        [alt.WindowTransform(frame=[None, 0], window=window)],
+        [alt.WindowTransform(frame=[None, 0], window=window[::-1])],
+    )
 
 
 def test_filter_transform_selection_predicates():

@@ -9,6 +9,7 @@ import types
 from os.path import abspath, dirname, join
 from typing import Final, Optional, Iterator, List
 from types import ModuleType
+import locale
 
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
@@ -115,7 +116,7 @@ def lowlevel_wrappers() -> List[str]:
     # in the top-level Altair namespace. Therefore, they cannot be imported as e.g.
     # altair.Color (which gives you the Channel class) and therefore Sphinx won't
     # be able to produce a documentation page.
-    objects = [o for o in objects if o not in ("Color", "Text")]
+    objects = [o for o in objects if o not in {"Color", "Text"}]
     return objects
 
 
@@ -128,7 +129,8 @@ def write_api_file() -> None:
             api_functions=sep.join(api_functions()),
             encoding_wrappers=sep.join(encoding_wrappers()),
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
-        )
+        ),
+        encoding=locale.getpreferredencoding(False),
     )
 
 

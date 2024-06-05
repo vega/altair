@@ -77,7 +77,7 @@ def spec_to_mimebundle(
 
     embed_options = preprocess_embed_options(final_embed_options)
 
-    if format in ["png", "svg", "pdf", "vega"]:
+    if format in {"png", "svg", "pdf", "vega"}:
         format = cast(Literal["png", "svg", "pdf", "vega"], format)
         return _spec_to_mimebundle_with_engine(
             spec,

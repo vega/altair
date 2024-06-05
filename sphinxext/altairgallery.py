@@ -26,6 +26,7 @@ from .utils import (
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
 from tests.examples_methods_syntax import iter_examples_methods_syntax
+import locale
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -158,7 +159,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
     hash_file = os.path.join(image_dir, "_image_hashes.json")
 
     if os.path.exists(hash_file):
-        with open(hash_file) as f:
+        with open(hash_file, encoding=locale.getpreferredencoding(False)) as f:
             hashes = json.load(f)
     else:
         hashes = {}
@@ -183,7 +184,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 warnings.warn("Unable to save image: using generic image", stacklevel=1)
                 create_generic_image(image_file)
 
-            with open(hash_file, "w") as f:
+            with open(hash_file, "w", encoding=locale.getpreferredencoding(False)) as f:
                 json.dump(hashes, f)
 
         if make_thumbnails:
@@ -197,7 +198,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 create_thumbnail(image_file, thumb_file, **params)
 
     # Save hashes so we know whether we need to re-generate plots
-    with open(hash_file, "w") as f:
+    with open(hash_file, "w", encoding=locale.getpreferredencoding(False)) as f:
         json.dump(hashes, f)
 
 
@@ -343,7 +344,8 @@ def main(app):
             examples=examples_toc.items(),
             image_dir="/_static",
             gallery_ref=gallery_ref,
-        )
+        ),
+        encoding=locale.getpreferredencoding(False),
     )
 
     # save the images to file

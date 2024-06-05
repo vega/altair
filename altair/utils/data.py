@@ -17,6 +17,7 @@ from .plugin_registry import PluginRegistry
 
 
 from typing import Protocol, TypedDict, Literal
+import locale
 
 
 if TYPE_CHECKING:
@@ -186,7 +187,7 @@ def to_json(
     data_json = _data_to_json_string(data)
     data_hash = _compute_data_hash(data_json)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    Path(filename).write_text(data_json)
+    Path(filename).write_text(data_json, encoding=locale.getpreferredencoding(False))
     return {"url": str(Path(urlpath, filename)), "format": {"type": "json"}}
 
 
@@ -202,7 +203,7 @@ def to_csv(
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    Path(filename).write_text(data_csv)
+    Path(filename).write_text(data_csv, encoding=locale.getpreferredencoding(False))
     return {"url": str(Path(urlpath, filename)), "format": {"type": "csv"}}
 
 

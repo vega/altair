@@ -183,7 +183,7 @@ def name_views(
         chart, (_chart_class_mapping[Chart], _chart_class_mapping[FacetChart])
     ):
         if chart.name not in exclude:
-            if chart.name in (None, Undefined):
+            if chart.name in {None, Undefined}:
                 # Add name since none is specified
                 chart.name = Chart._get_name()
             return [chart.name]

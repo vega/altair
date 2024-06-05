@@ -461,18 +461,16 @@ def _selection(
     type: Union[Literal["interval", "point"], UndefinedType] = Undefined, **kwds
 ) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
-    param_kwds = {}
 
-    for kwd in {"name", "bind", "value", "empty", "init", "views"}:
-        if kwd in kwds:
-            param_kwds[kwd] = kwds.pop(kwd)
+    select_kwds = {"name", "bind", "value", "empty", "init", "views"}
+    param_kwds = {key: kwds.pop(key) for key in select_kwds & kwds.keys()}
 
     select: Union[core.IntervalSelectionConfig, core.PointSelectionConfig]
     if type == "interval":
         select = core.IntervalSelectionConfig(type=type, **kwds)
     elif type == "point":
         select = core.PointSelectionConfig(type=type, **kwds)
-    elif type in ["single", "multi"]:
+    elif type in {"single", "multi"}:
         select = core.PointSelectionConfig(type="point", **kwds)
         warnings.warn(
             """The types 'single' and 'multi' are now
@@ -928,7 +926,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
 
         # Validate format
-        if format not in ("vega-lite", "vega"):
+        if format not in {"vega-lite", "vega"}:
             msg = f'The format argument must be either "vega-lite" or "vega". Received {format!r}'
             raise ValueError(msg)
 
@@ -998,15 +996,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 raise ValueError(msg)
             else:
                 return _compile_with_vegafusion(vegalite_spec)
+        elif format == "vega":
+            plugin = vegalite_compilers.get()
+            if plugin is None:
+                msg = "No active vega-lite compiler plugin found"
+                raise ValueError(msg)
+            return plugin(vegalite_spec)
         else:
-            if format == "vega":
-                plugin = vegalite_compilers.get()
-                if plugin is None:
-                    msg = "No active vega-lite compiler plugin found"
-                    raise ValueError(msg)
-                return plugin(vegalite_spec)
-            else:
-                return vegalite_spec
+            return vegalite_spec
 
     def to_json(
         self,
@@ -1242,7 +1239,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 save(**kwds)
         else:
             save(**kwds)
-        return
 
     # Fallback for when rendering fails; the full repr is too long to be
     # useful in nearly all cases.
@@ -2448,10 +2444,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if as_ is Undefined:
             as_ = kwargs.pop("as", Undefined)
-        else:
-            if "as" in kwargs:
-                msg = "transform_timeunit: both 'as_' and 'as' passed as arguments."
-                raise ValueError(msg)
+        elif "as" in kwargs:
+            msg = "transform_timeunit: both 'as_' and 'as' passed as arguments."
+            raise ValueError(msg)
         if as_ is not Undefined:
             dct = {"as": as_, "timeUnit": timeUnit, "field": field}
             self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
@@ -3271,7 +3266,7 @@ def repeat(
     -------
     repeat : RepeatRef object
     """
-    if repeater not in ["row", "column", "repeat", "layer"]:
+    if repeater not in {"row", "column", "repeat", "layer"}:
         msg = "repeater must be one of ['row', 'column', 'repeat', 'layer']"
         raise ValueError(msg)
     return core.RepeatRef(repeat=repeater)
@@ -3819,11 +3814,8 @@ def _combine_subchart_data(data, subcharts):
         if subdata is not Undefined and all(c.data is subdata for c in subcharts):
             data = subdata
             subcharts = [remove_data(c) for c in subcharts]
-    else:
-        # Top level has data; subchart data must be either
-        # undefined or identical to proceed.
-        if all(c.data is Undefined or c.data is data for c in subcharts):
-            subcharts = [remove_data(c) for c in subcharts]
+    elif all(c.data is Undefined or c.data is data for c in subcharts):
+        subcharts = [remove_data(c) for c in subcharts]
 
     return data, subcharts
 
@@ -4053,17 +4045,14 @@ def _remove_layer_props(chart, subcharts, layer_props):
             else:
                 msg = f"There are inconsistent values {values} for {prop}"
                 raise ValueError(msg)
+        elif all(
+            getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop]
+            for c in subcharts
+        ):
+            output_dict[prop] = chart[prop]
         else:
-            # Top level has this prop; subchart must either not have the prop
-            # or it must be Undefined or identical to proceed.
-            if all(
-                getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop]
-                for c in subcharts
-            ):
-                output_dict[prop] = chart[prop]
-            else:
-                msg = f"There are inconsistent values {values} for {prop}"
-                raise ValueError(msg)
+            msg = f"There are inconsistent values {values} for {prop}"
+            raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 
     return output_dict, subcharts

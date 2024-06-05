@@ -266,7 +266,7 @@ def spec_to_html(
 
     mode = embed_options.setdefault("mode", mode)
 
-    if mode not in ["vega", "vega-lite"]:
+    if mode not in {"vega", "vega-lite"}:
         msg = "mode must be either 'vega' or 'vega-lite'"
         raise ValueError(msg)
 

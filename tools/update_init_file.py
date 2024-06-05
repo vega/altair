@@ -20,6 +20,7 @@ from typing import (
     Union,
     cast,
 )
+import locale
 
 if sys.version_info >= (3, 13):
     from typing import TypeIs
@@ -48,7 +49,7 @@ def update__all__variable() -> None:
     """
     # Read existing file content
     init_path = alt.__file__
-    with open(init_path) as f:
+    with open(init_path, encoding=locale.getpreferredencoding(False)) as f:
         lines = f.readlines()
     lines = [line.strip("\n") for line in lines]
 
@@ -79,7 +80,9 @@ def update__all__variable() -> None:
     new_file_content = ruff_format_str("\n".join(new_lines))
 
     # Write new version of altair/__init__.py
-    Path(init_path).write_text(new_file_content)
+    Path(init_path).write_text(
+        new_file_content, encoding=locale.getpreferredencoding(False)
+    )
 
 
 def _is_relevant_attribute(attr_name: str) -> bool:
@@ -106,16 +109,13 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr_name == "ValueOrDatum"
     ):
         return False
+    elif inspect.ismodule(attr):
+        # Only include modules which are part of Altair. This excludes built-in
+        # modules (they do not have a __file__ attribute), standard library,
+        # and third-party packages.
+        return getattr(attr, "__file__", "").startswith(str(Path(alt.__file__).parent))
     else:
-        if inspect.ismodule(attr):
-            # Only include modules which are part of Altair. This excludes built-in
-            # modules (they do not have a __file__ attribute), standard library,
-            # and third-party packages.
-            return getattr(attr, "__file__", "").startswith(
-                str(Path(alt.__file__).parent)
-            )
-        else:
-            return True
+        return True
 
 
 if __name__ == "__main__":
