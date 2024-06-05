@@ -164,7 +164,7 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-extend-safe-fixes=["SIM101"]
+extend-safe-fixes=["SIM101","SIM102", "SIM105","SIM117"]
 select = [
     # flake8-bugbear
     "B",
