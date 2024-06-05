@@ -78504,7 +78504,7 @@ def _encode_signature(
     angle : str, :class:`Angle`, Dict, :class:`AngleDatum`, :class:`AngleValue`
         Rotation angle of point and text marks.
     color : str, :class:`Color`, Dict, :class:`ColorDatum`, :class:`ColorValue`
-        Color of the marks – either fill or stroke color based on  the ``filled`` property
+        Color of the marks - either fill or stroke color based on  the ``filled`` property
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
         stroke color for ``"line"`` and ``"point"``.
@@ -78547,7 +78547,7 @@ def _encode_signature(
     href : str, :class:`Href`, Dict, :class:`HrefValue`
         A URL to load upon mouse click.
     key : str, :class:`Key`, Dict
-        A data field to use as a unique key for data binding. When a visualization’s data is
+        A data field to use as a unique key for data binding. When a visualization's data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
@@ -78612,10 +78612,10 @@ def _encode_signature(
         Size of the mark.
 
 
-        * For ``"point"``, ``"square"`` and ``"circle"``, – the symbol size, or pixel area
+        * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or pixel area
           of the mark.
-        * For ``"bar"`` and ``"tick"`` – the bar and tick's size.
-        * For ``"text"`` – the text's font size.
+        * For ``"bar"`` and ``"tick"`` - the bar and tick's size.
+        * For ``"text"`` - the text's font size.
         * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
           instead of line with varying size)
     stroke : str, :class:`Stroke`, Dict, :class:`StrokeDatum`, :class:`StrokeValue`

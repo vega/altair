@@ -7702,7 +7702,7 @@ class BoxPlotDef(CompositeMarkDef):
     box : bool, dict, :class:`BarConfig`, :class:`AreaConfig`, :class:`LineConfig`, :class:`MarkConfig`, :class:`RectConfig`, :class:`TickConfig`, :class:`AnyMarkConfig`
 
     clip : bool
-        Whether a composite mark be clipped to the enclosing group’s width and height.
+        Whether a composite mark be clipped to the enclosing group's width and height.
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
@@ -10419,7 +10419,7 @@ class Encoding(VegaLiteSchema):
     angle : dict, :class:`NumericMarkPropDef`, :class:`FieldOrDatumDefWithConditionDatumDefnumber`, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`
         Rotation angle of point and text marks.
     color : dict, :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`
-        Color of the marks – either fill or stroke color based on  the ``filled`` property
+        Color of the marks - either fill or stroke color based on  the ``filled`` property
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
         stroke color for ``"line"`` and ``"point"``.
@@ -10456,7 +10456,7 @@ class Encoding(VegaLiteSchema):
     href : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`
         A URL to load upon mouse click.
     key : dict, :class:`FieldDefWithoutScale`
-        A data field to use as a unique key for data binding. When a visualization’s data is
+        A data field to use as a unique key for data binding. When a visualization's data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
@@ -10519,10 +10519,10 @@ class Encoding(VegaLiteSchema):
         Size of the mark.
 
 
-        * For ``"point"``, ``"square"`` and ``"circle"``, – the symbol size, or pixel area
+        * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or pixel area
           of the mark.
-        * For ``"bar"`` and ``"tick"`` – the bar and tick's size.
-        * For ``"text"`` – the text's font size.
+        * For ``"bar"`` and ``"tick"`` - the bar and tick's size.
+        * For ``"text"`` - the text's font size.
         * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
           instead of line with varying size)
     stroke : dict, :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`
@@ -10815,7 +10815,7 @@ class ErrorBandDef(CompositeMarkDef):
     borders : bool, dict, :class:`BarConfig`, :class:`AreaConfig`, :class:`LineConfig`, :class:`MarkConfig`, :class:`RectConfig`, :class:`TickConfig`, :class:`AnyMarkConfig`
 
     clip : bool
-        Whether a composite mark be clipped to the enclosing group’s width and height.
+        Whether a composite mark be clipped to the enclosing group's width and height.
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
@@ -11156,7 +11156,7 @@ class ErrorBarDef(CompositeMarkDef):
         ``"rule"``, and ``"text"`` ) or a composite mark type ( ``"boxplot"``,
         ``"errorband"``, ``"errorbar"`` ).
     clip : bool
-        Whether a composite mark be clipped to the enclosing group’s width and height.
+        Whether a composite mark be clipped to the enclosing group's width and height.
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
@@ -12293,7 +12293,7 @@ class FacetedEncoding(VegaLiteSchema):
     angle : dict, :class:`NumericMarkPropDef`, :class:`FieldOrDatumDefWithConditionDatumDefnumber`, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefnumber`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefnumber`
         Rotation angle of point and text marks.
     color : dict, :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`
-        Color of the marks – either fill or stroke color based on  the ``filled`` property
+        Color of the marks - either fill or stroke color based on  the ``filled`` property
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
         stroke color for ``"line"`` and ``"point"``.
@@ -12336,7 +12336,7 @@ class FacetedEncoding(VegaLiteSchema):
     href : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`
         A URL to load upon mouse click.
     key : dict, :class:`FieldDefWithoutScale`
-        A data field to use as a unique key for data binding. When a visualization’s data is
+        A data field to use as a unique key for data binding. When a visualization's data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
@@ -12401,10 +12401,10 @@ class FacetedEncoding(VegaLiteSchema):
         Size of the mark.
 
 
-        * For ``"point"``, ``"square"`` and ``"circle"``, – the symbol size, or pixel area
+        * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or pixel area
           of the mark.
-        * For ``"bar"`` and ``"tick"`` – the bar and tick's size.
-        * For ``"text"`` – the text's font size.
+        * For ``"bar"`` and ``"tick"`` - the bar and tick's size.
+        * For ``"text"`` - the text's font size.
         * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
           instead of line with varying size)
     stroke : dict, :class:`ColorDef`, :class:`FieldOrDatumDefWithConditionDatumDefGradientstringnull`, :class:`FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull`, :class:`ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull`
@@ -22921,7 +22921,7 @@ class MarkDef(AnyMark):
 
         __Default value:__ ``"source-over"``
     clip : bool, dict, :class:`ExprRef`
-        Whether a mark be clipped to the enclosing group’s width and height.
+        Whether a mark be clipped to the enclosing group's width and height.
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
@@ -26788,7 +26788,7 @@ class OverlayMarkDef(VegaLiteSchema):
 
         __Default value:__ ``"source-over"``
     clip : bool, dict, :class:`ExprRef`
-        Whether a mark be clipped to the enclosing group’s width and height.
+        Whether a mark be clipped to the enclosing group's width and height.
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
@@ -31354,7 +31354,7 @@ class Projection(VegaLiteSchema):
         **Default value:** ``2``
     distance : dict, float, :class:`ExprRef`
         For the ``satellite`` projection, the distance from the center of the sphere to the
-        point of view, as a proportion of the sphere’s radius. The recommended maximum clip
+        point of view, as a proportion of the sphere's radius. The recommended maximum clip
         angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
         is also applied, then more conservative clipping may be necessary.
 
@@ -31389,7 +31389,7 @@ class Projection(VegaLiteSchema):
     precision : dict, float, :class:`ExprRef`
         The threshold for the projection's `adaptive resampling
         <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
-        value corresponds to the `Douglas–Peucker distance
+        value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
         which defaults to ``√0.5 ≅ 0.70710…``.
@@ -31411,7 +31411,7 @@ class Projection(VegaLiteSchema):
 
         **Default value:** ``[0, 0, 0]``
     scale : dict, float, :class:`ExprRef`
-        The projection’s scale (zoom) factor, overriding automatic fitting. The default
+        The projection's scale (zoom) factor, overriding automatic fitting. The default
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
@@ -31427,7 +31427,7 @@ class Projection(VegaLiteSchema):
 
         **Default value:** ``0``.
     translate : dict, Sequence[float], :class:`ExprRef`, :class:`Vector2number`
-        The projection’s translation offset as a two-element array ``[tx, ty]``.
+        The projection's translation offset as a two-element array ``[tx, ty]``.
     type : dict, :class:`ExprRef`, :class:`ProjectionType`, Literal['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular', 'gnomonic', 'identity', 'mercator', 'naturalEarth1', 'orthographic', 'stereographic', 'transverseMercator']
         The cartographic projection to use. This value is case-insensitive, for example
         ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
@@ -31601,7 +31601,7 @@ class ProjectionConfig(VegaLiteSchema):
         **Default value:** ``2``
     distance : dict, float, :class:`ExprRef`
         For the ``satellite`` projection, the distance from the center of the sphere to the
-        point of view, as a proportion of the sphere’s radius. The recommended maximum clip
+        point of view, as a proportion of the sphere's radius. The recommended maximum clip
         angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
         is also applied, then more conservative clipping may be necessary.
 
@@ -31636,7 +31636,7 @@ class ProjectionConfig(VegaLiteSchema):
     precision : dict, float, :class:`ExprRef`
         The threshold for the projection's `adaptive resampling
         <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
-        value corresponds to the `Douglas–Peucker distance
+        value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
         which defaults to ``√0.5 ≅ 0.70710…``.
@@ -31658,7 +31658,7 @@ class ProjectionConfig(VegaLiteSchema):
 
         **Default value:** ``[0, 0, 0]``
     scale : dict, float, :class:`ExprRef`
-        The projection’s scale (zoom) factor, overriding automatic fitting. The default
+        The projection's scale (zoom) factor, overriding automatic fitting. The default
         scale is projection-specific. The scale factor corresponds linearly to the distance
         between projected points; however, scale factor values are not equivalent across
         projections.
@@ -31674,7 +31674,7 @@ class ProjectionConfig(VegaLiteSchema):
 
         **Default value:** ``0``.
     translate : dict, Sequence[float], :class:`ExprRef`, :class:`Vector2number`
-        The projection’s translation offset as a two-element array ``[tx, ty]``.
+        The projection's translation offset as a two-element array ``[tx, ty]``.
     type : dict, :class:`ExprRef`, :class:`ProjectionType`, Literal['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular', 'gnomonic', 'identity', 'mercator', 'naturalEarth1', 'orthographic', 'stereographic', 'transverseMercator']
         The cartographic projection to use. This value is case-insensitive, for example
         ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
@@ -34775,7 +34775,7 @@ class Scale(VegaLiteSchema):
         * **Default value:** ``hcl``
     nice : bool, dict, float, :class:`ExprRef`, :class:`TimeInterval`, :class:`TimeIntervalStep`, Literal['millisecond', 'second', 'minute', 'hour', 'day', 'week', 'month', 'year']
         Extending the domain so that it starts and ends on nice round values. This method
-        typically modifies the scale’s domain, and may only extend the bounds to the nearest
+        typically modifies the scale's domain, and may only extend the bounds to the nearest
         round value. Nicing is useful if the domain is computed from data and may be
         irregular. For example, for a domain of *[0.201479…, 0.996679…]*, a nice domain
         might be *[0.2, 1.0]*.
@@ -46123,7 +46123,7 @@ class DensityTransform(Transform):
     bandwidth : float
         The bandwidth (standard deviation) of the Gaussian kernel. If unspecified or set to
         zero, the bandwidth value is automatically estimated from the input data using
-        Scott’s rule.
+        Scott's rule.
     counts : bool
         A boolean flag indicating if the output values should be probability estimates
         (false) or smoothed counts (true).

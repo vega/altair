@@ -278,6 +278,8 @@ def process_description(description: str) -> str:
     description = description.replace(">`_", ">`__")
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
+    description = description.replace("’", "'")  # noqa: RUF001
+    description = description.replace("–", "-")  # noqa: RUF001
     description += "\n"
     return description.strip()
 
