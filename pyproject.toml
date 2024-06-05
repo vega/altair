@@ -205,6 +205,12 @@ ignore = [
     # zip() without an explicit strict= parameter set.
     # python>=3.10 only
     "B905",
+    # ambiguous-unicode-character-docstring
+    ## Need to work out where the char is originating
+    ## Assuming its from vega-lite
+    "RUF002",
+    # mutable-class-default
+    "RUF012",
 ]
 
 [tool.ruff.format]
