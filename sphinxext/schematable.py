@@ -11,7 +11,7 @@ from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
 sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
-from tools.schemapi.utils import fix_docstring_issues, SchemaInfo  # noqa: E402
+from tools.schemapi.utils import fix_docstring_issues, SchemaInfo
 
 
 def type_description(schema):
@@ -37,7 +37,7 @@ def type_description(schema):
         )
     else:
         warnings.warn(
-            "cannot infer type for schema with keys {}" "".format(schema.keys()),
+            f"cannot infer type for schema with keys {schema.keys()}" "",
             stacklevel=1,
         )
         return "--"
@@ -168,7 +168,8 @@ def select_items_from_schema(schema, props=None):
             try:
                 yield prop, properties[prop], prop in required
             except KeyError as err:
-                raise Exception(f"Can't find property: {prop}") from err
+                msg = f"Can't find property: {prop}"
+                raise Exception(msg) from err
 
 
 def prepare_schema_table(schema, rootschema, props=None):

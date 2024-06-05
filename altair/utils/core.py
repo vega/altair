@@ -38,6 +38,7 @@ else:
     from typing_extensions import ParamSpec
 
 from typing import Literal, Protocol, TYPE_CHECKING, runtime_checkable
+import contextlib
 
 if TYPE_CHECKING:
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
@@ -234,8 +235,8 @@ def infer_vegalite_type(
         return "temporal"
     else:
         warnings.warn(
-            "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ),
+            f"I don't know how to infer vegalite type from '{typ}'.  "
+            "Defaulting to nominal.",
             stacklevel=1,
         )
         return "nominal"
@@ -271,7 +272,7 @@ def sanitize_geo_interface(geo: MutableMapping) -> dict:
     geo = deepcopy(geo)
 
     # convert type _Array or array to list
-    for key in geo.keys():
+    for key in geo:
         if str(type(geo[key]).__name__).startswith(("_Array", "array")):
             geo[key] = geo[key].tolist()
 
@@ -299,7 +300,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
+def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
@@ -323,15 +324,18 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
 
     for col_name in df.columns:
         if not isinstance(col_name, str):
-            raise ValueError(
-                "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col_name)
+            msg = (
+                f"Dataframe contains invalid column name: {col_name!r}. "
+                "Column names must be strings"
             )
+            raise ValueError(msg)
 
     if isinstance(df.index, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
     if isinstance(df.columns, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
 
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
@@ -365,7 +369,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name.startswith("datetime") or dtype_name.startswith("timestamp"):
+        elif dtype_name.startswith(("datetime", "timestamp")):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
@@ -376,12 +380,13 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
             )
         elif dtype_name.startswith("timedelta"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=col_name, dtype=dtype)
+                ""
             )
+            raise ValueError(msg)
         elif dtype_name.startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
@@ -431,15 +436,16 @@ def sanitize_arrow_table(pa_table):
     for name in schema.names:
         array = pa_table[name]
         dtype_name = str(schema.field(name).type)
-        if dtype_name.startswith("timestamp") or dtype_name.startswith("date"):
+        if dtype_name.startswith(("timestamp", "date")):
             arrays.append(pc.strftime(array))
         elif dtype_name.startswith("duration"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{name}" has type "{dtype_name}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=name, dtype=dtype_name)
+                ""
             )
+            raise ValueError(msg)
         else:
             arrays.append(array)
 
@@ -675,7 +681,8 @@ def infer_vegalite_type_for_dfi_column(
     elif kind == DtypeKind.DATETIME:
         return "temporal"
     else:
-        raise ValueError(f"Unexpected DtypeKind: {kind}")
+        msg = f"Unexpected DtypeKind: {kind}"
+        raise ValueError(msg)
 
 
 def use_signature(Obj: Callable[P, Any]):
@@ -698,11 +705,9 @@ def use_signature(Obj: Callable[P, Any]):
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
                 doc = "\n".join(doclines)
-            try:
+            # __doc__ is not modifiable for classes in Python < 3.3
+            with contextlib.suppress(AttributeError):
                 f.__doc__ = doc
-            except AttributeError:
-                # __doc__ is not modifiable for classes in Python < 3.3
-                pass
 
         return f
 
@@ -812,11 +817,13 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
         else:
             type_ = type(arg)
 
-        encoding = channel_to_name.get(type_, None)
+        encoding = channel_to_name.get(type_)
         if encoding is None:
-            raise NotImplementedError("positional of type {}" "".format(type_))
+            msg = f"positional of type {type_}" ""
+            raise NotImplementedError(msg)
         if encoding in kwargs:
-            raise ValueError("encoding {} specified twice.".format(encoding))
+            msg = f"encoding {encoding} specified twice."
+            raise ValueError(msg)
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
@@ -830,9 +837,7 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn(
-                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
-            )
+            warnings.warn(f"Unrecognized encoding channel '{encoding}'", stacklevel=1)
             return obj
 
         classes = name_to_channel[encoding]

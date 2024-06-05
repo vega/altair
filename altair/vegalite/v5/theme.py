@@ -31,7 +31,7 @@ class VegaTheme:
         }
 
     def __repr__(self) -> str:
-        return "VegaTheme({!r})".format(self.theme)
+        return f"VegaTheme({self.theme!r})"
 
 
 # The entry point group that can be used by other packages to declare other
@@ -53,7 +53,7 @@ themes.register(
         }
     },
 )
-themes.register("none", lambda: {})
+themes.register("none", dict)
 
 for theme in VEGA_THEMES:
     themes.register(theme, VegaTheme(theme))

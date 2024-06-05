@@ -76,7 +76,6 @@ class Column(Protocol):
             - Data types not included: complex, Arrow-style null, binary, decimal,
               and nested (list, struct, map, union) dtypes.
         """
-        pass
 
     # Have to use a generic Any return type as not all libraries who implement
     # the dataframe interchange protocol implement the TypedDict that is usually
@@ -103,7 +102,6 @@ class Column(Protocol):
 
         TBD: are there any other in-memory representations that are needed?
         """
-        pass
 
 
 class DataFrame(Protocol):
@@ -136,19 +134,16 @@ class DataFrame(Protocol):
         necessary if a library supports strided buffers, given that this protocol
         specifies contiguous buffers.
         """
-        pass
 
     def column_names(self) -> Iterable[str]:
         """
         Return an iterator yielding the column names.
         """
-        pass
 
     def get_column_by_name(self, name: str) -> Column:
         """
         Return the column whose name is the indicated name.
         """
-        pass
 
     def get_chunks(self, n_chunks: Optional[int] = None) -> Iterable["DataFrame"]:
         """
@@ -162,4 +157,3 @@ class DataFrame(Protocol):
         Note that the producer must ensure that all columns are chunked the
         same way.
         """
-        pass

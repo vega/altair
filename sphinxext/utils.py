@@ -67,7 +67,7 @@ def _parse_source_file(filename):
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
 
-    with open(filename, "r", encoding="utf-8") as fid:
+    with open(filename, encoding="utf-8") as fid:
         content = fid.read()
     # change from Windows format to UNIX for uniformity
     content = content.replace("\r\n", "\n")
@@ -121,11 +121,8 @@ def get_docstring_and_rest(filename):
         return SYNTAX_ERROR_DOCSTRING, category, content, 1
 
     if not isinstance(node, ast.Module):
-        raise TypeError(
-            "This function only supports modules. You provided {}".format(
-                node.__class__.__name__
-            )
-        )
+        msg = f"This function only supports modules. You provided {node.__class__.__name__}"
+        raise TypeError(msg)
     try:
         # In python 3.7 module knows its docstring.
         # Everything else will raise an attribute error
@@ -172,12 +169,11 @@ def get_docstring_and_rest(filename):
             docstring, rest = "", ""
 
     if not docstring:
-        raise ValueError(
-            (
-                'Could not find docstring in file "{0}". '
-                "A docstring is required for the example gallery."
-            ).format(filename)
+        msg = (
+            f'Could not find docstring in file "{filename}". '
+            "A docstring is required for the example gallery."
         )
+        raise ValueError(msg)
     return docstring, category, rest, lineno
 
 

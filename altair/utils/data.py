@@ -66,8 +66,6 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
 
-    pass
-
 
 @curried.curry
 def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
@@ -78,7 +76,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
     check_data_type(data)
 
     def raise_max_rows_error():
-        raise MaxRowsError(
+        msg = (
             "The number of rows in your dataset is greater "
             f"than the maximum allowed ({max_rows}).\n\n"
             "Try enabling the VegaFusion data transformer which "
@@ -90,6 +88,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
             "for additional information\n"
             "on how to plot large datasets."
         )
+        raise MaxRowsError(msg)
 
     if hasattr(data, "__geo_interface__"):
         if data.__geo_interface__["type"] == "FeatureCollection":
@@ -132,9 +131,8 @@ def sample(
             values = data["values"]
             if not n:
                 if frac is None:
-                    raise ValueError(
-                        "frac cannot be None if n is None and data is a dictionary"
-                    )
+                    msg = "frac cannot be None if n is None and data is a dictionary"
+                    raise ValueError(msg)
                 n = int(frac * len(values))
             values = random.sample(values, n)
             return {"values": values}
@@ -145,9 +143,8 @@ def sample(
         pa_table = arrow_table_from_dfi_dataframe(data)
         if not n:
             if frac is None:
-                raise ValueError(
-                    "frac cannot be None if n is None with this data input type"
-                )
+                msg = "frac cannot be None if n is None with this data input type"
+                raise ValueError(msg)
             n = int(frac * len(pa_table))
         indices = random.sample(range(len(pa_table)), n)
         return pa_table.take(indices)
@@ -227,25 +224,24 @@ def to_values(data: DataType) -> ToValuesReturnType:
         return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
         if "values" not in data:
-            raise KeyError("values expected in data dict, but not present.")
+            msg = "values expected in data dict, but not present."
+            raise KeyError(msg)
         return data
     elif isinstance(data, DataFrameLike):
         pa_table = sanitize_arrow_table(arrow_table_from_dfi_dataframe(data))
         return {"values": pa_table.to_pylist()}
     else:
         # Should never reach this state as tested by check_data_type
-        raise ValueError("Unrecognized data type: {}".format(type(data)))
+        msg = f"Unrecognized data type: {type(data)}"
+        raise ValueError(msg)
 
 
 def check_data_type(data: DataType) -> None:
     if not isinstance(data, (dict, pd.DataFrame, DataFrameLike)) and not any(
         hasattr(data, attr) for attr in ["__geo_interface__"]
     ):
-        raise TypeError(
-            "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
-                type(data)
-            )
-        )
+        msg = f"Expected dict, DataFrame or a __geo_interface__ attribute, got: {type(data)}"
+        raise TypeError(msg)
 
 
 # ==============================================================================
@@ -270,31 +266,33 @@ def _data_to_json_string(data: DataType) -> str:
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
         if "values" not in data:
-            raise KeyError("values expected in data dict, but not present.")
+            msg = "values expected in data dict, but not present."
+            raise KeyError(msg)
         return json.dumps(data["values"], sort_keys=True)
     elif isinstance(data, DataFrameLike):
         pa_table = arrow_table_from_dfi_dataframe(data)
         return json.dumps(pa_table.to_pylist())
     else:
-        raise NotImplementedError(
-            "to_json only works with data expressed as " "a DataFrame or as a dict"
-        )
+        msg = "to_json only works with data expressed as " "a DataFrame or as a dict"
+        raise NotImplementedError(msg)
 
 
 def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
-        raise NotImplementedError(
+        msg = (
             "to_csv does not work with data that "
             "contains the __geo_interface__ attribute"
         )
+        raise NotImplementedError(msg)
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
         if "values" not in data:
-            raise KeyError("values expected in data dict, but not present")
+            msg = "values expected in data dict, but not present"
+            raise KeyError(msg)
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
     elif isinstance(data, DataFrameLike):
         # experimental interchange dataframe support
@@ -306,9 +304,8 @@ def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
         pa_csv.write_csv(pa_table, csv_buffer)
         return csv_buffer.getvalue().to_pybytes().decode()
     else:
-        raise NotImplementedError(
-            "to_csv only works with data expressed as " "a DataFrame or as a dict"
-        )
+        msg = "to_csv only works with data expressed as " "a DataFrame or as a dict"
+        raise NotImplementedError(msg)
 
 
 def pipe(data, *funcs):

@@ -197,7 +197,7 @@ def test_sanitize_dataframe_infs():
 
 @pytest.mark.skipif(
     not hasattr(pd, "Int64Dtype"),
-    reason="Nullable integers not supported in pandas v{}".format(pd.__version__),
+    reason=f"Nullable integers not supported in pandas v{pd.__version__}",
 )
 def test_sanitize_nullable_integers():
     df = pd.DataFrame(
@@ -227,7 +227,7 @@ def test_sanitize_nullable_integers():
 
 @pytest.mark.skipif(
     not hasattr(pd, "StringDtype"),
-    reason="dedicated String dtype not supported in pandas v{}".format(pd.__version__),
+    reason=f"dedicated String dtype not supported in pandas v{pd.__version__}",
 )
 def test_sanitize_string_dtype():
     df = pd.DataFrame(
@@ -253,7 +253,7 @@ def test_sanitize_string_dtype():
 
 @pytest.mark.skipif(
     not hasattr(pd, "BooleanDtype"),
-    reason="Nullable boolean dtype not supported in pandas v{}".format(pd.__version__),
+    reason=f"Nullable boolean dtype not supported in pandas v{pd.__version__}",
 )
 def test_sanitize_boolean_dtype():
     df = pd.DataFrame(

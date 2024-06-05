@@ -170,10 +170,10 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
         hashes_match = hashes.get(filename, "") == example_hash
 
         if hashes_match and os.path.exists(image_file):
-            print("-> using cached {}".format(image_file))
+            print(f"-> using cached {image_file}")
         else:
             # the file changed or the image file does not exist. Generate it.
-            print("-> saving {}".format(image_file))
+            print(f"-> saving {image_file}")
             chart = eval_block(example["code"])
             try:
                 chart.save(image_file)
@@ -208,7 +208,7 @@ def populate_examples(**kwds):
 
     for example in examples:
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
-        if example["name"] in method_examples.keys():
+        if example["name"] in method_examples:
             _, _, method_code, _ = get_docstring_and_rest(
                 method_examples[example["name"]]["filename"]
             )
@@ -220,9 +220,8 @@ def populate_examples(**kwds):
             )
         example.update(kwds)
         if category is None:
-            raise Exception(
-                f"The example {example['name']} is not assigned to a category"
-            )
+            msg = f"The example {example['name']} is not assigned to a category"
+            raise Exception(msg)
         example.update(
             {
                 "docstring": docstring,
@@ -268,10 +267,11 @@ class AltairMiniGalleryDirective(Directive):
 
         if names:
             if len(names) < size:
-                raise ValueError(
+                msg = (
                     "altair-minigallery: if names are specified, "
                     "the list must be at least as long as size."
                 )
+                raise ValueError(msg)
             mapping = {example["name"]: example for example in examples}
             examples = [mapping[name] for name in names]
         else:

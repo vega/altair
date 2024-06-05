@@ -78,15 +78,14 @@ def iter_objects(
 ) -> Iterator[str]:
     for name in dir(mod):
         obj = getattr(mod, name)
-        if ignore_private:
-            if name.startswith("_"):
-                continue
-        if restrict_to_type is not None:
-            if not isinstance(obj, restrict_to_type):
-                continue
-        if restrict_to_subclass is not None:
-            if not (isinstance(obj, type) and issubclass(obj, restrict_to_subclass)):
-                continue
+        if ignore_private and name.startswith("_"):
+            continue
+        if restrict_to_type is not None and not isinstance(obj, restrict_to_type):
+            continue
+        if restrict_to_subclass is not None and (
+            not (isinstance(obj, type) and issubclass(obj, restrict_to_subclass))
+        ):
+            continue
         yield name
 
 
@@ -120,7 +119,7 @@ def lowlevel_wrappers() -> List[str]:
 
 
 def write_api_file() -> None:
-    print("Updating API docs\n  ->{}".format(API_FILENAME))
+    print(f"Updating API docs\n  ->{API_FILENAME}")
     sep = "\n   "
     with open(API_FILENAME, "w") as f:
         f.write(

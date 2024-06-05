@@ -134,7 +134,7 @@ def validate_jsonschema(
 
         # Nothing special about this first error but we need to choose one
         # which can be raised
-        main_error = list(grouped_errors.values())[0][0]
+        main_error = next(iter(grouped_errors.values()))[0]
         # All errors are then attached as a new attribute to ValidationError so that
         # they can be used in SchemaValidationError to craft a more helpful
         # error message. Setting a new attribute like this is not ideal as
@@ -354,7 +354,7 @@ def _deduplicate_errors(
         }
         deduplicated_errors: ValidationErrorList = []
         for validator, errors in errors_by_validator.items():
-            deduplication_func = deduplication_functions.get(validator, None)
+            deduplication_func = deduplication_functions.get(validator)
             if deduplication_func is not None:
                 errors = deduplication_func(errors)
             deduplicated_errors.extend(_deduplicate_by_message(errors))
@@ -750,11 +750,12 @@ class SchemaBase:
         # - a single arg with no kwds, for, e.g. {'type': 'string'}
         # - zero args with zero or more kwds for {'type': 'object'}
         if self._schema is None:
-            raise ValueError(
-                "Cannot instantiate object of type {}: "
+            msg = (
+                f"Cannot instantiate object of type {self.__class__}: "
                 "_schema class attribute is not defined."
-                "".format(self.__class__)
+                ""
             )
+            raise ValueError(msg)
 
         if kwds:
             assert len(args) == 0
@@ -850,9 +851,9 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super(SchemaBase, self).__getattr__
+                _getattr = super().__getattr__
             except AttributeError:
-                _getattr = super(SchemaBase, self).__getattribute__
+                _getattr = super().__getattribute__
             return _getattr(attr)
 
     def __setattr__(self, item, val):
@@ -867,16 +868,16 @@ class SchemaBase:
     def __repr__(self):
         if self._kwds:
             args = (
-                "{}: {!r}".format(key, val)
+                f"{key}: {val!r}"
                 for key, val in sorted(self._kwds.items())
                 if val is not Undefined
             )
             args = "\n" + ",\n".join(args)
-            return "{0}({{{1}\n}})".format(
+            return "{}({{{}\n}})".format(
                 self.__class__.__name__, args.replace("\n", "\n  ")
             )
         else:
-            return "{}({!r})".format(self.__class__.__name__, self._args[0])
+            return f"{self.__class__.__name__}({self._args[0]!r})"
 
     def __eq__(self, other):
         return (
@@ -951,7 +952,7 @@ class SchemaBase:
                 }
             )
             kwds = {
-                k: v for k, v in kwds.items() if k not in list(ignore) + ["shorthand"]
+                k: v for k, v in kwds.items() if k not in [*list(ignore), "shorthand"]
             }
             if "mark" in kwds and isinstance(kwds["mark"], str):
                 kwds["mark"] = {"type": kwds["mark"]}
@@ -960,10 +961,11 @@ class SchemaBase:
                 context=context,
             )
         else:
-            raise ValueError(
-                "{} instance has both a value and properties : "
-                "cannot serialize to dict".format(self.__class__)
+            msg = (
+                f"{self.__class__} instance has both a value and properties : "
+                "cannot serialize to dict"
             )
+            raise ValueError(msg)
         if validate:
             try:
                 self.validate(result)
@@ -1210,7 +1212,8 @@ class _FromDict:
     ) -> Any:
         """Construct an object from a dict representation"""
         if (schema is None) == (cls is None):
-            raise ValueError("Must provide either cls or schema, but not both.")
+            msg = "Must provide either cls or schema, but not both."
+            raise ValueError(msg)
         if schema is None:
             # Can ignore type errors as  cls is not None in case schema is
             schema = cls._schema  # type: ignore[union-attr]
@@ -1232,10 +1235,7 @@ class _FromDict:
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            if matches:
-                cls = matches[0]
-            else:
-                cls = default_class
+            cls = matches[0] if matches else default_class
         schema = _resolve_references(schema, rootschema)
 
         if "anyOf" in schema or "oneOf" in schema:

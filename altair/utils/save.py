@@ -32,10 +32,11 @@ def set_inspect_format_argument(
         if isinstance(fp, (str, pathlib.Path)):
             format = pathlib.Path(fp).suffix.lstrip(".")
         else:
-            raise ValueError(
+            msg = (
                 "must specify file format: "
                 "['png', 'svg', 'pdf', 'html', 'json', 'vega']"
             )
+            raise ValueError(msg)
 
     if format != "html" and inline:
         warnings.warn("inline argument ignored for non HTML formats.", stacklevel=1)
@@ -59,10 +60,12 @@ def set_inspect_mode_argument(
             mode = "vega-lite"
 
     if mode != "vega-lite":
-        raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
+        msg = "mode must be 'vega-lite', " f"not '{mode}'"
+        raise ValueError(msg)
 
     if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version")
+        msg = "must specify vega-lite version"
+        raise ValueError(msg)
 
     return mode
 
@@ -190,7 +193,8 @@ def save(
                     fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
                 )
         else:
-            raise ValueError("Unsupported format: '{}'".format(format))
+            msg = f"Unsupported format: '{format}'"
+            raise ValueError(msg)
 
     if using_vegafusion():
         # When the vegafusion data transformer is enabled, transforms will be

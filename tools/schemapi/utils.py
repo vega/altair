@@ -122,7 +122,7 @@ class SchemaProperties:
         try:
             return self[attr]
         except KeyError:
-            return super(SchemaProperties, self).__getattr__(attr)
+            return super().__getattr__(attr)
 
     def __getitem__(self, attr):
         dct = self._properties[attr]
@@ -169,7 +169,7 @@ class SchemaInfo:
                 rval = "{...}"
             elif key == "properties":
                 rval = "{\n    " + "\n    ".join(sorted(map(repr, val))) + "\n  }"
-            keys.append('"{}": {}'.format(key, rval))
+            keys.append(f'"{key}": {rval}')
         return "SchemaInfo({\n  " + "\n  ".join(keys) + "\n})"
 
     @property
@@ -283,7 +283,8 @@ class SchemaInfo:
         elif self.type in jsonschema_to_python_types:
             type_representations.append(jsonschema_to_python_types[self.type])
         else:
-            raise ValueError("No Python type representation available for this schema")
+            msg = "No Python type representation available for this schema"
+            raise ValueError(msg)
 
         # Shorter types are usually the more relevant ones, e.g. `str` instead
         # of `SchemaBase`. Output order from set is non-deterministic -> If
@@ -435,7 +436,8 @@ class SchemaInfo:
         ):
             return True
         else:
-            raise ValueError("Unclear whether schema.is_object() is True")
+            msg = "Unclear whether schema.is_object() is True"
+            raise ValueError(msg)
 
     def is_value(self) -> bool:
         return not self.is_object()
@@ -546,8 +548,7 @@ def flatten(container: Iterable) -> Iterable:
     """
     for i in container:
         if isinstance(i, (list, tuple)):
-            for j in flatten(i):
-                yield j
+            yield from flatten(i)
         else:
             yield i
 

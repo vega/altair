@@ -8,12 +8,12 @@ import altair.vegalite.v5 as alt
 
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
 try:
-    import anywidget  # noqa: F401
+    import anywidget
 
 except ImportError:
     anywidget = None  # type: ignore

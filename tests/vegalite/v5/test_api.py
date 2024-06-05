@@ -14,7 +14,7 @@ import pandas as pd
 import altair.vegalite.v5 as alt
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
@@ -60,7 +60,8 @@ def _make_chart_type(chart_type):
     elif chart_type == "chart":
         return base
     else:
-        raise ValueError("chart_type='{}' is not recognized".format(chart_type))
+        msg = f"chart_type='{chart_type}' is not recognized"
+        raise ValueError(msg)
 
 
 @pytest.fixture
@@ -278,7 +279,7 @@ def test_selection_expression():
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
     assert isinstance(selection["value"], alt.expr.Expression)
-    assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
+    assert selection["value"].to_dict() == f"{selection.name}['value']"
 
     magic_attr = "__magic__"
     with pytest.raises(AttributeError):
@@ -295,18 +296,17 @@ def test_save(format, engine, basic_chart):
         out = io.StringIO()
         mode = "r"
 
-    if format in ["svg", "png", "pdf", "bogus"]:
-        if engine == "vl-convert":
-            if format == "bogus":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"Unsupported format: '{format}'" in str(err.value)
-                return
-            elif vlc is None:
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "vl-convert-python" in str(err.value)
-                return
+    if format in ["svg", "png", "pdf", "bogus"] and engine == "vl-convert":
+        if format == "bogus":
+            with pytest.raises(ValueError) as err:
+                basic_chart.save(out, format=format, engine=engine)
+            assert f"Unsupported format: '{format}'" in str(err.value)
+            return
+        elif vlc is None:
+            with pytest.raises(ValueError) as err:
+                basic_chart.save(out, format=format, engine=engine)
+            assert "vl-convert-python" in str(err.value)
+            return
 
     basic_chart.save(out, format=format, engine=engine)
     out.seek(0)
@@ -480,9 +480,9 @@ def test_selection():
     assert isinstance(single & multi, alt.SelectionPredicateComposition)
     assert isinstance(single | multi, alt.SelectionPredicateComposition)
     assert isinstance(~single, alt.SelectionPredicateComposition)
-    assert "and" in (single & multi).to_dict().keys()
-    assert "or" in (single | multi).to_dict().keys()
-    assert "not" in (~single).to_dict().keys()
+    assert "and" in (single & multi).to_dict()
+    assert "or" in (single | multi).to_dict()
+    assert "not" in (~single).to_dict()
 
     # test that default names increment (regression for #1454)
     sel1 = alt.selection_point()
@@ -829,7 +829,7 @@ def test_consolidate_InlineData():
     with alt.data_transformers.enable(consolidate_datasets=True):
         dct = chart.to_dict()
     assert dct["data"]["format"] == data.format
-    assert list(dct["datasets"].values())[0] == data.values
+    assert next(iter(dct["datasets"].values())) == data.values
 
     data = alt.InlineData(values=[], name="runtime_data")
     chart = alt.Chart(data).mark_point()

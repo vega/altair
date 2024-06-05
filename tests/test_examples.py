@@ -10,7 +10,7 @@ from tests import examples_methods_syntax
 
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
@@ -37,18 +37,20 @@ def test_render_examples_to_chart(syntax_module):
         chart = eval_block(source)
 
         if chart is None:
-            raise ValueError(
+            msg = (
                 f"Example file {filename} should define chart in its final "
                 "statement."
             )
+            raise ValueError(msg)
 
         try:
             assert isinstance(chart.to_dict(), dict)
         except Exception as err:
-            raise AssertionError(
+            msg = (
                 f"Example file {filename} raised an exception when "
                 f"converting to a dict: {err}"
-            ) from err
+            )
+            raise AssertionError(msg) from err
 
 
 @pytest.mark.parametrize(
@@ -63,10 +65,11 @@ def test_from_and_to_json_roundtrip(syntax_module):
         chart = eval_block(source)
 
         if chart is None:
-            raise ValueError(
+            msg = (
                 f"Example file {filename} should define chart in its final "
                 "statement."
             )
+            raise ValueError(msg)
 
         try:
             first_json = chart.to_json()
@@ -78,10 +81,11 @@ def test_from_and_to_json_roundtrip(syntax_module):
             second_json = reconstructed_chart.to_json()
             assert first_json == second_json
         except Exception as err:
-            raise AssertionError(
+            msg = (
                 f"Example file {filename} raised an exception when "
                 f"doing a json conversion roundtrip: {err}"
-            ) from err
+            )
+            raise AssertionError(msg) from err
 
 
 @pytest.mark.parametrize("engine", ["vl-convert"])

@@ -61,7 +61,8 @@ def spec_to_mimebundle(
     from altair import renderers
 
     if mode != "vega-lite":
-        raise ValueError("mode must be 'vega-lite'")
+        msg = "mode must be 'vega-lite'"
+        raise ValueError(msg)
 
     internal_mode: Literal["vega-lite", "vega"] = mode
     if using_vegafusion():
@@ -100,14 +101,16 @@ def spec_to_mimebundle(
         return {"text/html": html}
     if format == "vega-lite":
         if vegalite_version is None:
-            raise ValueError("Must specify vegalite_version")
-        return {"application/vnd.vegalite.v{}+json".format(vegalite_version[0]): spec}
+            msg = "Must specify vegalite_version"
+            raise ValueError(msg)
+        return {f"application/vnd.vegalite.v{vegalite_version[0]}+json": spec}
     if format == "json":
         return {"application/json": spec}
-    raise ValueError(
+    msg = (
         "format must be one of "
         "['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
     )
+    raise ValueError(msg)
 
 
 def _spec_to_mimebundle_with_engine(
@@ -218,13 +221,13 @@ def _spec_to_mimebundle_with_engine(
         else:
             # This should be validated above
             # but raise exception for the sake of future development
-            raise ValueError("Unexpected format {fmt!r}".format(fmt=format))
+            msg = f"Unexpected format {format!r}"
+            raise ValueError(msg)
     else:
         # This should be validated above
         # but raise exception for the sake of future development
-        raise ValueError(
-            "Unexpected normalized_engine {eng!r}".format(eng=normalized_engine)
-        )
+        msg = f"Unexpected normalized_engine {normalized_engine!r}"
+        raise ValueError(msg)
 
 
 def _validate_normalize_engine(
@@ -252,25 +255,20 @@ def _validate_normalize_engine(
     # Validate or infer default value of normalized_engine
     if normalized_engine == "vlconvert":
         if vlc is None:
-            raise ValueError(
-                "The 'vl-convert' conversion engine requires the vl-convert-python package"
-            )
+            msg = "The 'vl-convert' conversion engine requires the vl-convert-python package"
+            raise ValueError(msg)
     elif normalized_engine is None:
         if vlc is not None:
             normalized_engine = "vlconvert"
         else:
-            raise ValueError(
-                "Saving charts in {fmt!r} format requires the vl-convert-python package: "
-                "see https://altair-viz.github.io/user_guide/saving_charts.html#png-svg-and-pdf-format".format(
-                    fmt=format
-                )
+            msg = (
+                f"Saving charts in {format!r} format requires the vl-convert-python package: "
+                "see https://altair-viz.github.io/user_guide/saving_charts.html#png-svg-and-pdf-format"
             )
+            raise ValueError(msg)
     else:
-        raise ValueError(
-            "Invalid conversion engine {engine!r}. Expected vl-convert".format(
-                engine=engine
-            )
-        )
+        msg = f"Invalid conversion engine {engine!r}. Expected vl-convert"
+        raise ValueError(msg)
     return normalized_engine
 
 

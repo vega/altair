@@ -347,7 +347,8 @@ def download_schemafile(
     if not skip_download:
         request.urlretrieve(url, filename)
     elif not os.path.exists(filename):
-        raise ValueError("Cannot skip download: {} does not exist".format(filename))
+        msg = f"Cannot skip download: {filename} does not exist"
+        raise ValueError(msg)
     return filename
 
 
@@ -400,11 +401,12 @@ def copy_schemapi_util() -> None:
         join(dirname(__file__), "..", "altair", "utils", "schemapi.py")
     )
 
-    print("Copying\n {}\n  -> {}".format(source_path, destination_path))
-    with open(source_path, "r", encoding="utf8") as source:
-        with open(destination_path, "w", encoding="utf8") as dest:
-            dest.write(HEADER)
-            dest.writelines(source.readlines())
+    print(f"Copying\n {source_path}\n  -> {destination_path}")
+    with open(source_path, encoding="utf8") as source, open(
+        destination_path, "w", encoding="utf8"
+    ) as dest:
+        dest.write(HEADER)
+        dest.writelines(source.readlines())
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
@@ -413,7 +415,7 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
         if "properties" in next_schema:
             definition = schema["$ref"]
             properties = next_schema["properties"]
-            for k in def_dict.keys():
+            for k in def_dict:
                 if k in properties:
                     def_dict[k] = definition
         else:
@@ -430,7 +432,8 @@ def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict:
         if "field" in schema["properties"]:
             def_dict["field"] = propschema.ref
         else:
-            raise ValueError("Unexpected schema structure")
+            msg = "Unexpected schema structure"
+            raise ValueError(msg)
     else:
         recursive_dict_update(schema, root, def_dict)
 
@@ -486,7 +489,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
             schemarepr=defschema_repr,
             rootschema=rootschema,
             basename=basename,
-            rootschemarepr=CodeSnippet("{}._rootschema".format(basename)),
+            rootschemarepr=CodeSnippet(f"{basename}._rootschema"),
         )
 
     graph: Dict[str, List[str]] = {}
@@ -518,7 +521,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
 
     contents = [
         HEADER,
-        "__all__ = {}".format(all_),
+        f"__all__ = {all_}",
         "from typing import Any, Literal, Union, Protocol, Sequence, List",
         "from typing import Dict as TypingDict",
         "from typing import Generator as TypingGenerator" "",
@@ -532,7 +535,7 @@ def generate_vegalite_schema_wrapper(schema_file: str) -> str:
             "Root",
             schema=rootschema,
             basename=basename,
-            schemarepr=CodeSnippet("{}._rootschema".format(basename)),
+            schemarepr=CodeSnippet(f"{basename}._rootschema"),
         )
     )
 
@@ -683,8 +686,7 @@ def generate_vegalite_mark_mixin(
             for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
         dict_args = [
-            "{0}={0}".format(p)
-            for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
+            f"{p}={p}" for p in (sorted(arg_info.required) + sorted(arg_info.kwds))
         ]
 
         if arg_info.additional or arg_info.invalid_kwds:
@@ -744,26 +746,26 @@ def vegalite_main(skip_download: bool = False) -> None:
 
     # Generate __init__.py file
     outfile = join(schemapath, "__init__.py")
-    print("Writing {}".format(outfile))
+    print(f"Writing {outfile}")
     content = [
         "# ruff: noqa\n",
         "from .core import *\nfrom .channels import *\n",
         f"SCHEMA_VERSION = '{version}'\n",
-        "SCHEMA_URL = {!r}\n" "".format(schema_url(version)),
+        f"SCHEMA_URL = {schema_url(version)!r}\n" "",
     ]
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(content))
 
     # Generate the core schema wrappers
     outfile = join(schemapath, "core.py")
-    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    print(f"Generating\n {schemafile}\n  ->{outfile}")
     file_contents = generate_vegalite_schema_wrapper(schemafile)
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(file_contents))
 
     # Generate the channel wrappers
     outfile = join(schemapath, "channels.py")
-    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    print(f"Generating\n {schemafile}\n  ->{outfile}")
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
     with open(outfile, "w", encoding="utf8") as f:
         f.write(ruff_format_str(code))
@@ -771,7 +773,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
     outfile = join(schemapath, "mixins.py")
-    print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+    print(f"Generating\n {schemafile}\n  ->{outfile}")
     mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
     config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
     try_except_imports = [
@@ -836,9 +838,7 @@ def _create_encode_signature(
         signature_args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
 
         docstring_parameters.append(f"{channel} : {', '.join(docstring_union_types)}")
-        docstring_parameters.append(
-            "    {}".format(process_description(info.deep_description))
-        )
+        docstring_parameters.append(f"    {process_description(info.deep_description)}")
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
@@ -862,8 +862,8 @@ def main() -> None:
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
-    import generate_api_docs  # noqa: E402
-    import update_init_file  # noqa: E402
+    import generate_api_docs
+    import update_init_file
 
     generate_api_docs.write_api_file()
     update_init_file.update__all__variable()

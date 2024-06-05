@@ -89,10 +89,7 @@ class PointSelection:
         -------
         PointSelection
         """
-        if signal is None:
-            points = []
-        else:
-            points = signal.get("vlPoint", {}).get("or", [])
+        points = [] if signal is None else signal.get("vlPoint", {}).get("or", [])
         return PointSelection(name=name, value=points, store=store)
 
 

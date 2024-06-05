@@ -32,11 +32,10 @@ def test_check_renderer_options():
         display(None)
 
     # check that an error is appropriately raised if the test fails
-    with pytest.raises(AssertionError):
-        with check_render_options(foo="bar"):
-            from IPython.display import display
+    with pytest.raises(AssertionError), check_render_options(foo="bar"):
+        from IPython.display import display
 
-            display(None)
+        display(None)
 
 
 def test_display_options():

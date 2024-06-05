@@ -146,18 +146,14 @@ _validation_selection_schema = {
 class Draft4Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-04/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-04/schema#",
     }
 
 
 class Draft6Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-06/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-06/schema#",
     }
 
 

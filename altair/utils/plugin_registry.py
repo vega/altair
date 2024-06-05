@@ -43,7 +43,7 @@ class PluginEnabler:
         self.registry._set_state(self.original_state)
 
     def __repr__(self) -> str:
-        return "{}.enable({!r})".format(self.registry.__class__.__name__, self.name)
+        return f"{self.registry.__class__.__name__}.enable({self.name!r})"
 
 
 class PluginRegistry(Generic[PluginType]):
@@ -148,11 +148,11 @@ class PluginRegistry(Generic[PluginType]):
     def _enable(self, name: str, **options) -> None:
         if name not in self._plugins:
             try:
-                (ep,) = [
+                (ep,) = (
                     ep
                     for ep in importlib_metadata_get(self.entry_point_group)
                     if ep.name == name
-                ]
+                )
             except ValueError as err:
                 if name in self.entrypoint_err_messages:
                     raise ValueError(self.entrypoint_err_messages[name]) from err
@@ -207,8 +207,9 @@ class PluginRegistry(Generic[PluginType]):
             return self._active
 
     def __repr__(self) -> str:
-        return "{}(active={!r}, registered={!r})" "".format(
-            self.__class__.__name__, self._active_name, list(self.names())
+        return (
+            f"{self.__class__.__name__}(active={self._active_name!r}, registered={list(self.names())!r})"
+            ""
         )
 
 

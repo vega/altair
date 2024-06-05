@@ -105,7 +105,7 @@ def test_parameter_naming():
     assert prm.param.name == "some_name"
 
     # test automatic naming which has the form such as param_5
-    prm0, prm1, prm2 = [alt.param() for _ in range(3)]
+    prm0, prm1, prm2 = (alt.param() for _ in range(3))
 
     res = re.match("param_([0-9]+)", prm0.param.name)
 

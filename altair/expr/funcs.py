@@ -172,13 +172,13 @@ class ExprFunc:
     def __init__(self, name, doc):
         self.name = name
         self.doc = doc
-        self.__doc__ = """{}(*args)\n    {}""".format(name, doc)
+        self.__doc__ = f"""{name}(*args)\n    {doc}"""
 
     def __call__(self, *args):
         return FunctionExpression(self.name, args)
 
     def __repr__(self):
-        return "<function expr.{}(*args)>".format(self.name)
+        return f"<function expr.{self.name}(*args)>"
 
 
 def _populate_namespace():

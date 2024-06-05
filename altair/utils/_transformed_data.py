@@ -90,11 +90,9 @@ def transformed_data(chart, row_limit=None, exclude=None):
         transformed data
     """
     vf = import_vegafusion()
-
-    if isinstance(chart, Chart):
-        # Add mark if none is specified to satisfy Vega-Lite
-        if chart.mark == Undefined:
-            chart = chart.mark_point()
+    # Add mark if none is specified to satisfy Vega-Lite
+    if isinstance(chart, Chart) and chart.mark == Undefined:
+        chart = chart.mark_point()
 
     # Deep copy chart so that we can rename marks without affecting caller
     chart = chart.copy(deep=True)
@@ -119,7 +117,8 @@ def transformed_data(chart, row_limit=None, exclude=None):
         if chart_name in dataset_mapping:
             dataset_names.append(dataset_mapping[chart_name])
         else:
-            raise ValueError("Failed to locate all datasets")
+            msg = "Failed to locate all datasets"
+            raise ValueError(msg)
 
     # Extract transformed datasets with VegaFusion
     datasets, warnings = vf.runtime.pre_transform_datasets(
@@ -200,11 +199,12 @@ def name_views(
         elif isinstance(chart, _chart_class_mapping[ConcatChart]):
             subcharts = chart.concat
         else:
-            raise ValueError(
+            msg = (
                 "transformed_data accepts an instance of "
                 "Chart, FacetChart, LayerChart, HConcatChart, VConcatChart, or ConcatChart\n"
                 f"Received value of type: {type(chart)}"
             )
+            raise ValueError(msg)
 
         chart_names: List[str] = []
         for subchart in subcharts:
@@ -444,7 +444,7 @@ def get_facet_mapping(group: dict, scope: Scope = ()) -> FacetMapping:
     for mark in mark_group.get("marks", []):
         if mark.get("type", None) == "group":
             # Get facet for this group
-            group_scope = scope + (group_index,)
+            group_scope = (*scope, group_index)
             facet = mark.get("from", {}).get("facet", None)
             if facet is not None:
                 facet_name = facet.get("name", None)
@@ -536,7 +536,7 @@ def get_datasets_for_view_names(
         name = mark.get("name", "")
         if mark.get("type", "") == "group":
             group_data_names = get_datasets_for_view_names(
-                group, vl_chart_names, facet_mapping, scope=scope + (group_index,)
+                group, vl_chart_names, facet_mapping, scope=(*scope, group_index)
             )
             for k, v in group_data_names.items():
                 datasets.setdefault(k, v)

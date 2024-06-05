@@ -84,10 +84,9 @@ def _consolidate_data(data, context):
                 values = data.values
             kwds = {"format": data.format}
 
-    elif isinstance(data, dict):
-        if "name" not in data and "values" in data:
-            values = data["values"]
-            kwds = {k: v for k, v in data.items() if k != "values"}
+    elif isinstance(data, dict) and "name" not in data and "values" in data:
+        values = data["values"]
+        kwds = {k: v for k, v in data.items() if k != "values"}
 
     if values is not Undefined:
         name = _dataset_name(values)
@@ -130,7 +129,7 @@ def _prepare_data(data, context=None):
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data)):
-        warnings.warn("data of type {} not recognized".format(type(data)), stacklevel=1)
+        warnings.warn(f"data of type {type(data)} not recognized", stacklevel=1)
 
     return data
 
@@ -243,7 +242,8 @@ class Parameter(_expr_core.OperatorMixin):
                 )
             }
         else:
-            raise ValueError(f"Unrecognized parameter type: {self.param_type}")
+            msg = f"Unrecognized parameter type: {self.param_type}"
+            raise ValueError(msg)
 
     def __invert__(self):
         if self.param_type == "selection":
@@ -268,7 +268,7 @@ class Parameter(_expr_core.OperatorMixin):
             return _expr_core.OperatorMixin.__or__(self, other)
 
     def __repr__(self) -> str:
-        return "Parameter({0!r}, {1})".format(self.name, self.param)
+        return f"Parameter({self.name!r}, {self.param})"
 
     def _to_expr(self) -> str:
         return self.name
@@ -306,7 +306,7 @@ class SelectionPredicateComposition(core.PredicateComposition):
         return SelectionPredicateComposition({"or": [self.to_dict(), other.to_dict()]})
 
 
-class ParameterExpression(_expr_core.OperatorMixin, object):
+class ParameterExpression(_expr_core.OperatorMixin):
     def __init__(self, expr) -> None:
         self.expr = expr
 
@@ -320,7 +320,7 @@ class ParameterExpression(_expr_core.OperatorMixin, object):
         return ParameterExpression(expr=expr)
 
 
-class SelectionExpression(_expr_core.OperatorMixin, object):
+class SelectionExpression(_expr_core.OperatorMixin):
     def __init__(self, expr) -> None:
         self.expr = expr
 
@@ -418,7 +418,8 @@ def param(
         elif (parameter.empty is False) or (parameter.empty is True):
             pass
         else:
-            raise ValueError("The value of 'empty' should be True or False.")
+            msg = "The value of 'empty' should be True or False."
+            raise ValueError(msg)
 
     if "init" in kwds:
         warnings.warn(
@@ -480,7 +481,8 @@ def _selection(
             stacklevel=1,
         )
     else:
-        raise ValueError("""'type' must be 'point' or 'interval'""")
+        msg = """'type' must be 'point' or 'interval'"""
+        raise ValueError(msg)
 
     return param(select=select, **param_kwds)
 
@@ -845,9 +847,8 @@ def condition(
     elif isinstance(predicate, dict):
         condition = predicate
     else:
-        raise NotImplementedError(
-            "condition predicate of type {}" "".format(type(predicate))
-        )
+        msg = f"condition predicate of type {type(predicate)}" ""
+        raise NotImplementedError(msg)
 
     if isinstance(if_true, core.SchemaBase):
         # convert to dict for now; the from_dict call below will wrap this
@@ -855,9 +856,8 @@ def condition(
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
         if isinstance(if_false, str):
-            raise ValueError(
-                "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
-            )
+            msg = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
+            raise ValueError(msg)
         else:
             if_true = utils.parse_shorthand(if_true)
             if_true.update(kwargs)
@@ -929,9 +929,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # Validate format
         if format not in ("vega-lite", "vega"):
-            raise ValueError(
-                f'The format argument must be either "vega-lite" or "vega". Received {repr(format)}'
-            )
+            msg = f'The format argument must be either "vega-lite" or "vega". Received {format!r}'
+            raise ValueError(msg)
 
         # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
@@ -988,7 +987,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         if context.get("pre_transform", True) and _using_vegafusion():
             if format == "vega-lite":
-                raise ValueError(
+                msg = (
                     'When the "vegafusion" data transformer is enabled, the \n'
                     "to_dict() and to_json() chart methods must be called with "
                     'format="vega". \n'
@@ -996,13 +995,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                     '    >>> chart.to_dict(format="vega")\n'
                     '    >>> chart.to_json(format="vega")'
                 )
+                raise ValueError(msg)
             else:
                 return _compile_with_vegafusion(vegalite_spec)
         else:
             if format == "vega":
                 plugin = vegalite_compilers.get()
                 if plugin is None:
-                    raise ValueError("No active vega-lite compiler plugin found")
+                    msg = "No active vega-lite compiler plugin found"
+                    raise ValueError(msg)
                 return plugin(vegalite_spec)
             else:
                 return vegalite_spec
@@ -1246,23 +1247,26 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     # Fallback for when rendering fails; the full repr is too long to be
     # useful in nearly all cases.
     def __repr__(self) -> str:
-        return "alt.{}(...)".format(self.__class__.__name__)
+        return f"alt.{self.__class__.__name__}(...)"
 
     # Layering and stacking
     def __add__(self, other) -> "LayerChart":
         if not isinstance(other, TopLevelMixin):
-            raise ValueError("Only Chart objects can be layered.")
+            msg = "Only Chart objects can be layered."
+            raise ValueError(msg)
         return layer(self, other)
 
     def __and__(self, other) -> "VConcatChart":
         if not isinstance(other, TopLevelMixin):
-            raise ValueError("Only Chart objects can be concatenated.")
+            msg = "Only Chart objects can be concatenated."
+            raise ValueError(msg)
         # Too difficult to type check this
         return vconcat(self, other)
 
     def __or__(self, other) -> "HConcatChart":
         if not isinstance(other, TopLevelMixin):
-            raise ValueError("Only Chart objects can be concatenated.")
+            msg = "Only Chart objects can be concatenated."
+            raise ValueError(msg)
         return hconcat(self, other)
 
     def repeat(
@@ -1307,11 +1311,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         layer_specified = layer is not Undefined
 
         if repeat_specified and rowcol_specified:
-            raise ValueError(
-                "repeat argument cannot be combined with row/column argument."
-            )
+            msg = "repeat argument cannot be combined with row/column argument."
+            raise ValueError(msg)
         elif repeat_specified and layer_specified:
-            raise ValueError("repeat argument cannot be combined with layer argument.")
+            msg = "repeat argument cannot be combined with layer argument."
+            raise ValueError(msg)
 
         repeat_arg: Union[List[str], core.LayerRepeatMapping, core.RepeatMapping]
         if repeat_specified:
@@ -1656,9 +1660,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if as_ is not Undefined:
             if "as" in kwargs:
-                raise ValueError(
-                    "transform_bin: both 'as_' and 'as' passed as arguments."
-                )
+                msg = "transform_bin: both 'as_' and 'as' passed as arguments."
+                raise ValueError(msg)
             kwargs["as"] = as_
         kwargs["bin"] = bin
         kwargs["field"] = field
@@ -1726,9 +1729,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # users.
             as_ = kwargs.pop("as", Undefined)  # type: ignore[assignment]
         elif "as" in kwargs:
-            raise ValueError(
-                "transform_calculate: both 'as_' and 'as' passed as arguments."
-            )
+            msg = "transform_calculate: both 'as_' and 'as' passed as arguments."
+            raise ValueError(msg)
         if as_ is not Undefined or calculate is not Undefined:
             dct = {"as": as_, "calculate": calculate}
             self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
@@ -2143,15 +2145,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if as_ is not Undefined:
             if "as" in kwargs:
-                raise ValueError(
-                    "transform_lookup: both 'as_' and 'as' passed as arguments."
-                )
+                msg = "transform_lookup: both 'as_' and 'as' passed as arguments."
+                raise ValueError(msg)
             kwargs["as"] = as_
         if from_ is not Undefined:
             if "from" in kwargs:
-                raise ValueError(
-                    "transform_lookup: both 'from_' and 'from' passed as arguments."
-                )
+                msg = "transform_lookup: both 'from_' and 'from' passed as arguments."
+                raise ValueError(msg)
             kwargs["from"] = from_
         kwargs["lookup"] = lookup
         kwargs["default"] = default
@@ -2450,9 +2450,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             as_ = kwargs.pop("as", Undefined)
         else:
             if "as" in kwargs:
-                raise ValueError(
-                    "transform_timeunit: both 'as_' and 'as' passed as arguments."
-                )
+                msg = "transform_timeunit: both 'as_' and 'as' passed as arguments."
+                raise ValueError(msg)
         if as_ is not Undefined:
             dct = {"as": as_, "timeUnit": timeUnit, "field": field}
             self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
@@ -2466,7 +2465,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct.pop("type", None)
             dct["as"] = as_
             if "timeUnit" not in dct:
-                raise ValueError("'{}' must include a valid timeUnit".format(shorthand))
+                msg = f"'{shorthand}' must include a valid timeUnit"
+                raise ValueError(msg)
             self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
         return self
 
@@ -2708,9 +2708,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
         if not hasattr(self, "resolve"):
-            raise ValueError(
-                "{} object has no attribute " "'resolve'".format(self.__class__)
-            )
+            msg = f"{self.__class__} object has no attribute " "'resolve'"
+            raise ValueError(msg)
         copy = self.copy(deep=["resolve"])
         if copy.resolve is Undefined:
             copy.resolve = core.Resolve()
@@ -2792,18 +2791,18 @@ class _EncodingMixin:
         rowcol_specified = row is not Undefined or column is not Undefined
 
         if facet_specified and rowcol_specified:
-            raise ValueError(
-                "facet argument cannot be combined with row/column argument."
-            )
+            msg = "facet argument cannot be combined with row/column argument."
+            raise ValueError(msg)
 
         if data is Undefined:
             if self.data is Undefined:  # type: ignore[has-type]
-                raise ValueError(
+                msg = (
                     "Facet charts require data to be specified at the top level. "
                     "If you are trying to facet layered or concatenated charts, "
                     "ensure that the same data variable is passed to each chart "
                     "or specify the data inside the facet method instead."
                 )
+                raise ValueError(msg)
             # ignore type as copy comes from another class
             self = self.copy(deep=False)  # type: ignore[attr-defined]
             data, self.data = self.data, Undefined  # type: ignore[has-type]
@@ -2885,7 +2884,7 @@ class Chart(
         height: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
         **kwargs,
     ) -> None:
-        super(Chart, self).__init__(
+        super().__init__(
             # Data type hints won't match with what TopLevelUnitSpec expects
             # as there is some data processing happening when converting to
             # a VL spec
@@ -2927,7 +2926,7 @@ class Chart(
         """
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                class_ = cast(TypingType[TopLevelMixin], super(Chart, cls))
+                class_ = cast(TypingType[TopLevelMixin], super())
             try:
                 # TopLevelMixin classes don't necessarily have from_dict defined
                 # but all classes which are used here have due to how Altair is
@@ -3076,7 +3075,8 @@ def _check_if_valid_subspec(spec: Union[dict, core.SchemaBase], classname: str) 
     )
 
     if not isinstance(spec, (core.SchemaBase, dict)):
-        raise ValueError("Only chart objects can be used in {0}.".format(classname))
+        msg = f"Only chart objects can be used in {classname}."
+        raise ValueError(msg)
     for attr in TOPLEVEL_ONLY_KEYS:
         if isinstance(spec, core.SchemaBase):
             val = getattr(spec, attr, Undefined)
@@ -3099,38 +3099,32 @@ def _check_if_can_be_layered(spec: Union[dict, core.SchemaBase]) -> None:
     if encoding is not Undefined:
         for channel in ["row", "column", "facet"]:
             if _get(encoding, channel) is not Undefined:
-                raise ValueError(
-                    "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-                )
+                msg = "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+                raise ValueError(msg)
     if isinstance(spec, (Chart, LayerChart)):
         return
 
     if not isinstance(spec, (core.SchemaBase, dict)):
-        raise ValueError("Only chart objects can be layered.")
+        msg = "Only chart objects can be layered."
+        raise ValueError(msg)
     if _get(spec, "facet") is not Undefined:
-        raise ValueError(
-            "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-        )
+        msg = "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        raise ValueError(msg)
     if isinstance(spec, FacetChart) or _get(spec, "facet") is not Undefined:
-        raise ValueError(
-            "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-        )
+        msg = "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        raise ValueError(msg)
     if isinstance(spec, RepeatChart) or _get(spec, "repeat") is not Undefined:
-        raise ValueError(
-            "Repeat charts cannot be layered. Instead, layer the charts before repeating."
-        )
+        msg = "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+        raise ValueError(msg)
     if isinstance(spec, ConcatChart) or _get(spec, "concat") is not Undefined:
-        raise ValueError(
-            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-        )
+        msg = "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        raise ValueError(msg)
     if isinstance(spec, HConcatChart) or _get(spec, "hconcat") is not Undefined:
-        raise ValueError(
-            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-        )
+        msg = "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        raise ValueError(msg)
     if isinstance(spec, VConcatChart) or _get(spec, "vconcat") is not Undefined:
-        raise ValueError(
-            "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-        )
+        msg = "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+        raise ValueError(msg)
 
 
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
@@ -3170,7 +3164,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         spec = _spec_as_list[0]
         if isinstance(spec, (Chart, LayerChart)):
             params = _repeat_names(params, repeat, spec)
-        super(RepeatChart, self).__init__(
+        super().__init__(
             repeat=repeat,
             spec=spec,
             align=align,
@@ -3216,9 +3210,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         NotImplementedError
             RepeatChart does not yet support transformed_data
         """
-        raise NotImplementedError(
-            "transformed_data is not yet implemented for RepeatChart"
-        )
+        msg = "transformed_data is not yet implemented for RepeatChart"
+        raise NotImplementedError(msg)
 
     def interactive(
         self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
@@ -3279,7 +3272,8 @@ def repeat(
     repeat : RepeatRef object
     """
     if repeater not in ["row", "column", "repeat", "layer"]:
-        raise ValueError("repeater must be one of ['row', 'column', 'repeat', 'layer']")
+        msg = "repeater must be one of ['row', 'column', 'repeat', 'layer']"
+        raise ValueError(msg)
     return core.RepeatRef(repeat=repeater)
 
 
@@ -3291,9 +3285,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         # TODO: move common data to top level?
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
-        super(ConcatChart, self).__init__(
-            data=data, concat=list(concat), columns=columns, **kwargs
-        )
+        super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
@@ -3394,7 +3386,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
-        super(HConcatChart, self).__init__(data=data, hconcat=list(hconcat), **kwargs)
+        super().__init__(data=data, hconcat=list(hconcat), **kwargs)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
@@ -3493,7 +3485,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
-        super(VConcatChart, self).__init__(data=data, vconcat=list(vconcat), **kwargs)
+        super().__init__(data=data, vconcat=list(vconcat), **kwargs)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
@@ -3594,7 +3586,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
             _check_if_can_be_layered(spec)
-        super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
+        super().__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         # Currently (Vega-Lite 5.5) the same param can't occur on two layers
         self.layer = _remove_duplicate_params(self.layer)
@@ -3674,9 +3666,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         """
         if not self.layer:
-            raise ValueError(
-                "LayerChart: cannot call interactive() until a " "layer is defined"
-            )
+            msg = "LayerChart: cannot call interactive() until a " "layer is defined"
+            raise ValueError(msg)
         copy = self.copy(deep=["layer"])
         copy.layer[0] = copy.layer[0].interactive(
             name=name, bind_x=bind_x, bind_y=bind_y
@@ -3720,9 +3711,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
-        super(FacetChart, self).__init__(
-            data=data, spec=spec, facet=facet, params=params, **kwargs
-        )
+        super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)
 
     def transformed_data(
         self,
@@ -4065,7 +4054,8 @@ def _remove_layer_props(chart, subcharts, layer_props):
             elif all(v == values[0] for v in values[1:]):
                 output_dict[prop] = values[0]
             else:
-                raise ValueError(f"There are inconsistent values {values} for {prop}")
+                msg = f"There are inconsistent values {values} for {prop}"
+                raise ValueError(msg)
         else:
             # Top level has this prop; subchart must either not have the prop
             # or it must be Undefined or identical to proceed.
@@ -4075,7 +4065,8 @@ def _remove_layer_props(chart, subcharts, layer_props):
             ):
                 output_dict[prop] = chart[prop]
             else:
-                raise ValueError(f"There are inconsistent values {values} for {prop}")
+                msg = f"There are inconsistent values {values} for {prop}"
+                raise ValueError(msg)
         subcharts = [remove_prop(c, prop) for c in subcharts]
 
     return output_dict, subcharts
@@ -4093,11 +4084,8 @@ def sequence(start, stop=None, step=Undefined, as_=Undefined, **kwds):
 @utils.use_signature(core.GraticuleParams)
 def graticule(**kwds):
     """Graticule generator."""
-    if not kwds:
-        # graticule: True indicates default parameters
-        graticule = True
-    else:
-        graticule = core.GraticuleParams(**kwds)
+    # graticule: True indicates default parameters
+    graticule = core.GraticuleParams(**kwds) if kwds else True
     return core.GraticuleGenerator(graticule=graticule)
 
 

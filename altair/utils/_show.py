@@ -26,10 +26,7 @@ def open_html_in_browser(
         Port to use. Defaults to a random port
     """
     # Encode html to bytes
-    if isinstance(html, str):
-        html_bytes = html.encode("utf8")
-    else:
-        html_bytes = html
+    html_bytes = html.encode("utf8") if isinstance(html, str) else html
 
     browser = None
 
@@ -69,5 +66,5 @@ def open_html_in_browser(
     server = HTTPServer(
         ("127.0.0.1", port if port is not None else 0), OneShotRequestHandler
     )
-    browser.open("http://127.0.0.1:%s" % server.server_port)
+    browser.open(f"http://127.0.0.1:{server.server_port}")
     server.handle_request()

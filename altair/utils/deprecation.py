@@ -46,9 +46,7 @@ def _deprecate(obj, name=None, message=None):
     AltairDeprecationWarning: alt.OldFoo is deprecated. Use alt.Foo instead.
     """
     if message is None:
-        message = "alt.{} is deprecated. Use alt.{} instead." "".format(
-            name, obj.__name__
-        )
+        message = f"alt.{name} is deprecated. Use alt.{obj.__name__} instead." ""
     if isinstance(obj, type):
         return type(
             name,
@@ -68,4 +66,5 @@ def _deprecate(obj, name=None, message=None):
         new_obj._deprecated = True
         return new_obj
     else:
-        raise ValueError("Cannot deprecate object of type {}".format(type(obj)))
+        msg = f"Cannot deprecate object of type {type(obj)}"
+        raise ValueError(msg)

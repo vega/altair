@@ -16,6 +16,7 @@ from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
 from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
+import contextlib
 
 if TYPE_CHECKING:
     from vegafusion.runtime import ChartState  # type: ignore
@@ -125,11 +126,9 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     table_names = get_inline_table_names(vega_spec)
     tables = {}
     for table_name in table_names:
-        try:
+        # otherwise, named dataset that was provided by the user
+        with contextlib.suppress(KeyError):
             tables[table_name] = extracted_inline_tables.pop(table_name)
-        except KeyError:
-            # named dataset that was provided by the user
-            pass
     return tables
 
 
@@ -164,7 +163,8 @@ def compile_to_vegafusion_chart_state(
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()
     if compiler is None:
-        raise ValueError("No active vega-lite compiler plugin found")
+        msg = "No active vega-lite compiler plugin found"
+        raise ValueError(msg)
 
     vega_spec = compiler(vegalite_spec)
 
@@ -214,7 +214,8 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()
     if compiler is None:
-        raise ValueError("No active vega-lite compiler plugin found")
+        msg = "No active vega-lite compiler plugin found"
+        raise ValueError(msg)
 
     vega_spec = compiler(vegalite_spec)
 
@@ -239,13 +240,14 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
 def handle_row_limit_exceeded(row_limit: int, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
-            raise MaxRowsError(
+            msg = (
                 "The number of dataset rows after filtering and aggregation exceeds\n"
                 f"the current limit of {row_limit}. Try adding an aggregation to reduce\n"
                 "the size of the dataset that must be loaded into the browser. Or, disable\n"
                 "the limit by calling alt.data_transformers.disable_max_rows(). Note that\n"
                 "disabling this limit may cause the browser to freeze or crash."
             )
+            raise MaxRowsError(msg)
 
 
 def using_vegafusion() -> bool:

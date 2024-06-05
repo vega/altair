@@ -69,7 +69,8 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         additional = True
         # additional = info.additionalProperties or info.patternProperties
     else:
-        raise ValueError("Schema object not understood")
+        msg = "Schema object not understood"
+        raise ValueError(msg)
 
     return ArgInfo(
         nonkeyword=nonkeyword,
@@ -196,7 +197,7 @@ class SchemaGenerator:
     def docstring(self, indent: int = 0) -> str:
         info = self.info
         doc = [
-            "{} schema wrapper".format(self.classname),
+            f"{self.classname} schema wrapper",
         ]
         if info.description:
             doc += self._process_description(  # remove condition description
@@ -224,9 +225,7 @@ class SchemaGenerator:
                             altair_classes_prefix=self.altair_classes_prefix,
                         ),
                     ),
-                    "    {}".format(
-                        self._process_description(propinfo.deep_description)
-                    ),
+                    f"    {self._process_description(propinfo.deep_description)}",
                 ]
         if len(doc) > 1:
             doc += [""]
@@ -284,7 +283,7 @@ class SchemaGenerator:
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(
-            "{0}={0}".format(p)
+            f"{p}={p}"
             for p in sorted(nodefault)
             + sorted(arg_info.required)
             + sorted(arg_info.kwds)

@@ -70,7 +70,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Vega-Altair"
-copyright = "2016-{}, Vega-Altair Developers".format(datetime.now().year)
+copyright = f"2016-{datetime.now().year}, Vega-Altair Developers"
 author = "Vega-Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for

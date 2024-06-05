@@ -5,7 +5,7 @@ from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 

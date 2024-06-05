@@ -48,7 +48,7 @@ def update__all__variable() -> None:
     """
     # Read existing file content
     init_path = alt.__file__
-    with open(init_path, "r") as f:
+    with open(init_path) as f:
         lines = f.readlines()
     lines = [line.strip("\n") for line in lines]
 

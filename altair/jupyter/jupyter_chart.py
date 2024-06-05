@@ -61,7 +61,8 @@ class Selections(traitlets.HasTraits):
             elif isinstance(value, IntervalSelection):
                 traitlet_type = traitlets.Instance(IntervalSelection)
             else:
-                raise ValueError(f"Unexpected selection type: {type(value)}")
+                msg = f"Unexpected selection type: {type(value)}"
+                raise ValueError(msg)
 
             # Add the new trait.
             self.add_traits(**{key: traitlet_type})
@@ -82,10 +83,11 @@ class Selections(traitlets.HasTraits):
         """
         if change["name"] in self.traits() and change["old"] != change["new"]:
             self._set_value(change["name"], change["old"])
-        raise ValueError(
+        msg = (
             "Selections may not be set from Python.\n"
             f"Attempted to set select: {change['name']}"
         )
+        raise ValueError(msg)
 
     def _set_value(self, key, value):
         self.unobserve(self._make_read_only, names=key)
@@ -278,7 +280,8 @@ class JupyterChart(anywidget.AnyWidget):
                             name=clean_name, value={}, store=[]
                         )
                     else:
-                        raise ValueError(f"Unexpected selection type {select.type}")
+                        msg = f"Unexpected selection type {select.type}"
+                        raise ValueError(msg)
                     selection_watches.append(clean_name)
                     initial_vl_selections[clean_name] = {"value": None, "store": []}
                 else:

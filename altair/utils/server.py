@@ -79,7 +79,8 @@ def find_open_port(ip, port, n=50):
         s.close()
         if result != 0:
             return port
-    raise ValueError("no open ports found")
+    msg = "no open ports found"
+    raise ValueError(msg)
 
 
 def serve(
@@ -131,13 +132,13 @@ def serve(
             print(JUPYTER_WARNING)
 
     # Start the server
-    print("Serving to http://{}:{}/    [Ctrl-C to exit]".format(ip, port))
+    print(f"Serving to http://{ip}:{port}/    [Ctrl-C to exit]")
     sys.stdout.flush()
 
     if open_browser:
         # Use a thread to open a web browser pointing to the server
         def b():
-            return webbrowser.open("http://{}:{}".format(ip, port))
+            return webbrowser.open(f"http://{ip}:{port}")
 
         threading.Thread(target=b).start()
 

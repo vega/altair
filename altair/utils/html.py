@@ -267,16 +267,20 @@ def spec_to_html(
     mode = embed_options.setdefault("mode", mode)
 
     if mode not in ["vega", "vega-lite"]:
-        raise ValueError("mode must be either 'vega' or 'vega-lite'")
+        msg = "mode must be either 'vega' or 'vega-lite'"
+        raise ValueError(msg)
 
     if vega_version is None:
-        raise ValueError("must specify vega_version")
+        msg = "must specify vega_version"
+        raise ValueError(msg)
 
     if vegaembed_version is None:
-        raise ValueError("must specify vegaembed_version")
+        msg = "must specify vegaembed_version"
+        raise ValueError(msg)
 
     if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version for mode='vega-lite'")
+        msg = "must specify vega-lite version for mode='vega-lite'"
+        raise ValueError(msg)
 
     render_kwargs = {}
     if template == "inline":
@@ -286,7 +290,8 @@ def spec_to_html(
 
     jinja_template = TEMPLATES.get(template, template)
     if not hasattr(jinja_template, "render"):
-        raise ValueError("Invalid template: {0}".format(jinja_template))
+        msg = f"Invalid template: {jinja_template}"
+        raise ValueError(msg)
 
     return jinja_template.render(
         spec=json.dumps(spec, **json_kwds),
