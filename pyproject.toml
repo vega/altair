@@ -165,8 +165,31 @@ exclude = [
 
 [tool.ruff.lint]
 preview = true
-extend-safe-fixes=["SIM101", "SIM102", "SIM103", "SIM105", "SIM117", "C419"]
-extend-select=["FURB"]
+extend-safe-fixes=[
+    "SIM101", 
+    "SIM102", 
+    "SIM103", 
+    "SIM105", 
+    "SIM117",
+    # unnecessary-comprehension-in-call
+    "C419",
+]
+extend-select=[
+    # refurb
+    "FURB", 
+    # pylint (preview) autofix #
+    # ------------------------ #
+    # unnecessary-dunder-call
+    "PLC2801", 
+    # unnecessary-dict-index-lookup
+    "PLR1733", 
+    # unnecessary-list-index-lookup
+    "PLR1736",
+    # literal-membership
+    "PLR6201",
+    # unspecified-encoding
+    "PLW1514",
+]
 select = [
     # flake8-bugbear
     "B",
@@ -194,6 +217,26 @@ select = [
     "UP",
     # pycodestyle-warning
     "W",
+    # pylint (stable) autofix #
+    # ----------------------- #
+    # iteration-over-set
+    "PLC0208",
+    # manual-from-import
+    "PLR0402",
+    # repeated-isinstance-calls
+    "PLR1701",
+    # useless-return
+    "PLR1711",
+    # repeated-equality-comparison
+    "PLR1714",
+    # collapsible-else-if
+    "PLR5501",
+    # useless-else-on-loop
+    "PLW0120",
+    # subprocess-run-without-check
+    "PLW1510",
+    # nested-min-max
+    "PLW3301",
 ]
 ignore = [  
     # Whitespace before ':'
