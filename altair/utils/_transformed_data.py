@@ -121,7 +121,7 @@ def transformed_data(chart, row_limit=None, exclude=None):
             raise ValueError(msg)
 
     # Extract transformed datasets with VegaFusion
-    datasets, warnings = vf.runtime.pre_transform_datasets(
+    datasets, _ = vf.runtime.pre_transform_datasets(
         vega_spec,
         dataset_names,
         row_limit=row_limit,

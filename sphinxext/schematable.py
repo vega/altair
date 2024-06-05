@@ -103,7 +103,7 @@ def add_text(node, text):
 def build_row(item, rootschema):
     """Return nodes.row with property description"""
 
-    prop, propschema, required = item
+    prop, propschema, _ = item
     row = nodes.row()
 
     # Property
