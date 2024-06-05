@@ -355,7 +355,7 @@ def main(app):
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
-        Path(target_dir, f"{example["name"]}.rst").write_text(
+        Path(target_dir, example["name"] + ".rst").write_text(
             EXAMPLE_TEMPLATE.render(example), encoding="utf-8"
         )
 
