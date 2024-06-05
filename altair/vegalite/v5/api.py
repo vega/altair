@@ -1409,16 +1409,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             **Default value:** `equalEarth`
         center : List(float)
-            Sets the projection’s center to the specified center, a two-element array of
+            Sets the projection's center to the specified center, a two-element array of
             longitude and latitude in degrees.
 
             **Default value:** `[0, 0]`
         clipAngle : float
-            Sets the projection’s clipping circle radius to the specified angle in degrees. If
+            Sets the projection's clipping circle radius to the specified angle in degrees. If
             `null`, switches to [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting
             rather than small-circle clipping.
         clipExtent : List(List(float))
-            Sets the projection’s viewport clip extent to the specified bounds in pixels. The
+            Sets the projection's viewport clip extent to the specified bounds in pixels. The
             extent bounds are specified as an array `[[x0, y0], [x1, y1]]`, where `x0` is the
             left-side of the viewport, `y0` is the top, `x1` is the right and `y1` is the
             bottom. If `null`, no viewport clipping is performed.
@@ -1428,7 +1428,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **Default value:** ``2``
         distance : float
             For the ``satellite`` projection, the distance from the center of the sphere to the
-            point of view, as a proportion of the sphere’s radius. The recommended maximum clip
+            point of view, as a proportion of the sphere's radius. The recommended maximum clip
             angle for a given ``distance`` is acos(1 / distance) converted to degrees. If tilt
             is also applied, then more conservative clipping may be necessary.
 
@@ -1445,11 +1445,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             <https://en.wikipedia.org/wiki/Map_projection#Conic>`__ that define the map layout.
             The default depends on the specific conic projection used.
         precision : float
-            Sets the threshold for the projection’s [adaptive
+            Sets the threshold for the projection's [adaptive
             resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels.
-            This value corresponds to the [Douglas–Peucker
+            This value corresponds to the [Douglas-Peucker
             distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
-             If precision is not specified, returns the projection’s current resampling
+             If precision is not specified, returns the projection's current resampling
             precision which defaults to `√0.5 ≅ 0.70710…`.
         radius : float
             The radius parameter for the ``airy`` or ``gingery`` projection. The default value
@@ -1462,14 +1462,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         reflectY : boolean
             Sets whether or not the y-dimension is reflected (negated) in the output.
         rotate : List(float)
-            Sets the projection’s three-axis rotation to the specified angles, which must be a
+            Sets the projection's three-axis rotation to the specified angles, which must be a
             two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the
             rotation angles in degrees about each spherical axis. (These correspond to yaw,
             pitch and roll.)
 
             **Default value:** `[0, 0, 0]`
         scale : float
-            The projection’s scale (zoom) factor, overriding automatic fitting. The default
+            The projection's scale (zoom) factor, overriding automatic fitting. The default
             scale is projection-specific. The scale factor corresponds linearly to the distance
             between projected points; however, scale factor values are not equivalent across
             projections.
@@ -1482,7 +1482,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             **Default value:** ``0``.
         translate : List(float)
-            The projection’s translation offset as a two-element array ``[tx, ty]``,
+            The projection's translation offset as a two-element array ``[tx, ty]``,
             overriding automatic fitting.
 
         """
@@ -1760,7 +1760,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         bandwidth : float
             The bandwidth (standard deviation) of the Gaussian kernel. If unspecified or set to
             zero, the bandwidth value is automatically estimated from the input data using
-            Scott’s rule.
+            Scott's rule.
         counts : boolean
             A boolean flag indicating if the output values should be probability estimates
             (false) or smoothed counts (true).
