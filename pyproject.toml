@@ -173,6 +173,10 @@ extend-safe-fixes=[
     "SIM117",
     # unnecessary-comprehension-in-call
     "C419",
+    # literal-membership
+    "PLR6201",
+    # unspecified-encoding
+    "PLW1514",
 ]
 extend-select=[
     # refurb
