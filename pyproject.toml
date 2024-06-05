@@ -172,14 +172,26 @@ select = [
     "C4",
     # pycodestyle-error
     "E",
-    # pycodestyle-warning
-    "W",
+    # flake8-errmsg
+    "EM",
     # pyflakes
     "F",
+    # flynt
+    "FLY",
+    # flake8-pie
+    "PIE",
+    # Ruff-specific rules
+    "RUF",
+    # flake8-simplify
+    "SIM",
+    # flake8-type-checking
+    "TCH",
     # flake8-tidy-imports
     "TID",
-    # flake8-simplify
-    "SIM101"
+    # pyupgrade
+    "UP",
+    # pycodestyle-warning
+    "W",
 ]
 ignore = [  
     # Whitespace before ':'
