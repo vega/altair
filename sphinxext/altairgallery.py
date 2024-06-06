@@ -363,7 +363,7 @@ def main(app):
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
-        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
+        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding="utf-8")
 
 
 def setup(app):
