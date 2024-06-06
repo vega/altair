@@ -2,7 +2,6 @@ from functools import partial
 import json
 import random
 import hashlib
-import warnings
 import sys
 from pathlib import Path
 from typing import (
@@ -24,10 +23,9 @@ from typing import (
 
 import pandas as pd
 
-from ._importers import import_pyarrow_interchange
+from ._importers import import_pyarrow_interchange, import_toolz_function
 from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
 from .core import sanitize_geo_interface
-from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
 if sys.version_info >= (3, 13):
@@ -414,15 +412,7 @@ def pipe(data, *funcs):
 
     Deprecated: use toolz.curried.pipe() instead.
     """
-    warnings.warn(
-        "alt.pipe() is deprecated, and will be removed in a future release. "
-        "Use toolz.curried.pipe() instead.",
-        AltairDeprecationWarning,
-        stacklevel=1,
-    )
-    from toolz.curried import pipe
-
-    return pipe(data, *funcs)
+    return import_toolz_function("pipe")(data, *funcs)
 
 
 def curry(*args, **kwargs):
@@ -430,15 +420,7 @@ def curry(*args, **kwargs):
 
     Deprecated: use toolz.curried.curry() instead.
     """
-    warnings.warn(
-        "alt.curry() is deprecated, and will be removed in a future release. "
-        "Use toolz.curried.curry() instead.",
-        AltairDeprecationWarning,
-        stacklevel=1,
-    )
-    from toolz.curried import curry
-
-    return curry(*args, **kwargs)
+    return import_toolz_function("curry")(*args, **kwargs)
 
 
 def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> "pyarrow.lib.Table":
