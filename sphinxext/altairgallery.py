@@ -176,10 +176,10 @@ def save_example_pngs(
         hashes_match = hashes.get(filename, "") == example_hash
 
         if hashes_match and image_file.exists():
-            print(f"-> using cached {image_file:s}")
+            print(f"-> using cached {image_file!s}")
         else:
             # the file changed or the image file does not exist. Generate it.
-            print(f"-> saving {image_file:s}")
+            print(f"-> saving {image_file!s}")
             chart = eval_block(code)
             try:
                 chart.save(image_file)

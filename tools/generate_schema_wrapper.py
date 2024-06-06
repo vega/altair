@@ -349,7 +349,7 @@ def download_schemafile(
     if not skip_download:
         request.urlretrieve(url, fp)
     elif not fp.exists():
-        msg = f"Cannot skip download: {fp:s} does not exist"
+        msg = f"Cannot skip download: {fp!s} does not exist"
         raise ValueError(msg)
     return fp
 
@@ -400,7 +400,7 @@ def copy_schemapi_util() -> None:
     source_fp = Path(__file__).parent / "schemapi" / "schemapi.py"
     destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
 
-    print(f"Copying\n {source_fp:s}\n  -> {destination_fp:s}")
+    print(f"Copying\n {source_fp!s}\n  -> {destination_fp!s}")
     with source_fp.open(encoding="utf8") as source, destination_fp.open(
         "w", encoding="utf8"
     ) as dest:
@@ -745,7 +745,7 @@ def vegalite_main(skip_download: bool = False) -> None:
 
     # Generate __init__.py file
     outfile = schemapath / "__init__.py"
-    print(f"Writing {outfile:s}")
+    print(f"Writing {outfile!s}")
     content = [
         "# ruff: noqa\n",
         "from .core import *\nfrom .channels import *\n",
@@ -756,20 +756,20 @@ def vegalite_main(skip_download: bool = False) -> None:
 
     # Generate the core schema wrappers
     outfile = schemapath / "core.py"
-    print(f"Generating\n {schemafile:s}\n  ->{outfile:s}")
+    print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
     file_contents = generate_vegalite_schema_wrapper(schemafile)
     outfile.write_text(ruff_format_str(file_contents), encoding=encoding)
 
     # Generate the channel wrappers
     outfile = schemapath / "channels.py"
-    print(f"Generating\n {schemafile:s}\n  ->{outfile:s}")
+    print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
     outfile.write_text(ruff_format_str(code), encoding=encoding)
 
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
     outfile = schemapath / "mixins.py"
-    print(f"Generating\n {schemafile:s}\n  ->{outfile:s}")
+    print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
     mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
     config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
     try_except_imports = [
