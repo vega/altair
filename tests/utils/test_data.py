@@ -2,7 +2,6 @@ import os
 from typing import Any, Callable
 import pytest
 import pandas as pd
-
 from altair.utils.data import (
     limit_rows,
     MaxRowsError,
@@ -10,7 +9,11 @@ from altair.utils.data import (
     to_values,
     to_json,
     to_csv,
+    curry,
+    pipe,
 )
+from altair.utils._importers import import_toolz_function
+from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def _pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
@@ -151,3 +154,24 @@ def test_dict_to_csv():
 
     assert result1 == result2
     assert data == {"values": output}
+
+
+def test_toolz():
+    expected_msg = r"Usage.+ requires"
+    data = _create_data_with_values(10)
+    try:
+        with pytest.warns(AltairDeprecationWarning, match="toolz.curried.pipe"):
+            result1 = pipe(data, to_values)
+        assert isinstance(result1, dict)
+        kwds = {"prefix": "dummy"}
+        with pytest.warns(AltairDeprecationWarning, match="toolz.curried.curry"):
+            result2 = curry(to_csv, **kwds)
+        assert "curry" in type(result2).__name__
+        assert result2.func_name == to_csv.__name__
+        assert result2.keywords == kwds
+    except ImportError as err:
+        assert expected_msg in err.msg
+    with pytest.raises(ImportError, match=expected_msg):
+        dummy = "fake_function_name"
+        with pytest.warns(AltairDeprecationWarning, match=f"toolz.curried.{dummy}"):
+            func = import_toolz_function(dummy)  # noqa: F841
