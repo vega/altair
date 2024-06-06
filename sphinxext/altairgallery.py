@@ -308,7 +308,7 @@ class AltairMiniGalleryDirective(Directive):
 
 def main(app):
     src_dir = Path(app.builder.srcdir)
-    target_dir: Path = src_dir / app.builder.config.altair_gallery_dir
+    target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"
 
     gallery_ref = app.builder.config.altair_gallery_ref
@@ -362,7 +362,7 @@ def main(app):
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
-        fp = target_dir / example["name"] + ".rst"
+        fp = target_dir / "".join((example["name"], ".rst"))
         fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
 
 
