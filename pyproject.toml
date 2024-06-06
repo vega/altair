@@ -209,6 +209,8 @@ select = [
     "FLY",
     # flake8-pie
     "PIE",
+    # flake8-use-pathlib
+    "PTH",
     # Ruff-specific rules
     "RUF",
     # flake8-simplify
