@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Any, Callable
 import pytest
 import pandas as pd
@@ -170,7 +171,7 @@ def test_toolz():
         assert result2.func_name == to_csv.__name__
         assert result2.keywords == kwds
     except ImportError as err:
-        assert expected_msg in err.msg
+        assert re.search(expected_msg, err.msg)
     with pytest.raises(ImportError, match=expected_msg):
         dummy = "fake_function_name"
         with pytest.warns(AltairDeprecationWarning, match=f"toolz.curried.{dummy}"):
