@@ -3,7 +3,7 @@ This script updates the attribute __all__ in altair/__init__.py
 based on the updated Altair schema.
 """
 
-import inspect
+from inspect import ismodule, getattr_static
 import sys
 from pathlib import Path
 from typing import (
@@ -87,7 +87,7 @@ def update__all__variable() -> None:
 def _is_relevant_attribute(attr_name: str) -> bool:
     attr = getattr(alt, attr_name)
     if (
-        getattr(attr, "_deprecated", False) is True
+        getattr_static(attr, "_deprecated", False)
         or attr_name.startswith("_")
         or attr is TypeVar
         or attr is Self
@@ -108,11 +108,12 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr_name == "ValueOrDatum"
     ):
         return False
-    elif inspect.ismodule(attr):
+    elif ismodule(attr):
         # Only include modules which are part of Altair. This excludes built-in
         # modules (they do not have a __file__ attribute), standard library,
         # and third-party packages.
-        return getattr(attr, "__file__", "").startswith(str(Path(alt.__file__).parent))
+        prefix = str(Path(alt.__file__).parent)
+        return getattr_static(attr, "__file__", "").startswith(prefix)
     else:
         return True
 
