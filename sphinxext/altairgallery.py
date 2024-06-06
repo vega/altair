@@ -150,7 +150,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 
 
 def save_example_pngs(
-    examples: List[Dict[str, Any]], image_dir: Path, make_thumbnails=True
+    examples: List[Dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
 ):
     """Save example pngs and (optionally) thumbnails"""
     encoding = locale.getpreferredencoding(False)
