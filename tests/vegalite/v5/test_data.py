@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pandas as pd
 import pytest
@@ -31,4 +31,4 @@ def test_disable_max_rows(sample_data):
         jsonfile = {}
     finally:
         if jsonfile:
-            os.remove(jsonfile["url"])
+            Path(jsonfile["url"]).unlink()

@@ -3,24 +3,23 @@
 import argparse
 import copy
 import json
-import os
+import locale
 from pathlib import Path
 import re
 import sys
 import textwrap
 from dataclasses import dataclass
-from os.path import abspath, dirname, join
 from typing import Dict, Final, List, Literal, Optional, Tuple, Type, Union
 from urllib import request
 
 import m2r
 
 # Add path so that schemapi can be imported from the tools folder
-current_dir = dirname(__file__)
-sys.path.insert(0, abspath(current_dir))
+current_dir = Path(__file__).parent
+sys.path.insert(0, str(current_dir))
 # And another path so that Altair can be imported from head. This is relevant when
 # generate_api_docs is imported in the main function
-sys.path.insert(0, abspath(join(current_dir, "..")))
+sys.path.insert(0, str((current_dir / "..").resolve()))
 from schemapi import codegen  # noqa: E402
 from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (  # noqa: E402
@@ -341,22 +340,22 @@ def schema_url(version: str = SCHEMA_VERSION) -> str:
 
 
 def download_schemafile(
-    version: str, schemapath: str, skip_download: bool = False
-) -> str:
+    version: str, schemapath: Path, skip_download: bool = False
+) -> Path:
     url = schema_url(version=version)
-    if not os.path.exists(schemapath):
-        os.makedirs(schemapath)
-    filename = os.path.join(schemapath, "vega-lite-schema.json")
+    schemadir = Path(schemapath)
+    schemadir.mkdir(parents=True, exist_ok=True)
+    fp = schemadir / "vega-lite-schema.json"
     if not skip_download:
-        request.urlretrieve(url, filename)
-    elif not os.path.exists(filename):
-        msg = f"Cannot skip download: {filename} does not exist"
+        request.urlretrieve(url, fp)
+    elif not fp.exists():
+        msg = f"Cannot skip download: {fp:s} does not exist"
         raise ValueError(msg)
-    return filename
+    return fp
 
 
-def load_schema_with_shorthand_properties(schemapath: str) -> dict:
-    with open(schemapath, encoding="utf8") as f:
+def load_schema_with_shorthand_properties(schemapath: Path) -> dict:
+    with schemapath.open(encoding="utf8") as f:
         schema = json.load(f)
 
     schema = _add_shorthand_property_to_field_encodings(schema)
@@ -398,14 +397,12 @@ def copy_schemapi_util() -> None:
     Copy the schemapi utility into altair/utils/ and its test file to tests/utils/
     """
     # copy the schemapi utility file
-    source_path = abspath(join(dirname(__file__), "schemapi", "schemapi.py"))
-    destination_path = abspath(
-        join(dirname(__file__), "..", "altair", "utils", "schemapi.py")
-    )
+    source_fp = Path(__file__).parent / "schemapi" / "schemapi.py"
+    destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
 
-    print(f"Copying\n {source_path}\n  -> {destination_path}")
-    with open(source_path, encoding="utf8") as source, open(
-        destination_path, "w", encoding="utf8"
+    print(f"Copying\n {source_fp:s}\n  -> {destination_fp:s}")
+    with source_fp.open(encoding="utf8") as source, destination_fp.open(
+        "w", encoding="utf8"
     ) as dest:
         dest.write(HEADER)
         dest.writelines(source.readlines())
@@ -472,7 +469,7 @@ def toposort(graph: Dict[str, List[str]]) -> List[str]:
     return stack
 
 
-def generate_vegalite_schema_wrapper(schema_file: str) -> str:
+def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
     basename = "VegaLiteSchema"
@@ -560,7 +557,7 @@ class ChannelInfo:
 
 
 def generate_vegalite_channel_wrappers(
-    schemafile: str, version: str, imports: Optional[List[str]] = None
+    schemafile: Path, version: str, imports: Optional[List[str]] = None
 ) -> str:
     # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
@@ -646,9 +643,9 @@ def generate_vegalite_channel_wrappers(
 
 
 def generate_vegalite_mark_mixin(
-    schemafile: str, markdefs: Dict[str, str]
+    schemafile: Path, markdefs: Dict[str, str]
 ) -> Tuple[List[str], str]:
-    with open(schemafile, encoding="utf8") as f:
+    with schemafile.open(encoding="utf8") as f:
         schema = json.load(f)
 
     class_name = "MarkMethodMixin"
@@ -708,7 +705,7 @@ def generate_vegalite_mark_mixin(
     return imports, "\n".join(code)
 
 
-def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
+def generate_vegalite_config_mixin(schemafile: Path) -> Tuple[List[str], str]:
     imports = ["from . import core", "from altair.utils import use_signature"]
 
     class_name = "ConfigMethodMixin"
@@ -717,7 +714,7 @@ def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
         f"class {class_name}:",
         '    """A mixin class that defines config methods"""',
     ]
-    with open(schemafile, encoding="utf8") as f:
+    with schemafile.open(encoding="utf8") as f:
         schema = json.load(f)
     info = SchemaInfo({"$ref": "#/definitions/Config"}, rootschema=schema)
 
@@ -736,43 +733,43 @@ def generate_vegalite_config_mixin(schemafile: str) -> Tuple[List[str], str]:
 
 def vegalite_main(skip_download: bool = False) -> None:
     version = SCHEMA_VERSION
-    path = abspath(
-        join(dirname(__file__), "..", "altair", "vegalite", version.split(".")[0])
-    )
-    schemapath = os.path.join(path, "schema")
+    vn = version.split(".")[0]
+    fp = (Path(__file__).parent / ".." / "altair" / "vegalite" / vn).resolve()
+    schemapath = fp / "schema"
     schemafile = download_schemafile(
         version=version,
         schemapath=schemapath,
         skip_download=skip_download,
     )
+    encoding = locale.getpreferredencoding(False)
 
     # Generate __init__.py file
-    outfile = join(schemapath, "__init__.py")
-    print(f"Writing {outfile}")
+    outfile = schemapath / "__init__.py"
+    print(f"Writing {outfile:s}")
     content = [
         "# ruff: noqa\n",
         "from .core import *\nfrom .channels import *\n",
         f"SCHEMA_VERSION = '{version}'\n",
         f"SCHEMA_URL = {schema_url(version)!r}\n" "",
     ]
-    Path(outfile).write_text(ruff_format_str(content), encoding="utf8")
+    outfile.write_text(ruff_format_str(content), encoding=encoding)
 
     # Generate the core schema wrappers
-    outfile = join(schemapath, "core.py")
-    print(f"Generating\n {schemafile}\n  ->{outfile}")
+    outfile = schemapath / "core.py"
+    print(f"Generating\n {schemafile:s}\n  ->{outfile:s}")
     file_contents = generate_vegalite_schema_wrapper(schemafile)
-    Path(outfile).write_text(ruff_format_str(file_contents), encoding="utf8")
+    outfile.write_text(ruff_format_str(file_contents), encoding=encoding)
 
     # Generate the channel wrappers
-    outfile = join(schemapath, "channels.py")
-    print(f"Generating\n {schemafile}\n  ->{outfile}")
+    outfile = schemapath / "channels.py"
+    print(f"Generating\n {schemafile:s}\n  ->{outfile:s}")
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
-    Path(outfile).write_text(ruff_format_str(code), encoding="utf8")
+    outfile.write_text(ruff_format_str(code), encoding=encoding)
 
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
-    outfile = join(schemapath, "mixins.py")
-    print(f"Generating\n {schemafile}\n  ->{outfile}")
+    outfile = schemapath / "mixins.py"
+    print(f"Generating\n {schemafile:s}\n  ->{outfile:s}")
     mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
     config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
     try_except_imports = [
@@ -795,7 +792,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n\n",
         config_mixin,
     ]
-    Path(outfile).write_text(ruff_format_str(content), encoding="utf8")
+    outfile.write_text(ruff_format_str(content), encoding=encoding)
 
 
 def _create_encode_signature(

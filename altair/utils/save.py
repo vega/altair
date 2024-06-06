@@ -18,7 +18,7 @@ def write_file_or_filename(
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
     if isinstance(fp, (str, pathlib.Path)):
-        with open(file=fp, mode=mode, encoding=encoding) as f:
+        with pathlib.Path(fp).open(mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
         fp.write(content)

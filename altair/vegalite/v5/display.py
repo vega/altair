@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from typing import Dict
 
 from ...utils.mimebundle import spec_to_mimebundle
@@ -47,7 +47,7 @@ https://altair-viz.github.io/user_guide/display_frontends.html#troubleshooting
 
 renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
-here = os.path.dirname(os.path.realpath(__file__))
+here = str(Path(__file__).parent)
 
 
 def mimetype_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:

@@ -6,17 +6,16 @@ based on the updated Altair schema.
 from pathlib import Path
 import sys
 import types
-from os.path import abspath, dirname, join
 from typing import Final, Optional, Iterator, List
 from types import ModuleType
 import locale
 
 # Import Altair from head
-ROOT_DIR = abspath(join(dirname(__file__), ".."))
-sys.path.insert(0, ROOT_DIR)
+root_fp = (Path(__file__).parent / "..").resolve()
+sys.path.insert(0, str(root_fp))
 import altair as alt  # noqa: E402
 
-API_FILENAME: Final = join(ROOT_DIR, "doc", "user_guide", "api.rst")
+API_FILENAME: Final = str(root_fp / "doc" / "user_guide" / "api.rst")
 
 API_TEMPLATE: Final = """\
 .. _api:

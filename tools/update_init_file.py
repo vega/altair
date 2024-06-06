@@ -5,7 +5,6 @@ based on the updated Altair schema.
 
 import inspect
 import sys
-from os.path import abspath, dirname, join
 from pathlib import Path
 from typing import (
     IO,
@@ -33,8 +32,10 @@ else:
 
 from typing import Final, Literal
 
-ROOT_DIR: Final = abspath(join(dirname(__file__), ".."))
-sys.path.insert(0, abspath(dirname(__file__)))
+current_dir = Path(__file__).parent
+ROOT_DIR: Final = str((current_dir / "..").resolve())
+sys.path.insert(0, str(current_dir))
+
 from schemapi.utils import ruff_format_str  # noqa: E402
 
 # Import Altair from head
@@ -48,8 +49,9 @@ def update__all__variable() -> None:
     Jupyter.
     """
     # Read existing file content
-    init_path = alt.__file__
-    with open(init_path, encoding=locale.getpreferredencoding(False)) as f:
+    encoding = locale.getpreferredencoding(False)
+    init_path = Path(alt.__file__)
+    with init_path.open(encoding=encoding) as f:
         lines = f.readlines()
     lines = [line.strip("\n") for line in lines]
 
@@ -65,8 +67,7 @@ def update__all__variable() -> None:
     assert first_definition_line is not None and last_definition_line is not None
 
     # Figure out which attributes are relevant
-    relevant_attributes = [x for x in alt.__dict__ if _is_relevant_attribute(x)]
-    relevant_attributes.sort()
+    relevant_attributes = sorted(x for x in alt.__dict__ if _is_relevant_attribute(x))
     relevant_attributes_str = f"__all__ = {relevant_attributes}"
 
     # Put file back together, replacing old definition of __all__ with new one, keeping
@@ -80,9 +81,7 @@ def update__all__variable() -> None:
     new_file_content = ruff_format_str("\n".join(new_lines))
 
     # Write new version of altair/__init__.py
-    Path(init_path).write_text(
-        new_file_content, encoding=locale.getpreferredencoding(False)
-    )
+    init_path.write_text(new_file_content, encoding=encoding)
 
 
 def _is_relevant_attribute(attr_name: str) -> bool:

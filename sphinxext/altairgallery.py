@@ -1,5 +1,4 @@
 import hashlib
-import os
 import json
 from pathlib import Path
 import random
@@ -7,8 +6,9 @@ import collections
 from operator import itemgetter
 import warnings
 import shutil
-
+import locale
 import jinja2
+from typing import List, Dict, Any
 
 from docutils import nodes
 from docutils.statemachine import ViewList
@@ -26,7 +26,6 @@ from .utils import (
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
 from tests.examples_methods_syntax import iter_examples_methods_syntax
-import locale
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -150,33 +149,38 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 )
 
 
-def save_example_pngs(examples, image_dir, make_thumbnails=True):
+def save_example_pngs(
+    examples: List[Dict[str, Any]], image_dir: Path, make_thumbnails=True
+):
     """Save example pngs and (optionally) thumbnails"""
-    if not os.path.exists(image_dir):
-        os.makedirs(image_dir)
+    encoding = locale.getpreferredencoding(False)
 
     # store hashes so that we know whether images need to be generated
-    hash_file = os.path.join(image_dir, "_image_hashes.json")
+    hash_file: Path = image_dir / "_image_hashes.json"
 
-    if os.path.exists(hash_file):
-        with open(hash_file, encoding=locale.getpreferredencoding(False)) as f:
+    if hash_file.exists():
+        with hash_file.open(encoding=encoding) as f:
             hashes = json.load(f)
     else:
         hashes = {}
 
     for example in examples:
-        filename = example["name"] + (".svg" if example["use_svg"] else ".png")
-        image_file = os.path.join(image_dir, filename)
+        name: str = example["name"]
+        use_svg: bool = example["use_svg"]
+        code = example["code"]
 
-        example_hash = hashlib.sha256(example["code"].encode()).hexdigest()[:32]
+        filename = name + (".svg" if use_svg else ".png")
+        image_file = image_dir / filename
+
+        example_hash = hashlib.sha256(code.encode()).hexdigest()[:32]
         hashes_match = hashes.get(filename, "") == example_hash
 
-        if hashes_match and os.path.exists(image_file):
-            print(f"-> using cached {image_file}")
+        if hashes_match and image_file.exists():
+            print(f"-> using cached {image_file:s}")
         else:
             # the file changed or the image file does not exist. Generate it.
-            print(f"-> saving {image_file}")
-            chart = eval_block(example["code"])
+            print(f"-> saving {image_file:s}")
+            chart = eval_block(code)
             try:
                 chart.save(image_file)
                 hashes[filename] = example_hash
@@ -184,25 +188,23 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 warnings.warn("Unable to save image: using generic image", stacklevel=1)
                 create_generic_image(image_file)
 
-            with open(hash_file, "w", encoding=locale.getpreferredencoding(False)) as f:
+            with hash_file.open("w", encoding=encoding) as f:
                 json.dump(hashes, f)
 
         if make_thumbnails:
             params = example.get("galleryParameters", {})
-            if example["use_svg"]:
+            if use_svg:
                 # Thumbnail for SVG is identical to original image
-                thumb_file = os.path.join(image_dir, example["name"] + "-thumb.svg")
-                shutil.copyfile(image_file, thumb_file)
+                shutil.copyfile(image_file, image_dir / f"{name}-thumb.svg")
             else:
-                thumb_file = os.path.join(image_dir, example["name"] + "-thumb.png")
-                create_thumbnail(image_file, thumb_file, **params)
+                create_thumbnail(image_file, image_dir / f"{name}-thumb.png", **params)
 
     # Save hashes so we know whether we need to re-generate plots
-    with open(hash_file, "w", encoding=locale.getpreferredencoding(False)) as f:
+    with hash_file.open("w", encoding=encoding) as f:
         json.dump(hashes, f)
 
 
-def populate_examples(**kwds):
+def populate_examples(**kwds) -> List[Dict[str, Any]]:
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
@@ -305,16 +307,16 @@ class AltairMiniGalleryDirective(Directive):
 
 
 def main(app):
-    gallery_dir = app.builder.config.altair_gallery_dir
-    target_dir = os.path.join(app.builder.srcdir, gallery_dir)
-    image_dir = os.path.join(app.builder.srcdir, "_images")
+    src_dir = Path(app.builder.srcdir)
+    target_dir: Path = src_dir / app.builder.config.altair_gallery_dir
+    image_dir: Path = src_dir / "_images"
 
     gallery_ref = app.builder.config.altair_gallery_ref
     gallery_title = app.builder.config.altair_gallery_title
     examples = populate_examples(gallery_ref=gallery_ref, code_below=True, strict=False)
 
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
+    target_dir.mkdir(parents=True, exist_ok=True)
+    image_dir.mkdir(exist_ok=True)
 
     examples = sorted(examples, key=itemgetter("title"))
     examples_toc = collections.OrderedDict(
@@ -337,15 +339,18 @@ def main(app):
     for d in examples:
         examples_toc[d["category"]].append(d)
 
+    encoding = locale.getpreferredencoding(False)
+
     # Write the gallery index file
-    Path(target_dir, "index.rst").write_text(
+    fp = target_dir / "index.rst"
+    fp.write_text(
         GALLERY_TEMPLATE.render(
             title=gallery_title,
             examples=examples_toc.items(),
             image_dir="/_static",
             gallery_ref=gallery_ref,
         ),
-        encoding=locale.getpreferredencoding(False),
+        encoding=encoding,
     )
 
     # save the images to file
@@ -357,9 +362,8 @@ def main(app):
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
-        Path(target_dir, example["name"] + ".rst").write_text(
-            EXAMPLE_TEMPLATE.render(example), encoding="utf-8"
-        )
+        fp = target_dir / example["name"] + ".rst"
+        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
 
 
 def setup(app):

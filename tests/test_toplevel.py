@@ -1,10 +1,10 @@
+from pathlib import Path
 import sys
-from os.path import abspath, join, dirname
 
 import altair as alt
 
-current_dir = dirname(__file__)
-sys.path.insert(0, abspath(join(current_dir, "..")))
+current_dir = Path(__file__).parent
+sys.path.insert(0, str((current_dir / "..").resolve()))
 from tools import update_init_file  # noqa: E402
 
 

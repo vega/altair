@@ -1,8 +1,8 @@
 import importlib
+from pathlib import Path
 import re
 import sys
 import warnings
-from os.path import abspath, dirname
 
 from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
@@ -10,7 +10,7 @@ from docutils.parsers.rst.directives import flag
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
-sys.path.insert(0, abspath(dirname(dirname(dirname(__file__)))))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from tools.schemapi.utils import fix_docstring_issues, SchemaInfo
 
 

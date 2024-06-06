@@ -330,10 +330,10 @@ def test_save(format, engine, basic_chart):
     for fp in [filename, pathlib.Path(filename)]:
         try:
             basic_chart.save(fp, format=format, engine=engine)
-            with open(fp, mode) as f:
+            with pathlib.Path(fp).open(mode) as f:
                 assert f.read()[:1000] == content[:1000]
         finally:
-            os.remove(fp)
+            pathlib.Path(fp).unlink()
 
 
 @pytest.mark.parametrize("inline", [False, True])
