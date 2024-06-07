@@ -1,21 +1,23 @@
+from __future__ import annotations
+from typing import Any
 from ..utils import SchemaBase
 
 
 class DatumType:
     """An object to assist in building Vega-Lite Expressions"""
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "datum"
 
-    def __getattr__(self, attr):
+    def __getattr__(self, attr) -> GetAttrExpression:
         if attr.startswith("__") and attr.endswith("__"):
             raise AttributeError(attr)
         return GetAttrExpression("datum", attr)
 
-    def __getitem__(self, attr):
+    def __getitem__(self, attr) -> GetItemExpression:
         return GetItemExpression("datum", attr)
 
-    def __call__(self, datum, **kwargs):
+    def __call__(self, datum, **kwargs) -> dict[str, Any]:
         """Specify a datum for use in an encoding"""
         return dict(datum=datum, **kwargs)
 
@@ -23,7 +25,7 @@ class DatumType:
 datum = DatumType()
 
 
-def _js_repr(val):
+def _js_repr(val) -> str:
     """Return a javascript-safe string representation of val"""
     if val is True:
         return "true"
@@ -39,10 +41,10 @@ def _js_repr(val):
 
 # Designed to work with Expression and VariableParameter
 class OperatorMixin:
-    def _to_expr(self):
+    def _to_expr(self) -> str:
         return repr(self)
 
-    def _from_expr(self, expr):
+    def _from_expr(self, expr) -> Any:
         return expr
 
     def __add__(self, other):
@@ -173,7 +175,7 @@ class Expression(OperatorMixin, SchemaBase):
     def to_dict(self, *args, **kwargs):
         return repr(self)
 
-    def __setattr__(self, attr, val):
+    def __setattr__(self, attr, val) -> None:
         # We don't need the setattr magic defined in SchemaBase
         return object.__setattr__(self, attr, val)
 
@@ -183,7 +185,7 @@ class Expression(OperatorMixin, SchemaBase):
 
 
 class UnaryExpression(Expression):
-    def __init__(self, op, val):
+    def __init__(self, op, val) -> None:
         super().__init__(op=op, val=val)
 
     def __repr__(self):
@@ -191,7 +193,7 @@ class UnaryExpression(Expression):
 
 
 class BinaryExpression(Expression):
-    def __init__(self, op, lhs, rhs):
+    def __init__(self, op, lhs, rhs) -> None:
         super().__init__(op=op, lhs=lhs, rhs=rhs)
 
     def __repr__(self):
@@ -199,7 +201,7 @@ class BinaryExpression(Expression):
 
 
 class FunctionExpression(Expression):
-    def __init__(self, name, args):
+    def __init__(self, name, args) -> None:
         super().__init__(name=name, args=args)
 
     def __repr__(self):
@@ -208,16 +210,16 @@ class FunctionExpression(Expression):
 
 
 class ConstExpression(Expression):
-    def __init__(self, name, doc):
+    def __init__(self, name, doc) -> None:
         self.__doc__ = f"""{name}: {doc}"""
         super().__init__(name=name, doc=doc)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.name)
 
 
 class GetAttrExpression(Expression):
-    def __init__(self, group, name):
+    def __init__(self, group, name) -> None:
         super().__init__(group=group, name=name)
 
     def __repr__(self):
@@ -225,8 +227,8 @@ class GetAttrExpression(Expression):
 
 
 class GetItemExpression(Expression):
-    def __init__(self, group, name):
+    def __init__(self, group, name) -> None:
         super().__init__(group=group, name=name)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.group}[{self.name!r}]"
