@@ -40,7 +40,7 @@ HEADER: Final = """\
 # tools/generate_schema_wrapper.py. Do not modify directly.
 """
 
-SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/" "{library}/{version}.json"
+SCHEMA_URL_TEMPLATE: Final = "https://vega.github.io/schema/{library}/{version}.json"
 
 CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # These errors need to be ignored as they come from the overload methods
@@ -256,7 +256,8 @@ class SchemaGenerator(codegen.SchemaGenerator):
     '''
     )
 
-    def _process_description(self, description: str) -> str:
+    @staticmethod
+    def _process_description(description: str) -> str:
         return process_description(description)
 
 
@@ -423,7 +424,7 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
             recursive_dict_update(sub_schema, root, def_dict)
 
 
-def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict:
+def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> Dict[str, str]:
     def_dict: Dict[str, Optional[str]] = dict.fromkeys(("field", "datum", "value"))
     schema = propschema.schema
     if propschema.is_reference() and "properties" in schema:
@@ -508,36 +509,26 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     # of exported classes which are also defined in the channels module which takes
     # precedent in the generated __init__.py file one level up where core.py
     # and channels.py are imported. Importing both confuses type checkers.
-    all_ = [
-        c for c in definitions if not c.startswith("_") and c not in {"Color", "Text"}
-    ] + [
-        "Root",
-        "VegaLiteSchema",
-        "SchemaBase",
-        "load_schema",
-    ]
+    it = (c for c in definitions.keys() - {"Color", "Text"} if not c.startswith("_"))
+    all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
 
     contents = [
         HEADER,
         f"__all__ = {all_}",
         "from typing import Any, Literal, Union, Protocol, Sequence, List",
         "from typing import Dict as TypingDict",
-        "from typing import Generator as TypingGenerator" "",
+        "from typing import Generator as TypingGenerator",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
+        PARAMETER_PROTOCOL,
+        BASE_SCHEMA.format(basename=basename),
+        schema_class(
+            "Root",
+            schema=rootschema,
+            basename=basename,
+            schemarepr=CodeSnippet(f"{basename}._rootschema"),
+        ),
     ]
-    contents.extend(
-        (
-            PARAMETER_PROTOCOL,
-            BASE_SCHEMA.format(basename=basename),
-            schema_class(
-                "Root",
-                schema=rootschema,
-                basename=basename,
-                schemarepr=CodeSnippet(f"{basename}._rootschema"),
-            ),
-        )
-    )
 
     for name in toposort(graph):
         contents.append(definitions[name].schema_class())
@@ -560,20 +551,17 @@ def generate_vegalite_channel_wrappers(
 ) -> str:
     # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
-    if imports is None:
-        imports = [
-            "import sys",
-            "from . import core",
-            "import pandas as pd",
-            "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
-            "from altair.utils import parse_shorthand",
-            "from typing import Any, overload, Sequence, List, Literal, Union, Optional",
-            "from typing import Dict as TypingDict",
-        ]
-    contents = [HEADER]
-    contents.append(CHANNEL_MYPY_IGNORE_STATEMENTS)
-    contents.extend(imports)
-    contents.extend(("", CHANNEL_MIXINS))
+
+    imports = imports or [
+        "import sys",
+        "from . import core",
+        "import pandas as pd",
+        "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
+        "from altair.utils import parse_shorthand",
+        "from typing import Any, overload, Sequence, List, Literal, Union, Optional",
+        "from typing import Dict as TypingDict",
+    ]
+    contents = [HEADER, CHANNEL_MYPY_IGNORE_STATEMENTS, *imports, "", CHANNEL_MIXINS]
 
     encoding_def = "FacetedEncoding"
 
@@ -594,7 +582,7 @@ def generate_vegalite_channel_wrappers(
 
         for encoding_spec, definition in def_dict.items():
             classname = prop[0].upper() + prop[1:]
-            basename = definition.split("/")[-1]
+            basename = definition.rsplit("/", maxsplit=1)[-1]
             basename = get_valid_identifier(basename)
 
             defschema = {"$ref": definition}
@@ -666,7 +654,7 @@ def generate_vegalite_mark_mixin(
             marks = schema["definitions"][mark_enum]["enum"]
         else:
             marks = [schema["definitions"][mark_enum]["const"]]
-        info = SchemaInfo({"$ref": "#/definitions/" + mark_def}, rootschema=schema)
+        info = SchemaInfo({"$ref": f"#/definitions/{mark_def}"}, rootschema=schema)
 
         # adapted from SchemaInfo.init_code
         arg_info = codegen.get_args(info)
@@ -749,7 +737,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "# ruff: noqa\n",
         "from .core import *\nfrom .channels import *\n",
         f"SCHEMA_VERSION = '{version}'\n",
-        f"SCHEMA_URL = {schema_url(version)!r}\n" "",
+        f"SCHEMA_URL = {schema_url(version)!r}\n",
     ]
     outfile.write_text(ruff_format_str(content), encoding=encoding)
 
@@ -778,7 +766,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "    from typing_extensions import Self",
     ]
     stdlib_imports = ["import sys"]
-    imports = sorted(set(mark_imports + config_imports))
+    imports = sorted({*mark_imports, *config_imports})
     content = [
         HEADER,
         "\n".join(stdlib_imports),
