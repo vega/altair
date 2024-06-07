@@ -1,3 +1,4 @@
+from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
@@ -8,7 +9,7 @@ import warnings
 import shutil
 
 import jinja2
-from typing import List, Dict, Any
+from typing import Any
 
 from docutils import nodes
 from docutils.statemachine import ViewList
@@ -150,7 +151,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 
 
 def save_example_pngs(
-    examples: List[Dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
+    examples: list[dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
 ):
     """Save example pngs and (optionally) thumbnails"""
     encoding = "utf-8"
@@ -204,7 +205,7 @@ def save_example_pngs(
         json.dump(hashes, f)
 
 
-def populate_examples(**kwds) -> List[Dict[str, Any]]:
+def populate_examples(**kwds) -> list[dict[str, Any]]:
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
