@@ -16,7 +16,7 @@ from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
 from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
 from altair.vegalite.data import default_data_transformer
-import contextlib
+
 
 if TYPE_CHECKING:
     from vegafusion.runtime import ChartState  # type: ignore
@@ -123,13 +123,11 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     dict from str to dataframe
         dict from inline dataset name to dataframe object
     """
-    table_names = get_inline_table_names(vega_spec)
-    tables = {}
-    for table_name in table_names:
-        # otherwise, named dataset that was provided by the user
-        with contextlib.suppress(KeyError):
-            tables[table_name] = extracted_inline_tables.pop(table_name)
-    return tables
+    inline_names = get_inline_table_names(vega_spec)
+    # exclude named dataset that was provided by the user,
+    # or dataframes that have been deleted.
+    table_names = inline_names.intersection(extracted_inline_tables)
+    return {k: extracted_inline_tables.pop(k) for k in table_names}
 
 
 def compile_to_vegafusion_chart_state(
