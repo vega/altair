@@ -3,10 +3,11 @@ This script fills the contents of doc/user_guide/api.rst
 based on the updated Altair schema.
 """
 
+from __future__ import annotations
 from pathlib import Path
 import sys
 import types
-from typing import Final, Optional, Iterator, List
+from typing import Final, Iterator
 from types import ModuleType
 
 # Import Altair from head
@@ -73,8 +74,8 @@ Low-Level Schema Wrappers
 def iter_objects(
     mod: ModuleType,
     ignore_private: bool = True,
-    restrict_to_type: Optional[type] = None,
-    restrict_to_subclass: Optional[type] = None,
+    restrict_to_type: type | None = None,
+    restrict_to_subclass: type | None = None,
 ) -> Iterator[str]:
     for name in dir(mod):
         obj = getattr(mod, name)
@@ -89,15 +90,15 @@ def iter_objects(
         yield name
 
 
-def toplevel_charts() -> List[str]:
+def toplevel_charts() -> list[str]:
     return sorted(iter_objects(alt.api, restrict_to_subclass=alt.TopLevelMixin))  # type: ignore[attr-defined]
 
 
-def encoding_wrappers() -> List[str]:
+def encoding_wrappers() -> list[str]:
     return sorted(iter_objects(alt.channels, restrict_to_subclass=alt.SchemaBase))
 
 
-def api_functions() -> List[str]:
+def api_functions() -> list[str]:
     # Exclude typing.cast
     altair_api_functions = [
         obj_name
@@ -107,7 +108,7 @@ def api_functions() -> List[str]:
     return sorted(altair_api_functions)
 
 
-def lowlevel_wrappers() -> List[str]:
+def lowlevel_wrappers() -> list[str]:
     objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
     # The names of these two classes are also used for classes in alt.channels. Due to
     # how imports are set up, these channel classes overwrite the two low-level classes

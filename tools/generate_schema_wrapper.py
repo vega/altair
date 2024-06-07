@@ -1,5 +1,6 @@
 """Generate a schema wrapper from a schema"""
 
+from __future__ import annotations
 import argparse
 import copy
 import json
@@ -8,7 +9,7 @@ import re
 import sys
 import textwrap
 from dataclasses import dataclass
-from typing import Dict, Final, List, Literal, Optional, Tuple, Type, Union
+from typing import Final, Literal
 from urllib import request
 
 import m2r
@@ -424,8 +425,8 @@ def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
             recursive_dict_update(sub_schema, root, def_dict)
 
 
-def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> Dict[str, str]:
-    def_dict: Dict[str, Optional[str]] = dict.fromkeys(("field", "datum", "value"))
+def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict[str, str]:
+    def_dict: dict[str, str | None] = dict.fromkeys(("field", "datum", "value"))
     schema = propschema.schema
     if propschema.is_reference() and "properties" in schema:
         if "field" in schema["properties"]:
@@ -439,7 +440,7 @@ def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> Dict[str, 
     return {i: j for i, j in def_dict.items() if j}
 
 
-def toposort(graph: Dict[str, List[str]]) -> List[str]:
+def toposort(graph: dict[str, list[str]]) -> list[str]:
     """Topological sort of a directed acyclic graph.
 
     Parameters
@@ -455,8 +456,8 @@ def toposort(graph: Dict[str, List[str]]) -> List[str]:
     """
     # Once we drop support for Python 3.8, this can potentially be replaced
     # with graphlib.TopologicalSorter from the standard library.
-    stack: List[str] = []
-    visited: Dict[str, Literal[True]] = {}
+    stack: list[str] = []
+    visited: dict[str, Literal[True]] = {}
 
     def visit(nodes):
         for node in sorted(nodes, reverse=True):
@@ -476,7 +477,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
     rootschema = load_schema_with_shorthand_properties(schema_file)
 
-    definitions: Dict[str, SchemaGenerator] = {}
+    definitions: dict[str, SchemaGenerator] = {}
 
     for name in rootschema["definitions"]:
         defschema = {"$ref": "#/definitions/" + name}
@@ -491,7 +492,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
             rootschemarepr=CodeSnippet(f"{basename}._rootschema"),
         )
 
-    graph: Dict[str, List[str]] = {}
+    graph: dict[str, list[str]] = {}
 
     for name, schema in definitions.items():
         graph[name] = []
@@ -541,13 +542,13 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 class ChannelInfo:
     supports_arrays: bool
     deep_description: str
-    field_class_name: Optional[str] = None
-    datum_class_name: Optional[str] = None
-    value_class_name: Optional[str] = None
+    field_class_name: str | None = None
+    datum_class_name: str | None = None
+    value_class_name: str | None = None
 
 
 def generate_vegalite_channel_wrappers(
-    schemafile: Path, version: str, imports: Optional[List[str]] = None
+    schemafile: Path, version: str, imports: list[str] | None = None
 ) -> str:
     # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
@@ -587,11 +588,11 @@ def generate_vegalite_channel_wrappers(
 
             defschema = {"$ref": definition}
 
-            Generator: Union[
-                Type[FieldSchemaGenerator],
-                Type[DatumSchemaGenerator],
-                Type[ValueSchemaGenerator],
-            ]
+            Generator: (
+                type[FieldSchemaGenerator]
+                | type[DatumSchemaGenerator]
+                | type[ValueSchemaGenerator]
+            )
             if encoding_spec == "field":
                 Generator = FieldSchemaGenerator
                 nodefault = []
@@ -630,8 +631,8 @@ def generate_vegalite_channel_wrappers(
 
 
 def generate_vegalite_mark_mixin(
-    schemafile: Path, markdefs: Dict[str, str]
-) -> Tuple[List[str], str]:
+    schemafile: Path, markdefs: dict[str, str]
+) -> tuple[list[str], str]:
     with schemafile.open(encoding="utf8") as f:
         schema = json.load(f)
 
@@ -692,7 +693,7 @@ def generate_vegalite_mark_mixin(
     return imports, "\n".join(code)
 
 
-def generate_vegalite_config_mixin(schemafile: Path) -> Tuple[List[str], str]:
+def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
     imports = ["from . import core", "from altair.utils import use_signature"]
 
     class_name = "ConfigMethodMixin"
@@ -783,7 +784,7 @@ def vegalite_main(skip_download: bool = False) -> None:
 
 
 def _create_encode_signature(
-    channel_infos: Dict[str, ChannelInfo],
+    channel_infos: dict[str, ChannelInfo],
 ) -> str:
     signature_args: list[str] = ["self"]
     docstring_parameters: list[str] = ["", "Parameters", "----------", ""]

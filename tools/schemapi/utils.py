@@ -1,11 +1,12 @@
 """Utilities for working with schemas"""
 
+from __future__ import annotations
 import keyword
 import re
 import subprocess
 import textwrap
 import urllib
-from typing import Any, Dict, Final, Iterable, List, Optional, Union
+from typing import Any, Final, Iterable
 
 from .schemapi import _resolve_references as resolve_references
 
@@ -104,9 +105,9 @@ class SchemaProperties:
 
     def __init__(
         self,
-        properties: Dict[str, Any],
+        properties: dict[str, Any],
         schema: dict,
-        rootschema: Optional[dict] = None,
+        rootschema: dict | None = None,
     ) -> None:
         self._properties = properties
         self._schema = schema
@@ -115,7 +116,7 @@ class SchemaProperties:
     def __bool__(self) -> bool:
         return bool(self._properties)
 
-    def __dir__(self) -> List[str]:
+    def __dir__(self) -> list[str]:
         return list(self._properties.keys())
 
     def __getattr__(self, attr):
@@ -147,7 +148,7 @@ class SchemaInfo:
     """A wrapper for inspecting a JSON schema"""
 
     def __init__(
-        self, schema: Dict[str, Any], rootschema: Optional[Dict[str, Any]] = None
+        self, schema: dict[str, Any], rootschema: dict[str, Any] | None = None
     ) -> None:
         if not rootschema:
             rootschema = schema
@@ -155,7 +156,7 @@ class SchemaInfo:
         self.rootschema = rootschema
         self.schema = resolve_references(schema, rootschema)
 
-    def child(self, schema: dict) -> "SchemaInfo":
+    def child(self, schema: dict) -> SchemaInfo:
         return self.__class__(schema, rootschema=self.rootschema)
 
     def __repr__(self) -> str:
@@ -182,13 +183,13 @@ class SchemaInfo:
     def get_python_type_representation(
         self,
         for_type_hints: bool = False,
-        altair_classes_prefix: Optional[str] = None,
+        altair_classes_prefix: str | None = None,
         return_as_str: bool = True,
-        additional_type_hints: Optional[List[str]] = None,
-    ) -> Union[str, List[str]]:
+        additional_type_hints: list[str] | None = None,
+    ) -> str | list[str]:
         # This is a list of all types which can be used for the current SchemaInfo.
         # This includes Altair classes, standard Python types, etc.
-        type_representations: List[str] = []
+        type_representations: list[str] = []
         if self.title:
             if for_type_hints:
                 # To keep type hints simple, we only use the SchemaBase class
@@ -340,23 +341,23 @@ class SchemaInfo:
         return self.schema.get("additionalProperties", True)
 
     @property
-    def type(self) -> Optional[str]:
+    def type(self) -> str | None:
         return self.schema.get("type", None)
 
     @property
-    def anyOf(self) -> List["SchemaInfo"]:
+    def anyOf(self) -> list[SchemaInfo]:
         return [self.child(s) for s in self.schema.get("anyOf", [])]
 
     @property
-    def oneOf(self) -> List["SchemaInfo"]:
+    def oneOf(self) -> list[SchemaInfo]:
         return [self.child(s) for s in self.schema.get("oneOf", [])]
 
     @property
-    def allOf(self) -> List["SchemaInfo"]:
+    def allOf(self) -> list[SchemaInfo]:
         return [self.child(s) for s in self.schema.get("allOf", [])]
 
     @property
-    def not_(self) -> "SchemaInfo":
+    def not_(self) -> SchemaInfo:
         return self.child(self.schema.get("not", {}))
 
     @property
@@ -372,7 +373,7 @@ class SchemaInfo:
         return self.raw_schema.get("$ref", "#/").split("/")[-1]
 
     @property
-    def ref(self) -> Optional[str]:
+    def ref(self) -> str | None:
         return self.raw_schema.get("$ref", None)
 
     @property
@@ -447,7 +448,7 @@ class SchemaInfo:
 
 
 def indent_docstring(
-    lines: List[str], indent_level: int, width: int = 100, lstrip=True
+    lines: list[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
     """Indent a docstring for use in generated code"""
     final_lines = []
@@ -553,7 +554,7 @@ def flatten(container: Iterable) -> Iterable:
             yield i
 
 
-def ruff_format_str(code: Union[str, List[str]]) -> str:
+def ruff_format_str(code: str | list[str]) -> str:
     if isinstance(code, list):
         code = "\n".join(code)
 
