@@ -168,8 +168,7 @@ preview = true
 extend-safe-fixes=[
     "SIM101", 
     "SIM102", 
-    "SIM103", 
-    "SIM105", 
+    "SIM103",
     "SIM117",
     # unnecessary-comprehension-in-call
     "C419",
@@ -258,6 +257,9 @@ ignore = [
     "B905",
     # mutable-class-default
     "RUF012",
+    # suppressible-exception
+    # https://github.com/vega/altair/pull/3431#discussion_r1629808660
+    "SIM105",
 ]
 
 [tool.ruff.format]
