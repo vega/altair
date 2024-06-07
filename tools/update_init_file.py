@@ -19,7 +19,7 @@ from typing import (
     Union,
     cast,
 )
-import locale
+
 
 if sys.version_info >= (3, 13):
     from typing import TypeIs
@@ -49,7 +49,7 @@ def update__all__variable() -> None:
     Jupyter.
     """
     # Read existing file content
-    encoding = locale.getpreferredencoding(False)
+    encoding = "utf-8"
     init_path = Path(alt.__file__)
     with init_path.open(encoding=encoding) as f:
         lines = f.readlines()

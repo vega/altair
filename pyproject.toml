@@ -174,8 +174,6 @@ extend-safe-fixes=[
     "C419",
     # literal-membership
     "PLR6201",
-    # unspecified-encoding
-    "PLW1514",
 ]
 extend-select=[
     # refurb
@@ -260,6 +258,12 @@ ignore = [
     # suppressible-exception
     # https://github.com/vega/altair/pull/3431#discussion_r1629808660
     "SIM105",
+]
+unfixable= [
+    # unspecified-encoding
+    # The autofix is unsafe and doesn't reliably produce `utf-8`.
+    # However, it still needs to be flagged as error until `python>=3.10`.
+    "PLW1514"
 ]
 
 [tool.ruff.format]

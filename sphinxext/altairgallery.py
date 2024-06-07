@@ -6,7 +6,7 @@ import collections
 from operator import itemgetter
 import warnings
 import shutil
-import locale
+
 import jinja2
 from typing import List, Dict, Any
 
@@ -153,7 +153,7 @@ def save_example_pngs(
     examples: List[Dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
 ):
     """Save example pngs and (optionally) thumbnails"""
-    encoding = locale.getpreferredencoding(False)
+    encoding = "utf-8"
 
     # store hashes so that we know whether images need to be generated
     hash_file: Path = image_dir / "_image_hashes.json"
@@ -339,7 +339,7 @@ def main(app):
     for d in examples:
         examples_toc[d["category"]].append(d)
 
-    encoding = locale.getpreferredencoding(False)
+    encoding = "utf-8"
 
     # Write the gallery index file
     fp = target_dir / "index.rst"
@@ -363,7 +363,7 @@ def main(app):
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
-        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding="utf-8")
+        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
 
 
 def setup(app):

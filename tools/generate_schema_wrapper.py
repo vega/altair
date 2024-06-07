@@ -3,7 +3,6 @@
 import argparse
 import copy
 import json
-import locale
 from pathlib import Path
 import re
 import sys
@@ -741,7 +740,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         schemapath=schemapath,
         skip_download=skip_download,
     )
-    encoding = locale.getpreferredencoding(False)
+    encoding = "utf-8"
 
     # Generate __init__.py file
     outfile = schemapath / "__init__.py"

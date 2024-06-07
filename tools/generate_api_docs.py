@@ -8,7 +8,6 @@ import sys
 import types
 from typing import Final, Optional, Iterator, List
 from types import ModuleType
-import locale
 
 # Import Altair from head
 root_fp = (Path(__file__).parent / "..").resolve()
@@ -129,7 +128,7 @@ def write_api_file() -> None:
             encoding_wrappers=sep.join(encoding_wrappers()),
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
         ),
-        encoding=locale.getpreferredencoding(False),
+        encoding="utf-8",
     )
 
 
