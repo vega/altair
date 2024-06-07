@@ -38,7 +38,6 @@ else:
     from typing_extensions import ParamSpec
 
 from typing import Literal, Protocol, TYPE_CHECKING, runtime_checkable
-import contextlib
 
 if TYPE_CHECKING:
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
@@ -705,9 +704,7 @@ def use_signature(Obj: Callable[P, Any]):
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
                 doc = "\n".join(doclines)
-            # __doc__ is not modifiable for classes in Python < 3.3
-            with contextlib.suppress(AttributeError):
-                f.__doc__ = doc
+            f.__doc__ = doc
 
         return f
 
