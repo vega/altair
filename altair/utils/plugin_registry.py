@@ -207,10 +207,7 @@ class PluginRegistry(Generic[PluginType]):
             return self._active
 
     def __repr__(self) -> str:
-        return (
-            f"{self.__class__.__name__}(active={self._active_name!r}, registered={list(self.names())!r})"
-            ""
-        )
+        return f"{type(self).__name__}(active={self.active!r}, registered={self.names()!r})"
 
 
 def importlib_metadata_get(group):
