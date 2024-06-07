@@ -1,8 +1,9 @@
+from __future__ import annotations
 import json
 import anywidget
 import traitlets
 import pathlib
-from typing import Any, Set, Optional
+from typing import Any
 
 import altair as alt
 from altair.utils._vegafusion_data import (
@@ -187,7 +188,7 @@ class JupyterChart(anywidget.AnyWidget):
         debounce_wait: int = 10,
         max_wait: bool = True,
         debug: bool = False,
-        embed_options: Optional[dict] = None,
+        embed_options: dict | None = None,
         **kwargs: Any,
     ):
         """
@@ -387,7 +388,7 @@ class JupyterChart(anywidget.AnyWidget):
                 )
 
 
-def collect_transform_params(chart: TopLevelSpec) -> Set[str]:
+def collect_transform_params(chart: TopLevelSpec) -> set[str]:
     """
     Collect the names of params that are defined by transforms
 
