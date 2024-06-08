@@ -174,6 +174,10 @@ extend-safe-fixes=[
     "C419",
     # literal-membership
     "PLR6201",
+    # from __future__ import annotations
+    "UP006",
+    "UP007",
+    "TCH"
 ]
 extend-select=[
     # refurb
@@ -272,9 +276,8 @@ unfixable= [
 max-complexity = 18
 
 [tool.ruff.lint.per-file-ignores]
-"altair/utils/schemapi.py" = ["FA100","TCH", "UP006", "UP007"]
-"altair/vegalite/v?/api.py" = ["FA100","TCH", "UP006", "UP007"]
-"tools/schemapi/schemapi.py" = ["FA100", "TCH", "UP006", "UP007"]
+"altair/utils/schemapi.py" = ["FA100", "TCH", "UP006", "UP007"]
+"altair/vegalite/v?/api.py" = ["FA100", "TCH", "UP006", "UP007"]
 
 [tool.ruff.format]
 quote-style = "double"

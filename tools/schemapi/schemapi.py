@@ -1,29 +1,25 @@
+from __future__ import annotations
+
 import collections
 import contextlib
 import copy
 import inspect
 import json
-import sys
 import textwrap
-from typing import (
-    Any,
-    Sequence,
-    List,
-    Dict,
-    Optional,
-    DefaultDict,
-    Tuple,
-    Iterable,
-    Type,
-    Generator,
-    Union,
-    overload,
-    Literal,
-    TypeVar,
-)
-from itertools import zip_longest
 from importlib.metadata import version as importlib_version
-from typing import Final
+from itertools import chain, zip_longest
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Final,
+    Iterable,
+    Iterator,
+    Literal,
+    Sequence,
+    TypeAlias,
+    TypeVar,
+    overload,
+)
 
 import jsonschema
 import jsonschema.exceptions
@@ -37,15 +33,22 @@ from packaging.version import Version
 # not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
 
-if sys.version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+if TYPE_CHECKING:
+    import sys
 
-TSchemaBase = TypeVar("TSchemaBase", bound=Type["SchemaBase"])
+    from referencing import Registry
 
-ValidationErrorList = List[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors = Dict[str, ValidationErrorList]
+    from altair import ChartType
+
+    if sys.version_info >= (3, 11):
+        from typing import Self
+    else:
+        from typing_extensions import Self
+
+TSchemaBase = TypeVar("TSchemaBase", bound=type["SchemaBase"])
+
+ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in
@@ -83,7 +86,7 @@ def disable_debug_mode() -> None:
 
 
 @contextlib.contextmanager
-def debug_mode(arg: bool) -> Generator[None, None, None]:
+def debug_mode(arg: bool) -> Iterator[None]:
     global DEBUG_MODE
     original = DEBUG_MODE
     DEBUG_MODE = arg
@@ -95,9 +98,9 @@ def debug_mode(arg: bool) -> Generator[None, None, None]:
 
 @overload
 def validate_jsonschema(
-    spec: Dict[str, Any],
-    schema: Dict[str, Any],
-    rootschema: Optional[Dict[str, Any]] = ...,
+    spec: dict[str, Any],
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[True] = ...,
 ) -> None: ...
@@ -105,12 +108,12 @@ def validate_jsonschema(
 
 @overload
 def validate_jsonschema(
-    spec: Dict[str, Any],
-    schema: Dict[str, Any],
-    rootschema: Optional[Dict[str, Any]] = ...,
+    spec: dict[str, Any],
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = ...,
     *,
     raise_error: Literal[False],
-) -> Optional[jsonschema.exceptions.ValidationError]: ...
+) -> jsonschema.exceptions.ValidationError | None: ...
 
 
 def validate_jsonschema(
@@ -150,9 +153,9 @@ def validate_jsonschema(
 
 
 def _get_errors_from_spec(
-    spec: Dict[str, Any],
-    schema: Dict[str, Any],
-    rootschema: Optional[Dict[str, Any]] = None,
+    spec: dict[str, Any],
+    schema: dict[str, Any],
+    rootschema: dict[str, Any] | None = None,
 ) -> ValidationErrorList:
     """Uses the relevant jsonschema validator to validate the passed in spec
     against the schema using the rootschema to resolve references.
@@ -173,7 +176,7 @@ def _get_errors_from_spec(
     validator_cls = jsonschema.validators.validator_for(
         {"$schema": json_schema_draft_url}
     )
-    validator_kwargs: Dict[str, Any] = {}
+    validator_kwargs: dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
@@ -196,7 +199,7 @@ def _get_errors_from_spec(
     return errors
 
 
-def _get_json_schema_draft_url(schema: dict) -> str:
+def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
     return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
 
 
@@ -206,13 +209,13 @@ def _use_referencing_library() -> bool:
     return Version(jsonschema_version_str) >= Version("4.18")
 
 
-def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
+def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
     # Create a copy so that $ref is not modified in the original schema in case
     # that it would still reference a dictionary which might be attached to
     # an Altair class _schema attribute
     schema = copy.deepcopy(schema)
 
-    def _prepare_refs(d: Dict[str, Any]) -> Dict[str, Any]:
+    def _prepare_refs(d: dict[str, Any]) -> dict[str, Any]:
         """Add _VEGA_LITE_ROOT_URI in front of all $ref values.
 
         This function recursively iterates through the whole dictionary.
@@ -243,8 +246,8 @@ def _prepare_references_in_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
 # We do not annotate the return value here as the referencing library is not always
 # available and this function is only executed in those cases.
 def _get_referencing_registry(
-    rootschema: Dict[str, Any], json_schema_draft_url: Optional[str] = None
-):
+    rootschema: dict[str, Any], json_schema_draft_url: str | None = None
+) -> Registry:
     # Referencing is a dependency of newer jsonschema versions, starting with the
     # version that is specified in _use_referencing_library and we therefore
     # can expect that it is installed if the function returns True.
@@ -387,7 +390,7 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
     was set although no additional properties are allowed then "validator" is
     `"additionalProperties`, etc.
     """
-    errors_by_validator: DefaultDict[str, ValidationErrorList] = (
+    errors_by_validator: collections.defaultdict[str, ValidationErrorList] = (
         collections.defaultdict(list)
     )
     for err in errors:
@@ -455,7 +458,7 @@ def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
     return list({e.message: e for e in errors}.values())
 
 
-def _subclasses(cls: type) -> Generator[type, None, None]:
+def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
     """Breadth-first sequence of all classes which inherit from cls."""
     seen = set()
     current_set = {cls}
@@ -466,7 +469,7 @@ def _subclasses(cls: type) -> Generator[type, None, None]:
             yield cls
 
 
-def _todict(obj: Any, context: Optional[Dict[str, Any]]) -> Any:
+def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
         return obj.to_dict(validate=False, context=context)
@@ -485,8 +488,8 @@ def _todict(obj: Any, context: Optional[Dict[str, Any]]) -> Any:
 
 
 def _resolve_references(
-    schema: Dict[str, Any], rootschema: Optional[Dict[str, Any]] = None
-) -> Dict[str, Any]:
+    schema: dict[str, Any], rootschema: dict[str, Any] | None = None
+) -> dict[str, Any]:
     """Resolve schema references until there is no $ref anymore
     in the top-level of the dictionary.
     """
@@ -511,7 +514,7 @@ def _resolve_references(
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
 
-    def __init__(self, obj: "SchemaBase", err: jsonschema.ValidationError) -> None:
+    def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
@@ -526,14 +529,14 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def _get_message(self) -> str:
         def indent_second_line_onwards(message: str, indent: int = 4) -> str:
-            modified_lines: List[str] = []
+            modified_lines: list[str] = []
             for idx, line in enumerate(message.split("\n")):
                 if idx > 0 and len(line) > 0:
                     line = " " * indent + line
                 modified_lines.append(line)
             return "\n".join(modified_lines)
 
-        error_messages: List[str] = []
+        error_messages: list[str] = []
         # Only show a maximum of 3 errors as else the final message returned by this
         # method could get very long.
         for errors in list(self._errors.values())[:3]:
@@ -588,7 +591,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
-    ) -> Type["SchemaBase"]:
+    ) -> type[SchemaBase]:
         """Try to get the lowest class possible in the chart hierarchy so
         it can be displayed in the error message. This should lead to more informative
         error messages pointing the user closer to the source of the issue.
@@ -610,8 +613,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
         """Format param names into a table so that they are easier to read"""
-        param_names: Tuple[str, ...]
-        name_lengths: Tuple[int, ...]
+        param_names: tuple[str, ...]
+        name_lengths: tuple[int, ...]
         param_names, name_lengths = zip(
             *[
                 (name, len(name))
@@ -629,14 +632,14 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names
-        def split_into_equal_parts(n: int, p: int) -> List[int]:
+        def split_into_equal_parts(n: int, p: int) -> list[int]:
             return [n // p + 1] * (n % p) + [n // p] * (p - n % p)
 
         column_heights = split_into_equal_parts(num_param_names, columns)
 
         # Section the param names into columns and compute their widths
-        param_names_columns: List[Tuple[str, ...]] = []
-        column_max_widths: List[int] = []
+        param_names_columns: list[tuple[str, ...]] = []
+        column_max_widths: list[int] = []
         last_end_idx: int = 0
         for ch in column_heights:
             param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
@@ -646,7 +649,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             last_end_idx = ch + last_end_idx
 
         # Transpose the param name columns into rows to facilitate looping
-        param_names_rows: List[Tuple[str, ...]] = []
+        param_names_rows: list[tuple[str, ...]] = []
         for li in zip_longest(*param_names_columns, fillvalue=""):
             param_names_rows.append(li)
         # Build the table as a string by iterating over and formatting the rows
@@ -668,7 +671,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         self,
         errors: ValidationErrorList,
     ) -> str:
-        bullet_points: List[str] = []
+        bullet_points: list[str] = []
         errors_by_validator = _group_errors_by_validator(errors)
         if "enum" in errors_by_validator:
             for error in errors_by_validator["enum"]:
@@ -723,12 +726,12 @@ class UndefinedType:
 
     __instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args, **kwargs) -> Self:
         if not isinstance(cls.__instance, cls):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Undefined"
 
 
@@ -742,8 +745,8 @@ class SchemaBase:
     the _rootschema class attribute) which is used for validation.
     """
 
-    _schema: Optional[Dict[str, Any]] = None
-    _rootschema: Optional[Dict[str, Any]] = None
+    _schema: dict[str, Any] | None = None
+    _rootschema: dict[str, Any] | None = None
     _class_is_valid_at_instantiation: bool = True
 
     def __init__(self, *args: Any, **kwds: Any) -> None:
@@ -772,7 +775,7 @@ class SchemaBase:
             self.to_dict(validate=True)
 
     def copy(
-        self, deep: Union[bool, Iterable] = True, ignore: Optional[list] = None
+        self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
     ) -> Self:
         """Return a copy of the object
 
@@ -798,7 +801,7 @@ class SchemaBase:
             else:
                 return obj
 
-        def _deep_copy(obj, ignore: Optional[list] = None):
+        def _deep_copy(obj, ignore: list[str] | None = None):
             if ignore is None:
                 ignore = []
             if isinstance(obj, SchemaBase):
@@ -858,16 +861,16 @@ class SchemaBase:
                 _getattr = super().__getattribute__
             return _getattr(attr)
 
-    def __setattr__(self, item, val):
+    def __setattr__(self, item, val) -> None:
         self._kwds[item] = val
 
     def __getitem__(self, item):
         return self._kwds[item]
 
-    def __setitem__(self, item, val):
+    def __setitem__(self, item, val) -> None:
         self._kwds[item] = val
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self._kwds:
             args = (
                 f"{key}: {val!r}"
@@ -881,7 +884,7 @@ class SchemaBase:
         else:
             return f"{self.__class__.__name__}({self._args[0]!r})"
 
-    def __eq__(self, other):
+    def __eq__(self, other: SchemaBase) -> bool:
         return (
             type(self) is type(other)
             and self._args == other._args
@@ -892,9 +895,9 @@ class SchemaBase:
         self,
         validate: bool = True,
         *,
-        ignore: Optional[List[str]] = None,
-        context: Optional[Dict[str, Any]] = None,
-    ) -> dict:
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         """Return a dictionary representation of the object
 
         Parameters
@@ -983,11 +986,11 @@ class SchemaBase:
     def to_json(
         self,
         validate: bool = True,
-        indent: Optional[Union[int, str]] = 2,
+        indent: int | str | None = 2,
         sort_keys: bool = True,
         *,
-        ignore: Optional[List[str]] = None,
-        context: Optional[Dict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
         **kwargs,
     ) -> str:
         """Emit the JSON representation for this object as a string.
@@ -1028,19 +1031,19 @@ class SchemaBase:
         return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
 
     @classmethod
-    def _default_wrapper_classes(cls) -> Generator[Type["SchemaBase"], None, None]:
+    def _default_wrapper_classes(cls) -> Iterator[type[SchemaBase]]:
         """Return the set of classes used within cls.from_dict()"""
         return _subclasses(SchemaBase)
 
     @classmethod
     def from_dict(
         cls,
-        dct: dict,
+        dct: dict[str, Any],
         validate: bool = True,
-        _wrapper_classes: Optional[Iterable[Type["SchemaBase"]]] = None,
+        _wrapper_classes: Iterable[type[SchemaBase]] | None = None,
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
-    ) -> "SchemaBase":
+    ) -> SchemaBase:
         """Construct class from a dictionary representation
 
         Parameters
@@ -1079,7 +1082,7 @@ class SchemaBase:
         **kwargs: Any,
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
-    ) -> Any:
+    ) -> ChartType:
         """Instantiate the object from a valid JSON string
 
         Parameters
@@ -1101,7 +1104,7 @@ class SchemaBase:
 
     @classmethod
     def validate(
-        cls, instance: Dict[str, Any], schema: Optional[Dict[str, Any]] = None
+        cls, instance: dict[str, Any], schema: dict[str, Any] | None = None
     ) -> None:
         """
         Validate the instance against the class schema in the context of the
@@ -1116,7 +1119,7 @@ class SchemaBase:
         )
 
     @classmethod
-    def resolve_references(cls, schema: Optional[dict] = None) -> dict:
+    def resolve_references(cls, schema: dict[str, Any] | None = None) -> dict[str, Any]:
         """Resolve references in the context of this object's schema or root schema."""
         schema_to_pass = schema or cls._schema
         # For the benefit of mypy
@@ -1128,7 +1131,7 @@ class SchemaBase:
 
     @classmethod
     def validate_property(
-        cls, name: str, value: Any, schema: Optional[dict] = None
+        cls, name: str, value: Any, schema: dict[str, Any] | None = None
     ) -> None:
         """
         Validate a property against property schema in the context of the
@@ -1140,11 +1143,11 @@ class SchemaBase:
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
         )
 
-    def __dir__(self) -> list:
-        return sorted(list(super().__dir__()) + list(self._kwds.keys()))
+    def __dir__(self) -> list[str]:
+        return sorted(chain(super().__dir__(), self._kwds))
 
 
-def _passthrough(*args, **kwds):
+def _passthrough(*args: Any, **kwds: Any):
     return args[0] if args else kwds
 
 
@@ -1158,7 +1161,7 @@ class _FromDict:
 
     _hash_exclude_keys = ("definitions", "title", "description", "$schema", "id")
 
-    def __init__(self, class_list: Iterable[Type[SchemaBase]]) -> None:
+    def __init__(self, class_list: Iterable[type[SchemaBase]]) -> None:
         # Create a mapping of a schema hash to a list of matching classes
         # This lets us quickly determine the correct class to construct
         self.class_dict = collections.defaultdict(list)
@@ -1167,7 +1170,7 @@ class _FromDict:
                 self.class_dict[self.hash_schema(cls._schema)].append(cls)
 
     @classmethod
-    def hash_schema(cls, schema: dict, use_json: bool = True) -> int:
+    def hash_schema(cls, schema: dict[str, Any], use_json: bool = True) -> int:
         """
         Compute a python hash for a nested dictionary which
         properly handles dicts, lists, sets, and tuples.
@@ -1204,10 +1207,10 @@ class _FromDict:
 
     def from_dict(
         self,
-        dct: dict,
-        cls: Optional[Type[SchemaBase]] = None,
-        schema: Optional[dict] = None,
-        rootschema: Optional[dict] = None,
+        dct: dict[str, Any] | list[Any] | SchemaBase,
+        cls: type[SchemaBase] | None = None,
+        schema: dict[str, Any] | None = None,
+        rootschema: dict[str, Any] | None = None,
         default_class=_passthrough,
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
@@ -1277,7 +1280,7 @@ class _FromDict:
 
 
 class _PropertySetter:
-    def __init__(self, prop: str, schema: dict) -> None:
+    def __init__(self, prop: str, schema: dict[str, Any]) -> None:
         self.prop = prop
         self.schema = schema
 
@@ -1317,7 +1320,7 @@ class _PropertySetter:
             pass
         return self
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any):
         obj = self.obj.copy()
         # TODO: use schema to validate
         obj[self.prop] = args[0] if args else kwargs
