@@ -3,6 +3,7 @@ This script updates the attribute __all__ in altair/__init__.py
 based on the updated Altair schema.
 """
 
+from __future__ import annotations
 from inspect import ismodule, getattr_static
 import sys
 from pathlib import Path
@@ -103,6 +104,7 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         or attr is Sequence
         or attr is IO
         or attr is TypeIs
+        or attr is annotations
         or attr_name == "TypingDict"
         or attr_name == "TypingGenerator"
         or attr_name == "ValueOrDatum"

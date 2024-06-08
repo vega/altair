@@ -177,7 +177,11 @@ extend-safe-fixes=[
     # from __future__ import annotations
     "UP006",
     "UP007",
-    "TCH"
+    "UP008",
+    "TCH",
+    # assign exception msg to variable first
+    "EM101",
+    "EM102",
 ]
 extend-select=[
     # refurb
@@ -276,7 +280,6 @@ unfixable= [
 max-complexity = 18
 
 [tool.ruff.lint.per-file-ignores]
-"altair/utils/schemapi.py" = ["FA100", "TCH", "UP006", "UP007"]
 "altair/vegalite/v?/api.py" = ["FA100", "TCH", "UP006", "UP007"]
 
 [tool.ruff.format]

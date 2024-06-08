@@ -83,9 +83,6 @@ class {basename}(SchemaBase):
 """
 
 LOAD_SCHEMA: Final = '''
-import pkgutil
-import json
-
 def load_schema() -> dict:
     """Load the json schema associated with this module's functions"""
     schema_bytes = pkgutil.get_data(__name__, "{schemafile}")
@@ -278,8 +275,10 @@ def process_description(description: str) -> str:
     description = description.replace(">`_", ">`__")
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
-    description = description.replace("’", "'")  # noqa: RUF001
-    description = description.replace("–", "-")  # noqa: RUF001
+    # Fixing ambiguous unicode, RUF001 produces RUF002 in docs
+    description = description.replace("’", "'")  # noqa: RUF001 [RIGHT SINGLE QUOTATION MARK]
+    description = description.replace("–", "-")  # noqa: RUF001 [EN DASH]
+    description = description.replace(" ", " ")  # noqa: RUF001 [NO-BREAK SPACE]
     description += "\n"
     return description.strip()
 
@@ -515,11 +514,14 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
     contents = [
         HEADER,
-        f"__all__ = {all_}",
+        "from __future__ import annotations\n"
         "from typing import Any, Literal, Union, Protocol, Sequence, List",
         "from typing import Dict as TypingDict",
         "from typing import Generator as TypingGenerator",
-        "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses",
+        "import pkgutil",
+        "import json\n",
+        "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses\n",
+        f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
         PARAMETER_PROTOCOL,
         BASE_SCHEMA.format(basename=basename),
@@ -554,6 +556,7 @@ def generate_vegalite_channel_wrappers(
     schema = load_schema_with_shorthand_properties(schemafile)
 
     imports = imports or [
+        "from __future__ import annotations\n",
         "import sys",
         "from . import core",
         "import pandas as pd",
@@ -694,7 +697,10 @@ def generate_vegalite_mark_mixin(
 
 
 def generate_vegalite_config_mixin(schemafile: Path) -> tuple[list[str], str]:
-    imports = ["from . import core", "from altair.utils import use_signature"]
+    imports = [
+        "from . import core",
+        "from altair.utils import use_signature",
+    ]
 
     class_name = "ConfigMethodMixin"
 
@@ -766,7 +772,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "else:",
         "    from typing_extensions import Self",
     ]
-    stdlib_imports = ["import sys"]
+    stdlib_imports = ["from __future__ import annotations\n", "import sys"]
     imports = sorted({*mark_imports, *config_imports})
     content = [
         HEADER,
