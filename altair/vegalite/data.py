@@ -1,4 +1,8 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from toolz import curried
+
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
     MaxRowsError,
@@ -12,8 +16,11 @@ from ..utils.data import (
     check_data_type,
 )
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
-from ..utils.data import DataType, ToValuesReturnType
-from ..utils.plugin_registry import PluginEnabler
+
+
+if TYPE_CHECKING:
+    from ..utils.plugin_registry import PluginEnabler
+    from ..utils.data import DataType, ToValuesReturnType
 
 
 @curried.curry
