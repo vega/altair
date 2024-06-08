@@ -92,7 +92,7 @@ def serve(
     jupyter_warning=True,
     open_browser=True,
     http_server=None,
-):
+) -> None:
     """Start a server serving the given HTML, and (optionally) open a browser
 
     Parameters
@@ -125,7 +125,7 @@ def serve(
 
     if jupyter_warning:
         try:
-            __IPYTHON__  # noqa
+            __IPYTHON__  # type: ignore # noqa
         except NameError:
             pass
         else:

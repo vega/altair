@@ -2,6 +2,8 @@
 Utility routines
 """
 
+from __future__ import annotations
+
 from collections.abc import Mapping, MutableMapping
 from copy import deepcopy
 import json
@@ -14,15 +16,13 @@ from typing import (
     Callable,
     TypeVar,
     Any,
-    Union,
-    Dict,
-    Optional,
-    Tuple,
     Sequence,
-    Type,
     cast,
+    Literal,
+    Protocol,
+    TYPE_CHECKING,
+    runtime_checkable,
 )
-from types import ModuleType
 
 import jsonschema
 import pandas as pd
@@ -37,10 +37,12 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol, TYPE_CHECKING, runtime_checkable
 
 if TYPE_CHECKING:
+    from types import ModuleType
+    import typing as t
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
+    import pyarrow as pa
 
 V = TypeVar("V")
 P = ParamSpec("P")
@@ -199,7 +201,7 @@ InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
 def infer_vegalite_type(
     data: object,
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -241,7 +243,7 @@ def infer_vegalite_type(
         return "nominal"
 
 
-def merge_props_geom(feat: dict) -> dict:
+def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     """
     Merge properties with geometry
     * Overwrites 'type' and 'geometry' entries if existing
@@ -259,7 +261,7 @@ def merge_props_geom(feat: dict) -> dict:
     return props_geom
 
 
-def sanitize_geo_interface(geo: MutableMapping) -> dict:
+def sanitize_geo_interface(geo: t.MutableMapping[Any, Any]) -> dict[str, Any]:
     """Santize a geo_interface to prepare it for serialization.
 
     * Make a copy
@@ -425,7 +427,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def sanitize_arrow_table(pa_table):
+def sanitize_arrow_table(pa_table: pa.Table) -> pa.Table:
     """Sanitize arrow table for JSON serialization"""
     import pyarrow as pa
     import pyarrow.compute as pc
@@ -452,13 +454,13 @@ def sanitize_arrow_table(pa_table):
 
 
 def parse_shorthand(
-    shorthand: Union[Dict[str, Any], str],
-    data: Optional[Union[pd.DataFrame, DataFrameLike]] = None,
+    shorthand: dict[str, Any] | str,
+    data: pd.DataFrame | DataFrameLike | None = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
     parse_types: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """General tool to parse shorthand values
 
     These are of the form:
@@ -647,8 +649,8 @@ def parse_shorthand(
 
 
 def infer_vegalite_type_for_dfi_column(
-    column: Union[Column, "PandasColumn"],
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+    column: Column | PandasColumn,
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
     try:
@@ -684,7 +686,7 @@ def infer_vegalite_type_for_dfi_column(
         raise ValueError(msg)
 
 
-def use_signature(Obj: Callable[P, Any]):
+def use_signature(Obj: Callable[P, Any]):  # -> Callable[..., Callable[P, V]]:
     """Apply call signature and documentation of Obj to the decorated method"""
 
     def decorate(f: Callable[..., V]) -> Callable[P, V]:
@@ -712,8 +714,10 @@ def use_signature(Obj: Callable[P, Any]):
 
 
 def update_nested(
-    original: MutableMapping, update: Mapping, copy: bool = False
-) -> MutableMapping:
+    original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: bool = False,
+) -> t.MutableMapping[Any, Any]:
     """Update nested dictionaries
 
     Parameters
@@ -769,7 +773,9 @@ def display_traceback(in_ipython: bool = True):
         traceback.print_exception(*exc_info)
 
 
-def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: ModuleType):
+def infer_encoding_types(
+    args: Sequence[Any], kwargs: t.MutableMapping[str, Any], channels: ModuleType
+) -> dict[str, SchemaBase | list | dict[str, str] | Any]:
     """Infer typed keyword arguments for args and kwargs
 
     Parameters
@@ -793,10 +799,10 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
     channel_objs = (
         c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
     )
-    channel_to_name: Dict[Type[SchemaBase], str] = {
+    channel_to_name: dict[type[SchemaBase], str] = {
         c: c._encoding_name for c in channel_objs
     }
-    name_to_channel: Dict[str, Dict[str, Type[SchemaBase]]] = {}
+    name_to_channel: dict[str, dict[str, type[SchemaBase]]] = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
         if chan.__name__.endswith("Datum"):

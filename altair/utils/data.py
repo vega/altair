@@ -1,13 +1,23 @@
+from __future__ import annotations
 import json
 import random
 import hashlib
 import warnings
-from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
+from typing import (
+    Any,
+    MutableMapping,
+    Sequence,
+    TYPE_CHECKING,
+    TypeAlias,
+    Protocol,
+    TypedDict,
+    Literal,
+    TypeVar,
+)
 from pathlib import Path
 
 import pandas as pd
 from toolz import curried
-from typing import TypeVar
 
 from ._importers import import_pyarrow_interchange
 from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
@@ -16,22 +26,21 @@ from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
 
-from typing import Protocol, TypedDict, Literal
-
-
 if TYPE_CHECKING:
-    import pyarrow.lib
+    import pyarrow as pa
 
 
 class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, DataFrameLike]
+DataType: TypeAlias = (
+    dict[Any, Any] | pd.DataFrame | SupportsGeoInterface | DataFrameLike
+)
 TDataType = TypeVar("TDataType", bound=DataType)
 
-VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
-ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+VegaLiteDataDict: TypeAlias = dict[str, str | dict[Any, Any] | list[dict[Any, Any]]]
+ToValuesReturnType: TypeAlias = dict[str, dict[Any, Any] | list[dict[Any, Any]]]
 
 
 # ==============================================================================
@@ -68,7 +77,7 @@ class MaxRowsError(Exception):
 
 
 @curried.curry
-def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
+def limit_rows(data: TDataType, max_rows: int | None = 5000) -> TDataType:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
@@ -120,8 +129,8 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
 
 @curried.curry
 def sample(
-    data: DataType, n: Optional[int] = None, frac: Optional[float] = None
-) -> Optional[Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]]:
+    data: DataType, n: int | None = None, frac: float | None = None
+) -> pd.DataFrame | dict[str, Sequence] | pa.Table | None:
     """Reduce the size of the data model by sampling without replacement."""
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
@@ -192,7 +201,7 @@ def to_json(
 
 @curried.curry
 def to_csv(
-    data: Union[dict, pd.DataFrame, DataFrameLike],
+    data: dict | pd.DataFrame | DataFrameLike,
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
@@ -275,7 +284,7 @@ def _data_to_json_string(data: DataType) -> str:
         raise NotImplementedError(msg)
 
 
-def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
+def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if hasattr(data, "__geo_interface__"):
@@ -335,7 +344,7 @@ def curry(*args, **kwargs):
     return curried.curry(*args, **kwargs)
 
 
-def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> "pyarrow.lib.Table":
+def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> pa.Table:
     """Convert a DataFrame Interchange Protocol compatible object to an Arrow Table"""
     import pyarrow as pa
 

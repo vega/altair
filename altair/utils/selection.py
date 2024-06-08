@@ -1,5 +1,6 @@
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Dict, Any, NewType, Optional
+from typing import List, Dict, Any, NewType
 
 
 # Type representing the "{selection}_store" dataset that corresponds to a
@@ -22,11 +23,11 @@ class IndexSelection:
     """
 
     name: str
-    value: List[int]
+    value: list[int]
     store: Store
 
     @staticmethod
-    def from_vega(name: str, signal: Optional[Dict[str, dict]], store: Store):
+    def from_vega(name: str, signal: dict[str, dict] | None, store: Store):
         """
         Construct an IndexSelection from the raw Vega signal and dataset values.
 
@@ -67,11 +68,11 @@ class PointSelection:
     """
 
     name: str
-    value: List[Dict[str, Any]]
+    value: list[dict[str, Any]]
     store: Store
 
     @staticmethod
-    def from_vega(name: str, signal: Optional[Dict[str, dict]], store: Store):
+    def from_vega(name: str, signal: dict[str, dict] | None, store: Store):
         """
         Construct a PointSelection from the raw Vega signal and dataset values.
 
@@ -107,11 +108,11 @@ class IntervalSelection:
     """
 
     name: str
-    value: Dict[str, list]
+    value: dict[str, list]
     store: Store
 
     @staticmethod
-    def from_vega(name: str, signal: Optional[Dict[str, list]], store: Store):
+    def from_vega(name: str, signal: dict[str, list] | None, store: Store):
         """
         Construct an IntervalSelection from the raw Vega signal and dataset values.
 

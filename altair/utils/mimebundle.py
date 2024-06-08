@@ -1,21 +1,26 @@
-from typing import Literal, Optional, Union, cast, Tuple
+from __future__ import annotations
+from typing import Any, Literal, TypeAlias, cast
 
 from .html import spec_to_html
 from ._importers import import_vl_convert, vl_version_for_vl_convert
 import struct
 
+MimeBundleFormat: TypeAlias = Literal[
+    "html", "json", "png", "svg", "pdf", "vega", "vega-lite"
+]
+
 
 def spec_to_mimebundle(
-    spec: dict,
-    format: Literal["html", "json", "png", "svg", "pdf", "vega", "vega-lite"],
-    mode: Optional[Literal["vega-lite"]] = None,
-    vega_version: Optional[str] = None,
-    vegaembed_version: Optional[str] = None,
-    vegalite_version: Optional[str] = None,
-    embed_options: Optional[dict] = None,
-    engine: Optional[Literal["vl-convert"]] = None,
+    spec: dict[str, Any],
+    format: MimeBundleFormat,
+    mode: Literal["vega-lite"] | None = None,
+    vega_version: str | None = None,
+    vegaembed_version: str | None = None,
+    vegalite_version: str | None = None,
+    embed_options: dict[str, Any] | None = None,
+    engine: Literal["vl-convert"] | None = None,
     **kwargs,
-) -> Union[dict, Tuple[dict, dict]]:
+) -> dict[str, Any] | tuple[dict[str, Any], dict[str, Any]]:
     """Convert a vega-lite specification to a mimebundle
 
     The mimebundle type is controlled by the ``format`` argument, which can be
@@ -78,17 +83,16 @@ def spec_to_mimebundle(
     embed_options = preprocess_embed_options(final_embed_options)
 
     if format in {"png", "svg", "pdf", "vega"}:
-        format = cast(Literal["png", "svg", "pdf", "vega"], format)
         return _spec_to_mimebundle_with_engine(
             spec,
-            format,
+            cast(Literal["png", "svg", "pdf", "vega"], format),
             internal_mode,
             engine=engine,
             format_locale=embed_options.get("formatLocale", None),
             time_format_locale=embed_options.get("timeFormatLocale", None),
             **kwargs,
         )
-    if format == "html":
+    elif format == "html":
         html = spec_to_html(
             spec,
             mode=internal_mode,
@@ -99,28 +103,29 @@ def spec_to_mimebundle(
             **kwargs,
         )
         return {"text/html": html}
-    if format == "vega-lite":
+    elif format == "vega-lite":
         if vegalite_version is None:
             msg = "Must specify vegalite_version"
             raise ValueError(msg)
         return {f"application/vnd.vegalite.v{vegalite_version[0]}+json": spec}
-    if format == "json":
+    elif format == "json":
         return {"application/json": spec}
-    msg = (
-        "format must be one of "
-        "['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
-    )
-    raise ValueError(msg)
+    else:
+        msg = (
+            "format must be one of "
+            "['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']"
+        )
+        raise ValueError(msg)
 
 
 def _spec_to_mimebundle_with_engine(
     spec: dict,
     format: Literal["png", "svg", "pdf", "vega"],
     mode: Literal["vega-lite", "vega"],
-    format_locale: Optional[Union[str, dict]] = None,
-    time_format_locale: Optional[Union[str, dict]] = None,
+    format_locale: str | dict | None = None,
+    time_format_locale: str | dict | None = None,
     **kwargs,
-) -> Union[dict, Tuple[dict, dict]]:
+) -> dict | tuple[dict, dict]:
     """Helper for Vega-Lite to mimebundle conversions that require an engine
 
     Parameters
@@ -231,7 +236,7 @@ def _spec_to_mimebundle_with_engine(
 
 
 def _validate_normalize_engine(
-    engine: Optional[Literal["vl-convert"]],
+    engine: Literal["vl-convert"] | None,
     format: Literal["png", "svg", "pdf", "vega"],
 ) -> str:
     """Helper to validate and normalize the user-provided engine
