@@ -202,6 +202,8 @@ select = [
     "EM",
     # pyflakes
     "F",
+    # flake8-future-annotations
+    "FA",
     # flynt
     "FLY",
     # flake8-pie
@@ -266,14 +268,19 @@ unfixable= [
     "PLW1514"
 ]
 
+[tool.ruff.lint.mccabe]
+max-complexity = 18
+
+[tool.ruff.lint.per-file-ignores]
+"altair/utils/schemapi.py" = ["FA100","TCH", "UP006", "UP007"]
+"altair/vegalite/v?/api.py" = ["FA100","TCH", "UP006", "UP007"]
+"tools/schemapi/schemapi.py" = ["FA100", "TCH", "UP006", "UP007"]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "lf"
-
-[tool.ruff.lint.mccabe]
-max-complexity = 18
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
