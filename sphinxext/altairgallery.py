@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import hashlib
 import json
 from pathlib import Path
@@ -7,9 +8,9 @@ import collections
 from operator import itemgetter
 import warnings
 import shutil
+from typing import Any, TYPE_CHECKING
 
 import jinja2
-from typing import Any
 
 from docutils import nodes
 from docutils.statemachine import ViewList
@@ -27,6 +28,9 @@ from .utils import (
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
 from tests.examples_methods_syntax import iter_examples_methods_syntax
+
+if TYPE_CHECKING:
+    from docutils.nodes import Node
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -152,7 +156,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 
 def save_example_pngs(
     examples: list[dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
-):
+) -> None:
     """Save example pngs and (optionally) thumbnails"""
     encoding = "utf-8"
 
@@ -205,7 +209,7 @@ def save_example_pngs(
         json.dump(hashes, f)
 
 
-def populate_examples(**kwds) -> list[dict[str, Any]]:
+def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
@@ -241,20 +245,24 @@ def populate_examples(**kwds) -> list[dict[str, Any]]:
     return examples
 
 
+def _indices(x: str, /) -> list[int]:
+    return [int(idx) for idx in x.split()]
+
+
 class AltairMiniGalleryDirective(Directive):
     has_content = False
 
     option_spec = {
         "size": int,
         "names": str,
-        "indices": lambda x: list(map(int, x.split())),
+        "indices": _indices,
         "shuffle": flag,
         "seed": int,
         "titles": bool,
         "width": str,
     }
 
-    def run(self):
+    def run(self) -> list[Node]:
         size = self.options.get("size", 15)
         names = [name.strip() for name in self.options.get("names", "").split(",")]
         indices = self.options.get("indices", [])
@@ -307,7 +315,7 @@ class AltairMiniGalleryDirective(Directive):
         return node.children
 
 
-def main(app):
+def main(app) -> None:
     src_dir = Path(app.builder.srcdir)
     target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"
@@ -367,7 +375,7 @@ def main(app):
         fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
 
 
-def setup(app):
+def setup(app) -> None:
     app.connect("builder-inited", main)
     app.add_css_file("altair-gallery.css")
     app.add_config_value("altair_gallery_dir", "gallery", "env")
