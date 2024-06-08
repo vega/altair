@@ -1,6 +1,10 @@
-from types import ModuleType
+from __future__ import annotations
 from packaging.version import Version
 from importlib.metadata import version as importlib_version
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from types import ModuleType
 
 
 def import_vegafusion() -> ModuleType:

@@ -4,8 +4,9 @@
 # relevant for Altair.
 #
 # These classes are only for use in type signatures
+from __future__ import annotations
 import enum
-from typing import Any, Iterable, Optional, Tuple, Protocol
+from typing import Any, Iterable, Protocol, TypeAlias
 
 
 class DtypeKind(enum.IntEnum):
@@ -43,7 +44,7 @@ class DtypeKind(enum.IntEnum):
 # as other libraries won't use an instance of our own Enum in this module but have
 # their own. Type checkers will raise an error on that even though the enums
 # are identical.
-Dtype = Tuple[Any, int, str, str]  # see Column.dtype
+Dtype: TypeAlias = tuple[Any, int, str, str]  # see Column.dtype
 
 
 class Column(Protocol):
@@ -121,7 +122,7 @@ class DataFrame(Protocol):
 
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
-    ) -> "DataFrame":
+    ) -> DataFrame:
         """
         Construct a new exchange object, potentially changing the parameters.
 
@@ -145,7 +146,7 @@ class DataFrame(Protocol):
         Return the column whose name is the indicated name.
         """
 
-    def get_chunks(self, n_chunks: Optional[int] = None) -> Iterable["DataFrame"]:
+    def get_chunks(self, n_chunks: int | None = None) -> Iterable[DataFrame]:
         """
         Return an iterator yielding the chunks.
 

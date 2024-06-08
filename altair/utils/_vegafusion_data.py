@@ -1,11 +1,10 @@
+from __future__ import annotations
 from toolz import curried
 import uuid
 from weakref import WeakValueDictionary
 
 from typing import (
-    Union,
-    Dict,
-    Set,
+    Any,
     MutableMapping,
     TypedDict,
     Final,
@@ -40,7 +39,7 @@ class _ToVegaFusionReturnUrlDict(TypedDict):
 @curried.curry
 def vegafusion_data_transformer(
     data: DataType, max_rows: int = 100000
-) -> Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]:
+) -> _ToVegaFusionReturnUrlDict | ToValuesReturnType:
     """VegaFusion Data Transformer"""
     if hasattr(data, "__geo_interface__"):
         # Use default transformer for geo interface objects
@@ -55,7 +54,7 @@ def vegafusion_data_transformer(
         return default_data_transformer(data)
 
 
-def get_inline_table_names(vega_spec: dict) -> Set[str]:
+def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
     """Get a set of the inline datasets names in the provided Vega spec
 
     Inline datasets are encoded as URLs that start with the table://
@@ -105,7 +104,7 @@ def get_inline_table_names(vega_spec: dict) -> Set[str]:
     return table_names
 
 
-def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
+def get_inline_tables(vega_spec: dict[str, Any]) -> dict[str, DataFrameLike]:
     """Get the inline tables referenced by a Vega specification
 
     Note: This function should only be called on a Vega spec that corresponds
@@ -131,8 +130,8 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
 
 
 def compile_to_vegafusion_chart_state(
-    vegalite_spec: dict, local_tz: str
-) -> "ChartState":
+    vegalite_spec: dict[str, Any], local_tz: str
+) -> ChartState:
     """Compile a Vega-Lite spec to a VegaFusion ChartState
 
     Note: This function should only be called on a Vega-Lite spec
@@ -185,7 +184,7 @@ def compile_to_vegafusion_chart_state(
     return chart_state
 
 
-def compile_with_vegafusion(vegalite_spec: dict) -> dict:
+def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict:
     """Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion
 
     Note: This function should only be called on a Vega-Lite spec

@@ -1,13 +1,14 @@
+from __future__ import annotations
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from typing import Union, Iterable, Optional
+from typing import Iterable
 
 
 def open_html_in_browser(
-    html: Union[str, bytes],
-    using: Union[str, Iterable[str], None] = None,
-    port: Optional[int] = None,
-):
+    html: str | bytes,
+    using: str | Iterable[str] | None = None,
+    port: int | None = None,
+) -> None:
     """
     Display an html document in a web browser without creating a temp file.
 
@@ -49,7 +50,7 @@ def open_html_in_browser(
             raise ValueError("Failed to locate a browser with name in " + str(using))
 
     class OneShotRequestHandler(BaseHTTPRequestHandler):
-        def do_GET(self):
+        def do_GET(self) -> None:
             self.send_response(200)
             self.send_header("Content-type", "text/html")
             self.end_headers()
