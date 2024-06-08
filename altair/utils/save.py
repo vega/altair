@@ -17,7 +17,7 @@ def write_file_or_filename(
     fp: str | Path | IO,
     content: str | bytes,
     mode: str = "w",
-    encoding: str | None = "utf-8",
+    encoding: str | None = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
