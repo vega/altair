@@ -78,7 +78,7 @@ BASE_SCHEMA: Final = """
 class {basename}(SchemaBase):
     _rootschema = load_schema()
     @classmethod
-    def _default_wrapper_classes(cls) -> TypingGenerator[type, None, None]:
+    def _default_wrapper_classes(cls) -> Iterator[type[Any]]:
         return _subclasses({basename})
 """
 
@@ -515,9 +515,8 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     contents = [
         HEADER,
         "from __future__ import annotations\n"
-        "from typing import Any, Literal, Union, Protocol, Sequence, List",
+        "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator",
         "from typing import Dict as TypingDict",
-        "from typing import Generator as TypingGenerator",
         "import pkgutil",
         "import json\n",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses\n",

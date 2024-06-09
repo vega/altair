@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-import collections
 import contextlib
 import copy
 import inspect
 import json
 import textwrap
+from collections import defaultdict
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
 from typing import (
@@ -20,7 +20,7 @@ from typing import (
     TypeVar,
     overload,
 )
-
+from functools import partial
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
@@ -39,13 +39,18 @@ if TYPE_CHECKING:
     from referencing import Registry
 
     from altair import ChartType
+    from typing import ClassVar  # Unsure on the version
+
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
 
     if sys.version_info >= (3, 11):
-        from typing import Self
+        from typing import Self, Never
     else:
-        from typing_extensions import Self
+        from typing_extensions import Self, Never
 
-TSchemaBase = TypeVar("TSchemaBase", bound=type["SchemaBase"])
 
 ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
@@ -98,7 +103,7 @@ def debug_mode(arg: bool) -> Iterator[None]:
 
 @overload
 def validate_jsonschema(
-    spec: dict[str, Any],
+    spec: Any,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = ...,
     *,
@@ -108,7 +113,7 @@ def validate_jsonschema(
 
 @overload
 def validate_jsonschema(
-    spec: dict[str, Any],
+    spec: Any,
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = ...,
     *,
@@ -291,7 +296,7 @@ def _group_errors_by_json_path(
     a chart specification and can therefore be considered as an identifier of an
     'issue' in the chart that needs to be fixed.
     """
-    errors_by_json_path = collections.defaultdict(list)
+    errors_by_json_path = defaultdict(list)
     for err in errors:
         err_key = getattr(err, "json_path", _json_path(err))
         errors_by_json_path[err_key].append(err)
@@ -390,9 +395,7 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
     was set although no additional properties are allowed then "validator" is
     `"additionalProperties`, etc.
     """
-    errors_by_validator: collections.defaultdict[str, ValidationErrorList] = (
-        collections.defaultdict(list)
-    )
+    errors_by_validator: defaultdict[str, ValidationErrorList] = defaultdict(list)
     for err in errors:
         # Ignore mypy error as err.validator as it wrongly sees err.validator
         # as of type Optional[Validator] instead of str which it is according
@@ -745,9 +748,9 @@ class SchemaBase:
     the _rootschema class attribute) which is used for validation.
     """
 
-    _schema: dict[str, Any] | None = None
-    _rootschema: dict[str, Any] | None = None
-    _class_is_valid_at_instantiation: bool = True
+    _schema: ClassVar[dict[str, Any] | Any] = None
+    _rootschema: ClassVar[dict[str, Any] | None] = None
+    _class_is_valid_at_instantiation: ClassVar[bool] = True
 
     def __init__(self, *args: Any, **kwds: Any) -> None:
         # Two valid options for initialization, which should be handled by
@@ -872,19 +875,19 @@ class SchemaBase:
 
     def __repr__(self) -> str:
         if self._kwds:
-            args = (
+            it = (
                 f"{key}: {val!r}"
                 for key, val in sorted(self._kwds.items())
                 if val is not Undefined
             )
-            args = "\n" + ",\n".join(args)
+            args = "\n" + ",\n".join(it)
             return "{}({{{}\n}})".format(
                 self.__class__.__name__, args.replace("\n", "\n  ")
             )
         else:
             return f"{self.__class__.__name__}({self._args[0]!r})"
 
-    def __eq__(self, other: SchemaBase) -> bool:
+    def __eq__(self, other: Any) -> bool:
         return (
             type(self) is type(other)
             and self._args == other._args
@@ -1037,13 +1040,11 @@ class SchemaBase:
 
     @classmethod
     def from_dict(
-        cls,
+        cls: type[T],
         dct: dict[str, Any],
         validate: bool = True,
         _wrapper_classes: Iterable[type[SchemaBase]] | None = None,
-        # Type hints for this method would get rather complicated
-        # if we want to provide a more specific return type
-    ) -> SchemaBase:
+    ) -> T:
         """Construct class from a dictionary representation
 
         Parameters
@@ -1099,8 +1100,8 @@ class SchemaBase:
         chart : Chart object
             The altair Chart object built from the specification.
         """
-        dct = json.loads(json_string, **kwargs)
-        return cls.from_dict(dct, validate=validate)
+        dct: dict[str, Any] = json.loads(json_string, **kwargs)
+        return cls.from_dict(dct, validate=validate)  # type: ignore[return-value]
 
     @classmethod
     def validate(
@@ -1147,7 +1148,18 @@ class SchemaBase:
         return sorted(chain(super().__dir__(), self._kwds))
 
 
-def _passthrough(*args: Any, **kwds: Any):
+T = TypeVar("T", bound=SchemaBase)
+
+
+def _is_dict(obj: Any | dict[Any, Any]) -> TypeIs[dict[Any, Any]]:
+    return isinstance(obj, dict)
+
+
+def _is_list(obj: Any | list[Any]) -> TypeIs[list[Any]]:
+    return isinstance(obj, list)
+
+
+def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
     return args[0] if args else kwds
 
 
@@ -1156,18 +1168,18 @@ class _FromDict:
 
     The primary purpose of using this class is to be able to build a hash table
     that maps schemas to their wrapper classes. The candidate classes are
-    specified in the ``class_list`` argument to the constructor.
+    specified in the ``wrapper_classes`` positional-only argument to the constructor.
     """
 
     _hash_exclude_keys = ("definitions", "title", "description", "$schema", "id")
 
-    def __init__(self, class_list: Iterable[type[SchemaBase]]) -> None:
+    def __init__(self, wrapper_classes: Iterable[type[SchemaBase]], /) -> None:
         # Create a mapping of a schema hash to a list of matching classes
         # This lets us quickly determine the correct class to construct
-        self.class_dict = collections.defaultdict(list)
-        for cls in class_list:
-            if cls._schema is not None:
-                self.class_dict[self.hash_schema(cls._schema)].append(cls)
+        self.class_dict: dict[int, list[type[SchemaBase]]] = defaultdict(list)
+        for tp in wrapper_classes:
+            if tp._schema is not None:
+                self.class_dict[self.hash_schema(tp._schema)].append(tp)
 
     @classmethod
     def hash_schema(cls, schema: dict[str, Any], use_json: bool = True) -> int:
@@ -1205,78 +1217,107 @@ class _FromDict:
 
             return hash(_freeze(schema))
 
+    @overload
     def from_dict(
         self,
-        dct: dict[str, Any] | list[Any] | SchemaBase,
-        cls: type[SchemaBase] | None = None,
+        dct: T,
+        tp: Literal[None] = ...,
+        schema: Literal[None] = ...,
+        rootschema: Literal[None] = ...,
+        default_class: Any = ...,
+    ) -> T: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any],
+        tp: Literal[None] = ...,
+        schema: Any = ...,
+        rootschema: Literal[None] = ...,
+        default_class: type[T] = ...,
+    ) -> T: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any],
+        tp: Literal[None] = ...,
+        schema: dict[str, Any] = ...,
+        rootschema: Literal[None] = ...,
+        default_class: Any = ...,
+    ) -> SchemaBase: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any],
+        tp: type[T],
+        schema: Literal[None] = ...,
+        rootschema: Literal[None] = ...,
+        default_class: Any = ...,
+    ) -> T: ...
+    @overload
+    def from_dict(
+        self,
+        dct: dict[str, Any] | list[dict[str, Any]],
+        tp: type[T],
+        schema: dict[str, Any],
+        rootschema: dict[str, Any] | None = ...,
+        default_class: Any = ...,
+    ) -> Never: ...
+    def from_dict(
+        self,
+        dct: dict[str, Any] | list[dict[str, Any]] | T,
+        tp: type[T] | None = None,
         schema: dict[str, Any] | None = None,
         rootschema: dict[str, Any] | None = None,
-        default_class=_passthrough,
-        # Type hints for this method would get rather complicated
-        # if we want to provide a more specific return type
-    ) -> Any:
+        default_class: Any = _passthrough,
+    ) -> T:
         """Construct an object from a dict representation"""
-        if (schema is None) == (cls is None):
-            msg = "Must provide either cls or schema, but not both."
-            raise ValueError(msg)
-        if schema is None:
-            # Can ignore type errors as  cls is not None in case schema is
-            schema = cls._schema  # type: ignore[union-attr]
-            # For the benefit of mypy
-            assert schema is not None
-            if rootschema:
-                rootschema = rootschema
-            elif cls is not None and cls._rootschema is not None:
-                rootschema = cls._rootschema
-            else:
-                rootschema = None
-        rootschema = rootschema or schema
-
+        target_tp: type[T]
+        current_schema: dict[str, Any]
         if isinstance(dct, SchemaBase):
-            return dct
-
-        if cls is None:
+            return dct  # type: ignore[return-value]
+        elif tp is not None:
+            current_schema = tp._schema
+            root_schema = rootschema or tp._rootschema or current_schema
+            target_tp = tp
+        elif schema is not None:
             # If there are multiple matches, we use the first one in the dict.
             # Our class dict is constructed breadth-first from top to bottom,
             # so the first class that matches is the most general match.
-            matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[0] if matches else default_class
-        schema = _resolve_references(schema, rootschema)
+            current_schema = schema
+            root_schema = rootschema or current_schema
+            matches = self.class_dict[self.hash_schema(current_schema)]
+            target_tp = matches[0] if matches else default_class
+        else:
+            msg = "Must provide either `tp` or `schema`, but not both."
+            raise ValueError(msg)
 
-        if "anyOf" in schema or "oneOf" in schema:
-            schemas = schema.get("anyOf", []) + schema.get("oneOf", [])
-            for possible_schema in schemas:
+        from_dict = partial(self.from_dict, rootschema=root_schema)
+        # Can also return a list?
+        resolved = _resolve_references(current_schema, root_schema)
+        if "anyOf" in resolved or "oneOf" in resolved:
+            schemas = resolved.get("anyOf", []) + resolved.get("oneOf", [])
+            for possible in schemas:
                 try:
-                    validate_jsonschema(dct, possible_schema, rootschema=rootschema)
+                    validate_jsonschema(dct, possible, rootschema=root_schema)
                 except jsonschema.ValidationError:
                     continue
                 else:
-                    return self.from_dict(
-                        dct,
-                        schema=possible_schema,
-                        rootschema=rootschema,
-                        default_class=cls,
-                    )
+                    return from_dict(dct, schema=possible, default_class=target_tp)
 
-        if isinstance(dct, dict):
+        if _is_dict(dct):
             # TODO: handle schemas for additionalProperties/patternProperties
-            props = schema.get("properties", {})
-            kwds = {}
-            for key, val in dct.items():
-                if key in props:
-                    val = self.from_dict(val, schema=props[key], rootschema=rootschema)
-                kwds[key] = val
-            return cls(**kwds)
-
-        elif isinstance(dct, list):
-            item_schema = schema.get("items", {})
-            dct = [
-                self.from_dict(val, schema=item_schema, rootschema=rootschema)
-                for val in dct
-            ]
-            return cls(dct)
+            props: dict[str, Any] = resolved.get("properties", {})
+            kwds = {
+                k: (from_dict(v, schema=props[k]) if k in props else v)
+                for k, v in dct.items()
+            }
+            return target_tp(**kwds)
+        elif _is_list(dct):
+            item_schema: dict[str, Any] = resolved.get("items", {})
+            return target_tp([from_dict(k, schema=item_schema) for k in dct])
         else:
-            return cls(dct)
+            # NOTE: Unsure what is valid here
+            return target_tp(dct)
 
 
 class _PropertySetter:
@@ -1327,7 +1368,7 @@ class _PropertySetter:
         return obj
 
 
-def with_property_setters(cls: TSchemaBase) -> TSchemaBase:
+def with_property_setters(cls: type[T]) -> type[T]:
     """
     Decorator to add property setters to a Schema class.
     """
