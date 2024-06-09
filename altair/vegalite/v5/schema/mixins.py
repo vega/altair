@@ -1,13 +1,15 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
+from __future__ import annotations
+
 import sys
 
 
 from . import core
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined, UndefinedType
-from typing import Any, Sequence, List, Literal, Union
+from typing import Sequence, Literal
 
 
 if sys.version_info >= (3, 11):
@@ -21,828 +23,923 @@ class MarkMethodMixin:
 
     def mark_arc(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'arc' (see :class:`MarkDef`)"""
@@ -944,828 +1041,923 @@ class MarkMethodMixin:
 
     def mark_area(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'area' (see :class:`MarkDef`)"""
@@ -1867,828 +2059,923 @@ class MarkMethodMixin:
 
     def mark_bar(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'bar' (see :class:`MarkDef`)"""
@@ -2790,828 +3077,923 @@ class MarkMethodMixin:
 
     def mark_image(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'image' (see :class:`MarkDef`)"""
@@ -3713,828 +4095,923 @@ class MarkMethodMixin:
 
     def mark_line(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'line' (see :class:`MarkDef`)"""
@@ -4636,828 +5113,923 @@ class MarkMethodMixin:
 
     def mark_point(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'point' (see :class:`MarkDef`)"""
@@ -5559,828 +6131,923 @@ class MarkMethodMixin:
 
     def mark_rect(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'rect' (see :class:`MarkDef`)"""
@@ -6482,828 +7149,923 @@ class MarkMethodMixin:
 
     def mark_rule(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'rule' (see :class:`MarkDef`)"""
@@ -7405,828 +8167,923 @@ class MarkMethodMixin:
 
     def mark_text(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'text' (see :class:`MarkDef`)"""
@@ -8328,828 +9185,923 @@ class MarkMethodMixin:
 
     def mark_tick(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'tick' (see :class:`MarkDef`)"""
@@ -9251,828 +10203,923 @@ class MarkMethodMixin:
 
     def mark_trail(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'trail' (see :class:`MarkDef`)"""
@@ -10174,828 +11221,923 @@ class MarkMethodMixin:
 
     def mark_circle(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'circle' (see :class:`MarkDef`)"""
@@ -11097,828 +12239,923 @@ class MarkMethodMixin:
 
     def mark_square(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'square' (see :class:`MarkDef`)"""
@@ -12020,828 +13257,923 @@ class MarkMethodMixin:
 
     def mark_geoshape(
         self,
-        align: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["left", "center", "right"],
-            UndefinedType,
-        ] = Undefined,
-        angle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aria: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRole: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ariaRoleDescription: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        aspect: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        bandSize: Union[float, UndefinedType] = Undefined,
-        baseline: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["top", "middle", "bottom"],
-            UndefinedType,
-        ] = Undefined,
-        binSpacing: Union[float, UndefinedType] = Undefined,
-        blend: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                None,
-                "multiply",
-                "screen",
-                "overlay",
-                "darken",
-                "lighten",
-                "color-dodge",
-                "color-burn",
-                "hard-light",
-                "soft-light",
-                "difference",
-                "exclusion",
-                "hue",
-                "saturation",
-                "color",
-                "luminosity",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        clip: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        continuousBandSize: Union[float, UndefinedType] = Undefined,
-        cornerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusBottomRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusEnd: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopLeft: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cornerRadiusTopRight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        cursor: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "auto",
-                "default",
-                "none",
-                "context-menu",
-                "help",
-                "pointer",
-                "progress",
-                "wait",
-                "cell",
-                "crosshair",
-                "text",
-                "vertical-text",
-                "alias",
-                "copy",
-                "move",
-                "no-drop",
-                "not-allowed",
-                "e-resize",
-                "n-resize",
-                "ne-resize",
-                "nw-resize",
-                "s-resize",
-                "se-resize",
-                "sw-resize",
-                "w-resize",
-                "ew-resize",
-                "ns-resize",
-                "nesw-resize",
-                "nwse-resize",
-                "col-resize",
-                "row-resize",
-                "all-scroll",
-                "zoom-in",
-                "zoom-out",
-                "grab",
-                "grabbing",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        description: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dir: Union[
-            dict, core._Parameter, core.SchemaBase, Literal["ltr", "rtl"], UndefinedType
-        ] = Undefined,
-        discreteBandSize: Union[
-            dict, float, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dx: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        dy: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        ellipsis: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fill: Union[
-            str,
-            dict,
+        align: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["left", "center", "right"]
+        | UndefinedType = Undefined,
+        angle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aria: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRole: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ariaRoleDescription: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        aspect: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        bandSize: float | UndefinedType = Undefined,
+        baseline: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["top", "middle", "bottom"]
+        | UndefinedType = Undefined,
+        binSpacing: float | UndefinedType = Undefined,
+        blend: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
             None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        fillOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        filled: Union[bool, UndefinedType] = Undefined,
-        font: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontStyle: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        fontWeight: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "normal",
-                "bold",
-                "lighter",
-                "bolder",
-                100,
-                200,
-                300,
-                400,
-                500,
-                600,
-                700,
-                800,
-                900,
-            ],
-            UndefinedType,
-        ] = Undefined,
-        height: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        href: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        innerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        limit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        line: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        lineBreak: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        lineHeight: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        minBandSize: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        opacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        order: Union[bool, None, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outerRadius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        padAngle: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        point: Union[str, bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        radius: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radius2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        radiusOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        shape: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        size: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        smooth: Union[
-            bool, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        stroke: Union[
-            str,
-            dict,
-            None,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        strokeCap: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["butt", "round", "square"],
-            UndefinedType,
-        ] = Undefined,
-        strokeDash: Union[
-            dict, core._Parameter, core.SchemaBase, Sequence[float], UndefinedType
-        ] = Undefined,
-        strokeDashOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeJoin: Union[
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal["miter", "round", "bevel"],
-            UndefinedType,
-        ] = Undefined,
-        strokeMiterLimit: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeOpacity: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        strokeWidth: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        style: Union[str, Sequence[str], UndefinedType] = Undefined,
-        tension: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        text: Union[
-            str, dict, Sequence[str], core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        theta2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thetaOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        timeUnitBandPosition: Union[float, UndefinedType] = Undefined,
-        timeUnitBandSize: Union[float, UndefinedType] = Undefined,
-        tooltip: Union[
-            str,
-            bool,
-            dict,
-            None,
-            float,
-            core._Parameter,
-            core.SchemaBase,
-            UndefinedType,
-        ] = Undefined,
-        url: Union[
-            str, dict, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        width: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        x2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        xOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2: Union[
-            str, dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        y2Offset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
-        yOffset: Union[
-            dict, float, core._Parameter, core.SchemaBase, UndefinedType
-        ] = Undefined,
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity",
+        ]
+        | UndefinedType = Undefined,
+        clip: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        continuousBandSize: float | UndefinedType = Undefined,
+        cornerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusBottomRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusEnd: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopLeft: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cornerRadiusTopRight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        cursor: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        ]
+        | UndefinedType = Undefined,
+        description: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dir: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["ltr", "rtl"]
+        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        dx: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        dy: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        ellipsis: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fill: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        fillOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        filled: bool | UndefinedType = Undefined,
+        font: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontStyle: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        fontWeight: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "normal",
+            "bold",
+            "lighter",
+            "bolder",
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+        ]
+        | UndefinedType = Undefined,
+        height: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        href: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        innerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        interpolate: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        limit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        lineBreak: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        lineHeight: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        minBandSize: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        opacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        order: bool | None | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outerRadius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        padAngle: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        radius: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radius2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        radiusOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        shape: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        size: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        smooth: bool
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        stroke: str
+        | dict
+        | None
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        strokeCap: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["butt", "round", "square"]
+        | UndefinedType = Undefined,
+        strokeDash: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Sequence[float]
+        | UndefinedType = Undefined,
+        strokeDashOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeJoin: dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal["miter", "round", "bevel"]
+        | UndefinedType = Undefined,
+        strokeMiterLimit: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeOpacity: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        strokeWidth: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        style: str | Sequence[str] | UndefinedType = Undefined,
+        tension: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        text: str
+        | dict
+        | Sequence[str]
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        theta2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thetaOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        timeUnitBandPosition: float | UndefinedType = Undefined,
+        timeUnitBandSize: float | UndefinedType = Undefined,
+        tooltip: str
+        | bool
+        | dict
+        | None
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
+        width: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        x2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        xOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2: str
+        | dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        y2Offset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
+        yOffset: dict
+        | float
+        | core._Parameter
+        | core.SchemaBase
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)"""
@@ -12943,176 +14275,174 @@ class MarkMethodMixin:
 
     def mark_boxplot(
         self,
-        box: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        extent: Union[str, float, UndefinedType] = Undefined,
-        invalid: Union[Literal["filter", None], UndefinedType] = Undefined,
-        median: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        opacity: Union[float, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        outliers: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        rule: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        size: Union[float, UndefinedType] = Undefined,
-        ticks: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
+        box: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        clip: bool | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        extent: str | float | UndefinedType = Undefined,
+        invalid: Literal["filter", None] | UndefinedType = Undefined,
+        median: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        opacity: float | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        outliers: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        rule: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        size: float | UndefinedType = Undefined,
+        ticks: bool | dict | core.SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)"""
@@ -13140,175 +14470,173 @@ class MarkMethodMixin:
 
     def mark_errorbar(
         self,
-        clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        extent: Union[
-            core.SchemaBase, Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
-        ] = Undefined,
-        opacity: Union[float, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        rule: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        size: Union[float, UndefinedType] = Undefined,
-        thickness: Union[float, UndefinedType] = Undefined,
-        ticks: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
+        clip: bool | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        extent: core.SchemaBase
+        | Literal["ci", "iqr", "stderr", "stdev"]
+        | UndefinedType = Undefined,
+        opacity: float | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        rule: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        size: float | UndefinedType = Undefined,
+        thickness: float | UndefinedType = Undefined,
+        ticks: bool | dict | core.SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)"""
@@ -13333,195 +14661,191 @@ class MarkMethodMixin:
 
     def mark_errorband(
         self,
-        band: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        borders: Union[bool, dict, core.SchemaBase, UndefinedType] = Undefined,
-        clip: Union[bool, UndefinedType] = Undefined,
-        color: Union[
-            str,
-            dict,
-            core._Parameter,
-            core.SchemaBase,
-            Literal[
-                "black",
-                "silver",
-                "gray",
-                "white",
-                "maroon",
-                "red",
-                "purple",
-                "fuchsia",
-                "green",
-                "lime",
-                "olive",
-                "yellow",
-                "navy",
-                "blue",
-                "teal",
-                "aqua",
-                "orange",
-                "aliceblue",
-                "antiquewhite",
-                "aquamarine",
-                "azure",
-                "beige",
-                "bisque",
-                "blanchedalmond",
-                "blueviolet",
-                "brown",
-                "burlywood",
-                "cadetblue",
-                "chartreuse",
-                "chocolate",
-                "coral",
-                "cornflowerblue",
-                "cornsilk",
-                "crimson",
-                "cyan",
-                "darkblue",
-                "darkcyan",
-                "darkgoldenrod",
-                "darkgray",
-                "darkgreen",
-                "darkgrey",
-                "darkkhaki",
-                "darkmagenta",
-                "darkolivegreen",
-                "darkorange",
-                "darkorchid",
-                "darkred",
-                "darksalmon",
-                "darkseagreen",
-                "darkslateblue",
-                "darkslategray",
-                "darkslategrey",
-                "darkturquoise",
-                "darkviolet",
-                "deeppink",
-                "deepskyblue",
-                "dimgray",
-                "dimgrey",
-                "dodgerblue",
-                "firebrick",
-                "floralwhite",
-                "forestgreen",
-                "gainsboro",
-                "ghostwhite",
-                "gold",
-                "goldenrod",
-                "greenyellow",
-                "grey",
-                "honeydew",
-                "hotpink",
-                "indianred",
-                "indigo",
-                "ivory",
-                "khaki",
-                "lavender",
-                "lavenderblush",
-                "lawngreen",
-                "lemonchiffon",
-                "lightblue",
-                "lightcoral",
-                "lightcyan",
-                "lightgoldenrodyellow",
-                "lightgray",
-                "lightgreen",
-                "lightgrey",
-                "lightpink",
-                "lightsalmon",
-                "lightseagreen",
-                "lightskyblue",
-                "lightslategray",
-                "lightslategrey",
-                "lightsteelblue",
-                "lightyellow",
-                "limegreen",
-                "linen",
-                "magenta",
-                "mediumaquamarine",
-                "mediumblue",
-                "mediumorchid",
-                "mediumpurple",
-                "mediumseagreen",
-                "mediumslateblue",
-                "mediumspringgreen",
-                "mediumturquoise",
-                "mediumvioletred",
-                "midnightblue",
-                "mintcream",
-                "mistyrose",
-                "moccasin",
-                "navajowhite",
-                "oldlace",
-                "olivedrab",
-                "orangered",
-                "orchid",
-                "palegoldenrod",
-                "palegreen",
-                "paleturquoise",
-                "palevioletred",
-                "papayawhip",
-                "peachpuff",
-                "peru",
-                "pink",
-                "plum",
-                "powderblue",
-                "rosybrown",
-                "royalblue",
-                "saddlebrown",
-                "salmon",
-                "sandybrown",
-                "seagreen",
-                "seashell",
-                "sienna",
-                "skyblue",
-                "slateblue",
-                "slategray",
-                "slategrey",
-                "snow",
-                "springgreen",
-                "steelblue",
-                "tan",
-                "thistle",
-                "tomato",
-                "turquoise",
-                "violet",
-                "wheat",
-                "whitesmoke",
-                "yellowgreen",
-                "rebeccapurple",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        extent: Union[
-            core.SchemaBase, Literal["ci", "iqr", "stderr", "stdev"], UndefinedType
-        ] = Undefined,
-        interpolate: Union[
-            core.SchemaBase,
-            Literal[
-                "basis",
-                "basis-open",
-                "basis-closed",
-                "bundle",
-                "cardinal",
-                "cardinal-open",
-                "cardinal-closed",
-                "catmull-rom",
-                "linear",
-                "linear-closed",
-                "monotone",
-                "natural",
-                "step",
-                "step-before",
-                "step-after",
-            ],
-            UndefinedType,
-        ] = Undefined,
-        opacity: Union[float, UndefinedType] = Undefined,
-        orient: Union[
-            core.SchemaBase, Literal["horizontal", "vertical"], UndefinedType
-        ] = Undefined,
-        tension: Union[float, UndefinedType] = Undefined,
+        band: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        borders: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        clip: bool | UndefinedType = Undefined,
+        color: str
+        | dict
+        | core._Parameter
+        | core.SchemaBase
+        | Literal[
+            "black",
+            "silver",
+            "gray",
+            "white",
+            "maroon",
+            "red",
+            "purple",
+            "fuchsia",
+            "green",
+            "lime",
+            "olive",
+            "yellow",
+            "navy",
+            "blue",
+            "teal",
+            "aqua",
+            "orange",
+            "aliceblue",
+            "antiquewhite",
+            "aquamarine",
+            "azure",
+            "beige",
+            "bisque",
+            "blanchedalmond",
+            "blueviolet",
+            "brown",
+            "burlywood",
+            "cadetblue",
+            "chartreuse",
+            "chocolate",
+            "coral",
+            "cornflowerblue",
+            "cornsilk",
+            "crimson",
+            "cyan",
+            "darkblue",
+            "darkcyan",
+            "darkgoldenrod",
+            "darkgray",
+            "darkgreen",
+            "darkgrey",
+            "darkkhaki",
+            "darkmagenta",
+            "darkolivegreen",
+            "darkorange",
+            "darkorchid",
+            "darkred",
+            "darksalmon",
+            "darkseagreen",
+            "darkslateblue",
+            "darkslategray",
+            "darkslategrey",
+            "darkturquoise",
+            "darkviolet",
+            "deeppink",
+            "deepskyblue",
+            "dimgray",
+            "dimgrey",
+            "dodgerblue",
+            "firebrick",
+            "floralwhite",
+            "forestgreen",
+            "gainsboro",
+            "ghostwhite",
+            "gold",
+            "goldenrod",
+            "greenyellow",
+            "grey",
+            "honeydew",
+            "hotpink",
+            "indianred",
+            "indigo",
+            "ivory",
+            "khaki",
+            "lavender",
+            "lavenderblush",
+            "lawngreen",
+            "lemonchiffon",
+            "lightblue",
+            "lightcoral",
+            "lightcyan",
+            "lightgoldenrodyellow",
+            "lightgray",
+            "lightgreen",
+            "lightgrey",
+            "lightpink",
+            "lightsalmon",
+            "lightseagreen",
+            "lightskyblue",
+            "lightslategray",
+            "lightslategrey",
+            "lightsteelblue",
+            "lightyellow",
+            "limegreen",
+            "linen",
+            "magenta",
+            "mediumaquamarine",
+            "mediumblue",
+            "mediumorchid",
+            "mediumpurple",
+            "mediumseagreen",
+            "mediumslateblue",
+            "mediumspringgreen",
+            "mediumturquoise",
+            "mediumvioletred",
+            "midnightblue",
+            "mintcream",
+            "mistyrose",
+            "moccasin",
+            "navajowhite",
+            "oldlace",
+            "olivedrab",
+            "orangered",
+            "orchid",
+            "palegoldenrod",
+            "palegreen",
+            "paleturquoise",
+            "palevioletred",
+            "papayawhip",
+            "peachpuff",
+            "peru",
+            "pink",
+            "plum",
+            "powderblue",
+            "rosybrown",
+            "royalblue",
+            "saddlebrown",
+            "salmon",
+            "sandybrown",
+            "seagreen",
+            "seashell",
+            "sienna",
+            "skyblue",
+            "slateblue",
+            "slategray",
+            "slategrey",
+            "snow",
+            "springgreen",
+            "steelblue",
+            "tan",
+            "thistle",
+            "tomato",
+            "turquoise",
+            "violet",
+            "wheat",
+            "whitesmoke",
+            "yellowgreen",
+            "rebeccapurple",
+        ]
+        | UndefinedType = Undefined,
+        extent: core.SchemaBase
+        | Literal["ci", "iqr", "stderr", "stdev"]
+        | UndefinedType = Undefined,
+        interpolate: core.SchemaBase
+        | Literal[
+            "basis",
+            "basis-open",
+            "basis-closed",
+            "bundle",
+            "cardinal",
+            "cardinal-open",
+            "cardinal-closed",
+            "catmull-rom",
+            "linear",
+            "linear-closed",
+            "monotone",
+            "natural",
+            "step",
+            "step-before",
+            "step-after",
+        ]
+        | UndefinedType = Undefined,
+        opacity: float | UndefinedType = Undefined,
+        orient: core.SchemaBase
+        | Literal["horizontal", "vertical"]
+        | UndefinedType = Undefined,
+        tension: float | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)"""
