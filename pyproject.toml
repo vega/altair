@@ -106,6 +106,15 @@ artifacts = ["altair/jupyter/js/index.js"]
 features = ["all", "dev"]
 
 [tool.hatch.envs.default.scripts]
+generate-schema-wrapper = [
+    "mypy tools/schemapi/schemapi.py",
+    "python tools/generate_schema_wrapper.py",
+    "ruff check altair/vegalite/v?/schema --fix --exit-zero",
+    "ruff format altair/vegalite/v?/schema",
+    "ruff check altair/vegalite/v?/schema --statistics",
+    "mypy altair tests",
+    "python -m pytest --pyargs --doctest-modules tests altair"
+]
 test = [
     "ruff check .",
     "ruff format --diff --check .",
