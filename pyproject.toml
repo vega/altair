@@ -104,6 +104,8 @@ artifacts = ["altair/jupyter/js/index.js"]
 
 [tool.hatch.envs.default]
 features = ["all", "dev"]
+# https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
+installer = "uv"
 
 [tool.hatch.envs.default.scripts]
 generate-schema-wrapper = [
@@ -306,6 +308,8 @@ line-ending = "lf"
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
+# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
+addopts="-n logical"
 
 [tool.mypy]
 warn_unused_ignores = true
