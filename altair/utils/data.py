@@ -5,15 +5,18 @@ import hashlib
 import warnings
 from typing import (
     Any,
+    List,
     MutableMapping,
     Sequence,
     TYPE_CHECKING,
-    TypeAlias,
     Protocol,
     TypedDict,
     Literal,
     TypeVar,
+    Union,
+    Dict,
 )
+from typing_extensions import TypeAlias
 from pathlib import Path
 
 import pandas as pd
@@ -34,13 +37,16 @@ class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-DataType: TypeAlias = (
-    dict[Any, Any] | pd.DataFrame | SupportsGeoInterface | DataFrameLike
-)
+DataType: TypeAlias = Union[
+    Dict[Any, Any], pd.DataFrame, SupportsGeoInterface, DataFrameLike
+]
+
 TDataType = TypeVar("TDataType", bound=DataType)
 
-VegaLiteDataDict: TypeAlias = dict[str, str | dict[Any, Any] | list[dict[Any, Any]]]
-ToValuesReturnType: TypeAlias = dict[str, dict[Any, Any] | list[dict[Any, Any]]]
+VegaLiteDataDict: TypeAlias = Dict[
+    str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
+]
+ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
 
 
 # ==============================================================================

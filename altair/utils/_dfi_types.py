@@ -6,7 +6,8 @@
 # These classes are only for use in type signatures
 from __future__ import annotations
 import enum
-from typing import Any, Iterable, Protocol, TypeAlias
+from typing import Any, Iterable, Protocol
+from typing_extensions import TypeAlias
 
 
 class DtypeKind(enum.IntEnum):

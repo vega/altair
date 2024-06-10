@@ -12,26 +12,17 @@ from typing import (
     Any,
     Iterable,
     List,
-    Optional,
-    Protocol,
     Sequence,
-    Type,
     TypeVar,
     Union,
     cast,
+    TYPE_CHECKING,
+    Final,
+    Literal,
 )
+import typing as t
+import typing_extensions as te
 
-
-if sys.version_info >= (3, 13):
-    from typing import TypeIs
-else:
-    from typing_extensions import TypeIs
-if sys.version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
-
-from typing import Final, Literal
 
 current_dir = Path(__file__).parent
 ROOT_DIR: Final = str((current_dir / "..").resolve())
@@ -85,28 +76,33 @@ def update__all__variable() -> None:
     init_path.write_text(new_file_content, encoding=encoding)
 
 
+def _is_hashable(obj: Any) -> bool:
+    try:
+        return bool(hash(obj))
+    except TypeError:
+        return False
+
+
 def _is_relevant_attribute(attr_name: str) -> bool:
     attr = getattr(alt, attr_name)
     if (
         getattr_static(attr, "_deprecated", False)
         or attr_name.startswith("_")
+        # or (_is_hashable(attr) and attr in typing.__dict__)
+        or attr is TYPE_CHECKING
+        or attr is te.TypeAlias
         or attr is TypeVar
-        or attr is Self
-        or attr is Type
         or attr is cast
         or attr is List
         or attr is Any
         or attr is Literal
-        or attr is Optional
         or attr is Iterable
         or attr is Union
-        or attr is Protocol
+        or attr is t.Protocol
+        or attr is te.Protocol
         or attr is Sequence
         or attr is IO
-        or attr is TypeIs
         or attr is annotations
-        or attr_name == "TypingDict"
-        or attr_name == "TypingGenerator"
         or attr_name == "ValueOrDatum"
     ):
         return False

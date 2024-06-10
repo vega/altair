@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import Any, Iterable, overload, TYPE_CHECKING, TypeAlias
-
+from typing import Any, Iterable, overload, TYPE_CHECKING
+from typing_extensions import TypeAlias
 from altair import (
     Chart,
     FacetChart,

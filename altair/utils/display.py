@@ -2,7 +2,8 @@ from __future__ import annotations
 import json
 import pkgutil
 import textwrap
-from typing import Callable, Any, TypeAlias
+from typing import Callable, Any, Dict, Tuple, Union
+from typing_extensions import TypeAlias
 import uuid
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
@@ -17,16 +18,16 @@ from .schemapi import validate_jsonschema
 # MimeBundleType needs to be the same as what are acceptable return values
 # for _repr_mimebundle_,
 # see https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_
-MimeBundleDataType: TypeAlias = dict[str, Any]
-MimeBundleMetaDataType: TypeAlias = dict[str, Any]
-MimeBundleType: TypeAlias = (
-    MimeBundleDataType | tuple[MimeBundleDataType, MimeBundleMetaDataType]
-)
+MimeBundleDataType: TypeAlias = Dict[str, Any]
+MimeBundleMetaDataType: TypeAlias = Dict[str, Any]
+MimeBundleType: TypeAlias = Union[
+    MimeBundleDataType, Tuple[MimeBundleDataType, MimeBundleMetaDataType]
+]
 RendererType: TypeAlias = Callable[..., MimeBundleType]
 # Subtype of MimeBundleType as more specific in the values of the dictionaries
 
-DefaultRendererReturnType: TypeAlias = tuple[
-    dict[str, str | dict[str, Any]], dict[str, dict[str, Any]]
+DefaultRendererReturnType: TypeAlias = Tuple[
+    Dict[str, Union[str, Dict[str, Any]]], Dict[str, Dict[str, Any]]
 ]
 
 

@@ -18,10 +18,10 @@ from typing import (
     Iterator,
     Literal,
     Sequence,
-    TypeAlias,
     TypeVar,
     overload,
 )
+from typing_extensions import TypeAlias
 from functools import partial
 import jsonschema
 import jsonschema.exceptions

@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import Any, Literal, TypeAlias, cast
-
+from typing import Any, Literal, cast, overload
+from typing_extensions import TypeAlias
 from .html import spec_to_html
 from ._importers import import_vl_convert, vl_version_for_vl_convert
 import struct
