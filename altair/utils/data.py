@@ -61,8 +61,7 @@ ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, A
 # form.
 # ==============================================================================
 class DataTransformerType(Protocol):
-    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict:
-        pass
+    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict: ...
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
