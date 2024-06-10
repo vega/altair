@@ -71,6 +71,7 @@ dev = [
     "ipython",
     "pytest",
     "pytest-cov",
+    "pytest-xdist[psutil]~=3.5",
     "m2r",
     "mypy",
     "pandas-stubs",
@@ -113,9 +114,10 @@ generate-schema-wrapper = [
     "python tools/generate_schema_wrapper.py",
     "ruff check altair/vegalite/v?/schema --fix --exit-zero",
     "ruff format altair/vegalite/v?/schema",
-    "ruff check altair/vegalite/v?/schema --statistics",
-    "mypy altair tests",
-    "python -m pytest --pyargs --doctest-modules tests altair"
+    "ruff check altair/vegalite/v?/schema --fix --select I001 --select I002",
+    #"ruff check altair/vegalite/v?/schema --statistics --exit-zero",
+    "ruff format .",
+    #"test"
 ]
 test = [
     "ruff check .",
@@ -130,6 +132,25 @@ update-init-file = [
     "ruff check .",
     "ruff format .",
 ]
+
+[tool.hatch.envs.hatch-test]
+# https://hatch.pypa.io/latest/tutorials/testing/overview/
+features = ["all", "dev", "doc"]
+# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
+default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair"]
+parallel = true
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+[tool.hatch.envs.hatch-test.scripts]
+run = [
+    "ruff check .", 
+    "ruff format --diff --check .",
+    "mypy altair tests",
+    "pytest{env:HATCH_TEST_ARGS:} {args}"
+]
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+cov-report = "coverage report"
 
 [tool.hatch.envs.doc]
 features = ["all", "dev", "doc"]
@@ -313,8 +334,6 @@ line-ending = "lf"
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
-# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
-addopts="-n logical"
 
 [tool.mypy]
 warn_unused_ignores = true
