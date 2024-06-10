@@ -125,6 +125,11 @@ test = [
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
+update-init-file = [
+    "python tools/update_init_file.py",
+    "ruff check .",
+    "ruff format .",
+]
 
 [tool.hatch.envs.doc]
 features = ["all", "dev", "doc"]
