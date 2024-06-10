@@ -287,7 +287,7 @@ def test_schema_validator_selection():
         Draft6Schema.from_dict(dct)
 
 
-@pytest.fixture
+@pytest.fixture()
 def dct():
     return {
         "a": {"foo": "bar"},

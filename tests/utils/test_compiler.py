@@ -8,7 +8,7 @@ except ImportError:
     vlc = None
 
 
-@pytest.fixture
+@pytest.fixture()
 def chart():
     return (
         Chart("cars.json")

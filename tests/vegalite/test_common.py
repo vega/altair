@@ -7,7 +7,7 @@ import pandas as pd
 from altair.vegalite import v5
 
 
-@pytest.fixture
+@pytest.fixture()
 def basic_spec():
     return {
         "data": {"url": "data.csv"},

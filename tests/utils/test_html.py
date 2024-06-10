@@ -3,7 +3,7 @@ import pytest
 from altair.utils.html import spec_to_html
 
 
-@pytest.fixture
+@pytest.fixture()
 def spec():
     return {
         "data": {"url": "data.json"},
