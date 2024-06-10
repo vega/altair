@@ -1,4 +1,5 @@
 import pkgutil
+import sys
 
 import pytest
 from vega_datasets import data
@@ -101,7 +102,16 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     ("radial_chart.py", [6, 6], [["values"], ["values_start"]]),
     ("scatter_linked_table.py", [392, 14, 14, 14], [["Year"], ["Year"], ["Year"], ["Year"]]),
     ("scatter_marginal_hist.py", [34, 150, 27], [["__count"], ["species"], ["__count"]]),
-    ("scatter_with_layered_histogram.py", [2, 19], [["gender"], ["__count"]]),
+    pytest.param(
+        "scatter_with_layered_histogram.py",
+        [2, 19],
+        [["gender"], ["__count"]],
+        marks=pytest.mark.xfail(
+            sys.version_info <= (3, 9),
+            reason="Possibly `numpy` with unsupported python.\n"
+            "Very intermittent, but only affects `to_reconstruct=False`."
+        ),
+    ),
     ("scatter_with_minimap.py", [1461, 1461], [["date"], ["date"]]),
     ("scatter_with_rolling_mean.py", [1461, 1461], [["date"], ["rolling_mean"]]),
     ("seattle_weather_interactive.py", [1461, 5], [["date"], ["__count"]]),
