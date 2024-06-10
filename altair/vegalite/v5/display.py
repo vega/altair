@@ -77,7 +77,7 @@ def png_renderer(spec: dict, **metadata) -> dict[str, bytes]:
 def svg_renderer(spec: dict, **metadata) -> dict[str, str]:
     # To get proper return value type, would need to write complex
     # overload signatures for spec_to_mimebundle based on `format`
-    return spec_to_mimebundle(  # type: ignore[return-value]
+    return spec_to_mimebundle(
         spec,
         format="svg",
         mode="vega-lite",

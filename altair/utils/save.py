@@ -161,7 +161,7 @@ def save(
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
-            mimebundle: Any = spec_to_mimebundle(
+            mb_html = spec_to_mimebundle(
                 spec=spec,
                 format=format,
                 mode=inner_mode,
@@ -173,10 +173,10 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp, mimebundle["text/html"], mode="w", encoding=encoding
+                fp, mb_html["text/html"], mode="w", encoding=encoding
             )
-        elif format in {"png", "svg", "pdf", "vega"}:
-            mimebundle = spec_to_mimebundle(
+        elif format == "png":
+            mb_png = spec_to_mimebundle(
                 spec=spec,
                 format=format,
                 mode=inner_mode,
@@ -188,13 +188,25 @@ def save(
                 engine=engine,
                 **kwargs,
             )
-            if format == "png":
-                write_file_or_filename(fp, mimebundle[0]["image/png"], mode="wb")
-            elif format == "pdf":
-                write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
+            write_file_or_filename(fp, mb_png[0]["image/png"], mode="wb")
+        elif format in {"svg", "pdf", "vega"}:
+            mb_any = spec_to_mimebundle(
+                spec=spec,
+                format=format,
+                mode=inner_mode,
+                vega_version=vega_version,
+                vegalite_version=vegalite_version,
+                vegaembed_version=vegaembed_version,
+                embed_options=embed_options,
+                scale_factor=scale_factor,
+                engine=engine,
+                **kwargs,
+            )
+            if format == "pdf":
+                write_file_or_filename(fp, mb_any["application/pdf"], mode="wb")
             else:
                 write_file_or_filename(
-                    fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
+                    fp, mb_any["image/svg+xml"], mode="w", encoding=encoding
                 )
         else:
             msg = f"Unsupported format: '{format}'"

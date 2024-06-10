@@ -10,6 +10,54 @@ MimeBundleFormat: TypeAlias = Literal[
 ]
 
 
+@overload
+def spec_to_mimebundle(
+    spec: dict[str, Any],
+    format: Literal["json", "vega-lite"],
+    mode: Literal["vega-lite"] | None = ...,
+    vega_version: str | None = ...,
+    vegaembed_version: str | None = ...,
+    vegalite_version: str | None = ...,
+    embed_options: dict[str, Any] | None = ...,
+    engine: Literal["vl-convert"] | None = ...,
+    **kwargs,
+) -> dict[str, dict[str, Any]]: ...
+@overload
+def spec_to_mimebundle(
+    spec: dict[str, Any],
+    format: Literal["html"],
+    mode: Literal["vega-lite"] | None = ...,
+    vega_version: str | None = ...,
+    vegaembed_version: str | None = ...,
+    vegalite_version: str | None = ...,
+    embed_options: dict[str, Any] | None = ...,
+    engine: Literal["vl-convert"] | None = ...,
+    **kwargs,
+) -> dict[str, str]: ...
+@overload
+def spec_to_mimebundle(
+    spec: dict[str, Any],
+    format: Literal["pdf", "svg", "vega"],
+    mode: Literal["vega-lite"] | None = ...,
+    vega_version: str | None = ...,
+    vegaembed_version: str | None = ...,
+    vegalite_version: str | None = ...,
+    embed_options: dict[str, Any] | None = ...,
+    engine: Literal["vl-convert"] | None = ...,
+    **kwargs,
+) -> dict[str, Any]: ...
+@overload
+def spec_to_mimebundle(
+    spec: dict[str, Any],
+    format: Literal["png"],
+    mode: Literal["vega-lite"] | None = ...,
+    vega_version: str | None = ...,
+    vegaembed_version: str | None = ...,
+    vegalite_version: str | None = ...,
+    embed_options: dict[str, Any] | None = ...,
+    engine: Literal["vl-convert"] | None = ...,
+    **kwargs,
+) -> tuple[dict[str, Any], dict[str, Any]]: ...
 def spec_to_mimebundle(
     spec: dict[str, Any],
     format: MimeBundleFormat,
@@ -125,7 +173,7 @@ def _spec_to_mimebundle_with_engine(
     format_locale: str | dict | None = None,
     time_format_locale: str | dict | None = None,
     **kwargs,
-) -> dict | tuple[dict, dict]:
+) -> Any:
     """Helper for Vega-Lite to mimebundle conversions that require an engine
 
     Parameters
