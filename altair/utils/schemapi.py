@@ -20,6 +20,8 @@ from typing import (
     Sequence,
     TypeVar,
     overload,
+    List,
+    Dict,
 )
 from typing_extensions import TypeAlias
 from functools import partial
@@ -41,7 +43,7 @@ if TYPE_CHECKING:
     from referencing import Registry
 
     from altair import ChartType
-    from typing import ClassVar  # Unsure on the version
+    from typing import ClassVar
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
@@ -54,8 +56,8 @@ if TYPE_CHECKING:
         from typing_extensions import Self, Never
 
 
-ValidationErrorList: TypeAlias = list[jsonschema.exceptions.ValidationError]
-GroupedValidationErrors: TypeAlias = dict[str, ValidationErrorList]
+ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
+GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
 
 # This URI is arbitrary and could be anything else. It just cannot be an empty
 # string as we need to reference the schema registered in

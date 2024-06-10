@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Iterable, overload, TYPE_CHECKING
+from typing import Any, Iterable, overload, TYPE_CHECKING, Dict, Tuple
 from typing_extensions import TypeAlias
 from altair import (
     Chart,
@@ -31,8 +31,8 @@ from altair.utils.schemapi import Undefined
 if TYPE_CHECKING:
     from altair.utils.core import DataFrameLike
 
-Scope: TypeAlias = tuple[int, ...]
-FacetMapping: TypeAlias = dict[tuple[str, Scope], tuple[str, Scope]]
+Scope: TypeAlias = Tuple[int, ...]
+FacetMapping: TypeAlias = Dict[Tuple[str, Scope], Tuple[str, Scope]]
 
 
 # For the transformed_data functionality, the chart classes in the values

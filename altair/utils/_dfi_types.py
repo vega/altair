@@ -7,7 +7,6 @@
 from __future__ import annotations
 import enum
 from typing import Any, Iterable, Protocol
-from typing_extensions import TypeAlias
 
 
 class DtypeKind(enum.IntEnum):
@@ -45,12 +44,9 @@ class DtypeKind(enum.IntEnum):
 # as other libraries won't use an instance of our own Enum in this module but have
 # their own. Type checkers will raise an error on that even though the enums
 # are identical.
-Dtype: TypeAlias = tuple[Any, int, str, str]  # see Column.dtype
-
-
 class Column(Protocol):
     @property
-    def dtype(self) -> Dtype:
+    def dtype(self) -> tuple[Any, int, str, str]:
         """
         Dtype description as a tuple ``(kind, bit-width, format string, endianness)``.
 

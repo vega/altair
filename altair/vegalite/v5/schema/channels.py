@@ -31,10 +31,7 @@ class FieldChannelMixin:
         field = self._get("field")  # type: ignore[attr-defined]
 
         if shorthand is not Undefined and field is not Undefined:
-            msg = (
-                f"{self.__class__.__name__} specifies both shorthand={shorthand} and field={field}. "
-                ""
-            )
+            msg = f"{self.__class__.__name__} specifies both shorthand={shorthand} and field={field}. "
             raise ValueError(msg)
 
         if isinstance(shorthand, (tuple, list)):
@@ -73,7 +70,6 @@ class FieldChannelMixin:
                         f"{shorthand} encoding field is specified without a type; "
                         "the type cannot be automatically inferred because "
                         "the data is not specified as a pandas.DataFrame."
-                        ""
                     )
                     raise ValueError(msg)
         else:
