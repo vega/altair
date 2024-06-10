@@ -288,9 +288,6 @@ unfixable= [
 [tool.ruff.lint.mccabe]
 max-complexity = 18
 
-[tool.ruff.lint.per-file-ignores]
-"altair/vegalite/v?/api.py" = ["FA100", "TCH", "UP006", "UP007"]
-
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
@@ -325,3 +322,5 @@ module = [
 ignore_missing_imports = true
 [tool.pyright]
 extraPaths=["./tools"]
+pythonPlatform="All"
+pythonVersion="3.8"

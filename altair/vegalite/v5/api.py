@@ -1,5 +1,6 @@
-import warnings
+from __future__ import annotations
 
+import warnings
 import hashlib
 import io
 import json
@@ -7,19 +8,13 @@ import jsonschema
 import pandas as pd
 from toolz.curried import pipe as _pipe
 import itertools
-import sys
-import pathlib
-import typing
-from typing import cast, List, Optional, Any, Iterable, Union, Literal, IO
-
-# Have to rename it here as else it overlaps with schema.core.Type and schema.core.Dict
-from typing import Type as TypingType
-from typing import Dict as TypingDict
+from typing import Union, cast, Any, Iterable, Literal, IO, TYPE_CHECKING
+from typing_extensions import TypeAlias
 
 from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
 
 from .data import data_transformers
-from ... import utils, expr
+from ... import utils
 from ...expr import core as _expr_core
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
@@ -32,21 +27,75 @@ from ...utils.core import DataFrameLike
 from ...utils.data import DataType
 from ...utils.deprecation import AltairDeprecationWarning
 
-if sys.version_info >= (3, 13):
-    from typing import TypeIs
-else:
-    from typing_extensions import TypeIs
-if sys.version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+if TYPE_CHECKING:
+    import sys
+    from pathlib import Path
 
-ChartDataType = Union[DataType, core.Data, str, core.Generator, UndefinedType]
+    if sys.version_info >= (3, 13):
+        from typing import TypeIs
+    else:
+        from typing_extensions import TypeIs
+    if sys.version_info >= (3, 11):
+        from typing import Self
+    else:
+        from typing_extensions import Self
+    from .schema.channels import Facet, Row, Column
+    from .schema.core import (
+        SchemaBase,
+        Expr,
+        PredicateComposition,
+        Binding,
+        IntervalSelectionConfig,
+        PointSelectionConfig,
+        Mark,
+        LayerRepeatMapping,
+        RepeatMapping,
+        ProjectionType,
+        ExprRef,
+        Vector2number,
+        Vector2Vector2number,
+        Vector3number,
+        Transform,
+        AggregatedFieldDef,
+        FieldName,
+        BinParams,
+        ImputeSequence,
+        ImputeMethod,
+        JoinAggregateFieldDef,
+        ParameterName,
+        Predicate,
+        LookupSelection,
+        AggregateOp,
+        SortField,
+        TimeUnit,
+        WindowFieldDef,
+        FacetFieldDef,
+        FacetedEncoding,
+        AnyMark,
+        Step,
+        RepeatRef,
+        NonNormalizedSpec,
+        LayerSpec,
+        UnitSpec,
+        UrlData,
+        SequenceGenerator,
+        GraticuleGenerator,
+        SphereGenerator,
+        VariableParameter,
+        TopLevelSelectionParameter,
+        SelectionParameter,
+        InlineDataset,
+    )
+    from altair.expr.core import Expression, GetAttrExpression
+
+ChartDataType: TypeAlias = Union[
+    DataType, core.Data, str, core.Generator, UndefinedType
+]
 
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _dataset_name(values: Union[dict, list, core.InlineDataset]) -> str:
+def _dataset_name(values: dict | list | InlineDataset) -> str:
     """Generate a unique hash of the data
 
     Parameters
@@ -182,8 +231,8 @@ core.FacetedEncoding._class_is_valid_at_instantiation = False
 TOPLEVEL_ONLY_KEYS = {"background", "config", "autosize", "padding", "$schema"}
 
 
-def _get_channels_mapping() -> TypingDict[TypingType[core.SchemaBase], str]:
-    mapping: TypingDict[TypingType[core.SchemaBase], str] = {}
+def _get_channels_mapping() -> dict[type[SchemaBase], str]:
+    mapping: dict[type[SchemaBase], str] = {}
     for attr in dir(channels):
         cls = getattr(channels, attr)
         if isinstance(cls, type) and issubclass(cls, core.SchemaBase):
@@ -208,15 +257,13 @@ class Parameter(_expr_core.OperatorMixin):
 
     def __init__(
         self,
-        name: Optional[str] = None,
-        empty: Union[bool, UndefinedType] = Undefined,
-        param: Union[
-            core.VariableParameter,
-            core.TopLevelSelectionParameter,
-            core.SelectionParameter,
-            UndefinedType,
-        ] = Undefined,
-        param_type: Union[Literal["variable", "selection"], UndefinedType] = Undefined,
+        name: str | None = None,
+        empty: bool | UndefinedType = Undefined,
+        param: VariableParameter
+        | TopLevelSelectionParameter
+        | SelectionParameter
+        | UndefinedType = Undefined,
+        param_type: Literal["variable", "selection"] | UndefinedType = Undefined,
     ) -> None:
         if name is None:
             name = self._get_name()
@@ -232,7 +279,7 @@ class Parameter(_expr_core.OperatorMixin):
         "'ref' is deprecated. No need to call '.ref()' anymore."
         return self.to_dict()
 
-    def to_dict(self) -> TypingDict[str, Union[str, dict]]:
+    def to_dict(self) -> dict[str, str | dict]:
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
@@ -273,12 +320,10 @@ class Parameter(_expr_core.OperatorMixin):
     def _to_expr(self) -> str:
         return self.name
 
-    def _from_expr(self, expr) -> "ParameterExpression":
+    def _from_expr(self, expr) -> ParameterExpression:
         return ParameterExpression(expr=expr)
 
-    def __getattr__(
-        self, field_name: str
-    ) -> Union[_expr_core.GetAttrExpression, "SelectionExpression"]:
+    def __getattr__(self, field_name: str) -> GetAttrExpression | SelectionExpression:
         if field_name.startswith("__") and field_name.endswith("__"):
             raise AttributeError(field_name)
         _attrexpr = _expr_core.GetAttrExpression(self.name, field_name)
@@ -310,13 +355,13 @@ class ParameterExpression(_expr_core.OperatorMixin):
     def __init__(self, expr) -> None:
         self.expr = expr
 
-    def to_dict(self) -> TypingDict[str, str]:
+    def to_dict(self) -> dict[str, str]:
         return {"expr": repr(self.expr)}
 
     def _to_expr(self) -> str:
         return repr(self.expr)
 
-    def _from_expr(self, expr) -> "ParameterExpression":
+    def _from_expr(self, expr) -> ParameterExpression:
         return ParameterExpression(expr=expr)
 
 
@@ -324,13 +369,13 @@ class SelectionExpression(_expr_core.OperatorMixin):
     def __init__(self, expr) -> None:
         self.expr = expr
 
-    def to_dict(self) -> TypingDict[str, str]:
+    def to_dict(self) -> dict[str, str]:
         return {"expr": repr(self.expr)}
 
     def _to_expr(self) -> str:
         return repr(self.expr)
 
-    def _from_expr(self, expr) -> "SelectionExpression":
+    def _from_expr(self, expr) -> SelectionExpression:
         return SelectionExpression(expr=expr)
 
 
@@ -355,11 +400,11 @@ def value(value, **kwargs) -> dict:
 
 
 def param(
-    name: Optional[str] = None,
-    value: Union[Any, UndefinedType] = Undefined,
-    bind: Union[core.Binding, UndefinedType] = Undefined,
-    empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[str, core.Expr, _expr_core.Expression, UndefinedType] = Undefined,
+    name: str | None = None,
+    value: Any | UndefinedType = Undefined,
+    bind: Binding | UndefinedType = Undefined,
+    empty: bool | UndefinedType = Undefined,
+    expr: str | Expr | Expression | UndefinedType = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -458,14 +503,14 @@ def param(
 
 
 def _selection(
-    type: Union[Literal["interval", "point"], UndefinedType] = Undefined, **kwds
+    type: Literal["interval", "point"] | UndefinedType = Undefined, **kwds
 ) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
 
     select_kwds = {"name", "bind", "value", "empty", "init", "views"}
     param_kwds = {key: kwds.pop(key) for key in select_kwds & kwds.keys()}
 
-    select: Union[core.IntervalSelectionConfig, core.PointSelectionConfig]
+    select: IntervalSelectionConfig | PointSelectionConfig
     if type == "interval":
         select = core.IntervalSelectionConfig(type=type, **kwds)
     elif type == "point":
@@ -490,7 +535,7 @@ def _selection(
    Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
 )
 def selection(
-    type: Union[Literal["interval", "point"], UndefinedType] = Undefined, **kwds
+    type: Literal["interval", "point"] | UndefinedType = Undefined, **kwds
 ) -> Parameter:
     """
     Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
@@ -515,18 +560,18 @@ def selection(
 
 
 def selection_interval(
-    name: Optional[str] = None,
-    value: Union[Any, UndefinedType] = Undefined,
-    bind: Union[core.Binding, str, UndefinedType] = Undefined,
-    empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[str, core.Expr, _expr_core.Expression, UndefinedType] = Undefined,
-    encodings: Union[List[str], UndefinedType] = Undefined,
-    on: Union[str, UndefinedType] = Undefined,
-    clear: Union[str, bool, UndefinedType] = Undefined,
-    resolve: Union[Literal["global", "union", "intersect"], UndefinedType] = Undefined,
-    mark: Union[core.Mark, UndefinedType] = Undefined,
-    translate: Union[str, bool, UndefinedType] = Undefined,
-    zoom: Union[str, bool, UndefinedType] = Undefined,
+    name: str | None = None,
+    value: Any | UndefinedType = Undefined,
+    bind: Binding | str | UndefinedType = Undefined,
+    empty: bool | UndefinedType = Undefined,
+    expr: str | Expr | Expression | UndefinedType = Undefined,
+    encodings: list[str] | UndefinedType = Undefined,
+    on: str | UndefinedType = Undefined,
+    clear: str | bool | UndefinedType = Undefined,
+    resolve: Literal["global", "union", "intersect"] | UndefinedType = Undefined,
+    mark: Mark | UndefinedType = Undefined,
+    translate: str | bool | UndefinedType = Undefined,
+    zoom: str | bool | UndefinedType = Undefined,
     **kwds,
 ) -> Parameter:
     """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
@@ -627,18 +672,18 @@ def selection_interval(
 
 
 def selection_point(
-    name: Optional[str] = None,
-    value: Union[Any, UndefinedType] = Undefined,
-    bind: Union[core.Binding, str, UndefinedType] = Undefined,
-    empty: Union[bool, UndefinedType] = Undefined,
-    expr: Union[core.Expr, UndefinedType] = Undefined,
-    encodings: Union[List[str], UndefinedType] = Undefined,
-    fields: Union[List[str], UndefinedType] = Undefined,
-    on: Union[str, UndefinedType] = Undefined,
-    clear: Union[str, bool, UndefinedType] = Undefined,
-    resolve: Union[Literal["global", "union", "intersect"], UndefinedType] = Undefined,
-    toggle: Union[str, bool, UndefinedType] = Undefined,
-    nearest: Union[bool, UndefinedType] = Undefined,
+    name: str | None = None,
+    value: Any | UndefinedType = Undefined,
+    bind: Binding | str | UndefinedType = Undefined,
+    empty: bool | UndefinedType = Undefined,
+    expr: Expr | UndefinedType = Undefined,
+    encodings: list[str] | UndefinedType = Undefined,
+    fields: list[str] | UndefinedType = Undefined,
+    on: str | UndefinedType = Undefined,
+    clear: str | bool | UndefinedType = Undefined,
+    resolve: Literal["global", "union", "intersect"] | UndefinedType = Undefined,
+    toggle: str | bool | UndefinedType = Undefined,
+    nearest: bool | UndefinedType = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
@@ -792,15 +837,18 @@ def binding_range(**kwargs):
 
 # TODO: update the docstring
 def condition(
-    predicate: Union[
-        Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
-    ],
+    predicate: Parameter
+    | str
+    | Expression
+    | Expr
+    | PredicateComposition
+    | dict[str, Any],
     # Types of these depends on where the condition is used so we probably
     # can't be more specific here.
     if_true: Any,
     if_false: Any,
     **kwargs,
-) -> Union[dict, core.SchemaBase]:
+) -> dict[str, Any] | SchemaBase:
     """A conditional attribute or encoding
 
     Parameters
@@ -820,14 +868,10 @@ def condition(
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    test_predicates = (str, expr.Expression, core.PredicateComposition)
 
-    condition: TypingDict[
-        str,
-        Union[
-            bool, str, _expr_core.Expression, core.PredicateComposition, UndefinedType
-        ],
-    ]
+    test_predicates = (str, _expr_core.Expression, core.PredicateComposition)
+
+    condition: dict[str, bool | str | Expression | PredicateComposition | UndefinedType]
     if isinstance(predicate, Parameter):
         if (
             predicate.param_type == "selection"
@@ -861,7 +905,7 @@ def condition(
             if_true.update(kwargs)
     condition.update(if_true)
 
-    selection: Union[dict, core.SchemaBase]
+    selection: dict | SchemaBase
     if isinstance(if_false, core.SchemaBase):
         # For the selection, the channel definitions all allow selections
         # already. So use this SchemaBase wrapper if possible.
@@ -890,8 +934,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         validate: bool = True,
         *,
         format: str = "vega-lite",
-        ignore: Optional[List[str]] = None,
-        context: Optional[TypingDict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
     ) -> dict:
         """Convert the chart to a dictionary suitable for JSON export
 
@@ -1008,12 +1052,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def to_json(
         self,
         validate: bool = True,
-        indent: Optional[Union[int, str]] = 2,
+        indent: int | str | None = 2,
         sort_keys: bool = True,
         *,
         format: str = "vega-lite",
-        ignore: Optional[List[str]] = None,
-        context: Optional[TypingDict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
         **kwargs,
     ) -> str:
         """Convert a chart to a JSON string
@@ -1053,8 +1097,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         base_url: str = "https://cdn.jsdelivr.net/npm",
         output_div: str = "vis",
-        embed_options: Optional[dict] = None,
-        json_kwds: Optional[dict] = None,
+        embed_options: dict | None = None,
+        json_kwds: dict | None = None,
         fullhtml: bool = True,
         requirejs: bool = False,
         inline: bool = False,
@@ -1142,18 +1186,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def save(
         self,
-        fp: Union[str, pathlib.Path, IO],
-        format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
+        fp: str | Path | IO,
+        format: Literal["json", "html", "png", "svg", "pdf"] | None = None,
         override_data_transformer: bool = True,
         scale_factor: float = 1.0,
-        mode: Optional[str] = None,
+        mode: str | None = None,
         vegalite_version: str = VEGALITE_VERSION,
         vega_version: str = VEGA_VERSION,
         vegaembed_version: str = VEGAEMBED_VERSION,
-        embed_options: Optional[dict] = None,
-        json_kwds: Optional[dict] = None,
-        webdriver: Optional[str] = None,
-        engine: Optional[str] = None,
+        embed_options: dict | None = None,
+        json_kwds: dict | None = None,
+        webdriver: str | None = None,
+        engine: str | None = None,
         inline=False,
         **kwargs,
     ) -> None:
@@ -1246,20 +1290,20 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return f"alt.{self.__class__.__name__}(...)"
 
     # Layering and stacking
-    def __add__(self, other) -> "LayerChart":
+    def __add__(self, other) -> LayerChart:
         if not isinstance(other, TopLevelMixin):
             msg = "Only Chart objects can be layered."
             raise ValueError(msg)
         return layer(self, other)
 
-    def __and__(self, other) -> "VConcatChart":
+    def __and__(self, other) -> VConcatChart:
         if not isinstance(other, TopLevelMixin):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
         # Too difficult to type check this
         return vconcat(self, other)
 
-    def __or__(self, other) -> "HConcatChart":
+    def __or__(self, other) -> HConcatChart:
         if not isinstance(other, TopLevelMixin):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
@@ -1267,13 +1311,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def repeat(
         self,
-        repeat: Union[List[str], UndefinedType] = Undefined,
-        row: Union[List[str], UndefinedType] = Undefined,
-        column: Union[List[str], UndefinedType] = Undefined,
-        layer: Union[List[str], UndefinedType] = Undefined,
-        columns: Union[int, UndefinedType] = Undefined,
+        repeat: list[str] | UndefinedType = Undefined,
+        row: list[str] | UndefinedType = Undefined,
+        column: list[str] | UndefinedType = Undefined,
+        layer: list[str] | UndefinedType = Undefined,
+        columns: int | UndefinedType = Undefined,
         **kwargs,
-    ) -> "RepeatChart":
+    ) -> RepeatChart:
         """Return a RepeatChart built from the chart
 
         Fields within the chart can be set to correspond to the row or
@@ -1313,7 +1357,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             msg = "repeat argument cannot be combined with layer argument."
             raise ValueError(msg)
 
-        repeat_arg: Union[List[str], core.LayerRepeatMapping, core.RepeatMapping]
+        repeat_arg: list[str] | LayerRepeatMapping | RepeatMapping
         if repeat_specified:
             assert not isinstance(repeat, UndefinedType)  # For mypy
             repeat_arg = repeat
@@ -1347,46 +1391,46 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type: Union[
-            str, core.ProjectionType, core.ExprRef, Parameter, UndefinedType
-        ] = Undefined,
-        center: Union[
-            List[float], core.Vector2number, core.ExprRef, Parameter, UndefinedType
-        ] = Undefined,
-        clipAngle: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        clipExtent: Union[
-            List[List[float]],
-            core.Vector2Vector2number,
-            core.ExprRef,
-            Parameter,
-            UndefinedType,
-        ] = Undefined,
-        coefficient: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        distance: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        fraction: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        lobes: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        parallel: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        precision: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        radius: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        ratio: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        reflectX: Union[bool, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        reflectY: Union[bool, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        rotate: Union[
-            List[float],
-            core.Vector2number,
-            core.Vector3number,
-            core.ExprRef,
-            Parameter,
-            UndefinedType,
-        ] = Undefined,
-        scale: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        spacing: Union[
-            float, core.Vector2number, core.ExprRef, Parameter, UndefinedType
-        ] = Undefined,
-        tilt: Union[float, core.ExprRef, Parameter, UndefinedType] = Undefined,
-        translate: Union[
-            List[float], core.Vector2number, core.ExprRef, Parameter, UndefinedType
-        ] = Undefined,
+        type: str | ProjectionType | ExprRef | Parameter | UndefinedType = Undefined,
+        center: list[float]
+        | Vector2number
+        | ExprRef
+        | Parameter
+        | UndefinedType = Undefined,
+        clipAngle: float | ExprRef | Parameter | UndefinedType = Undefined,
+        clipExtent: list[list[float]]
+        | Vector2Vector2number
+        | ExprRef
+        | Parameter
+        | UndefinedType = Undefined,
+        coefficient: float | ExprRef | Parameter | UndefinedType = Undefined,
+        distance: float | ExprRef | Parameter | UndefinedType = Undefined,
+        fraction: float | ExprRef | Parameter | UndefinedType = Undefined,
+        lobes: float | ExprRef | Parameter | UndefinedType = Undefined,
+        parallel: float | ExprRef | Parameter | UndefinedType = Undefined,
+        precision: float | ExprRef | Parameter | UndefinedType = Undefined,
+        radius: float | ExprRef | Parameter | UndefinedType = Undefined,
+        ratio: float | ExprRef | Parameter | UndefinedType = Undefined,
+        reflectX: bool | ExprRef | Parameter | UndefinedType = Undefined,
+        reflectY: bool | ExprRef | Parameter | UndefinedType = Undefined,
+        rotate: list[float]
+        | Vector2number
+        | Vector3number
+        | ExprRef
+        | Parameter
+        | UndefinedType = Undefined,
+        scale: float | ExprRef | Parameter | UndefinedType = Undefined,
+        spacing: float
+        | Vector2number
+        | ExprRef
+        | Parameter
+        | UndefinedType = Undefined,
+        tilt: float | ExprRef | Parameter | UndefinedType = Undefined,
+        translate: list[float]
+        | Vector2number
+        | ExprRef
+        | Parameter
+        | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Add a geographic projection to the chart.
@@ -1512,7 +1556,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.properties(projection=projection)
 
-    def _add_transform(self, *transforms: core.Transform) -> Self:
+    def _add_transform(self, *transforms: Transform) -> Self:
         """Copy the chart and add specified transforms to chart.transform"""
         copy = self.copy(deep=["transform"])  # type: ignore[attr-defined]
         if copy.transform is Undefined:
@@ -1522,9 +1566,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_aggregate(
         self,
-        aggregate: Union[List[core.AggregatedFieldDef], UndefinedType] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        **kwds: Union[TypingDict[str, Any], str],
+        aggregate: list[AggregatedFieldDef] | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        **kwds: dict[str, Any] | str,
     ) -> Self:
         """
         Add an :class:`AggregateTransform` to the schema.
@@ -1602,11 +1646,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_bin(
         self,
-        as_: Union[
-            str, core.FieldName, List[Union[str, core.FieldName]], UndefinedType
-        ] = Undefined,
-        field: Union[str, core.FieldName, UndefinedType] = Undefined,
-        bin: Union[Literal[True], core.BinParams] = True,
+        as_: str | FieldName | list[str | FieldName] | UndefinedType = Undefined,
+        field: str | FieldName | UndefinedType = Undefined,
+        bin: Literal[True] | BinParams = True,
         **kwargs,
     ) -> Self:
         """
@@ -1665,11 +1707,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_calculate(
         self,
-        as_: Union[str, core.FieldName, UndefinedType] = Undefined,
-        calculate: Union[
-            str, core.Expr, _expr_core.Expression, UndefinedType
-        ] = Undefined,
-        **kwargs: Union[str, core.Expr, _expr_core.Expression],
+        as_: str | FieldName | UndefinedType = Undefined,
+        calculate: str | Expr | Expression | UndefinedType = Undefined,
+        **kwargs: str | Expr | Expression,
     ) -> Self:
         """
         Add a :class:`CalculateTransform` to the schema.
@@ -1737,16 +1777,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_density(
         self,
-        density: Union[str, core.FieldName],
-        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        bandwidth: Union[float, UndefinedType] = Undefined,
-        counts: Union[bool, UndefinedType] = Undefined,
-        cumulative: Union[bool, UndefinedType] = Undefined,
-        extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        maxsteps: Union[int, UndefinedType] = Undefined,
-        minsteps: Union[int, UndefinedType] = Undefined,
-        steps: Union[int, UndefinedType] = Undefined,
+        density: str | FieldName,
+        as_: list[str | FieldName] | UndefinedType = Undefined,
+        bandwidth: float | UndefinedType = Undefined,
+        counts: bool | UndefinedType = Undefined,
+        cumulative: bool | UndefinedType = Undefined,
+        extent: list[float] | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        maxsteps: int | UndefinedType = Undefined,
+        minsteps: int | UndefinedType = Undefined,
+        steps: int | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`DensityTransform` to the spec.
 
@@ -1805,16 +1845,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_impute(
         self,
-        impute: Union[str, core.FieldName],
-        key: Union[str, core.FieldName],
-        frame: Union[List[Optional[int]], UndefinedType] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        keyvals: Union[List[Any], core.ImputeSequence, UndefinedType] = Undefined,
-        method: Union[
-            Literal["value", "mean", "median", "max", "min"],
-            core.ImputeMethod,
-            UndefinedType,
-        ] = Undefined,
+        impute: str | FieldName,
+        key: str | FieldName,
+        frame: list[int | None] | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        keyvals: list[Any] | ImputeSequence | UndefinedType = Undefined,
+        method: Literal["value", "mean", "median", "max", "min"]
+        | ImputeMethod
+        | UndefinedType = Undefined,
         value=Undefined,
     ) -> Self:
         """
@@ -1879,10 +1917,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_joinaggregate(
         self,
-        joinaggregate: Union[
-            List[core.JoinAggregateFieldDef], UndefinedType
-        ] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
+        joinaggregate: list[JoinAggregateFieldDef] | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -1936,7 +1972,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def transform_extent(
-        self, extent: Union[str, core.FieldName], param: Union[str, core.ParameterName]
+        self, extent: str | FieldName, param: str | ParameterName
     ) -> Self:
         """Add a :class:`ExtentTransform` to the spec.
 
@@ -1956,18 +1992,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.ExtentTransform(extent=extent, param=param))
 
     # TODO: Update docstring
+    # # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
     def transform_filter(
         self,
-        filter: Union[
-            str,
-            core.Expr,
-            _expr_core.Expression,
-            core.Predicate,
-            Parameter,
-            core.PredicateComposition,
-            # E.g. {'not': alt.FieldRangePredicate(field='year', range=[1950, 1960])}
-            TypingDict[str, Union[core.Predicate, str, list, bool]],
-        ],
+        filter: str
+        | Expr
+        | Expression
+        | Predicate
+        | Parameter
+        | PredicateComposition
+        | dict[str, Predicate | str | list | bool],
         **kwargs,
     ) -> Self:
         """
@@ -1989,7 +2023,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             returns chart to allow for chaining
         """
         if isinstance(filter, Parameter):
-            new_filter: TypingDict[str, Union[bool, str]] = {"param": filter.name}
+            new_filter: dict[str, bool | str] = {"param": filter.name}
             if "empty" in kwargs:
                 new_filter["empty"] = kwargs.pop("empty")
             elif isinstance(filter.empty, bool):
@@ -1999,8 +2033,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_flatten(
         self,
-        flatten: List[Union[str, core.FieldName]],
-        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
+        flatten: list[str | FieldName],
+        as_: list[str | FieldName] | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`FlattenTransform` to the schema.
 
@@ -2031,8 +2065,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_fold(
         self,
-        fold: List[Union[str, core.FieldName]],
-        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
+        fold: list[str | FieldName],
+        as_: list[str | FieldName] | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`FoldTransform` to the spec.
 
@@ -2058,11 +2092,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_loess(
         self,
-        on: Union[str, core.FieldName],
-        loess: Union[str, core.FieldName],
-        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        bandwidth: Union[float, UndefinedType] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
+        on: str | FieldName,
+        loess: str | FieldName,
+        as_: list[str | FieldName] | UndefinedType = Undefined,
+        bandwidth: float | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`LoessTransform` to the spec.
 
@@ -2100,12 +2134,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_lookup(
         self,
-        lookup: Union[str, UndefinedType] = Undefined,
-        from_: Union[core.LookupData, core.LookupSelection, UndefinedType] = Undefined,
-        as_: Union[
-            Union[str, core.FieldName], List[Union[str, core.FieldName]], UndefinedType
-        ] = Undefined,
-        default: Union[str, UndefinedType] = Undefined,
+        lookup: str | UndefinedType = Undefined,
+        from_: LookupData | LookupSelection | UndefinedType = Undefined,
+        as_: str | FieldName | list[str | FieldName] | UndefinedType = Undefined,
+        default: str | UndefinedType = Undefined,
         **kwargs,
     ) -> Self:
         """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
@@ -2155,11 +2187,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_pivot(
         self,
-        pivot: Union[str, core.FieldName],
-        value: Union[str, core.FieldName],
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        limit: Union[int, UndefinedType] = Undefined,
-        op: Union[str, core.AggregateOp, UndefinedType] = Undefined,
+        pivot: str | FieldName,
+        value: str | FieldName,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        limit: int | UndefinedType = Undefined,
+        op: str | AggregateOp | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
@@ -2207,11 +2239,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_quantile(
         self,
-        quantile: Union[str, core.FieldName],
-        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        probs: Union[List[float], UndefinedType] = Undefined,
-        step: Union[float, UndefinedType] = Undefined,
+        quantile: str | FieldName,
+        as_: list[str | FieldName] | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        probs: list[float] | UndefinedType = Undefined,
+        step: float | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`QuantileTransform` to the chart
 
@@ -2253,16 +2285,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_regression(
         self,
-        on: Union[str, core.FieldName],
-        regression: Union[str, core.FieldName],
-        as_: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        extent: Union[List[float], UndefinedType] = Undefined,
-        groupby: Union[List[Union[str, core.FieldName]], UndefinedType] = Undefined,
-        method: Union[
-            Literal["linear", "log", "exp", "pow", "quad", "poly"], UndefinedType
-        ] = Undefined,
-        order: Union[int, UndefinedType] = Undefined,
-        params: Union[bool, UndefinedType] = Undefined,
+        on: str | FieldName,
+        regression: str | FieldName,
+        as_: list[str | FieldName] | UndefinedType = Undefined,
+        extent: list[float] | UndefinedType = Undefined,
+        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        method: Literal["linear", "log", "exp", "pow", "quad", "poly"]
+        | UndefinedType = Undefined,
+        order: int | UndefinedType = Undefined,
+        params: bool | UndefinedType = Undefined,
     ) -> Self:
         """Add a :class:`RegressionTransform` to the chart.
 
@@ -2340,13 +2371,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_stack(
         self,
-        as_: Union[str, core.FieldName, List[str]],
-        stack: Union[str, core.FieldName],
-        groupby: List[Union[str, core.FieldName]],
-        offset: Union[
-            Literal["zero", "center", "normalize"], UndefinedType
-        ] = Undefined,
-        sort: Union[List[core.SortField], UndefinedType] = Undefined,
+        as_: str | FieldName | list[str],
+        stack: str | FieldName,
+        groupby: list[str | FieldName],
+        offset: Literal["zero", "center", "normalize"] | UndefinedType = Undefined,
+        sort: list[SortField] | UndefinedType = Undefined,
     ) -> Self:
         """
         Add a :class:`StackTransform` to the schema.
@@ -2384,9 +2413,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_timeunit(
         self,
-        as_: Union[str, core.FieldName, UndefinedType] = Undefined,
-        field: Union[str, core.FieldName, UndefinedType] = Undefined,
-        timeUnit: Union[str, core.TimeUnit, UndefinedType] = Undefined,
+        as_: str | FieldName | UndefinedType = Undefined,
+        field: str | FieldName | UndefinedType = Undefined,
+        timeUnit: str | TimeUnit | UndefinedType = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -2467,13 +2496,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_window(
         self,
-        window: Union[List[core.WindowFieldDef], UndefinedType] = Undefined,
-        frame: Union[List[Optional[int]], UndefinedType] = Undefined,
-        groupby: Union[List[str], UndefinedType] = Undefined,
-        ignorePeers: Union[bool, UndefinedType] = Undefined,
-        sort: Union[
-            List[Union[core.SortField, TypingDict[str, str]]], UndefinedType
-        ] = Undefined,
+        window: list[WindowFieldDef] | UndefinedType = Undefined,
+        frame: list[int | None] | UndefinedType = Undefined,
+        groupby: list[str] | UndefinedType = Undefined,
+        ignorePeers: bool | UndefinedType = Undefined,
+        sort: list[SortField | dict[str, str]] | UndefinedType = Undefined,
         **kwargs: str,
     ) -> Self:
         """Add a :class:`WindowTransform` to the schema
@@ -2587,9 +2614,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def display(
         self,
-        renderer: Union[Literal["canvas", "svg"], UndefinedType] = Undefined,
-        theme: Union[str, UndefinedType] = Undefined,
-        actions: Union[bool, dict, UndefinedType] = Undefined,
+        renderer: Literal["canvas", "svg"] | UndefinedType = Undefined,
+        theme: str | UndefinedType = Undefined,
+        actions: bool | dict | UndefinedType = Undefined,
         **kwargs,
     ) -> None:
         """Display chart in Jupyter notebook or JupyterLab
@@ -2745,15 +2772,13 @@ class _EncodingMixin:
 
     def facet(
         self,
-        facet: Union[str, channels.Facet, UndefinedType] = Undefined,
-        row: Union[str, core.FacetFieldDef, channels.Row, UndefinedType] = Undefined,
-        column: Union[
-            str, core.FacetFieldDef, channels.Column, UndefinedType
-        ] = Undefined,
-        data: Union[ChartDataType, UndefinedType] = Undefined,
-        columns: Union[int, UndefinedType] = Undefined,
+        facet: str | Facet | UndefinedType = Undefined,
+        row: str | FacetFieldDef | Row | UndefinedType = Undefined,
+        column: str | FacetFieldDef | Column | UndefinedType = Undefined,
+        data: ChartDataType | UndefinedType = Undefined,
+        columns: int | UndefinedType = Undefined,
         **kwargs,
-    ) -> "FacetChart":
+    ) -> FacetChart:
         """Create a facet chart from the current chart.
 
         Faceted charts require data to be specified at the top level; if data
@@ -2872,11 +2897,11 @@ class Chart(
 
     def __init__(
         self,
-        data: Union[ChartDataType, UndefinedType] = Undefined,
-        encoding: Union[core.FacetedEncoding, UndefinedType] = Undefined,
-        mark: Union[str, core.AnyMark, UndefinedType] = Undefined,
-        width: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
-        height: Union[int, str, dict, core.Step, UndefinedType] = Undefined,
+        data: ChartDataType | UndefinedType = Undefined,
+        encoding: FacetedEncoding | UndefinedType = Undefined,
+        mark: str | AnyMark | UndefinedType = Undefined,
+        width: int | str | dict | Step | UndefinedType = Undefined,
+        height: int | str | dict | Step | UndefinedType = Undefined,
         **kwargs,
     ) -> None:
         super().__init__(
@@ -2899,7 +2924,7 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct: dict, validate: bool = True) -> core.SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
+    def from_dict(cls, dct: dict, validate: bool = True) -> SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
         """Construct class from a dictionary representation
 
         Parameters
@@ -2921,7 +2946,7 @@ class Chart(
         """
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                class_ = cast(TypingType[TopLevelMixin], super())
+                class_ = cast(Any, super())
             try:
                 # TopLevelMixin classes don't necessarily have from_dict defined
                 # but all classes which are used here have due to how Altair is
@@ -2938,8 +2963,8 @@ class Chart(
         validate: bool = True,
         *,
         format: str = "vega-lite",
-        ignore: Optional[List[str]] = None,
-        context: Optional[TypingDict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
     ) -> dict:
         """Convert the chart to a dictionary suitable for JSON export
 
@@ -2986,10 +3011,8 @@ class Chart(
         )
 
     def transformed_data(
-        self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[DataFrameLike]:
+        self, row_limit: int | None = None, exclude: Iterable[str] | None = None
+    ) -> DataFrameLike | None:
         """Evaluate a Chart's transforms
 
         Evaluate the data transforms associated with a Chart and return the
@@ -3031,7 +3054,7 @@ class Chart(
         return self.add_params(*params)
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3059,7 +3082,7 @@ class Chart(
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
 
-def _check_if_valid_subspec(spec: Union[dict, core.SchemaBase], classname: str) -> None:
+def _check_if_valid_subspec(spec: dict | SchemaBase, classname: str) -> None:
     """Check if the spec is a valid sub-spec.
 
     If it is not, then raise a ValueError
@@ -3081,7 +3104,7 @@ def _check_if_valid_subspec(spec: Union[dict, core.SchemaBase], classname: str) 
             raise ValueError(err.format(attr, classname))
 
 
-def _check_if_can_be_layered(spec: Union[dict, core.SchemaBase]) -> None:
+def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
     """Check if the spec can be layered."""
 
     def _get(spec, attr):
@@ -3184,10 +3207,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         )
 
     def transformed_data(
-        self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[DataFrameLike]:
+        self, row_limit: int | None = None, exclude: Iterable[str] | None = None
+    ) -> DataFrameLike | None:
         """Evaluate a RepeatChart's transforms
 
         Evaluate the data transforms associated with a RepeatChart and return the
@@ -3209,7 +3230,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         raise NotImplementedError(msg)
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3251,7 +3272,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 
 def repeat(
     repeater: Literal["row", "column", "repeat", "layer"] = "repeat",
-) -> core.RepeatRef:
+) -> RepeatRef:
     """Tie a channel to the row or column within a repeated chart
 
     The output of this should be passed to the ``field`` attribute of
@@ -3293,16 +3314,14 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return self
 
     # Too difficult to fix override error
-    def __or__(self, other: core.NonNormalizedSpec) -> Self:  # type: ignore[override]
+    def __or__(self, other: NonNormalizedSpec) -> Self:  # type: ignore[override]
         copy = self.copy(deep=["concat"])
         copy |= other
         return copy
 
     def transformed_data(
-        self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> List[DataFrameLike]:
+        self, row_limit: int | None = None, exclude: Iterable[str] | None = None
+    ) -> list[DataFrameLike]:
         """Evaluate a ConcatChart's transforms
 
         Evaluate the data transforms associated with a ConcatChart and return the
@@ -3325,7 +3344,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3385,23 +3404,21 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
-    def __ior__(self, other: core.NonNormalizedSpec) -> Self:
+    def __ior__(self, other: NonNormalizedSpec) -> Self:
         _check_if_valid_subspec(other, "HConcatChart")
         self.hconcat.append(other)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
         return self
 
-    def __or__(self, other: core.NonNormalizedSpec) -> Self:
+    def __or__(self, other: NonNormalizedSpec) -> Self:
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
 
     def transformed_data(
-        self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> List[DataFrameLike]:
+        self, row_limit: int | None = None, exclude: Iterable[str] | None = None
+    ) -> list[DataFrameLike]:
         """Evaluate a HConcatChart's transforms
 
         Evaluate the data transforms associated with a HConcatChart and return the
@@ -3424,7 +3441,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3484,23 +3501,23 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
-    def __iand__(self, other: core.NonNormalizedSpec) -> Self:
+    def __iand__(self, other: NonNormalizedSpec) -> Self:
         _check_if_valid_subspec(other, "VConcatChart")
         self.vconcat.append(other)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
         return self
 
-    def __and__(self, other: core.NonNormalizedSpec) -> Self:
+    def __and__(self, other: NonNormalizedSpec) -> Self:
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
 
     def transformed_data(
         self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> List[DataFrameLike]:
+        row_limit: int | None = None,
+        exclude: Iterable[str] | None = None,
+    ) -> list[DataFrameLike]:
         """Evaluate a VConcatChart's transforms
 
         Evaluate the data transforms associated with a VConcatChart and return the
@@ -3523,7 +3540,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3596,9 +3613,9 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
     def transformed_data(
         self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> List[DataFrameLike]:
+        row_limit: int | None = None,
+        exclude: Iterable[str] | None = None,
+    ) -> list[DataFrameLike]:
         """Evaluate a LayerChart's transforms
 
         Evaluate the data transforms associated with a LayerChart and return the
@@ -3620,7 +3637,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def __iadd__(self, other: Union[core.LayerSpec, core.UnitSpec]) -> Self:
+    def __iadd__(self, other: LayerSpec | UnitSpec) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
         self.layer.append(other)
@@ -3628,19 +3645,19 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
-    def __add__(self, other: Union[core.LayerSpec, core.UnitSpec]) -> Self:
+    def __add__(self, other: LayerSpec | UnitSpec) -> Self:
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
 
-    def add_layers(self, *layers: Union[core.LayerSpec, core.UnitSpec]) -> Self:
+    def add_layers(self, *layers: LayerSpec | UnitSpec) -> Self:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer
         return copy
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3709,10 +3726,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         super().__init__(data=data, spec=spec, facet=facet, params=params, **kwargs)
 
     def transformed_data(
-        self,
-        row_limit: Optional[int] = None,
-        exclude: Optional[Iterable[str]] = None,
-    ) -> Optional[DataFrameLike]:
+        self, row_limit: int | None = None, exclude: Iterable[str] | None = None
+    ) -> DataFrameLike | None:
         """Evaluate a FacetChart's transforms
 
         Evaluate the data transforms associated with a FacetChart and return the
@@ -3735,7 +3750,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
     def interactive(
-        self, name: Optional[str] = None, bind_x: bool = True, bind_y: bool = True
+        self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
         """Make chart axes scales interactive
 
@@ -3775,7 +3790,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return self.add_params(*selections)
 
 
-def topo_feature(url: str, feature: str, **kwargs) -> core.UrlData:
+def topo_feature(url: str, feature: str, **kwargs) -> UrlData:
     """A convenience function for extracting features from a topojson url
 
     Parameters
@@ -4063,7 +4078,9 @@ def _remove_layer_props(chart, subcharts, layer_props):
 
 
 @utils.use_signature(core.SequenceParams)
-def sequence(start, stop=None, step=Undefined, as_=Undefined, **kwds):
+def sequence(
+    start, stop=None, step=Undefined, as_=Undefined, **kwds
+) -> SequenceGenerator:
     """Sequence generator."""
     if stop is None:
         start, stop = 0, start
@@ -4072,14 +4089,14 @@ def sequence(start, stop=None, step=Undefined, as_=Undefined, **kwds):
 
 
 @utils.use_signature(core.GraticuleParams)
-def graticule(**kwds):
+def graticule(**kwds) -> GraticuleGenerator:
     """Graticule generator."""
     # graticule: True indicates default parameters
-    graticule = core.GraticuleParams(**kwds) if kwds else True
+    graticule: Any = core.GraticuleParams(**kwds) if kwds else True
     return core.GraticuleGenerator(graticule=graticule)
 
 
-def sphere() -> core.SphereGenerator:
+def sphere() -> SphereGenerator:
     """Sphere generator."""
     return core.SphereGenerator(sphere=True)
 
@@ -4095,5 +4112,5 @@ def is_chart_type(obj: Any) -> TypeIs[ChartType]:
     """
     return isinstance(
         obj,
-        typing.get_args(ChartType),
-    )
+        (Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart)
+    )  # fmt: skip
