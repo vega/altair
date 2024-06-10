@@ -190,7 +190,7 @@ def test_chart_infer_types():
 
 
 @pytest.mark.parametrize(
-    "args, kwargs",
+    ("args", "kwargs"),
     [
         getargs(detail=["value:Q", "name:N"], tooltip=["value:Q", "name:N"]),
         getargs(detail=["value", "name"], tooltip=["value", "name"]),

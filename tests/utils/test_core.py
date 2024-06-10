@@ -71,7 +71,7 @@ class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
 
 
 @pytest.mark.parametrize(
-    "value,expected_type",
+    ("value", "expected_type"),
     [
         ([1, 2, 3], "integer"),
         ([1.0, 2.0, 3.0], "floating"),

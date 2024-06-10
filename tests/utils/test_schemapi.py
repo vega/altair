@@ -645,7 +645,7 @@ def chart_error_example__four_errors():
 
 
 @pytest.mark.parametrize(
-    "chart_func, expected_error_message",
+    ("chart_func", "expected_error_message"),
     [
         (
             chart_error_example__invalid_y_option_value_unknown_x_option,
