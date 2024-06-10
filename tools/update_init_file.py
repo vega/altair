@@ -56,7 +56,8 @@ def update__all__variable() -> None:
         elif first_definition_line is not None and line.startswith("]"):
             last_definition_line = idx
             break
-    assert first_definition_line is not None and last_definition_line is not None
+    assert first_definition_line is not None
+    assert last_definition_line is not None
 
     # Figure out which attributes are relevant
     relevant_attributes = sorted(x for x in alt.__dict__ if _is_relevant_attribute(x))
