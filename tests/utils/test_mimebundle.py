@@ -197,7 +197,7 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 
 def test_spec_to_vega_mimebundle(vega_spec):
     # ValueError: mode must be 'vega-lite'
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError):  # noqa: PT011
         spec_to_mimebundle(
             spec=vega_spec,
             mode="vega",

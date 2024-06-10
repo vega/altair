@@ -371,7 +371,7 @@ def test_class_with_no_schema():
     class BadSchema(SchemaBase):
         pass
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         BadSchema(4)
     assert str(err.value).startswith("Cannot instantiate object")
 

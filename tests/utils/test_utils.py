@@ -180,14 +180,14 @@ def test_sanitize_dataframe_colnames():
 
     # Test that non-string columns result in an error
     df.columns = [4, "foo", "bar"]
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         sanitize_dataframe(df)
     assert str(err.value).startswith("Dataframe contains invalid column name: 4.")
 
 
 def test_sanitize_dataframe_timedelta():
     df = pd.DataFrame({"r": pd.timedelta_range(start="1 day", periods=4)})
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         sanitize_dataframe(df)
     assert str(err.value).startswith('Field "r" has type "timedelta')
 

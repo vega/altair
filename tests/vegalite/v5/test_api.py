@@ -298,12 +298,12 @@ def test_save(format, engine, basic_chart):
 
     if format in {"svg", "png", "pdf", "bogus"} and engine == "vl-convert":
         if format == "bogus":
-            with pytest.raises(ValueError) as err:
+            with pytest.raises(ValueError) as err:  # noqa: PT011
                 basic_chart.save(out, format=format, engine=engine)
             assert f"Unsupported format: '{format}'" in str(err.value)
             return
         elif vlc is None:
-            with pytest.raises(ValueError) as err:
+            with pytest.raises(ValueError) as err:  # noqa: PT011
                 basic_chart.save(out, format=format, engine=engine)
             assert "vl-convert-python" in str(err.value)
             return
@@ -953,34 +953,34 @@ def test_layer_errors():
 
     simple_chart = alt.Chart("data.txt").mark_point()
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         toplevel_chart + simple_chart
     assert str(err.value).startswith(
         'Objects with "config" attribute cannot be used within LayerChart.'
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         alt.hconcat(simple_chart) + simple_chart
     assert (
         str(err.value)
         == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         repeat_chart + simple_chart
     assert (
         str(err.value)
         == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         facet_chart1 + simple_chart
     assert (
         str(err.value)
         == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         alt.layer(simple_chart) + facet_chart2
     assert (
         str(err.value)

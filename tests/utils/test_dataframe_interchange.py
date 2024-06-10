@@ -54,7 +54,7 @@ def test_duration_raises():
     df = pd.DataFrame(td).reset_index()
     df.columns = ["id", "timedelta"]
     pa_table = pa.table(df)
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError) as e:  # noqa: PT011
         to_values(pa_table)
 
     # Check that exception mentions the duration[ns] type,
