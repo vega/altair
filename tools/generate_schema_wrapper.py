@@ -515,12 +515,14 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     contents = [
         HEADER,
         "from __future__ import annotations\n"
-        "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator",
+        "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
         "from typing import Dict as TypingDict",
         "import pkgutil",
         "import json\n",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses\n",
-        f"__all__ = {all_}\n",
+        "if TYPE_CHECKING:",
+        "\tfrom altair import Parameter",
+        "\n" f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
         PARAMETER_PROTOCOL,
         BASE_SCHEMA.format(basename=basename),
@@ -561,10 +563,20 @@ def generate_vegalite_channel_wrappers(
         "import pandas as pd",
         "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
         "from altair.utils import parse_shorthand",
-        "from typing import Any, overload, Sequence, List, Literal, Union, Optional",
-        "from typing import Dict as TypingDict",
+        "from typing import Any, overload, Sequence, List, Literal, Union, Optional, TYPE_CHECKING, Dict as TypingDict",
     ]
-    contents = [HEADER, CHANNEL_MYPY_IGNORE_STATEMENTS, *imports, "", CHANNEL_MIXINS]
+    type_checking_only = [
+        "\nif TYPE_CHECKING:",
+        "\tfrom altair import Parameter, SchemaBase # noqa: F401",
+        "\n",
+    ]
+    contents = [
+        HEADER,
+        CHANNEL_MYPY_IGNORE_STATEMENTS,
+        *imports,
+        *type_checking_only,
+        CHANNEL_MIXINS,
+    ]
 
     encoding_def = "FacetedEncoding"
 
@@ -668,7 +680,6 @@ def generate_vegalite_mark_mixin(
             f"{p}: "
             + info.properties[p].get_python_type_representation(
                 for_type_hints=True,
-                altair_classes_prefix="core",
                 additional_type_hints=["UndefinedType"],
             )
             + " = Undefined"
@@ -773,6 +784,11 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     stdlib_imports = ["from __future__ import annotations\n", "import sys"]
     imports = sorted({*mark_imports, *config_imports})
+    type_checking_only = [
+        "if TYPE_CHECKING:",
+        "\tfrom altair import Parameter, SchemaBase",
+        "\n",
+    ]
     content = [
         HEADER,
         "\n".join(stdlib_imports),
@@ -780,6 +796,8 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n".join(imports),
         "\n\n",
         "\n".join(try_except_imports),
+        "\n\n",
+        "\n".join(type_checking_only),
         "\n\n\n",
         mark_mixin,
         "\n\n\n",

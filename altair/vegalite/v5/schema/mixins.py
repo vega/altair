@@ -4,12 +4,15 @@
 from __future__ import annotations
 
 import sys
+from typing import TYPE_CHECKING, Literal, Sequence
 
-
-from . import core
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined, UndefinedType
-from typing import Sequence, Literal
+
+from . import core
+
+if TYPE_CHECKING:
+    from altair import Parameter, SchemaBase
 
 
 if sys.version_info >= (3, 11):
@@ -24,46 +27,30 @@ class MarkMethodMixin:
     def mark_arc(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -83,15 +70,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -244,39 +227,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -316,37 +295,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -498,30 +461,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -538,24 +485,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -575,87 +510,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -808,77 +691,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -887,59 +742,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'arc' (see :class:`MarkDef`)"""
@@ -1042,46 +857,30 @@ class MarkMethodMixin:
     def mark_area(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -1101,15 +900,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1262,39 +1057,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -1334,37 +1125,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1516,30 +1291,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -1556,24 +1315,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -1593,87 +1340,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1826,77 +1521,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -1905,59 +1572,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'area' (see :class:`MarkDef`)"""
@@ -2060,46 +1687,30 @@ class MarkMethodMixin:
     def mark_bar(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -2119,15 +1730,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -2280,39 +1887,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -2352,37 +1955,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -2534,30 +2121,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -2574,24 +2145,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -2611,87 +2170,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -2844,77 +2351,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -2923,59 +2402,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'bar' (see :class:`MarkDef`)"""
@@ -3078,46 +2517,30 @@ class MarkMethodMixin:
     def mark_image(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -3137,15 +2560,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -3298,39 +2717,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -3370,37 +2785,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -3552,30 +2951,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -3592,24 +2975,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -3629,87 +3000,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -3862,77 +3181,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -3941,59 +3232,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'image' (see :class:`MarkDef`)"""
@@ -4096,46 +3347,30 @@ class MarkMethodMixin:
     def mark_line(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -4155,15 +3390,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4316,39 +3547,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -4388,37 +3615,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4570,30 +3781,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -4610,24 +3805,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -4647,87 +3830,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4880,77 +4011,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -4959,59 +4062,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'line' (see :class:`MarkDef`)"""
@@ -5114,46 +4177,30 @@ class MarkMethodMixin:
     def mark_point(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -5173,15 +4220,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -5334,39 +4377,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -5406,37 +4445,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -5588,30 +4611,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -5628,24 +4635,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -5665,87 +4660,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -5898,77 +4841,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -5977,59 +4892,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'point' (see :class:`MarkDef`)"""
@@ -6132,46 +5007,30 @@ class MarkMethodMixin:
     def mark_rect(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -6191,15 +5050,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -6352,39 +5207,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -6424,37 +5275,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -6606,30 +5441,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -6646,24 +5465,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -6683,87 +5490,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -6916,77 +5671,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -6995,59 +5722,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'rect' (see :class:`MarkDef`)"""
@@ -7150,46 +5837,30 @@ class MarkMethodMixin:
     def mark_rule(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -7209,15 +5880,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -7370,39 +6037,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -7442,37 +6105,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -7624,30 +6271,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -7664,24 +6295,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -7701,87 +6320,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -7934,77 +6501,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -8013,59 +6552,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'rule' (see :class:`MarkDef`)"""
@@ -8168,46 +6667,30 @@ class MarkMethodMixin:
     def mark_text(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -8227,15 +6710,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -8388,39 +6867,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -8460,37 +6935,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -8642,30 +7101,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -8682,24 +7125,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -8719,87 +7150,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -8952,77 +7331,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -9031,59 +7382,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'text' (see :class:`MarkDef`)"""
@@ -9186,46 +7497,30 @@ class MarkMethodMixin:
     def mark_tick(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -9245,15 +7540,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -9406,39 +7697,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -9478,37 +7765,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -9660,30 +7931,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -9700,24 +7955,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -9737,87 +7980,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -9970,77 +8161,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -10049,59 +8212,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'tick' (see :class:`MarkDef`)"""
@@ -10204,46 +8327,30 @@ class MarkMethodMixin:
     def mark_trail(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -10263,15 +8370,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -10424,39 +8527,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -10496,37 +8595,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -10678,30 +8761,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -10718,24 +8785,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -10755,87 +8810,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -10988,77 +8991,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -11067,59 +9042,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'trail' (see :class:`MarkDef`)"""
@@ -11222,46 +9157,30 @@ class MarkMethodMixin:
     def mark_circle(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -11281,15 +9200,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -11442,39 +9357,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -11514,37 +9425,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -11696,30 +9591,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -11736,24 +9615,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -11773,87 +9640,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -12006,77 +9821,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -12085,59 +9872,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'circle' (see :class:`MarkDef`)"""
@@ -12240,46 +9987,30 @@ class MarkMethodMixin:
     def mark_square(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -12299,15 +10030,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -12460,39 +10187,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -12532,37 +10255,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -12714,30 +10421,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -12754,24 +10445,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -12791,87 +10470,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13024,77 +10651,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -13103,59 +10702,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'square' (see :class:`MarkDef`)"""
@@ -13258,46 +10817,30 @@ class MarkMethodMixin:
     def mark_geoshape(
         self,
         align: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ariaRole: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             None,
             "multiply",
@@ -13317,15 +10860,11 @@ class MarkMethodMixin:
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13478,39 +11017,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "auto",
             "default",
@@ -13550,37 +11085,21 @@ class MarkMethodMixin:
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        discreteBandSize: dict | float | core.SchemaBase | UndefinedType = Undefined,
-        dx: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        dy: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        ellipsis: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13732,30 +11251,14 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        fontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -13772,24 +11275,12 @@ class MarkMethodMixin:
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        href: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        innerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -13809,87 +11300,35 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        line: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        lineBreak: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        lineHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minBandSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        opacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        line: bool | dict | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        padAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        point: str | bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        radius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        radius2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        shape: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        size: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        smooth: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -14042,77 +11481,49 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
-        theta: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -14121,59 +11532,19 @@ class MarkMethodMixin:
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        width: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        x2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        xOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2: str
-        | dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        y2Offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        yOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)"""
@@ -14275,12 +11646,12 @@ class MarkMethodMixin:
 
     def mark_boxplot(
         self,
-        box: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        box: bool | dict | SchemaBase | UndefinedType = Undefined,
         clip: bool | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -14434,15 +11805,15 @@ class MarkMethodMixin:
         | UndefinedType = Undefined,
         extent: str | float | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        median: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        median: bool | dict | SchemaBase | UndefinedType = Undefined,
         opacity: float | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outliers: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        rule: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        outliers: bool | dict | SchemaBase | UndefinedType = Undefined,
+        rule: bool | dict | SchemaBase | UndefinedType = Undefined,
         size: float | UndefinedType = Undefined,
-        ticks: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        ticks: bool | dict | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)"""
@@ -14473,8 +11844,8 @@ class MarkMethodMixin:
         clip: bool | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -14626,17 +11997,17 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        extent: core.SchemaBase
+        extent: SchemaBase
         | Literal["ci", "iqr", "stderr", "stdev"]
         | UndefinedType = Undefined,
         opacity: float | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        rule: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        rule: bool | dict | SchemaBase | UndefinedType = Undefined,
         size: float | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
-        ticks: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        ticks: bool | dict | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)"""
@@ -14661,13 +12032,13 @@ class MarkMethodMixin:
 
     def mark_errorband(
         self,
-        band: bool | dict | core.SchemaBase | UndefinedType = Undefined,
-        borders: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        band: bool | dict | SchemaBase | UndefinedType = Undefined,
+        borders: bool | dict | SchemaBase | UndefinedType = Undefined,
         clip: bool | UndefinedType = Undefined,
         color: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -14819,10 +12190,10 @@ class MarkMethodMixin:
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        extent: core.SchemaBase
+        extent: SchemaBase
         | Literal["ci", "iqr", "stderr", "stdev"]
         | UndefinedType = Undefined,
-        interpolate: core.SchemaBase
+        interpolate: SchemaBase
         | Literal[
             "basis",
             "basis-open",
@@ -14842,7 +12213,7 @@ class MarkMethodMixin:
         ]
         | UndefinedType = Undefined,
         opacity: float | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         tension: float | UndefinedType = Undefined,

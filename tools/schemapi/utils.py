@@ -190,6 +190,13 @@ class SchemaInfo:
         # This is a list of all types which can be used for the current SchemaInfo.
         # This includes Altair classes, standard Python types, etc.
         type_representations: list[str] = []
+        TP_CHECK_ONLY = {"Parameter", "SchemaBase"}
+        """Most common annotations are include in `TYPE_CHECKING` block.
+        They do not require `core.` prefix, and this saves many lines of code.
+
+        Eventually a more robust solution would apply to more types from `core`.
+        """
+
         if self.title:
             if for_type_hints:
                 # To keep type hints simple, we only use the SchemaBase class
@@ -205,9 +212,9 @@ class SchemaInfo:
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
-                    class_names.append("_Parameter")
+                    class_names.append("Parameter")
                 if self.title == "ParameterExtent":
-                    class_names.append("_Parameter")
+                    class_names.append("Parameter")
 
                 prefix = (
                     "" if not altair_classes_prefix else altair_classes_prefix + "."
@@ -218,7 +225,10 @@ class SchemaInfo:
                 if not prefix:
                     class_names = [f'"{n}"' for n in class_names]
                 else:
-                    class_names = [f"{prefix}{n}" for n in class_names]
+                    class_names = (
+                        n if n in TP_CHECK_ONLY else f"{prefix}{n}" for n in class_names
+                    )
+                    # class_names = [f"{prefix}{n}" for n in class_names]
                 type_representations.extend(class_names)
             else:
                 # use RST syntax for generated sphinx docs

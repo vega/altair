@@ -2,11 +2,22 @@
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
 from __future__ import annotations
-from typing import Any, Literal, Protocol, Sequence, Iterator
-import pkgutil
+
 import json
+import pkgutil
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Iterator,
+    Literal,
+    Protocol,
+    Sequence,
+)
 
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
+
+if TYPE_CHECKING:
+    from altair import Parameter
 
 __all__ = [
     "URI",
@@ -969,27 +980,27 @@ class AreaConfig(AnyMarkConfig):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -1012,7 +1023,7 @@ class AreaConfig(AnyMarkConfig):
         | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -1165,33 +1176,29 @@ class AreaConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -1232,20 +1239,20 @@ class AreaConfig(AnyMarkConfig):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -1398,13 +1405,13 @@ class AreaConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -1422,11 +1429,11 @@ class AreaConfig(AnyMarkConfig):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -1447,28 +1454,28 @@ class AreaConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         line: bool | dict | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -1622,50 +1629,46 @@ class AreaConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
         tooltip: str
@@ -1673,15 +1676,15 @@ class AreaConfig(AnyMarkConfig):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -2223,23 +2226,19 @@ class Axis(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        bandPosition: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        bandPosition: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: bool | UndefinedType = Undefined,
         domainCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         domainColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -2393,33 +2392,33 @@ class Axis(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         domainDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         domainDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         domainOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        domainWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        domainWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         grid: bool | UndefinedType = Undefined,
         gridCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         gridColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -2573,39 +2572,39 @@ class Axis(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         gridDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         gridDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        gridOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        gridWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        gridOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        gridWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelBound: bool
         | dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -2762,22 +2761,18 @@ class Axis(VegaLiteSchema):
         labelFlush: bool | float | UndefinedType = Undefined,
         labelFlushOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -2795,59 +2790,51 @@ class Axis(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        maxExtent: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        minExtent: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        maxExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "bottom", "left", "right"]
         | UndefinedType = Undefined,
-        position: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        position: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         tickBand: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["center", "extent"]
         | UndefinedType = Undefined,
         tickCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         tickColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -3002,52 +2989,52 @@ class Axis(VegaLiteSchema):
         | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
         tickDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         tickDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         tickExtra: bool | UndefinedType = Undefined,
-        tickMinStep: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tickOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tickOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         tickRound: bool | UndefinedType = Undefined,
-        tickSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tickWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tickSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         ticks: bool | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        titleAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -3200,19 +3187,15 @@ class Axis(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -3230,27 +3213,19 @@ class Axis(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        titleX: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        titleY: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        translate: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        translate: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         values: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | Sequence[bool]
@@ -3724,24 +3699,20 @@ class AxisConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        bandPosition: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        bandPosition: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         disable: bool | UndefinedType = Undefined,
         domain: bool | UndefinedType = Undefined,
         domainCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         domainColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -3895,33 +3866,33 @@ class AxisConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         domainDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         domainDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         domainOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        domainWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        domainWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         grid: bool | UndefinedType = Undefined,
         gridCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         gridColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -4075,39 +4046,39 @@ class AxisConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         gridDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         gridDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        gridOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        gridWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        gridOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        gridWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelBound: bool
         | dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -4264,22 +4235,18 @@ class AxisConfig(VegaLiteSchema):
         labelFlush: bool | float | UndefinedType = Undefined,
         labelFlushOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -4297,59 +4264,51 @@ class AxisConfig(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        maxExtent: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        minExtent: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        maxExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "bottom", "left", "right"]
         | UndefinedType = Undefined,
-        position: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        position: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         tickBand: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["center", "extent"]
         | UndefinedType = Undefined,
         tickCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         tickColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -4504,52 +4463,52 @@ class AxisConfig(VegaLiteSchema):
         | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
         tickDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         tickDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         tickExtra: bool | UndefinedType = Undefined,
-        tickMinStep: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tickOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tickOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         tickRound: bool | UndefinedType = Undefined,
-        tickSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tickWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tickSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         ticks: bool | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        titleAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -4702,19 +4661,15 @@ class AxisConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -4732,27 +4687,19 @@ class AxisConfig(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        titleX: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        titleY: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        translate: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        translate: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         values: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | Sequence[bool]
@@ -5274,28 +5221,28 @@ class BarConfig(AnyMarkConfig):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -5318,7 +5265,7 @@ class BarConfig(AnyMarkConfig):
         | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -5472,38 +5419,34 @@ class BarConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -5544,21 +5487,21 @@ class BarConfig(AnyMarkConfig):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
         discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -5711,13 +5654,13 @@ class BarConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -5735,11 +5678,11 @@ class BarConfig(AnyMarkConfig):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -5760,27 +5703,27 @@ class BarConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        minBandSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -5934,50 +5877,46 @@ class BarConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
         tooltip: str
@@ -5985,15 +5924,15 @@ class BarConfig(AnyMarkConfig):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -6164,12 +6103,12 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         anchor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | SchemaBase
         | Literal["top", "middle", "bottom"]
@@ -6177,7 +6116,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         color: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -6330,13 +6269,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -6356,22 +6295,22 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         | UndefinedType = Undefined,
         frame: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["bounds", "group"]
         | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["none", "left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
         subtitleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -6524,19 +6463,19 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        subtitleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        subtitleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         subtitleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitleFontStyle: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -6556,15 +6495,15 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         | UndefinedType = Undefined,
         subtitleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitlePadding: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        zindex: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        zindex: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -6663,7 +6602,7 @@ class BinParams(VegaLiteSchema):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
@@ -7546,7 +7485,7 @@ class BoxPlotDef(CompositeMarkDef):
         clip: bool | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -8849,7 +8788,7 @@ class ConditionalParameterValueDefGradientstringnullExprRef(
     def __init__(
         self,
         param: str | SchemaBase | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
         **kwds,
     ):
@@ -8879,7 +8818,7 @@ class ConditionalPredicateValueDefGradientstringnullExprRef(
     def __init__(
         self,
         test: str | dict | SchemaBase | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(test=test, value=value, **kwds)
@@ -8918,7 +8857,7 @@ class ConditionalParameterValueDefTextExprRef(ConditionalValueDefTextExprRef):
         param: str | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
@@ -8949,7 +8888,7 @@ class ConditionalPredicateValueDefTextExprRef(ConditionalValueDefTextExprRef):
         test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
@@ -9057,7 +8996,7 @@ class ConditionalParameterValueDefnumberArrayExprRef(
         self,
         param: str | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
@@ -9091,7 +9030,7 @@ class ConditionalPredicateValueDefnumberArrayExprRef(
         self,
         test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
@@ -9131,7 +9070,7 @@ class ConditionalParameterValueDefnumberExprRef(ConditionalValueDefnumberExprRef
     def __init__(
         self,
         param: str | SchemaBase | UndefinedType = Undefined,
-        value: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
         **kwds,
     ):
@@ -9157,7 +9096,7 @@ class ConditionalPredicateValueDefnumberExprRef(ConditionalValueDefnumberExprRef
     def __init__(
         self,
         test: str | dict | SchemaBase | UndefinedType = Undefined,
-        value: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(test=test, value=value, **kwds)
@@ -9194,7 +9133,7 @@ class ConditionalParameterValueDefstringExprRef(ConditionalValueDefstringExprRef
     def __init__(
         self,
         param: str | SchemaBase | UndefinedType = Undefined,
-        value: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
         **kwds,
     ):
@@ -9220,7 +9159,7 @@ class ConditionalPredicateValueDefstringExprRef(ConditionalValueDefstringExprRef
     def __init__(
         self,
         test: str | dict | SchemaBase | UndefinedType = Undefined,
-        value: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(test=test, value=value, **kwds)
@@ -9261,7 +9200,7 @@ class ConditionalParameterValueDefstringnullExprRef(
     def __init__(
         self,
         param: str | SchemaBase | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
         **kwds,
     ):
@@ -9291,7 +9230,7 @@ class ConditionalPredicateValueDefstringnullExprRef(
     def __init__(
         self,
         test: str | dict | SchemaBase | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(test=test, value=value, **kwds)
@@ -9608,7 +9547,7 @@ class Config(VegaLiteSchema):
         axisYTemporal: dict | SchemaBase | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -9781,14 +9720,14 @@ class Config(VegaLiteSchema):
         image: dict | SchemaBase | UndefinedType = Undefined,
         legend: dict | SchemaBase | UndefinedType = Undefined,
         line: dict | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         locale: dict | SchemaBase | UndefinedType = Undefined,
         mark: dict | SchemaBase | UndefinedType = Undefined,
         normalizedNumberFormat: str | UndefinedType = Undefined,
         normalizedNumberFormatType: str | UndefinedType = Undefined,
         numberFormat: str | UndefinedType = Undefined,
         numberFormatType: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         point: dict | SchemaBase | UndefinedType = Undefined,
         projection: dict | SchemaBase | UndefinedType = Undefined,
@@ -10585,7 +10524,7 @@ class ErrorBandDef(CompositeMarkDef):
         clip: bool | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -10903,7 +10842,7 @@ class ErrorBarDef(CompositeMarkDef):
         clip: bool | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -13890,7 +13829,7 @@ class Header(VegaLiteSchema):
         format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         labelAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
@@ -13900,13 +13839,13 @@ class Header(VegaLiteSchema):
         labelAngle: float | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -14060,19 +13999,15 @@ class Header(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -14090,27 +14025,23 @@ class Header(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         labelOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
@@ -14120,13 +14051,13 @@ class Header(VegaLiteSchema):
         titleAngle: float | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -14279,19 +14210,15 @@ class Header(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -14309,20 +14236,16 @@ class Header(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         titleOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -14512,7 +14435,7 @@ class HeaderConfig(VegaLiteSchema):
         format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         labelAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
@@ -14522,13 +14445,13 @@ class HeaderConfig(VegaLiteSchema):
         labelAngle: float | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -14682,19 +14605,15 @@ class HeaderConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -14712,27 +14631,23 @@ class HeaderConfig(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         labelOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
         title: None | UndefinedType = Undefined,
         titleAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
@@ -14742,13 +14657,13 @@ class HeaderConfig(VegaLiteSchema):
         titleAngle: float | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -14901,19 +14816,15 @@ class HeaderConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -14931,20 +14842,16 @@ class HeaderConfig(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         titleOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -16247,27 +16154,23 @@ class Legend(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        clipHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -16424,18 +16327,18 @@ class Legend(VegaLiteSchema):
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -16590,34 +16493,34 @@ class Legend(VegaLiteSchema):
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -16771,19 +16674,15 @@ class Legend(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -16801,32 +16700,24 @@ class Legend(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        labelOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        legendY: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal[
             "none",
@@ -16840,12 +16731,12 @@ class Legend(VegaLiteSchema):
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        rowPadding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -16999,19 +16890,19 @@ class Legend(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -17164,22 +17055,18 @@ class Legend(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -17334,40 +17221,40 @@ class Legend(VegaLiteSchema):
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -17520,19 +17407,15 @@ class Legend(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -17550,30 +17433,22 @@ class Legend(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | Sequence[bool]
@@ -17946,20 +17821,16 @@ class LegendConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        clipHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
@@ -17967,7 +17838,7 @@ class LegendConfig(VegaLiteSchema):
         fillColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -18121,7 +17992,7 @@ class LegendConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         gradientDirection: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
@@ -18129,28 +18000,28 @@ class LegendConfig(VegaLiteSchema):
         gradientHorizontalMinLength: float | UndefinedType = Undefined,
         gradientLabelLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientLabelOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -18305,36 +18176,36 @@ class LegendConfig(VegaLiteSchema):
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         gradientVerticalMaxLength: float | UndefinedType = Undefined,
         gradientVerticalMinLength: float | UndefinedType = Undefined,
         gridAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -18487,19 +18358,15 @@ class LegendConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        labelFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -18517,33 +18384,25 @@ class LegendConfig(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        labelOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        layout: dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        legendX: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        legendY: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        layout: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal[
             "none",
@@ -18557,12 +18416,12 @@ class LegendConfig(VegaLiteSchema):
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        rowPadding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -18716,15 +18575,15 @@ class LegendConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolBaseFillColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -18880,7 +18739,7 @@ class LegendConfig(VegaLiteSchema):
         symbolBaseStrokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -19034,24 +18893,24 @@ class LegendConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         symbolDirection: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -19204,22 +19063,18 @@ class LegendConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -19374,13 +19229,13 @@ class LegendConfig(VegaLiteSchema):
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
@@ -19388,25 +19243,25 @@ class LegendConfig(VegaLiteSchema):
         | UndefinedType = Undefined,
         title: None | UndefinedType = Undefined,
         titleAlign: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -19559,19 +19414,15 @@ class LegendConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -19589,29 +19440,21 @@ class LegendConfig(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         unselectedOpacity: float | UndefinedType = Undefined,
-        zindex: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        zindex: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -20184,27 +20027,27 @@ class LineConfig(AnyMarkConfig):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -20227,7 +20070,7 @@ class LineConfig(AnyMarkConfig):
         | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -20380,33 +20223,29 @@ class LineConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -20447,20 +20286,20 @@ class LineConfig(AnyMarkConfig):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -20613,13 +20452,13 @@ class LineConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -20637,11 +20476,11 @@ class LineConfig(AnyMarkConfig):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -20662,27 +20501,27 @@ class LineConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -20836,50 +20675,46 @@ class LineConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
         tooltip: str
@@ -20887,15 +20722,15 @@ class LineConfig(AnyMarkConfig):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21504,27 +21339,27 @@ class MarkConfig(AnyMarkConfig):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -21547,7 +21382,7 @@ class MarkConfig(AnyMarkConfig):
         | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -21700,33 +21535,29 @@ class MarkConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -21767,20 +21598,20 @@ class MarkConfig(AnyMarkConfig):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -21933,13 +21764,13 @@ class MarkConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -21957,11 +21788,11 @@ class MarkConfig(AnyMarkConfig):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -21982,26 +21813,26 @@ class MarkConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -22155,50 +21986,46 @@ class MarkConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
         tooltip: str
@@ -22206,15 +22033,15 @@ class MarkConfig(AnyMarkConfig):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -22772,29 +22599,29 @@ class MarkDef(AnyMark):
         ]
         | UndefinedType = Undefined,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -22815,10 +22642,10 @@ class MarkDef(AnyMark):
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -22972,38 +22799,34 @@ class MarkDef(AnyMark):
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusEnd: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -23044,20 +22867,20 @@ class MarkDef(AnyMark):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
         discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -23210,13 +23033,13 @@ class MarkDef(AnyMark):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -23234,11 +23057,11 @@ class MarkDef(AnyMark):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -23259,38 +23082,34 @@ class MarkDef(AnyMark):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         line: bool | dict | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        minBandSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         point: str | bool | dict | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -23444,57 +23263,49 @@ class MarkDef(AnyMark):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -23503,19 +23314,19 @@ class MarkDef(AnyMark):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2Offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        xOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2Offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        yOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -23747,7 +23558,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
@@ -24585,7 +24396,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
@@ -25190,7 +25001,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
@@ -26056,7 +25867,7 @@ class OrderValueDef(VegaLiteSchema):
 
     def __init__(
         self,
-        value: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         condition: dict
         | SchemaBase
         | Sequence[dict | SchemaBase]
@@ -26483,27 +26294,27 @@ class OverlayMarkDef(VegaLiteSchema):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -26524,10 +26335,10 @@ class OverlayMarkDef(VegaLiteSchema):
             "luminosity",
         ]
         | UndefinedType = Undefined,
-        clip: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        clip: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -26680,33 +26491,29 @@ class OverlayMarkDef(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -26747,20 +26554,20 @@ class OverlayMarkDef(VegaLiteSchema):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -26913,13 +26720,13 @@ class OverlayMarkDef(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -26937,11 +26744,11 @@ class OverlayMarkDef(VegaLiteSchema):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -26962,36 +26769,32 @@ class OverlayMarkDef(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         radius2Offset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        radiusOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        radiusOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -27145,57 +26948,49 @@ class OverlayMarkDef(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2Offset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        thetaOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        thetaOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
         tooltip: str
@@ -27203,19 +26998,19 @@ class OverlayMarkDef(VegaLiteSchema):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2Offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        xOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2Offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        yOffset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        xOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2Offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        yOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -27873,7 +27668,7 @@ class DatumDef(LatLongDef, Position2Def):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
@@ -28044,7 +27839,7 @@ class PositionDatumDefBase(PolarDef):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         scale: dict | None | SchemaBase | UndefinedType = Undefined,
@@ -28254,7 +28049,7 @@ class PositionDatumDef(PositionDef):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         impute: dict | None | SchemaBase | UndefinedType = Undefined,
@@ -29248,7 +29043,7 @@ class PositionValueDef(PolarDef, Position2Def, PositionDef):
 
     def __init__(
         self,
-        value: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(value=value, **kwds)
@@ -29342,7 +29137,7 @@ class FieldEqualPredicate(Predicate):
         | bool
         | dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         field: str | SchemaBase | UndefinedType = Undefined,
@@ -29493,7 +29288,7 @@ class FieldGTEPredicate(Predicate):
     def __init__(
         self,
         field: str | SchemaBase | UndefinedType = Undefined,
-        gte: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        gte: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
         | SchemaBase
         | Literal[
@@ -29641,7 +29436,7 @@ class FieldGTPredicate(Predicate):
     def __init__(
         self,
         field: str | SchemaBase | UndefinedType = Undefined,
-        gt: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        gt: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
         | SchemaBase
         | Literal[
@@ -29789,7 +29584,7 @@ class FieldLTEPredicate(Predicate):
     def __init__(
         self,
         field: str | SchemaBase | UndefinedType = Undefined,
-        lte: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        lte: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
         | SchemaBase
         | Literal[
@@ -29937,7 +29732,7 @@ class FieldLTPredicate(Predicate):
     def __init__(
         self,
         field: str | SchemaBase | UndefinedType = Undefined,
-        lt: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        lt: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
         | SchemaBase
         | Literal[
@@ -30240,9 +30035,9 @@ class FieldRangePredicate(Predicate):
         self,
         field: str | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
-        | Sequence[dict | None | float | _Parameter | SchemaBase]
+        | Sequence[dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
         timeUnit: dict
         | SchemaBase
@@ -30659,63 +30454,63 @@ class Projection(VegaLiteSchema):
     def __init__(
         self,
         center: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        clipAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        clipAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         clipExtent: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[SchemaBase | Sequence[float]]
         | UndefinedType = Undefined,
-        coefficient: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        distance: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        coefficient: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        distance: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         extent: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[SchemaBase | Sequence[float]]
         | UndefinedType = Undefined,
         fit: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | Sequence[dict | SchemaBase | Sequence[dict | SchemaBase]]
         | UndefinedType = Undefined,
-        fraction: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lobes: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        parallel: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fraction: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lobes: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        parallel: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         parallels: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        pointRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        precision: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ratio: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        reflectX: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        reflectY: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        pointRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        precision: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ratio: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        reflectX: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        reflectY: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         rotate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        scale: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        scale: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         size: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        spacing: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tilt: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        spacing: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tilt: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         translate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         type: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "albers",
@@ -30880,63 +30675,63 @@ class ProjectionConfig(VegaLiteSchema):
     def __init__(
         self,
         center: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        clipAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        clipAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         clipExtent: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[SchemaBase | Sequence[float]]
         | UndefinedType = Undefined,
-        coefficient: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        distance: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        coefficient: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        distance: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         extent: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[SchemaBase | Sequence[float]]
         | UndefinedType = Undefined,
         fit: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | Sequence[dict | SchemaBase | Sequence[dict | SchemaBase]]
         | UndefinedType = Undefined,
-        fraction: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lobes: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        parallel: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fraction: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lobes: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        parallel: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         parallels: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        pointRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        precision: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ratio: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        reflectX: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        reflectY: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        pointRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        precision: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ratio: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        reflectX: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        reflectY: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         rotate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        scale: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        scale: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         size: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
-        spacing: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tilt: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        spacing: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tilt: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         translate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         type: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "albers",
@@ -32371,28 +32166,28 @@ class RectConfig(AnyMarkConfig):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         binSpacing: float | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -32415,7 +32210,7 @@ class RectConfig(AnyMarkConfig):
         | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -32569,33 +32364,29 @@ class RectConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         continuousBandSize: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -32636,21 +32427,21 @@ class RectConfig(AnyMarkConfig):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
         discreteBandSize: dict | float | SchemaBase | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -32803,13 +32594,13 @@ class RectConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -32827,11 +32618,11 @@ class RectConfig(AnyMarkConfig):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -32852,27 +32643,27 @@ class RectConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        minBandSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minBandSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -33026,50 +32817,46 @@ class RectConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
         tooltip: str
@@ -33077,15 +32864,15 @@ class RectConfig(AnyMarkConfig):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -34006,24 +33793,24 @@ class Scale(VegaLiteSchema):
 
     def __init__(
         self,
-        align: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        base: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        constant: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
-        | Sequence[str | bool | dict | None | float | _Parameter | SchemaBase]
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        domainMid: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        domainMin: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        domainRaw: dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        exponent: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "rgb",
@@ -34039,26 +33826,18 @@ class Scale(VegaLiteSchema):
         nice: bool
         | dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
         | SchemaBase
-        | Sequence[str | dict | float | _Parameter | SchemaBase | Sequence[float]]
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -34073,19 +33852,19 @@ class Scale(VegaLiteSchema):
         rangeMax: str
         | dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        round: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | Literal["rainbow", "sinebow"]
@@ -34448,7 +34227,7 @@ class Scale(VegaLiteSchema):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -34662,33 +34441,33 @@ class ScaleConfig(VegaLiteSchema):
         self,
         bandPaddingInner: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         bandPaddingOuter: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         bandWithNestedOffsetPaddingInner: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         bandWithNestedOffsetPaddingOuter: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         barBandPaddingInner: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        clamp: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         continuousPadding: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         maxBandSize: float | UndefinedType = Undefined,
@@ -34703,29 +34482,25 @@ class ScaleConfig(VegaLiteSchema):
         minStrokeWidth: float | UndefinedType = Undefined,
         offsetBandPaddingInner: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         offsetBandPaddingOuter: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        pointPadding: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        pointPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         quantileCount: float | UndefinedType = Undefined,
         quantizeCount: float | UndefinedType = Undefined,
         rectBandPaddingInner: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        round: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         useUnaggregatedDomain: bool | UndefinedType = Undefined,
-        xReverse: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        xReverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         zero: bool | UndefinedType = Undefined,
         **kwds,
     ):
@@ -34887,7 +34662,7 @@ class ScaleDatumDef(OffsetDef):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         scale: dict | None | SchemaBase | UndefinedType = Undefined,
@@ -36568,7 +36343,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
@@ -39371,7 +39146,7 @@ class StringValueDefWithCondition(VegaLiteSchema):
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -39687,7 +39462,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         format: str | dict | SchemaBase | UndefinedType = Undefined,
@@ -40481,28 +40256,28 @@ class TickConfig(AnyMarkConfig):
     def __init__(
         self,
         align: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ariaRole: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        ariaRole: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         ariaRoleDescription: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        aspect: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        aspect: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         bandSize: float | UndefinedType = Undefined,
         baseline: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         blend: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             None,
@@ -40525,7 +40300,7 @@ class TickConfig(AnyMarkConfig):
         | UndefinedType = Undefined,
         color: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -40678,33 +40453,29 @@ class TickConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cornerRadiusBottomLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusBottomRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopLeft: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cornerRadiusTopRight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         cursor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "auto",
@@ -40745,20 +40516,20 @@ class TickConfig(AnyMarkConfig):
             "grabbing",
         ]
         | UndefinedType = Undefined,
-        description: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         dir: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["ltr", "rtl"]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        ellipsis: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        endAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        ellipsis: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        endAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -40911,13 +40682,13 @@ class TickConfig(AnyMarkConfig):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         filled: bool | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -40935,11 +40706,11 @@ class TickConfig(AnyMarkConfig):
             900,
         ]
         | UndefinedType = Undefined,
-        height: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        href: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        innerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        height: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        href: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        innerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "basis",
@@ -40960,26 +40731,26 @@ class TickConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         invalid: Literal["filter", None] | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineBreak: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineBreak: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         order: bool | None | UndefinedType = Undefined,
         orient: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
-        outerRadius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        padAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        radius2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        shape: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        size: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        smooth: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        startAngle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        outerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        padAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        radius2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        shape: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        size: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        smooth: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        startAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -41133,50 +40904,46 @@ class TickConfig(AnyMarkConfig):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeOffset: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        strokeOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        tension: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tension: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
-        theta: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        theta2: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        theta: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        theta2: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         thickness: float | UndefinedType = Undefined,
         timeUnitBandPosition: float | UndefinedType = Undefined,
         timeUnitBandSize: float | UndefinedType = Undefined,
@@ -41185,15 +40952,15 @@ class TickConfig(AnyMarkConfig):
         | dict
         | None
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        url: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        width: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        x2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        y2: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        url: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        width: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        x2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        y2: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -41757,12 +41524,12 @@ class TitleConfig(VegaLiteSchema):
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         anchor: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | SchemaBase
         | Literal["top", "middle", "bottom"]
@@ -41770,7 +41537,7 @@ class TitleConfig(VegaLiteSchema):
         color: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -41923,13 +41690,13 @@ class TitleConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -41949,22 +41716,22 @@ class TitleConfig(VegaLiteSchema):
         | UndefinedType = Undefined,
         frame: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["bounds", "group"]
         | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["none", "left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
         subtitleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -42117,19 +41884,19 @@ class TitleConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        subtitleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        subtitleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         subtitleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitleFontStyle: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -42149,15 +41916,15 @@ class TitleConfig(VegaLiteSchema):
         | UndefinedType = Undefined,
         subtitleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitlePadding: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        zindex: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        zindex: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -42315,7 +42082,7 @@ class TitleParams(VegaLiteSchema):
         self,
         text: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
@@ -42325,8 +42092,8 @@ class TitleParams(VegaLiteSchema):
         anchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        angle: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        aria: bool | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        angle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         baseline: str
         | SchemaBase
         | Literal["top", "middle", "bottom"]
@@ -42334,7 +42101,7 @@ class TitleParams(VegaLiteSchema):
         color: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -42487,13 +42254,13 @@ class TitleParams(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        dx: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        dy: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        font: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontSize: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        fontStyle: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        dx: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        dy: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        font: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        fontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         fontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -42513,15 +42280,15 @@ class TitleParams(VegaLiteSchema):
         | UndefinedType = Undefined,
         frame: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["bounds", "group"]
         | UndefinedType = Undefined,
-        limit: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        lineHeight: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        offset: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        limit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        lineHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["none", "left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
@@ -42530,7 +42297,7 @@ class TitleParams(VegaLiteSchema):
         subtitleColor: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -42683,19 +42450,19 @@ class TitleParams(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        subtitleFont: str | dict | _Parameter | SchemaBase | UndefinedType = Undefined,
+        subtitleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         subtitleFontSize: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitleFontStyle: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitleFontWeight: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "normal",
@@ -42715,12 +42482,12 @@ class TitleParams(VegaLiteSchema):
         | UndefinedType = Undefined,
         subtitleLineHeight: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         subtitlePadding: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
@@ -43010,7 +42777,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -43171,7 +42938,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         datasets: dict | SchemaBase | UndefinedType = Undefined,
         description: str | UndefinedType = Undefined,
         name: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         resolve: dict | SchemaBase | UndefinedType = Undefined,
         spacing: dict | float | SchemaBase | UndefinedType = Undefined,
@@ -43348,7 +43115,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -43508,7 +43275,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         datasets: dict | SchemaBase | UndefinedType = Undefined,
         description: str | UndefinedType = Undefined,
         name: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         resolve: dict | SchemaBase | UndefinedType = Undefined,
         spacing: dict | float | SchemaBase | UndefinedType = Undefined,
@@ -43632,7 +43399,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -43792,7 +43559,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         datasets: dict | SchemaBase | UndefinedType = Undefined,
         description: str | UndefinedType = Undefined,
         name: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         resolve: dict | SchemaBase | UndefinedType = Undefined,
         spacing: float | UndefinedType = Undefined,
@@ -43947,7 +43714,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -44107,7 +43874,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         encoding: dict | SchemaBase | UndefinedType = Undefined,
         height: str | dict | float | SchemaBase | UndefinedType = Undefined,
         name: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         projection: dict | SchemaBase | UndefinedType = Undefined,
         resolve: dict | SchemaBase | UndefinedType = Undefined,
@@ -44343,7 +44110,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -44504,7 +44271,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         encoding: dict | SchemaBase | UndefinedType = Undefined,
         height: str | dict | float | SchemaBase | UndefinedType = Undefined,
         name: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         projection: dict | SchemaBase | UndefinedType = Undefined,
         resolve: dict | SchemaBase | UndefinedType = Undefined,
@@ -44634,7 +44401,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         | UndefinedType = Undefined,
         background: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -44794,7 +44561,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         datasets: dict | SchemaBase | UndefinedType = Undefined,
         description: str | UndefinedType = Undefined,
         name: str | UndefinedType = Undefined,
-        padding: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         params: Sequence[dict | SchemaBase] | UndefinedType = Undefined,
         resolve: dict | SchemaBase | UndefinedType = Undefined,
         spacing: float | UndefinedType = Undefined,
@@ -46392,7 +46159,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull(
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -46424,7 +46191,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull(
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -46456,7 +46223,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumber(
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        value: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -46489,7 +46256,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray(
         | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         value: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
@@ -46522,7 +46289,7 @@ class ValueDefWithConditionMarkPropFieldOrDatumDefstringnull(VegaLiteSchema):
         | SchemaBase
         | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        value: str | dict | None | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(condition=condition, value=value, **kwds)
@@ -46552,7 +46319,7 @@ class ValueDefWithConditionStringFieldDefText(TextDef):
         | UndefinedType = Undefined,
         value: str
         | dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[str]
         | UndefinedType = Undefined,
@@ -46599,7 +46366,7 @@ class ValueDefnumberwidthheightExprRef(VegaLiteSchema):
 
     def __init__(
         self,
-        value: str | dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(value=value, **kwds)
@@ -46790,11 +46557,7 @@ class ViewBackground(VegaLiteSchema):
 
     def __init__(
         self,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cursor: SchemaBase
         | Literal[
             "auto",
@@ -46838,7 +46601,7 @@ class ViewBackground(VegaLiteSchema):
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -46991,12 +46754,12 @@ class ViewBackground(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -47150,36 +46913,36 @@ class ViewBackground(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
@@ -47288,11 +47051,7 @@ class ViewConfig(VegaLiteSchema):
         clip: bool | UndefinedType = Undefined,
         continuousHeight: float | UndefinedType = Undefined,
         continuousWidth: float | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | _Parameter
-        | SchemaBase
-        | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         cursor: SchemaBase
         | Literal[
             "auto",
@@ -47338,7 +47097,7 @@ class ViewConfig(VegaLiteSchema):
         fill: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -47491,13 +47250,13 @@ class ViewConfig(VegaLiteSchema):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        fillOpacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
-        opacity: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        fillOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        opacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
         stroke: str
         | dict
         | None
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal[
             "black",
@@ -47651,36 +47410,36 @@ class ViewConfig(VegaLiteSchema):
         ]
         | UndefinedType = Undefined,
         strokeCap: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         strokeDash: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         strokeDashOffset: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeJoin: dict
-        | _Parameter
+        | Parameter
         | SchemaBase
         | Literal["miter", "round", "bevel"]
         | UndefinedType = Undefined,
         strokeMiterLimit: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
         strokeOpacity: dict
         | float
-        | _Parameter
+        | Parameter
         | SchemaBase
         | UndefinedType = Undefined,
-        strokeWidth: dict | float | _Parameter | SchemaBase | UndefinedType = Undefined,
+        strokeWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(

@@ -11,11 +11,23 @@
 
 from __future__ import annotations
 
-from . import core
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Literal,
+    Sequence,
+    overload,
+)
+
 import pandas as pd
-from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters
+
 from altair.utils import parse_shorthand
-from typing import Any, overload, Sequence, Literal
+from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters
+
+from . import core
+
+if TYPE_CHECKING:
+    from altair import Parameter, SchemaBase
 
 
 class FieldChannelMixin:
@@ -31,7 +43,10 @@ class FieldChannelMixin:
         field = self._get("field")  # type: ignore[attr-defined]
 
         if shorthand is not Undefined and field is not Undefined:
-            msg = f"{self.__class__.__name__} specifies both shorthand={shorthand} and field={field}. "
+            msg = (
+                f"{self.__class__.__name__} specifies both shorthand={shorthand} and field={field}. "
+                ""
+            )
             raise ValueError(msg)
 
         if isinstance(shorthand, (tuple, list)):
@@ -70,6 +85,7 @@ class FieldChannelMixin:
                         f"{shorthand} encoding field is specified without a type; "
                         "the type cannot be automatically inferred because "
                         "the data is not specified as a pandas.DataFrame."
+                        ""
                     )
                     raise ValueError(msg)
         else:
@@ -115,8 +131,9 @@ class DatumChannelMixin:
         ignore = ignore or []
         datum = self._get("datum", Undefined)  # type: ignore[attr-defined]
         copy = self  # don't copy unless we need to
-        if datum is not Undefined and isinstance(datum, core.SchemaBase):
-            pass
+        if datum is not Undefined:
+            if isinstance(datum, core.SchemaBase):
+                pass
         return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
@@ -383,12 +400,12 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Angle: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Angle: ...
 
     @overload
@@ -405,8 +422,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -423,12 +440,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -436,12 +449,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -463,44 +472,24 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -652,23 +641,23 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -822,35 +811,35 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1003,24 +992,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -1037,53 +1018,25 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -1096,21 +1049,13 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1263,20 +1208,20 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1428,31 +1373,19 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1606,49 +1539,41 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -1800,24 +1725,16 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -1834,39 +1751,27 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -1878,57 +1783,25 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -1943,32 +1816,18 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -1983,29 +1842,21 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -2346,7 +2197,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -2366,11 +2217,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Angle: ...
 
@@ -2435,8 +2282,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -2464,7 +2311,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -2473,7 +2320,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -2490,7 +2337,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -2661,7 +2508,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -2771,13 +2618,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -2805,22 +2648,22 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -2851,7 +2694,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -2973,8 +2816,8 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -3116,12 +2959,8 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> AngleDatum: ...
 
@@ -3129,12 +2968,8 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> AngleDatum: ...
 
@@ -3164,11 +2999,11 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -3207,7 +3042,7 @@ class AngleValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -3235,18 +3070,18 @@ class AngleValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -3276,9 +3111,9 @@ class AngleValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -3400,8 +3235,8 @@ class AngleValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -3416,14 +3251,14 @@ class AngleValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -3433,7 +3268,7 @@ class AngleValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -3461,20 +3296,20 @@ class AngleValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -3505,7 +3340,7 @@ class AngleValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -3627,8 +3462,8 @@ class AngleValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -3643,15 +3478,15 @@ class AngleValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -3660,12 +3495,8 @@ class AngleValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> AngleValue: ...
 
@@ -3673,12 +3504,8 @@ class AngleValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> AngleValue: ...
 
@@ -3691,8 +3518,8 @@ class AngleValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -3963,12 +3790,12 @@ class Color(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Color: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Color: ...
 
     @overload
@@ -3985,8 +3812,8 @@ class Color(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -4003,13 +3830,8 @@ class Color(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -4017,13 +3839,8 @@ class Color(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -4045,44 +3862,24 @@ class Color(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4234,23 +4031,23 @@ class Color(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4404,35 +4201,35 @@ class Color(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4585,24 +4382,16 @@ class Color(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -4619,53 +4408,25 @@ class Color(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -4678,21 +4439,13 @@ class Color(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -4845,20 +4598,20 @@ class Color(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -5010,31 +4763,19 @@ class Color(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -5188,49 +4929,41 @@ class Color(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -5382,24 +5115,16 @@ class Color(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -5416,39 +5141,27 @@ class Color(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -5460,57 +5173,25 @@ class Color(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -5525,32 +5206,18 @@ class Color(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -5565,29 +5232,21 @@ class Color(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -5928,7 +5587,7 @@ class Color(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -5948,11 +5607,7 @@ class Color(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Color: ...
 
@@ -6017,8 +5672,8 @@ class Color(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -6046,7 +5701,7 @@ class Color(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -6055,7 +5710,7 @@ class Color(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -6072,7 +5727,7 @@ class Color(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -6243,7 +5898,7 @@ class Color(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -6353,13 +6008,9 @@ class Color(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -6387,22 +6038,22 @@ class Color(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -6433,7 +6084,7 @@ class Color(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -6555,8 +6206,8 @@ class Color(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -6700,13 +6351,8 @@ class ColorDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ColorDatum: ...
 
@@ -6714,13 +6360,8 @@ class ColorDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ColorDatum: ...
 
@@ -6750,11 +6391,11 @@ class ColorDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -6794,7 +6435,7 @@ class ColorValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -6822,18 +6463,18 @@ class ColorValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -6863,9 +6504,9 @@ class ColorValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -6987,8 +6628,8 @@ class ColorValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -7003,14 +6644,14 @@ class ColorValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -7020,7 +6661,7 @@ class ColorValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -7048,20 +6689,20 @@ class ColorValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -7092,7 +6733,7 @@ class ColorValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -7214,8 +6855,8 @@ class ColorValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -7230,15 +6871,15 @@ class ColorValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -7247,13 +6888,8 @@ class ColorValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -7261,13 +6897,8 @@ class ColorValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -7280,8 +6911,8 @@ class ColorValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -7535,12 +7166,12 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Column: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Column: ...
 
     @overload
@@ -7560,8 +7191,8 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -7591,27 +7222,27 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def header(
         self,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAnchor: core.SchemaBase
+        labelAnchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         labelAngle: float | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -7764,24 +7395,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -7798,48 +7421,40 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOrient: core.SchemaBase
+        labelOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        titleAnchor: core.SchemaBase
+        titleAnchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleAngle: float | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -7991,24 +7606,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -8025,24 +7632,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOrient: core.SchemaBase
+        titleOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Column: ...
 
@@ -8067,8 +7666,8 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -8096,7 +7695,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -8270,7 +7869,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -8380,13 +7979,9 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -8413,26 +8008,24 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "exponentialb",
         ]
         | UndefinedType = Undefined,
-        align: core.SchemaBase
-        | Literal["all", "each", "none"]
-        | UndefinedType = Undefined,
+        align: SchemaBase | Literal["all", "each", "none"] | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         center: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        header: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        header: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | UndefinedType = Undefined,
         spacing: float | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -8554,8 +8147,8 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -8812,12 +8405,12 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Description: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Description: ...
 
     @overload
@@ -8834,8 +8427,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -8855,12 +8448,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Description: ...
 
@@ -8868,12 +8457,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Description: ...
 
@@ -9063,7 +8648,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -9173,13 +8758,9 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -9207,16 +8788,16 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -9338,8 +8919,8 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -9382,7 +8963,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -9410,18 +8991,18 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -9451,9 +9032,9 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -9575,8 +9156,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -9591,14 +9172,14 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -9608,7 +9189,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -9636,20 +9217,20 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -9680,7 +9261,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -9802,8 +9383,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -9818,15 +9399,15 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -9835,13 +9416,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -9849,13 +9425,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -9868,8 +9439,8 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -10070,12 +9641,12 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Detail: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Detail: ...
 
     @overload
@@ -10092,8 +9663,8 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -10282,7 +9853,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -10392,13 +9963,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -10426,10 +9993,10 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -10551,8 +10118,8 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -10855,12 +10422,12 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Facet: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Facet: ...
 
     @overload
@@ -10869,12 +10436,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def align(
         self,
-        column: core.SchemaBase
-        | Literal["all", "each", "none"]
-        | UndefinedType = Undefined,
-        row: core.SchemaBase
-        | Literal["all", "each", "none"]
-        | UndefinedType = Undefined,
+        column: SchemaBase | Literal["all", "each", "none"] | UndefinedType = Undefined,
+        row: SchemaBase | Literal["all", "each", "none"] | UndefinedType = Undefined,
         **kwds,
     ) -> Facet: ...
 
@@ -10892,8 +10455,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -10937,27 +10500,27 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def header(
         self,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAnchor: core.SchemaBase
+        labelAnchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         labelAngle: float | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -11110,24 +10673,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -11144,48 +10699,40 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOrient: core.SchemaBase
+        labelOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        titleAnchor: core.SchemaBase
+        titleAnchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleAngle: float | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -11337,24 +10884,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -11371,24 +10910,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOrient: core.SchemaBase
+        titleOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Facet: ...
 
@@ -11413,8 +10944,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -11442,7 +10973,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -11624,7 +11155,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -11734,13 +11265,9 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -11768,28 +11295,28 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         align: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         bounds: Literal["full", "flush"] | UndefinedType = Undefined,
-        center: bool | dict | core.SchemaBase | UndefinedType = Undefined,
+        center: bool | dict | SchemaBase | UndefinedType = Undefined,
         columns: float | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        header: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        header: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | UndefinedType = Undefined,
-        spacing: dict | float | core.SchemaBase | UndefinedType = Undefined,
+        spacing: dict | float | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -11911,8 +11438,8 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -12201,12 +11728,12 @@ class Fill(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Fill: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Fill: ...
 
     @overload
@@ -12223,8 +11750,8 @@ class Fill(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -12241,13 +11768,8 @@ class Fill(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -12255,13 +11777,8 @@ class Fill(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -12283,44 +11800,24 @@ class Fill(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -12472,23 +11969,23 @@ class Fill(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -12642,35 +12139,35 @@ class Fill(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -12823,24 +12320,16 @@ class Fill(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -12857,53 +12346,25 @@ class Fill(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -12916,21 +12377,13 @@ class Fill(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13083,20 +12536,20 @@ class Fill(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13248,31 +12701,19 @@ class Fill(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13426,49 +12867,41 @@ class Fill(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -13620,24 +13053,16 @@ class Fill(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -13654,39 +13079,27 @@ class Fill(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -13698,57 +13111,25 @@ class Fill(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -13763,32 +13144,18 @@ class Fill(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -13803,29 +13170,21 @@ class Fill(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -14166,7 +13525,7 @@ class Fill(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -14186,11 +13545,7 @@ class Fill(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Fill: ...
 
@@ -14255,8 +13610,8 @@ class Fill(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -14284,7 +13639,7 @@ class Fill(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -14293,7 +13648,7 @@ class Fill(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -14310,7 +13665,7 @@ class Fill(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -14481,7 +13836,7 @@ class Fill(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -14591,13 +13946,9 @@ class Fill(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -14625,22 +13976,22 @@ class Fill(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -14671,7 +14022,7 @@ class Fill(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -14793,8 +14144,8 @@ class Fill(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -14938,13 +14289,8 @@ class FillDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillDatum: ...
 
@@ -14952,13 +14298,8 @@ class FillDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillDatum: ...
 
@@ -14988,11 +14329,11 @@ class FillDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -15032,7 +14373,7 @@ class FillValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -15060,18 +14401,18 @@ class FillValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -15101,9 +14442,9 @@ class FillValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -15225,8 +14566,8 @@ class FillValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -15241,14 +14582,14 @@ class FillValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -15258,7 +14599,7 @@ class FillValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -15286,20 +14627,20 @@ class FillValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -15330,7 +14671,7 @@ class FillValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -15452,8 +14793,8 @@ class FillValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -15468,15 +14809,15 @@ class FillValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -15485,13 +14826,8 @@ class FillValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -15499,13 +14835,8 @@ class FillValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -15518,8 +14849,8 @@ class FillValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -15789,12 +15120,12 @@ class FillOpacity(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> FillOpacity: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> FillOpacity: ...
 
     @overload
@@ -15811,8 +15142,8 @@ class FillOpacity(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -15829,12 +15160,8 @@ class FillOpacity(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -15842,12 +15169,8 @@ class FillOpacity(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -15869,44 +15192,24 @@ class FillOpacity(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -16058,23 +15361,23 @@ class FillOpacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -16228,35 +15531,35 @@ class FillOpacity(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -16409,24 +15712,16 @@ class FillOpacity(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -16443,53 +15738,25 @@ class FillOpacity(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -16502,21 +15769,13 @@ class FillOpacity(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -16669,20 +15928,20 @@ class FillOpacity(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -16834,31 +16093,19 @@ class FillOpacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -17012,49 +16259,41 @@ class FillOpacity(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -17206,24 +16445,16 @@ class FillOpacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -17240,39 +16471,27 @@ class FillOpacity(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -17284,57 +16503,25 @@ class FillOpacity(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -17349,32 +16536,18 @@ class FillOpacity(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -17389,29 +16562,21 @@ class FillOpacity(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -17752,7 +16917,7 @@ class FillOpacity(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -17772,11 +16937,7 @@ class FillOpacity(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacity: ...
 
@@ -17841,8 +17002,8 @@ class FillOpacity(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -17870,7 +17031,7 @@ class FillOpacity(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -17879,7 +17040,7 @@ class FillOpacity(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -17896,7 +17057,7 @@ class FillOpacity(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -18067,7 +17228,7 @@ class FillOpacity(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -18177,13 +17338,9 @@ class FillOpacity(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -18211,22 +17368,22 @@ class FillOpacity(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -18257,7 +17414,7 @@ class FillOpacity(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -18379,8 +17536,8 @@ class FillOpacity(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -18524,12 +17681,8 @@ class FillOpacityDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacityDatum: ...
 
@@ -18537,12 +17690,8 @@ class FillOpacityDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacityDatum: ...
 
@@ -18572,11 +17721,11 @@ class FillOpacityDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -18615,7 +17764,7 @@ class FillOpacityValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -18643,18 +17792,18 @@ class FillOpacityValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -18684,9 +17833,9 @@ class FillOpacityValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -18808,8 +17957,8 @@ class FillOpacityValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -18824,14 +17973,14 @@ class FillOpacityValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -18841,7 +17990,7 @@ class FillOpacityValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -18869,20 +18018,20 @@ class FillOpacityValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -18913,7 +18062,7 @@ class FillOpacityValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -19035,8 +18184,8 @@ class FillOpacityValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -19051,15 +18200,15 @@ class FillOpacityValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -19068,12 +18217,8 @@ class FillOpacityValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
 
@@ -19081,12 +18226,8 @@ class FillOpacityValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
 
@@ -19099,8 +18240,8 @@ class FillOpacityValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -19341,12 +18482,12 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Href: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Href: ...
 
     @overload
@@ -19363,8 +18504,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -19384,12 +18525,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Href: ...
 
@@ -19397,12 +18534,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Href: ...
 
@@ -19592,7 +18725,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -19702,13 +18835,9 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -19736,16 +18865,16 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -19867,8 +18996,8 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -19911,7 +19040,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -19939,18 +19068,18 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -19980,9 +19109,9 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -20104,8 +19233,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -20120,14 +19249,14 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -20137,7 +19266,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -20165,20 +19294,20 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -20209,7 +19338,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -20331,8 +19460,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -20347,15 +19476,15 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -20364,13 +19493,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -20378,13 +19502,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -20397,8 +19516,8 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -20599,12 +19718,12 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Key: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Key: ...
 
     @overload
@@ -20621,8 +19740,8 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -20811,7 +19930,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -20921,13 +20040,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -20955,10 +20070,10 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -21080,8 +20195,8 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -21292,12 +20407,12 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Latitude: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Latitude: ...
 
     @overload
@@ -21478,7 +20593,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -21586,13 +20701,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -21621,9 +20732,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -21745,7 +20856,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         type: str | UndefinedType = Undefined,
         **kwds,
     ):
@@ -21892,8 +21003,8 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -22029,12 +21140,12 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Latitude2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Latitude2: ...
 
     @overload
@@ -22215,7 +21326,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -22320,13 +21431,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -22355,9 +21462,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -22479,7 +21586,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -22624,8 +21731,8 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -22850,12 +21957,12 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Longitude: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Longitude: ...
 
     @overload
@@ -23036,7 +22143,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -23144,13 +22251,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -23179,9 +22282,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -23303,7 +22406,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         type: str | UndefinedType = Undefined,
         **kwds,
     ):
@@ -23450,8 +22553,8 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -23587,12 +22690,12 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Longitude2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Longitude2: ...
 
     @overload
@@ -23773,7 +22876,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -23878,13 +22981,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -23913,9 +23012,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -24037,7 +23136,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -24182,8 +23281,8 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -24478,12 +23577,12 @@ class Opacity(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Opacity: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Opacity: ...
 
     @overload
@@ -24500,8 +23599,8 @@ class Opacity(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -24518,12 +23617,8 @@ class Opacity(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -24531,12 +23626,8 @@ class Opacity(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -24558,44 +23649,24 @@ class Opacity(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -24747,23 +23818,23 @@ class Opacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -24917,35 +23988,35 @@ class Opacity(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -25098,24 +24169,16 @@ class Opacity(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -25132,53 +24195,25 @@ class Opacity(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -25191,21 +24226,13 @@ class Opacity(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -25358,20 +24385,20 @@ class Opacity(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -25523,31 +24550,19 @@ class Opacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -25701,49 +24716,41 @@ class Opacity(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -25895,24 +24902,16 @@ class Opacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -25929,39 +24928,27 @@ class Opacity(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -25973,57 +24960,25 @@ class Opacity(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -26038,32 +24993,18 @@ class Opacity(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -26078,29 +25019,21 @@ class Opacity(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -26441,7 +25374,7 @@ class Opacity(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -26461,11 +25394,7 @@ class Opacity(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Opacity: ...
 
@@ -26530,8 +25459,8 @@ class Opacity(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -26559,7 +25488,7 @@ class Opacity(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -26568,7 +25497,7 @@ class Opacity(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -26585,7 +25514,7 @@ class Opacity(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -26756,7 +25685,7 @@ class Opacity(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -26866,13 +25795,9 @@ class Opacity(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -26900,22 +25825,22 @@ class Opacity(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -26946,7 +25871,7 @@ class Opacity(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -27068,8 +25993,8 @@ class Opacity(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -27211,12 +26136,8 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> OpacityDatum: ...
 
@@ -27224,12 +26145,8 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> OpacityDatum: ...
 
@@ -27259,11 +26176,11 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -27302,7 +26219,7 @@ class OpacityValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -27330,18 +26247,18 @@ class OpacityValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -27371,9 +26288,9 @@ class OpacityValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -27495,8 +26412,8 @@ class OpacityValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -27511,14 +26428,14 @@ class OpacityValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -27528,7 +26445,7 @@ class OpacityValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -27556,20 +26473,20 @@ class OpacityValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -27600,7 +26517,7 @@ class OpacityValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -27722,8 +26639,8 @@ class OpacityValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -27738,15 +26655,15 @@ class OpacityValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -27755,12 +26672,8 @@ class OpacityValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> OpacityValue: ...
 
@@ -27768,12 +26681,8 @@ class OpacityValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> OpacityValue: ...
 
@@ -27786,8 +26695,8 @@ class OpacityValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -27989,12 +26898,12 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Order: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Order: ...
 
     @overload
@@ -28011,8 +26920,8 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -28204,7 +27113,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -28314,13 +27223,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -28348,13 +27253,13 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        sort: core.SchemaBase
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        sort: SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -28476,8 +27381,8 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -28522,7 +27427,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: float | UndefinedType = Undefined,
         **kwds,
     ) -> OrderValue: ...
@@ -28531,7 +27436,7 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: float | UndefinedType = Undefined,
         **kwds,
     ) -> OrderValue: ...
@@ -28545,8 +27450,8 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -28829,12 +27734,12 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Radius: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Radius: ...
 
     @overload
@@ -28851,8 +27756,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -28882,57 +27787,25 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -28947,32 +27820,18 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -28987,29 +27846,21 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -29350,7 +28201,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -29370,11 +28221,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Radius: ...
 
@@ -29439,8 +28286,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -29468,7 +28315,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -29477,7 +28324,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -29494,7 +28341,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -29674,7 +28521,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -29784,13 +28631,9 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -29818,17 +28661,17 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -29860,11 +28703,11 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -29986,8 +28829,8 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -30165,57 +29008,25 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -30230,32 +29041,18 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -30270,29 +29067,21 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -30633,7 +29422,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -30653,11 +29442,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> RadiusDatum: ...
 
@@ -30695,14 +29480,14 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -30866,12 +29651,12 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Radius2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Radius2: ...
 
     @overload
@@ -31052,7 +29837,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -31157,13 +29942,9 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -31192,9 +29973,9 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -31316,7 +30097,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -31461,8 +30242,8 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -31741,12 +30522,12 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Row: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Row: ...
 
     @overload
@@ -31766,8 +30547,8 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -31797,27 +30578,27 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def header(
         self,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAnchor: core.SchemaBase
+        labelAnchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         labelAngle: float | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -31970,24 +30751,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -32004,48 +30777,40 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOrient: core.SchemaBase
+        labelOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        orient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        titleAnchor: core.SchemaBase
+        titleAnchor: SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleAngle: float | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -32197,24 +30962,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -32231,24 +30988,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOrient: core.SchemaBase
+        titleOrient: SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Row: ...
 
@@ -32273,8 +31022,8 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -32302,7 +31051,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -32476,7 +31225,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -32586,13 +31335,9 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -32619,26 +31364,24 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "exponentialb",
         ]
         | UndefinedType = Undefined,
-        align: core.SchemaBase
-        | Literal["all", "each", "none"]
-        | UndefinedType = Undefined,
+        align: SchemaBase | Literal["all", "each", "none"] | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         center: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        header: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        header: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | UndefinedType = Undefined,
         spacing: float | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -32760,8 +31503,8 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -33048,12 +31791,12 @@ class Shape(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Shape: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Shape: ...
 
     @overload
@@ -33070,8 +31813,8 @@ class Shape(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -33088,13 +31831,8 @@ class Shape(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -33102,13 +31840,8 @@ class Shape(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -33130,44 +31863,24 @@ class Shape(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -33319,23 +32032,23 @@ class Shape(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -33489,35 +32202,35 @@ class Shape(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -33670,24 +32383,16 @@ class Shape(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -33704,53 +32409,25 @@ class Shape(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -33763,21 +32440,13 @@ class Shape(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -33930,20 +32599,20 @@ class Shape(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -34095,31 +32764,19 @@ class Shape(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -34273,49 +32930,41 @@ class Shape(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -34467,24 +33116,16 @@ class Shape(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -34501,39 +33142,27 @@ class Shape(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -34545,57 +33174,25 @@ class Shape(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -34610,32 +33207,18 @@ class Shape(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -34650,29 +33233,21 @@ class Shape(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -35013,7 +33588,7 @@ class Shape(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -35033,11 +33608,7 @@ class Shape(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Shape: ...
 
@@ -35102,8 +33673,8 @@ class Shape(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -35131,7 +33702,7 @@ class Shape(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -35140,7 +33711,7 @@ class Shape(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -35157,7 +33728,7 @@ class Shape(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -35328,7 +33899,7 @@ class Shape(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -35436,13 +34007,9 @@ class Shape(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -35470,22 +34037,22 @@ class Shape(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -35516,7 +34083,7 @@ class Shape(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -35638,8 +34205,8 @@ class Shape(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["nominal", "ordinal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -35783,13 +34350,8 @@ class ShapeDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
 
@@ -35797,13 +34359,8 @@ class ShapeDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ShapeDatum: ...
 
@@ -35833,11 +34390,11 @@ class ShapeDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -35877,7 +34434,7 @@ class ShapeValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -35905,18 +34462,18 @@ class ShapeValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -35946,9 +34503,9 @@ class ShapeValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -36070,8 +34627,8 @@ class ShapeValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["nominal", "ordinal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -36086,14 +34643,14 @@ class ShapeValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -36103,7 +34660,7 @@ class ShapeValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -36131,20 +34688,20 @@ class ShapeValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -36175,7 +34732,7 @@ class ShapeValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -36297,8 +34854,8 @@ class ShapeValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["nominal", "ordinal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -36313,15 +34870,15 @@ class ShapeValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -36330,13 +34887,8 @@ class ShapeValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -36344,13 +34896,8 @@ class ShapeValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -36363,8 +34910,8 @@ class ShapeValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -36632,12 +35179,12 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Size: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Size: ...
 
     @overload
@@ -36654,8 +35201,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -36672,12 +35219,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -36685,12 +35228,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -36712,44 +35251,24 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -36901,23 +35420,23 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -37071,35 +35590,35 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -37252,24 +35771,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -37286,53 +35797,25 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -37345,21 +35828,13 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -37512,20 +35987,20 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -37677,31 +36152,19 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -37855,49 +36318,41 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -38049,24 +36504,16 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -38083,39 +36530,27 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -38127,57 +36562,25 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -38192,32 +36595,18 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -38232,29 +36621,21 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -38595,7 +36976,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -38615,11 +36996,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Size: ...
 
@@ -38684,8 +37061,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -38713,7 +37090,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -38722,7 +37099,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -38739,7 +37116,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -38910,7 +37287,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -39020,13 +37397,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -39054,22 +37427,22 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -39100,7 +37473,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -39222,8 +37595,8 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -39365,12 +37738,8 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> SizeDatum: ...
 
@@ -39378,12 +37747,8 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> SizeDatum: ...
 
@@ -39413,11 +37778,11 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -39456,7 +37821,7 @@ class SizeValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -39484,18 +37849,18 @@ class SizeValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -39525,9 +37890,9 @@ class SizeValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -39649,8 +38014,8 @@ class SizeValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -39665,14 +38030,14 @@ class SizeValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -39682,7 +38047,7 @@ class SizeValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -39710,20 +38075,20 @@ class SizeValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -39754,7 +38119,7 @@ class SizeValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -39876,8 +38241,8 @@ class SizeValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -39892,15 +38257,15 @@ class SizeValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -39909,12 +38274,8 @@ class SizeValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> SizeValue: ...
 
@@ -39922,12 +38283,8 @@ class SizeValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> SizeValue: ...
 
@@ -39940,8 +38297,8 @@ class SizeValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -40212,12 +38569,12 @@ class Stroke(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Stroke: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Stroke: ...
 
     @overload
@@ -40234,8 +38591,8 @@ class Stroke(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -40252,13 +38609,8 @@ class Stroke(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -40266,13 +38618,8 @@ class Stroke(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -40294,44 +38641,24 @@ class Stroke(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -40483,23 +38810,23 @@ class Stroke(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -40653,35 +38980,35 @@ class Stroke(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -40834,24 +39161,16 @@ class Stroke(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -40868,53 +39187,25 @@ class Stroke(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -40927,21 +39218,13 @@ class Stroke(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -41094,20 +39377,20 @@ class Stroke(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -41259,31 +39542,19 @@ class Stroke(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -41437,49 +39708,41 @@ class Stroke(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -41631,24 +39894,16 @@ class Stroke(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -41665,39 +39920,27 @@ class Stroke(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -41709,57 +39952,25 @@ class Stroke(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -41774,32 +39985,18 @@ class Stroke(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -41814,29 +40011,21 @@ class Stroke(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -42177,7 +40366,7 @@ class Stroke(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -42197,11 +40386,7 @@ class Stroke(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Stroke: ...
 
@@ -42266,8 +40451,8 @@ class Stroke(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -42295,7 +40480,7 @@ class Stroke(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -42304,7 +40489,7 @@ class Stroke(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -42321,7 +40506,7 @@ class Stroke(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -42492,7 +40677,7 @@ class Stroke(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -42602,13 +40787,9 @@ class Stroke(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -42636,22 +40817,22 @@ class Stroke(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -42682,7 +40863,7 @@ class Stroke(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -42804,8 +40985,8 @@ class Stroke(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -42949,13 +41130,8 @@ class StrokeDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
 
@@ -42963,13 +41139,8 @@ class StrokeDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeDatum: ...
 
@@ -42999,11 +41170,11 @@ class StrokeDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -43043,7 +41214,7 @@ class StrokeValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -43071,18 +41242,18 @@ class StrokeValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -43112,9 +41283,9 @@ class StrokeValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -43236,8 +41407,8 @@ class StrokeValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -43252,14 +41423,14 @@ class StrokeValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -43269,7 +41440,7 @@ class StrokeValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -43297,20 +41468,20 @@ class StrokeValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -43341,7 +41512,7 @@ class StrokeValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -43463,8 +41634,8 @@ class StrokeValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -43479,15 +41650,15 @@ class StrokeValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -43496,13 +41667,8 @@ class StrokeValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -43510,13 +41676,8 @@ class StrokeValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -43529,8 +41690,8 @@ class StrokeValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -43800,12 +41961,12 @@ class StrokeDash(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> StrokeDash: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> StrokeDash: ...
 
     @overload
@@ -43822,8 +41983,8 @@ class StrokeDash(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -43840,10 +42001,10 @@ class StrokeDash(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         **kwds,
@@ -43853,10 +42014,10 @@ class StrokeDash(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         **kwds,
@@ -43880,44 +42041,24 @@ class StrokeDash(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -44069,23 +42210,23 @@ class StrokeDash(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -44239,35 +42380,35 @@ class StrokeDash(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -44420,24 +42561,16 @@ class StrokeDash(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -44454,53 +42587,25 @@ class StrokeDash(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -44513,21 +42618,13 @@ class StrokeDash(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -44680,20 +42777,20 @@ class StrokeDash(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -44845,31 +42942,19 @@ class StrokeDash(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -45023,49 +43108,41 @@ class StrokeDash(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -45217,24 +43294,16 @@ class StrokeDash(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -45251,39 +43320,27 @@ class StrokeDash(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -45295,57 +43352,25 @@ class StrokeDash(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -45360,32 +43385,18 @@ class StrokeDash(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -45400,29 +43411,21 @@ class StrokeDash(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -45763,7 +43766,7 @@ class StrokeDash(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -45783,11 +43786,7 @@ class StrokeDash(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeDash: ...
 
@@ -45852,8 +43851,8 @@ class StrokeDash(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -45881,7 +43880,7 @@ class StrokeDash(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -45890,7 +43889,7 @@ class StrokeDash(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -45907,7 +43906,7 @@ class StrokeDash(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -46078,7 +44077,7 @@ class StrokeDash(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -46188,13 +44187,9 @@ class StrokeDash(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -46222,22 +44217,22 @@ class StrokeDash(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -46268,7 +44263,7 @@ class StrokeDash(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -46390,8 +44385,8 @@ class StrokeDash(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -46535,10 +44530,10 @@ class StrokeDashDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         **kwds,
@@ -46548,10 +44543,10 @@ class StrokeDashDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         **kwds,
@@ -46583,11 +44578,11 @@ class StrokeDashDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -46626,7 +44621,7 @@ class StrokeDashValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -46654,18 +44649,18 @@ class StrokeDashValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -46695,9 +44690,9 @@ class StrokeDashValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -46819,8 +44814,8 @@ class StrokeDashValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -46835,14 +44830,14 @@ class StrokeDashValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -46852,7 +44847,7 @@ class StrokeDashValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -46880,20 +44875,20 @@ class StrokeDashValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -46924,7 +44919,7 @@ class StrokeDashValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -47046,8 +45041,8 @@ class StrokeDashValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -47062,15 +45057,15 @@ class StrokeDashValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -47079,10 +45074,10 @@ class StrokeDashValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         **kwds,
@@ -47092,10 +45087,10 @@ class StrokeDashValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         **kwds,
@@ -47110,8 +45105,8 @@ class StrokeDashValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -47381,12 +45376,12 @@ class StrokeOpacity(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> StrokeOpacity: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> StrokeOpacity: ...
 
     @overload
@@ -47403,8 +45398,8 @@ class StrokeOpacity(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -47421,12 +45416,8 @@ class StrokeOpacity(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -47434,12 +45425,8 @@ class StrokeOpacity(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -47461,44 +45448,24 @@ class StrokeOpacity(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -47650,23 +45617,23 @@ class StrokeOpacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -47820,35 +45787,35 @@ class StrokeOpacity(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -48001,24 +45968,16 @@ class StrokeOpacity(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -48035,53 +45994,25 @@ class StrokeOpacity(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -48094,21 +46025,13 @@ class StrokeOpacity(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -48261,20 +46184,20 @@ class StrokeOpacity(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -48426,31 +46349,19 @@ class StrokeOpacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -48604,49 +46515,41 @@ class StrokeOpacity(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -48798,24 +46701,16 @@ class StrokeOpacity(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -48832,39 +46727,27 @@ class StrokeOpacity(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -48876,57 +46759,25 @@ class StrokeOpacity(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -48941,32 +46792,18 @@ class StrokeOpacity(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -48981,29 +46818,21 @@ class StrokeOpacity(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -49344,7 +47173,7 @@ class StrokeOpacity(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -49364,11 +47193,7 @@ class StrokeOpacity(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
 
@@ -49433,8 +47258,8 @@ class StrokeOpacity(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -49462,7 +47287,7 @@ class StrokeOpacity(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -49471,7 +47296,7 @@ class StrokeOpacity(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -49488,7 +47313,7 @@ class StrokeOpacity(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -49659,7 +47484,7 @@ class StrokeOpacity(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -49769,13 +47594,9 @@ class StrokeOpacity(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -49803,22 +47624,22 @@ class StrokeOpacity(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -49849,7 +47670,7 @@ class StrokeOpacity(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -49971,8 +47792,8 @@ class StrokeOpacity(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -50116,12 +47937,8 @@ class StrokeOpacityDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacityDatum: ...
 
@@ -50129,12 +47946,8 @@ class StrokeOpacityDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacityDatum: ...
 
@@ -50164,11 +47977,11 @@ class StrokeOpacityDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -50207,7 +48020,7 @@ class StrokeOpacityValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -50235,18 +48048,18 @@ class StrokeOpacityValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -50276,9 +48089,9 @@ class StrokeOpacityValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -50400,8 +48213,8 @@ class StrokeOpacityValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -50416,14 +48229,14 @@ class StrokeOpacityValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -50433,7 +48246,7 @@ class StrokeOpacityValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -50461,20 +48274,20 @@ class StrokeOpacityValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -50505,7 +48318,7 @@ class StrokeOpacityValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -50627,8 +48440,8 @@ class StrokeOpacityValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -50643,15 +48456,15 @@ class StrokeOpacityValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -50660,12 +48473,8 @@ class StrokeOpacityValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
 
@@ -50673,12 +48482,8 @@ class StrokeOpacityValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
 
@@ -50691,8 +48496,8 @@ class StrokeOpacityValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -50962,12 +48767,12 @@ class StrokeWidth(
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> StrokeWidth: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> StrokeWidth: ...
 
     @overload
@@ -50984,8 +48789,8 @@ class StrokeWidth(
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -51002,12 +48807,8 @@ class StrokeWidth(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -51015,12 +48816,8 @@ class StrokeWidth(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -51042,44 +48839,24 @@ class StrokeWidth(
     @overload
     def legend(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        clipHeight: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        clipHeight: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         columnPadding: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        columns: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        cornerRadius: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        direction: core.SchemaBase
+        columns: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        cornerRadius: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        direction: SchemaBase
         | Literal["horizontal", "vertical"]
         | UndefinedType = Undefined,
         fillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -51231,23 +49008,23 @@ class StrokeWidth(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         gradientLength: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -51401,35 +49178,35 @@ class StrokeWidth(
         | UndefinedType = Undefined,
         gradientStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gradientThickness: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         gridAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["all", "each", "none"]
         | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -51582,24 +49359,16 @@ class StrokeWidth(
         ]
         | UndefinedType = Undefined,
         labelExpr: str | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -51616,53 +49385,25 @@ class StrokeWidth(
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legendX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        legendY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        orient: core.SchemaBase
+        legendX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        legendY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        orient: SchemaBase
         | Literal[
             "none",
             "left",
@@ -51675,21 +49416,13 @@ class StrokeWidth(
             "bottom-right",
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        rowPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        rowPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         strokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -51842,20 +49575,20 @@ class StrokeWidth(
         ]
         | UndefinedType = Undefined,
         symbolDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         symbolDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         symbolFillColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -52007,31 +49740,19 @@ class StrokeWidth(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        symbolLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        symbolOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        symbolOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         symbolStrokeColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -52185,49 +49906,41 @@ class StrokeWidth(
         | UndefinedType = Undefined,
         symbolStrokeWidth: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        symbolType: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        symbolType: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -52379,24 +50092,16 @@ class StrokeWidth(
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -52413,39 +50118,27 @@ class StrokeWidth(
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleOrient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "right", "top", "bottom"]
         | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         type: Literal["symbol", "gradient"] | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -52457,57 +50150,25 @@ class StrokeWidth(
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -52522,32 +50183,18 @@ class StrokeWidth(
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -52562,29 +50209,21 @@ class StrokeWidth(
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -52925,7 +50564,7 @@ class StrokeWidth(
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -52945,11 +50584,7 @@ class StrokeWidth(
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
 
@@ -53014,8 +50649,8 @@ class StrokeWidth(
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -53043,7 +50678,7 @@ class StrokeWidth(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -53052,7 +50687,7 @@ class StrokeWidth(
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -53069,7 +50704,7 @@ class StrokeWidth(
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -53240,7 +50875,7 @@ class StrokeWidth(
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -53350,13 +50985,9 @@ class StrokeWidth(
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -53384,22 +51015,22 @@ class StrokeWidth(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -53430,7 +51061,7 @@ class StrokeWidth(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -53552,8 +51183,8 @@ class StrokeWidth(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -53697,12 +51328,8 @@ class StrokeWidthDatum(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidthDatum: ...
 
@@ -53710,12 +51337,8 @@ class StrokeWidthDatum(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidthDatum: ...
 
@@ -53745,11 +51368,11 @@ class StrokeWidthDatum(
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -53788,7 +51411,7 @@ class StrokeWidthValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -53816,18 +51439,18 @@ class StrokeWidthValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -53857,9 +51480,9 @@ class StrokeWidthValue(
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -53981,8 +51604,8 @@ class StrokeWidthValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -53997,14 +51620,14 @@ class StrokeWidthValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -54014,7 +51637,7 @@ class StrokeWidthValue(
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -54042,20 +51665,20 @@ class StrokeWidthValue(
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -54086,7 +51709,7 @@ class StrokeWidthValue(
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -54208,8 +51831,8 @@ class StrokeWidthValue(
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -54224,15 +51847,15 @@ class StrokeWidthValue(
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -54241,12 +51864,8 @@ class StrokeWidthValue(
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
 
@@ -54254,12 +51873,8 @@ class StrokeWidthValue(
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
 
@@ -54272,8 +51887,8 @@ class StrokeWidthValue(
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -54514,12 +52129,12 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Text: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Text: ...
 
     @overload
@@ -54536,8 +52151,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -54557,12 +52172,12 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
         **kwds,
     ) -> Text: ...
@@ -54571,12 +52186,12 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
         **kwds,
     ) -> Text: ...
@@ -54767,7 +52382,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -54877,13 +52492,9 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -54911,16 +52522,16 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -55042,8 +52653,8 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -55218,12 +52829,12 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
         **kwds,
     ) -> TextDatum: ...
@@ -55232,12 +52843,12 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
         **kwds,
     ) -> TextDatum: ...
@@ -55277,13 +52888,13 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         datum,
         bandPosition: float | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -55322,7 +52933,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -55350,13 +52961,13 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -55478,8 +53089,8 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -55489,7 +53100,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -55517,14 +53128,14 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -55646,8 +53257,8 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -55656,12 +53267,12 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
         **kwds,
     ) -> TextValue: ...
@@ -55670,12 +53281,12 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
         value: str
         | dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | UndefinedType = Undefined,
         **kwds,
     ) -> TextValue: ...
@@ -55689,8 +53300,8 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -55973,12 +53584,12 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Theta: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Theta: ...
 
     @overload
@@ -55995,8 +53606,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -56026,57 +53637,25 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -56091,32 +53670,18 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -56131,29 +53696,21 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -56494,7 +54051,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -56514,11 +54071,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Theta: ...
 
@@ -56583,8 +54136,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -56612,7 +54165,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -56621,7 +54174,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -56638,7 +54191,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -56818,7 +54371,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -56928,13 +54481,9 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -56962,17 +54511,17 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -57004,11 +54553,11 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -57130,8 +54679,8 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -57309,57 +54858,25 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -57374,32 +54891,18 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -57414,29 +54917,21 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -57777,7 +55272,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -57797,11 +55292,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> ThetaDatum: ...
 
@@ -57839,14 +55330,14 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -58010,12 +55501,12 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Theta2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Theta2: ...
 
     @overload
@@ -58196,7 +55687,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -58301,13 +55792,9 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -58336,9 +55823,9 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -58460,7 +55947,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -58605,8 +56092,8 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -58872,12 +56359,12 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Tooltip: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Tooltip: ...
 
     @overload
@@ -58894,8 +56381,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -58915,12 +56402,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Tooltip: ...
 
@@ -58928,12 +56411,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Tooltip: ...
 
@@ -59123,7 +56602,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -59233,13 +56712,9 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -59267,16 +56742,16 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -59398,8 +56873,8 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -59442,7 +56917,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -59470,18 +56945,18 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -59511,9 +56986,9 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -59635,8 +57110,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -59651,14 +57126,14 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -59668,7 +57143,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -59696,20 +57171,20 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -59740,7 +57215,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -59862,8 +57337,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -59878,15 +57353,15 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -59895,13 +57370,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -59909,13 +57379,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -59928,8 +57393,8 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -60170,12 +57635,12 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Url: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Url: ...
 
     @overload
@@ -60192,8 +57657,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -60213,12 +57678,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Url: ...
 
@@ -60226,12 +57687,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Url: ...
 
@@ -60421,7 +57878,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -60531,13 +57988,9 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -60565,16 +58018,16 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -60696,8 +58149,8 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -60740,7 +58193,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -60768,18 +58221,18 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -60809,9 +58262,9 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "-text",
         ]
         | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -60933,8 +58386,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -60949,14 +58402,14 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -60966,7 +58419,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -60994,20 +58447,20 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -61038,7 +58491,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -61160,8 +58613,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -61176,15 +58629,15 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         | dict
         | None
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         empty: bool | UndefinedType = Undefined,
-        legend: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        legend: dict | None | SchemaBase | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -61193,13 +58646,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     @overload
     def condition(
         self,
-        test: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        test: str | dict | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -61207,13 +58655,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     def condition(
         self,
         empty: bool | UndefinedType = Undefined,
-        param: str | core.SchemaBase | UndefinedType = Undefined,
-        value: str
-        | dict
-        | None
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        param: str | SchemaBase | UndefinedType = Undefined,
+        value: str | dict | None | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -61226,8 +58669,8 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         self,
         value,
         condition: dict
-        | core.SchemaBase
-        | Sequence[dict | core.SchemaBase]
+        | SchemaBase
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         **kwds,
     ):
@@ -61527,43 +58970,31 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> X: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> X: ...
 
     @overload
     def axis(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bandPosition: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        bandPosition: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: bool | UndefinedType = Undefined,
         domainCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         domainColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -61716,38 +59147,34 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         domainDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         domainDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         domainOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        domainWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        domainWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         grid: bool | UndefinedType = Undefined,
         gridCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         gridColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -61900,52 +59327,40 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         gridDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         gridDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        gridOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        gridWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        gridOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        gridWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelBound: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -62101,27 +59516,19 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         labelFlush: bool | float | UndefinedType = Undefined,
         labelFlushOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -62138,84 +59545,52 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        maxExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        maxExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "bottom", "left", "right"]
         | UndefinedType = Undefined,
-        position: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        position: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         tickBand: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["center", "extent"]
         | UndefinedType = Undefined,
         tickCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         tickColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -62369,77 +59744,53 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
         tickDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         tickDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         tickExtra: bool | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         tickRound: bool | UndefinedType = Undefined,
-        tickSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         ticks: bool | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        titleAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -62591,24 +59942,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -62625,48 +59968,24 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        translate: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        translate: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -62689,8 +60008,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -62721,8 +60040,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     def impute(
         self,
         frame: Sequence[None | float] | UndefinedType = Undefined,
-        keyvals: dict | Sequence[Any] | core.SchemaBase | UndefinedType = Undefined,
-        method: core.SchemaBase
+        keyvals: dict | SchemaBase | Sequence[Any] | UndefinedType = Undefined,
+        method: SchemaBase
         | Literal["value", "median", "max", "min", "mean"]
         | UndefinedType = Undefined,
         value: Any | UndefinedType = Undefined,
@@ -62735,57 +60054,25 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -62800,32 +60087,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -62840,29 +60113,21 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -63203,7 +60468,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -63223,11 +60488,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> X: ...
 
@@ -63292,8 +60553,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -63321,7 +60582,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -63330,7 +60591,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -63347,7 +60608,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -63527,7 +60788,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -63637,13 +60898,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -63670,20 +60927,20 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "exponentialb",
         ]
         | UndefinedType = Undefined,
-        axis: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        axis: dict | None | SchemaBase | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        impute: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        impute: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -63715,11 +60972,11 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -63841,8 +61098,8 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -64036,32 +61293,20 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def axis(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bandPosition: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        bandPosition: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: bool | UndefinedType = Undefined,
         domainCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         domainColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -64214,38 +61459,34 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ]
         | UndefinedType = Undefined,
         domainDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         domainDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         domainOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        domainWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        domainWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         grid: bool | UndefinedType = Undefined,
         gridCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         gridColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -64398,52 +61639,40 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         ]
         | UndefinedType = Undefined,
         gridDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         gridDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        gridOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        gridWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        gridOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        gridWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelBound: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -64599,27 +61828,19 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         labelFlush: bool | float | UndefinedType = Undefined,
         labelFlushOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -64636,84 +61857,52 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        maxExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        maxExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "bottom", "left", "right"]
         | UndefinedType = Undefined,
-        position: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        position: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         tickBand: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["center", "extent"]
         | UndefinedType = Undefined,
         tickCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         tickColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -64867,77 +62056,53 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
         tickDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         tickDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         tickExtra: bool | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         tickRound: bool | UndefinedType = Undefined,
-        tickSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         ticks: bool | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        titleAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -65089,24 +62254,16 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -65123,48 +62280,24 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        translate: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        translate: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -65180,8 +62313,8 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def impute(
         self,
         frame: Sequence[None | float] | UndefinedType = Undefined,
-        keyvals: dict | Sequence[Any] | core.SchemaBase | UndefinedType = Undefined,
-        method: core.SchemaBase
+        keyvals: dict | SchemaBase | Sequence[Any] | UndefinedType = Undefined,
+        method: SchemaBase
         | Literal["value", "median", "max", "min", "mean"]
         | UndefinedType = Undefined,
         value: Any | UndefinedType = Undefined,
@@ -65194,57 +62327,25 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -65259,32 +62360,18 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -65299,29 +62386,21 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -65662,7 +62741,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -65682,11 +62761,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> XDatum: ...
 
@@ -65721,17 +62796,17 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
     def __init__(
         self,
         datum,
-        axis: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        axis: dict | None | SchemaBase | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        impute: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        impute: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -65897,12 +62972,12 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> X2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> X2: ...
 
     @overload
@@ -66083,7 +63158,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -66188,13 +63263,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -66223,9 +63294,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -66347,7 +63418,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -66492,8 +63563,8 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -66651,12 +63722,12 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> XError: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> XError: ...
 
     @overload
@@ -66837,7 +63908,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -66942,13 +64013,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -66977,9 +64044,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -67101,7 +64168,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -67264,12 +64331,12 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> XError2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> XError2: ...
 
     @overload
@@ -67450,7 +64517,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -67555,13 +64622,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -67590,9 +64653,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -67714,7 +64777,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -67996,12 +65059,12 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> XOffset: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> XOffset: ...
 
     @overload
@@ -68018,8 +65081,8 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -68046,57 +65109,25 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -68111,32 +65142,18 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -68151,29 +65168,21 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -68514,7 +65523,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -68534,11 +65543,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> XOffset: ...
 
@@ -68603,8 +65608,8 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -68632,7 +65637,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -68641,7 +65646,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -68658,7 +65663,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -68829,7 +65834,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -68939,13 +65944,9 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -68973,17 +65974,17 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -69014,7 +66015,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -69136,8 +66137,8 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -69283,57 +66284,25 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -69348,32 +66317,18 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -69388,29 +66343,21 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -69751,7 +66698,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -69771,11 +66718,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> XOffsetDatum: ...
 
@@ -69802,9 +66745,9 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -70134,43 +67077,31 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Y: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Y: ...
 
     @overload
     def axis(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bandPosition: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        bandPosition: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: bool | UndefinedType = Undefined,
         domainCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         domainColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -70323,38 +67254,34 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         domainDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         domainDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         domainOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        domainWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        domainWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         grid: bool | UndefinedType = Undefined,
         gridCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         gridColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -70507,52 +67434,40 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         gridDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         gridDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        gridOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        gridWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        gridOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        gridWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelBound: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -70708,27 +67623,19 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         labelFlush: bool | float | UndefinedType = Undefined,
         labelFlushOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -70745,84 +67652,52 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        maxExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        maxExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "bottom", "left", "right"]
         | UndefinedType = Undefined,
-        position: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        position: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         tickBand: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["center", "extent"]
         | UndefinedType = Undefined,
         tickCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         tickColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -70976,77 +67851,53 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
         tickDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         tickDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         tickExtra: bool | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         tickRound: bool | UndefinedType = Undefined,
-        tickSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         ticks: bool | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        titleAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -71198,24 +68049,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -71232,48 +68075,24 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        translate: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        translate: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -71296,8 +68115,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -71328,8 +68147,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     def impute(
         self,
         frame: Sequence[None | float] | UndefinedType = Undefined,
-        keyvals: dict | Sequence[Any] | core.SchemaBase | UndefinedType = Undefined,
-        method: core.SchemaBase
+        keyvals: dict | SchemaBase | Sequence[Any] | UndefinedType = Undefined,
+        method: SchemaBase
         | Literal["value", "median", "max", "min", "mean"]
         | UndefinedType = Undefined,
         value: Any | UndefinedType = Undefined,
@@ -71342,57 +68161,25 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -71407,32 +68194,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -71447,29 +68220,21 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -71810,7 +68575,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -71830,11 +68595,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> Y: ...
 
@@ -71899,8 +68660,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -71928,7 +68689,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -71937,7 +68698,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -71954,7 +68715,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -72134,7 +68895,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -72244,13 +69005,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -72277,20 +69034,20 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "exponentialb",
         ]
         | UndefinedType = Undefined,
-        axis: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        axis: dict | None | SchemaBase | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: str | bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        impute: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: str | bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        impute: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -72322,11 +69079,11 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -72448,8 +69205,8 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -72643,32 +69400,20 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def axis(
         self,
-        aria: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bandPosition: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        description: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        aria: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        bandPosition: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        description: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: bool | UndefinedType = Undefined,
         domainCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         domainColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -72821,38 +69566,34 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ]
         | UndefinedType = Undefined,
         domainDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         domainDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         domainOpacity: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        domainWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        format: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        domainWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        format: str | dict | SchemaBase | UndefinedType = Undefined,
         formatType: str | UndefinedType = Undefined,
         grid: bool | UndefinedType = Undefined,
         gridCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         gridColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -73005,52 +69746,40 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         ]
         | UndefinedType = Undefined,
         gridDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         gridDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        gridOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        gridWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        gridOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        gridWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
-        labelAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         labelBound: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labelColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -73206,27 +69935,19 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         labelFlush: bool | float | UndefinedType = Undefined,
         labelFlushOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         labelFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -73243,84 +69964,52 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             900,
         ]
         | UndefinedType = Undefined,
-        labelLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        labelOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        labelOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelOverlap: str
         | bool
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        labelPadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        labelPadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         labelSeparation: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         labels: bool | UndefinedType = Undefined,
-        maxExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        minExtent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        offset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        maxExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        minExtent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        offset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         orient: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "bottom", "left", "right"]
         | UndefinedType = Undefined,
-        position: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        position: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         style: str | Sequence[str] | UndefinedType = Undefined,
         tickBand: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["center", "extent"]
         | UndefinedType = Undefined,
         tickCap: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["butt", "round", "square"]
         | UndefinedType = Undefined,
         tickColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -73474,77 +70163,53 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         | UndefinedType = Undefined,
         tickCount: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
         tickDash: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         tickDashOffset: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         tickExtra: bool | UndefinedType = Undefined,
-        tickMinStep: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOffset: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickMinStep: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOffset: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         tickRound: bool | UndefinedType = Undefined,
-        tickSize: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        tickWidth: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        tickSize: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        tickWidth: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         ticks: bool | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         titleAlign: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["left", "center", "right"]
         | UndefinedType = Undefined,
         titleAnchor: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[None, "start", "middle", "end"]
         | UndefinedType = Undefined,
-        titleAngle: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleAngle: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleBaseline: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal["top", "middle", "bottom"]
         | UndefinedType = Undefined,
         titleColor: str
         | dict
         | None
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "black",
             "silver",
@@ -73696,24 +70361,16 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             "rebeccapurple",
         ]
         | UndefinedType = Undefined,
-        titleFont: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFont: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontSize: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleFontStyle: str
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleFontStyle: str | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         titleFontWeight: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "normal",
             "bold",
@@ -73730,48 +70387,24 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             900,
         ]
         | UndefinedType = Undefined,
-        titleLimit: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleLimit: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         titleLineHeight: dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        titleOpacity: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titlePadding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleX: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        titleY: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        translate: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        titleOpacity: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titlePadding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleX: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        titleY: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        translate: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         values: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core._Parameter
-        | core.SchemaBase
         | Sequence[float]
-        | Sequence[dict | core.SchemaBase]
+        | Sequence[dict | SchemaBase]
         | UndefinedType = Undefined,
         zindex: float | UndefinedType = Undefined,
         **kwds,
@@ -73787,8 +70420,8 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def impute(
         self,
         frame: Sequence[None | float] | UndefinedType = Undefined,
-        keyvals: dict | Sequence[Any] | core.SchemaBase | UndefinedType = Undefined,
-        method: core.SchemaBase
+        keyvals: dict | SchemaBase | Sequence[Any] | UndefinedType = Undefined,
+        method: SchemaBase
         | Literal["value", "median", "max", "min", "mean"]
         | UndefinedType = Undefined,
         value: Any | UndefinedType = Undefined,
@@ -73801,57 +70434,25 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -73866,32 +70467,18 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -73906,29 +70493,21 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -74269,7 +70848,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -74289,11 +70868,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> YDatum: ...
 
@@ -74328,17 +70903,17 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
     def __init__(
         self,
         datum,
-        axis: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        axis: dict | None | SchemaBase | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        impute: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        impute: dict | None | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         stack: bool
         | None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["zero", "center", "normalize"]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -74504,12 +71079,12 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Y2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> Y2: ...
 
     @overload
@@ -74690,7 +71265,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -74795,13 +71370,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -74830,9 +71401,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -74954,7 +71525,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -75099,8 +71670,8 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
@@ -75258,12 +71829,12 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> YError: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> YError: ...
 
     @overload
@@ -75444,7 +72015,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -75549,13 +72120,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -75584,9 +72151,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -75708,7 +72275,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -75871,12 +72438,12 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> YError2: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> YError2: ...
 
     @overload
@@ -76057,7 +72624,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -76162,13 +72729,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -76197,9 +72760,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
         bin: None | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -76321,7 +72884,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -76603,12 +73166,12 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     @overload
     def aggregate(
-        self, argmax: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmax: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> YOffset: ...
 
     @overload
     def aggregate(
-        self, argmin: str | core.SchemaBase | UndefinedType = Undefined, **kwds
+        self, argmin: str | SchemaBase | UndefinedType = Undefined, **kwds
     ) -> YOffset: ...
 
     @overload
@@ -76625,8 +73188,8 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: bool | UndefinedType = Undefined,
         divide: Sequence[float] | UndefinedType = Undefined,
         extent: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Sequence[float]
         | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
@@ -76653,57 +73216,25 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -76718,32 +73249,18 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -76758,29 +73275,21 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -77121,7 +73630,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -77141,11 +73650,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> YOffset: ...
 
@@ -77210,8 +73715,8 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def sort(
         self,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        op: core.SchemaBase
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        op: SchemaBase
         | Literal[
             "average",
             "count",
@@ -77239,7 +73744,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -77248,7 +73753,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
     @overload
     def sort(
         self,
-        encoding: core.SchemaBase
+        encoding: SchemaBase
         | Literal[
             "x",
             "y",
@@ -77265,7 +73770,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         order: None
-        | core.SchemaBase
+        | SchemaBase
         | Literal["ascending", "descending"]
         | UndefinedType = Undefined,
         **kwds,
@@ -77436,7 +73941,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: bool | UndefinedType = Undefined,
         maxbins: float | UndefinedType = Undefined,
         step: float | UndefinedType = Undefined,
-        unit: core.SchemaBase
+        unit: SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -77546,13 +74051,9 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
     def __init__(
         self,
-        shorthand: str
-        | dict
-        | Sequence[str]
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        shorthand: str | dict | SchemaBase | Sequence[str] | UndefinedType = Undefined,
         aggregate: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "average",
             "count",
@@ -77580,17 +74081,17 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         bandPosition: float | UndefinedType = Undefined,
-        bin: bool | dict | None | core.SchemaBase | UndefinedType = Undefined,
-        field: str | dict | core.SchemaBase | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
+        bin: bool | dict | None | SchemaBase | UndefinedType = Undefined,
+        field: str | dict | SchemaBase | UndefinedType = Undefined,
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
         sort: dict
         | None
+        | SchemaBase
         | Sequence[str]
         | Sequence[bool]
-        | core.SchemaBase
         | Sequence[float]
+        | Sequence[dict | SchemaBase]
         | Literal["ascending", "descending"]
-        | Sequence[dict | core.SchemaBase]
         | Literal[
             "x",
             "y",
@@ -77621,7 +74122,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         ]
         | UndefinedType = Undefined,
         timeUnit: dict
-        | core.SchemaBase
+        | SchemaBase
         | Literal[
             "year",
             "quarter",
@@ -77743,8 +74244,8 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             "utcsecondsmilliseconds",
         ]
         | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal"]
         | UndefinedType = Undefined,
         **kwds,
@@ -77890,57 +74391,25 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
     @overload
     def scale(
         self,
-        align: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        base: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        bins: dict | core.SchemaBase | Sequence[float] | UndefinedType = Undefined,
-        clamp: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        constant: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        align: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        base: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        bins: dict | SchemaBase | Sequence[float] | UndefinedType = Undefined,
+        clamp: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        constant: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         domain: str
         | dict
-        | core._Parameter
-        | core.SchemaBase
-        | Sequence[str | bool | dict | None | float | core._Parameter | core.SchemaBase]
+        | Parameter
+        | SchemaBase
+        | Sequence[str | bool | dict | None | float | Parameter | SchemaBase]
         | UndefinedType = Undefined,
-        domainMax: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMid: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainMin: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        domainRaw: dict | core._Parameter | core.SchemaBase | UndefinedType = Undefined,
-        exponent: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        domainMax: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMid: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainMin: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        domainRaw: dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        exponent: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         interpolate: dict
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "rgb",
             "lab",
@@ -77955,32 +74424,18 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         nice: bool
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | Literal[
             "millisecond", "second", "minute", "hour", "day", "week", "month", "year"
         ]
         | UndefinedType = Undefined,
-        padding: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingInner: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        paddingOuter: dict
-        | float
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        padding: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingInner: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
+        paddingOuter: dict | float | Parameter | SchemaBase | UndefinedType = Undefined,
         range: dict
-        | core.SchemaBase
-        | Sequence[
-            str | dict | float | core._Parameter | core.SchemaBase | Sequence[float]
-        ]
+        | SchemaBase
+        | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
         | Literal[
             "width",
             "height",
@@ -77995,29 +74450,21 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         rangeMax: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
         rangeMin: str
         | dict
         | float
-        | core._Parameter
-        | core.SchemaBase
+        | Parameter
+        | SchemaBase
         | UndefinedType = Undefined,
-        reverse: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
-        round: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        reverse: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
+        round: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         scheme: dict
+        | Parameter
+        | SchemaBase
         | Sequence[str]
-        | core._Parameter
-        | core.SchemaBase
         | Literal["rainbow", "sinebow"]
         | Literal[
             "blues",
@@ -78358,7 +74805,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             "lighttealblue-9",
         ]
         | UndefinedType = Undefined,
-        type: core.SchemaBase
+        type: SchemaBase
         | Literal[
             "linear",
             "log",
@@ -78378,11 +74825,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
             "band",
         ]
         | UndefinedType = Undefined,
-        zero: bool
-        | dict
-        | core._Parameter
-        | core.SchemaBase
-        | UndefinedType = Undefined,
+        zero: bool | dict | Parameter | SchemaBase | UndefinedType = Undefined,
         **kwds,
     ) -> YOffsetDatum: ...
 
@@ -78409,9 +74852,9 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         self,
         datum,
         bandPosition: float | UndefinedType = Undefined,
-        scale: dict | None | core.SchemaBase | UndefinedType = Undefined,
-        title: str | None | Sequence[str] | core.SchemaBase | UndefinedType = Undefined,
-        type: core.SchemaBase
+        scale: dict | None | SchemaBase | UndefinedType = Undefined,
+        title: str | None | SchemaBase | Sequence[str] | UndefinedType = Undefined,
+        type: SchemaBase
         | Literal["quantitative", "ordinal", "temporal", "nominal", "geojson"]
         | UndefinedType = Undefined,
         **kwds,
