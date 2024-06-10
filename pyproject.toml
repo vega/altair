@@ -173,25 +173,28 @@ exclude = [
 ]
 
 [tool.ruff.lint]
+# https://docs.astral.sh/ruff/preview/
 preview = true
+
+# https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
 extend-safe-fixes=[
-    "SIM101", 
-    "SIM102", 
-    "SIM103",
-    "SIM117",
     # unnecessary-comprehension-in-call
     "C419",
     # literal-membership
     "PLR6201",
-    # from __future__ import annotations
+    # from __future__ import annotations #
+    # ---------------------------------- # 
     "UP006",
     "UP007",
     "UP008",
     "TCH",
-    # assign exception msg to variable first
+    # assign exception msg to variable #
+    # -------------------------------- #
     "EM101",
     "EM102",
 ]
+
+# https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
 extend-select=[
     # refurb
     "FURB", 
@@ -280,6 +283,8 @@ ignore = [
     # https://github.com/vega/altair/pull/3431#discussion_r1629808660
     "SIM105",
 ]
+
+# https://docs.astral.sh/ruff/settings/#lint_unfixable
 unfixable= [
     # unspecified-encoding
     # The autofix is unsafe and doesn't reliably produce `utf-8`.
@@ -322,6 +327,7 @@ module = [
     "schemapi.*"
 ]
 ignore_missing_imports = true
+
 [tool.pyright]
 extraPaths=["./tools"]
 pythonPlatform="All"
