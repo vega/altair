@@ -32,7 +32,7 @@ def test_check_renderer_options():
         display(None)
 
     # check that an error is appropriately raised if the test fails
-    with pytest.raises(AssertionError), check_render_options(foo="bar"):
+    with pytest.raises(AssertionError), check_render_options(foo="bar"):  # noqa: PT012
         from IPython.display import display
 
         display(None)
