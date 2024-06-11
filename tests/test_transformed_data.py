@@ -13,6 +13,9 @@ try:
 except ImportError:
     vf = None
 
+XDIST_ENABLED: bool = "xdist" in sys.modules
+"""Use as an `xfail` condition, if running in parallel may cause the test to fail."""
+
 
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
@@ -107,8 +110,8 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         [2, 19],
         [["gender"], ["__count"]],
         marks=pytest.mark.xfail(
-            sys.version_info <= (3, 9),
-            reason="Possibly `numpy` with unsupported python.\n"
+            XDIST_ENABLED,
+            reason="Possibly `numpy` conflict with `xdist`.\n"
             "Very intermittent, but only affects `to_reconstruct=False`."
         ),
     ),
