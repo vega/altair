@@ -1042,11 +1042,11 @@ class SchemaBase:
 
     @classmethod
     def from_dict(
-        cls: type[T],
+        cls: type[TSchemaBase],
         dct: dict[str, Any],
         validate: bool = True,
         _wrapper_classes: Iterable[type[SchemaBase]] | None = None,
-    ) -> T:
+    ) -> TSchemaBase:
         """Construct class from a dictionary representation
 
         Parameters
@@ -1150,7 +1150,7 @@ class SchemaBase:
         return sorted(chain(super().__dir__(), self._kwds))
 
 
-T = TypeVar("T", bound=SchemaBase)
+TSchemaBase = TypeVar("TSchemaBase", bound=SchemaBase)
 
 
 def _is_dict(obj: Any | dict[Any, Any]) -> TypeIs[dict[Any, Any]]:
@@ -1222,12 +1222,12 @@ class _FromDict:
     @overload
     def from_dict(
         self,
-        dct: T,
+        dct: TSchemaBase,
         tp: Literal[None] = ...,
         schema: Literal[None] = ...,
         rootschema: Literal[None] = ...,
         default_class: Any = ...,
-    ) -> T: ...
+    ) -> TSchemaBase: ...
     @overload
     def from_dict(
         self,
@@ -1235,8 +1235,8 @@ class _FromDict:
         tp: Literal[None] = ...,
         schema: Any = ...,
         rootschema: Literal[None] = ...,
-        default_class: type[T] = ...,
-    ) -> T: ...
+        default_class: type[TSchemaBase] = ...,
+    ) -> TSchemaBase: ...
     @overload
     def from_dict(
         self,
@@ -1250,30 +1250,30 @@ class _FromDict:
     def from_dict(
         self,
         dct: dict[str, Any],
-        tp: type[T],
+        tp: type[TSchemaBase],
         schema: Literal[None] = ...,
         rootschema: Literal[None] = ...,
         default_class: Any = ...,
-    ) -> T: ...
+    ) -> TSchemaBase: ...
     @overload
     def from_dict(
         self,
         dct: dict[str, Any] | list[dict[str, Any]],
-        tp: type[T],
+        tp: type[TSchemaBase],
         schema: dict[str, Any],
         rootschema: dict[str, Any] | None = ...,
         default_class: Any = ...,
     ) -> Never: ...
     def from_dict(
         self,
-        dct: dict[str, Any] | list[dict[str, Any]] | T,
-        tp: type[T] | None = None,
+        dct: dict[str, Any] | list[dict[str, Any]] | TSchemaBase,
+        tp: type[TSchemaBase] | None = None,
         schema: dict[str, Any] | None = None,
         rootschema: dict[str, Any] | None = None,
         default_class: Any = _passthrough,
-    ) -> T:
+    ) -> TSchemaBase:
         """Construct an object from a dict representation"""
-        target_tp: type[T]
+        target_tp: type[TSchemaBase]
         current_schema: dict[str, Any]
         if isinstance(dct, SchemaBase):
             return dct  # type: ignore[return-value]
@@ -1370,7 +1370,7 @@ class _PropertySetter:
         return obj
 
 
-def with_property_setters(cls: type[T]) -> type[T]:
+def with_property_setters(cls: type[TSchemaBase]) -> type[TSchemaBase]:
     """
     Decorator to add property setters to a Schema class.
     """
