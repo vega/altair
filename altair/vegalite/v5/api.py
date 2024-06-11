@@ -11,8 +11,8 @@ import itertools
 from typing import Union, cast, Any, Iterable, Literal, IO, TYPE_CHECKING
 from typing_extensions import TypeAlias
 
-from .schema import core, channels, mixins, Undefined, UndefinedType, SCHEMA_URL
-
+from .schema import core, channels, mixins, Undefined, SCHEMA_URL
+from altair.utils.schemapi import UndefinedType
 from .data import data_transformers
 from ... import utils
 from ...expr import core as _expr_core

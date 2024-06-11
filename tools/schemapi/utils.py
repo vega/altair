@@ -324,7 +324,14 @@ class SchemaInfo:
             # If it's not for_type_hints but instead for the docstrings, we don't want
             # to include Union as it just clutters the docstrings.
             if len(type_representations) > 1 and for_type_hints:
-                type_representations_str = f"Union[{type_representations_str}]"
+                # Use parameterised `TypeAlias` instead of exposing `UndefinedType`
+                # `Union` is collapsed by `ruff` later
+                if type_representations_str.endswith(", UndefinedType"):
+                    s = type_representations_str.replace(", UndefinedType", "")
+                    s = f"Optional[Union[{s}]]"
+                else:
+                    s = f"Union[{type_representations_str}]"
+                return s
             return type_representations_str
         else:
             return type_representations

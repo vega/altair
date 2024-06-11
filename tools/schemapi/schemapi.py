@@ -17,6 +17,7 @@ from typing import (
     Literal,
     Sequence,
     TypeVar,
+    Union,
     overload,
     List,
     Dict,
@@ -741,6 +742,18 @@ class UndefinedType:
 
 
 Undefined = UndefinedType()
+T = TypeVar("T")
+Optional: TypeAlias = Union[T, UndefinedType]
+"""One of the sepcified types, or the `Undefined` singleton.
+
+
+Examples
+--------
+```py
+MaybeDictOrStr: TypeAlias = Optional[dict[str, Any] | str]
+LongerDictOrStr: TypeAlias = dict[str, Any] | str | UndefinedType
+```
+"""
 
 
 class SchemaBase:

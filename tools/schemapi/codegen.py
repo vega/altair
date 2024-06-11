@@ -268,7 +268,7 @@ class SchemaGenerator:
             super_args.append("*args")
 
         args.extend(
-            f"{p}: Union["
+            f"{p}: Optional[Union["
             + ", ".join(
                 [
                     *additional_types,
@@ -277,10 +277,9 @@ class SchemaGenerator:
                         altair_classes_prefix=self.altair_classes_prefix,
                         return_as_str=False,
                     ),
-                    "UndefinedType",
                 ]
             )
-            + "] = Undefined"
+            + "]] = Undefined"
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(

@@ -498,12 +498,13 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         HEADER,
         "from __future__ import annotations\n"
         "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
-        "from typing import Dict as TypingDict",
         "import pkgutil",
         "import json\n",
-        "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses\n",
-        "if TYPE_CHECKING:",
-        "    from altair import Parameter",
+        "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
+        _type_checking_only_imports(
+            "from altair import Parameter",
+            "from altair.utils.schemapi import Optional",
+        ),
         "\n" f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
         BASE_SCHEMA.format(basename=basename),
@@ -520,6 +521,10 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
     contents.append("")  # end with newline
     return "\n".join(contents)
+
+
+def _type_checking_only_imports(*imports: str) -> str:
+    return "\nif TYPE_CHECKING:\n" + "\n".join(f"    {s}" for s in imports) + "\n"
 
 
 @dataclass
@@ -544,18 +549,16 @@ def generate_vegalite_channel_wrappers(
         "import pandas as pd",
         "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
         "from altair.utils import parse_shorthand",
-        "from typing import Any, overload, Sequence, List, Literal, Union, Optional, TYPE_CHECKING, Dict as TypingDict",
-    ]
-    type_checking_only = [
-        "\nif TYPE_CHECKING:",
-        "    from altair import Parameter, SchemaBase # noqa: F401",
-        "\n",
+        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
     ]
     contents = [
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
-        *type_checking_only,
+        _type_checking_only_imports(
+            "from altair import Parameter, SchemaBase # noqa: F401",
+            "from altair.utils.schemapi import Optional # noqa: F401",
+        ),
         CHANNEL_MIXINS,
     ]
 
@@ -764,11 +767,6 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     stdlib_imports = ["from __future__ import annotations\n", "import sys"]
     imports = sorted({*mark_imports, *config_imports})
-    type_checking_only = [
-        "if TYPE_CHECKING:",
-        "    from altair import Parameter, SchemaBase",
-        "\n",
-    ]
     content = [
         HEADER,
         "\n".join(stdlib_imports),
@@ -777,7 +775,10 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n",
         "\n".join(try_except_imports),
         "\n\n",
-        "\n".join(type_checking_only),
+        _type_checking_only_imports(
+            "from altair import Parameter, SchemaBase",
+            "from altair.utils.schemapi import Optional # noqa: F401",
+        ),
         "\n\n\n",
         mark_mixin,
         "\n\n\n",
@@ -816,12 +817,14 @@ def _create_encode_signature(
             union_types.append("list")
             docstring_union_types.append("List")
 
-        union_types = union_types + datum_and_value_class_names + ["UndefinedType"]
+        union_types = union_types + datum_and_value_class_names
         docstring_union_types = docstring_union_types + [
             rst_syntax_for_class(c) for c in datum_and_value_class_names
         ]
 
-        signature_args.append(f"{channel}: Union[{', '.join(union_types)}] = Undefined")
+        signature_args.append(
+            f"{channel}: Optional[Union[{', '.join(union_types)}]] = Undefined"
+        )
 
         docstring_parameters.extend(
             (
