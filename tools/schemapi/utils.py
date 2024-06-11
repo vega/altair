@@ -6,9 +6,12 @@ import re
 import subprocess
 import textwrap
 import urllib
-from typing import Any, Final, Iterable
+from typing import Any, Final, Iterable, TYPE_CHECKING
 
 from .schemapi import _resolve_references as resolve_references
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
 
@@ -576,3 +579,45 @@ def ruff_format_str(code: str | list[str]) -> str:
         capture_output=True,
     )
     return r.stdout.decode()
+
+
+def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
+    """Format an existing file.
+
+    Running on `win32` after writing lines will ensure "lf" is used before:
+    ```bash
+    ruff format --diff --check .
+    ```
+    """
+
+    cmd = ["ruff", "format", fp]
+    if extra_args:
+        cmd.extend(extra_args)
+    r = subprocess.run(cmd, check=True)
+    r.check_returncode()
+
+
+def ruff_write_lint_format_str(
+    fp: Path, code: str | Iterable[str], /, *, encoding: str = "utf-8"
+) -> None:
+    """Combined steps of writing, `ruff check`, `ruff format`.
+
+    Notes
+    -----
+    - `fp` is written to first, as the size before formatting will be the smallest
+        - Better utilizes `ruff` performance, rather than `python` str and io
+    - `code` is no longer bound to `list`
+    - Encoding set as default
+    - `I001/2` are `isort` rules, to sort imports.
+    """
+    commands = (
+        ["ruff", "check", fp, "--fix"],
+        ["ruff", "check", fp, "--fix", "--select", "I001", "--select", "I002"],
+        ["ruff", "format", fp],
+    )
+    if not isinstance(code, str):
+        code = "\n".join(code)
+    fp.write_text(code, encoding=encoding)
+    for cmd in commands:
+        r = subprocess.run(cmd, check=True)
+        r.check_returncode()

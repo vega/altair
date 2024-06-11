@@ -112,12 +112,7 @@ installer = "uv"
 generate-schema-wrapper = [
     "mypy tools/schemapi/schemapi.py",
     "python tools/generate_schema_wrapper.py",
-    "ruff check altair/vegalite/v?/schema --fix --exit-zero",
-    "ruff format altair/vegalite/v?/schema",
-    "ruff check altair/vegalite/v?/schema --fix --select I001 --select I002",
-    #"ruff check altair/vegalite/v?/schema --statistics --exit-zero",
-    "ruff format .",
-    #"test"
+    "test"
 ]
 test = [
     "ruff check .",

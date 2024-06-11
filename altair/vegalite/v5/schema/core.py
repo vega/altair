@@ -5,14 +5,7 @@ from __future__ import annotations
 
 import json
 import pkgutil
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Iterator,
-    Literal,
-    Protocol,
-    Sequence,
-)
+from typing import TYPE_CHECKING, Any, Iterator, Literal, Sequence
 
 from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses
 
@@ -447,23 +440,6 @@ def load_schema() -> dict:
         msg = "Unable to load vega-lite-schema.json"
         raise ValueError(msg)
     return json.loads(schema_bytes.decode("utf-8"))
-
-
-class _Parameter(Protocol):
-    # This protocol represents a Parameter as defined in api.py
-    # It would be better if we could directly use the Parameter class,
-    # but that would create a circular import.
-    # The protocol does not need to have all the attributes and methods of this
-    # class but the actual api.Parameter just needs to pass a type check
-    # as a core._Parameter.
-
-    _counter: int
-
-    def _get_name(cls) -> str: ...
-
-    def to_dict(self) -> dict[str, str | dict]: ...
-
-    def _to_expr(self) -> str: ...
 
 
 class VegaLiteSchema(SchemaBase):
@@ -42539,9 +42515,7 @@ class TooltipContent(VegaLiteSchema):
     _schema = {"$ref": "#/definitions/TooltipContent"}
 
     def __init__(
-        self,
-        content: Literal["encoding", "data"] | UndefinedType = Undefined,
-        **kwds,
+        self, content: Literal["encoding", "data"] | UndefinedType = Undefined, **kwds
     ):
         super().__init__(content=content, **kwds)
 
@@ -44893,9 +44867,7 @@ class FlattenTransform(Transform):
     _schema = {"$ref": "#/definitions/FlattenTransform"}
 
     def __init__(
-        self,
-        flatten: Sequence[str | SchemaBase] | UndefinedType = Undefined,
-        **kwds,
+        self, flatten: Sequence[str | SchemaBase] | UndefinedType = Undefined, **kwds
     ):
         super().__init__(flatten=flatten, **kwds)
 
@@ -44916,9 +44888,7 @@ class FoldTransform(Transform):
     _schema = {"$ref": "#/definitions/FoldTransform"}
 
     def __init__(
-        self,
-        fold: Sequence[str | SchemaBase] | UndefinedType = Undefined,
-        **kwds,
+        self, fold: Sequence[str | SchemaBase] | UndefinedType = Undefined, **kwds
     ):
         super().__init__(fold=fold, **kwds)
 

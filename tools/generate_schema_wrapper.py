@@ -26,9 +26,10 @@ from schemapi.utils import (  # noqa: E402
     SchemaInfo,
     get_valid_identifier,
     resolve_references,
-    ruff_format_str,
+    ruff_format_py,
     rst_syntax_for_class,
     indent_docstring,
+    ruff_write_lint_format_str,
 )
 
 SCHEMA_VERSION: Final = "v5.17.0"
@@ -195,11 +196,14 @@ class DatumChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        datum = self._get("datum", Undefined)  # type: ignore[attr-defined]
+        datum = self._get("datum", Undefined)  # type: ignore[attr-defined] # noqa
         copy = self  # don't copy unless we need to
-        if datum is not Undefined:
-            if isinstance(datum, core.SchemaBase):
-                pass
+        # NOTE: The block below does nothing?
+        # `ruff`: SIM102 Use a single `if` statement instead of nested `if` statements
+        # But I can't see why it should be kept in
+        # if datum is not Undefined:
+        #     if isinstance(datum, core.SchemaBase):
+        #         pass
         return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
@@ -406,6 +410,8 @@ def copy_schemapi_util() -> None:
     ) as dest:
         dest.write(HEADER)
         dest.writelines(source.readlines())
+    if sys.platform == "win32":
+        ruff_format_py(destination_fp)
 
 
 def recursive_dict_update(schema: dict, root: dict, def_dict: dict) -> None:
@@ -521,10 +527,9 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         "import json\n",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses\n",
         "if TYPE_CHECKING:",
-        "\tfrom altair import Parameter",
+        "    from altair import Parameter",
         "\n" f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
-        PARAMETER_PROTOCOL,
         BASE_SCHEMA.format(basename=basename),
         schema_class(
             "Root",
@@ -567,7 +572,7 @@ def generate_vegalite_channel_wrappers(
     ]
     type_checking_only = [
         "\nif TYPE_CHECKING:",
-        "\tfrom altair import Parameter, SchemaBase # noqa: F401",
+        "    from altair import Parameter, SchemaBase # noqa: F401",
         "\n",
     ]
     contents = [
@@ -745,7 +750,6 @@ def vegalite_main(skip_download: bool = False) -> None:
         schemapath=schemapath,
         skip_download=skip_download,
     )
-    encoding = "utf-8"
 
     # Generate __init__.py file
     outfile = schemapath / "__init__.py"
@@ -756,19 +760,19 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"SCHEMA_VERSION = '{version}'\n",
         f"SCHEMA_URL = {schema_url(version)!r}\n",
     ]
-    outfile.write_text(ruff_format_str(content), encoding=encoding)
+    ruff_write_lint_format_str(outfile, content)
 
     # Generate the core schema wrappers
     outfile = schemapath / "core.py"
     print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
     file_contents = generate_vegalite_schema_wrapper(schemafile)
-    outfile.write_text(ruff_format_str(file_contents), encoding=encoding)
+    ruff_write_lint_format_str(outfile, file_contents)
 
     # Generate the channel wrappers
     outfile = schemapath / "channels.py"
     print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
     code = generate_vegalite_channel_wrappers(schemafile, version=version)
-    outfile.write_text(ruff_format_str(code), encoding=encoding)
+    ruff_write_lint_format_str(outfile, code)
 
     # generate the mark mixin
     markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
@@ -786,7 +790,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     imports = sorted({*mark_imports, *config_imports})
     type_checking_only = [
         "if TYPE_CHECKING:",
-        "\tfrom altair import Parameter, SchemaBase",
+        "    from altair import Parameter, SchemaBase",
         "\n",
     ]
     content = [
@@ -803,7 +807,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n\n",
         config_mixin,
     ]
-    outfile.write_text(ruff_format_str(content), encoding=encoding)
+    ruff_write_lint_format_str(outfile, content)
 
 
 def _create_encode_signature(

@@ -28,7 +28,7 @@ current_dir = Path(__file__).parent
 ROOT_DIR: Final = str((current_dir / "..").resolve())
 sys.path.insert(0, str(current_dir))
 
-from schemapi.utils import ruff_format_str  # noqa: E402
+from schemapi.utils import ruff_format_py, ruff_format_str  # noqa: E402
 
 # Import Altair from head
 sys.path.insert(0, ROOT_DIR)
@@ -75,6 +75,8 @@ def update__all__variable() -> None:
 
     # Write new version of altair/__init__.py
     init_path.write_text(new_file_content, encoding=encoding)
+    if sys.platform == "win32":
+        ruff_format_py(init_path)
 
 
 def _is_hashable(obj: Any) -> bool:

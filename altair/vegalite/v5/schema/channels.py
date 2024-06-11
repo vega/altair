@@ -11,13 +11,7 @@
 
 from __future__ import annotations
 
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Literal,
-    Sequence,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Literal, Sequence, overload
 
 import pandas as pd
 
@@ -129,11 +123,14 @@ class DatumChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        datum = self._get("datum", Undefined)  # type: ignore[attr-defined]
+        datum = self._get("datum", Undefined)  # type: ignore[attr-defined] # noqa
         copy = self  # don't copy unless we need to
-        if datum is not Undefined:
-            if isinstance(datum, core.SchemaBase):
-                pass
+        # NOTE: The block below does nothing?
+        # `ruff`: SIM102 Use a single `if` statement instead of nested `if` statements
+        # But I can't see why it should be kept in
+        # if datum is not Undefined:
+        #     if isinstance(datum, core.SchemaBase):
+        #         pass
         return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
