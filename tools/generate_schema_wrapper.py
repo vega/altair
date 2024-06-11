@@ -54,27 +54,6 @@ CHANNEL_MYPY_IGNORE_STATEMENTS: Final = """\
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
 """
 
-PARAMETER_PROTOCOL: Final = """
-class _Parameter(Protocol):
-    # This protocol represents a Parameter as defined in api.py
-    # It would be better if we could directly use the Parameter class,
-    # but that would create a circular import.
-    # The protocol does not need to have all the attributes and methods of this
-    # class but the actual api.Parameter just needs to pass a type check
-    # as a core._Parameter.
-
-    _counter: int
-
-    def _get_name(cls) -> str:
-        ...
-
-    def to_dict(self) -> TypingDict[str, Union[str, dict]]:
-        ...
-
-    def _to_expr(self) -> str:
-        ...
-"""
-
 BASE_SCHEMA: Final = """
 class {basename}(SchemaBase):
     _rootschema = load_schema()
