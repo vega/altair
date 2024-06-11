@@ -79,9 +79,9 @@ class FieldChannelMixin:
     def to_dict(
         self,
         validate: bool = True,
-        ignore: Optional[List[str]] = None,
-        context: Optional[TypingDict[str, Any]] = None,
-    ) -> Union[dict, List[dict]]:
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
+    ) -> dict | list[dict]:
         context = context or {}
         ignore = ignore or []
         shorthand = self._get("shorthand")  # type: ignore[attr-defined]
@@ -144,8 +144,8 @@ class ValueChannelMixin:
     def to_dict(
         self,
         validate: bool = True,
-        ignore: Optional[List[str]] = None,
-        context: Optional[TypingDict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
     ) -> dict:
         context = context or {}
         ignore = ignore or []
@@ -167,8 +167,8 @@ class DatumChannelMixin:
     def to_dict(
         self,
         validate: bool = True,
-        ignore: Optional[List[str]] = None,
-        context: Optional[TypingDict[str, Any]] = None,
+        ignore: list[str] | None = None,
+        context: dict[str, Any] | None = None,
     ) -> dict:
         context = context or {}
         ignore = ignore or []
