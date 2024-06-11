@@ -109,10 +109,8 @@ class FieldChannelMixin:
         field = self._get("field")  # type: ignore[attr-defined]
 
         if shorthand is not Undefined and field is not Undefined:
-            raise ValueError(
-                "{} specifies both shorthand={} and field={}. "
-                "".format(self.__class__.__name__, shorthand, field)
-            )
+            msg = f"{self.__class__.__name__} specifies both shorthand={shorthand} and field={field}. "
+            raise ValueError(msg)
 
         if isinstance(shorthand, (tuple, list)):
             # If given a list of shorthands, then transform it to a list of classes
@@ -138,21 +136,20 @@ class FieldChannelMixin:
                 parsed.pop("type", None)
             elif not (type_in_shorthand or type_defined_explicitly):
                 if isinstance(context.get("data", None), pd.DataFrame):
-                    raise ValueError(
-                        'Unable to determine data type for the field "{}";'
+                    msg = (
+                        f'Unable to determine data type for the field "{shorthand}";'
                         " verify that the field name is not misspelled."
                         " If you are referencing a field from a transform,"
-                        " also confirm that the data type is specified correctly.".format(
-                            shorthand
-                        )
+                        " also confirm that the data type is specified correctly."
                     )
+                    raise ValueError(msg)
                 else:
-                    raise ValueError(
-                        "{} encoding field is specified without a type; "
+                    msg = (
+                        f"{shorthand} encoding field is specified without a type; "
                         "the type cannot be automatically inferred because "
                         "the data is not specified as a pandas.DataFrame."
-                        "".format(shorthand)
                     )
+                    raise ValueError(msg)
         else:
             # Shorthand is not a string; we pass the definition to field,
             # and do not do any parsing.
