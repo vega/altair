@@ -34,6 +34,22 @@ from schemapi.utils import ruff_format_py, ruff_format_str  # noqa: E402
 sys.path.insert(0, ROOT_DIR)
 import altair as alt  # noqa: E402
 
+_TYPING_CONSTRUCTS = {
+    te.TypeAlias,
+    TypeVar,
+    cast,
+    List,
+    Any,
+    Literal,
+    Union,
+    Iterable,
+    t.Protocol,
+    te.Protocol,
+    Sequence,
+    IO,
+    annotations,
+}
+
 
 def update__all__variable() -> None:
     """Updates the __all__ variable to all relevant attributes of top-level Altair.
@@ -91,22 +107,8 @@ def _is_relevant_attribute(attr_name: str) -> bool:
     if (
         getattr_static(attr, "_deprecated", False)
         or attr_name.startswith("_")
-        # or (_is_hashable(attr) and attr in typing.__dict__)
         or attr is TYPE_CHECKING
-        or attr is te.TypeAlias
-        or attr is TypeVar
-        or attr is cast
-        or attr is List
-        or attr is Any
-        or attr is Literal
-        or attr is Iterable
-        or attr is Union
-        or attr is t.Protocol
-        or attr is te.Protocol
-        or attr is Sequence
-        or attr is IO
-        or attr is annotations
-        or attr_name == "ValueOrDatum"
+        or (_is_hashable(attr) and attr in _TYPING_CONSTRUCTS)
     ):
         return False
     elif ismodule(attr):
