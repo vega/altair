@@ -12,11 +12,12 @@ from .core import (
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
 from .deprecation import AltairDeprecationWarning
-from .schemapi import Undefined
+from .schemapi import Undefined, Optional
 
 
 __all__ = (
     "AltairDeprecationWarning",
+    "Optional",
     "PluginRegistry",
     "SchemaBase",
     "Undefined",

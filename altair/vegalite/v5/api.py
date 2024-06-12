@@ -12,7 +12,8 @@ from typing import Union, cast, Any, Iterable, Literal, IO, TYPE_CHECKING
 from typing_extensions import TypeAlias
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
-from altair.utils.schemapi import UndefinedType
+
+from altair.utils import Optional
 from .data import data_transformers
 from ... import utils
 from ...expr import core as _expr_core
@@ -87,10 +88,9 @@ if TYPE_CHECKING:
         InlineDataset,
     )
     from altair.expr.core import Expression, GetAttrExpression
+    from altair.utils.schemapi import UndefinedType
 
-ChartDataType: TypeAlias = Union[
-    DataType, core.Data, str, core.Generator, UndefinedType
-]
+ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 
 
 # ------------------------------------------------------------------------
@@ -1359,7 +1359,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         repeat_arg: list[str] | LayerRepeatMapping | RepeatMapping
         if repeat_specified:
-            assert not isinstance(repeat, UndefinedType)  # For mypy
+            assert isinstance(repeat, list)
             repeat_arg = repeat
         elif layer_specified:
             repeat_arg = core.LayerRepeatMapping(layer=layer, row=row, column=column)
@@ -1638,7 +1638,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "field": parsed.get("field", Undefined),
                 "op": parsed.get("aggregate", Undefined),
             }
-            assert not isinstance(aggregate, UndefinedType)  # For mypy
+            assert isinstance(aggregate, list)
             aggregate.append(core.AggregatedFieldDef(**dct))
         return self._add_transform(
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
@@ -1965,7 +1965,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "field": parsed.get("field", Undefined),
                 "op": parsed.get("aggregate", Undefined),
             }
-            assert not isinstance(joinaggregate, UndefinedType)  # For mypy
+            assert isinstance(joinaggregate, list)
             joinaggregate.append(core.JoinAggregateFieldDef(**dct))
         return self._add_transform(
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
@@ -2584,7 +2584,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                assert not isinstance(window, UndefinedType)  # For mypy
+                assert isinstance(window, list)
                 # Ignore as core.WindowFieldDef has a Literal type hint with all options
                 window.append(core.WindowFieldDef(**kwds))  # type: ignore[arg-type]
 
