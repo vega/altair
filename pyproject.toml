@@ -118,7 +118,7 @@ test = [
     "ruff check .",
     "ruff format --diff --check .",
     "mypy altair tests",
-    "python -m pytest --pyargs --doctest-modules tests altair",
+    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
@@ -215,6 +215,8 @@ extend-safe-fixes=[
     # -------------------------------- #
     "EM101",
     "EM102",
+    # trailing-whitespace
+    "W291",
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
@@ -329,6 +331,7 @@ line-ending = "lf"
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
+addopts = ["--numprocesses=logical"]
 
 [tool.mypy]
 warn_unused_ignores = true
