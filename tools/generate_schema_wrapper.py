@@ -9,9 +9,8 @@ import re
 import sys
 import textwrap
 from dataclasses import dataclass
-from typing import Final, Literal
+from typing import Final, Iterable, Literal
 from urllib import request
-
 import m2r
 
 # Add path so that schemapi can be imported from the tools folder
@@ -31,6 +30,7 @@ from schemapi.utils import (  # noqa: E402
     indent_docstring,
     ruff_write_lint_format_str,
 )
+
 
 SCHEMA_VERSION: Final = "v5.17.0"
 
@@ -504,6 +504,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         _type_checking_only_imports(
             "from altair import Parameter",
             "from altair.utils.schemapi import Optional",
+            "from ._typing import * # noqa: F403",
         ),
         "\n" f"__all__ = {all_}\n",
         LOAD_SCHEMA.format(schemafile="vega-lite-schema.json"),
@@ -524,7 +525,11 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
 
 
 def _type_checking_only_imports(*imports: str) -> str:
-    return "\nif TYPE_CHECKING:\n" + "\n".join(f"    {s}" for s in imports) + "\n"
+    return (
+        "\n# ruff: noqa: F405\nif TYPE_CHECKING:\n"
+        + "\n".join(f"    {s}" for s in imports)
+        + "\n"
+    )
 
 
 @dataclass
@@ -558,6 +563,7 @@ def generate_vegalite_channel_wrappers(
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase # noqa: F401",
             "from altair.utils.schemapi import Optional # noqa: F401",
+            "from ._typing import * # noqa: F403",
         ),
         CHANNEL_MIXINS,
     ]
@@ -741,22 +747,22 @@ def vegalite_main(skip_download: bool = False) -> None:
     ]
     ruff_write_lint_format_str(outfile, content)
 
+    files: dict[Path, str | Iterable[str]] = {}
+
     # Generate the core schema wrappers
-    outfile = schemapath / "core.py"
-    print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
-    file_contents = generate_vegalite_schema_wrapper(schemafile)
-    ruff_write_lint_format_str(outfile, file_contents)
+    fp_core = schemapath / "core.py"
+    print(f"Generating\n {schemafile!s}\n  ->{fp_core!s}")
+    files[fp_core] = generate_vegalite_schema_wrapper(schemafile)
 
     # Generate the channel wrappers
-    outfile = schemapath / "channels.py"
-    print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
-    code = generate_vegalite_channel_wrappers(schemafile, version=version)
-    ruff_write_lint_format_str(outfile, code)
+    fp_channels = schemapath / "channels.py"
+    print(f"Generating\n {schemafile!s}\n  ->{fp_channels!s}")
+    files[fp_channels] = generate_vegalite_channel_wrappers(schemafile, version=version)
 
     # generate the mark mixin
-    markdefs = {k: k + "Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
-    outfile = schemapath / "mixins.py"
-    print(f"Generating\n {schemafile!s}\n  ->{outfile!s}")
+    markdefs = {k: f"{k}Def" for k in ["Mark", "BoxPlot", "ErrorBar", "ErrorBand"]}
+    fp_mixins = schemapath / "mixins.py"
+    print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
     mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
     config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
     try_except_imports = [
@@ -766,25 +772,40 @@ def vegalite_main(skip_download: bool = False) -> None:
         "    from typing_extensions import Self",
     ]
     stdlib_imports = ["from __future__ import annotations\n", "import sys"]
-    imports = sorted({*mark_imports, *config_imports})
-    content = [
+    content_mixins = [
         HEADER,
         "\n".join(stdlib_imports),
         "\n\n",
-        "\n".join(imports),
+        "\n".join(sorted({*mark_imports, *config_imports})),
         "\n\n",
         "\n".join(try_except_imports),
         "\n\n",
         _type_checking_only_imports(
             "from altair import Parameter, SchemaBase",
-            "from altair.utils.schemapi import Optional # noqa: F401",
+            "from altair.utils.schemapi import Optional",
+            "from ._typing import * # noqa: F403",
         ),
         "\n\n\n",
         mark_mixin,
         "\n\n\n",
         config_mixin,
     ]
-    ruff_write_lint_format_str(outfile, content)
+    files[fp_mixins] = content_mixins
+
+    # Write `_typing.py` TypeAlias, for import in generated modules
+    from schemapi.utils import TypeAliasTracer
+
+    fp_typing = schemapath / "_typing.py"
+    msg = (
+        f"Generating\n {schemafile!s}\n  ->{fp_typing!s}\n"
+        f"Tracer cache collected {TypeAliasTracer.n_entries!r} entries."
+    )
+    print(msg)
+    TypeAliasTracer.write_module(fp_typing, header=HEADER)
+    # Write the pre-generated modules
+    for fp, contents in files.items():
+        print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
+        ruff_write_lint_format_str(fp, contents)
 
 
 def _create_encode_signature(

@@ -1,13 +1,22 @@
 """Utilities for working with schemas"""
 
 from __future__ import annotations
+from itertools import chain
 import keyword
 import re
 import subprocess
 import textwrap
 import urllib
-from typing import Any, Final, Iterable, TYPE_CHECKING
-
+from typing import (
+    Any,
+    Final,
+    Iterable,
+    TYPE_CHECKING,
+    Iterator,
+    LiteralString,
+    Sequence,
+)
+from operator import itemgetter
 from .schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
@@ -24,6 +33,133 @@ jsonschema_to_python_types = {
     "array": "list",
     "null": "None",
 }
+
+
+class _TypeAliasTracer:
+    """Recording all `enum` -> `Literal` translations.
+
+    Rewrites as `TypeAlias` to be reused anywhere, and not clog up method definitions.
+
+    Parameters
+    ----------
+    fmt
+        A format specifier to produce the `TypeAlias` name.
+
+        Will be provided a `SchemaInfo.title` as a single positional argument.
+    *ruff_check
+        Optional [ruff rule codes](https://docs.astral.sh/ruff/rules/),
+        each prefixed with `--select ` and follow a `ruff check --fix ` call.
+
+        If not provided, uses `[tool.ruff.lint.select]` from `pyproject.toml`.
+    ruff_format
+        Optional argument list supplied to [ruff format](https://docs.astral.sh/ruff/formatter/#ruff-format)
+
+    Attributes
+    ----------
+    _literals: dict[str, str]
+        `{alias_name: literal_statement}`
+    _literals_invert: dict[str, str]
+        `{literal_statement: alias_name}`
+    aliases: list[tuple[str, str]]
+        `_literals` sorted by `alias_name`
+    _imports: Sequence[str]
+        Prefined import statements to appear at beginning of module.
+    """
+
+    def __init__(
+        self,
+        fmt: str = "{}_T",
+        *ruff_check: str,
+        ruff_format: Sequence[str] | None = None,
+    ) -> None:
+        self.fmt: str = fmt
+        self._literals: dict[str, str] = {}
+        self._literals_invert: dict[str, str] = {}
+        self.aliases: list[tuple[str, str]] = []
+        self._imports: Sequence[str] = (
+            "from __future__ import annotations\n",
+            "from typing import Literal",
+            "from typing_extensions import TypeAlias",
+        )
+        self._cmd_check: list[str] = ["--fix"]
+        self._cmd_format: Sequence[str] = ruff_format or ()
+        for c in ruff_check:
+            self._cmd_check.extend(("--select", c))
+
+    def _update_literals(self, name: str, tp: str, /) -> None:
+        """Produces an inverted index, to reuse a `Literal` when `SchemaInfo.title` is empty."""
+        self._literals[name] = tp
+        self._literals_invert[tp] = name
+
+    def add_literal(
+        self, info: SchemaInfo, tp: str, /, *, replace: bool = False
+    ) -> str:
+        """`replace=True` returns the eventual alias name.
+
+        - Doing so will mean that the `_typing` module must be written first, before the source of `info`.
+        - Otherwise, `ruff` will raise an error during `check`/`format`, as the import will be invalid.
+        - Where a `title` is not found, an attempt will be made to find an existing alias definition that had one.
+        """
+        if info.title:
+            alias = self.fmt.format(info.title)
+            if alias not in self._literals:
+                self._update_literals(alias, tp)
+            if replace:
+                tp = alias
+        elif (alias := self._literals_invert.get(tp)) and replace:
+            tp = alias
+        return tp
+
+    def generate_aliases(self) -> Iterator[str]:
+        """Represents a line per `TypeAlias` declaration.
+
+        Additionally, stores in `self.aliases` an alphabetically sorted list of tuples.
+        """
+        self.aliases = sorted(self._literals.items(), key=itemgetter(0))
+        for name, statement in self.aliases:
+            yield f"{name}: TypeAlias = {statement}"
+
+    def write_module(
+        self, fp: Path, *extra_imports: str, header: LiteralString
+    ) -> None:
+        """Write all collected `TypeAlias`'s to `fp`.
+
+        Parameters
+        ----------
+        fp
+            Path to new module.
+        *extra_imports
+            Follows `self._imports` block.
+        header
+            `tools.generate_schema_wrapper.HEADER`.
+        """
+        ruff_format = ["ruff", "format", fp]
+        if self._cmd_format:
+            ruff_format.extend(self._cmd_format)
+        commands = (["ruff", "check", fp, *self._cmd_check], ruff_format)
+        imports = (header, "\n", *self._imports, *extra_imports, "\n\n")
+        it = chain(imports, self.generate_aliases())
+        fp.write_text("\n".join(it), encoding="utf-8")
+        for cmd in commands:
+            r = subprocess.run(cmd, check=True)
+            r.check_returncode()
+
+    @property
+    def n_entries(self) -> int:
+        """Number of unique `TypeAlias` defintions collected."""
+        return len(self._literals)
+
+
+TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
+"""An instance of `_TypeAliasTracer`.
+
+Collects a cache of unique `Literal` types used globally.
+
+These are then converted to `TypeAlias` statements, written to another module.
+
+Allows for a single definition to be reused multiple times,
+rather than repeating long literals in every method definition.
+"""
 
 
 def get_valid_identifier(
@@ -240,9 +376,11 @@ class SchemaInfo:
         if self.is_empty():
             type_representations.append("Any")
         elif self.is_enum():
-            type_representations.append(
-                "Literal[{}]".format(", ".join(map(repr, self.enum)))
-            )
+            s = ", ".join(f"{s!r}" for s in self.enum)
+            tp_str = f"Literal[{s}]"
+            if for_type_hints:
+                tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
+            type_representations.append(tp_str)
         elif self.is_anyOf():
             type_representations.extend(
                 [
@@ -361,7 +499,7 @@ class SchemaInfo:
         return self.schema.get("additionalProperties", True)
 
     @property
-    def type(self) -> str | None:
+    def type(self) -> str | list[Any] | None:
         return self.schema.get("type", None)
 
     @property
