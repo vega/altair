@@ -88,7 +88,6 @@ if TYPE_CHECKING:
         InlineDataset,
     )
     from altair.expr.core import Expression, GetAttrExpression
-    from altair.utils.schemapi import UndefinedType
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 
@@ -258,12 +257,11 @@ class Parameter(_expr_core.OperatorMixin):
     def __init__(
         self,
         name: str | None = None,
-        empty: bool | UndefinedType = Undefined,
-        param: VariableParameter
-        | TopLevelSelectionParameter
-        | SelectionParameter
-        | UndefinedType = Undefined,
-        param_type: Literal["variable", "selection"] | UndefinedType = Undefined,
+        empty: Optional[bool] = Undefined,
+        param: Optional[
+            VariableParameter | TopLevelSelectionParameter | SelectionParameter
+        ] = Undefined,
+        param_type: Optional[Literal["variable", "selection"]] = Undefined,
     ) -> None:
         if name is None:
             name = self._get_name()
@@ -401,10 +399,10 @@ def value(value, **kwargs) -> dict:
 
 def param(
     name: str | None = None,
-    value: Any | UndefinedType = Undefined,
-    bind: Binding | UndefinedType = Undefined,
-    empty: bool | UndefinedType = Undefined,
-    expr: str | Expr | Expression | UndefinedType = Undefined,
+    value: Optional[Any] = Undefined,
+    bind: Optional[Binding] = Undefined,
+    empty: Optional[bool] = Undefined,
+    expr: Optional[str | Expr | Expression] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a named parameter.
@@ -503,7 +501,7 @@ def param(
 
 
 def _selection(
-    type: Literal["interval", "point"] | UndefinedType = Undefined, **kwds
+    type: Optional[Literal["interval", "point"]] = Undefined, **kwds
 ) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
 
@@ -535,7 +533,7 @@ def _selection(
    Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
 )
 def selection(
-    type: Literal["interval", "point"] | UndefinedType = Undefined, **kwds
+    type: Optional[Literal["interval", "point"]] = Undefined, **kwds
 ) -> Parameter:
     """
     Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
@@ -561,17 +559,17 @@ def selection(
 
 def selection_interval(
     name: str | None = None,
-    value: Any | UndefinedType = Undefined,
-    bind: Binding | str | UndefinedType = Undefined,
-    empty: bool | UndefinedType = Undefined,
-    expr: str | Expr | Expression | UndefinedType = Undefined,
-    encodings: list[str] | UndefinedType = Undefined,
-    on: str | UndefinedType = Undefined,
-    clear: str | bool | UndefinedType = Undefined,
-    resolve: Literal["global", "union", "intersect"] | UndefinedType = Undefined,
-    mark: Mark | UndefinedType = Undefined,
-    translate: str | bool | UndefinedType = Undefined,
-    zoom: str | bool | UndefinedType = Undefined,
+    value: Optional[Any] = Undefined,
+    bind: Optional[Binding | str] = Undefined,
+    empty: Optional[bool] = Undefined,
+    expr: Optional[str | Expr | Expression] = Undefined,
+    encodings: Optional[list[str]] = Undefined,
+    on: Optional[str] = Undefined,
+    clear: Optional[str | bool] = Undefined,
+    resolve: Optional[Literal["global", "union", "intersect"]] = Undefined,
+    mark: Optional[Mark] = Undefined,
+    translate: Optional[str | bool] = Undefined,
+    zoom: Optional[str | bool] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
@@ -673,17 +671,17 @@ def selection_interval(
 
 def selection_point(
     name: str | None = None,
-    value: Any | UndefinedType = Undefined,
-    bind: Binding | str | UndefinedType = Undefined,
-    empty: bool | UndefinedType = Undefined,
-    expr: Expr | UndefinedType = Undefined,
-    encodings: list[str] | UndefinedType = Undefined,
-    fields: list[str] | UndefinedType = Undefined,
-    on: str | UndefinedType = Undefined,
-    clear: str | bool | UndefinedType = Undefined,
-    resolve: Literal["global", "union", "intersect"] | UndefinedType = Undefined,
-    toggle: str | bool | UndefinedType = Undefined,
-    nearest: bool | UndefinedType = Undefined,
+    value: Optional[Any] = Undefined,
+    bind: Optional[Binding | str] = Undefined,
+    empty: Optional[bool] = Undefined,
+    expr: Optional[Expr] = Undefined,
+    encodings: Optional[list[str]] = Undefined,
+    fields: Optional[list[str]] = Undefined,
+    on: Optional[str] = Undefined,
+    clear: Optional[str | bool] = Undefined,
+    resolve: Optional[Literal["global", "union", "intersect"]] = Undefined,
+    toggle: Optional[str | bool] = Undefined,
+    nearest: Optional[bool] = Undefined,
     **kwds,
 ) -> Parameter:
     """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
@@ -871,7 +869,7 @@ def condition(
 
     test_predicates = (str, _expr_core.Expression, core.PredicateComposition)
 
-    condition: dict[str, bool | str | Expression | PredicateComposition | UndefinedType]
+    condition: dict[str, Optional[bool | str | Expression | PredicateComposition]]
     if isinstance(predicate, Parameter):
         if (
             predicate.param_type == "selection"
@@ -1311,11 +1309,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def repeat(
         self,
-        repeat: list[str] | UndefinedType = Undefined,
-        row: list[str] | UndefinedType = Undefined,
-        column: list[str] | UndefinedType = Undefined,
-        layer: list[str] | UndefinedType = Undefined,
-        columns: int | UndefinedType = Undefined,
+        repeat: Optional[list[str]] = Undefined,
+        row: Optional[list[str]] = Undefined,
+        column: Optional[list[str]] = Undefined,
+        layer: Optional[list[str]] = Undefined,
+        columns: Optional[int] = Undefined,
         **kwargs,
     ) -> RepeatChart:
         """Return a RepeatChart built from the chart
@@ -1391,46 +1389,31 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type: str | ProjectionType | ExprRef | Parameter | UndefinedType = Undefined,
-        center: list[float]
-        | Vector2number
-        | ExprRef
-        | Parameter
-        | UndefinedType = Undefined,
-        clipAngle: float | ExprRef | Parameter | UndefinedType = Undefined,
-        clipExtent: list[list[float]]
-        | Vector2Vector2number
-        | ExprRef
-        | Parameter
-        | UndefinedType = Undefined,
-        coefficient: float | ExprRef | Parameter | UndefinedType = Undefined,
-        distance: float | ExprRef | Parameter | UndefinedType = Undefined,
-        fraction: float | ExprRef | Parameter | UndefinedType = Undefined,
-        lobes: float | ExprRef | Parameter | UndefinedType = Undefined,
-        parallel: float | ExprRef | Parameter | UndefinedType = Undefined,
-        precision: float | ExprRef | Parameter | UndefinedType = Undefined,
-        radius: float | ExprRef | Parameter | UndefinedType = Undefined,
-        ratio: float | ExprRef | Parameter | UndefinedType = Undefined,
-        reflectX: bool | ExprRef | Parameter | UndefinedType = Undefined,
-        reflectY: bool | ExprRef | Parameter | UndefinedType = Undefined,
-        rotate: list[float]
-        | Vector2number
-        | Vector3number
-        | ExprRef
-        | Parameter
-        | UndefinedType = Undefined,
-        scale: float | ExprRef | Parameter | UndefinedType = Undefined,
-        spacing: float
-        | Vector2number
-        | ExprRef
-        | Parameter
-        | UndefinedType = Undefined,
-        tilt: float | ExprRef | Parameter | UndefinedType = Undefined,
-        translate: list[float]
-        | Vector2number
-        | ExprRef
-        | Parameter
-        | UndefinedType = Undefined,
+        type: Optional[str | ProjectionType | ExprRef | Parameter] = Undefined,
+        center: Optional[list[float] | Vector2number | ExprRef | Parameter] = Undefined,
+        clipAngle: Optional[float | ExprRef | Parameter] = Undefined,
+        clipExtent: Optional[
+            list[list[float]] | Vector2Vector2number | ExprRef | Parameter
+        ] = Undefined,
+        coefficient: Optional[float | ExprRef | Parameter] = Undefined,
+        distance: Optional[float | ExprRef | Parameter] = Undefined,
+        fraction: Optional[float | ExprRef | Parameter] = Undefined,
+        lobes: Optional[float | ExprRef | Parameter] = Undefined,
+        parallel: Optional[float | ExprRef | Parameter] = Undefined,
+        precision: Optional[float | ExprRef | Parameter] = Undefined,
+        radius: Optional[float | ExprRef | Parameter] = Undefined,
+        ratio: Optional[float | ExprRef | Parameter] = Undefined,
+        reflectX: Optional[bool | ExprRef | Parameter] = Undefined,
+        reflectY: Optional[bool | ExprRef | Parameter] = Undefined,
+        rotate: Optional[
+            list[float] | Vector2number | Vector3number | ExprRef | Parameter
+        ] = Undefined,
+        scale: Optional[float | ExprRef | Parameter] = Undefined,
+        spacing: Optional[float | Vector2number | ExprRef | Parameter] = Undefined,
+        tilt: Optional[float | ExprRef | Parameter] = Undefined,
+        translate: Optional[
+            list[float] | Vector2number | ExprRef | Parameter
+        ] = Undefined,
         **kwds,
     ) -> Self:
         """Add a geographic projection to the chart.
@@ -1566,8 +1549,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_aggregate(
         self,
-        aggregate: list[AggregatedFieldDef] | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        aggregate: Optional[list[AggregatedFieldDef]] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
         **kwds: dict[str, Any] | str,
     ) -> Self:
         """
@@ -1646,8 +1629,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_bin(
         self,
-        as_: str | FieldName | list[str | FieldName] | UndefinedType = Undefined,
-        field: str | FieldName | UndefinedType = Undefined,
+        as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
+        field: Optional[str | FieldName] = Undefined,
         bin: Literal[True] | BinParams = True,
         **kwargs,
     ) -> Self:
@@ -1707,8 +1690,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_calculate(
         self,
-        as_: str | FieldName | UndefinedType = Undefined,
-        calculate: str | Expr | Expression | UndefinedType = Undefined,
+        as_: Optional[str | FieldName] = Undefined,
+        calculate: Optional[str | Expr | Expression] = Undefined,
         **kwargs: str | Expr | Expression,
     ) -> Self:
         """
@@ -1778,15 +1761,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_density(
         self,
         density: str | FieldName,
-        as_: list[str | FieldName] | UndefinedType = Undefined,
-        bandwidth: float | UndefinedType = Undefined,
-        counts: bool | UndefinedType = Undefined,
-        cumulative: bool | UndefinedType = Undefined,
-        extent: list[float] | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
-        maxsteps: int | UndefinedType = Undefined,
-        minsteps: int | UndefinedType = Undefined,
-        steps: int | UndefinedType = Undefined,
+        as_: Optional[list[str | FieldName]] = Undefined,
+        bandwidth: Optional[float] = Undefined,
+        counts: Optional[bool] = Undefined,
+        cumulative: Optional[bool] = Undefined,
+        extent: Optional[list[float]] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
+        maxsteps: Optional[int] = Undefined,
+        minsteps: Optional[int] = Undefined,
+        steps: Optional[int] = Undefined,
     ) -> Self:
         """Add a :class:`DensityTransform` to the spec.
 
@@ -1847,12 +1830,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         impute: str | FieldName,
         key: str | FieldName,
-        frame: list[int | None] | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
-        keyvals: list[Any] | ImputeSequence | UndefinedType = Undefined,
-        method: Literal["value", "mean", "median", "max", "min"]
-        | ImputeMethod
-        | UndefinedType = Undefined,
+        frame: Optional[list[int | None]] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
+        keyvals: Optional[list[Any] | ImputeSequence] = Undefined,
+        method: Optional[
+            Literal["value", "mean", "median", "max", "min"] | ImputeMethod
+        ] = Undefined,
         value=Undefined,
     ) -> Self:
         """
@@ -1917,8 +1900,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_joinaggregate(
         self,
-        joinaggregate: list[JoinAggregateFieldDef] | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        joinaggregate: Optional[list[JoinAggregateFieldDef]] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -2034,7 +2017,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_flatten(
         self,
         flatten: list[str | FieldName],
-        as_: list[str | FieldName] | UndefinedType = Undefined,
+        as_: Optional[list[str | FieldName]] = Undefined,
     ) -> Self:
         """Add a :class:`FlattenTransform` to the schema.
 
@@ -2066,7 +2049,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_fold(
         self,
         fold: list[str | FieldName],
-        as_: list[str | FieldName] | UndefinedType = Undefined,
+        as_: Optional[list[str | FieldName]] = Undefined,
     ) -> Self:
         """Add a :class:`FoldTransform` to the spec.
 
@@ -2094,9 +2077,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         on: str | FieldName,
         loess: str | FieldName,
-        as_: list[str | FieldName] | UndefinedType = Undefined,
-        bandwidth: float | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
+        as_: Optional[list[str | FieldName]] = Undefined,
+        bandwidth: Optional[float] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
     ) -> Self:
         """Add a :class:`LoessTransform` to the spec.
 
@@ -2134,10 +2117,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_lookup(
         self,
-        lookup: str | UndefinedType = Undefined,
-        from_: LookupData | LookupSelection | UndefinedType = Undefined,
-        as_: str | FieldName | list[str | FieldName] | UndefinedType = Undefined,
-        default: str | UndefinedType = Undefined,
+        lookup: Optional[str] = Undefined,
+        from_: Optional[LookupData | LookupSelection] = Undefined,
+        as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
+        default: Optional[str] = Undefined,
         **kwargs,
     ) -> Self:
         """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
@@ -2189,9 +2172,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         pivot: str | FieldName,
         value: str | FieldName,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
-        limit: int | UndefinedType = Undefined,
-        op: str | AggregateOp | UndefinedType = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
+        limit: Optional[int] = Undefined,
+        op: Optional[str | AggregateOp] = Undefined,
     ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
@@ -2240,10 +2223,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_quantile(
         self,
         quantile: str | FieldName,
-        as_: list[str | FieldName] | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
-        probs: list[float] | UndefinedType = Undefined,
-        step: float | UndefinedType = Undefined,
+        as_: Optional[list[str | FieldName]] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
+        probs: Optional[list[float]] = Undefined,
+        step: Optional[float] = Undefined,
     ) -> Self:
         """Add a :class:`QuantileTransform` to the chart
 
@@ -2287,13 +2270,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         on: str | FieldName,
         regression: str | FieldName,
-        as_: list[str | FieldName] | UndefinedType = Undefined,
-        extent: list[float] | UndefinedType = Undefined,
-        groupby: list[str | FieldName] | UndefinedType = Undefined,
-        method: Literal["linear", "log", "exp", "pow", "quad", "poly"]
-        | UndefinedType = Undefined,
-        order: int | UndefinedType = Undefined,
-        params: bool | UndefinedType = Undefined,
+        as_: Optional[list[str | FieldName]] = Undefined,
+        extent: Optional[list[float]] = Undefined,
+        groupby: Optional[list[str | FieldName]] = Undefined,
+        method: Optional[
+            Literal["linear", "log", "exp", "pow", "quad", "poly"]
+        ] = Undefined,
+        order: Optional[int] = Undefined,
+        params: Optional[bool] = Undefined,
     ) -> Self:
         """Add a :class:`RegressionTransform` to the chart.
 
@@ -2374,8 +2358,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         as_: str | FieldName | list[str],
         stack: str | FieldName,
         groupby: list[str | FieldName],
-        offset: Literal["zero", "center", "normalize"] | UndefinedType = Undefined,
-        sort: list[SortField] | UndefinedType = Undefined,
+        offset: Optional[Literal["zero", "center", "normalize"]] = Undefined,
+        sort: Optional[list[SortField]] = Undefined,
     ) -> Self:
         """
         Add a :class:`StackTransform` to the schema.
@@ -2413,9 +2397,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_timeunit(
         self,
-        as_: str | FieldName | UndefinedType = Undefined,
-        field: str | FieldName | UndefinedType = Undefined,
-        timeUnit: str | TimeUnit | UndefinedType = Undefined,
+        as_: Optional[str | FieldName] = Undefined,
+        field: Optional[str | FieldName] = Undefined,
+        timeUnit: Optional[str | TimeUnit] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -2496,11 +2480,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_window(
         self,
-        window: list[WindowFieldDef] | UndefinedType = Undefined,
-        frame: list[int | None] | UndefinedType = Undefined,
-        groupby: list[str] | UndefinedType = Undefined,
-        ignorePeers: bool | UndefinedType = Undefined,
-        sort: list[SortField | dict[str, str]] | UndefinedType = Undefined,
+        window: Optional[list[WindowFieldDef]] = Undefined,
+        frame: Optional[list[int | None]] = Undefined,
+        groupby: Optional[list[str]] = Undefined,
+        ignorePeers: Optional[bool] = Undefined,
+        sort: Optional[list[SortField | dict[str, str]]] = Undefined,
         **kwargs: str,
     ) -> Self:
         """Add a :class:`WindowTransform` to the schema
@@ -2614,9 +2598,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def display(
         self,
-        renderer: Literal["canvas", "svg"] | UndefinedType = Undefined,
-        theme: str | UndefinedType = Undefined,
-        actions: bool | dict | UndefinedType = Undefined,
+        renderer: Optional[Literal["canvas", "svg"]] = Undefined,
+        theme: Optional[str] = Undefined,
+        actions: Optional[bool | dict] = Undefined,
         **kwargs,
     ) -> None:
         """Display chart in Jupyter notebook or JupyterLab
@@ -2772,11 +2756,11 @@ class _EncodingMixin:
 
     def facet(
         self,
-        facet: str | Facet | UndefinedType = Undefined,
-        row: str | FacetFieldDef | Row | UndefinedType = Undefined,
-        column: str | FacetFieldDef | Column | UndefinedType = Undefined,
-        data: ChartDataType | UndefinedType = Undefined,
-        columns: int | UndefinedType = Undefined,
+        facet: Optional[str | Facet] = Undefined,
+        row: Optional[str | FacetFieldDef | Row] = Undefined,
+        column: Optional[str | FacetFieldDef | Column] = Undefined,
+        data: Optional[ChartDataType] = Undefined,
+        columns: Optional[int] = Undefined,
         **kwargs,
     ) -> FacetChart:
         """Create a facet chart from the current chart.
@@ -2897,11 +2881,11 @@ class Chart(
 
     def __init__(
         self,
-        data: ChartDataType | UndefinedType = Undefined,
-        encoding: FacetedEncoding | UndefinedType = Undefined,
-        mark: str | AnyMark | UndefinedType = Undefined,
-        width: int | str | dict | Step | UndefinedType = Undefined,
-        height: int | str | dict | Step | UndefinedType = Undefined,
+        data: Optional[ChartDataType] = Undefined,
+        encoding: Optional[FacetedEncoding] = Undefined,
+        mark: Optional[str | AnyMark] = Undefined,
+        width: Optional[int | str | dict | Step] = Undefined,
+        height: Optional[int | str | dict | Step] = Undefined,
         **kwargs,
     ) -> None:
         super().__init__(
