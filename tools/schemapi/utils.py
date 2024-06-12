@@ -7,19 +7,12 @@ import re
 import subprocess
 import textwrap
 import urllib
-from typing import (
-    Any,
-    Final,
-    Iterable,
-    TYPE_CHECKING,
-    Iterator,
-    LiteralString,
-    Sequence,
-)
+from typing import Any, Final, Iterable, TYPE_CHECKING, Iterator, Sequence
 from operator import itemgetter
 from .schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
+    from typing_extensions import LiteralString
     from pathlib import Path
 
 EXCLUDE_KEYS: Final = ("definitions", "title", "description", "$schema", "id")
