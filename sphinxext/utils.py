@@ -6,7 +6,7 @@ import itertools
 import json
 from pathlib import Path
 import re
-from typing import Any, Literal
+from typing import Any
 
 
 def create_thumbnail(
@@ -188,7 +188,7 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
 
 
 def prev_this_next(
-    it: list[dict[str, Any]], sentinel: Literal[None] = None
+    it: list[dict[str, Any]], sentinel: None = None
 ) -> zip[tuple[dict[str, Any] | None, dict[str, Any], dict[str, Any] | None]]:
     """Utility to return (prev, this, next) tuples from an iterator"""
     i1, i2, i3 = itertools.tee(it, 3)

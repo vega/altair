@@ -1236,27 +1236,27 @@ class _FromDict:
     def from_dict(
         self,
         dct: TSchemaBase,
-        tp: Literal[None] = ...,
-        schema: Literal[None] = ...,
-        rootschema: Literal[None] = ...,
+        tp: None = ...,
+        schema: None = ...,
+        rootschema: None = ...,
         default_class: Any = ...,
     ) -> TSchemaBase: ...
     @overload
     def from_dict(
         self,
         dct: dict[str, Any],
-        tp: Literal[None] = ...,
+        tp: None = ...,
         schema: Any = ...,
-        rootschema: Literal[None] = ...,
+        rootschema: None = ...,
         default_class: type[TSchemaBase] = ...,
     ) -> TSchemaBase: ...
     @overload
     def from_dict(
         self,
         dct: dict[str, Any],
-        tp: Literal[None] = ...,
+        tp: None = ...,
         schema: dict[str, Any] = ...,
-        rootschema: Literal[None] = ...,
+        rootschema: None = ...,
         default_class: Any = ...,
     ) -> SchemaBase: ...
     @overload
@@ -1264,8 +1264,8 @@ class _FromDict:
         self,
         dct: dict[str, Any],
         tp: type[TSchemaBase],
-        schema: Literal[None] = ...,
-        rootschema: Literal[None] = ...,
+        schema: None = ...,
+        rootschema: None = ...,
         default_class: Any = ...,
     ) -> TSchemaBase: ...
     @overload
