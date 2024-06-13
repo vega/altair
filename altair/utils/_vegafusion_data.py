@@ -2,7 +2,6 @@ import uuid
 from weakref import WeakValueDictionary
 from typing import (
     Any,
-    Literal,
     Optional,
     Union,
     Dict,
@@ -49,7 +48,7 @@ _VegaFusionReturnType = Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]
 
 @overload
 def vegafusion_data_transformer(
-    data: Literal[None] = ..., max_rows: int = ...
+    data: None = ..., max_rows: int = ...
 ) -> Callable[..., Any]: ...
 
 

@@ -13,12 +13,12 @@ from ..utils.data import (
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
 from ..utils.data import DataType, ToValuesReturnType
 from ..utils.plugin_registry import PluginEnabler
-from typing import Optional, Literal, Union, overload, Callable
+from typing import Optional, Union, overload, Callable
 
 
 @overload
 def default_data_transformer(
-    data: Literal[None] = ..., max_rows: int = ...
+    data: None = ..., max_rows: int = ...
 ) -> Callable[[DataType], ToValuesReturnType]: ...
 @overload
 def default_data_transformer(

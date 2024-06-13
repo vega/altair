@@ -71,9 +71,7 @@ def is_data_type(obj: Any) -> TypeIs[DataType]:
 # ==============================================================================
 class DataTransformerType(Protocol):
     @overload
-    def __call__(
-        self, data: Literal[None] = None, **kwargs
-    ) -> "DataTransformerType": ...
+    def __call__(self, data: None = None, **kwargs) -> "DataTransformerType": ...
     @overload
     def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict: ...
     def __call__(
@@ -101,7 +99,7 @@ class MaxRowsError(Exception):
 
 
 @overload
-def limit_rows(data: Literal[None] = ..., max_rows: Optional[int] = ...) -> partial: ...
+def limit_rows(data: None = ..., max_rows: Optional[int] = ...) -> partial: ...
 @overload
 def limit_rows(data: DataType, max_rows: Optional[int]) -> DataType: ...
 def limit_rows(
@@ -157,7 +155,7 @@ def limit_rows(
 
 @overload
 def sample(
-    data: Literal[None] = ..., n: Optional[int] = ..., frac: Optional[float] = ...
+    data: None = ..., n: Optional[int] = ..., frac: Optional[float] = ...
 ) -> partial: ...
 @overload
 def sample(
@@ -218,7 +216,7 @@ class _ToFormatReturnUrlDict(TypedDict):
 
 @overload
 def to_json(
-    data: Literal[None] = ...,
+    data: None = ...,
     prefix: str = ...,
     extension: str = ...,
     filename: str = ...,
@@ -256,7 +254,7 @@ def to_json(
 
 @overload
 def to_csv(
-    data: Literal[None] = ...,
+    data: None = ...,
     prefix: str = ...,
     extension: str = ...,
     filename: str = ...,
