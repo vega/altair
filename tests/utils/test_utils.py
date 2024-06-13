@@ -125,7 +125,7 @@ def test_sanitize_dataframe_arrow_columns():
 
 @pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
-@pytest.mark.skipif(
+@pytest.mark.xfail(
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
 def test_sanitize_pyarrow_table_columns() -> None:
