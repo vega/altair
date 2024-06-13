@@ -1,3 +1,4 @@
+from __future__ import annotations
 import uuid
 from weakref import WeakValueDictionary
 from typing import (
@@ -20,11 +21,12 @@ from altair.utils.data import (
     DataType,
     ToValuesReturnType,
     MaxRowsError,
-    NonLikeDataType,
+    SupportsGeoInterface,
 )
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
+    import pandas as pd
     from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
@@ -60,7 +62,7 @@ def vegafusion_data_transformer(
 
 @overload
 def vegafusion_data_transformer(
-    data: NonLikeDataType, max_rows: int
+    data: Union[dict, pd.DataFrame, SupportsGeoInterface], max_rows: int
 ) -> _VegaFusionReturnType: ...
 
 
