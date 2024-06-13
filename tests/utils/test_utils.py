@@ -39,6 +39,7 @@ def test_infer_vegalite_type():
             _check([], "nominal")
 
 
+@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 def test_sanitize_dataframe():
     # create a dataframe with various types
     df = pd.DataFrame(
@@ -90,6 +91,7 @@ def test_sanitize_dataframe():
     assert df.equals(df2)
 
 
+@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 def test_sanitize_dataframe_arrow_columns():
     # create a dataframe with various types
@@ -121,6 +123,7 @@ def test_sanitize_dataframe_arrow_columns():
     json.dumps(records)
 
 
+@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 @pytest.mark.skipif(
     sys.platform == "win32", reason="Timezone database is not installed on Windows"

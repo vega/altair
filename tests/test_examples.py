@@ -1,5 +1,6 @@
 import io
 import pkgutil
+from typing import Iterator
 
 import pytest
 
@@ -15,19 +16,22 @@ except ImportError:
     vlc = None
 
 
-def iter_examples_filenames(syntax_module):
+def iter_examples_filenames(syntax_module) -> Iterator[str]:
     for _importer, modname, ispkg in pkgutil.iter_modules(syntax_module.__path__):
-        if (
+        if not (
             ispkg
             or modname.startswith("_")
             # Temporarily skip this test until https://github.com/vega/altair/issues/3418
             # is fixed
             or modname == "interval_selection_map_quakes"
         ):
-            continue
-        yield modname + ".py"
+            yield f"{modname}.py"
 
 
+@pytest.mark.filterwarnings(
+    "ignore:'M' is deprecated.*:FutureWarning",
+    "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
+)
 @pytest.mark.parametrize(
     "syntax_module", [examples_arguments_syntax, examples_methods_syntax]
 )
@@ -53,6 +57,10 @@ def test_render_examples_to_chart(syntax_module):
             raise AssertionError(msg) from err
 
 
+@pytest.mark.filterwarnings(
+    "ignore:'M' is deprecated.*:FutureWarning",
+    "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
+)
 @pytest.mark.parametrize(
     "syntax_module", [examples_arguments_syntax, examples_methods_syntax]
 )
@@ -88,6 +96,10 @@ def test_from_and_to_json_roundtrip(syntax_module):
             raise AssertionError(msg) from err
 
 
+@pytest.mark.filterwarnings(
+    "ignore:'M' is deprecated.*:FutureWarning",
+    "ignore:DataFrameGroupBy.apply.*:DeprecationWarning",
+)
 @pytest.mark.parametrize("engine", ["vl-convert"])
 @pytest.mark.parametrize(
     "syntax_module", [examples_arguments_syntax, examples_methods_syntax]

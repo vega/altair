@@ -113,6 +113,7 @@ def test_chart_data_types():
     assert dct["data"] == {"name": "Foo"}
 
 
+@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_infer_types():
     data = pd.DataFrame(
         {
@@ -218,6 +219,7 @@ def test_multiple_encodings(args, kwargs):
     assert dct["encoding"]["tooltip"] == encoding_dct
 
 
+@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_operations():
     data = pd.DataFrame(
         {

@@ -16,7 +16,10 @@ except ImportError:
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
 
-
+@pytest.mark.filterwarnings(
+    "ignore:'M' is deprecated.*:FutureWarning",
+    "ignore:DataFrameGroupBy.apply.*:DeprecationWarning"
+)
 @pytest.mark.skipif(vf is None, reason="vegafusion not installed")
 # fmt: off
 @pytest.mark.parametrize("filename,rows,cols", [
