@@ -19,6 +19,7 @@ jobs:
         pip install uv
         uv venv
         uv pip install ".[all, dev]"
+        source .venv/bin/activate
     - name: Lint with ruff
       run: |        
         ruff check .        
