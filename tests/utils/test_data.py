@@ -161,11 +161,11 @@ def test_toolz():
     data = _create_data_with_values(10)
     try:
         with pytest.warns(AltairDeprecationWarning, match="toolz.curried.pipe"):
-            result1 = pipe(data, to_values)
+            result1 = pipe(data, to_values)  # noqa: F821
         assert isinstance(result1, dict)
         kwds = {"prefix": "dummy"}
         with pytest.warns(AltairDeprecationWarning, match="toolz.curried.curry"):
-            result2 = curry(to_csv, **kwds)
+            result2 = curry(to_csv, **kwds)  # noqa: F821
         assert "curry" in type(result2).__name__
         assert result2.func_name == to_csv.__name__
         assert result2.keywords == kwds
