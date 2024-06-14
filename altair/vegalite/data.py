@@ -1,9 +1,7 @@
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
     MaxRowsError,
-    curry,
     limit_rows,
-    pipe,
     sample,
     to_csv,
     to_json,
@@ -52,11 +50,9 @@ class DataTransformerRegistry(_DataTransformerRegistry):
 __all__ = (
     "DataTransformerRegistry",
     "MaxRowsError",
-    "curry",
     "sanitize_dataframe",
     "default_data_transformer",
     "limit_rows",
-    "pipe",
     "sample",
     "to_csv",
     "to_json",

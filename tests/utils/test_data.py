@@ -10,8 +10,6 @@ from altair.utils.data import (
     to_values,
     to_json,
     to_csv,
-    curry,
-    pipe,
 )
 from altair.utils._importers import import_toolz_function
 from altair.utils.deprecation import AltairDeprecationWarning
@@ -157,6 +155,7 @@ def test_dict_to_csv():
     assert data == {"values": output}
 
 
+@pytest.mark.skip
 def test_toolz():
     expected_msg = r"Usage.+ requires"
     data = _create_data_with_values(10)

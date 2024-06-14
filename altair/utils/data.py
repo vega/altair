@@ -23,7 +23,7 @@ from typing import (
 
 import pandas as pd
 
-from ._importers import import_pyarrow_interchange, import_toolz_function
+from ._importers import import_pyarrow_interchange
 from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
 from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
@@ -401,23 +401,6 @@ def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
         raise NotImplementedError(
             "to_csv only works with data expressed as " "a DataFrame or as a dict"
         )
-
-
-def pipe(data, *funcs):
-    """
-    Pipe a value through a sequence of functions
-
-    Deprecated: use toolz.curried.pipe() instead.
-    """
-    return import_toolz_function("pipe")(data, *funcs)
-
-
-def curry(*args, **kwargs):
-    """Curry a callable function
-
-    Deprecated: use toolz.curried.curry() instead.
-    """
-    return import_toolz_function("curry")(*args, **kwargs)
 
 
 def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> "pyarrow.lib.Table":
