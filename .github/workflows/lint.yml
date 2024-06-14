@@ -16,17 +16,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install uv
-        uv venv
-        uv pip install ".[all, dev]"
-        source .venv/bin/activate
+        pip install hatch
     - name: Lint with ruff
       run: |        
-        ruff check .        
+        hatch run ruff check .        
     - name: Check formatting with ruff
       run: |
-        ruff format --diff .
-        ruff format --check .
+        hatch run ruff format --diff .
+        hatch run ruff format --check .
     - name: Lint with mypy
       run: |
-        mypy altair tests
+        hatch run mypy altair tests
