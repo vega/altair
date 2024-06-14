@@ -1,5 +1,4 @@
 import os
-import re
 from typing import Any, Callable
 import pytest
 import pandas as pd
@@ -11,8 +10,6 @@ from altair.utils.data import (
     to_json,
     to_csv,
 )
-from altair.utils._importers import import_toolz_function
-from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def _pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
@@ -153,25 +150,3 @@ def test_dict_to_csv():
 
     assert result1 == result2
     assert data == {"values": output}
-
-
-@pytest.mark.skip
-def test_toolz():
-    expected_msg = r"Usage.+ requires"
-    data = _create_data_with_values(10)
-    try:
-        with pytest.warns(AltairDeprecationWarning, match="toolz.curried.pipe"):
-            result1 = pipe(data, to_values)  # noqa: F821
-        assert isinstance(result1, dict)
-        kwds = {"prefix": "dummy"}
-        with pytest.warns(AltairDeprecationWarning, match="toolz.curried.curry"):
-            result2 = curry(to_csv, **kwds)  # noqa: F821
-        assert "curry" in type(result2).__name__
-        assert result2.func_name == to_csv.__name__
-        assert result2.keywords == kwds
-    except ImportError as err:
-        assert re.search(expected_msg, err.msg)
-    with pytest.raises(ImportError, match=expected_msg):
-        dummy = "fake_function_name"
-        with pytest.warns(AltairDeprecationWarning, match=f"toolz.curried.{dummy}"):
-            func = import_toolz_function(dummy)  # noqa: F841
