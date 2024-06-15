@@ -9,7 +9,7 @@ import textwrap
 import urllib
 from typing import Any, Final, Iterable, TYPE_CHECKING, Iterator, Sequence
 from operator import itemgetter
-from .schemapi import _resolve_references as resolve_references
+from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
     from typing_extensions import LiteralString
@@ -751,7 +751,6 @@ def ruff_write_lint_format_str(
     commands = (
         ["ruff", "check", fp, "--fix"],
         ["ruff", "check", fp, "--fix", "--select", "I001", "--select", "I002"],
-        ["ruff", "format", fp],
     )
     if not isinstance(code, str):
         code = "\n".join(code)
@@ -759,3 +758,4 @@ def ruff_write_lint_format_str(
     for cmd in commands:
         r = subprocess.run(cmd, check=True)
         r.check_returncode()
+    ruff_format_py(fp)

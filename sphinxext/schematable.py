@@ -1,8 +1,6 @@
 from __future__ import annotations
 import importlib
-from pathlib import Path
 import re
-import sys
 from typing import Any, Iterator, Sequence
 import warnings
 
@@ -12,7 +10,6 @@ from docutils.parsers.rst.directives import flag
 from myst_parser.docutils_ import Parser
 from sphinx import addnodes
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from tools.schemapi.utils import fix_docstring_issues, SchemaInfo
 
 

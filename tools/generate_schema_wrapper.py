@@ -13,16 +13,8 @@ from typing import Final, Iterable, Literal
 from urllib import request
 import m2r
 
-# Add path so that schemapi can be imported from the tools folder
-current_dir = Path(__file__).parent
-sys.path.insert(0, str(current_dir))
-# And another path so that Altair can be imported from head. This is relevant when
-# generate_api_docs is imported in the main function
-sys.path.insert(0, str((current_dir / "..").resolve()))
-from schemapi import codegen  # noqa: E402
-from schemapi.codegen import CodeSnippet  # noqa: E402
-from schemapi.utils import (  # noqa: E402
-    SchemaInfo,
+from tools.schemapi import codegen, CodeSnippet, SchemaInfo
+from tools.schemapi.utils import (
     get_valid_identifier,
     resolve_references,
     ruff_format_py,
@@ -793,7 +785,7 @@ def vegalite_main(skip_download: bool = False) -> None:
     files[fp_mixins] = content_mixins
 
     # Write `_typing.py` TypeAlias, for import in generated modules
-    from schemapi.utils import TypeAliasTracer
+    from tools.schemapi.utils import TypeAliasTracer
 
     fp_typing = schemapath / "_typing.py"
     msg = (
@@ -876,8 +868,7 @@ def main() -> None:
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes
-    import generate_api_docs
-    import update_init_file
+    from tools import generate_api_docs, update_init_file
 
     generate_api_docs.write_api_file()
     update_init_file.update__all__variable()

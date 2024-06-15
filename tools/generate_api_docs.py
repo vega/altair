@@ -5,17 +5,13 @@ based on the updated Altair schema.
 
 from __future__ import annotations
 from pathlib import Path
-import sys
 import types
 from typing import Final, Iterator
 from types import ModuleType
 
-# Import Altair from head
-root_fp = (Path(__file__).parent / "..").resolve()
-sys.path.insert(0, str(root_fp))
-import altair as alt  # noqa: E402
+import altair as alt
 
-API_FILENAME: Final = str(root_fp / "doc" / "user_guide" / "api.rst")
+API_FILENAME: Final = str(Path.cwd() / "doc" / "user_guide" / "api.rst")
 
 API_TEMPLATE: Final = """\
 .. _api:

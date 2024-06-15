@@ -4,8 +4,8 @@ based on the updated Altair schema.
 """
 
 from __future__ import annotations
+
 from inspect import ismodule, getattr_static
-import sys
 from pathlib import Path
 from typing import (
     IO,
@@ -17,22 +17,12 @@ from typing import (
     Union,
     cast,
     TYPE_CHECKING,
-    Final,
     Literal,
 )
 import typing as t
 import typing_extensions as te
 
-
-current_dir = Path(__file__).parent
-ROOT_DIR: Final = str((current_dir / "..").resolve())
-sys.path.insert(0, str(current_dir))
-
-from schemapi.utils import ruff_format_py, ruff_format_str  # noqa: E402
-
-# Import Altair from head
-sys.path.insert(0, ROOT_DIR)
-import altair as alt  # noqa: E402
+from tools.schemapi.utils import ruff_write_lint_format_str
 
 _TYPING_CONSTRUCTS = {
     te.TypeAlias,
@@ -57,6 +47,8 @@ def update__all__variable() -> None:
     Jupyter.
     """
     # Read existing file content
+    import altair as alt
+
     encoding = "utf-8"
     init_path = Path(alt.__file__)
     with init_path.open(encoding=encoding) as f:
@@ -75,38 +67,48 @@ def update__all__variable() -> None:
     assert first_definition_line is not None
     assert last_definition_line is not None
 
-    # Figure out which attributes are relevant
-    relevant_attributes = sorted(x for x in alt.__dict__ if _is_relevant_attribute(x))
-    relevant_attributes_str = f"__all__ = {relevant_attributes}"
-
     # Put file back together, replacing old definition of __all__ with new one, keeping
     # the rest of the file as is
-    new_lines = (
-        lines[:first_definition_line]
-        + [relevant_attributes_str]
-        + lines[last_definition_line + 1 :]
-    )
-    # Format file content with ruff
-    new_file_content = ruff_format_str("\n".join(new_lines))
-
+    new_lines = [
+        *lines[:first_definition_line],
+        f"__all__ = {relevant_attributes(alt.__dict__)}",
+        *lines[last_definition_line + 1 :],
+    ]
     # Write new version of altair/__init__.py
-    init_path.write_text(new_file_content, encoding=encoding)
-    if sys.platform == "win32":
-        ruff_format_py(init_path)
+    # Format file content with ruff
+    ruff_write_lint_format_str(init_path, new_lines)
+
+
+def relevant_attributes(namespace: dict[str, Any], /) -> list[str]:
+    """Figure out which attributes in `__all__` are relevant.
+
+    Returns an alphabetically sorted list, to insert into `__all__`.
+
+    Parameters
+    ----------
+    namespace
+        A module dict, like `altair.__dict__`
+    """
+    it = (
+        name
+        for name, attr in namespace.items()
+        if (not name.startswith("_")) and _is_relevant(attr)
+    )
+    return sorted(it)
 
 
 def _is_hashable(obj: Any) -> bool:
+    """Guard to prevent an `in` check occuring on mutable objects."""
     try:
         return bool(hash(obj))
     except TypeError:
         return False
 
 
-def _is_relevant_attribute(attr_name: str) -> bool:
-    attr = getattr(alt, attr_name)
+def _is_relevant(attr: Any, /) -> bool:
+    """Predicate logic for filtering attributes."""
     if (
         getattr_static(attr, "_deprecated", False)
-        or attr_name.startswith("_")
         or attr is TYPE_CHECKING
         or (_is_hashable(attr) and attr in _TYPING_CONSTRUCTS)
     ):
@@ -115,8 +117,7 @@ def _is_relevant_attribute(attr_name: str) -> bool:
         # Only include modules which are part of Altair. This excludes built-in
         # modules (they do not have a __file__ attribute), standard library,
         # and third-party packages.
-        prefix = str(Path(alt.__file__).parent)
-        return getattr_static(attr, "__file__", "").startswith(prefix)
+        return getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
     else:
         return True
 
