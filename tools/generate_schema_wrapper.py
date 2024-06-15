@@ -16,7 +16,10 @@ import m2r
 try:
     from tools.schemapi import codegen, CodeSnippet, SchemaInfo
 except ImportError as err:
-    msg = f"Unable to find 'tools' in sys.path:\n{sys.path!r}"
+    msg = (
+        f"Unable to find 'tools' in sys.path:\n{sys.path!r}\n\n"
+        f"Cwd: {Path.cwd().as_posix()}"
+    )
     raise ModuleNotFoundError(msg) from err
 
 from tools.schemapi.utils import (
