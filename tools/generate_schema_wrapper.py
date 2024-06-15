@@ -13,7 +13,12 @@ from typing import Final, Iterable, Literal
 from urllib import request
 import m2r
 
-from tools.schemapi import codegen, CodeSnippet, SchemaInfo
+try:
+    from tools.schemapi import codegen, CodeSnippet, SchemaInfo
+except ImportError as err:
+    msg = f"Unable to find 'tools' in sys.path:\n{sys.path!r}"
+    raise ModuleNotFoundError(msg) from err
+
 from tools.schemapi.utils import (
     get_valid_identifier,
     resolve_references,
