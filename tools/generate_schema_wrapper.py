@@ -13,6 +13,8 @@ from typing import Final, Iterable, Literal
 from urllib import request
 import m2r
 
+sys.path.insert(0, str(Path.cwd()))
+
 try:
     from tools.schemapi import codegen, CodeSnippet, SchemaInfo
 except ImportError as err:
