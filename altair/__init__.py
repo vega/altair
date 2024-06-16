@@ -611,6 +611,7 @@ __all__ = [
     "vconcat",
     "vegalite",
     "vegalite_compilers",
+    "when",
     "with_property_setters",
 ]
 

@@ -254,9 +254,9 @@ def test_when() -> None:
 
     select = alt.selection_point(name="select", on="click")
     condition = _alt._predicate_to_condition(select, empty=False)
-    when = _alt._when(select, empty=False)
-    when_constraint = _alt._when(Origin="Europe")
-    when_constraints = _alt._when(
+    when = alt.when(select, empty=False)
+    when_constraint = alt.when(Origin="Europe")
+    when_constraints = alt.when(
         Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01"
     )
     expected_constraint = alt.datum.Origin == "Europe"
@@ -273,13 +273,13 @@ def test_when() -> None:
     assert when_constraint._condition["test"] == expected_constraint
     assert when_constraints._condition["test"] == expected_constraints
     with pytest.raises((NotImplementedError, TypeError)) as err:
-        _alt._when([1, 2, 3])  # type: ignore
+        alt.when([1, 2, 3])  # type: ignore
     assert "list" in str(err.value)
     with pytest.raises(TypeError) as err:
-        _alt._when()
+        alt.when()
     assert "Undefined" in str(err.value)
     with pytest.raises(TypeError) as err:
-        _alt._when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
     assert "int" in str(err.value)
 
 
@@ -287,7 +287,7 @@ def test_when_then() -> None:
     from altair.vegalite.v5 import api as _alt
 
     select = alt.selection_point(name="select", on="click")
-    when = _alt._when(select)
+    when = alt.when(select)
     when_then = when.then(alt.value(5))
 
     assert isinstance(when_then, _alt._Then)
@@ -310,10 +310,9 @@ def test_when_then() -> None:
 
 def test_when_then_only(basic_chart) -> None:
     """`_Then` is an acceptable encode argument."""
-    from altair.vegalite.v5 import api as _alt
 
     select = alt.selection_point(name="select", on="click")
-    when = _alt._when(select)
+    when = alt.when(select)
     when_then = when.then(alt.value(5))
 
     assert when_then.to_dict() == when.then(5).to_dict()
@@ -324,12 +323,10 @@ def test_when_then_only(basic_chart) -> None:
 
 
 def test_when_then_otherwise() -> None:
-    from altair.vegalite.v5 import api as _alt
-
     select = alt.selection_point(name="select", on="click")
-    when_then = _alt._when(select).then(alt.value(2, empty=False))
+    when_then = alt.when(select).then(alt.value(2, empty=False))
     when_then_otherwise = when_then.otherwise(alt.value(0))
-    short = _alt._when(select).then(2, empty=False).otherwise(0)
+    short = alt.when(select).then(2, empty=False).otherwise(0)
     expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
     when_then.otherwise([1, 2, 3])
 
@@ -347,7 +344,6 @@ def test_when_then_otherwise() -> None:
 
 def test_when_then_when_then_otherwise() -> None:
     """Test for [#3301](https://github.com/vega/altair/issues/3301)."""
-    from altair.vegalite.v5 import api as _alt
 
     data = {
         "values": [
@@ -366,7 +362,7 @@ def test_when_then_when_then_otherwise() -> None:
     select = alt.selection_point(name="select", on="click")
     highlight = alt.selection_point(name="highlight", on="pointerover")
     when_then_when_then = (
-        _alt._when(select)
+        alt.when(select)
         .then(alt.value(2, empty=False))
         .when(highlight)
         .then(alt.value(1, empty=False))
@@ -387,7 +383,7 @@ def test_when_then_when_then_otherwise() -> None:
         .encode(
             x="a:O",
             y="b:Q",
-            fillOpacity=_alt._when(select).then(1).otherwise(0.3),
+            fillOpacity=alt.when(select).then(1).otherwise(0.3),
             strokeWidth=actual_stroke,
         )
         .configure_scale(bandPaddingInner=0.2)
@@ -424,7 +420,7 @@ def test_when_labels_position_based_on_condition() -> None:
         expr=alt.expr.if_(param_width_lt_200, "red", "black")  # type: ignore
     )
     when = (
-        _alt._when(param_width_lt_200)
+        alt.when(param_width_lt_200)
         .then(alt.value("red"))
         .otherwise("black", str_as_lit=True)
     )
@@ -464,7 +460,7 @@ def test_when_expressions_inside_parameters() -> None:
         .mark_bar()
         .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
     )
-    when_then_otherwise = _alt._when(alt.datum.b >= 0).then(10).otherwise(-20)
+    when_then_otherwise = alt.when(alt.datum.b >= 0).then(10).otherwise(-20)
     expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))  # type: ignore
     actual = _alt._condition_to_expr_ref(when_then_otherwise)
     assert expected == actual
@@ -480,7 +476,7 @@ def test_when_expressions_inside_parameters() -> None:
 def test_when_convert_expr() -> None:
     from altair.vegalite.v5 import api as _alt
 
-    when = _alt._when(Color="Green").then(5).otherwise(10)
+    when = alt.when(Color="Green").then(5).otherwise(10)
     converted = _alt._condition_to_expr_ref(when)
 
     assert isinstance(converted, alt.ExprRef)
@@ -490,7 +486,7 @@ def test_when_convert_expr() -> None:
     assert "int" in str(err.value)
 
     with pytest.raises(KeyError) as err:  # type: ignore
-        _alt._condition_to_expr_ref(_alt._when(Color="Green").then(5).to_dict())
+        _alt._condition_to_expr_ref(alt.when(Color="Green").then(5).to_dict())
     assert "Missing `value`" in str(err.value)
 
     with pytest.raises(KeyError) as err:  # type: ignore
@@ -503,12 +499,12 @@ def test_when_convert_expr() -> None:
 
     with pytest.raises(KeyError) as err:  # type: ignore
         _alt._condition_to_expr_ref(
-            _alt._when(alt.selection_point("name")).then(33).otherwise(11)
+            alt.when(alt.selection_point("name")).then(33).otherwise(11)
         )
     assert "Missing `test`" in str(err.value)
 
     long = (
-        _alt._when(Color="red")
+        alt.when(Color="red")
         .then(1)
         .when(Color="blue")
         .then(2)
