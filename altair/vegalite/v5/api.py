@@ -433,7 +433,14 @@ Prior to parsing any `_StatementType`.
 """
 
 _SelectionType = Union[core.SchemaBase, TypingDict[str, Union[_ConditionType, Any]]]
-"""Returned type of `alt.condition`.
+"""Returned type of `alt.condition`."""
+
+_FieldEqualType = Union[_LiteralValue, TypingDict[str, Any], Parameter, core.SchemaBase]
+"""Permitted types for equality checks on field values:
+
+- `datum.field == ...`
+- `FieldEqualPredicate(equal=...)`
+- `when(**constraints=...)`
 """
 
 
@@ -820,7 +827,7 @@ class _Then:
         predicate: _AltOptional[_PredicateType] = Undefined,
         *more_predicates: _ComposablePredicateType,
         empty: _AltOptional[bool] = Undefined,
-        **constraints: Any,
+        **constraints: _FieldEqualType,
     ) -> "_ChainedWhen":
         condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         return _ChainedWhen(condition, self.to_dict())
@@ -883,7 +890,7 @@ def _when(
     predicate: _AltOptional[_PredicateType] = Undefined,
     *more_predicates: _ComposablePredicateType,
     empty: _AltOptional[bool] = Undefined,
-    **constraints: Any,
+    **constraints: _FieldEqualType,
 ) -> _When:
     """Start a `when-then-otherwise` condition.
 
