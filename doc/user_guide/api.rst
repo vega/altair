@@ -166,6 +166,7 @@ API Functions
    topo_feature
    value
    vconcat
+   when
 
 Low-Level Schema Wrappers
 -------------------------

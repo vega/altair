@@ -892,53 +892,51 @@ def when(
     empty: _AltOptional[bool] = Undefined,
     **constraints: _FieldEqualType,
 ) -> _When:
-    """Start a `when-then-otherwise` condition.
+    """Start a ``when-then-otherwise`` condition.
 
-    The resulting predicate is an `AND` reduction over `predicate` and optional `*`, `**`, arguments.
+    The resulting predicate is an ``AND`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
     Parameters
     ----------
     predicate
         A selection or test predicate.
-        `str` input will be treated as a test operand.
+        ``str`` input will be treated as a test operand.
     *more_predicates
-        Additional predicates, restricted to types supporting `&`.
+        Additional predicates, restricted to types supporting ``&``.
     empty
-        For selection parameters, the predicate of empty selections returns `True` by default.
-        Override this behavior, with `empty=False`.
+        For selection parameters, the predicate of empty selections returns ``True`` by default.
+        Override this behavior, with ``empty=False``.
     **constraints
-        Specify [Field Equal Predicate](https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate)'s.
-        Shortcut for `alt.datum.field_name == value`, see examples for usage.
+        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate/>`__'s.
+        Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
     Returns
     -------
-    When
-        A partial state which requires calling `then(statement)` to finish the condition.
+    result: When
+        A partial state which requires calling ``result.then(statement)`` to finish the condition.
 
     Notes
     -----
-    - Directly inspired by the `when-then-otherwise` syntax used in `polars.when`.
-    - `predicate` accepts all inputs valid in `alt.condition(predicate=...)`
+    - Directly inspired by the ``when-then-otherwise`` syntax used in ``polars.when``.
+    - ``predicate`` accepts all inputs valid in ``alt.condition(predicate=...)``
 
     References
     ----------
-    [polars.when](https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html)
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html/>`__
 
     Examples
     --------
-    Using keyword-argument `constraints` can simplify compositions like:
+    Using keyword-argument ``constraints`` can simplify compositions like::
 
-    ```py
-    import altair as alt
-    verbose_composition = (
-        (alt.datum.Name == "Name_1")
-        & (alt.datum.Color == "Green")
-        & (alt.datum.Age == 25)
-        & (alt.datum.StartDate == "2000-10-01")
-    )
-    when_verbose = alt.when(verbose_composition)
-    when_concise = alt.when(Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01")
-    ```
+        import altair as alt
+        verbose_composition = (
+            (alt.datum.Name == "Name_1")
+            & (alt.datum.Color == "Green")
+            & (alt.datum.Age == 25)
+            & (alt.datum.StartDate == "2000-10-01")
+        )
+        when_verbose = alt.when(verbose_composition)
+        when_concise = alt.when(Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01")
     """
     # TODO
     # ----
