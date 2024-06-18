@@ -1,12 +1,7 @@
-import warnings
-from importlib import import_module
 from importlib.metadata import version as importlib_version
 from types import ModuleType
-from typing import Any, Callable
 
 from packaging.version import Version
-
-from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def import_vegafusion() -> ModuleType:
@@ -101,24 +96,3 @@ def pyarrow_available() -> bool:
         return True
     except (ImportError, RuntimeError):
         return False
-
-
-def import_toolz_function(
-    function: str, module: str = "toolz.curried"
-) -> Callable[..., Any]:
-    msg = (
-        f"alt.{function}() is deprecated, and will be removed in a future release. "
-        f"Use {module}.{function}() instead."
-    )
-    warnings.warn(msg, AltairDeprecationWarning, stacklevel=1)
-    msg_start = f"Usage of deprecated alt.{function}() requires {module}\n\n"
-    msg = f"{msg_start}ImportError: "
-    try:
-        toolz_curried = import_module(module)
-    except ImportError as err:
-        msg = f"{msg} {err.args[0]}"
-        raise ImportError(msg) from err
-    if func := getattr(toolz_curried, function, None):
-        return func
-    else:
-        raise ImportError(msg_start)
