@@ -100,7 +100,7 @@ class MaxRowsError(Exception):
 @overload
 def limit_rows(data: None = ..., max_rows: Optional[int] = ...) -> partial: ...
 @overload
-def limit_rows(data: DataType, max_rows: Optional[int]) -> DataType: ...
+def limit_rows(data: DataType, max_rows: Optional[int] = ...) -> DataType: ...
 def limit_rows(
     data: Optional[DataType] = None, max_rows: Optional[int] = 5000
 ) -> Union[partial, DataType]:
@@ -226,10 +226,10 @@ def to_json(
 @overload
 def to_json(
     data: DataType,
-    prefix: str,
-    extension: str,
-    filename: str,
-    urlpath: str,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
 ) -> _ToFormatReturnUrlDict: ...
 
 
@@ -264,10 +264,10 @@ def to_csv(
 @overload
 def to_csv(
     data: NonGeoDataType,
-    prefix: str,
-    extension: str,
-    filename: str,
-    urlpath: str,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
 ) -> _ToFormatReturnUrlDict: ...
 
 
