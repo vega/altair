@@ -19,7 +19,7 @@ dependencies = [
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
-    "numpy",
+    "numpy<2.0.0",
     # If you update the minimum required pandas version, also update it in build.yml
     "pandas>=0.25",
     "toolz",
