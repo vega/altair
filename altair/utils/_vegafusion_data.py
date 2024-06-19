@@ -1,8 +1,9 @@
-from toolz import curried
+from __future__ import annotations
 import uuid
 from weakref import WeakValueDictionary
-
 from typing import (
+    Any,
+    Optional,
     Union,
     Dict,
     Set,
@@ -10,14 +11,22 @@ from typing import (
     TypedDict,
     Final,
     TYPE_CHECKING,
+    overload,
+    Callable,
 )
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
-from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
+from altair.utils.data import (
+    DataType,
+    ToValuesReturnType,
+    MaxRowsError,
+    SupportsGeoInterface,
+)
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
+    import pandas as pd
     from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
@@ -36,21 +45,41 @@ class _ToVegaFusionReturnUrlDict(TypedDict):
     url: str
 
 
-@curried.curry
+_VegaFusionReturnType = Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]
+
+
+@overload
 def vegafusion_data_transformer(
-    data: DataType, max_rows: int = 100000
-) -> Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]:
+    data: None = ..., max_rows: int = ...
+) -> Callable[..., Any]: ...
+
+
+@overload
+def vegafusion_data_transformer(
+    data: DataFrameLike, max_rows: int
+) -> ToValuesReturnType: ...
+
+
+@overload
+def vegafusion_data_transformer(
+    data: Union[dict, pd.DataFrame, SupportsGeoInterface], max_rows: int
+) -> _VegaFusionReturnType: ...
+
+
+def vegafusion_data_transformer(
+    data: Optional[DataType] = None, max_rows: int = 100000
+) -> Union[Callable[..., Any], _VegaFusionReturnType]:
     """VegaFusion Data Transformer"""
-    if hasattr(data, "__geo_interface__"):
-        # Use default transformer for geo interface objects
-        # # (e.g. a geopandas GeoDataFrame)
-        return default_data_transformer(data)
-    elif isinstance(data, DataFrameLike):
+    if data is None:
+        return vegafusion_data_transformer
+    elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
         extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}
     else:
-        # Use default transformer if we don't recognize data type
+        # Use default transformer for geo interface objects
+        # # (e.g. a geopandas GeoDataFrame)
+        # Or if we don't recognize data type
         return default_data_transformer(data)
 
 

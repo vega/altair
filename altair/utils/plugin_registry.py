@@ -1,9 +1,7 @@
-from typing import Any, Dict, List, Optional, Generic, TypeVar, cast
+from functools import partial
+from typing import Any, Dict, List, Optional, Generic, TypeVar, Union, cast, Callable
 from types import TracebackType
-
 from importlib.metadata import entry_points
-
-from toolz import curry
 
 
 PluginType = TypeVar("PluginType")
@@ -71,7 +69,7 @@ class PluginRegistry(Generic[PluginType]):
     # in the registry rather than passed to the plugins
     _global_settings = {}  # type: Dict[str, Any]
 
-    def __init__(self, entry_point_group: str = "", plugin_type: type = object):
+    def __init__(self, entry_point_group: str = "", plugin_type: type = Callable):  # type: ignore[assignment]
         """Create a PluginRegistry for a named entry point group.
 
         Parameters
@@ -90,7 +88,9 @@ class PluginRegistry(Generic[PluginType]):
         self._options = {}  # type: Dict[str, Any]
         self._global_settings = self.__class__._global_settings.copy()  # type: dict
 
-    def register(self, name: str, value: Optional[PluginType]) -> Optional[PluginType]:
+    def register(
+        self, name: str, value: Union[Optional[PluginType], Any]
+    ) -> Optional[PluginType]:
         """Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be
@@ -199,10 +199,15 @@ class PluginRegistry(Generic[PluginType]):
         """Return the current options dictionary"""
         return self._options
 
-    def get(self) -> Optional[PluginType]:
+    def get(self) -> Optional[Union[PluginType, Callable[..., Any]]]:
         """Return the currently active plugin."""
         if self._options:
-            return curry(self._active, **self._options)
+            if func := self._active:
+                # NOTE: Fully do not understand this one
+                # error: Argument 1 to "partial" has incompatible type "PluginType"; expected "Callable[..., Never]"
+                return partial(func, **self._options)  # type: ignore[arg-type]
+            else:
+                raise TypeError("Unclear what this meant by passing to curry.")
         else:
             return self._active
 

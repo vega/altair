@@ -4,8 +4,6 @@ import hashlib
 import io
 import json
 import jsonschema
-import pandas as pd
-from toolz.curried import pipe as _pipe
 import itertools
 import sys
 import pathlib
@@ -29,7 +27,7 @@ from ...utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from ...utils.core import DataFrameLike
-from ...utils.data import DataType
+from ...utils.data import DataType, is_data_type as _is_data_type
 from ...utils.deprecation import AltairDeprecationWarning
 
 if sys.version_info >= (3, 13):
@@ -114,15 +112,13 @@ def _prepare_data(data, context=None):
         return data
 
     # convert dataframes  or objects with __geo_interface__ to dict
-    elif isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
-        data = _pipe(data, data_transformers.get())
+    elif not isinstance(data, dict) and _is_data_type(data):
+        if func := data_transformers.get():
+            data = func(data)
 
     # convert string input to a URLData
     elif isinstance(data, str):
         data = core.UrlData(data)
-
-    elif isinstance(data, DataFrameLike):
-        data = _pipe(data, data_transformers.get())
 
     # consolidate inline data to top-level datasets
     if context is not None and data_transformers.consolidate_datasets:

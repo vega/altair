@@ -9,8 +9,6 @@ from .compiler import vegalite_compilers
 
 from .data import (
     MaxRowsError,
-    pipe,
-    curry,
     limit_rows,
     sample,
     to_json,

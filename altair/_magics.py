@@ -10,7 +10,6 @@ import warnings
 import IPython
 from IPython.core import magic_arguments
 import pandas as pd
-from toolz import curried
 
 from altair.vegalite import v5 as vegalite_v5
 
@@ -41,7 +40,9 @@ def _prepare_data(data, data_transformers):
     if data is None or isinstance(data, dict):
         return data
     elif isinstance(data, pd.DataFrame):
-        return curried.pipe(data, data_transformers.get())
+        if func := data_transformers.get():
+            data = func(data)
+        return data
     elif isinstance(data, str):
         return {"url": data}
     else:
