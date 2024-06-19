@@ -1459,13 +1459,16 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
+_TSchemaBase = typing.TypeVar("_TSchemaBase", bound=core.SchemaBase)
+
+
 @overload
 def condition(
     predicate: _PredicateType,
     if_true: _StatementType,
-    if_false: core.SchemaBase,
+    if_false: _TSchemaBase,
     **kwargs,
-) -> core.SchemaBase: ...
+) -> _TSchemaBase: ...
 @overload
 def condition(
     predicate: _PredicateType, if_true: str, if_false: str, **kwargs
