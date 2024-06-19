@@ -72,7 +72,7 @@ def vegafusion_data_transformer(
     """VegaFusion Data Transformer"""
     if data is None:
         return vegafusion_data_transformer
-    elif isinstance(data, DataFrameLike):
+    elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
         extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}
