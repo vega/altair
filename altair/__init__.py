@@ -1,13 +1,6 @@
 # ruff: noqa
 __version__ = "5.4.0dev"
 
-from typing import Any
-
-# Necessary as mypy would see expr as the module alt.expr although due to how
-# the imports are set up it is expr in the alt.expr module
-expr: Any
-
-
 # The content of __all__ is automatically written by
 # tools/update_init_file.py. Do not modify directly.
 __all__ = [
@@ -620,11 +613,12 @@ def __dir__():
     return __all__
 
 
-from .vegalite import *
-from .jupyter import JupyterChart
+from altair.vegalite import *
+from altair.jupyter import JupyterChart
+from altair.expr import expr
 
 
 def load_ipython_extension(ipython):
-    from ._magics import vegalite
+    from altair._magics import vegalite
 
     ipython.register_magic_function(vegalite, "cell")

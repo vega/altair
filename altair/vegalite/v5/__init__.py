@@ -2,8 +2,7 @@
 from .schema import *
 from .api import *
 
-from ...expr import datum, expr  # type: ignore[no-redef]
-
+from altair.expr.core import datum
 from .display import VegaLite, renderers
 from .compiler import vegalite_compilers
 

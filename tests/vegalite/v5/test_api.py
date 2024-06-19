@@ -11,7 +11,7 @@ import jsonschema
 import pytest
 import pandas as pd
 
-import altair.vegalite.v5 as alt
+import altair as alt
 
 try:
     import vl_convert as vlc  # noqa: F401
@@ -383,8 +383,8 @@ def test_when_then_when_then_otherwise() -> None:
         .encode(
             x="a:O",
             y="b:Q",
-            fillOpacity=alt.when(select).then(1).otherwise(0.3),
-            strokeWidth=actual_stroke,
+            fillOpacity=alt.when(select).then(1).otherwise(0.3),  # type: ignore
+            strokeWidth=actual_stroke,  # type: ignore
         )
         .configure_scale(bandPaddingInner=0.2)
         .add_params(select, highlight)
@@ -541,12 +541,14 @@ def test_selection_to_dict():
 
 
 def test_selection_expression():
+    from altair.expr.core import Expression
+
     selection = alt.selection_point(fields=["value"])
 
     assert isinstance(selection.value, alt.SelectionExpression)
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
-    assert isinstance(selection["value"], alt.expr.Expression)
+    assert isinstance(selection["value"], Expression)
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
     magic_attr = "__magic__"

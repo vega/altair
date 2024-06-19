@@ -61,20 +61,24 @@ def test_abs():
 
 def test_expr_funcs():
     """test all functions defined in expr.funcs"""
-    name_map = {val: key for key, val in expr.funcs.NAME_MAP.items()}
-    for funcname in expr.funcs.__all__:
-        func = getattr(expr, funcname)
+    from altair.expr.funcs import NAME_MAP
+    from altair.expr.funcs import FUNCTION_LISTING
+
+    _map = {vname: (NAME_MAP.get(vname, vname)) for vname in FUNCTION_LISTING}
+    for veganame, methodname in _map.items():
+        func = getattr(expr, methodname)
         z = func(datum.xxx)
-        assert repr(z) == "{}(datum.xxx)".format(name_map.get(funcname, funcname))
+        assert repr(z) == "{}(datum.xxx)".format(veganame)
 
 
 def test_expr_consts():
     """Test all constants defined in expr.consts"""
-    name_map = {val: key for key, val in expr.consts.NAME_MAP.items()}
-    for constname in expr.consts.__all__:
+    from altair.expr.consts import CONST_LISTING
+
+    for constname in CONST_LISTING:
         const = getattr(expr, constname)
         z = const * datum.xxx
-        assert repr(z) == "({} * datum.xxx)".format(name_map.get(constname, constname))
+        assert repr(z) == "({} * datum.xxx)".format(constname)
 
 
 def test_json_reprs():
