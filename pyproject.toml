@@ -19,7 +19,7 @@ dependencies = [
     "jinja2",
     # If you update the minimum required jsonschema version, also update it in build.yml
     "jsonschema>=3.0",
-    "numpy",
+    "numpy<2.0.0",
     # If you update the minimum required pandas version, also update it in build.yml
     "pandas>=0.25",
     "toolz",
@@ -108,6 +108,7 @@ features = ["all", "dev"]
 [tool.hatch.envs.default.scripts]
 test = [
     "ruff check .",
+    "ruff format .",
     "ruff format --diff --check .",
     "mypy altair tests",
     "python -m pytest --pyargs --doctest-modules tests altair",
@@ -233,3 +234,6 @@ ignore_missing_imports = true
 
 [tool.pyright]
 extraPaths=["./tools"]
+persistAllIndices=true
+pythonPlatform="All"
+pythonVersion="3.8"
