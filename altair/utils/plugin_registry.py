@@ -1,9 +1,9 @@
 from __future__ import annotations
-from typing import Any, Generic, TypeVar, cast, TYPE_CHECKING
+
+from functools import partial
+from typing import Any, Generic, TypeVar, cast, Callable, TYPE_CHECKING
 
 from importlib.metadata import entry_points
-
-from toolz import curry
 
 if TYPE_CHECKING:
     from types import TracebackType
@@ -74,7 +74,7 @@ class PluginRegistry(Generic[PluginType]):
     # in the registry rather than passed to the plugins
     _global_settings: dict[str, Any] = {}
 
-    def __init__(self, entry_point_group: str = "", plugin_type: type = object):
+    def __init__(self, entry_point_group: str = "", plugin_type: type = Callable):  # type: ignore[assignment]
         """Create a PluginRegistry for a named entry point group.
 
         Parameters
@@ -204,10 +204,15 @@ class PluginRegistry(Generic[PluginType]):
         """Return the current options dictionary"""
         return self._options
 
-    def get(self) -> PluginType | None:
+    def get(self) -> PluginType | Callable[..., Any] | None:
         """Return the currently active plugin."""
         if self._options:
-            return curry(self._active, **self._options)
+            if func := self._active:
+                # NOTE: Fully do not understand this one
+                # error: Argument 1 to "partial" has incompatible type "PluginType"; expected "Callable[..., Never]"
+                return partial(func, **self._options)  # type: ignore[arg-type]
+            else:
+                raise TypeError("Unclear what this meant by passing to curry.")
         else:
             return self._active
 

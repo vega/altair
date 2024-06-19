@@ -1,11 +1,12 @@
 from __future__ import annotations
-from packaging.version import Version
+
 from importlib.metadata import version as importlib_version
 from typing import TYPE_CHECKING
 
+from packaging.version import Version
+
 if TYPE_CHECKING:
     from types import ModuleType
-
 
 def import_vegafusion() -> ModuleType:
     min_version = "1.5.0"

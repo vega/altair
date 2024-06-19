@@ -1,9 +1,7 @@
 from ..data import (
     MaxRowsError,
-    curry,
     default_data_transformer,
     limit_rows,
-    pipe,
     sample,
     to_csv,
     to_json,
@@ -34,11 +32,8 @@ data_transformers.enable("default")
 
 __all__ = (
     "MaxRowsError",
-    "curry",
-    "data_transformers",
     "default_data_transformer",
     "limit_rows",
-    "pipe",
     "sample",
     "to_csv",
     "to_json",
