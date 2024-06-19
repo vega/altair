@@ -417,7 +417,7 @@ def test_when_labels_position_based_on_condition() -> None:
     # Examples of how to write both js and python expressions
     param_color_js_expr = alt.param(expr=f"{param_width.name} < 200 ? 'red' : 'black'")
     param_color_py_expr = alt.param(
-        expr=alt.expr.if_(param_width_lt_200, "red", "black")  # type: ignore
+        expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
     when = (
         alt.when(param_width_lt_200)
@@ -461,7 +461,7 @@ def test_when_expressions_inside_parameters() -> None:
         .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
     )
     when_then_otherwise = alt.when(alt.datum.b >= 0).then(10).otherwise(-20)
-    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))  # type: ignore
+    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
     actual = _alt._condition_to_expr_ref(when_then_otherwise)
     assert expected == actual
 
