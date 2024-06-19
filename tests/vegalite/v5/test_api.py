@@ -1,5 +1,6 @@
 """Unit tests for altair API"""
 
+# mypy: disable-error-code="unused-ignore"
 import io
 import json
 import operator
