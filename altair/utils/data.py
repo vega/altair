@@ -44,7 +44,6 @@ class SupportsGeoInterface(Protocol):
 
 DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, DataFrameLike]
 TDataType = TypeVar("TDataType", bound=DataType)
-NonGeoDataType = Union[dict, pd.DataFrame, DataFrameLike]
 
 VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
 ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
@@ -263,7 +262,7 @@ def to_csv(
 
 @overload
 def to_csv(
-    data: NonGeoDataType,
+    data: Union[dict, pd.DataFrame, DataFrameLike],
     prefix: str = ...,
     extension: str = ...,
     filename: str = ...,
@@ -272,7 +271,7 @@ def to_csv(
 
 
 def to_csv(
-    data: Optional[NonGeoDataType] = None,
+    data: Optional[Union[dict, pd.DataFrame, DataFrameLike]] = None,
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
@@ -378,8 +377,9 @@ def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         raise NotImplementedError(
-            "to_csv does not work with data that "
-            "contains the __geo_interface__ attribute"
+            f"to_csv does not yet work with data that "
+            f"is of type {type(SupportsGeoInterface).__name__!r}.\n"
+            f"See https://github.com/vega/altair/issues/3441"
         )
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
