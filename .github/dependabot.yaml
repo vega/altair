@@ -8,3 +8,5 @@ updates:
       github-actions:
         patterns:
           - "*"
+    commit-message:
+      prefix: "ci"
