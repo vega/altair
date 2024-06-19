@@ -128,7 +128,6 @@ __all__ = [
     "Cyclical",
     "Data",
     "DataFormat",
-    "DataFrameLike",
     "DataSource",
     "DataType",
     "Datasets",

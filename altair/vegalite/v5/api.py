@@ -22,11 +22,11 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from ...utils.core import DataFrameLike
 from ...utils.data import DataType, is_data_type as _is_data_type
 from ...utils.deprecation import AltairDeprecationWarning
 
 if TYPE_CHECKING:
+    from ...utils.core import DataFrameLike
     import sys
     from pathlib import Path
 

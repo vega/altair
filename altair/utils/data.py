@@ -2,7 +2,6 @@ from __future__ import annotations
 import json
 import random
 import hashlib
-import warnings
 from typing import (
     Any,
     List,
@@ -55,9 +54,7 @@ VegaLiteDataDict: TypeAlias = Dict[
     str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
 ]
 ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
-SampleReturnType = Optional[
-    Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]
-]
+SampleReturnType = Optional[Union[pd.DataFrame, Dict[str, Sequence], "pa.lib.Table"]]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
@@ -77,12 +74,12 @@ def is_data_type(obj: Any) -> TypeIs[DataType]:
 # ==============================================================================
 class DataTransformerType(Protocol):
     @overload
-    def __call__(self, data: None = None, **kwargs) -> "DataTransformerType": ...
+    def __call__(self, data: None = None, **kwargs) -> DataTransformerType: ...
     @overload
     def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict: ...
     def __call__(
-        self, data: Optional[DataType] = None, **kwargs
-    ) -> Union["DataTransformerType", VegaLiteDataDict]: ...
+        self, data: DataType | None = None, **kwargs
+    ) -> DataTransformerType | VegaLiteDataDict: ...
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
@@ -103,12 +100,12 @@ class MaxRowsError(Exception):
 
 
 @overload
-def limit_rows(data: None = ..., max_rows: Optional[int] = ...) -> partial: ...
+def limit_rows(data: None = ..., max_rows: int | None = ...) -> partial: ...
 @overload
-def limit_rows(data: DataType, max_rows: Optional[int] = ...) -> DataType: ...
+def limit_rows(data: DataType, max_rows: int | None = ...) -> DataType: ...
 def limit_rows(
-    data: Optional[DataType] = None, max_rows: Optional[int] = 5000
-) -> Union[partial, DataType]:
+    data: DataType | None = None, max_rows: int | None = 5000
+) -> partial | DataType:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
@@ -160,17 +157,17 @@ def limit_rows(
 
 @overload
 def sample(
-    data: None = ..., n: Optional[int] = ..., frac: Optional[float] = ...
+    data: None = ..., n: int | None = ..., frac: float | None = ...
 ) -> partial: ...
 @overload
 def sample(
-    data: DataType, n: Optional[int], frac: Optional[float]
+    data: DataType, n: int | None = ..., frac: float | None = ...
 ) -> SampleReturnType: ...
 def sample(
-    data: Optional[DataType] = None,
-    n: Optional[int] = None,
-    frac: Optional[float] = None,
-) -> Union[partial, SampleReturnType]:
+    data: DataType | None = None,
+    n: int | None = None,
+    frac: float | None = None,
+) -> partial | SampleReturnType:
     """Reduce the size of the data model by sampling without replacement."""
     if data is None:
         return partial(sample, n=n, frac=frac)
@@ -238,12 +235,12 @@ def to_json(
 
 
 def to_json(
-    data: Optional[DataType] = None,
+    data: DataType | None = None,
     prefix: str = "altair-data",
     extension: str = "json",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> Union[partial, _ToFormatReturnUrlDict]:
+) -> partial | _ToFormatReturnUrlDict:
     """
     Write the data model to a .json file and return a url based data model.
     """
@@ -267,7 +264,7 @@ def to_csv(
 
 @overload
 def to_csv(
-    data: Union[dict, pd.DataFrame, DataFrameLike],
+    data: dict | pd.DataFrame | DataFrameLike,
     prefix: str = ...,
     extension: str = ...,
     filename: str = ...,
@@ -276,12 +273,12 @@ def to_csv(
 
 
 def to_csv(
-    data: Optional[Union[dict, pd.DataFrame, DataFrameLike]] = None,
+    data: dict | pd.DataFrame | DataFrameLike | None = None,
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> Union[partial, _ToFormatReturnUrlDict]:
+) -> partial | _ToFormatReturnUrlDict:
     """Write the data model to a .csv file and return a url based data model."""
     kwds = _to_text_kwds(prefix, extension, filename, urlpath)
     if data is None:
@@ -301,12 +298,12 @@ def _to_text(
 ) -> _ToFormatReturnUrlDict:
     data_hash = _compute_data_hash(data)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    Path(filename).write_text(data)
+    Path(filename).write_text(data, encoding="utf-8")
     url = str(Path(urlpath, filename))
     return _ToFormatReturnUrlDict({"url": url, "format": format})
 
 
-def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -> Dict[str, str]:  # fmt: skip
+def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -> dict[str, str]:  # fmt: skip
     return {"prefix": prefix, "extension": extension, "filename": filename, "urlpath": urlpath}  # fmt: skip
 
 
@@ -339,11 +336,8 @@ def to_values(data: DataType) -> ToValuesReturnType:
 
 def check_data_type(data: DataType) -> None:
     if not is_data_type(data):
-        raise TypeError(
-            "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
-                type(data)
-            )
-        )
+        msg = f"Expected dict, DataFrame or a __geo_interface__ attribute, got: {type(data)}"
+        raise TypeError(msg)
 
 
 # ==============================================================================
@@ -383,7 +377,7 @@ def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
-        raise NotImplementedError(
+        msg = (
             f"to_csv does not yet work with data that "
             f"is of type {type(SupportsGeoInterface).__name__!r}.\n"
             f"See https://github.com/vega/altair/issues/3441"

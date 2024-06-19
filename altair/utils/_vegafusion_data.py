@@ -3,10 +3,7 @@ import uuid
 from weakref import WeakValueDictionary
 from typing import (
     Any,
-    Optional,
     Union,
-    Dict,
-    Set,
     MutableMapping,
     TypedDict,
     Final,
@@ -57,19 +54,19 @@ def vegafusion_data_transformer(
 
 @overload
 def vegafusion_data_transformer(
-    data: DataFrameLike, max_rows: int
+    data: DataFrameLike, max_rows: int = ...
 ) -> ToValuesReturnType: ...
 
 
 @overload
 def vegafusion_data_transformer(
-    data: Union[dict, pd.DataFrame, SupportsGeoInterface], max_rows: int
+    data: dict | pd.DataFrame | SupportsGeoInterface, max_rows: int = ...
 ) -> _VegaFusionReturnType: ...
 
 
 def vegafusion_data_transformer(
-    data: Optional[DataType] = None, max_rows: int = 100000
-) -> Union[Callable[..., Any], _VegaFusionReturnType]:
+    data: DataType | None = None, max_rows: int = 100000
+) -> Callable[..., Any] | _VegaFusionReturnType:
     """VegaFusion Data Transformer"""
     if data is None:
         return vegafusion_data_transformer

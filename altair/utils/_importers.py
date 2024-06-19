@@ -8,6 +8,7 @@ from packaging.version import Version
 if TYPE_CHECKING:
     from types import ModuleType
 
+
 def import_vegafusion() -> ModuleType:
     min_version = "1.5.0"
     try:

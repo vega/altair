@@ -93,7 +93,7 @@ class PluginRegistry(Generic[PluginType]):
         self._options: dict[str, Any] = {}
         self._global_settings: dict[str, Any] = self.__class__._global_settings.copy()
 
-    def register(self, name: str, value: PluginType | None) -> PluginType | None:
+    def register(self, name: str, value: PluginType | Any | None) -> PluginType | None:
         """Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be
@@ -212,7 +212,8 @@ class PluginRegistry(Generic[PluginType]):
                 # error: Argument 1 to "partial" has incompatible type "PluginType"; expected "Callable[..., Never]"
                 return partial(func, **self._options)  # type: ignore[arg-type]
             else:
-                raise TypeError("Unclear what this meant by passing to curry.")
+                msg = "Unclear what this meant by passing to curry."
+                raise TypeError(msg)
         else:
             return self._active
 
