@@ -260,6 +260,7 @@ def _getargs(*args, **kwargs):
     return args, kwargs
 
 
+# NOTE: Dependent on a no longer needed implementation detail
 def test_infer_encoding_types(channels):
     expected = {
         "x": channels.X("xval"),
@@ -285,8 +286,6 @@ def test_infer_encoding_types(channels):
 
 
 def test_infer_encoding_types_with_condition():
-    channels = alt.channels
-
     args, kwds = _getargs(
         size=alt.condition("pred1", alt.value(1), alt.value(2)),
         color=alt.condition("pred2", alt.value("red"), "cfield:N"),
@@ -294,19 +293,19 @@ def test_infer_encoding_types_with_condition():
     )
 
     expected = {
-        "size": channels.SizeValue(
+        "size": alt.SizeValue(
             2,
             condition=alt.ConditionalPredicateValueDefnumberExprRef(
                 value=1, test=alt.Predicate("pred1")
             ),
         ),
-        "color": channels.Color(
+        "color": alt.Color(
             "cfield:N",
             condition=alt.ConditionalPredicateValueDefGradientstringnullExprRef(
                 value="red", test=alt.Predicate("pred2")
             ),
         ),
-        "opacity": channels.OpacityValue(
+        "opacity": alt.OpacityValue(
             0.2,
             condition=alt.ConditionalPredicateMarkPropFieldOrDatumDef(
                 field=alt.FieldName("ofield"),
@@ -315,7 +314,7 @@ def test_infer_encoding_types_with_condition():
             ),
         ),
     }
-    assert infer_encoding_types(args, kwds, channels) == expected
+    assert infer_encoding_types(args, kwds) == expected
 
 
 def test_invalid_data_type():
