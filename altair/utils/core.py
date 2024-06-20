@@ -18,18 +18,20 @@ from typing import (
     Dict,
     Optional,
     Tuple,
-    Sequence,
+    Iterator,
     Type,
     cast,
 )
 from types import ModuleType
+from itertools import groupby
+from operator import itemgetter
 
 import jsonschema
 import pandas as pd
 import numpy as np
 from pandas.api.types import infer_dtype
 
-from altair.utils.schemapi import SchemaBase
+from altair.utils.schemapi import SchemaBase, Undefined
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
 
 if sys.version_info >= (3, 10):
@@ -767,7 +769,132 @@ def display_traceback(in_ipython: bool = True):
         traceback.print_exception(*exc_info)
 
 
-def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: ModuleType):
+_ChannelType = Literal["field", "datum", "value"]
+_CHANNEL_CACHE: "_ChannelCache"
+"""Singleton `_ChannelCache` instance.
+
+Initialized on first use.
+"""
+
+
+class _ChannelCache:
+    channel_to_name: Dict[Type[SchemaBase], str]
+    name_to_channel: Dict[str, Dict[_ChannelType, Type[SchemaBase]]]
+
+    @classmethod
+    def from_channels(cls, channels: ModuleType, /) -> "_ChannelCache":
+        # - This branch is only kept for tests that depend on mocking `channels`.
+        # - No longer needs to pass around `channels` reference and rebuild every call.
+        c_to_n = {
+            c: c._encoding_name
+            for c in channels.__dict__.values()
+            if isinstance(c, type)
+            and issubclass(c, SchemaBase)
+            and hasattr(c, "_encoding_name")
+        }
+        self = cls.__new__(cls)
+        self.channel_to_name = c_to_n
+        self.name_to_channel = _invert_group_channels(c_to_n)
+        return self
+
+    @classmethod
+    def from_cache(cls) -> "_ChannelCache":
+        global _CHANNEL_CACHE
+        try:
+            cached = _CHANNEL_CACHE
+        except NameError:
+            cached = cls.__new__(cls)
+            cached.channel_to_name = _init_channel_to_name()
+            cached.name_to_channel = _invert_group_channels(cached.channel_to_name)
+            _CHANNEL_CACHE = cached
+        return _CHANNEL_CACHE
+
+    def get_encoding(self, tp: Type[Any], /) -> str:
+        if encoding := self.channel_to_name.get(tp):
+            return encoding
+        raise NotImplementedError(f"positional of type {type(tp).__name__!r}")
+
+    def _wrap_in_channel(self, obj: Any, encoding: str, /):
+        if isinstance(obj, SchemaBase):
+            return obj
+        elif isinstance(obj, str):
+            obj = {"shorthand": obj}
+        elif isinstance(obj, (list, tuple)):
+            return [self._wrap_in_channel(el, encoding) for el in obj]
+        if channel := self.name_to_channel.get(encoding):
+            tp = channel["value" if "value" in obj else "field"]
+            try:
+                # Don't force validation here; some objects won't be valid until
+                # they're created in the context of a chart.
+                return tp.from_dict(obj, validate=False)
+            except jsonschema.ValidationError:
+                # our attempts at finding the correct class have failed
+                return obj
+        else:
+            warnings.warn(f"Unrecognized encoding channel {encoding!r}", stacklevel=1)
+            return obj
+
+    def infer_encoding_types(self, kwargs: Dict[str, Any], /):
+        return {
+            encoding: self._wrap_in_channel(obj, encoding)
+            for encoding, obj in kwargs.items()
+            if obj is not Undefined
+        }
+
+
+def _init_channel_to_name():
+    """
+    Construct a dictionary of channel type to encoding name.
+
+    Note
+    ----
+    The return type is not expressible using annotations, but is used
+    internally by `mypy`/`pyright` and avoid the need for type ignores.
+
+    Returns
+    -------
+        mapping: dict[type[`<subclass of FieldChannelMixin and SchemaBase>`] | type[`<subclass of ValueChannelMixin and SchemaBase>`] | type[`<subclass of DatumChannelMixin and SchemaBase>`], str]
+    """
+    from altair.vegalite.v5.schema import channels as ch
+
+    mixins = ch.FieldChannelMixin, ch.ValueChannelMixin, ch.DatumChannelMixin
+
+    return {
+        c: c._encoding_name
+        for c in ch.__dict__.values()
+        if isinstance(c, type) and issubclass(c, mixins) and issubclass(c, SchemaBase)
+    }
+
+
+def _invert_group_channels(
+    m: Dict[Type[SchemaBase], str], /
+) -> Dict[str, Dict[_ChannelType, Type[SchemaBase]]]:
+    """Grouped inverted index for `_ChannelCache.channel_to_name`."""
+
+    def _reduce(it: Iterator[Tuple[Type[Any], str]]) -> Any:
+        """Returns a 1-2 item dict, per channel.
+
+        Never includes `datum`, as it is never utilized in `wrap_in_channel`.
+        """
+        item: Dict[Any, Type[SchemaBase]] = {}
+        for tp, _ in it:
+            name = tp.__name__
+            if name.endswith("Datum"):
+                continue
+            elif name.endswith("Value"):
+                sub_key = "value"
+            else:
+                sub_key = "field"
+            item[sub_key] = tp
+        return item
+
+    grouper = groupby(m.items(), itemgetter(1))
+    return {k: _reduce(chans) for k, chans in grouper}
+
+
+def infer_encoding_types(
+    args: Tuple[Any, ...], kwargs: Dict[str, Any], channels: Optional[ModuleType] = None
+):
     """Infer typed keyword arguments for args and kwargs
 
     Parameters
@@ -785,68 +912,18 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
         All args and kwargs in a single dict, with keys and types
         based on the channels mapping.
     """
-    # Construct a dictionary of channel type to encoding name
-    # TODO: cache this somehow?
-    channel_objs = (getattr(channels, name) for name in dir(channels))
-    channel_objs = (
-        c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
+    cache = (
+        _ChannelCache.from_channels(channels)
+        if channels
+        else _ChannelCache.from_cache()
     )
-    channel_to_name: Dict[Type[SchemaBase], str] = {
-        c: c._encoding_name for c in channel_objs
-    }
-    name_to_channel: Dict[str, Dict[str, Type[SchemaBase]]] = {}
-    for chan, name in channel_to_name.items():
-        chans = name_to_channel.setdefault(name, {})
-        if chan.__name__.endswith("Datum"):
-            key = "datum"
-        elif chan.__name__.endswith("Value"):
-            key = "value"
-        else:
-            key = "field"
-        chans[key] = chan
-
     # First use the mapping to convert args to kwargs based on their types.
     for arg in args:
-        if isinstance(arg, (list, tuple)) and len(arg) > 0:
-            type_ = type(arg[0])
+        el = next(iter(arg), None) if isinstance(arg, (list, tuple)) else arg
+        encoding = cache.get_encoding(type(el))
+        if encoding not in kwargs:
+            kwargs[encoding] = arg
         else:
-            type_ = type(arg)
+            raise ValueError(f"encoding {encoding!r} specified twice.")
 
-        encoding = channel_to_name.get(type_, None)
-        if encoding is None:
-            raise NotImplementedError("positional of type {}" "".format(type_))
-        if encoding in kwargs:
-            raise ValueError("encoding {} specified twice.".format(encoding))
-        kwargs[encoding] = arg
-
-    def _wrap_in_channel_class(obj, encoding):
-        if isinstance(obj, SchemaBase):
-            return obj
-
-        if isinstance(obj, str):
-            obj = {"shorthand": obj}
-
-        if isinstance(obj, (list, tuple)):
-            return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
-
-        if encoding not in name_to_channel:
-            warnings.warn(
-                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
-            )
-            return obj
-
-        classes = name_to_channel[encoding]
-        cls = classes["value"] if "value" in obj else classes["field"]
-
-        try:
-            # Don't force validation here; some objects won't be valid until
-            # they're created in the context of a chart.
-            return cls.from_dict(obj, validate=False)
-        except jsonschema.ValidationError:
-            # our attempts at finding the correct class have failed
-            return obj
-
-    return {
-        encoding: _wrap_in_channel_class(obj, encoding)
-        for encoding, obj in kwargs.items()
-    }
+    return cache.infer_encoding_types(kwargs)

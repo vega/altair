@@ -2727,24 +2727,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
-class _EncodingMixin:
-    @utils.use_signature(channels._encode_signature)
-    def encode(self, *args, **kwargs) -> Self:
-        # Convert args to kwargs based on their types.
-        kwargs = utils.infer_encoding_types(args, kwargs, channels)
-
-        # get a copy of the dict representation of the previous encoding
-        # ignore type as copy method comes from SchemaBase
-        copy = self.copy(deep=["encoding"])  # type: ignore[attr-defined]
-        encoding = copy._get("encoding", {})
-        if isinstance(encoding, core.VegaLiteSchema):
-            encoding = {k: v for k, v in encoding._kwds.items() if v is not Undefined}
-
-        # update with the new encodings, and apply them to the copy
-        encoding.update(kwargs)
-        copy.encoding = core.FacetedEncoding(**encoding)
-        return copy
-
+class _EncodingMixin(channels._EncodingMixin):
     def facet(
         self,
         facet: Union[str, channels.Facet, UndefinedType] = Undefined,
@@ -3629,7 +3612,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def __iadd__(self, other: Union[core.LayerSpec, core.UnitSpec]) -> Self:
+    def __iadd__(self, other: Union["LayerChart", Chart]) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
         self.layer.append(other)
@@ -3637,12 +3620,12 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
-    def __add__(self, other: Union[core.LayerSpec, core.UnitSpec]) -> Self:
+    def __add__(self, other: Union["LayerChart", Chart]) -> Self:
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
 
-    def add_layers(self, *layers: Union[core.LayerSpec, core.UnitSpec]) -> Self:
+    def add_layers(self, *layers: Union["LayerChart", Chart]) -> Self:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer
