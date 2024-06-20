@@ -341,6 +341,19 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     return False
 
 
+_TestPredicateType = Union[str, _expr_core.Expression, core.PredicateComposition]
+_PredicateType = Union[
+    Parameter,
+    core.Expr,
+    TypingDict[str, Any],
+    _TestPredicateType,
+    _expr_core.OperatorMixin,
+]
+_ConditionType = TypingDict[str, Union[_TestPredicateType, Any]]
+_DictOrStr = Union[TypingDict[str, Any], str]
+_DictOrSchema = Union[core.SchemaBase, TypingDict[str, Any]]
+_StatementType = Union[core.SchemaBase, _DictOrStr]
+
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
@@ -786,15 +799,33 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
+_TSchemaBase = typing.TypeVar("_TSchemaBase", bound=core.SchemaBase)
+
+
+@typing.overload
+def condition(
+    predicate: _PredicateType, if_true: _StatementType, if_false: _TSchemaBase, **kwargs
+) -> _TSchemaBase: ...
+@typing.overload
+def condition(
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+) -> typing.NoReturn: ...
+@typing.overload
+def condition(
+    predicate: _PredicateType, if_true: _DictOrSchema, if_false: _DictOrStr, **kwargs
+) -> TypingDict[str, Union[_ConditionType, Any]]: ...
+@typing.overload
+def condition(
+    predicate: _PredicateType,
+    if_true: _DictOrStr,
+    if_false: TypingDict[str, Any],
+    **kwargs,
+) -> TypingDict[str, Union[_ConditionType, Any]]: ...
 # TODO: update the docstring
 def condition(
-    predicate: Union[
-        Parameter, str, expr.Expression, core.Expr, core.PredicateComposition, dict
-    ],
-    # Types of these depends on where the condition is used so we probably
-    # can't be more specific here.
-    if_true: Any,
-    if_false: Any,
+    predicate: _PredicateType,
+    if_true: _StatementType,
+    if_false: _StatementType,
     **kwargs,
 ) -> Union[dict, core.SchemaBase]:
     """A conditional attribute or encoding
