@@ -30,7 +30,7 @@ alt.Chart(source).mark_point(size=size**2, shape=hexagon).encode(
                                                    labelPadding=20, tickOpacity=0, domainOpacity=0)),
     stroke=alt.value('black'),
     strokeWidth=alt.value(0.2),
-    fill=alt.Color('mean(temp_max):Q', scale=alt.Scale(scheme='darkblue')),
+    fill=alt.Fill('mean(temp_max):Q', scale=alt.Scale(scheme='darkblue')),
     tooltip=['month(' + xField + '):O', 'day(' + yField + '):O', 'mean(temp_max):Q']
 ).transform_calculate(
     # This field is required for the hexagonal X-Offset
