@@ -37,4 +37,4 @@ alt.Chart(source).transform_filter(
         anchor='middle'
     ),
     columns=2
-).resolve_scale(y='independent')
+).resolve_axis(y='independent', x='independent')
