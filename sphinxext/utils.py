@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 import re
 from typing import Any
+from PIL import Image
+import numpy as np
 
 
 def create_thumbnail(
@@ -15,7 +17,6 @@ def create_thumbnail(
     window_size: tuple[float, float] = (280, 160),
 ) -> None:
     """Create a thumbnail whose shortest dimension matches the window"""
-    from PIL import Image
 
     im = Image.open(image_filename)
     im_width, im_height = im.size
@@ -38,10 +39,6 @@ def create_generic_image(
     filename: Path, shape: tuple[float, float] = (200, 300), gradient: bool = True
 ) -> None:
     """Create a generic image"""
-    from PIL import Image
-    import numpy as np
-
-    assert len(shape) == 2
 
     arr = np.zeros((shape[0], shape[1], 3))
     if gradient:
@@ -58,6 +55,10 @@ Example script with invalid Python syntax
 """
 
 
+# NOTE
+# - reads entire file as text
+# - performs a string replace
+# - Try/except is probabloy fine
 def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
     """Parse source file into AST node
 
@@ -82,11 +83,20 @@ def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
 
     try:
         node = ast.parse(content)
+        if not isinstance(node, ast.Module):
+            msg = f"This function only supports modules. You provided {type(node).__name__}"
+            raise TypeError(msg)
     except SyntaxError:
         node = None
     return node, content
 
 
+# NOTE:
+# - called 1-2x per example
+# - re.search, but should be match? (has ^...$ markers, but also multi-line)
+#   - replacement possibly inefficient
+# - should unnest the stdlib imports
+# fully drop 3.6 compat code?
 def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
     """Separate ``filename`` content between docstring and the rest
 
@@ -130,59 +140,30 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
     if node is None:
         return SYNTAX_ERROR_DOCSTRING, category, content, lineno
 
-    if not isinstance(node, ast.Module):
-        msg = f"This function only supports modules. You provided {node.__class__.__name__}"
-        raise TypeError(msg)
-    try:
-        # In python 3.7 module knows its docstring.
-        # Everything else will raise an attribute error
-        docstring = node.docstring
+    # NOTE: Incorrect comment below. Still triggered on 3.11
+    # this block can be removed when python 3.6 support is dropped
+    # ast.get_docstring
+    msg = (
+        f'Could not find docstring in file "{filename}". '
+        "A docstring is required for the example gallery."
+    )
 
-        import tokenize
-        from io import BytesIO
-
-        ts = tokenize.tokenize(BytesIO(content).readline)
-        ds_lines = 0
-        # find the first string according to the tokenizer and get
-        # it's end row
-        for tk in ts:
-            if tk.exact_type == 3:
-                ds_lines, _ = tk.end
-                break
-        # grab the rest of the file
-        rest = "\n".join(content.split("\n")[ds_lines:])
-        lineno = ds_lines + 1
-
-    except AttributeError:
-        # this block can be removed when python 3.6 support is dropped
-        if (
-            node.body
-            and isinstance(node.body[0], ast.Expr)
-            and isinstance(node.body[0].value, (ast.Str, ast.Constant))
-        ):
-            docstring_node = node.body[0]
-            docstring = docstring_node.value.s
-            # python2.7: Code was read in bytes needs decoding to utf-8
-            # unless future unicode_literals is imported in source which
-            # make ast output unicode strings
-            if hasattr(docstring, "decode") and not isinstance(docstring, str):
-                docstring = docstring.decode("utf-8")
-            # python3.8: has end_lineno
-            lineno = getattr(
-                docstring_node, "end_lineno", docstring_node.lineno
-            )  # The last line of the string.
+    if (
+        node.body
+        and isinstance(node.body[0], ast.Expr)
+        and isinstance(node.body[0].value, ast.Constant)
+    ):
+        docstring_node = node.body[0]
+        if docstring := docstring_node.value.s:
+            dn = docstring_node
+            lineno = dn.end_lineno or dn.lineno
+            # The last line of the string.
             # This get the content of the file after the docstring last line
-            # Note: 'maxsplit' argument is not a keyword argument in python2
             rest = content.split("\n", lineno)[-1]
             lineno += 1
         else:
-            docstring, rest = "", ""
-
-    if not docstring:
-        msg = (
-            f'Could not find docstring in file "{filename}". '
-            "A docstring is required for the example gallery."
-        )
+            raise ValueError(msg)
+    else:
         raise ValueError(msg)
     return docstring, category, rest, lineno
 

@@ -3,7 +3,6 @@ import importlib
 import re
 from typing import Any, Iterator, Sequence
 import warnings
-
 from docutils import nodes, utils, frontend
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
@@ -163,7 +162,7 @@ def build_schema_table(
 
 def select_items_from_schema(
     schema: dict[str, Any], props: list[str] | None = None
-) -> nodes.Generator[tuple[Any, Any, bool] | tuple[str, Any, bool], Any, None]:
+) -> Iterator[tuple[Any, Any, bool] | tuple[str, Any, bool]]:
     """Return iterator  (prop, schema.item, required) on prop, return all in None"""
     properties = schema.get("properties", {})
     required = schema.get("required", [])
