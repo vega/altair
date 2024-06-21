@@ -306,7 +306,6 @@ class AltairMiniGalleryDirective(Directive):
 
         # parse and return documentation
         result = ViewList()
-
         for line in include.split("\n"):
             result.append(line, "<altair-minigallery>")
         node = nodes.paragraph()
