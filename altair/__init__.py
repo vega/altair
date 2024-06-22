@@ -523,6 +523,7 @@ __all__ = [
     "VegaLiteSchema",
     "ViewBackground",
     "ViewConfig",
+    "When",
     "WindowEventType",
     "WindowFieldDef",
     "WindowOnlyOp",

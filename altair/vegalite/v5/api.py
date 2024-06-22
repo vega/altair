@@ -720,7 +720,7 @@ class _BaseWhen(typing.Protocol):
         return condition
 
 
-class _When(_BaseWhen):
+class When(_BaseWhen):
     """Utility class for ``when-then-otherwise`` conditions.
 
     Represents the state after calling :func:`.when()`.
@@ -904,7 +904,7 @@ def when(
     *more_predicates: _ComposablePredicateType,
     empty: _AltOptional[bool] = Undefined,
     **constraints: _FieldEqualType,
-) -> _When:
+) -> When:
     """Start a ``when-then-otherwise`` condition.
 
     The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
@@ -927,7 +927,7 @@ def when(
 
     Returns
     -------
-    result: When
+    result: :class:`When`
         A partial state which requires calling ``result.then(statement)`` to finish the condition.
 
     Notes
@@ -973,7 +973,7 @@ def when(
     # ]
     # ```
     condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
-    return _When(condition)
+    return When(condition)
 
 
 def _condition_to_expr_str(c: Union[_SelectionType, _Conditions], /) -> str:
