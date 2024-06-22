@@ -721,15 +721,15 @@ class _BaseWhen(typing.Protocol):
 
 
 class _When(_BaseWhen):
-    """Utility class for `when-then-otherwise` conditions.
+    """Utility class for ``when-then-otherwise`` conditions.
 
-    Represents the state after calling `alt.when(...)`.
+    Represents the state after calling :func:`.when()`.
 
-    This partial state requires calling `then` to finish the condition.
+    This partial state requires calling :meth:`.then()` to finish the condition.
 
     References
     ----------
-    [polars.expr.whenthen](https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py)
+    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
     """
 
     def __init__(self, condition: _ConditionType, /) -> None:
@@ -761,6 +761,19 @@ class _When(_BaseWhen):
         seq_as_lit: bool = True,
         **kwargs: Any,
     ) -> "_Then":
+        """Attach a statement to this predicate.
+
+        Parameters
+        ----------
+        statement
+            A spec or value to use when the preceding :func:`.when()` clause is true.
+        str_as_lit
+            Wrap ``str`` in :func:`.value()` instead of encoding as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        seq_as_lit
+            Wrap ``Sequence[str | bool | float | int]`` in :func:`.value()`.
+        **kwargs
+            Additional keyword args are added to the resulting ``dict``.
+        """
         lit = _LiteralConfig(str_as_lit, seq_as_lit)
         condition = self._when_then(statement, kwargs, lit)
         return _Then(_Conditions({"condition": [condition]}))
