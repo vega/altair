@@ -268,9 +268,9 @@ def test_when() -> None:
         & (alt.datum.StartDate == "2000-10-01")
     )
 
-    assert isinstance(when, _alt._When)
+    assert isinstance(when, alt.When)
     assert condition == when._condition
-    assert isinstance(when_constraint, _alt._When)
+    assert isinstance(when_constraint, alt.When)
     assert when_constraint._condition["test"] == expected_constraint
     assert when_constraints._condition["test"] == expected_constraints
     with pytest.raises((NotImplementedError, TypeError)) as err:
