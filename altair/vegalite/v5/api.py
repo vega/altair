@@ -894,20 +894,22 @@ def when(
 ) -> _When:
     """Start a ``when-then-otherwise`` condition.
 
-    The resulting predicate is an ``AND`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
+    The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
     Parameters
     ----------
     predicate
-        A selection or test predicate.
-        ``str`` input will be treated as a test operand.
+        A selection or test predicate. ``str`` input will be treated as a test operand.
+
+        .. note::
+            accepts the same range of inputs as in :func:`.condition()`.
     *more_predicates
         Additional predicates, restricted to types supporting ``&``.
     empty
         For selection parameters, the predicate of empty selections returns ``True`` by default.
         Override this behavior, with ``empty=False``.
     **constraints
-        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate/>`__'s.
+        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
         Shortcut for ``alt.datum.field_name == value``, see examples for usage.
 
     Returns
@@ -918,11 +920,10 @@ def when(
     Notes
     -----
     - Directly inspired by the ``when-then-otherwise`` syntax used in ``polars.when``.
-    - ``predicate`` accepts all inputs valid in ``alt.condition(predicate=...)``
 
     References
     ----------
-    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html/>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
 
     Examples
     --------
