@@ -1,6 +1,7 @@
-from types import ModuleType
-from packaging.version import Version
 from importlib.metadata import version as importlib_version
+from types import ModuleType
+
+from packaging.version import Version
 
 
 def import_vegafusion() -> ModuleType:
