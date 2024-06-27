@@ -498,10 +498,10 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
                 child.basename.append(name)
 
     # Specify __all__ explicitly so that we can exclude the ones from the list
-    # of exported classes which are also defined in the channels module which takes
-    # precedent in the generated __init__.py file one level up where core.py
-    # and channels.py are imported. Importing both confuses type checkers.
-    it = (c for c in definitions.keys() - {"Color", "Text"} if not c.startswith("_"))
+    # of exported classes which are also defined in the channels or api modules which takes
+    # precedent in the generated __init__.py files one and two levels up.
+    # Importing these classes from multiple modules confuses type checkers.
+    it = (c for c in definitions.keys() - {"Color", "Text", "LookupData"} if not c.startswith("_"))
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
 
     contents = [

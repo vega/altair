@@ -246,7 +246,6 @@ __all__ = [
     "LogicalAndPredicate",
     "LogicalNotPredicate",
     "LogicalOrPredicate",
-    "LookupData",
     "LookupSelection",
     "LookupTransform",
     "Mark",
