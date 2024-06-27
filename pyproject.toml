@@ -70,6 +70,7 @@ dev = [
     "ipython",
     "pytest",
     "pytest-cov",
+    "pytest-xdist[psutil]~=3.5",
     "m2r",
     "mypy",
     "pandas-stubs",
@@ -103,16 +104,47 @@ artifacts = ["altair/jupyter/js/index.js"]
 
 [tool.hatch.envs.default]
 features = ["all", "dev"]
+# https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
+installer = "uv"
 
 [tool.hatch.envs.default.scripts]
+generate-schema-wrapper = [
+    "mypy tools/schemapi/schemapi.py",
+    "python tools/generate_schema_wrapper.py",
+    "test"
+]
 test = [
     "ruff check .",
     "ruff format --diff --check .",
     "mypy altair tests",
-    "python -m pytest --pyargs --doctest-modules tests altair",
+    "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",
 ]
 test-coverage = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair"
 test-coverage-html = "python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair"
+update-init-file = [
+    "python tools/update_init_file.py",
+    "ruff check .",
+    "ruff format .",
+]
+
+[tool.hatch.envs.hatch-test]
+# https://hatch.pypa.io/latest/tutorials/testing/overview/
+features = ["all", "dev", "doc"]
+# https://pytest-xdist.readthedocs.io/en/latest/distribution.html#running-tests-across-multiple-cpus
+default-args = ["--numprocesses=logical","--doctest-modules", "tests", "altair"]
+parallel = true
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+[tool.hatch.envs.hatch-test.scripts]
+run = [
+    "ruff check .", 
+    "ruff format --diff --check .",
+    "mypy altair tests",
+    "pytest{env:HATCH_TEST_ARGS:} {args}"
+]
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+cov-report = "coverage report"
 
 [tool.hatch.envs.doc]
 features = ["all", "dev", "doc"]
@@ -163,7 +195,46 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-extend-safe-fixes=["SIM101"]
+# https://docs.astral.sh/ruff/preview/
+preview = true
+
+# https://docs.astral.sh/ruff/settings/#lint_extend-safe-fixes
+extend-safe-fixes=[
+    # unnecessary-comprehension-in-call
+    "C419",
+    # literal-membership
+    "PLR6201",
+    # from __future__ import annotations #
+    # ---------------------------------- # 
+    "UP006",
+    "UP007",
+    "UP008",
+    "TCH",
+    # assign exception msg to variable #
+    # -------------------------------- #
+    "EM101",
+    "EM102",
+    # trailing-whitespace
+    "W291",
+]
+
+# https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
+extend-select=[
+    # refurb
+    "FURB", 
+    # pylint (preview) autofix #
+    # ------------------------ #
+    # unnecessary-dunder-call
+    "PLC2801", 
+    # unnecessary-dict-index-lookup
+    "PLR1733", 
+    # unnecessary-list-index-lookup
+    "PLR1736",
+    # literal-membership
+    "PLR6201",
+    # unspecified-encoding
+    "PLW1514",
+]
 select = [
     # flake8-bugbear
     "B",
@@ -171,14 +242,52 @@ select = [
     "C4",
     # pycodestyle-error
     "E",
-    # pycodestyle-warning
-    "W",
+    # flake8-errmsg
+    "EM",
     # pyflakes
     "F",
+    # flake8-future-annotations
+    "FA",
+    # flynt
+    "FLY",
+    # flake8-pie
+    "PIE",
+    # flake8-pytest-style
+    "PT",
+    # flake8-use-pathlib
+    "PTH",
+    # Ruff-specific rules
+    "RUF",
+    # flake8-simplify
+    "SIM",
+    # flake8-type-checking
+    "TCH",
     # flake8-tidy-imports
     "TID",
-    # flake8-simplify
-    "SIM101"
+    # pyupgrade
+    "UP",
+    # pycodestyle-warning
+    "W",
+    # pylint (stable) autofix #
+    # ----------------------- #
+    # iteration-over-set
+    "PLC0208",
+    # manual-from-import
+    "PLR0402",
+    # repeated-isinstance-calls
+    "PLR1701",
+    # useless-return
+    "PLR1711",
+    # repeated-equality-comparison
+    "PLR1714",
+    # collapsible-else-if
+    "PLR5501",
+    # useless-else-on-loop
+    "PLW0120",
+    # subprocess-run-without-check
+    "PLW1510",
+    # nested-min-max
+    "PLW3301",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -192,7 +301,23 @@ ignore = [
     # zip() without an explicit strict= parameter set.
     # python>=3.10 only
     "B905",
+    # mutable-class-default
+    "RUF012",
+    # suppressible-exception
+    # https://github.com/vega/altair/pull/3431#discussion_r1629808660
+    "SIM105",
 ]
+
+# https://docs.astral.sh/ruff/settings/#lint_unfixable
+unfixable= [
+    # unspecified-encoding
+    # The autofix is unsafe and doesn't reliably produce `utf-8`.
+    # However, it still needs to be flagged as error until `python>=3.10`.
+    "PLW1514"
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
 
 [tool.ruff.format]
 quote-style = "double"
@@ -200,14 +325,12 @@ indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "lf"
 
-[tool.ruff.lint.mccabe]
-max-complexity = 18
-
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
 # They contain examples which are being executed by the
 # test_examples tests.
 norecursedirs = ["tests/examples_arguments_syntax", "tests/examples_methods_syntax"]
+addopts = ["--numprocesses=logical"]
 
 [tool.mypy]
 warn_unused_ignores = true
@@ -229,3 +352,8 @@ module = [
     "schemapi.*"
 ]
 ignore_missing_imports = true
+
+[tool.pyright]
+extraPaths=["./tools"]
+pythonPlatform="All"
+pythonVersion="3.8"

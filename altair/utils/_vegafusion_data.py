@@ -3,10 +3,7 @@ import uuid
 from weakref import WeakValueDictionary
 from typing import (
     Any,
-    Optional,
     Union,
-    Dict,
-    Set,
     MutableMapping,
     TypedDict,
     Final,
@@ -24,6 +21,7 @@ from altair.utils.data import (
     SupportsGeoInterface,
 )
 from altair.vegalite.data import default_data_transformer
+
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -56,19 +54,19 @@ def vegafusion_data_transformer(
 
 @overload
 def vegafusion_data_transformer(
-    data: DataFrameLike, max_rows: int
+    data: DataFrameLike, max_rows: int = ...
 ) -> ToValuesReturnType: ...
 
 
 @overload
 def vegafusion_data_transformer(
-    data: Union[dict, pd.DataFrame, SupportsGeoInterface], max_rows: int
+    data: dict | pd.DataFrame | SupportsGeoInterface, max_rows: int = ...
 ) -> _VegaFusionReturnType: ...
 
 
 def vegafusion_data_transformer(
-    data: Optional[DataType] = None, max_rows: int = 100000
-) -> Union[Callable[..., Any], _VegaFusionReturnType]:
+    data: DataType | None = None, max_rows: int = 100000
+) -> Callable[..., Any] | _VegaFusionReturnType:
     """VegaFusion Data Transformer"""
     if data is None:
         return vegafusion_data_transformer
@@ -83,7 +81,7 @@ def vegafusion_data_transformer(
         return default_data_transformer(data)
 
 
-def get_inline_table_names(vega_spec: dict) -> Set[str]:
+def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
     """Get a set of the inline datasets names in the provided Vega spec
 
     Inline datasets are encoded as URLs that start with the table://
@@ -133,7 +131,7 @@ def get_inline_table_names(vega_spec: dict) -> Set[str]:
     return table_names
 
 
-def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
+def get_inline_tables(vega_spec: dict[str, Any]) -> dict[str, DataFrameLike]:
     """Get the inline tables referenced by a Vega specification
 
     Note: This function should only be called on a Vega spec that corresponds
@@ -151,20 +149,16 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     dict from str to dataframe
         dict from inline dataset name to dataframe object
     """
-    table_names = get_inline_table_names(vega_spec)
-    tables = {}
-    for table_name in table_names:
-        try:
-            tables[table_name] = extracted_inline_tables.pop(table_name)
-        except KeyError:
-            # named dataset that was provided by the user
-            pass
-    return tables
+    inline_names = get_inline_table_names(vega_spec)
+    # exclude named dataset that was provided by the user,
+    # or dataframes that have been deleted.
+    table_names = inline_names.intersection(extracted_inline_tables)
+    return {k: extracted_inline_tables.pop(k) for k in table_names}
 
 
 def compile_to_vegafusion_chart_state(
-    vegalite_spec: dict, local_tz: str
-) -> "ChartState":
+    vegalite_spec: dict[str, Any], local_tz: str
+) -> ChartState:
     """Compile a Vega-Lite spec to a VegaFusion ChartState
 
     Note: This function should only be called on a Vega-Lite spec
@@ -193,7 +187,8 @@ def compile_to_vegafusion_chart_state(
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()
     if compiler is None:
-        raise ValueError("No active vega-lite compiler plugin found")
+        msg = "No active vega-lite compiler plugin found"
+        raise ValueError(msg)
 
     vega_spec = compiler(vegalite_spec)
 
@@ -216,7 +211,7 @@ def compile_to_vegafusion_chart_state(
     return chart_state
 
 
-def compile_with_vegafusion(vegalite_spec: dict) -> dict:
+def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict:
     """Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion
 
     Note: This function should only be called on a Vega-Lite spec
@@ -243,7 +238,8 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()
     if compiler is None:
-        raise ValueError("No active vega-lite compiler plugin found")
+        msg = "No active vega-lite compiler plugin found"
+        raise ValueError(msg)
 
     vega_spec = compiler(vegalite_spec)
 
@@ -268,13 +264,14 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
 def handle_row_limit_exceeded(row_limit: int, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
-            raise MaxRowsError(
+            msg = (
                 "The number of dataset rows after filtering and aggregation exceeds\n"
                 f"the current limit of {row_limit}. Try adding an aggregation to reduce\n"
                 "the size of the dataset that must be loaded into the browser. Or, disable\n"
                 "the limit by calling alt.data_transformers.disable_max_rows(). Note that\n"
                 "disabling this limit may cause the browser to freeze or crash."
             )
+            raise MaxRowsError(msg)
 
 
 def using_vegafusion() -> bool:

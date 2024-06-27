@@ -2,6 +2,8 @@
 Utility routines
 """
 
+from __future__ import annotations
+
 from collections.abc import Mapping, MutableMapping
 from copy import deepcopy
 import json
@@ -14,15 +16,13 @@ from typing import (
     Callable,
     TypeVar,
     Any,
-    Union,
-    Dict,
-    Optional,
-    Tuple,
     Sequence,
-    Type,
     cast,
+    Literal,
+    Protocol,
+    TYPE_CHECKING,
+    runtime_checkable,
 )
-from types import ModuleType
 
 import jsonschema
 import pandas as pd
@@ -37,10 +37,12 @@ if sys.version_info >= (3, 10):
 else:
     from typing_extensions import ParamSpec
 
-from typing import Literal, Protocol, TYPE_CHECKING, runtime_checkable
 
 if TYPE_CHECKING:
+    from types import ModuleType
+    import typing as t
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
+    import pyarrow as pa
 
 V = TypeVar("V")
 P = ParamSpec("P")
@@ -199,7 +201,7 @@ InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
 def infer_vegalite_type(
     data: object,
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -210,19 +212,19 @@ def infer_vegalite_type(
     """
     typ = infer_dtype(data, skipna=False)
 
-    if typ in [
+    if typ in {
         "floating",
         "mixed-integer-float",
         "integer",
         "mixed-integer",
         "complex",
-    ]:
+    }:
         return "quantitative"
     elif typ == "categorical" and hasattr(data, "cat") and data.cat.ordered:
         return ("ordinal", data.cat.categories.tolist())
-    elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
+    elif typ in {"string", "bytes", "categorical", "boolean", "mixed", "unicode"}:
         return "nominal"
-    elif typ in [
+    elif typ in {
         "datetime",
         "datetime64",
         "timedelta",
@@ -230,18 +232,18 @@ def infer_vegalite_type(
         "date",
         "time",
         "period",
-    ]:
+    }:
         return "temporal"
     else:
         warnings.warn(
-            "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ),
+            f"I don't know how to infer vegalite type from '{typ}'.  "
+            "Defaulting to nominal.",
             stacklevel=1,
         )
         return "nominal"
 
 
-def merge_props_geom(feat: dict) -> dict:
+def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     """
     Merge properties with geometry
     * Overwrites 'type' and 'geometry' entries if existing
@@ -259,7 +261,7 @@ def merge_props_geom(feat: dict) -> dict:
     return props_geom
 
 
-def sanitize_geo_interface(geo: MutableMapping) -> dict:
+def sanitize_geo_interface(geo: t.MutableMapping[Any, Any]) -> dict[str, Any]:
     """Santize a geo_interface to prepare it for serialization.
 
     * Make a copy
@@ -271,7 +273,7 @@ def sanitize_geo_interface(geo: MutableMapping) -> dict:
     geo = deepcopy(geo)
 
     # convert type _Array or array to list
-    for key in geo.keys():
+    for key in geo:
         if str(type(geo[key]).__name__).startswith(("_Array", "array")):
             geo[key] = geo[key].tolist()
 
@@ -299,7 +301,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
+def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
@@ -323,15 +325,18 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
 
     for col_name in df.columns:
         if not isinstance(col_name, str):
-            raise ValueError(
-                "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col_name)
+            msg = (
+                f"Dataframe contains invalid column name: {col_name!r}. "
+                "Column names must be strings"
             )
+            raise ValueError(msg)
 
     if isinstance(df.index, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
     if isinstance(df.columns, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
 
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
@@ -365,7 +370,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name.startswith("datetime") or dtype_name.startswith("timestamp"):
+        elif dtype_name.startswith(("datetime", "timestamp")):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
@@ -376,12 +381,13 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
             )
         elif dtype_name.startswith("timedelta"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=col_name, dtype=dtype)
+                ""
             )
+            raise ValueError(msg)
         elif dtype_name.startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
@@ -413,7 +419,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             col = df[col_name]
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
-        elif dtype == object:
+        elif dtype == object:  # noqa: E721
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
             col = df[col_name].astype(object).apply(to_list_if_array)
@@ -421,7 +427,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     return df
 
 
-def sanitize_arrow_table(pa_table):
+def sanitize_arrow_table(pa_table: pa.Table) -> pa.Table:
     """Sanitize arrow table for JSON serialization"""
     import pyarrow as pa
     import pyarrow.compute as pc
@@ -431,15 +437,16 @@ def sanitize_arrow_table(pa_table):
     for name in schema.names:
         array = pa_table[name]
         dtype_name = str(schema.field(name).type)
-        if dtype_name.startswith("timestamp") or dtype_name.startswith("date"):
+        if dtype_name.startswith(("timestamp", "date")):
             arrays.append(pc.strftime(array))
         elif dtype_name.startswith("duration"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{name}" has type "{dtype_name}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=name, dtype=dtype_name)
+                ""
             )
+            raise ValueError(msg)
         else:
             arrays.append(array)
 
@@ -447,13 +454,13 @@ def sanitize_arrow_table(pa_table):
 
 
 def parse_shorthand(
-    shorthand: Union[Dict[str, Any], str],
-    data: Optional[Union[pd.DataFrame, DataFrameLike]] = None,
+    shorthand: dict[str, Any] | str,
+    data: pd.DataFrame | DataFrameLike | None = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
     parse_types: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """General tool to parse shorthand values
 
     These are of the form:
@@ -642,8 +649,8 @@ def parse_shorthand(
 
 
 def infer_vegalite_type_for_dfi_column(
-    column: Union[Column, "PandasColumn"],
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+    column: Column | PandasColumn,
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
     try:
@@ -668,17 +675,18 @@ def infer_vegalite_type_for_dfi_column(
         categories_column = column.describe_categorical["categories"]
         categories_array = column_to_array(categories_column)
         return "ordinal", categories_array.to_pylist()
-    if kind in (DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL):
+    if kind in {DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL}:
         return "nominal"
-    elif kind in (DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT):
+    elif kind in {DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT}:
         return "quantitative"
     elif kind == DtypeKind.DATETIME:
         return "temporal"
     else:
-        raise ValueError(f"Unexpected DtypeKind: {kind}")
+        msg = f"Unexpected DtypeKind: {kind}"
+        raise ValueError(msg)
 
 
-def use_signature(Obj: Callable[P, Any]):
+def use_signature(Obj: Callable[P, Any]):  # -> Callable[..., Callable[P, V]]:
     """Apply call signature and documentation of Obj to the decorated method"""
 
     def decorate(f: Callable[..., V]) -> Callable[P, V]:
@@ -698,11 +706,7 @@ def use_signature(Obj: Callable[P, Any]):
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
                 doc = "\n".join(doclines)
-            try:
-                f.__doc__ = doc
-            except AttributeError:
-                # __doc__ is not modifiable for classes in Python < 3.3
-                pass
+            f.__doc__ = doc
 
         return f
 
@@ -710,8 +714,10 @@ def use_signature(Obj: Callable[P, Any]):
 
 
 def update_nested(
-    original: MutableMapping, update: Mapping, copy: bool = False
-) -> MutableMapping:
+    original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: bool = False,
+) -> t.MutableMapping[Any, Any]:
     """Update nested dictionaries
 
     Parameters
@@ -767,7 +773,9 @@ def display_traceback(in_ipython: bool = True):
         traceback.print_exception(*exc_info)
 
 
-def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: ModuleType):
+def infer_encoding_types(
+    args: Sequence[Any], kwargs: t.MutableMapping[str, Any], channels: ModuleType
+) -> dict[str, SchemaBase | list | dict[str, str] | Any]:
     """Infer typed keyword arguments for args and kwargs
 
     Parameters
@@ -791,10 +799,10 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
     channel_objs = (
         c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
     )
-    channel_to_name: Dict[Type[SchemaBase], str] = {
+    channel_to_name: dict[type[SchemaBase], str] = {
         c: c._encoding_name for c in channel_objs
     }
-    name_to_channel: Dict[str, Dict[str, Type[SchemaBase]]] = {}
+    name_to_channel: dict[str, dict[str, type[SchemaBase]]] = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
         if chan.__name__.endswith("Datum"):
@@ -812,11 +820,13 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
         else:
             type_ = type(arg)
 
-        encoding = channel_to_name.get(type_, None)
+        encoding = channel_to_name.get(type_)
         if encoding is None:
-            raise NotImplementedError("positional of type {}" "".format(type_))
+            msg = f"positional of type {type_}" ""
+            raise NotImplementedError(msg)
         if encoding in kwargs:
-            raise ValueError("encoding {} specified twice.".format(encoding))
+            msg = f"encoding {encoding} specified twice."
+            raise ValueError(msg)
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
@@ -830,9 +840,7 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn(
-                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
-            )
+            warnings.warn(f"Unrecognized encoding channel '{encoding}'", stacklevel=1)
             return obj
 
         classes = name_to_channel[encoding]

@@ -38,6 +38,5 @@ __all__ = (
     "to_csv",
     "to_json",
     "to_values",
-    "data_transformers",
     "vegafusion_data_transformer",
 )

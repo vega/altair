@@ -146,18 +146,14 @@ _validation_selection_schema = {
 class Draft4Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-04/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-04/schema#",
     }
 
 
 class Draft6Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-06/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-06/schema#",
     }
 
 
@@ -291,7 +287,7 @@ def test_schema_validator_selection():
         Draft6Schema.from_dict(dct)
 
 
-@pytest.fixture
+@pytest.fixture()
 def dct():
     return {
         "a": {"foo": "bar"},
@@ -375,7 +371,7 @@ def test_class_with_no_schema():
     class BadSchema(SchemaBase):
         pass
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         BadSchema(4)
     assert str(err.value).startswith("Cannot instantiate object")
 
@@ -649,7 +645,7 @@ def chart_error_example__four_errors():
 
 
 @pytest.mark.parametrize(
-    "chart_func, expected_error_message",
+    ("chart_func", "expected_error_message"),
     [
         (
             chart_error_example__invalid_y_option_value_unknown_x_option,

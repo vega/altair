@@ -71,7 +71,7 @@ class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
 
 
 @pytest.mark.parametrize(
-    "value,expected_type",
+    ("value", "expected_type"),
     [
         ([1, 2, 3], "integer"),
         ([1.0, 2.0, 3.0], "floating"),
@@ -164,7 +164,7 @@ def test_parse_shorthand_with_data(object_dtype):
     check("month(z)", data, timeUnit="month", field="z", type="temporal")
     check("month(t)", data, timeUnit="month", field="t", type="temporal")
 
-    if PANDAS_VERSION >= Version("1.0.0"):
+    if Version("1.0.0") <= PANDAS_VERSION:
         data["b"] = pd.Series([True, False, True, False, None], dtype="boolean")
         check("b", data, field="b", type="nominal")
 
@@ -186,7 +186,7 @@ def test_parse_shorthand_for_arrow_timestamp():
 def test_parse_shorthand_all_aggregates():
     aggregates = alt.Root._schema["definitions"]["AggregateOp"]["enum"]
     for aggregate in aggregates:
-        shorthand = "{aggregate}(field):Q".format(aggregate=aggregate)
+        shorthand = f"{aggregate}(field):Q"
         assert parse_shorthand(shorthand) == {
             "aggregate": aggregate,
             "field": "field",
@@ -201,7 +201,7 @@ def test_parse_shorthand_all_timeunits():
             defn = loc + typ + "TimeUnit"
             timeUnits.extend(alt.Root._schema["definitions"][defn]["enum"])
     for timeUnit in timeUnits:
-        shorthand = "{timeUnit}(field):Q".format(timeUnit=timeUnit)
+        shorthand = f"{timeUnit}(field):Q"
         assert parse_shorthand(shorthand) == {
             "timeUnit": timeUnit,
             "field": "field",
@@ -225,7 +225,7 @@ def test_parse_shorthand_all_window_ops():
     window_ops = alt.Root._schema["definitions"]["WindowOnlyOp"]["enum"]
     aggregates = alt.Root._schema["definitions"]["AggregateOp"]["enum"]
     for op in window_ops + aggregates:
-        shorthand = "{op}(field)".format(op=op)
+        shorthand = f"{op}(field)"
         dct = parse_shorthand(
             shorthand,
             parse_aggregates=False,
@@ -249,7 +249,7 @@ def test_update_nested():
     assert output == output2
 
 
-@pytest.fixture
+@pytest.fixture()
 def channels():
     channels = types.ModuleType("channels")
     exec(FAKE_CHANNELS_MODULE, channels.__dict__)

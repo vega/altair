@@ -8,18 +8,18 @@ import altair.vegalite.v5 as alt
 
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
 try:
-    import anywidget  # noqa: F401
+    import anywidget
 
 except ImportError:
     anywidget = None  # type: ignore
 
 
-@pytest.fixture
+@pytest.fixture()
 def chart():
     return alt.Chart("data.csv").mark_point()
 
@@ -95,7 +95,8 @@ def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
         assert bundle["image/svg+xml"].startswith("<svg")
 
 
-def test_jupyter_renderer_mimetype(chart, renderer="jupyter"):
+@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
+def test_jupyter_renderer_mimetype(chart, renderer="jupyter") -> None:
     """Test that we get the expected widget mimetype when the jupyter renderer is enabled"""
     if not anywidget:
         pytest.skip("anywidget not importable; skipping test")

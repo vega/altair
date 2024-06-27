@@ -1,18 +1,10 @@
-import sys
-from os.path import abspath, join, dirname
-
 import altair as alt
 
-current_dir = dirname(__file__)
-sys.path.insert(0, abspath(join(current_dir, "..")))
-from tools import update_init_file  # noqa: E402
+from tools import update_init_file
 
 
 def test_completeness_of__all__():
-    relevant_attributes = [
-        x for x in alt.__dict__ if update_init_file._is_relevant_attribute(x)
-    ]
-    relevant_attributes.sort()
+    relevant_attributes = update_init_file.relevant_attributes(alt.__dict__)
 
     # If the assert statement fails below, there are probably either new objects
     # in the top-level Altair namespace or some were removed.

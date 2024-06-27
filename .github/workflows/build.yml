@@ -64,7 +64,7 @@ jobs:
           fi
       - name: Test with pytest
         run: |
-          pytest --doctest-modules tests
+          pytest --pyargs --numprocesses=logical --doctest-modules tests
       - name: Validate Vega-Lite schema
         run: |
           # We install all 'format' dependencies of jsonschema as check-jsonschema
