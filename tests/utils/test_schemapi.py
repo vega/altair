@@ -542,10 +542,10 @@ def chart_error_example__wrong_tooltip_type_in_layered_chart():
 
 def chart_error_example__two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
-    # Error 2: `Color` has no parameter named 'invalidChannel'
+    # Error 2: `Color` has no parameter named 'invalidArgument'
     return alt.layer(
         alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
-        alt.Chart().mark_line().encode(alt.Color(invalidChannel="unknown")),
+        alt.Chart().mark_line().encode(alt.Color(invalidArgument="unknown")),
     )
 
 
@@ -560,7 +560,7 @@ def chart_error_example__two_errors_in_complex_concat_layered_chart():
 
 def chart_error_example__three_errors_in_complex_concat_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
-    # Error 2: `Color` has no parameter named 'invalidChannel'
+    # Error 2: `Color` has no parameter named 'invalidArgument'
     # Error 3: Invalid value for bandPosition
     return (
         chart_error_example__two_errors_in_layered_chart()
@@ -570,7 +570,7 @@ def chart_error_example__three_errors_in_complex_concat_layered_chart():
 
 def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     # Error 1: invalidOption is not a valid option for Scale
-    # Error 2: `Color` has no parameter named 'invalidChannel'
+    # Error 2: `Color` has no parameter named 'invalidArgument'
 
     # In the final chart object, the `layer` attribute will look like this:
     # [alt.Chart(...), alt.Chart(...), alt.LayerChart(...)]
@@ -606,7 +606,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
     base = alt.Chart().encode(y=alt.datum(300))
 
-    rule = base.mark_rule().encode(alt.Color(invalidChannel="unknown"))
+    rule = base.mark_rule().encode(alt.Color(invalidArgument="unknown"))
     text = base.mark_text(text="hazardous")
     rule_text = rule + text
 
@@ -681,7 +681,7 @@ def chart_error_example__four_errors():
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: `Color` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
                     shorthand      bin         legend   timeUnit   
@@ -708,7 +708,7 @@ def chart_error_example__four_errors():
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: `Color` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
                     shorthand      bin         legend   timeUnit   
@@ -736,7 +736,7 @@ def chart_error_example__four_errors():
 
                     See the help for `Scale` to read the full description of these parameters
 
-                Error 2: `Color` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
                     shorthand      bin         legend   timeUnit   
