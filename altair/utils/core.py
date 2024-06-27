@@ -849,7 +849,7 @@ def _init_channel_to_name():
     Note
     ----
     The return type is not expressible using annotations, but is used
-    internally by `mypy`/`pyright` and avoid the need for type ignores.
+    internally by `mypy`/`pyright` and avoids the need for type ignores.
 
     Returns
     -------
