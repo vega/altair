@@ -501,7 +501,11 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
     # of exported classes which are also defined in the channels or api modules which takes
     # precedent in the generated __init__.py files one and two levels up.
     # Importing these classes from multiple modules confuses type checkers.
-    it = (c for c in definitions.keys() - {"Color", "Text", "LookupData"} if not c.startswith("_"))
+    it = (
+        c
+        for c in definitions.keys() - {"Color", "Text", "LookupData"}
+        if not c.startswith("_")
+    )
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
 
     contents = [
