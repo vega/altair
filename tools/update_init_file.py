@@ -92,7 +92,7 @@ def relevant_attributes(namespace: dict[str, Any], /) -> list[str]:
     it = (
         name
         for name, attr in namespace.items()
-        if (not name.startswith("_")) and _is_relevant(attr)
+        if (not name.startswith("_")) and _is_relevant(attr, name)
     )
     return sorted(it)
 
@@ -105,12 +105,13 @@ def _is_hashable(obj: Any) -> bool:
         return False
 
 
-def _is_relevant(attr: Any, /) -> bool:
+def _is_relevant(attr: Any, name: str, /) -> bool:
     """Predicate logic for filtering attributes."""
     if (
         getattr_static(attr, "_deprecated", False)
         or attr is TYPE_CHECKING
         or (_is_hashable(attr) and attr in _TYPING_CONSTRUCTS)
+        or name in {"pd", "jsonschema"}
     ):
         return False
     elif ismodule(attr):
