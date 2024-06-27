@@ -7,7 +7,7 @@ import pandas as pd
 from altair.vegalite import v5
 
 
-@pytest.fixture
+@pytest.fixture()
 def basic_spec():
     return {
         "data": {"url": "data.csv"},
@@ -93,7 +93,7 @@ def test_max_rows(alt):
 
     with alt.data_transformers.enable("default"):
         basic_chart.to_dict()  # this should not fail
-
-    with alt.data_transformers.enable("default", max_rows=5):
-        with pytest.raises(alt.MaxRowsError):
-            basic_chart.to_dict()  # this should not fail
+    with alt.data_transformers.enable("default", max_rows=5), pytest.raises(
+        alt.MaxRowsError
+    ):
+        basic_chart.to_dict()  # this should not fail

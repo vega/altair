@@ -3,42 +3,42 @@ This script updates the attribute __all__ in altair/__init__.py
 based on the updated Altair schema.
 """
 
-import inspect
-import sys
-from os.path import abspath, dirname, join
+from __future__ import annotations
+
+from inspect import ismodule, getattr_static
 from pathlib import Path
 from typing import (
     IO,
     Any,
     Iterable,
     List,
-    Optional,
-    Protocol,
     Sequence,
-    Type,
     TypeVar,
     Union,
     cast,
+    TYPE_CHECKING,
+    Literal,
 )
+import typing as t
+import typing_extensions as te
 
-if sys.version_info >= (3, 13):
-    from typing import TypeIs
-else:
-    from typing_extensions import TypeIs
-if sys.version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+from tools.schemapi.utils import ruff_write_lint_format_str
 
-from typing import Final, Literal
-
-ROOT_DIR: Final = abspath(join(dirname(__file__), ".."))
-sys.path.insert(0, abspath(dirname(__file__)))
-from schemapi.utils import ruff_format_str  # noqa: E402
-
-# Import Altair from head
-sys.path.insert(0, ROOT_DIR)
-import altair as alt  # noqa: E402
+_TYPING_CONSTRUCTS = {
+    te.TypeAlias,
+    TypeVar,
+    cast,
+    List,
+    Any,
+    Literal,
+    Union,
+    Iterable,
+    t.Protocol,
+    te.Protocol,
+    Sequence,
+    IO,
+    annotations,
+}
 
 
 def update__all__variable() -> None:
@@ -47,8 +47,11 @@ def update__all__variable() -> None:
     Jupyter.
     """
     # Read existing file content
-    init_path = alt.__file__
-    with open(init_path, "r") as f:
+    import altair as alt
+
+    encoding = "utf-8"
+    init_path = Path(alt.__file__)
+    with init_path.open(encoding=encoding) as f:
         lines = f.readlines()
     lines = [line.strip("\n") for line in lines]
 
@@ -61,62 +64,62 @@ def update__all__variable() -> None:
         elif first_definition_line is not None and line.startswith("]"):
             last_definition_line = idx
             break
-    assert first_definition_line is not None and last_definition_line is not None
-
-    # Figure out which attributes are relevant
-    relevant_attributes = [x for x in alt.__dict__ if _is_relevant_attribute(x)]
-    relevant_attributes.sort()
-    relevant_attributes_str = f"__all__ = {relevant_attributes}"
+    assert first_definition_line is not None
+    assert last_definition_line is not None
 
     # Put file back together, replacing old definition of __all__ with new one, keeping
     # the rest of the file as is
-    new_lines = (
-        lines[:first_definition_line]
-        + [relevant_attributes_str]
-        + lines[last_definition_line + 1 :]
-    )
-    # Format file content with black
-    new_file_content = ruff_format_str("\n".join(new_lines))
-
+    new_lines = [
+        *lines[:first_definition_line],
+        f"__all__ = {relevant_attributes(alt.__dict__)}",
+        *lines[last_definition_line + 1 :],
+    ]
     # Write new version of altair/__init__.py
-    with open(init_path, "w") as f:
-        f.write(new_file_content)
+    # Format file content with ruff
+    ruff_write_lint_format_str(init_path, new_lines)
 
 
-def _is_relevant_attribute(attr_name: str) -> bool:
-    attr = getattr(alt, attr_name)
+def relevant_attributes(namespace: dict[str, Any], /) -> list[str]:
+    """Figure out which attributes in `__all__` are relevant.
+
+    Returns an alphabetically sorted list, to insert into `__all__`.
+
+    Parameters
+    ----------
+    namespace
+        A module dict, like `altair.__dict__`
+    """
+    it = (
+        name
+        for name, attr in namespace.items()
+        if (not name.startswith("_")) and _is_relevant(attr)
+    )
+    return sorted(it)
+
+
+def _is_hashable(obj: Any) -> bool:
+    """Guard to prevent an `in` check occuring on mutable objects."""
+    try:
+        return bool(hash(obj))
+    except TypeError:
+        return False
+
+
+def _is_relevant(attr: Any, /) -> bool:
+    """Predicate logic for filtering attributes."""
     if (
-        getattr(attr, "_deprecated", False) is True
-        or attr_name.startswith("_")
-        or attr is TypeVar
-        or attr is Self
-        or attr is Type
-        or attr is cast
-        or attr is List
-        or attr is Any
-        or attr is Literal
-        or attr is Optional
-        or attr is Iterable
-        or attr is Union
-        or attr is Protocol
-        or attr is Sequence
-        or attr is IO
-        or attr is TypeIs
-        or attr_name == "TypingDict"
-        or attr_name == "TypingGenerator"
-        or attr_name == "ValueOrDatum"
+        getattr_static(attr, "_deprecated", False)
+        or attr is TYPE_CHECKING
+        or (_is_hashable(attr) and attr in _TYPING_CONSTRUCTS)
     ):
         return False
+    elif ismodule(attr):
+        # Only include modules which are part of Altair. This excludes built-in
+        # modules (they do not have a __file__ attribute), standard library,
+        # and third-party packages.
+        return getattr_static(attr, "__file__", "").startswith(str(Path.cwd()))
     else:
-        if inspect.ismodule(attr):
-            # Only include modules which are part of Altair. This excludes built-in
-            # modules (they do not have a __file__ attribute), standard library,
-            # and third-party packages.
-            return getattr(attr, "__file__", "").startswith(
-                str(Path(alt.__file__).parent)
-            )
-        else:
-            return True
+        return True
 
 
 if __name__ == "__main__":

@@ -1,11 +1,14 @@
+from __future__ import annotations
+
 import hashlib
-import os
 import json
+from pathlib import Path
 import random
 import collections
 from operator import itemgetter
 import warnings
 import shutil
+from typing import Any, TYPE_CHECKING
 
 import jinja2
 
@@ -25,6 +28,9 @@ from .utils import (
 from altair.utils.execeval import eval_block
 from tests.examples_arguments_syntax import iter_examples_arguments_syntax
 from tests.examples_methods_syntax import iter_examples_methods_syntax
+
+if TYPE_CHECKING:
+    from docutils.nodes import Node
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -148,33 +154,38 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 )
 
 
-def save_example_pngs(examples, image_dir, make_thumbnails=True):
+def save_example_pngs(
+    examples: list[dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
+) -> None:
     """Save example pngs and (optionally) thumbnails"""
-    if not os.path.exists(image_dir):
-        os.makedirs(image_dir)
+    encoding = "utf-8"
 
     # store hashes so that we know whether images need to be generated
-    hash_file = os.path.join(image_dir, "_image_hashes.json")
+    hash_file: Path = image_dir / "_image_hashes.json"
 
-    if os.path.exists(hash_file):
-        with open(hash_file) as f:
+    if hash_file.exists():
+        with hash_file.open(encoding=encoding) as f:
             hashes = json.load(f)
     else:
         hashes = {}
 
     for example in examples:
-        filename = example["name"] + (".svg" if example["use_svg"] else ".png")
-        image_file = os.path.join(image_dir, filename)
+        name: str = example["name"]
+        use_svg: bool = example["use_svg"]
+        code = example["code"]
 
-        example_hash = hashlib.sha256(example["code"].encode()).hexdigest()[:32]
+        filename = name + (".svg" if use_svg else ".png")
+        image_file = image_dir / filename
+
+        example_hash = hashlib.sha256(code.encode()).hexdigest()[:32]
         hashes_match = hashes.get(filename, "") == example_hash
 
-        if hashes_match and os.path.exists(image_file):
-            print("-> using cached {}".format(image_file))
+        if hashes_match and image_file.exists():
+            print(f"-> using cached {image_file!s}")
         else:
             # the file changed or the image file does not exist. Generate it.
-            print("-> saving {}".format(image_file))
-            chart = eval_block(example["code"])
+            print(f"-> saving {image_file!s}")
+            chart = eval_block(code)
             try:
                 chart.save(image_file)
                 hashes[filename] = example_hash
@@ -182,25 +193,23 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 warnings.warn("Unable to save image: using generic image", stacklevel=1)
                 create_generic_image(image_file)
 
-            with open(hash_file, "w") as f:
+            with hash_file.open("w", encoding=encoding) as f:
                 json.dump(hashes, f)
 
         if make_thumbnails:
             params = example.get("galleryParameters", {})
-            if example["use_svg"]:
+            if use_svg:
                 # Thumbnail for SVG is identical to original image
-                thumb_file = os.path.join(image_dir, example["name"] + "-thumb.svg")
-                shutil.copyfile(image_file, thumb_file)
+                shutil.copyfile(image_file, image_dir / f"{name}-thumb.svg")
             else:
-                thumb_file = os.path.join(image_dir, example["name"] + "-thumb.png")
-                create_thumbnail(image_file, thumb_file, **params)
+                create_thumbnail(image_file, image_dir / f"{name}-thumb.png", **params)
 
     # Save hashes so we know whether we need to re-generate plots
-    with open(hash_file, "w") as f:
+    with hash_file.open("w", encoding=encoding) as f:
         json.dump(hashes, f)
 
 
-def populate_examples(**kwds):
+def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
@@ -208,7 +217,7 @@ def populate_examples(**kwds):
 
     for example in examples:
         docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
-        if example["name"] in method_examples.keys():
+        if example["name"] in method_examples:
             _, _, method_code, _ = get_docstring_and_rest(
                 method_examples[example["name"]]["filename"]
             )
@@ -220,9 +229,8 @@ def populate_examples(**kwds):
             )
         example.update(kwds)
         if category is None:
-            raise Exception(
-                f"The example {example['name']} is not assigned to a category"
-            )
+            msg = f"The example {example['name']} is not assigned to a category"
+            raise Exception(msg)
         example.update(
             {
                 "docstring": docstring,
@@ -237,20 +245,24 @@ def populate_examples(**kwds):
     return examples
 
 
+def _indices(x: str, /) -> list[int]:
+    return [int(idx) for idx in x.split()]
+
+
 class AltairMiniGalleryDirective(Directive):
     has_content = False
 
     option_spec = {
         "size": int,
         "names": str,
-        "indices": lambda x: list(map(int, x.split())),
+        "indices": _indices,
         "shuffle": flag,
         "seed": int,
         "titles": bool,
         "width": str,
     }
 
-    def run(self):
+    def run(self) -> list[Node]:
         size = self.options.get("size", 15)
         names = [name.strip() for name in self.options.get("names", "").split(",")]
         indices = self.options.get("indices", [])
@@ -268,10 +280,11 @@ class AltairMiniGalleryDirective(Directive):
 
         if names:
             if len(names) < size:
-                raise ValueError(
+                msg = (
                     "altair-minigallery: if names are specified, "
                     "the list must be at least as long as size."
                 )
+                raise ValueError(msg)
             mapping = {example["name"]: example for example in examples}
             examples = [mapping[name] for name in names]
         else:
@@ -302,19 +315,19 @@ class AltairMiniGalleryDirective(Directive):
         return node.children
 
 
-def main(app):
-    gallery_dir = app.builder.config.altair_gallery_dir
-    target_dir = os.path.join(app.builder.srcdir, gallery_dir)
-    image_dir = os.path.join(app.builder.srcdir, "_images")
+def main(app) -> None:
+    src_dir = Path(app.builder.srcdir)
+    target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
+    image_dir: Path = src_dir / "_images"
 
     gallery_ref = app.builder.config.altair_gallery_ref
     gallery_title = app.builder.config.altair_gallery_title
     examples = populate_examples(gallery_ref=gallery_ref, code_below=True, strict=False)
 
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
+    target_dir.mkdir(parents=True, exist_ok=True)
+    image_dir.mkdir(exist_ok=True)
 
-    examples = sorted(examples, key=lambda x: x["title"])
+    examples = sorted(examples, key=itemgetter("title"))
     examples_toc = collections.OrderedDict(
         {
             "Simple Charts": [],
@@ -335,16 +348,19 @@ def main(app):
     for d in examples:
         examples_toc[d["category"]].append(d)
 
+    encoding = "utf-8"
+
     # Write the gallery index file
-    with open(os.path.join(target_dir, "index.rst"), "w") as f:
-        f.write(
-            GALLERY_TEMPLATE.render(
-                title=gallery_title,
-                examples=examples_toc.items(),
-                image_dir="/_static",
-                gallery_ref=gallery_ref,
-            )
-        )
+    fp = target_dir / "index.rst"
+    fp.write_text(
+        GALLERY_TEMPLATE.render(
+            title=gallery_title,
+            examples=examples_toc.items(),
+            image_dir="/_static",
+            gallery_ref=gallery_ref,
+        ),
+        encoding=encoding,
+    )
 
     # save the images to file
     save_example_pngs(examples, image_dir)
@@ -355,12 +371,11 @@ def main(app):
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
-        target_filename = os.path.join(target_dir, example["name"] + ".rst")
-        with open(os.path.join(target_filename), "w", encoding="utf-8") as f:
-            f.write(EXAMPLE_TEMPLATE.render(example))
+        fp = target_dir / "".join((example["name"], ".rst"))
+        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
 
 
-def setup(app):
+def setup(app) -> None:
     app.connect("builder-inited", main)
     app.add_css_file("altair-gallery.css")
     app.add_config_value("altair_gallery_dir", "gallery", "env")

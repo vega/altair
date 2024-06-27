@@ -147,18 +147,14 @@ _validation_selection_schema = {
 class Draft4Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-04/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-04/schema#",
     }
 
 
 class Draft6Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-06/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-06/schema#",
     }
 
 
@@ -292,7 +288,7 @@ def test_schema_validator_selection():
         Draft6Schema.from_dict(dct)
 
 
-@pytest.fixture
+@pytest.fixture()
 def dct():
     return {
         "a": {"foo": "bar"},
@@ -376,7 +372,7 @@ def test_class_with_no_schema():
     class BadSchema(SchemaBase):
         pass
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         BadSchema(4)
     assert str(err.value).startswith("Cannot instantiate object")
 
@@ -634,7 +630,7 @@ def chart_error_example__four_errors():
 
 
 @pytest.mark.parametrize(
-    "chart_func, expected_error_message",
+    ("chart_func", "expected_error_message"),
     [
         (
             chart_error_example__invalid_y_option_value_unknown_x_option,
@@ -654,7 +650,7 @@ def chart_error_example__four_errors():
                 Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                     - One of \['zero', 'center', 'normalize'\]
-                    - Of type 'null' or 'boolean'$"""  # noqa: W291
+                    - Of type 'null' or 'boolean'$"""
             ),
         ),
         (
@@ -683,7 +679,7 @@ def chart_error_example__four_errors():
                     aggregate      condition   scale    title      
                     bandPosition   field       sort     type       
 
-                    See the help for `Color` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `Color` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -712,7 +708,7 @@ def chart_error_example__four_errors():
 
                     See the help for `Color` to read the full description of these parameters
 
-                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
         ),
         (
@@ -738,7 +734,7 @@ def chart_error_example__four_errors():
                     aggregate      condition   scale    title      
                     bandPosition   field       sort     type       
 
-                    See the help for `Color` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `Color` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -752,7 +748,7 @@ def chart_error_example__four_errors():
                 background   data       padding       spacing   usermeta    
                 bounds       datasets                                       
 
-                See the help for `VConcatChart` to read the full description of these parameters$"""  # noqa: W291
+                See the help for `VConcatChart` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -827,7 +823,7 @@ def chart_error_example__four_errors():
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+                See the help for `X` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -867,7 +863,7 @@ def chart_error_example__four_errors():
                     axis           impute   stack   type       
                     bandPosition                               
 
-                    See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `X` to read the full description of these parameters$"""
             ),
         ),
     ],

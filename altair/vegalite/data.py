@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING, overload, Callable
+
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
     MaxRowsError,
@@ -9,9 +12,10 @@ from ..utils.data import (
     check_data_type,
 )
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
-from ..utils.data import DataType, ToValuesReturnType
-from ..utils.plugin_registry import PluginEnabler
-from typing import Optional, Union, overload, Callable
+
+if TYPE_CHECKING:
+    from ..utils.plugin_registry import PluginEnabler
+    from ..utils.data import DataType, ToValuesReturnType
 
 
 @overload
@@ -23,8 +27,8 @@ def default_data_transformer(
     data: DataType, max_rows: int = ...
 ) -> ToValuesReturnType: ...
 def default_data_transformer(
-    data: Optional[DataType] = None, max_rows: int = 5000
-) -> Union[Callable[[DataType], ToValuesReturnType], ToValuesReturnType]:
+    data: DataType | None = None, max_rows: int = 5000
+) -> Callable[[DataType], ToValuesReturnType] | ToValuesReturnType:
     if data is None:
 
         def pipe(data: DataType, /) -> ToValuesReturnType:
@@ -41,7 +45,7 @@ class DataTransformerRegistry(_DataTransformerRegistry):
     def disable_max_rows(self) -> PluginEnabler:
         """Disable the MaxRowsError."""
         options = self.options
-        if self.active in ("default", "vegafusion"):
+        if self.active in {"default", "vegafusion"}:
             options = options.copy()
             options["max_rows"] = None
         return self.enable(**options)
@@ -50,12 +54,12 @@ class DataTransformerRegistry(_DataTransformerRegistry):
 __all__ = (
     "DataTransformerRegistry",
     "MaxRowsError",
-    "sanitize_dataframe",
+    "check_data_type",
     "default_data_transformer",
     "limit_rows",
     "sample",
+    "sanitize_dataframe",
     "to_csv",
     "to_json",
     "to_values",
-    "check_data_type",
 )

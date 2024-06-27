@@ -1,8 +1,9 @@
+from __future__ import annotations
 import json
 import anywidget
 import traitlets
 import pathlib
-from typing import Any, Set, Optional
+from typing import Any
 
 import altair as alt
 from altair.utils._vegafusion_data import (
@@ -61,7 +62,8 @@ class Selections(traitlets.HasTraits):
             elif isinstance(value, IntervalSelection):
                 traitlet_type = traitlets.Instance(IntervalSelection)
             else:
-                raise ValueError(f"Unexpected selection type: {type(value)}")
+                msg = f"Unexpected selection type: {type(value)}"
+                raise ValueError(msg)
 
             # Add the new trait.
             self.add_traits(**{key: traitlet_type})
@@ -82,10 +84,11 @@ class Selections(traitlets.HasTraits):
         """
         if change["name"] in self.traits() and change["old"] != change["new"]:
             self._set_value(change["name"], change["old"])
-        raise ValueError(
+        msg = (
             "Selections may not be set from Python.\n"
             f"Attempted to set select: {change['name']}"
         )
+        raise ValueError(msg)
 
     def _set_value(self, key, value):
         self.unobserve(self._make_read_only, names=key)
@@ -185,7 +188,7 @@ class JupyterChart(anywidget.AnyWidget):
         debounce_wait: int = 10,
         max_wait: bool = True,
         debug: bool = False,
-        embed_options: Optional[dict] = None,
+        embed_options: dict | None = None,
         **kwargs: Any,
     ):
         """
@@ -278,7 +281,8 @@ class JupyterChart(anywidget.AnyWidget):
                             name=clean_name, value={}, store=[]
                         )
                     else:
-                        raise ValueError(f"Unexpected selection type {select.type}")
+                        msg = f"Unexpected selection type {select.type}"
+                        raise ValueError(msg)
                     selection_watches.append(clean_name)
                     initial_vl_selections[clean_name] = {"value": None, "store": []}
                 else:
@@ -384,7 +388,7 @@ class JupyterChart(anywidget.AnyWidget):
                 )
 
 
-def collect_transform_params(chart: TopLevelSpec) -> Set[str]:
+def collect_transform_params(chart: TopLevelSpec) -> set[str]:
     """
     Collect the names of params that are defined by transforms
 

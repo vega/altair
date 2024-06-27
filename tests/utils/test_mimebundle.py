@@ -5,7 +5,7 @@ from altair import VEGA_VERSION
 from altair.utils.mimebundle import spec_to_mimebundle
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
@@ -15,7 +15,7 @@ except ImportError:
     vf = None
 
 
-@pytest.fixture
+@pytest.fixture()
 def vegalite_spec():
     return {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -41,7 +41,7 @@ def vegalite_spec():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def vega_spec():
     return {
         "$schema": "https://vega.github.io/schema/vega/v5.json",
@@ -197,7 +197,7 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 
 def test_spec_to_vega_mimebundle(vega_spec):
     # ValueError: mode must be 'vega-lite'
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError):  # noqa: PT011
         spec_to_mimebundle(
             spec=vega_spec,
             mode="vega",

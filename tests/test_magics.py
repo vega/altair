@@ -7,7 +7,6 @@ try:
     IPYTHON_AVAILABLE = True
 except ImportError:
     IPYTHON_AVAILABLE = False
-    pass
 
 from altair.vegalite.v5 import VegaLite
 
@@ -27,11 +26,11 @@ if IPYTHON_AVAILABLE:
     _ipshell = InteractiveShell.instance()
     _ipshell.run_cell("%load_ext altair")
     _ipshell.run_cell(
-        """
+        f"""
 import pandas as pd
-table = pd.DataFrame.from_records({})
+table = pd.DataFrame.from_records({DATA_RECORDS})
 the_data = table
-""".format(DATA_RECORDS)
+"""
     )
 
 
@@ -51,14 +50,14 @@ VEGALITE_SPEC = {
 def test_vegalite_magic_data_included():
     result = _ipshell.run_cell("%%vegalite\n" + json.dumps(VEGALITE_SPEC))
     assert isinstance(result.result, VegaLite)
-    assert VEGALITE_SPEC == result.result.spec
+    assert result.result.spec == VEGALITE_SPEC
 
 
 @pytest.mark.skipif(not IPYTHON_AVAILABLE, reason="requires ipython")
 def test_vegalite_magic_json_flag():
     result = _ipshell.run_cell("%%vegalite --json\n" + json.dumps(VEGALITE_SPEC))
     assert isinstance(result.result, VegaLite)
-    assert VEGALITE_SPEC == result.result.spec
+    assert result.result.spec == VEGALITE_SPEC
 
 
 @pytest.mark.skipif(not IPYTHON_AVAILABLE, reason="requires ipython")
@@ -66,4 +65,4 @@ def test_vegalite_magic_pandas_data():
     spec = {key: val for key, val in VEGALITE_SPEC.items() if key != "data"}
     result = _ipshell.run_cell("%%vegalite table\n" + json.dumps(spec))
     assert isinstance(result.result, VegaLite)
-    assert VEGALITE_SPEC == result.result.spec
+    assert result.result.spec == VEGALITE_SPEC

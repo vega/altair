@@ -1,4 +1,5 @@
-import os
+from pathlib import Path
+
 from typing import Any, Callable
 import pytest
 import pandas as pd
@@ -92,7 +93,7 @@ def test_dataframe_to_json():
         filename = result1["url"]
         output = pd.read_json(filename)
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert output.equals(data)
@@ -110,7 +111,7 @@ def test_dict_to_json():
         filename = result1["url"]
         output = pd.read_json(filename).to_dict(orient="records")
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert data == {"values": output}
@@ -128,7 +129,7 @@ def test_dataframe_to_csv():
         filename = result1["url"]
         output = pd.read_csv(filename)
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert output.equals(data)
@@ -146,7 +147,7 @@ def test_dict_to_csv():
         filename = result1["url"]
         output = pd.read_csv(filename).to_dict(orient="records")
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert data == {"values": output}
