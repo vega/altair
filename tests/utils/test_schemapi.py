@@ -633,11 +633,6 @@ def chart_error_example__four_errors():
     )
 
 
-# NOTE: These 6 `TypeError`s are due to the removal of `kwargs` in Chart.encode
-# That is, only declared keywords can now be used in Chart.encode,
-# so these are not conditions worth checking against.
-
-
 @pytest.mark.parametrize(
     "chart_func, expected_error_message",
     [
