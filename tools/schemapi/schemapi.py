@@ -744,15 +744,33 @@ class UndefinedType:
 Undefined = UndefinedType()
 T = TypeVar("T")
 Optional: TypeAlias = Union[T, UndefinedType]
-"""One of the sepcified types, or the `Undefined` singleton.
-
+"""One of ``T`` specified type(s), or the ``Undefined`` singleton.
 
 Examples
 --------
-```py
-MaybeDictOrStr: TypeAlias = Optional[dict[str, Any] | str]
-LongerDictOrStr: TypeAlias = dict[str, Any] | str | UndefinedType
-```
+The parameters ``short``, ``long`` accept the same range of types::
+
+    # ruff: noqa: UP006, UP007
+    from altair import Optional
+
+    def func_1(
+        short: Optional[str | bool | float | dict[str, Any] | SchemaBase] = Undefined,
+        long: Union[
+            str, bool, float, Dict[str, Any], SchemaBase, UndefinedType
+        ] = Undefined,
+    ): ...
+
+This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__, as ``altair.Optional`` treats ``None`` like any other type::
+
+    # ruff: noqa: UP006, UP007
+    from altair import Optional
+
+    def func_2(
+        short: Optional[str | float | dict[str, Any] | None | SchemaBase] = Undefined,
+        long: Union[
+            str, float, Dict[str, Any], None, SchemaBase, UndefinedType
+        ] = Undefined,
+    ): ...
 """
 
 
