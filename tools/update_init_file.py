@@ -7,19 +7,7 @@ from __future__ import annotations
 
 from inspect import ismodule, getattr_static
 from pathlib import Path
-from typing import (
-    IO,
-    Any,
-    Iterable,
-    List,
-    Sequence,
-    TypeVar,
-    Union,
-    cast,
-    overload,
-    TYPE_CHECKING,
-    Literal,
-)
+from typing import TYPE_CHECKING
 import typing as t
 import typing_extensions as te
 
@@ -27,19 +15,27 @@ from tools.schemapi.utils import ruff_write_lint_format_str
 
 _TYPING_CONSTRUCTS = {
     te.TypeAlias,
-    TypeVar,
-    cast,
-    overload,
-    List,
-    Any,
-    Literal,
-    Union,
-    Iterable,
+    t.TypeVar,
+    t.cast,
+    t.overload,
+    te.runtime_checkable,
+    t.List,
+    t.Dict,
+    t.Tuple,
+    t.Any,
+    t.Literal,
+    t.Union,
+    t.Iterable,
     t.Protocol,
     te.Protocol,
-    Sequence,
-    IO,
+    t.Sequence,
+    t.IO,
     annotations,
+    t.NamedTuple,
+    te.Required,
+    te.TypedDict,
+    t.TypedDict,
+    te.Self,
 }
 
 
@@ -81,7 +77,7 @@ def update__all__variable() -> None:
     ruff_write_lint_format_str(init_path, new_lines)
 
 
-def relevant_attributes(namespace: dict[str, Any], /) -> list[str]:
+def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
     """Figure out which attributes in `__all__` are relevant.
 
     Returns an alphabetically sorted list, to insert into `__all__`.
@@ -99,7 +95,7 @@ def relevant_attributes(namespace: dict[str, Any], /) -> list[str]:
     return sorted(it)
 
 
-def _is_hashable(obj: Any) -> bool:
+def _is_hashable(obj: t.Any) -> bool:
     """Guard to prevent an `in` check occuring on mutable objects."""
     try:
         return bool(hash(obj))
@@ -107,7 +103,7 @@ def _is_hashable(obj: Any) -> bool:
         return False
 
 
-def _is_relevant(attr: Any, name: str, /) -> bool:
+def _is_relevant(attr: t.Any, name: str, /) -> bool:
     """Predicate logic for filtering attributes."""
     if (
         getattr_static(attr, "_deprecated", False)

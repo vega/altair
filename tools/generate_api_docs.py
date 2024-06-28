@@ -95,11 +95,11 @@ def encoding_wrappers() -> list[str]:
 
 
 def api_functions() -> list[str]:
-    # Exclude typing.cast
+    # Exclude `typing` functions/SpecialForm(s)
     altair_api_functions = [
         obj_name
         for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
-        if obj_name not in {"cast", "overload"}
+        if obj_name not in {"cast", "overload", "NamedTuple", "TypedDict"}
     ]
     return sorted(altair_api_functions)
 

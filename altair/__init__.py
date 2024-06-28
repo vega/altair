@@ -612,6 +612,7 @@ def __dir__():
 
 
 from altair.vegalite import *
+from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 

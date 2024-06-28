@@ -7,9 +7,20 @@ import io
 import json
 import jsonschema
 import itertools
-from typing import Any, cast, overload, Literal, Union, TYPE_CHECKING
+from typing import (
+    Any,
+    cast,
+    overload,
+    Literal,
+    Union,
+    TYPE_CHECKING,
+    TypeVar,
+    Sequence,
+    Protocol,
+    NamedTuple,
+)
 from typing_extensions import TypeAlias
-import typing
+import typing as t
 import functools
 import operator
 from copy import deepcopy as _deepcopy
@@ -30,24 +41,24 @@ from ...utils._vegafusion_data import (
 from ...utils.data import DataType, is_data_type as _is_data_type
 
 if sys.version_info >= (3, 13):
-    from typing import TypedDict as _TypedDict
+    from typing import TypedDict
 else:
-    from typing_extensions import TypedDict as _TypedDict
+    from typing_extensions import TypedDict
 
 
 if TYPE_CHECKING:
     from ...utils.core import DataFrameLike
     from pathlib import Path
-    from typing import Iterable, IO
+    from typing import Iterable, IO, Iterator
 
     if sys.version_info >= (3, 13):
-        from typing import TypeIs, Required as _Required
+        from typing import TypeIs, Required
     else:
-        from typing_extensions import TypeIs, Required as _Required
+        from typing_extensions import TypeIs, Required
     if sys.version_info >= (3, 11):
-        from typing import Self
+        from typing import Self, Never
     else:
-        from typing_extensions import Self
+        from typing_extensions import Self, Never
 
     from .schema.channels import Facet, Row, Column
     from .schema.core import (
@@ -95,7 +106,12 @@ if TYPE_CHECKING:
         InlineDataset,
         UndefinedType,
     )
-    from altair.expr.core import Expression, GetAttrExpression
+    from altair.expr.core import (
+        BinaryExpression,
+        Expression,
+        GetAttrExpression,
+        GetItemExpression,
+    )
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 
@@ -109,7 +125,7 @@ Special-cases `str`, for use in `parse_shorthand`.
 _LiteralValue = Union[str, _LiteralNumeric]
 """Primitive python value types."""
 
-_OneOrSeqLiteralValue = Union[_LiteralValue, typing.Sequence[_LiteralValue]]
+_OneOrSeqLiteralValue = Union[_LiteralValue, Sequence[_LiteralValue]]
 """Primitive python value types, or a `Sequence` of such.
 
 For restricting inputs passed to `alt.value`.
@@ -352,7 +368,7 @@ class Parameter(_expr_core.OperatorMixin):
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
-    def __getitem__(self, field_name: str) -> _expr_core.GetItemExpression:
+    def __getitem__(self, field_name: str) -> GetItemExpression:
         return _expr_core.GetItemExpression(self.name, field_name)
 
 
@@ -418,7 +434,7 @@ Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `t
 _PredicateType = Union[
     Parameter,
     core.Expr,
-    typing.Dict[str, Any],
+    t.Dict[str, Any],
     _TestPredicateType,
     _expr_core.OperatorMixin,
 ]
@@ -429,8 +445,8 @@ _ComposablePredicateType = Union[
 ]
 """Permitted types for `AND` reduced predicates."""
 
-_DictOrStr = Union[typing.Dict[str, Any], str]
-_DictOrSchema = Union[core.SchemaBase, typing.Dict[str, Any]]
+_DictOrStr = Union[t.Dict[str, Any], str]
+_DictOrSchema = Union[core.SchemaBase, t.Dict[str, Any]]
 
 _StatementType = Union[core.SchemaBase, _DictOrStr]
 """Permitted types for `if_true`/`if_false`.
@@ -449,18 +465,16 @@ else:
 _StatementOrLiteralType = Union[_StatementType, _OneOrSeqLiteralValue]
 """Extended types when allowing input to be wrapped in `alt.value`."""
 
-_ConditionType = typing.Dict[str, Union[_TestPredicateType, Any]]
+_ConditionType = t.Dict[str, Union[_TestPredicateType, Any]]
 """Intermediate type representing a converted `_PredicateType`.
 
 Prior to parsing any `_StatementType`.
 """
 
-_SelectionType = Union[core.SchemaBase, typing.Dict[str, Union[_ConditionType, Any]]]
+_SelectionType = Union[core.SchemaBase, t.Dict[str, Union[_ConditionType, Any]]]
 """Returned type of `alt.condition`."""
 
-_FieldEqualType = Union[
-    _LiteralValue, typing.Dict[str, Any], Parameter, core.SchemaBase
-]
+_FieldEqualType = Union[_LiteralValue, t.Dict[str, Any], Parameter, core.SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
@@ -487,7 +501,7 @@ def _is_literal_value(obj: Any) -> TypeIs[_LiteralValue]:
 
 def _is_one_or_seq_literal_value(obj: Any) -> TypeIs[_OneOrSeqLiteralValue]:
     return _is_literal_value(obj) or (
-        isinstance(obj, typing.Sequence) and all(_is_literal_value(el) for el in obj)
+        isinstance(obj, Sequence) and all(_is_literal_value(el) for el in obj)
     )
 
 
@@ -571,12 +585,12 @@ def _condition_to_selection(
     return selection
 
 
-class _Conditions(_TypedDict, total=False):
-    condition: _Required[list[_ConditionType]]
+class _Conditions(TypedDict, total=False):
+    condition: Required[list[_ConditionType]]
     value: Any
 
 
-class _LiteralConfig(typing.NamedTuple):
+class _LiteralConfig(NamedTuple):
     """Settings for parsing literal python values in conditions.
 
     Parameters
@@ -598,7 +612,7 @@ class _LiteralConfig(typing.NamedTuple):
 
 def _parse_when_constraints(
     constraints: dict[str, Any], /
-) -> typing.Iterator[_expr_core.BinaryExpression]:
+) -> Iterator[BinaryExpression]:
     """Wrap kwargs with `alt.datum`.
 
     ```py
@@ -615,7 +629,7 @@ def _parse_when_constraints(
 
 def _validate_composables(
     predicates: tuple[Any, ...], /
-) -> typing.Iterator[_ComposablePredicateType]:
+) -> Iterator[_ComposablePredicateType]:
     for p in predicates:
         if _is_composable_type(p):
             yield p
@@ -632,7 +646,7 @@ def _parse_when_compose(
     predicates: tuple[Any, ...],
     constraints: dict[str, Any],
     /,
-) -> _expr_core.BinaryExpression:
+) -> BinaryExpression:
     """Compose an `AND` reduction predicate.
 
     Parameters
@@ -712,8 +726,8 @@ def _parse_otherwise(
     kwargs: dict[str, Any],
     lit: _LiteralConfig,
     /,
-) -> core.SchemaBase | _Conditions:
-    selection: core.SchemaBase | _Conditions
+) -> SchemaBase | _Conditions:
+    selection: SchemaBase | _Conditions
     if isinstance(statement, core.SchemaBase):
         selection = statement.copy()
         conditions.update(**kwargs)  # type: ignore[call-arg]
@@ -726,7 +740,7 @@ def _parse_otherwise(
     return selection
 
 
-class _BaseWhen(typing.Protocol):
+class _BaseWhen(Protocol):
     # NOTE: Temporary solution to non-SchemaBase copy
     _condition: _ConditionType
 
@@ -832,12 +846,12 @@ class _Then:
     @overload
     def otherwise(
         self,
-        statement: core.SchemaBase,
+        statement: SchemaBase,
         *,
         str_as_lit: bool,
         seq_as_lit: Literal[False],
         **kwargs: Any,
-    ) -> core.SchemaBase: ...
+    ) -> SchemaBase: ...
     @overload
     def otherwise(
         self,
@@ -854,7 +868,7 @@ class _Then:
         str_as_lit: bool = False,
         seq_as_lit: bool = True,
         **kwargs: Any,
-    ) -> core.SchemaBase | _Conditions:
+    ) -> SchemaBase | _Conditions:
         lit = _LiteralConfig(str_as_lit, seq_as_lit)
         return _parse_otherwise(statement, self.to_dict(), kwargs, lit)
 
@@ -1496,22 +1510,22 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
-_TSchemaBase = typing.TypeVar("_TSchemaBase", bound=core.SchemaBase)
+_TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
 
 
-@typing.overload
+@overload
 def condition(
     predicate: _PredicateType, if_true: _StatementType, if_false: _TSchemaBase, **kwargs
 ) -> _TSchemaBase: ...
-@typing.overload
+@overload
 def condition(
     predicate: _PredicateType, if_true: str, if_false: str, **kwargs
-) -> typing.NoReturn: ...
-@typing.overload
+) -> Never: ...
+@overload
 def condition(
     predicate: _PredicateType, if_true: _DictOrSchema, if_false: _DictOrStr, **kwargs
 ) -> dict[str, _ConditionType | Any]: ...
-@typing.overload
+@overload
 def condition(
     predicate: _PredicateType,
     if_true: _DictOrStr,
