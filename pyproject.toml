@@ -216,6 +216,8 @@ extend-safe-fixes=[
     "EM102",
     # trailing-whitespace
     "W291",
+    # blank line contains whitespace
+    "W293"
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview

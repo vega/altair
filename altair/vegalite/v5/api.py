@@ -8,6 +8,7 @@ import jsonschema
 import itertools
 from typing import Union, cast, Any, Iterable, Literal, IO, TYPE_CHECKING
 from typing_extensions import TypeAlias
+import typing
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
@@ -74,8 +75,6 @@ if TYPE_CHECKING:
         Step,
         RepeatRef,
         NonNormalizedSpec,
-        LayerSpec,
-        UnitSpec,
         UrlData,
         SequenceGenerator,
         GraticuleGenerator,
@@ -380,6 +379,19 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 
     return False
 
+
+_TestPredicateType = Union[str, _expr_core.Expression, core.PredicateComposition]
+_PredicateType = Union[
+    Parameter,
+    core.Expr,
+    typing.Dict[str, Any],
+    _TestPredicateType,
+    _expr_core.OperatorMixin,
+]
+_ConditionType = typing.Dict[str, Union[_TestPredicateType, Any]]
+_DictOrStr = Union[typing.Dict[str, Any], str]
+_DictOrSchema = Union[core.SchemaBase, typing.Dict[str, Any]]
+_StatementType = Union[core.SchemaBase, _DictOrStr]
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
@@ -826,18 +838,33 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
+_TSchemaBase = typing.TypeVar("_TSchemaBase", bound=core.SchemaBase)
+
+
+@typing.overload
+def condition(
+    predicate: _PredicateType, if_true: _StatementType, if_false: _TSchemaBase, **kwargs
+) -> _TSchemaBase: ...
+@typing.overload
+def condition(
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+) -> typing.NoReturn: ...
+@typing.overload
+def condition(
+    predicate: _PredicateType, if_true: _DictOrSchema, if_false: _DictOrStr, **kwargs
+) -> dict[str, _ConditionType | Any]: ...
+@typing.overload
+def condition(
+    predicate: _PredicateType,
+    if_true: _DictOrStr,
+    if_false: dict[str, Any],
+    **kwargs,
+) -> dict[str, _ConditionType | Any]: ...
 # TODO: update the docstring
 def condition(
-    predicate: Parameter
-    | str
-    | Expression
-    | Expr
-    | PredicateComposition
-    | dict[str, Any],
-    # Types of these depends on where the condition is used so we probably
-    # can't be more specific here.
-    if_true: Any,
-    if_false: Any,
+    predicate: _PredicateType,
+    if_true: _StatementType,
+    if_false: _StatementType,
     **kwargs,
 ) -> dict[str, Any] | SchemaBase:
     """A conditional attribute or encoding
@@ -2729,24 +2756,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
-class _EncodingMixin:
-    @utils.use_signature(channels._encode_signature)
-    def encode(self, *args, **kwargs) -> Self:
-        # Convert args to kwargs based on their types.
-        kwargs = utils.infer_encoding_types(args, kwargs, channels)
-
-        # get a copy of the dict representation of the previous encoding
-        # ignore type as copy method comes from SchemaBase
-        copy = self.copy(deep=["encoding"])  # type: ignore[attr-defined]
-        encoding = copy._get("encoding", {})
-        if isinstance(encoding, core.VegaLiteSchema):
-            encoding = {k: v for k, v in encoding._kwds.items() if v is not Undefined}
-
-        # update with the new encodings, and apply them to the copy
-        encoding.update(kwargs)
-        copy.encoding = core.FacetedEncoding(**encoding)
-        return copy
-
+class _EncodingMixin(channels._EncodingMixin):
     def facet(
         self,
         facet: Optional[str | Facet] = Undefined,
@@ -3614,7 +3624,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def __iadd__(self, other: LayerSpec | UnitSpec) -> Self:
+    def __iadd__(self, other: LayerChart | Chart) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
         self.layer.append(other)
@@ -3622,12 +3632,12 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
-    def __add__(self, other: LayerSpec | UnitSpec) -> Self:
+    def __add__(self, other: LayerChart | Chart) -> Self:
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
 
-    def add_layers(self, *layers: LayerSpec | UnitSpec) -> Self:
+    def add_layers(self, *layers: LayerChart | Chart) -> Self:
         copy = self.copy(deep=["layer"])
         for layer in layers:
             copy += layer

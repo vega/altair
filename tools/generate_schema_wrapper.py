@@ -69,6 +69,7 @@ def load_schema() -> dict:
 
 CHANNEL_MIXINS: Final = """
 class FieldChannelMixin:
+    _encoding_name: str
     def to_dict(
         self,
         validate: bool = True,
@@ -134,6 +135,7 @@ class FieldChannelMixin:
 
 
 class ValueChannelMixin:
+    _encoding_name: str
     def to_dict(
         self,
         validate: bool = True,
@@ -157,6 +159,7 @@ class ValueChannelMixin:
 
 
 class DatumChannelMixin:
+    _encoding_name: str
     def to_dict(
         self,
         validate: bool = True,
@@ -203,10 +206,30 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 
-ENCODE_SIGNATURE: Final = '''
-def _encode_signature({encode_method_args}):
-    """{docstring}"""
-    ...
+ENCODE_METHOD: Final = '''
+class _EncodingMixin:
+    def encode({encode_method_args}) -> Self:
+        """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
+        {docstring}"""
+        # Compat prep for `infer_encoding_types` signature
+        kwargs = locals()
+        kwargs.pop("self")
+        args = kwargs.pop("args")
+        if args:
+            kwargs = {{k: v for k, v in kwargs.items() if v is not Undefined}}
+
+        # Convert args to kwargs based on their types.
+        kwargs = _infer_encoding_types(args, kwargs)
+        # get a copy of the dict representation of the previous encoding
+        # ignore type as copy method comes from SchemaBase
+        copy = self.copy(deep=['encoding'])  # type: ignore[attr-defined]
+        encoding = copy._get('encoding', {{}})
+        if isinstance(encoding, core.VegaLiteSchema):
+            encoding = {{k: v for k, v in encoding._kwds.items() if v is not Undefined}}
+        # update with the new encodings, and apply them to the copy
+        encoding.update(kwargs)
+        copy.encoding = core.FacetedEncoding(**encoding)
+        return copy
 '''
 
 
@@ -475,10 +498,14 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
                 child.basename.append(name)
 
     # Specify __all__ explicitly so that we can exclude the ones from the list
-    # of exported classes which are also defined in the channels module which takes
-    # precedent in the generated __init__.py file one level up where core.py
-    # and channels.py are imported. Importing both confuses type checkers.
-    it = (c for c in definitions.keys() - {"Color", "Text"} if not c.startswith("_"))
+    # of exported classes which are also defined in the channels or api modules which takes
+    # precedent in the generated __init__.py files one and two levels up.
+    # Importing these classes from multiple modules confuses type checkers.
+    it = (
+        c
+        for c in definitions.keys() - {"Color", "Text", "LookupData"}
+        if not c.startswith("_")
+    )
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
 
     contents = [
@@ -536,21 +563,22 @@ def generate_vegalite_channel_wrappers(
 
     imports = imports or [
         "from __future__ import annotations\n",
-        "import sys",
-        "from . import core",
-        "import pandas as pd",
-        "from altair.utils.schemapi import Undefined, UndefinedType, with_property_setters",
-        "from altair.utils import parse_shorthand",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
+        "import pandas as pd",
+        "from altair.utils.schemapi import Undefined, with_property_setters",
+        "from altair.utils import infer_encoding_types as _infer_encoding_types",
+        "from altair.utils import parse_shorthand",
+        "from . import core",
     ]
     contents = [
         HEADER,
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
         _type_checking_only_imports(
-            "from altair import Parameter, SchemaBase # noqa: F401",
-            "from altair.utils.schemapi import Optional # noqa: F401",
+            "from altair import Parameter, SchemaBase",
+            "from altair.utils.schemapi import Optional",
             "from ._typing import * # noqa: F403",
+            "from typing_extensions import Self",
         ),
         CHANNEL_MIXINS,
     ]
@@ -798,8 +826,8 @@ def vegalite_main(skip_download: bool = False) -> None:
 def _create_encode_signature(
     channel_infos: dict[str, ChannelInfo],
 ) -> str:
-    signature_args: list[str] = ["self"]
-    docstring_parameters: list[str] = ["", "Parameters", "----------", ""]
+    signature_args: list[str] = ["self", "*args: Any"]
+    docstring_parameters: list[str] = ["", "Parameters", "----------"]
     for channel, info in channel_infos.items():
         field_class_name = info.field_class_name
         assert (
@@ -843,9 +871,9 @@ def _create_encode_signature(
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
-        docstring_parameters, indent_level=4, width=100, lstrip=True
+        docstring_parameters, indent_level=4, width=100, lstrip=False
     )
-    return ENCODE_SIGNATURE.format(
+    return ENCODE_METHOD.format(
         encode_method_args=", ".join(signature_args), docstring=docstring
     )
 
