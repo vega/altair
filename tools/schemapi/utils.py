@@ -336,11 +336,9 @@ class SchemaInfo:
                 class_names = ["SchemaBase"]
                 if self.title == "ExprRef":
                     # In these cases, a value parameter is also always accepted.
-                    # We use the _Parameter to indicate this although this
-                    # protocol would also pass for selection parameters but
-                    # due to how the Parameter class is defined, it would be quite
-                    # complex to further differentiate between a value and
-                    # a selection parameter based on the type system (one could
+                    # It would be quite complex to further differentiate
+                    # between a value and a selection parameter based on
+                    # the type system (one could
                     # try to check for the type of the Parameter.param attribute
                     # but then we would need to write some overload signatures for
                     # api.param).
