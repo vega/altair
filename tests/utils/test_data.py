@@ -1,9 +1,8 @@
-import os
+from pathlib import Path
 
+from typing import Any, Callable
 import pytest
 import pandas as pd
-from toolz import pipe
-
 from altair.utils.data import (
     limit_rows,
     MaxRowsError,
@@ -12,6 +11,14 @@ from altair.utils.data import (
     to_json,
     to_csv,
 )
+
+
+def _pipe(data: Any, *funcs: Callable[..., Any]) -> Any:
+    # Redefined to maintain existing tests
+    # Originally part of `toolz` dependency
+    for func in funcs:
+        data = func(data)
+    return data
 
 
 def _create_dataframe(N):
@@ -30,9 +37,9 @@ def test_limit_rows():
     result = limit_rows(data, max_rows=20)
     assert data is result
     with pytest.raises(MaxRowsError):
-        pipe(data, limit_rows(max_rows=5))
+        _pipe(data, limit_rows(max_rows=5))
     data = _create_data_with_values(10)
-    result = pipe(data, limit_rows(max_rows=20))
+    result = _pipe(data, limit_rows(max_rows=20))
     assert data is result
     with pytest.raises(MaxRowsError):
         limit_rows(data, max_rows=5)
@@ -41,7 +48,7 @@ def test_limit_rows():
 def test_sample():
     """Test the sample data transformer."""
     data = _create_dataframe(20)
-    result = pipe(data, sample(n=10))
+    result = _pipe(data, sample(n=10))
     assert len(result) == 10
     assert isinstance(result, pd.DataFrame)
     data = _create_data_with_values(20)
@@ -50,7 +57,7 @@ def test_sample():
     assert "values" in result
     assert len(result["values"]) == 10
     data = _create_dataframe(20)
-    result = pipe(data, sample(frac=0.5))
+    result = _pipe(data, sample(frac=0.5))
     assert len(result) == 10
     assert isinstance(result, pd.DataFrame)
     data = _create_data_with_values(20)
@@ -63,7 +70,7 @@ def test_sample():
 def test_to_values():
     """Test the to_values data transformer."""
     data = _create_dataframe(10)
-    result = pipe(data, to_values)
+    result = _pipe(data, to_values)
     assert result == {"values": data.to_dict(orient="records")}
 
 
@@ -71,7 +78,7 @@ def test_type_error():
     """Ensure that TypeError is raised for types other than dict/DataFrame."""
     for f in (sample, limit_rows, to_values):
         with pytest.raises(TypeError):
-            pipe(0, f)
+            _pipe(0, f)
 
 
 def test_dataframe_to_json():
@@ -81,12 +88,12 @@ def test_dataframe_to_json():
     """
     data = _create_dataframe(10)
     try:
-        result1 = pipe(data, to_json)
-        result2 = pipe(data, to_json)
+        result1 = _pipe(data, to_json)
+        result2 = _pipe(data, to_json)
         filename = result1["url"]
         output = pd.read_json(filename)
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert output.equals(data)
@@ -99,12 +106,12 @@ def test_dict_to_json():
     """
     data = _create_data_with_values(10)
     try:
-        result1 = pipe(data, to_json)
-        result2 = pipe(data, to_json)
+        result1 = _pipe(data, to_json)
+        result2 = _pipe(data, to_json)
         filename = result1["url"]
         output = pd.read_json(filename).to_dict(orient="records")
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert data == {"values": output}
@@ -117,12 +124,12 @@ def test_dataframe_to_csv():
     """
     data = _create_dataframe(10)
     try:
-        result1 = pipe(data, to_csv)
-        result2 = pipe(data, to_csv)
+        result1 = _pipe(data, to_csv)
+        result2 = _pipe(data, to_csv)
         filename = result1["url"]
         output = pd.read_csv(filename)
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert output.equals(data)
@@ -135,12 +142,12 @@ def test_dict_to_csv():
     """
     data = _create_data_with_values(10)
     try:
-        result1 = pipe(data, to_csv)
-        result2 = pipe(data, to_csv)
+        result1 = _pipe(data, to_csv)
+        result2 = _pipe(data, to_csv)
         filename = result1["url"]
         output = pd.read_csv(filename).to_dict(orient="records")
     finally:
-        os.remove(filename)
+        Path(filename).unlink()
 
     assert result1 == result2
     assert data == {"values": output}

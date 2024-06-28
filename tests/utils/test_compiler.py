@@ -3,12 +3,12 @@ import pytest
 from altair import vegalite_compilers, Chart
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
 
-@pytest.fixture
+@pytest.fixture()
 def chart():
     return (
         Chart("cars.json")

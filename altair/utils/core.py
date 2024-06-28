@@ -2,6 +2,8 @@
 Utility routines
 """
 
+from __future__ import annotations
+
 from collections.abc import Mapping, MutableMapping
 from copy import deepcopy
 import json
@@ -10,28 +12,16 @@ import re
 import sys
 import traceback
 import warnings
-from typing import (
-    Callable,
-    TypeVar,
-    Any,
-    Union,
-    Dict,
-    Optional,
-    Tuple,
-    Sequence,
-    Type,
-    cast,
-    Literal,
-    TYPE_CHECKING,
-)
-from types import ModuleType
+from typing import Callable, TypeVar, Any, Iterator, cast, Literal, TYPE_CHECKING
+from itertools import groupby
+from operator import itemgetter
 
 import jsonschema
 import pandas as pd
 import numpy as np
 from pandas.api.types import infer_dtype
 
-from altair.utils.schemapi import SchemaBase
+from altair.utils.schemapi import SchemaBase, Undefined
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
 
 if sys.version_info >= (3, 12):
@@ -45,7 +35,10 @@ else:
 
 
 if TYPE_CHECKING:
+    from types import ModuleType
+    import typing as t
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
+    import pyarrow as pa
 
 V = TypeVar("V")
 P = ParamSpec("P")
@@ -63,7 +56,7 @@ class _ThenLike(Protocol):
     # Helper for extracting the intermediate representation,
     # whilst still allowing further clauses to be added.
     def otherwise(self, *args: Any, **kwargs: Any) -> Any: ...
-    def to_dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]: ...
+    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]: ...
     def when(self, *args: Any, **kwargs: Any) -> Any: ...
 
 
@@ -224,7 +217,7 @@ InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
 def infer_vegalite_type(
     data: object,
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -235,19 +228,19 @@ def infer_vegalite_type(
     """
     typ = infer_dtype(data, skipna=False)
 
-    if typ in [
+    if typ in {
         "floating",
         "mixed-integer-float",
         "integer",
         "mixed-integer",
         "complex",
-    ]:
+    }:
         return "quantitative"
     elif typ == "categorical" and hasattr(data, "cat") and data.cat.ordered:
         return ("ordinal", data.cat.categories.tolist())
-    elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
+    elif typ in {"string", "bytes", "categorical", "boolean", "mixed", "unicode"}:
         return "nominal"
-    elif typ in [
+    elif typ in {
         "datetime",
         "datetime64",
         "timedelta",
@@ -255,18 +248,18 @@ def infer_vegalite_type(
         "date",
         "time",
         "period",
-    ]:
+    }:
         return "temporal"
     else:
         warnings.warn(
-            "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ),
+            f"I don't know how to infer vegalite type from '{typ}'.  "
+            "Defaulting to nominal.",
             stacklevel=1,
         )
         return "nominal"
 
 
-def merge_props_geom(feat: dict) -> dict:
+def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     """
     Merge properties with geometry
     * Overwrites 'type' and 'geometry' entries if existing
@@ -284,7 +277,7 @@ def merge_props_geom(feat: dict) -> dict:
     return props_geom
 
 
-def sanitize_geo_interface(geo: MutableMapping) -> dict:
+def sanitize_geo_interface(geo: t.MutableMapping[Any, Any]) -> dict[str, Any]:
     """Santize a geo_interface to prepare it for serialization.
 
     * Make a copy
@@ -296,7 +289,7 @@ def sanitize_geo_interface(geo: MutableMapping) -> dict:
     geo = deepcopy(geo)
 
     # convert type _Array or array to list
-    for key in geo.keys():
+    for key in geo:
         if str(type(geo[key]).__name__).startswith(("_Array", "array")):
             geo[key] = geo[key].tolist()
 
@@ -324,7 +317,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
+def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
@@ -348,15 +341,18 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
 
     for col_name in df.columns:
         if not isinstance(col_name, str):
-            raise ValueError(
-                "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col_name)
+            msg = (
+                f"Dataframe contains invalid column name: {col_name!r}. "
+                "Column names must be strings"
             )
+            raise ValueError(msg)
 
     if isinstance(df.index, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
     if isinstance(df.columns, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
+        msg = "Hierarchical indices not supported"
+        raise ValueError(msg)
 
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
@@ -390,7 +386,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name.startswith("datetime") or dtype_name.startswith("timestamp"):
+        elif dtype_name.startswith(("datetime", "timestamp")):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
@@ -401,12 +397,13 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
             )
         elif dtype_name.startswith("timedelta"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=col_name, dtype=dtype)
+                ""
             )
+            raise ValueError(msg)
         elif dtype_name.startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
@@ -438,7 +435,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             col = df[col_name]
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
-        elif dtype == object:
+        elif dtype == object:  # noqa: E721
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
             col = df[col_name].astype(object).apply(to_list_if_array)
@@ -446,7 +443,7 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     return df
 
 
-def sanitize_arrow_table(pa_table):
+def sanitize_arrow_table(pa_table: pa.Table) -> pa.Table:
     """Sanitize arrow table for JSON serialization"""
     import pyarrow as pa
     import pyarrow.compute as pc
@@ -456,15 +453,16 @@ def sanitize_arrow_table(pa_table):
     for name in schema.names:
         array = pa_table[name]
         dtype_name = str(schema.field(name).type)
-        if dtype_name.startswith("timestamp") or dtype_name.startswith("date"):
+        if dtype_name.startswith(("timestamp", "date")):
             arrays.append(pc.strftime(array))
         elif dtype_name.startswith("duration"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+            msg = (
+                f'Field "{name}" has type "{dtype_name}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=name, dtype=dtype_name)
+                ""
             )
+            raise ValueError(msg)
         else:
             arrays.append(array)
 
@@ -472,13 +470,13 @@ def sanitize_arrow_table(pa_table):
 
 
 def parse_shorthand(
-    shorthand: Union[Dict[str, Any], str],
-    data: Optional[Union[pd.DataFrame, DataFrameLike]] = None,
+    shorthand: dict[str, Any] | str,
+    data: pd.DataFrame | DataFrameLike | None = None,
     parse_aggregates: bool = True,
     parse_window_ops: bool = False,
     parse_timeunits: bool = True,
     parse_types: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """General tool to parse shorthand values
 
     These are of the form:
@@ -656,8 +654,8 @@ def parse_shorthand(
 
 
 def infer_vegalite_type_for_dfi_column(
-    column: Union[Column, "PandasColumn"],
-) -> Union[InferredVegaLiteType, Tuple[InferredVegaLiteType, list]]:
+    column: Column | PandasColumn,
+) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     from pyarrow.interchange.from_dataframe import column_to_array
 
     try:
@@ -682,17 +680,18 @@ def infer_vegalite_type_for_dfi_column(
         categories_column = column.describe_categorical["categories"]
         categories_array = column_to_array(categories_column)
         return "ordinal", categories_array.to_pylist()
-    if kind in (DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL):
+    if kind in {DtypeKind.STRING, DtypeKind.CATEGORICAL, DtypeKind.BOOL}:
         return "nominal"
-    elif kind in (DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT):
+    elif kind in {DtypeKind.INT, DtypeKind.UINT, DtypeKind.FLOAT}:
         return "quantitative"
     elif kind == DtypeKind.DATETIME:
         return "temporal"
     else:
-        raise ValueError(f"Unexpected DtypeKind: {kind}")
+        msg = f"Unexpected DtypeKind: {kind}"
+        raise ValueError(msg)
 
 
-def use_signature(Obj: Callable[P, Any]):
+def use_signature(Obj: Callable[P, Any]):  # -> Callable[..., Callable[P, V]]:
     """Apply call signature and documentation of Obj to the decorated method"""
 
     def decorate(f: Callable[..., V]) -> Callable[P, V]:
@@ -712,11 +711,7 @@ def use_signature(Obj: Callable[P, Any]):
                 doc = f.__doc__ + "\n".join(doclines[1:])
             else:
                 doc = "\n".join(doclines)
-            try:
-                f.__doc__ = doc
-            except AttributeError:
-                # __doc__ is not modifiable for classes in Python < 3.3
-                pass
+            f.__doc__ = doc
 
         return f
 
@@ -724,8 +719,10 @@ def use_signature(Obj: Callable[P, Any]):
 
 
 def update_nested(
-    original: MutableMapping, update: Mapping, copy: bool = False
-) -> MutableMapping:
+    original: t.MutableMapping[Any, Any],
+    update: t.Mapping[Any, Any],
+    copy: bool = False,
+) -> t.MutableMapping[Any, Any]:
     """Update nested dictionaries
 
     Parameters
@@ -781,7 +778,137 @@ def display_traceback(in_ipython: bool = True):
         traceback.print_exception(*exc_info)
 
 
-def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: ModuleType):
+_ChannelType = Literal["field", "datum", "value"]
+_CHANNEL_CACHE: _ChannelCache
+"""Singleton `_ChannelCache` instance.
+
+Initialized on first use.
+"""
+
+
+class _ChannelCache:
+    channel_to_name: dict[type[SchemaBase], str]
+    name_to_channel: dict[str, dict[_ChannelType, type[SchemaBase]]]
+
+    @classmethod
+    def from_channels(cls, channels: ModuleType, /) -> _ChannelCache:
+        # - This branch is only kept for tests that depend on mocking `channels`.
+        # - No longer needs to pass around `channels` reference and rebuild every call.
+        c_to_n = {
+            c: c._encoding_name
+            for c in channels.__dict__.values()
+            if isinstance(c, type)
+            and issubclass(c, SchemaBase)
+            and hasattr(c, "_encoding_name")
+        }
+        self = cls.__new__(cls)
+        self.channel_to_name = c_to_n
+        self.name_to_channel = _invert_group_channels(c_to_n)
+        return self
+
+    @classmethod
+    def from_cache(cls) -> _ChannelCache:
+        global _CHANNEL_CACHE
+        try:
+            cached = _CHANNEL_CACHE
+        except NameError:
+            cached = cls.__new__(cls)
+            cached.channel_to_name = _init_channel_to_name()
+            cached.name_to_channel = _invert_group_channels(cached.channel_to_name)
+            _CHANNEL_CACHE = cached
+        return _CHANNEL_CACHE
+
+    def get_encoding(self, tp: type[Any], /) -> str:
+        if encoding := self.channel_to_name.get(tp):
+            return encoding
+        msg = f"positional of type {type(tp).__name__!r}"
+        raise NotImplementedError(msg)
+
+    def _wrap_in_channel(self, obj: Any, encoding: str, /):
+        if isinstance(obj, SchemaBase):
+            return obj
+        elif isinstance(obj, str):
+            obj = {"shorthand": obj}
+        elif isinstance(obj, (list, tuple)):
+            return [self._wrap_in_channel(el, encoding) for el in obj]
+        elif isinstance(obj, _ThenLike):
+            # NOTE: Temporary solution while `when-then-otherwise` is not
+            # related to any other `altair` classes.
+            obj = obj.to_dict()
+        if channel := self.name_to_channel.get(encoding):
+            tp = channel["value" if "value" in obj else "field"]
+            try:
+                # Don't force validation here; some objects won't be valid until
+                # they're created in the context of a chart.
+                return tp.from_dict(obj, validate=False)
+            except jsonschema.ValidationError:
+                # our attempts at finding the correct class have failed
+                return obj
+        else:
+            warnings.warn(f"Unrecognized encoding channel {encoding!r}", stacklevel=1)
+            return obj
+
+    def infer_encoding_types(self, kwargs: dict[str, Any], /):
+        return {
+            encoding: self._wrap_in_channel(obj, encoding)
+            for encoding, obj in kwargs.items()
+            if obj is not Undefined
+        }
+
+
+def _init_channel_to_name():
+    """
+    Construct a dictionary of channel type to encoding name.
+
+    Note
+    ----
+    The return type is not expressible using annotations, but is used
+    internally by `mypy`/`pyright` and avoids the need for type ignores.
+
+    Returns
+    -------
+        mapping: dict[type[`<subclass of FieldChannelMixin and SchemaBase>`] | type[`<subclass of ValueChannelMixin and SchemaBase>`] | type[`<subclass of DatumChannelMixin and SchemaBase>`], str]
+    """
+    from altair.vegalite.v5.schema import channels as ch
+
+    mixins = ch.FieldChannelMixin, ch.ValueChannelMixin, ch.DatumChannelMixin
+
+    return {
+        c: c._encoding_name
+        for c in ch.__dict__.values()
+        if isinstance(c, type) and issubclass(c, mixins) and issubclass(c, SchemaBase)
+    }
+
+
+def _invert_group_channels(
+    m: dict[type[SchemaBase], str], /
+) -> dict[str, dict[_ChannelType, type[SchemaBase]]]:
+    """Grouped inverted index for `_ChannelCache.channel_to_name`."""
+
+    def _reduce(it: Iterator[tuple[type[Any], str]]) -> Any:
+        """Returns a 1-2 item dict, per channel.
+
+        Never includes `datum`, as it is never utilized in `wrap_in_channel`.
+        """
+        item: dict[Any, type[SchemaBase]] = {}
+        for tp, _ in it:
+            name = tp.__name__
+            if name.endswith("Datum"):
+                continue
+            elif name.endswith("Value"):
+                sub_key = "value"
+            else:
+                sub_key = "field"
+            item[sub_key] = tp
+        return item
+
+    grouper = groupby(m.items(), itemgetter(1))
+    return {k: _reduce(chans) for k, chans in grouper}
+
+
+def infer_encoding_types(
+    args: tuple[Any, ...], kwargs: dict[str, Any], channels: ModuleType | None = None
+):
     """Infer typed keyword arguments for args and kwargs
 
     Parameters
@@ -799,70 +926,19 @@ def infer_encoding_types(args: Sequence, kwargs: MutableMapping, channels: Modul
         All args and kwargs in a single dict, with keys and types
         based on the channels mapping.
     """
-    # Construct a dictionary of channel type to encoding name
-    # TODO: cache this somehow?
-    channel_objs = (getattr(channels, name) for name in dir(channels))
-    channel_objs = (
-        c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
+    cache = (
+        _ChannelCache.from_channels(channels)
+        if channels
+        else _ChannelCache.from_cache()
     )
-    channel_to_name: Dict[Type[SchemaBase], str] = {
-        c: c._encoding_name for c in channel_objs
-    }
-    name_to_channel: Dict[str, Dict[str, Type[SchemaBase]]] = {}
-    for chan, name in channel_to_name.items():
-        chans = name_to_channel.setdefault(name, {})
-        if chan.__name__.endswith("Datum"):
-            key = "datum"
-        elif chan.__name__.endswith("Value"):
-            key = "value"
-        else:
-            key = "field"
-        chans[key] = chan
-
     # First use the mapping to convert args to kwargs based on their types.
     for arg in args:
-        if isinstance(arg, (list, tuple)) and len(arg) > 0:
-            type_ = type(arg[0])
+        el = next(iter(arg), None) if isinstance(arg, (list, tuple)) else arg
+        encoding = cache.get_encoding(type(el))
+        if encoding not in kwargs:
+            kwargs[encoding] = arg
         else:
-            type_ = type(arg)
+            msg = f"encoding {encoding!r} specified twice."
+            raise ValueError(msg)
 
-        encoding = channel_to_name.get(type_, None)
-        if encoding is None:
-            raise NotImplementedError("positional of type {}" "".format(type_))
-        if encoding in kwargs:
-            raise ValueError("encoding {} specified twice.".format(encoding))
-        kwargs[encoding] = arg
-
-    def _wrap_in_channel_class(obj, encoding):
-        if isinstance(obj, SchemaBase):
-            return obj
-        elif isinstance(obj, str):
-            obj = {"shorthand": obj}
-        elif isinstance(obj, (list, tuple)):
-            return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
-        elif isinstance(obj, _ThenLike):
-            # NOTE: Temporary solution while `when-then-otherwise` is not
-            # related to any other `altair` classes.
-            obj = obj.to_dict()
-
-        if encoding not in name_to_channel:
-            warnings.warn(
-                "Unrecognized encoding channel '{}'".format(encoding), stacklevel=1
-            )
-            return obj
-
-        classes = name_to_channel[encoding]
-        cls = classes["value"] if "value" in obj else classes["field"]
-
-        try:
-            # Don't force validation here; some objects won't be valid until
-            # they're created in the context of a chart.
-            return cls.from_dict(obj, validate=False)
-        except jsonschema.ValidationError:
-            # our attempts at finding the correct class have failed
-            return obj
-
-    return {
-        encoding: _wrap_in_channel_class(obj, encoding)
-        for encoding, obj in kwargs.items()
-    }
+    return cache.infer_encoding_types(kwargs)

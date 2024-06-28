@@ -3,7 +3,7 @@ import pytest
 from altair.utils.html import spec_to_html
 
 
-@pytest.fixture
+@pytest.fixture()
 def spec():
     return {
         "data": {"url": "data.json"},
@@ -47,6 +47,6 @@ def test_spec_to_html(requirejs, fullhtml, spec):
     else:
         assert "require(" not in html
 
-    assert "vega-lite@{}".format(vegalite_version) in html
-    assert "vega@{}".format(vega_version) in html
-    assert "vega-embed@{}".format(vegaembed_version) in html
+    assert f"vega-lite@{vegalite_version}" in html
+    assert f"vega@{vega_version}" in html
+    assert f"vega-embed@{vegaembed_version}" in html

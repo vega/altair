@@ -71,7 +71,7 @@ class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
 
 
 @pytest.mark.parametrize(
-    "value,expected_type",
+    ("value", "expected_type"),
     [
         ([1, 2, 3], "integer"),
         ([1.0, 2.0, 3.0], "floating"),
@@ -164,7 +164,7 @@ def test_parse_shorthand_with_data(object_dtype):
     check("month(z)", data, timeUnit="month", field="z", type="temporal")
     check("month(t)", data, timeUnit="month", field="t", type="temporal")
 
-    if PANDAS_VERSION >= Version("1.0.0"):
+    if Version("1.0.0") <= PANDAS_VERSION:
         data["b"] = pd.Series([True, False, True, False, None], dtype="boolean")
         check("b", data, field="b", type="nominal")
 
@@ -186,7 +186,7 @@ def test_parse_shorthand_for_arrow_timestamp():
 def test_parse_shorthand_all_aggregates():
     aggregates = alt.Root._schema["definitions"]["AggregateOp"]["enum"]
     for aggregate in aggregates:
-        shorthand = "{aggregate}(field):Q".format(aggregate=aggregate)
+        shorthand = f"{aggregate}(field):Q"
         assert parse_shorthand(shorthand) == {
             "aggregate": aggregate,
             "field": "field",
@@ -201,7 +201,7 @@ def test_parse_shorthand_all_timeunits():
             defn = loc + typ + "TimeUnit"
             timeUnits.extend(alt.Root._schema["definitions"][defn]["enum"])
     for timeUnit in timeUnits:
-        shorthand = "{timeUnit}(field):Q".format(timeUnit=timeUnit)
+        shorthand = f"{timeUnit}(field):Q"
         assert parse_shorthand(shorthand) == {
             "timeUnit": timeUnit,
             "field": "field",
@@ -225,7 +225,7 @@ def test_parse_shorthand_all_window_ops():
     window_ops = alt.Root._schema["definitions"]["WindowOnlyOp"]["enum"]
     aggregates = alt.Root._schema["definitions"]["AggregateOp"]["enum"]
     for op in window_ops + aggregates:
-        shorthand = "{op}(field)".format(op=op)
+        shorthand = f"{op}(field)"
         dct = parse_shorthand(
             shorthand,
             parse_aggregates=False,
@@ -249,7 +249,7 @@ def test_update_nested():
     assert output == output2
 
 
-@pytest.fixture
+@pytest.fixture()
 def channels():
     channels = types.ModuleType("channels")
     exec(FAKE_CHANNELS_MODULE, channels.__dict__)
@@ -260,6 +260,7 @@ def _getargs(*args, **kwargs):
     return args, kwargs
 
 
+# NOTE: Dependent on a no longer needed implementation detail
 def test_infer_encoding_types(channels):
     expected = {
         "x": channels.X("xval"),
@@ -285,8 +286,6 @@ def test_infer_encoding_types(channels):
 
 
 def test_infer_encoding_types_with_condition():
-    channels = alt.channels
-
     args, kwds = _getargs(
         size=alt.condition("pred1", alt.value(1), alt.value(2)),
         color=alt.condition("pred2", alt.value("red"), "cfield:N"),
@@ -294,13 +293,13 @@ def test_infer_encoding_types_with_condition():
     )
 
     expected = {
-        "size": channels.SizeValue(
+        "size": alt.SizeValue(
             2,
             condition=alt.ConditionalPredicateValueDefnumberExprRef(
                 value=1, test=alt.Predicate("pred1")
             ),
         ),
-        "color": channels.Color(
+        "color": alt.Color(
             field=alt.FieldName("cfield"),
             type=alt.StandardType("nominal"),
             condition=alt.ConditionalPredicateValueDefGradientstringnullExprRef(
@@ -308,7 +307,7 @@ def test_infer_encoding_types_with_condition():
                 test=alt.Predicate("pred2"),
             ),
         ),
-        "opacity": channels.OpacityValue(
+        "opacity": alt.OpacityValue(
             0.2,
             condition=alt.ConditionalPredicateMarkPropFieldOrDatumDef(
                 field=alt.FieldName("ofield"),
@@ -317,7 +316,7 @@ def test_infer_encoding_types_with_condition():
             ),
         ),
     }
-    assert infer_encoding_types(args, kwds, channels) == expected
+    assert infer_encoding_types(args, kwds) == expected
 
 
 def test_invalid_data_type():

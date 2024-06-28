@@ -1,8 +1,9 @@
 """Code generation utilities"""
 
+from __future__ import annotations
 import re
 import textwrap
-from typing import Set, Final, Optional, List, Union, Dict, Tuple
+from typing import Final
 from dataclasses import dataclass
 
 from .utils import (
@@ -27,9 +28,9 @@ class CodeSnippet:
 @dataclass
 class ArgInfo:
     nonkeyword: bool
-    required: Set[str]
-    kwds: Set[str]
-    invalid_kwds: Set[str]
+    required: set[str]
+    kwds: set[str]
+    invalid_kwds: set[str]
     additional: bool
 
 
@@ -37,9 +38,9 @@ def get_args(info: SchemaInfo) -> ArgInfo:
     """Return the list of args & kwds for building the __init__ function"""
     # TODO: - set additional properties correctly
     #       - handle patternProperties etc.
-    required: Set[str] = set()
-    kwds: Set[str] = set()
-    invalid_kwds: Set[str] = set()
+    required: set[str] = set()
+    kwds: set[str] = set()
+    invalid_kwds: set[str] = set()
 
     # TODO: specialize for anyOf/oneOf?
 
@@ -69,7 +70,8 @@ def get_args(info: SchemaInfo) -> ArgInfo:
         additional = True
         # additional = info.additionalProperties or info.patternProperties
     else:
-        raise ValueError("Schema object not understood")
+        msg = "Schema object not understood"
+        raise ValueError(msg)
 
     return ArgInfo(
         nonkeyword=nonkeyword,
@@ -131,13 +133,13 @@ class SchemaGenerator:
         self,
         classname: str,
         schema: dict,
-        rootschema: Optional[dict] = None,
-        basename: Union[str, List[str]] = "SchemaBase",
-        schemarepr: Optional[object] = None,
-        rootschemarepr: Optional[object] = None,
-        nodefault: Optional[List[str]] = None,
+        rootschema: dict | None = None,
+        basename: str | list[str] = "SchemaBase",
+        schemarepr: object | None = None,
+        rootschemarepr: object | None = None,
+        nodefault: list[str] | None = None,
         haspropsetters: bool = False,
-        altair_classes_prefix: Optional[str] = None,
+        altair_classes_prefix: str | None = None,
         **kwargs,
     ) -> None:
         self.classname = classname
@@ -151,7 +153,7 @@ class SchemaGenerator:
         self.kwargs = kwargs
         self.altair_classes_prefix = altair_classes_prefix
 
-    def subclasses(self) -> List[str]:
+    def subclasses(self) -> list[str]:
         """Return a list of subclass names, if any."""
         info = SchemaInfo(self.schema, self.rootschema)
         return [child.refname for child in info.anyOf if child.is_reference()]
@@ -196,7 +198,7 @@ class SchemaGenerator:
     def docstring(self, indent: int = 0) -> str:
         info = self.info
         doc = [
-            "{} schema wrapper".format(self.classname),
+            f"{self.classname} schema wrapper",
         ]
         if info.description:
             doc += self._process_description(  # remove condition description
@@ -224,9 +226,7 @@ class SchemaGenerator:
                             altair_classes_prefix=self.altair_classes_prefix,
                         ),
                     ),
-                    "    {}".format(
-                        self._process_description(propinfo.deep_description)
-                    ),
+                    f"    {self._process_description(propinfo.deep_description)}",
                 ]
         if len(doc) > 1:
             doc += [""]
@@ -246,8 +246,8 @@ class SchemaGenerator:
         return initfunc
 
     def init_args(
-        self, additional_types: Optional[List[str]] = None
-    ) -> Tuple[List[str], List[str]]:
+        self, additional_types: list[str] | None = None
+    ) -> tuple[list[str], list[str]]:
         additional_types = additional_types or []
         info = self.info
         arg_info = self.arg_info
@@ -256,8 +256,8 @@ class SchemaGenerator:
         arg_info.required -= nodefault
         arg_info.kwds -= nodefault
 
-        args: List[str] = ["self"]
-        super_args: List[str] = []
+        args: list[str] = ["self"]
+        super_args: list[str] = []
 
         self.init_kwds = sorted(arg_info.kwds)
 
@@ -268,7 +268,7 @@ class SchemaGenerator:
             super_args.append("*args")
 
         args.extend(
-            f"{p}: Union["
+            f"{p}: Optional[Union["
             + ", ".join(
                 [
                     *additional_types,
@@ -277,14 +277,13 @@ class SchemaGenerator:
                         altair_classes_prefix=self.altair_classes_prefix,
                         return_as_str=False,
                     ),
-                    "UndefinedType",
                 ]
             )
-            + "] = Undefined"
+            + "]] = Undefined"
             for p in sorted(arg_info.required) + sorted(arg_info.kwds)
         )
         super_args.extend(
-            "{0}={0}".format(p)
+            f"{p}={p}"
             for p in sorted(nodefault)
             + sorted(arg_info.required)
             + sorted(arg_info.kwds)
@@ -295,9 +294,9 @@ class SchemaGenerator:
             super_args.append("**kwds")
         return args, super_args
 
-    def get_args(self, si: SchemaInfo) -> List[str]:
+    def get_args(self, si: SchemaInfo) -> list[str]:
         contents = ["self"]
-        prop_infos: Dict[str, SchemaInfo] = {}
+        prop_infos: dict[str, SchemaInfo] = {}
         if si.is_anyOf():
             prop_infos = {}
             for si_sub in si.anyOf:
@@ -345,16 +344,17 @@ class SchemaGenerator:
 
     def get_signature(
         self, attr: str, sub_si: SchemaInfo, indent: int, has_overload: bool = False
-    ) -> List[str]:
+    ) -> list[str]:
         lines = []
         if has_overload:
             lines.append("@overload")
         args = ", ".join(self.get_args(sub_si))
-        lines.append(f"def {attr}({args}) -> '{self.classname}':")
-        lines.append(indent * " " + "...\n")
+        lines.extend(
+            (f"def {attr}({args}) -> '{self.classname}':", indent * " " + "...\n")
+        )
         return lines
 
-    def setter_hint(self, attr: str, indent: int) -> List[str]:
+    def setter_hint(self, attr: str, indent: int) -> list[str]:
         si = SchemaInfo(self.schema, self.rootschema).properties[attr]
         if si.is_anyOf():
             return self._get_signature_any_of(si, attr, indent)
@@ -363,7 +363,7 @@ class SchemaGenerator:
 
     def _get_signature_any_of(
         self, si: SchemaInfo, attr: str, indent: int
-    ) -> List[str]:
+    ) -> list[str]:
         signatures = []
         for sub_si in si.anyOf:
             if sub_si.is_anyOf():
@@ -375,7 +375,7 @@ class SchemaGenerator:
                 )
         return list(flatten(signatures))
 
-    def method_code(self, indent: int = 0) -> Optional[str]:
+    def method_code(self, indent: int = 0) -> str | None:
         """Return code to assist setter methods"""
         if not self.haspropsetters:
             return None

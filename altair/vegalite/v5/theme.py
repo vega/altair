@@ -1,6 +1,7 @@
 """Tools for enabling and registering chart themes"""
 
-from typing import Dict, Union, Final
+from __future__ import annotations
+from typing import Final
 
 from ...utils.theme import ThemeRegistry
 
@@ -24,14 +25,14 @@ class VegaTheme:
     def __init__(self, theme: str) -> None:
         self.theme = theme
 
-    def __call__(self) -> Dict[str, Dict[str, Dict[str, Union[str, int]]]]:
+    def __call__(self) -> dict[str, dict[str, dict[str, str | int]]]:
         return {
             "usermeta": {"embedOptions": {"theme": self.theme}},
             "config": {"view": {"continuousWidth": 300, "continuousHeight": 300}},
         }
 
     def __repr__(self) -> str:
-        return "VegaTheme({!r})".format(self.theme)
+        return f"VegaTheme({self.theme!r})"
 
 
 # The entry point group that can be used by other packages to declare other
@@ -53,7 +54,7 @@ themes.register(
         }
     },
 )
-themes.register("none", lambda: {})
+themes.register("none", dict)
 
 for theme in VEGA_THEMES:
     themes.register(theme, VegaTheme(theme))

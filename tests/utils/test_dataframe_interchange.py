@@ -1,8 +1,8 @@
 from datetime import datetime
+from pathlib import Path
 import pandas as pd
 import pytest
 import sys
-import os
 
 try:
     import pyarrow as pa
@@ -19,8 +19,7 @@ def windows_has_tzdata():
     This is the default location where tz.cpp will look for (until we make
     this configurable at run-time)
     """
-    tzdata_path = os.path.expandvars(r"%USERPROFILE%\Downloads\tzdata")
-    return os.path.exists(tzdata_path)
+    return Path.home().joinpath("Downloads", "tzdata").exists()
 
 
 # Skip test on Windows when the tz database is not configured.
@@ -55,7 +54,7 @@ def test_duration_raises():
     df = pd.DataFrame(td).reset_index()
     df.columns = ["id", "timedelta"]
     pa_table = pa.table(df)
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError) as e:  # noqa: PT011
         to_values(pa_table)
 
     # Check that exception mentions the duration[ns] type,

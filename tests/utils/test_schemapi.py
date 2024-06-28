@@ -1,3 +1,4 @@
+# ruff: noqa: W291
 import copy
 import io
 import inspect
@@ -146,18 +147,14 @@ _validation_selection_schema = {
 class Draft4Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-04/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-04/schema#",
     }
 
 
 class Draft6Schema(_TestSchema):
     _schema = {
         **_validation_selection_schema,
-        **{
-            "$schema": "http://json-schema.org/draft-06/schema#",
-        },
+        "$schema": "http://json-schema.org/draft-06/schema#",
     }
 
 
@@ -291,7 +288,7 @@ def test_schema_validator_selection():
         Draft6Schema.from_dict(dct)
 
 
-@pytest.fixture
+@pytest.fixture()
 def dct():
     return {
         "a": {"foo": "bar"},
@@ -375,7 +372,7 @@ def test_class_with_no_schema():
     class BadSchema(SchemaBase):
         pass
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         BadSchema(4)
     assert str(err.value).startswith("Cannot instantiate object")
 
@@ -438,22 +435,6 @@ def chart_error_example__hconcat():
     )
 
     return points | text
-
-
-def chart_error_example__invalid_channel():
-    # Error: invalidChannel is an invalid encoding channel. Condition is correct
-    # but is added below as in previous implementations of Altair this interfered
-    # with finding the invalidChannel error
-    selection = alt.selection_point()
-    return (
-        alt.Chart(data.barley())
-        .mark_circle()
-        .add_params(selection)
-        .encode(
-            color=alt.condition(selection, alt.value("red"), alt.value("green")),
-            invalidChannel=None,
-        )
-    )
 
 
 def chart_error_example__invalid_y_option_value_unknown_x_option():
@@ -557,10 +538,10 @@ def chart_error_example__wrong_tooltip_type_in_layered_chart():
 
 def chart_error_example__two_errors_in_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
-    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 2: `Color` has no parameter named 'invalidArgument'
     return alt.layer(
         alt.Chart().mark_point().encode(tooltip=[{"wrong"}]),
-        alt.Chart().mark_line().encode(invalidChannel="unknown"),
+        alt.Chart().mark_line().encode(alt.Color(invalidArgument="unknown")),
     )
 
 
@@ -575,7 +556,7 @@ def chart_error_example__two_errors_in_complex_concat_layered_chart():
 
 def chart_error_example__three_errors_in_complex_concat_layered_chart():
     # Error 1: Wrong data type to pass to tooltip
-    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 2: `Color` has no parameter named 'invalidArgument'
     # Error 3: Invalid value for bandPosition
     return (
         chart_error_example__two_errors_in_layered_chart()
@@ -585,7 +566,7 @@ def chart_error_example__three_errors_in_complex_concat_layered_chart():
 
 def chart_error_example__two_errors_with_one_in_nested_layered_chart():
     # Error 1: invalidOption is not a valid option for Scale
-    # Error 2: invalidChannel is not a valid encoding channel
+    # Error 2: `Color` has no parameter named 'invalidArgument'
 
     # In the final chart object, the `layer` attribute will look like this:
     # [alt.Chart(...), alt.Chart(...), alt.LayerChart(...)]
@@ -621,7 +602,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
     base = alt.Chart().encode(y=alt.datum(300))
 
-    rule = base.mark_rule().encode(invalidChannel=2)
+    rule = base.mark_rule().encode(alt.Color(invalidArgument="unknown"))
     text = base.mark_text(text="hazardous")
     rule_text = rule + text
 
@@ -649,7 +630,7 @@ def chart_error_example__four_errors():
 
 
 @pytest.mark.parametrize(
-    "chart_func, expected_error_message",
+    ("chart_func", "expected_error_message"),
     [
         (
             chart_error_example__invalid_y_option_value_unknown_x_option,
@@ -669,7 +650,7 @@ def chart_error_example__four_errors():
                 Error 2: 'asdf' is an invalid value for `stack`. Valid values are:
 
                     - One of \['zero', 'center', 'normalize'\]
-                    - Of type 'null' or 'boolean'$"""  # noqa: W291
+                    - Of type 'null' or 'boolean'$"""
             ),
         ),
         (
@@ -691,18 +672,14 @@ def chart_error_example__four_errors():
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
-                    angle         key          order     strokeDash      tooltip   xOffset   
-                    color         latitude     radius    strokeOpacity   url       y         
-                    description   latitude2    radius2   strokeWidth     x         y2        
-                    detail        longitude    shape     text            x2        yError    
-                    fill          longitude2   size      theta           xError    yError2   
-                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                    href                                                                     
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
 
-                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `Color` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -722,20 +699,16 @@ def chart_error_example__four_errors():
 
                 Error 1: '{'wrong'}' is an invalid value for `field`. Valid values are of type 'string' or 'object'.
 
-                Error 2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
-                    angle         key          order     strokeDash      tooltip   xOffset   
-                    color         latitude     radius    strokeOpacity   url       y         
-                    description   latitude2    radius2   strokeWidth     x         y2        
-                    detail        longitude    shape     text            x2        yError    
-                    fill          longitude2   size      theta           xError    yError2   
-                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                    href                                                                     
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
 
-                    See the help for `Encoding` to read the full description of these parameters
+                    See the help for `Color` to read the full description of these parameters
 
-                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""  # noqa: W291
+                Error 3: '4' is an invalid value for `bandPosition`. Valid values are of type 'number'.$"""
             ),
         ),
         (
@@ -754,18 +727,14 @@ def chart_error_example__four_errors():
 
                     See the help for `Scale` to read the full description of these parameters
 
-                Error 2: `Encoding` has no parameter named 'invalidChannel'
+                Error 2: `Color` has no parameter named 'invalidArgument'
 
                     Existing parameter names are:
-                    angle         key          order     strokeDash      tooltip   xOffset   
-                    color         latitude     radius    strokeOpacity   url       y         
-                    description   latitude2    radius2   strokeWidth     x         y2        
-                    detail        longitude    shape     text            x2        yError    
-                    fill          longitude2   size      theta           xError    yError2   
-                    fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                    href                                                                     
+                    shorthand      bin         legend   timeUnit   
+                    aggregate      condition   scale    title      
+                    bandPosition   field       sort     type       
 
-                    See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `Color` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -779,7 +748,7 @@ def chart_error_example__four_errors():
                 background   data       padding       spacing   usermeta    
                 bounds       datasets                                       
 
-                See the help for `VConcatChart` to read the full description of these parameters$"""  # noqa: W291
+                See the help for `VConcatChart` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -804,23 +773,6 @@ def chart_error_example__four_errors():
             chart_error_example__hconcat,
             inspect.cleandoc(
                 r"""'{'text': 'Horsepower', 'align': 'right'}' is an invalid value for `title`. Valid values are of type 'string', 'array', or 'null'.$"""
-            ),
-        ),
-        (
-            chart_error_example__invalid_channel,
-            inspect.cleandoc(
-                r"""`Encoding` has no parameter named 'invalidChannel'
-
-                Existing parameter names are:
-                angle         key          order     strokeDash      tooltip   xOffset   
-                color         latitude     radius    strokeOpacity   url       y         
-                description   latitude2    radius2   strokeWidth     x         y2        
-                detail        longitude    shape     text            x2        yError    
-                fill          longitude2   size      theta           xError    yError2   
-                fillOpacity   opacity      stroke    theta2          xError2   yOffset   
-                href                                                                     
-
-                See the help for `Encoding` to read the full description of these parameters$"""  # noqa: W291
             ),
         ),
         (
@@ -871,7 +823,7 @@ def chart_error_example__four_errors():
                 axis           impute   stack   type       
                 bandPosition                               
 
-                See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+                See the help for `X` to read the full description of these parameters$"""
             ),
         ),
         (
@@ -911,7 +863,7 @@ def chart_error_example__four_errors():
                     axis           impute   stack   type       
                     bandPosition                               
 
-                    See the help for `X` to read the full description of these parameters$"""  # noqa: W291
+                    See the help for `X` to read the full description of these parameters$"""
             ),
         ),
     ],

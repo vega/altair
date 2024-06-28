@@ -1,7 +1,9 @@
+from __future__ import annotations
 import json
 import pkgutil
 import textwrap
-from typing import Callable, Dict, Optional, Tuple, Any, Union
+from typing import Callable, Any, Dict, Tuple, Union
+from typing_extensions import TypeAlias
 import uuid
 
 from ._vegafusion_data import compile_with_vegafusion, using_vegafusion
@@ -16,15 +18,16 @@ from .schemapi import validate_jsonschema
 # MimeBundleType needs to be the same as what are acceptable return values
 # for _repr_mimebundle_,
 # see https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_
-MimeBundleDataType = Dict[str, Any]
-MimeBundleMetaDataType = Dict[str, Any]
-MimeBundleType = Union[
+MimeBundleDataType: TypeAlias = Dict[str, Any]
+MimeBundleMetaDataType: TypeAlias = Dict[str, Any]
+MimeBundleType: TypeAlias = Union[
     MimeBundleDataType, Tuple[MimeBundleDataType, MimeBundleMetaDataType]
 ]
-RendererType = Callable[..., MimeBundleType]
+RendererType: TypeAlias = Callable[..., MimeBundleType]
 # Subtype of MimeBundleType as more specific in the values of the dictionaries
-DefaultRendererReturnType = Tuple[
-    Dict[str, Union[str, dict]], Dict[str, Dict[str, Any]]
+
+DefaultRendererReturnType: TypeAlias = Tuple[
+    Dict[str, Union[str, Dict[str, Any]]], Dict[str, Dict[str, Any]]
 ]
 
 
@@ -42,15 +45,15 @@ class RendererRegistry(PluginRegistry[RendererType]):
 
     def set_embed_options(
         self,
-        defaultStyle: Optional[Union[bool, str]] = None,
-        renderer: Optional[str] = None,
-        width: Optional[int] = None,
-        height: Optional[int] = None,
-        padding: Optional[int] = None,
-        scaleFactor: Optional[float] = None,
-        actions: Optional[Union[bool, Dict[str, bool]]] = None,
-        format_locale: Optional[Union[str, dict]] = None,
-        time_format_locale: Optional[Union[str, dict]] = None,
+        defaultStyle: bool | str | None = None,
+        renderer: str | None = None,
+        width: int | None = None,
+        height: int | None = None,
+        padding: int | None = None,
+        scaleFactor: float | None = None,
+        actions: bool | dict[str, bool] | None = None,
+        format_locale: str | dict | None = None,
+        time_format_locale: str | dict | None = None,
         **kwargs,
     ) -> PluginEnabler:
         """Set options for embeddings of Vega & Vega-Lite charts.
@@ -94,7 +97,7 @@ class RendererRegistry(PluginRegistry[RendererType]):
         **kwargs :
             Additional options are passed directly to embed options.
         """
-        options: Dict[str, Optional[Union[bool, str, float, Dict[str, bool]]]] = {
+        options: dict[str, bool | str | float | dict[str, bool] | None] = {
             "defaultStyle": defaultStyle,
             "renderer": renderer,
             "width": width,
@@ -129,10 +132,10 @@ class Displayable:
     through appropriate data model transformers.
     """
 
-    renderers: Optional[RendererRegistry] = None
+    renderers: RendererRegistry | None = None
     schema_path = ("altair", "")
 
-    def __init__(self, spec: dict, validate: bool = False) -> None:
+    def __init__(self, spec: dict[str, Any], validate: bool = False) -> None:
         self.spec = spec
         self.validate = validate
         self._validate()
@@ -141,7 +144,7 @@ class Displayable:
         """Validate the spec against the schema."""
         data = pkgutil.get_data(*self.schema_path)
         assert data is not None
-        schema_dict: dict = json.loads(data.decode("utf-8"))
+        schema_dict: dict[str, Any] = json.loads(data.decode("utf-8"))
         validate_jsonschema(
             self.spec,
             schema_dict,
@@ -160,7 +163,7 @@ class Displayable:
 
 
 def default_renderer_base(
-    spec: dict, mime_type: str, str_repr: str, **options
+    spec: dict[str, Any], mime_type: str, str_repr: str, **options
 ) -> DefaultRendererReturnType:
     """A default renderer for Vega or VegaLite that works for modern frontends.
 
@@ -171,8 +174,8 @@ def default_renderer_base(
     from altair.vegalite.v5.display import VEGA_MIME_TYPE, VEGALITE_MIME_TYPE
 
     assert isinstance(spec, dict)
-    bundle: Dict[str, Union[str, dict]] = {}
-    metadata: Dict[str, Dict[str, Any]] = {}
+    bundle: dict[str, str | dict] = {}
+    metadata: dict[str, dict[str, Any]] = {}
 
     if using_vegafusion():
         spec = compile_with_vegafusion(spec)
@@ -190,7 +193,7 @@ def default_renderer_base(
 
 
 def json_renderer_base(
-    spec: dict, str_repr: str, **options
+    spec: dict[str, Any], str_repr: str, **options
 ) -> DefaultRendererReturnType:
     """A renderer that returns a MIME type of application/json.
 
@@ -212,11 +215,7 @@ class HTMLRenderer:
     def output_div(self) -> str:
         return self._output_div.format(uuid.uuid4().hex)
 
-    def __call__(self, spec: dict, **metadata) -> Dict[str, str]:
+    def __call__(self, spec: dict[str, Any], **metadata) -> dict[str, str]:
         kwargs = self.kwargs.copy()
-        kwargs.update(metadata)
-        # To get proper return value type, would need to write complex
-        # overload signatures for spec_to_mimebundle based on `format`
-        return spec_to_mimebundle(  # type: ignore[return-value]
-            spec, format="html", output_div=self.output_div, **kwargs
-        )
+        kwargs.update(**metadata, output_div=self.output_div)
+        return spec_to_mimebundle(spec, format="html", **kwargs)

@@ -1,7 +1,7 @@
 import io
 import json
-import warnings
 import sys
+import warnings
 import numpy as np
 import pandas as pd
 import pytest
@@ -38,6 +38,7 @@ def test_infer_vegalite_type():
             _check([], "nominal")
 
 
+@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 def test_sanitize_dataframe():
     # create a dataframe with various types
     df = pd.DataFrame(
@@ -46,11 +47,11 @@ def test_sanitize_dataframe():
             "f": np.arange(5, dtype=float),
             "i": np.arange(5, dtype=int),
             "b": np.array([True, False, True, True, False]),
-            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "d": pd.date_range("2012-01-01", periods=5, freq="h"),
             "c": pd.Series(list("ababc"), dtype="category"),
             "c2": pd.Series([1, "A", 2.5, "B", None], dtype="category"),
             "o": pd.Series([np.array(i) for i in range(5)]),
-            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+            "p": pd.date_range("2012-01-01", periods=5, freq="h").tz_localize("UTC"),
         }
     )
 
@@ -89,6 +90,7 @@ def test_sanitize_dataframe():
     assert df.equals(df2)
 
 
+@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 def test_sanitize_dataframe_arrow_columns():
     # create a dataframe with various types
@@ -98,9 +100,9 @@ def test_sanitize_dataframe_arrow_columns():
             "f": np.arange(5, dtype=float),
             "i": np.arange(5, dtype=int),
             "b": np.array([True, False, True, True, False]),
-            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "d": pd.date_range("2012-01-01", periods=5, freq="h"),
             "c": pd.Series(list("ababc"), dtype="category"),
-            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+            "p": pd.date_range("2012-01-01", periods=5, freq="h").tz_localize("UTC"),
         }
     )
     df_arrow = pa.Table.from_pandas(df).to_pandas(types_mapper=pd.ArrowDtype)
@@ -120,11 +122,12 @@ def test_sanitize_dataframe_arrow_columns():
     json.dumps(records)
 
 
+@pytest.mark.filterwarnings("ignore:'H' is deprecated.*:FutureWarning")
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
-@pytest.mark.skipif(
+@pytest.mark.xfail(
     sys.platform == "win32", reason="Timezone database is not installed on Windows"
 )
-def test_sanitize_pyarrow_table_columns():
+def test_sanitize_pyarrow_table_columns() -> None:
     # create a dataframe with various types
     df = pd.DataFrame(
         {
@@ -132,9 +135,9 @@ def test_sanitize_pyarrow_table_columns():
             "f": np.arange(5, dtype=float),
             "i": np.arange(5, dtype=int),
             "b": np.array([True, False, True, True, False]),
-            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "d": pd.date_range("2012-01-01", periods=5, freq="h"),
             "c": pd.Series(list("ababc"), dtype="category"),
-            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+            "p": pd.date_range("2012-01-01", periods=5, freq="h").tz_localize("UTC"),
         }
     )
 
@@ -179,14 +182,14 @@ def test_sanitize_dataframe_colnames():
 
     # Test that non-string columns result in an error
     df.columns = [4, "foo", "bar"]
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         sanitize_dataframe(df)
     assert str(err.value).startswith("Dataframe contains invalid column name: 4.")
 
 
 def test_sanitize_dataframe_timedelta():
     df = pd.DataFrame({"r": pd.timedelta_range(start="1 day", periods=4)})
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         sanitize_dataframe(df)
     assert str(err.value).startswith('Field "r" has type "timedelta')
 
@@ -200,7 +203,7 @@ def test_sanitize_dataframe_infs():
 
 @pytest.mark.skipif(
     not hasattr(pd, "Int64Dtype"),
-    reason="Nullable integers not supported in pandas v{}".format(pd.__version__),
+    reason=f"Nullable integers not supported in pandas v{pd.__version__}",
 )
 def test_sanitize_nullable_integers():
     df = pd.DataFrame(
@@ -230,7 +233,7 @@ def test_sanitize_nullable_integers():
 
 @pytest.mark.skipif(
     not hasattr(pd, "StringDtype"),
-    reason="dedicated String dtype not supported in pandas v{}".format(pd.__version__),
+    reason=f"dedicated String dtype not supported in pandas v{pd.__version__}",
 )
 def test_sanitize_string_dtype():
     df = pd.DataFrame(
@@ -256,7 +259,7 @@ def test_sanitize_string_dtype():
 
 @pytest.mark.skipif(
     not hasattr(pd, "BooleanDtype"),
-    reason="Nullable boolean dtype not supported in pandas v{}".format(pd.__version__),
+    reason=f"Nullable boolean dtype not supported in pandas v{pd.__version__}",
 )
 def test_sanitize_boolean_dtype():
     df = pd.DataFrame(

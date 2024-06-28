@@ -25,6 +25,7 @@ except ImportError:
     transformers = ["default"]
 
 
+@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
 @pytest.mark.parametrize("transformer", transformers)
 def test_chart_with_no_interactivity(transformer):
     if not has_anywidget:
@@ -54,6 +55,7 @@ def test_chart_with_no_interactivity(transformer):
         assert len(widget.params.trait_values()) == 0
 
 
+@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
 @pytest.mark.parametrize("transformer", transformers)
 def test_interval_selection_example(transformer):
     if not has_anywidget:
@@ -125,6 +127,7 @@ def test_interval_selection_example(transformer):
         assert selection.store == store
 
 
+@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
 @pytest.mark.parametrize("transformer", transformers)
 def test_index_selection_example(transformer):
     if not has_anywidget:
@@ -188,6 +191,7 @@ def test_index_selection_example(transformer):
         assert selection.store == store
 
 
+@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
 @pytest.mark.parametrize("transformer", transformers)
 def test_point_selection(transformer):
     if not has_anywidget:
@@ -254,6 +258,7 @@ def test_point_selection(transformer):
         assert selection.store == store
 
 
+@pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
 @pytest.mark.parametrize("transformer", transformers)
 def test_param_updates(transformer):
     if not has_anywidget:

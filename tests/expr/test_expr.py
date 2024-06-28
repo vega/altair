@@ -12,7 +12,7 @@ def test_unary_operations():
     OP_MAP = {"-": operator.neg, "+": operator.pos}
     for op, func in OP_MAP.items():
         z = func(datum.xxx)
-        assert repr(z) == "({}datum.xxx)".format(op)
+        assert repr(z) == f"({op}datum.xxx)"
 
 
 def test_binary_operations():
@@ -42,16 +42,16 @@ def test_binary_operations():
     }
     for op, func in OP_MAP.items():
         z1 = func(datum.xxx, 2)
-        assert repr(z1) == "(datum.xxx {} 2)".format(op)
+        assert repr(z1) == f"(datum.xxx {op} 2)"
 
         z2 = func(2, datum.xxx)
         if op in INEQ_REVERSE:
-            assert repr(z2) == "(datum.xxx {} 2)".format(INEQ_REVERSE[op])
+            assert repr(z2) == f"(datum.xxx {INEQ_REVERSE[op]} 2)"
         else:
-            assert repr(z2) == "(2 {} datum.xxx)".format(op)
+            assert repr(z2) == f"(2 {op} datum.xxx)"
 
         z3 = func(datum.xxx, datum.yyy)
-        assert repr(z3) == "(datum.xxx {} datum.yyy)".format(op)
+        assert repr(z3) == f"(datum.xxx {op} datum.yyy)"
 
 
 def test_abs():
@@ -68,7 +68,7 @@ def test_expr_funcs():
     for veganame, methodname in _map.items():
         func = getattr(expr, methodname)
         z = func(datum.xxx)
-        assert repr(z) == "{}(datum.xxx)".format(veganame)
+        assert repr(z) == f"{veganame}(datum.xxx)"
 
 
 def test_expr_consts():
@@ -78,7 +78,7 @@ def test_expr_consts():
     for constname in CONST_LISTING:
         const = getattr(expr, constname)
         z = const * datum.xxx
-        assert repr(z) == "({} * datum.xxx)".format(constname)
+        assert repr(z) == f"({constname} * datum.xxx)"
 
 
 def test_json_reprs():

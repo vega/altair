@@ -1,4 +1,9 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 from .core import FunctionExpression
+
+if TYPE_CHECKING:
+    from typing import Iterator
 
 
 FUNCTION_LISTING = {
@@ -169,19 +174,19 @@ NAME_MAP = {"if": "if_"}
 
 
 class ExprFunc:
-    def __init__(self, name, doc):
+    def __init__(self, name, doc) -> None:
         self.name = name
         self.doc = doc
-        self.__doc__ = """{}(*args)\n    {}""".format(name, doc)
+        self.__doc__ = f"""{name}(*args)\n    {doc}"""
 
-    def __call__(self, *args):
+    def __call__(self, *args) -> FunctionExpression:
         return FunctionExpression(self.name, args)
 
-    def __repr__(self):
-        return "<function expr.{}(*args)>".format(self.name)
+    def __repr__(self) -> str:
+        return f"<function expr.{self.name}(*args)>"
 
 
-def _populate_namespace():
+def _populate_namespace() -> Iterator[str]:
     globals_ = globals()
     for name, doc in FUNCTION_LISTING.items():
         py_name = NAME_MAP.get(name, name)
