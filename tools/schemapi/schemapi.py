@@ -760,7 +760,7 @@ The parameters ``short``, ``long`` accept the same range of types::
         ] = Undefined,
     ): ...
 
-This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__, as ``altair.Optional`` treats ``None`` like any other type::
+This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__ as ``altair.Optional`` treats ``None`` like any other type::
 
     # ruff: noqa: UP006, UP007
     from altair import Optional
