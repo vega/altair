@@ -275,15 +275,12 @@ def test_when() -> None:
     assert isinstance(when_constraint, alt.When)
     assert when_constraint._condition["test"] == expected_constraint
     assert when_constraints._condition["test"] == expected_constraints
-    with pytest.raises((NotImplementedError, TypeError)) as err:
+    with pytest.raises((NotImplementedError, TypeError), match="list"):
         alt.when([1, 2, 3])  # type: ignore
-    assert "list" in str(err.value)
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="Undefined"):
         alt.when()
-    assert "Undefined" in str(err.value)
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="int"):
         alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
-    assert "int" in str(err.value)
 
 
 def test_when_then() -> None:
@@ -298,17 +295,11 @@ def test_when_then() -> None:
     assert isinstance(condition, list)
     assert condition[-1].get("value") == 5
 
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match=r"literal.+Path"):
         when.then(pathlib.Path("some"))  # type: ignore
-    assert "Path" in str(err.value)
 
-    with pytest.raises(TypeError) as err:
-        when.then(pathlib.Path("some"))  # type: ignore
-    assert "literal" in str(err.value)
-
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="float"):
         when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
-    assert "float" in str(err.value)
 
 
 def test_when_then_only(basic_chart) -> None:
@@ -320,9 +311,8 @@ def test_when_then_only(basic_chart) -> None:
 
     assert when_then.to_dict() == when.then(5).to_dict()
     basic_chart.encode(fillOpacity=when_then).to_dict()
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="list"):
         when.then([5], seq_as_lit=False)  # type: ignore
-    assert "list" in str(err.value)
 
 
 def test_when_then_otherwise() -> None:
@@ -340,9 +330,8 @@ def test_when_then_otherwise() -> None:
     expected["condition"] = [single_condition]
 
     assert expected == when_then_otherwise
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="list"):
         when_then.otherwise([1, 2, 3], seq_as_lit=False)  # type: ignore
-    assert "list" in str(err.value)
 
 
 def test_when_then_when_then_otherwise() -> None:
@@ -370,6 +359,9 @@ def test_when_then_when_then_otherwise() -> None:
         .when(highlight)
         .then(alt.value(1, empty=False))
     )
+    with pytest.raises(TypeError, match="set"):
+        when_then_when_then.otherwise({"five", "six"})  # type: ignore
+
     actual_stroke = when_then_when_then.otherwise(alt.value(0))
     expected_stroke = {
         "condition": [
@@ -392,11 +384,7 @@ def test_when_then_when_then_otherwise() -> None:
         .configure_scale(bandPaddingInner=0.2)
         .add_params(select, highlight)
     )
-    assert isinstance(chart, alt.Chart)
     chart.to_dict()
-    with pytest.raises(TypeError) as err:
-        when_then_when_then.otherwise({"five", "six"})  # type: ignore
-    assert "set" in str(err.value)
 
 
 def test_when_labels_position_based_on_condition() -> None:
@@ -443,9 +431,8 @@ def test_when_labels_position_based_on_condition() -> None:
     fail_condition = alt.condition(
         param_width < 200, alt.value("red"), alt.value("black")
     )
-    with pytest.raises(SchemaValidationError) as err:
+    with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
         alt.param(expr=fail_condition)  # type: ignore
-    assert "invalid value for `expr`" in str(err.value)
 
 
 def test_when_expressions_inside_parameters() -> None:
@@ -484,27 +471,22 @@ def test_when_convert_expr() -> None:
 
     assert isinstance(converted, alt.ExprRef)
 
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="int"):
         _alt._condition_to_expr_ref(9)  # type: ignore
-    assert "int" in str(err.value)
 
-    with pytest.raises(KeyError) as err:  # type: ignore
+    with pytest.raises(KeyError, match="Missing `value`"):
         _alt._condition_to_expr_ref(alt.when(Color="Green").then(5).to_dict())
-    assert "Missing `value`" in str(err.value)
 
-    with pytest.raises(KeyError) as err:  # type: ignore
+    with pytest.raises(KeyError, match="Missing `condition`"):
         _alt._condition_to_expr_ref({"value": 10})
-    assert "Missing `condition`" in str(err.value)
 
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="'str'"):
         _alt._condition_to_expr_ref({"value": 10, "condition": "words"})  # type: ignore
-    assert "'str'" in str(err.value)
 
-    with pytest.raises(KeyError) as err:  # type: ignore
+    with pytest.raises(KeyError, match="Missing `test`"):
         _alt._condition_to_expr_ref(
             alt.when(alt.selection_point("name")).then(33).otherwise(11)
         )
-    assert "Missing `test`" in str(err.value)
 
     long = (
         alt.when(Color="red")
@@ -516,9 +498,8 @@ def test_when_convert_expr() -> None:
         .otherwise(0)
     )
 
-    with pytest.raises(ValueError, match="3") as err:  # type: ignore
+    with pytest.raises(ValueError, match="3"):
         _alt._condition_to_expr_ref(long)
-    assert "3" in str(err.value)
 
 
 def test_selection_to_dict():
