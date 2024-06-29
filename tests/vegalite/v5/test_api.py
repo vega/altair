@@ -284,13 +284,11 @@ def test_when() -> None:
 
 
 def test_when_then() -> None:
-    from altair.vegalite.v5 import api as _alt
-
     select = alt.selection_point(name="select", on="click")
     when = alt.when(select)
     when_then = when.then(alt.value(5))
 
-    assert isinstance(when_then, _alt._Then)
+    assert isinstance(when_then, alt.Then)
     condition = when_then._conditions["condition"]
     assert isinstance(condition, list)
     assert condition[-1].get("value") == 5

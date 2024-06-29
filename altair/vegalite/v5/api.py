@@ -780,7 +780,7 @@ class When(_BaseWhen):
         str_as_lit: bool = ...,
         seq_as_lit: Literal[True] = ...,
         **kwargs: Any,
-    ) -> _Then: ...
+    ) -> Then: ...
     @overload
     def then(
         self,
@@ -789,7 +789,7 @@ class When(_BaseWhen):
         str_as_lit: bool,
         seq_as_lit: Literal[False],
         **kwargs: Any,
-    ) -> _Then: ...
+    ) -> Then: ...
     def then(
         self,
         statement: _StatementOrLiteralType,
@@ -797,7 +797,7 @@ class When(_BaseWhen):
         str_as_lit: bool = False,
         seq_as_lit: bool = True,
         **kwargs: Any,
-    ) -> _Then:
+    ) -> Then:
         """Attach a statement to this predicate.
 
         Parameters
@@ -813,10 +813,10 @@ class When(_BaseWhen):
         """
         lit = _LiteralConfig(str_as_lit, seq_as_lit)
         condition = self._when_then(statement, kwargs, lit)
-        return _Then(_Conditions({"condition": [condition]}))
+        return Then(_Conditions({"condition": [condition]}))
 
 
-class _Then:
+class Then:
     """Utility class for ``when-then-otherwise`` conditions.
 
     Represents the state after calling :func:`.when().then()`.
@@ -894,7 +894,7 @@ class _Then:
         *more_predicates: _ComposablePredicateType,
         empty: Optional[bool] = Undefined,
         **constraints: _FieldEqualType,
-    ) -> _ChainedWhen:
+    ) -> ChainedWhen:
         """Attach another predicate to the ``when-then-otherwise`` condition.
 
         The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
@@ -921,13 +921,13 @@ class _Then:
             A partial state which requires calling ``result.then(statement)`` to finish the condition.
         """
         condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
-        return _ChainedWhen(condition, self.to_dict())
+        return ChainedWhen(condition, self.to_dict())
 
     def to_dict(self, *args: Any, **kwargs: Any) -> _Conditions:
         return self._conditions.copy()
 
 
-class _ChainedWhen(_BaseWhen):
+class ChainedWhen(_BaseWhen):
     """
     Utility class for `when-then-otherwise` conditions.
 
@@ -952,7 +952,7 @@ class _ChainedWhen(_BaseWhen):
         str_as_lit: bool = ...,
         seq_as_lit: Literal[True] = ...,
         **kwargs: Any,
-    ) -> _Then: ...
+    ) -> Then: ...
     @overload
     def then(
         self,
@@ -961,7 +961,7 @@ class _ChainedWhen(_BaseWhen):
         str_as_lit: bool,
         seq_as_lit: Literal[False],
         **kwargs: Any,
-    ) -> _Then: ...
+    ) -> Then: ...
     def then(
         self,
         statement: _StatementOrLiteralType,
@@ -969,12 +969,12 @@ class _ChainedWhen(_BaseWhen):
         str_as_lit: bool = False,
         seq_as_lit: bool = True,
         **kwargs: Any,
-    ) -> _Then:
+    ) -> Then:
         lit = _LiteralConfig(str_as_lit, seq_as_lit)
         condition = self._when_then(statement, kwargs, lit)
         conditions = self._conditions.copy()
         conditions["condition"].append(condition)
-        return _Then(conditions)
+        return Then(conditions)
 
 
 def when(
