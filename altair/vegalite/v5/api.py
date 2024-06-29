@@ -762,7 +762,7 @@ class When(_BaseWhen):
 
     Represents the state after calling :func:`.when()`.
 
-    This partial state requires calling :meth:`.then()` to finish the condition.
+    This partial state requires calling :meth:`When.then()` to finish the condition.
 
     References
     ----------
@@ -810,6 +810,10 @@ class When(_BaseWhen):
             Wrap ``Sequence[str | bool | float | int]`` in :func:`.value()`.
         **kwargs
             Additional keyword args are added to the resulting ``dict``.
+
+        Returns
+        -------
+        :class:`Then`
         """
         lit = _LiteralConfig(str_as_lit, seq_as_lit)
         condition = self._when_then(statement, kwargs, lit)
@@ -824,7 +828,7 @@ class Then:
     This state is a valid condition on its own.
 
     It can be further specified, via multiple chained `when-then` calls,
-    or finalized with :meth:`.otherwise()`.
+    or finalized with :meth:`Then.otherwise()`.
 
     References
     ----------
@@ -895,7 +899,7 @@ class Then:
         empty: Optional[bool] = Undefined,
         **constraints: _FieldEqualType,
     ) -> ChainedWhen:
-        """Attach another predicate to the ``when-then-otherwise`` condition.
+        """Attach another predicate to the condition.
 
         The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
@@ -917,8 +921,8 @@ class Then:
 
         Returns
         -------
-        result: :class:`._ChainedWhen`
-            A partial state which requires calling ``result.then(statement)`` to finish the condition.
+        :class:`ChainedWhen`
+            A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
         """
         condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         return ChainedWhen(condition, self.to_dict())
@@ -929,15 +933,15 @@ class Then:
 
 class ChainedWhen(_BaseWhen):
     """
-    Utility class for `when-then-otherwise` conditions.
+    Utility class for ``when-then-otherwise`` conditions.
 
-    Represents the state after calling `alt.when(...).then(...).when(...)`.
+    Represents the state after calling :func:`.when().then().when()`.
 
-    This partial state requires calling `then` to finish the condition.
+    This partial state requires calling :meth:`ChainedWhen.then()` to finish the condition.
 
     References
     ----------
-    [polars.expr.whenthen](https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py)
+    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
     """
 
     def __init__(self, condition: _ConditionType, conditions: _Conditions, /) -> None:
@@ -970,6 +974,22 @@ class ChainedWhen(_BaseWhen):
         seq_as_lit: bool = True,
         **kwargs: Any,
     ) -> Then:
+        """Attach a statement to this predicate.
+
+        Parameters
+        ----------
+        statement
+            A spec or value to use when the preceding :meth:`Then.when()` clause is true.
+        str_as_lit
+            Wrap ``str`` in :func:`.value()` instead of encoding as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        seq_as_lit
+            Wrap ``Sequence[str | bool | float | int]`` in :func:`.value()`.
+        **kwargs
+            Additional keyword args are added to the resulting ``dict``.
+        Returns
+        -------
+        :class:`Then`
+        """
         lit = _LiteralConfig(str_as_lit, seq_as_lit)
         condition = self._when_then(statement, kwargs, lit)
         conditions = self._conditions.copy()
@@ -1005,8 +1025,8 @@ def when(
 
     Returns
     -------
-    result: :class:`When`
-        A partial state which requires calling ``result.then(statement)`` to finish the condition.
+    :class:`When`
+        A partial state which requires calling :meth:`When.then()` to finish the condition.
 
     Notes
     -----
