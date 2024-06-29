@@ -64,6 +64,16 @@ Low-Level Schema Wrappers
    :nosignatures:
 
    {lowlevel_wrappers}
+
+API Utility Classes
+-------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/api-cls/
+   :nosignatures:
+
+   {api_classes}
 """
 
 
@@ -104,6 +114,12 @@ def api_functions() -> list[str]:
     return sorted(altair_api_functions)
 
 
+def api_classes() -> list[str]:
+    # classes defined in `api` and returned by `API Functions`,
+    # but not covered in other groups
+    return ["When", "Then", "ChainedWhen"]
+
+
 def lowlevel_wrappers() -> list[str]:
     objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))  # type: ignore[attr-defined]
     # The names of these two classes are also used for classes in alt.channels. Due to
@@ -124,6 +140,7 @@ def write_api_file() -> None:
             api_functions=sep.join(api_functions()),
             encoding_wrappers=sep.join(encoding_wrappers()),
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
+            api_classes=sep.join(api_classes()),
         ),
         encoding="utf-8",
     )

@@ -592,3 +592,15 @@ Low-Level Schema Wrappers
    WindowFieldDef
    WindowOnlyOp
    WindowTransform
+
+API Utility Classes
+-------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/api-cls/
+   :nosignatures:
+
+   When
+   Then
+   ChainedWhen
