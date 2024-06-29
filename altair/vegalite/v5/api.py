@@ -895,6 +895,31 @@ class _Then:
         empty: Optional[bool] = Undefined,
         **constraints: _FieldEqualType,
     ) -> _ChainedWhen:
+        """Attach another predicate to the ``when-then-otherwise`` condition.
+
+        The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
+
+        Parameters
+        ----------
+        predicate
+            A selection or test predicate. ``str`` input will be treated as a test operand.
+
+            .. note::
+                accepts the same range of inputs as in :func:`.condition()`.
+        *more_predicates
+            Additional predicates, restricted to types supporting ``&``.
+        empty
+            For selection parameters, the predicate of empty selections returns ``True`` by default.
+            Override this behavior, with ``empty=False``.
+        **constraints
+            Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+            Shortcut for ``alt.datum.field_name == value``, see examples for usage.
+
+        Returns
+        -------
+        result: :class:`._ChainedWhen`
+            A partial state which requires calling ``result.then(statement)`` to finish the condition.
+        """
         condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         return _ChainedWhen(condition, self.to_dict())
 
