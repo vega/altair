@@ -28,7 +28,7 @@ from narwhals.dependencies import is_pandas_dataframe
 
 from ._importers import import_pyarrow_interchange
 from .core import (
-    sanitize_dataframe,
+    sanitize_pandas_dataframe,
     DataFrameLike,
     sanitize_narwhals_dataframe,
     narwhalify,
@@ -324,7 +324,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         if is_pandas_dataframe(data):
-            data = sanitize_dataframe(data)
+            data = sanitize_pandas_dataframe(data)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
         data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
@@ -332,7 +332,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
     elif (pd := sys.modules.get("pandas")) is not None and isinstance(
         data, pd.DataFrame
     ):
-        data = sanitize_dataframe(data)
+        data = sanitize_pandas_dataframe(data)
         return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
         if "values" not in data:
@@ -367,13 +367,13 @@ def _data_to_json_string(data: DataType) -> str:
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         if is_pandas_dataframe(data):
-            data = sanitize_dataframe(data)
+            data = sanitize_pandas_dataframe(data)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
         data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return json.dumps(data)
     elif is_pandas_dataframe(data):
-        data = sanitize_dataframe(data)
+        data = sanitize_pandas_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
         if "values" not in data:
@@ -399,7 +399,7 @@ def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
         )
         raise NotImplementedError(msg)
     elif is_pandas_dataframe(data):
-        data = sanitize_dataframe(data)
+        data = sanitize_pandas_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
         if "values" not in data:

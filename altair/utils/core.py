@@ -306,7 +306,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
@@ -323,6 +323,9 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
+    # We can safely import pandas here, this function is only
+    # called on pandas dataframes
+    import pandas as pd
     df = df.copy()
 
     if isinstance(df.columns, pd.RangeIndex):

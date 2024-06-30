@@ -1,7 +1,7 @@
 from .core import (
     infer_vegalite_type,
     infer_encoding_types,
-    sanitize_dataframe,
+    sanitize_pandas_dataframe,
     sanitize_narwhals_dataframe,
     parse_shorthand,
     use_signature,
@@ -25,7 +25,7 @@ __all__ = (
     "infer_encoding_types",
     "infer_vegalite_type",
     "parse_shorthand",
-    "sanitize_dataframe",
+    "sanitize_pandas_dataframe",
     "sanitize_narwhals_dataframe",
     "spec_to_html",
     "update_nested",
