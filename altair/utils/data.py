@@ -405,6 +405,11 @@ def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
         if "values" not in data:
             msg = "values expected in data dict, but not present"
             raise KeyError(msg)
+        try:
+            import pandas as pd
+        except ImportError as exc:
+            msg = "pandas is required to convert a dict to a CSV string"
+            raise ImportError(msg) from exc
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
     elif isinstance(data, DataFrameLike):
         # experimental interchange dataframe support

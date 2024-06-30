@@ -326,6 +326,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     # We can safely import pandas here, this function is only
     # called on pandas dataframes
     import pandas as pd
+
     df = df.copy()
 
     if isinstance(df.columns, pd.RangeIndex):
