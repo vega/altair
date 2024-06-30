@@ -39,8 +39,6 @@ from packaging.version import Version
 from altair import vegalite
 
 if TYPE_CHECKING:
-    import sys
-
     from referencing import Registry
 
     from altair import ChartType

@@ -1,4 +1,5 @@
 from __future__ import annotations
+import sys
 
 import contextlib
 import copy
@@ -29,7 +30,6 @@ import jsonschema.exceptions
 import jsonschema.validators
 import numpy as np
 from packaging.version import Version
-from narwhals.dependencies import get_pandas
 
 # This leads to circular imports with the vegalite module. Currently, this works
 # but be aware that when you access it in this script, the vegalite module might
@@ -37,8 +37,6 @@ from narwhals.dependencies import get_pandas
 from altair import vegalite
 
 if TYPE_CHECKING:
-    import sys
-
     from referencing import Registry
 
     from altair import ChartType
