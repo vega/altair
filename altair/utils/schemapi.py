@@ -32,12 +32,12 @@ import jsonschema.validators
 import numpy as np
 from packaging.version import Version
 
-from narwhals.dependencies import get_pandas
-
 # This leads to circular imports with the vegalite module. Currently, this works
 # but be aware that when you access it in this script, the vegalite module might
 # not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
+
+from narwhals.dependencies import get_pandas
 
 if TYPE_CHECKING:
     import sys

@@ -10,13 +10,12 @@
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
 
 from __future__ import annotations
-import sys
+
 from typing import TYPE_CHECKING, Any, Literal, Sequence, overload
 
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
 from altair.utils.schemapi import Undefined, with_property_setters
-from narwhals.dependencies import is_pandas_dataframe
 
 from . import core
 
