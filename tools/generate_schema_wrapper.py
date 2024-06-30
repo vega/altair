@@ -108,7 +108,7 @@ class FieldChannelMixin:
                 # We still parse it out of the shorthand, but drop it here.
                 parsed.pop("type", None)
             elif not (type_in_shorthand or type_defined_explicitly):
-                if is_pandas_dataframe(context.get("data", None)):
+                if _is_pandas_dataframe(context.get("data", None)):
                     msg = (
                         f'Unable to determine data type for the field "{shorthand}";'
                         " verify that the field name is not misspelled."
@@ -514,7 +514,7 @@ def generate_vegalite_schema_wrapper(schema_file: Path) -> str:
         "from typing import Any, Literal, Union, Protocol, Sequence, List, Iterator, TYPE_CHECKING",
         "import pkgutil",
         "import json\n",
-        "from narwhals.dependencies import is_pandas_dataframe",
+        "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         _type_checking_only_imports(
             "from altair import Parameter",
@@ -565,7 +565,7 @@ def generate_vegalite_channel_wrappers(
     imports = imports or [
         "from __future__ import annotations\n",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
-        "from narwhals.dependencies import is_pandas_dataframe",
+        "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",

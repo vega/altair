@@ -28,7 +28,7 @@ from operator import itemgetter
 
 import jsonschema
 import narwhals as nw
-from narwhals.dependencies import is_pandas_dataframe
+from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
 import numpy as np
 
 from altair.utils.schemapi import SchemaBase, Undefined
@@ -624,7 +624,7 @@ def parse_shorthand(
         unescaped_field = attrs["field"].replace("\\", "")
         if isinstance(data_nw, nw.DataFrame) and unescaped_field in data_nw.columns:
             column = data_nw[unescaped_field]
-            if column.dtype == nw.Object and is_pandas_dataframe(data):
+            if column.dtype == nw.Object and _is_pandas_dataframe(data):
                 attrs["type"] = infer_vegalite_type(nw.to_native(column))
             else:
                 attrs["type"] = infer_vegalite_type_for_nw_column(column)

@@ -580,7 +580,6 @@ __all__ = [
     "graticule",
     "hconcat",
     "is_chart_type",
-    "is_pandas_dataframe",
     "jupyter",
     "layer",
     "limit_rows",
