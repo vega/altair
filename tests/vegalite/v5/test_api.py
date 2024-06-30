@@ -301,7 +301,7 @@ def test_when_then() -> None:
 
 
 def test_when_then_only(basic_chart) -> None:
-    """`_Then` is an acceptable encode argument."""
+    """`Then` is an acceptable encode argument."""
 
     select = alt.selection_point(name="select", on="click")
     when = alt.when(select)
@@ -309,8 +309,6 @@ def test_when_then_only(basic_chart) -> None:
 
     assert when_then.to_dict() == when.then(5).to_dict()
     basic_chart.encode(fillOpacity=when_then).to_dict()
-    with pytest.raises(TypeError, match="list"):
-        when.then([5], seq_as_lit=False)  # type: ignore
 
 
 def test_when_then_otherwise() -> None:
@@ -328,8 +326,6 @@ def test_when_then_otherwise() -> None:
     expected["condition"] = [single_condition]
 
     assert expected == when_then_otherwise
-    with pytest.raises(TypeError, match="list"):
-        when_then.otherwise([1, 2, 3], seq_as_lit=False)  # type: ignore
 
 
 def test_when_then_when_then_otherwise() -> None:
