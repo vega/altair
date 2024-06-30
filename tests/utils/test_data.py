@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any, Callable
 import pytest
 import pandas as pd
+import polars as pl
 from altair.utils.data import (
     limit_rows,
     MaxRowsError,
@@ -65,6 +66,9 @@ def test_sample():
     assert isinstance(result, dict)
     assert "values" in result
     assert len(result["values"]) == 10
+    result = sample(pl.DataFrame(data), n=10)
+    assert isinstance(result, pl.DataFrame)
+    assert len(result) == 10
 
 
 def test_to_values():
