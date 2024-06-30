@@ -31,6 +31,7 @@ from .core import (
     sanitize_dataframe,
     DataFrameLike,
     sanitize_narwhals_dataframe,
+    narwhalify,
 )
 from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
@@ -347,23 +348,6 @@ def check_data_type(data: DataType) -> None:
     if not is_data_type(data):
         msg = f"Expected dict, DataFrame or a __geo_interface__ attribute, got: {type(data)}"
         raise TypeError(msg)
-
-
-def narwhalify(data: DataType) -> nw.DataFrame:
-    """Wrap `data` in `narwhals.DataFrame`.
-
-    If `data` is not supported by Narwhals, but it is convertible
-    to a PyArrow table, then first convert to a PyArrow Table,
-    and then wrap in `narwhals.DataFrame`.
-    """
-    data = nw.from_native(data, eager_only=True, strict=False)
-    if isinstance(data, nw.DataFrame):
-        return data
-    if isinstance(data, DataFrameLike):
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        return nw.from_native(pa_table, eager_only=True)
-    msg = f"Unsupported data type: {type(data)}"
-    raise TypeError(msg)
 
 
 # ==============================================================================
