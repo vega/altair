@@ -1,6 +1,7 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 from __future__ import annotations
+import sys
 
 import contextlib
 import copy
@@ -30,7 +31,6 @@ import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import numpy as np
-import pandas as pd
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -489,7 +489,11 @@ def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
         return obj.to_dict()
     elif isinstance(obj, np.number):
         return float(obj)
-    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
+    elif isinstance(obj, np.datetime64):
+        return str(obj)
+    elif (pd := sys.modules.get("pandas")) is not None and isinstance(
+        obj, pd.Timestamp
+    ):
         return pd.Timestamp(obj).isoformat()
     else:
         return obj

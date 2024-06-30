@@ -28,8 +28,8 @@ import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import numpy as np
-import pandas as pd
 from packaging.version import Version
+from narwhals.dependencies import get_pandas
 
 # This leads to circular imports with the vegalite module. Currently, this works
 # but be aware that when you access it in this script, the vegalite module might
@@ -487,7 +487,9 @@ def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
         return obj.to_dict()
     elif isinstance(obj, np.number):
         return float(obj)
-    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
+    elif isinstance(obj, np.datetime64):
+        return str(obj)
+    elif (pd := sys.modules.get('pandas')) is not None and isinstance(obj, pd.Timestamp):
         return pd.Timestamp(obj).isoformat()
     else:
         return obj

@@ -28,9 +28,8 @@ from operator import itemgetter
 
 import jsonschema
 import narwhals as nw
+from narwhals.dependencies import is_pandas_dataframe
 import numpy as np
-import pandas as pd
-from pandas.api.types import infer_dtype
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -46,6 +45,7 @@ if TYPE_CHECKING:
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.utils.data import DataType
     from narwhals.typing import IntoExpr
+    import pandas as pd
 
 V = TypeVar("V")
 P = ParamSpec("P")
@@ -213,6 +213,8 @@ def infer_vegalite_type(
     ----------
     data: object
     """
+    from pandas.api.types import infer_dtype
+
     typ = infer_dtype(data, skipna=False)
 
     if typ in {
@@ -553,6 +555,8 @@ def parse_shorthand(
     >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
     True
     """
+    from altair.utils.data import is_data_type
+
     if not shorthand:
         return {}
 
@@ -611,16 +615,12 @@ def parse_shorthand(
         attrs["type"] = "temporal"
 
     # if data is specified and type is not, infer type from data
-    if "type" not in attrs:
+    if "type" not in attrs and is_data_type(data):
         data_nw = narwhalify(data)
         unescaped_field = attrs["field"].replace("\\", "")
         if isinstance(data_nw, nw.DataFrame) and unescaped_field in data_nw.columns:
             column = data_nw[unescaped_field]
-            if (
-                column.dtype == nw.Object
-                and (pandas := sys.modules.get("pandas")) is not None
-                and isinstance(data, pandas.DataFrame)
-            ):
+            if column.dtype == nw.Object and is_pandas_dataframe(data):
                 attrs["type"] = infer_vegalite_type(nw.to_native(column))
             else:
                 attrs["type"] = infer_vegalite_type_for_nw_column(column)

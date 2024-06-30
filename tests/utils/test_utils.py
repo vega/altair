@@ -162,7 +162,7 @@ def test_sanitize_pyarrow_table_columns() -> None:
             ]
         ),
     )
-    sanitized = sanitize_narwhals_dataframe(nw.from_native(pa_table))
+    sanitized = sanitize_narwhals_dataframe(nw.from_native(pa_table, eager_only=True))
     values = sanitized.rows(named=True)
 
     assert values[0] == {

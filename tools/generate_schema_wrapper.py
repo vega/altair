@@ -108,7 +108,7 @@ class FieldChannelMixin:
                 # We still parse it out of the shorthand, but drop it here.
                 parsed.pop("type", None)
             elif not (type_in_shorthand or type_defined_explicitly):
-                if isinstance(context.get("data", None), pd.DataFrame):
+                if is_pandas_dataframe(context.get("data", None)):
                     msg = (
                         f'Unable to determine data type for the field "{shorthand}";'
                         " verify that the field name is not misspelled."
