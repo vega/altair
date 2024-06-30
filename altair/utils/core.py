@@ -45,7 +45,6 @@ if TYPE_CHECKING:
     from types import ModuleType
     import typing as t
     from pandas.core.interchange.dataframe_protocol import Column as PandasColumn
-    import pyarrow as pa
 
 V = TypeVar("V")
 P = ParamSpec("P")

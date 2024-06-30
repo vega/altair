@@ -1,5 +1,4 @@
 from pathlib import Path
-import narwhals as nw
 
 from typing import Any, Callable
 import pytest
@@ -36,7 +35,7 @@ def test_limit_rows():
     """Test the limit_rows data transformer."""
     data = _create_dataframe(10)
     result = limit_rows(data, max_rows=20)
-    assert data is nw.to_native(result)
+    assert data is result
     with pytest.raises(MaxRowsError):
         _pipe(data, limit_rows(max_rows=5))
     data = _create_data_with_values(10)

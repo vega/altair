@@ -141,19 +141,19 @@ def limit_rows(
             values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
-
-    data = maybe_narwhalify(data)
-    if isinstance(data, dict):
+    elif isinstance(data, pd.DataFrame):
+        values = data
+    elif isinstance(data, dict):
         if "values" in data:
             values = data["values"]
         else:
             return data
-    elif isinstance(data, nw.DataFrame):
+    else:
+        data = narwhalify(data)
         if max_rows is not None and len(data) > max_rows:
             raise_max_rows_error()
-        # `nw.from_native` is a practically free operation - however,
-        # `narwhalify` may also call `arrow_table_from_dfi_dataframe`,
-        # which may be expensive. Therefore, we return the `narwhals.DataFrame`
+        # `narwhalify` may call `arrow_table_from_dfi_dataframe`,
+        # which can be expensive. Therefore, we return the `narwhals.DataFrame`
         # here instead of the original input.
         return data
 
@@ -325,23 +325,22 @@ def to_values(data: DataType) -> ToValuesReturnType:
         # SupportGeoInterface and then the ignore statement is not needed?
         data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return {"values": data_sanitized}
-    if isinstance(data, pd.DataFrame):
+    elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {"values": data.to_dict(orient="records")}
-
-    data = maybe_narwhalify(data)
-    if isinstance(data, nw.DataFrame):
-        data = sanitize_narwhals_dataframe(data)
-        return {"values": data.rows(named=True)}
     elif isinstance(data, dict):
         if "values" not in data:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data
-    else:
+    try:
+        data = narwhalify(data)
+    except TypeError as exc:
         # Should never reach this state as tested by check_data_type
         msg = f"Unrecognized data type: {type(data)}"
-        raise ValueError(msg)
+        raise ValueError(msg) from exc
+    data = sanitize_narwhals_dataframe(data)
+    return {"values": data.rows(named=True)}
 
 
 def check_data_type(data: DataType) -> None:
@@ -350,8 +349,8 @@ def check_data_type(data: DataType) -> None:
         raise TypeError(msg)
 
 
-def maybe_narwhalify(data: DataType) -> DataType:
-    """Wrap `data` in `narwhals.DataFrame`, if possible.
+def narwhalify(data: DataType) -> nw.DataFrame:
+    """Wrap `data` in `narwhals.DataFrame`.
 
     If `data` is not supported by Narwhals, but it is convertible
     to a PyArrow table, then first convert to a PyArrow Table,
@@ -360,10 +359,11 @@ def maybe_narwhalify(data: DataType) -> DataType:
     data = nw.from_native(data, eager_only=True, strict=False)
     if isinstance(data, nw.DataFrame):
         return data
-    elif isinstance(data, DataFrameLike):
+    if isinstance(data, DataFrameLike):
         pa_table = arrow_table_from_dfi_dataframe(data)
         return nw.from_native(pa_table, eager_only=True)
-    return data
+    msg = f"Unsupported data type: {type(data)}"
+    raise TypeError(msg)
 
 
 # ==============================================================================
