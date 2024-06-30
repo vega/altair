@@ -1,5 +1,4 @@
 from __future__ import annotations
-import sys
 
 import contextlib
 import copy
@@ -39,6 +38,7 @@ from altair import vegalite
 from narwhals.dependencies import get_pandas
 
 if TYPE_CHECKING:
+    import sys
     from referencing import Registry
 
     from altair import ChartType
@@ -489,9 +489,7 @@ def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
         return float(obj)
     elif isinstance(obj, np.datetime64):
         return str(obj)
-    elif (pd := get_pandas()) is not None and isinstance(
-        obj, pd.Timestamp
-    ):
+    elif (pd := get_pandas()) is not None and isinstance(obj, pd.Timestamp):
         return pd.Timestamp(obj).isoformat()
     else:
         return obj

@@ -24,7 +24,7 @@ from functools import partial
 import sys
 
 import narwhals as nw
-from narwhals.dependencies import is_pandas_dataframe, get_pandas
+from narwhals.dependencies import is_pandas_dataframe
 
 from ._importers import import_pyarrow_interchange
 from .core import (

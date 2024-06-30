@@ -1,7 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 from __future__ import annotations
-import sys
 
 import contextlib
 import copy
@@ -41,6 +40,7 @@ from narwhals.dependencies import get_pandas
 from altair import vegalite
 
 if TYPE_CHECKING:
+    import sys
     from referencing import Registry
 
     from altair import ChartType
@@ -491,9 +491,7 @@ def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
         return float(obj)
     elif isinstance(obj, np.datetime64):
         return str(obj)
-    elif (pd := get_pandas()) is not None and isinstance(
-        obj, pd.Timestamp
-    ):
+    elif (pd := get_pandas()) is not None and isinstance(obj, pd.Timestamp):
         return pd.Timestamp(obj).isoformat()
     else:
         return obj
