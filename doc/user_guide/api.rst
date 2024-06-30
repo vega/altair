@@ -166,6 +166,7 @@ API Functions
    topo_feature
    value
    vconcat
+   when
 
 Low-Level Schema Wrappers
 -------------------------
@@ -591,3 +592,15 @@ Low-Level Schema Wrappers
    WindowFieldDef
    WindowOnlyOp
    WindowTransform
+
+API Utility Classes
+-------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/api-cls/
+   :nosignatures:
+
+   When
+   Then
+   ChainedWhen

@@ -202,14 +202,12 @@ Altair also contains expressions related to geographical features. We can for ex
 
 .. altair-plot::
 
-    from altair.expr import datum, geoCentroid
-
     basemap = alt.Chart(gdf_sel).mark_geoshape(
          fill='lightgray', stroke='white', strokeWidth=0.5
     )
 
     bubbles = alt.Chart(gdf_sel).transform_calculate(
-        centroid=geoCentroid(None, datum)
+        centroid=alt.expr.geoCentroid(None, alt.datum)
     ).mark_circle(
         stroke='black'
     ).encode(

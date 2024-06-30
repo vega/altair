@@ -135,7 +135,6 @@ __all__ = [
     "Day",
     "DensityTransform",
     "DerivedStream",
-    "Dict",
     "DictInlineDataset",
     "DictSelectionInit",
     "DictSelectionInitInterval",

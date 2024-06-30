@@ -115,6 +115,7 @@ generate-schema-wrapper = [
 ]
 test = [
     "ruff check .",
+    "ruff format .",
     "ruff format --diff --check .",
     "mypy altair tests",
     "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",

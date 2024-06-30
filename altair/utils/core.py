@@ -12,17 +12,7 @@ import re
 import sys
 import traceback
 import warnings
-from typing import (
-    Callable,
-    TypeVar,
-    Any,
-    Iterator,
-    cast,
-    Literal,
-    Protocol,
-    TYPE_CHECKING,
-    runtime_checkable,
-)
+from typing import Callable, TypeVar, Any, Iterator, cast, Literal, TYPE_CHECKING
 from itertools import groupby
 from operator import itemgetter
 
@@ -34,6 +24,10 @@ from pandas.api.types import infer_dtype
 from altair.utils.schemapi import SchemaBase, Undefined
 from altair.utils._dfi_types import Column, DtypeKind, DataFrame as DfiDataFrame
 
+if sys.version_info >= (3, 12):
+    from typing import runtime_checkable, Protocol
+else:
+    from typing_extensions import runtime_checkable, Protocol
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
@@ -55,6 +49,15 @@ class DataFrameLike(Protocol):
     def __dataframe__(
         self, nan_as_null: bool = False, allow_copy: bool = True
     ) -> DfiDataFrame: ...
+
+
+@runtime_checkable
+class _ThenLike(Protocol):
+    # Helper for extracting the intermediate representation,
+    # whilst still allowing further clauses to be added.
+    def otherwise(self, *args: Any, **kwargs: Any) -> Any: ...
+    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]: ...
+    def when(self, *args: Any, **kwargs: Any) -> Any: ...
 
 
 TYPECODE_MAP = {
@@ -197,6 +200,17 @@ TIMEUNITS = [
     "utcsecondsmilliseconds",
 ]
 
+VALID_TYPECODES = list(itertools.chain(iter(TYPECODE_MAP), iter(INV_TYPECODE_MAP)))
+
+SHORTHAND_UNITS = {
+    "field": "(?P<field>.*)",
+    "type": "(?P<type>{})".format("|".join(VALID_TYPECODES)),
+    "agg_count": "(?P<aggregate>count)",
+    "op_count": "(?P<op>count)",
+    "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+    "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+    "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+}
 
 InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
@@ -542,18 +556,6 @@ def parse_shorthand(
     if not shorthand:
         return {}
 
-    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
-
-    units = {
-        "field": "(?P<field>.*)",
-        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
-        "agg_count": "(?P<aggregate>count)",
-        "op_count": "(?P<op>count)",
-        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    }
-
     patterns = []
 
     if parse_aggregates:
@@ -571,7 +573,8 @@ def parse_shorthand(
         patterns = list(itertools.chain(*((p + ":{type}", p) for p in patterns)))
 
     regexps = (
-        re.compile(r"\A" + p.format(**units) + r"\Z", re.DOTALL) for p in patterns
+        re.compile(r"\A" + p.format(**SHORTHAND_UNITS) + r"\Z", re.DOTALL)
+        for p in patterns
     )
 
     # find matches depending on valid fields passed
@@ -831,6 +834,10 @@ class _ChannelCache:
             obj = {"shorthand": obj}
         elif isinstance(obj, (list, tuple)):
             return [self._wrap_in_channel(el, encoding) for el in obj]
+        elif isinstance(obj, _ThenLike):
+            # NOTE: Temporary solution while `when-then-otherwise` is not
+            # related to any other `altair` classes.
+            obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
             tp = channel["value" if "value" in obj else "field"]
             try:

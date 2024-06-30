@@ -11,7 +11,7 @@ import jsonschema
 import pytest
 import pandas as pd
 
-import altair.vegalite.v5 as alt
+import altair as alt
 
 try:
     import vl_convert as vlc
@@ -252,6 +252,250 @@ def test_chart_operations():
     assert len(chart.vconcat) == 4
 
 
+def test_when() -> None:
+    from altair.vegalite.v5 import api as _alt
+
+    select = alt.selection_point(name="select", on="click")
+    condition = _alt._predicate_to_condition(select, empty=False)
+    when = alt.when(select, empty=False)
+    when_constraint = alt.when(Origin="Europe")
+    when_constraints = alt.when(
+        Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01"
+    )
+    expected_constraint = alt.datum.Origin == "Europe"
+    expected_constraints = (
+        (alt.datum.Name == "Name_1")
+        & (alt.datum.Color == "Green")
+        & (alt.datum.Age == 25)
+        & (alt.datum.StartDate == "2000-10-01")
+    )
+
+    assert isinstance(when, alt.When)
+    assert condition == when._condition
+    assert isinstance(when_constraint, alt.When)
+    assert when_constraint._condition["test"] == expected_constraint
+    assert when_constraints._condition["test"] == expected_constraints
+    with pytest.raises((NotImplementedError, TypeError), match="list"):
+        alt.when([1, 2, 3])  # type: ignore
+    with pytest.raises(TypeError, match="Undefined"):
+        alt.when()
+    with pytest.raises(TypeError, match="int"):
+        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+
+
+def test_when_then() -> None:
+    select = alt.selection_point(name="select", on="click")
+    when = alt.when(select)
+    when_then = when.then(alt.value(5))
+
+    assert isinstance(when_then, alt.Then)
+    condition = when_then._conditions["condition"]
+    assert isinstance(condition, list)
+    assert condition[-1].get("value") == 5
+
+    with pytest.raises(TypeError, match=r"literal.+Path"):
+        when.then(pathlib.Path("some"))  # type: ignore
+
+    with pytest.raises(TypeError, match="float"):
+        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
+
+
+def test_when_then_only(basic_chart) -> None:
+    """`Then` is an acceptable encode argument."""
+
+    select = alt.selection_point(name="select", on="click")
+    when = alt.when(select)
+    when_then = when.then(alt.value(5))
+
+    assert when_then.to_dict() == when.then(5).to_dict()
+    basic_chart.encode(fillOpacity=when_then).to_dict()
+
+
+def test_when_then_otherwise() -> None:
+    select = alt.selection_point(name="select", on="click")
+    when_then = alt.when(select).then(alt.value(2, empty=False))
+    when_then_otherwise = when_then.otherwise(alt.value(0))
+    short = alt.when(select).then(2, empty=False).otherwise(0)
+    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    when_then.otherwise([1, 2, 3])
+
+    assert when_then_otherwise == short
+    # Needed to modify to a list of conditions,
+    # which isn't possible in `condition`
+    single_condition = expected.pop("condition")
+    expected["condition"] = [single_condition]
+
+    assert expected == when_then_otherwise
+
+
+def test_when_then_when_then_otherwise() -> None:
+    """Test for [#3301](https://github.com/vega/altair/issues/3301)."""
+
+    data = {
+        "values": [
+            {"a": "A", "b": 28},
+            {"a": "B", "b": 55},
+            {"a": "C", "b": 43},
+            {"a": "D", "b": 91},
+            {"a": "E", "b": 81},
+            {"a": "F", "b": 53},
+            {"a": "G", "b": 19},
+            {"a": "H", "b": 87},
+            {"a": "I", "b": 52},
+        ]
+    }
+
+    select = alt.selection_point(name="select", on="click")
+    highlight = alt.selection_point(name="highlight", on="pointerover")
+    when_then_when_then = (
+        alt.when(select)
+        .then(alt.value(2, empty=False))
+        .when(highlight)
+        .then(alt.value(1, empty=False))
+    )
+    with pytest.raises(TypeError, match="set"):
+        when_then_when_then.otherwise({"five", "six"})  # type: ignore
+
+    actual_stroke = when_then_when_then.otherwise(alt.value(0))
+    expected_stroke = {
+        "condition": [
+            {"param": "select", "empty": False, "value": 2},
+            {"param": "highlight", "empty": False, "value": 1},
+        ],
+        "value": 0,
+    }
+
+    assert expected_stroke == actual_stroke
+    chart = (
+        alt.Chart(data)
+        .mark_bar(fill="#4C78A8", stroke="black", cursor="pointer")
+        .encode(
+            x="a:O",
+            y="b:Q",
+            fillOpacity=alt.when(select).then(1).otherwise(0.3),  # type: ignore
+            strokeWidth=actual_stroke,  # type: ignore
+        )
+        .configure_scale(bandPaddingInner=0.2)
+        .add_params(select, highlight)
+    )
+    chart.to_dict()
+
+
+def test_when_labels_position_based_on_condition() -> None:
+    """Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+
+    Original [labels-position-based-on-condition](https://altair-viz.github.io/user_guide/marks/text.html#labels-position-based-on-condition)
+    """
+    import numpy as np
+    import pandas as pd
+    from altair.utils.schemapi import SchemaValidationError
+
+    from altair.vegalite.v5 import api as _alt
+
+    rand = np.random.RandomState(42)
+    df = pd.DataFrame({"xval": range(100), "yval": rand.randn(100).cumsum()})
+
+    bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
+    param_width = alt.param(bind=bind_range)
+    param_width_lt_200 = param_width < 200
+
+    # Examples of how to write both js and python expressions
+    param_color_js_expr = alt.param(expr=f"{param_width.name} < 200 ? 'red' : 'black'")
+    param_color_py_expr = alt.param(
+        expr=alt.expr.if_(param_width_lt_200, "red", "black")
+    )
+    when = (
+        alt.when(param_width_lt_200)
+        .then(alt.value("red"))
+        .otherwise("black", str_as_lit=True)
+    )
+    param_color_py_when = alt.param(expr=_alt._condition_to_expr_str(when))
+    assert param_color_py_expr.expr == param_color_py_when.expr
+
+    chart = (
+        alt.Chart(df)
+        .mark_point()
+        .encode(
+            alt.X("xval").axis(titleColor=param_color_js_expr),
+            alt.Y("yval").axis(titleColor=param_color_py_when),
+        )
+        .add_params(param_width, param_color_js_expr, param_color_py_when)
+    )
+    chart.to_dict()
+    fail_condition = alt.condition(
+        param_width < 200, alt.value("red"), alt.value("black")
+    )
+    with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
+        alt.param(expr=fail_condition)  # type: ignore
+
+
+def test_when_expressions_inside_parameters() -> None:
+    """Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+
+    Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
+    """
+    from altair.vegalite.v5 import api as _alt
+    import pandas as pd
+
+    source = pd.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
+
+    bar = (
+        alt.Chart(source)
+        .mark_bar()
+        .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
+    )
+    when_then_otherwise = alt.when(alt.datum.b >= 0).then(10).otherwise(-20)
+    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
+    actual = _alt._condition_to_expr_ref(when_then_otherwise)
+    assert expected == actual
+
+    text_conditioned = bar.mark_text(align="left", baseline="middle", dx=actual).encode(
+        text="b"
+    )
+
+    chart = bar + text_conditioned
+    chart.to_dict()
+
+
+def test_when_convert_expr() -> None:
+    from altair.vegalite.v5 import api as _alt
+
+    when = alt.when(Color="Green").then(5).otherwise(10)
+    converted = _alt._condition_to_expr_ref(when)
+
+    assert isinstance(converted, alt.ExprRef)
+
+    with pytest.raises(TypeError, match="int"):
+        _alt._condition_to_expr_ref(9)  # type: ignore
+
+    with pytest.raises(KeyError, match="Missing `value`"):
+        _alt._condition_to_expr_ref(alt.when(Color="Green").then(5).to_dict())
+
+    with pytest.raises(KeyError, match="Missing `condition`"):
+        _alt._condition_to_expr_ref({"value": 10})
+
+    with pytest.raises(TypeError, match="'str'"):
+        _alt._condition_to_expr_ref({"value": 10, "condition": "words"})  # type: ignore
+
+    with pytest.raises(KeyError, match="Missing `test`"):
+        _alt._condition_to_expr_ref(
+            alt.when(alt.selection_point("name")).then(33).otherwise(11)
+        )
+
+    long = (
+        alt.when(Color="red")
+        .then(1)
+        .when(Color="blue")
+        .then(2)
+        .when(Color="green")
+        .then(3)
+        .otherwise(0)
+    )
+
+    with pytest.raises(ValueError, match="3"):
+        _alt._condition_to_expr_ref(long)
+
+
 def test_selection_to_dict():
     brush = alt.selection_interval()
 
@@ -275,12 +519,14 @@ def test_selection_to_dict():
 
 
 def test_selection_expression():
+    from altair.expr.core import Expression
+
     selection = alt.selection_point(fields=["value"])
 
     assert isinstance(selection.value, alt.SelectionExpression)
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
-    assert isinstance(selection["value"], alt.expr.Expression)
+    assert isinstance(selection["value"], Expression)
     assert selection["value"].to_dict() == f"{selection.name}['value']"
 
     magic_attr = "__magic__"

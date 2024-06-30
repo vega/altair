@@ -300,9 +300,11 @@ def test_infer_encoding_types_with_condition():
             ),
         ),
         "color": alt.Color(
-            "cfield:N",
+            field=alt.FieldName("cfield"),
+            type=alt.StandardType("nominal"),
             condition=alt.ConditionalPredicateValueDefGradientstringnullExprRef(
-                value="red", test=alt.Predicate("pred2")
+                value="red",
+                test=alt.Predicate("pred2"),
             ),
         ),
         "opacity": alt.OpacityValue(
