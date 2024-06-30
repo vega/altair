@@ -565,7 +565,7 @@ def generate_vegalite_channel_wrappers(
     imports = imports or [
         "from __future__ import annotations\n",
         "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
-        "import pandas as pd",
+        "from narwhals.dependencies import is_pandas_dataframe",
         "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
