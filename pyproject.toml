@@ -21,7 +21,7 @@ dependencies = [
     "jsonschema>=3.0",
     "numpy<2.0.0",
     "packaging",
-    "narwhals>=0.9.20"
+    "narwhals>=0.9.21"
 ]
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 readme = "README.md"
