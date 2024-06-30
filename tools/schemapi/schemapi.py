@@ -36,6 +36,8 @@ from packaging.version import Version
 # not yet be fully instantiated in case your code is being executed during import time
 from altair import vegalite
 
+from narwhals.dependencies import get_pandas
+
 if TYPE_CHECKING:
     from referencing import Registry
 
@@ -487,7 +489,7 @@ def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
         return float(obj)
     elif isinstance(obj, np.datetime64):
         return str(obj)
-    elif (pd := sys.modules.get("pandas")) is not None and isinstance(
+    elif (pd := get_pandas()) is not None and isinstance(
         obj, pd.Timestamp
     ):
         return pd.Timestamp(obj).isoformat()

@@ -24,7 +24,7 @@ from functools import partial
 import sys
 
 import narwhals as nw
-from narwhals.dependencies import is_pandas_dataframe
+from narwhals.dependencies import is_pandas_dataframe, get_pandas
 
 from ._importers import import_pyarrow_interchange
 from .core import (
@@ -143,9 +143,7 @@ def limit_rows(
             values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
-    elif (pd := sys.modules.get("pandas")) is not None and isinstance(
-        data, pd.DataFrame
-    ):
+    elif is_pandas_dataframe(data):
         values = data
     elif isinstance(data, dict):
         if "values" in data:
@@ -329,9 +327,7 @@ def to_values(data: DataType) -> ToValuesReturnType:
         # SupportGeoInterface and then the ignore statement is not needed?
         data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return {"values": data_sanitized}
-    elif (pd := sys.modules.get("pandas")) is not None and isinstance(
-        data, pd.DataFrame
-    ):
+    elif is_pandas_dataframe(data):
         data = sanitize_pandas_dataframe(data)
         return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
