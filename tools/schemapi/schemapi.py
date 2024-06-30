@@ -489,7 +489,9 @@ def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
         return float(obj)
     elif isinstance(obj, np.datetime64):
         return str(obj)
-    elif (pd := sys.modules.get('pandas')) is not None and isinstance(obj, pd.Timestamp):
+    elif (pd := sys.modules.get("pandas")) is not None and isinstance(
+        obj, pd.Timestamp
+    ):
         return pd.Timestamp(obj).isoformat()
     else:
         return obj
