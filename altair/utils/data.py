@@ -325,13 +325,12 @@ def to_values(data: DataType) -> ToValuesReturnType:
         # SupportGeoInterface and then the ignore statement is not needed?
         data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return {"values": data_sanitized}
+    if isinstance(data, pd.DataFrame):
+        data = sanitize_dataframe(data)
+        return {"values": data.to_dict(orient="records")}
 
     data = maybe_narwhalify(data)
     if isinstance(data, nw.DataFrame):
-        # todo: unify these paths
-        if isinstance(data_native := nw.to_native(data, strict=False), pd.DataFrame):
-            data_native = sanitize_dataframe(data_native)
-            return {"values": data_native.to_dict(orient="records")}
         data = sanitize_narwhals_dataframe(data)
         return {"values": data.rows(named=True)}
     elif isinstance(data, dict):

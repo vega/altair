@@ -433,12 +433,23 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 def sanitize_narwhals_dataframe(data: nw.DataFrame) -> nw.DataFrame:
     """Sanitize narwhals.DataFrame for JSON serialization"""
     schema = data.schema
-    return data.select(
-        nw.col(name).dt.to_string("%Y-%m-%dT%H:%M:%S%.f")
-        if dtype in (nw.Date, nw.Datetime)
-        else name
-        for name, dtype in schema.items()
-    )
+    columns = []
+    for name, dtype in schema.items():
+        if dtype == nw.Date:
+            columns.append(nw.col(name).dt.to_string("%Y-%m-%d"))
+        elif dtype == nw.Datetime:
+            columns.append(nw.col(name).dt.to_string("%Y-%m-%dT%H:%M:%S%.f"))
+        elif dtype == nw.Duration:
+            msg = (
+                f'Field "{name}" has type "{dtype}" which is '
+                "not supported by Altair. Please convert to "
+                "either a timestamp or a numerical value."
+                ""
+            )
+            raise ValueError(msg)
+        else:
+            columns.append(name)
+    return data.select(columns)
 
 
 def parse_shorthand(
