@@ -23,10 +23,15 @@ from pathlib import Path
 from functools import partial
 import sys
 
+import narwhals as nw
 import pandas as pd
 
 from ._importers import import_pyarrow_interchange
-from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
+from .core import (
+    sanitize_dataframe,
+    DataFrameLike,
+    sanitize_narwhals_dataframe,
+)
 from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
 
@@ -45,7 +50,7 @@ class SupportsGeoInterface(Protocol):
 
 
 DataType: TypeAlias = Union[
-    Dict[Any, Any], pd.DataFrame, SupportsGeoInterface, DataFrameLike
+    Dict[Any, Any], pd.DataFrame, SupportsGeoInterface, DataFrameLike, nw.DataFrame
 ]
 
 TDataType = TypeVar("TDataType", bound=DataType)
@@ -58,7 +63,9 @@ SampleReturnType = Optional[Union[pd.DataFrame, Dict[str, Sequence], "pa.lib.Tab
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
-    return isinstance(obj, (dict, pd.DataFrame, DataFrameLike, SupportsGeoInterface))
+    return isinstance(
+        obj, (dict, pd.DataFrame, DataFrameLike, SupportsGeoInterface, nw.DataFrame)
+    )
 
 
 # ==============================================================================
@@ -134,20 +141,21 @@ def limit_rows(
             values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
-    elif isinstance(data, pd.DataFrame):
-        values = data
-    elif isinstance(data, dict):
+
+    data = maybe_narwhalify(data)
+    if isinstance(data, dict):
         if "values" in data:
             values = data["values"]
         else:
             return data
-    elif isinstance(data, DataFrameLike):
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        if max_rows is not None and pa_table.num_rows > max_rows:
+    elif isinstance(data, nw.DataFrame):
+        if max_rows is not None and len(data) > max_rows:
             raise_max_rows_error()
-        # Return pyarrow Table instead of input since the
-        # `arrow_table_from_dfi_dataframe` call above may be expensive
-        return pa_table
+        # `nw.from_native` is a practically free operation - however,
+        # `narwhalify` may also call `arrow_table_from_dfi_dataframe`,
+        # which may be expensive. Therefore, we return the `narwhals.DataFrame`
+        # here instead of the original input.
+        return data
 
     if max_rows is not None and len(values) > max_rows:
         raise_max_rows_error()
@@ -317,17 +325,20 @@ def to_values(data: DataType) -> ToValuesReturnType:
         # SupportGeoInterface and then the ignore statement is not needed?
         data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return {"values": data_sanitized}
-    elif isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
-        return {"values": data.to_dict(orient="records")}
+
+    data = maybe_narwhalify(data)
+    if isinstance(data, nw.DataFrame):
+        # todo: unify these paths
+        if isinstance(data_native := nw.to_native(data, strict=False), pd.DataFrame):
+            data_native = sanitize_dataframe(data_native)
+            return {"values": data_native.to_dict(orient="records")}
+        data = sanitize_narwhals_dataframe(data)
+        return {"values": data.rows(named=True)}
     elif isinstance(data, dict):
         if "values" not in data:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data
-    elif isinstance(data, DataFrameLike):
-        pa_table = sanitize_arrow_table(arrow_table_from_dfi_dataframe(data))
-        return {"values": pa_table.to_pylist()}
     else:
         # Should never reach this state as tested by check_data_type
         msg = f"Unrecognized data type: {type(data)}"
@@ -338,6 +349,22 @@ def check_data_type(data: DataType) -> None:
     if not is_data_type(data):
         msg = f"Expected dict, DataFrame or a __geo_interface__ attribute, got: {type(data)}"
         raise TypeError(msg)
+
+
+def maybe_narwhalify(data: DataType) -> DataType:
+    """Wrap `data` in `narwhals.DataFrame`, if possible.
+
+    If `data` is not supported by Narwhals, but it is convertible
+    to a PyArrow table, then first convert to a PyArrow Table,
+    and then wrap in `narwhals.DataFrame`.
+    """
+    data = nw.from_native(data, eager_only=True, strict=False)
+    if isinstance(data, nw.DataFrame):
+        return data
+    elif isinstance(data, DataFrameLike):
+        pa_table = arrow_table_from_dfi_dataframe(data)
+        return nw.from_native(pa_table, eager_only=True)
+    return data
 
 
 # ==============================================================================

@@ -3,11 +3,16 @@ import json
 import sys
 import warnings
 
+import narwhals as nw
 import numpy as np
 import pandas as pd
 import pytest
 
-from altair.utils import infer_vegalite_type, sanitize_dataframe, sanitize_arrow_table
+from altair.utils import (
+    infer_vegalite_type,
+    sanitize_dataframe,
+    sanitize_narwhals_dataframe,
+)
 
 try:
     import pyarrow as pa
@@ -157,8 +162,8 @@ def test_sanitize_pyarrow_table_columns() -> None:
             ]
         ),
     )
-    sanitized = sanitize_arrow_table(pa_table)
-    values = sanitized.to_pylist()
+    sanitized = sanitize_narwhals_dataframe(nw.from_native(pa_table))
+    values = sanitized.rows(named=True)
 
     assert values[0] == {
         "s": "a",

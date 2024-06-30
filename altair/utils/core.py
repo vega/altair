@@ -27,8 +27,9 @@ from itertools import groupby
 from operator import itemgetter
 
 import jsonschema
-import pandas as pd
+import narwhals as nw
 import numpy as np
+import pandas as pd
 from pandas.api.types import infer_dtype
 
 from altair.utils.schemapi import SchemaBase, Undefined
@@ -429,30 +430,15 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def sanitize_arrow_table(pa_table: pa.Table) -> pa.Table:
-    """Sanitize arrow table for JSON serialization"""
-    import pyarrow as pa
-    import pyarrow.compute as pc
-
-    arrays = []
-    schema = pa_table.schema
-    for name in schema.names:
-        array = pa_table[name]
-        dtype_name = str(schema.field(name).type)
-        if dtype_name.startswith(("timestamp", "date")):
-            arrays.append(pc.strftime(array))
-        elif dtype_name.startswith("duration"):
-            msg = (
-                f'Field "{name}" has type "{dtype_name}" which is '
-                "not supported by Altair. Please convert to "
-                "either a timestamp or a numerical value."
-                ""
-            )
-            raise ValueError(msg)
-        else:
-            arrays.append(array)
-
-    return pa.Table.from_arrays(arrays, names=schema.names)
+def sanitize_narwhals_dataframe(data: nw.DataFrame) -> nw.DataFrame:
+    """Sanitize narwhals.DataFrame for JSON serialization"""
+    schema = data.schema
+    return data.select(
+        nw.col(name).dt.to_string("%Y-%m-%dT%H:%M:%S%.f")
+        if dtype in (nw.Date, nw.Datetime)
+        else name
+        for name, dtype in schema.items()
+    )
 
 
 def parse_shorthand(
