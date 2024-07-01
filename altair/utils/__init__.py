@@ -1,5 +1,5 @@
 from .core import (
-    infer_vegalite_type,
+    infer_vegalite_type_for_pandas,
     infer_encoding_types,
     sanitize_pandas_dataframe,
     sanitize_narwhals_dataframe,
@@ -23,7 +23,7 @@ __all__ = (
     "Undefined",
     "display_traceback",
     "infer_encoding_types",
-    "infer_vegalite_type",
+    "infer_vegalite_type_for_pandas",
     "parse_shorthand",
     "sanitize_narwhals_dataframe",
     "sanitize_pandas_dataframe",

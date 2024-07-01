@@ -44,6 +44,7 @@ else:
 if TYPE_CHECKING:
     import pyarrow as pa
     import pandas as pd
+    from narwhals.typing import IntoDataFrame
 
 
 @runtime_checkable
@@ -52,7 +53,7 @@ class SupportsGeoInterface(Protocol):
 
 
 DataType: TypeAlias = Union[
-    Dict[Any, Any], "pd.DataFrame", SupportsGeoInterface, DataFrameLike, nw.DataFrame
+    Dict[Any, Any], "IntoDataFrame", SupportsGeoInterface, DataFrameLike
 ]
 
 TDataType = TypeVar("TDataType", bound=DataType)
@@ -151,13 +152,13 @@ def limit_rows(
         else:
             return data
     else:
-        data = narwhalify(data)
-        if max_rows is not None and len(data) > max_rows:
+        data_nw = narwhalify(data)
+        if max_rows is not None and len(data_nw) > max_rows:
             raise_max_rows_error()
         # `narwhalify` may call `arrow_table_from_dfi_dataframe`,
         # which can be expensive. Therefore, we return the `narwhals.DataFrame`
         # here instead of the original input.
-        return data
+        return data_nw
 
     if max_rows is not None and len(values) > max_rows:
         raise_max_rows_error()

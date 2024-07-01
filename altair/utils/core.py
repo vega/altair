@@ -202,7 +202,7 @@ TIMEUNITS = [
 InferredVegaLiteType = Literal["ordinal", "nominal", "quantitative", "temporal"]
 
 
-def infer_vegalite_type(
+def infer_vegalite_type_for_pandas(
     data: object,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
@@ -213,6 +213,7 @@ def infer_vegalite_type(
     ----------
     data: object
     """
+    # This is safe to import here, as this function is only called on pandas input.
     from pandas.api.types import infer_dtype
 
     typ = infer_dtype(data, skipna=False)
@@ -323,8 +324,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
-    # We can safely import pandas here, this function is only
-    # called on pandas dataframes
+    # This is safe to import here, as this function is only called on pandas input.
     import pandas as pd
 
     df = df.copy()
@@ -625,9 +625,9 @@ def parse_shorthand(
         if isinstance(data_nw, nw.DataFrame) and unescaped_field in data_nw.columns:
             column = data_nw[unescaped_field]
             if column.dtype == nw.Object and _is_pandas_dataframe(data):
-                attrs["type"] = infer_vegalite_type(nw.to_native(column))
+                attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
             else:
-                attrs["type"] = infer_vegalite_type_for_nw_column(column)
+                attrs["type"] = infer_vegalite_type_for_narwhals(column)
             if isinstance(attrs["type"], tuple):
                 attrs["sort"] = attrs["type"][1]
                 attrs["type"] = attrs["type"][0]
@@ -651,7 +651,7 @@ def parse_shorthand(
     return attrs
 
 
-def infer_vegalite_type_for_nw_column(
+def infer_vegalite_type_for_narwhals(
     column: nw.Series,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list]:
     dtype = column.dtype

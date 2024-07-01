@@ -9,7 +9,7 @@ import pandas as pd
 import pytest
 
 from altair.utils import (
-    infer_vegalite_type,
+    infer_vegalite_type_for_pandas,
     sanitize_pandas_dataframe,
     sanitize_narwhals_dataframe,
 )
@@ -22,7 +22,7 @@ except ImportError:
 
 def test_infer_vegalite_type():
     def _check(arr, typ):
-        assert infer_vegalite_type(arr) == typ
+        assert infer_vegalite_type_for_pandas(arr) == typ
 
     _check(np.arange(5, dtype=float), "quantitative")
     _check(np.arange(5, dtype=int), "quantitative")
