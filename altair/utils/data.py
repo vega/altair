@@ -23,10 +23,16 @@ from pathlib import Path
 from functools import partial
 import sys
 
-import pandas as pd
+import narwhals as nw
+from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
 
 from ._importers import import_pyarrow_interchange
-from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
+from .core import (
+    sanitize_pandas_dataframe,
+    DataFrameLike,
+    sanitize_narwhals_dataframe,
+    narwhalify,
+)
 from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
 
@@ -37,6 +43,8 @@ else:
 
 if TYPE_CHECKING:
     import pyarrow as pa
+    import pandas as pd
+    from narwhals.typing import IntoDataFrame
 
 
 @runtime_checkable
@@ -45,7 +53,7 @@ class SupportsGeoInterface(Protocol):
 
 
 DataType: TypeAlias = Union[
-    Dict[Any, Any], pd.DataFrame, SupportsGeoInterface, DataFrameLike
+    Dict[Any, Any], "IntoDataFrame", SupportsGeoInterface, DataFrameLike
 ]
 
 TDataType = TypeVar("TDataType", bound=DataType)
@@ -54,11 +62,13 @@ VegaLiteDataDict: TypeAlias = Dict[
     str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
 ]
 ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
-SampleReturnType = Optional[Union[pd.DataFrame, Dict[str, Sequence], "pa.lib.Table"]]
+SampleReturnType = Optional[Union["pd.DataFrame", Dict[str, Sequence], "pa.lib.Table"]]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
-    return isinstance(obj, (dict, pd.DataFrame, DataFrameLike, SupportsGeoInterface))
+    return _is_pandas_dataframe(obj) or isinstance(
+        obj, (dict, DataFrameLike, SupportsGeoInterface, nw.DataFrame)
+    )
 
 
 # ==============================================================================
@@ -134,20 +144,21 @@ def limit_rows(
             values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
-    elif isinstance(data, pd.DataFrame):
+    elif _is_pandas_dataframe(data):
         values = data
     elif isinstance(data, dict):
         if "values" in data:
             values = data["values"]
         else:
             return data
-    elif isinstance(data, DataFrameLike):
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        if max_rows is not None and pa_table.num_rows > max_rows:
+    else:
+        data_nw = narwhalify(data)
+        if max_rows is not None and len(data_nw) > max_rows:
             raise_max_rows_error()
-        # Return pyarrow Table instead of input since the
-        # `arrow_table_from_dfi_dataframe` call above may be expensive
-        return pa_table
+        # `narwhalify` may call `arrow_table_from_dfi_dataframe`,
+        # which can be expensive. Therefore, we return the `narwhals.DataFrame`
+        # here instead of the original input.
+        return data_nw
 
     if max_rows is not None and len(values) > max_rows:
         raise_max_rows_error()
@@ -172,7 +183,7 @@ def sample(
     if data is None:
         return partial(sample, n=n, frac=frac)
     check_data_type(data)
-    if isinstance(data, pd.DataFrame):
+    if _is_pandas_dataframe(data):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
         if "values" in data:
@@ -311,27 +322,28 @@ def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
-        if isinstance(data, pd.DataFrame):
-            data = sanitize_dataframe(data)
+        if _is_pandas_dataframe(data):
+            data = sanitize_pandas_dataframe(data)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
         data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return {"values": data_sanitized}
-    elif isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
+    elif _is_pandas_dataframe(data):
+        data = sanitize_pandas_dataframe(data)
         return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
         if "values" not in data:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data
-    elif isinstance(data, DataFrameLike):
-        pa_table = sanitize_arrow_table(arrow_table_from_dfi_dataframe(data))
-        return {"values": pa_table.to_pylist()}
-    else:
+    try:
+        data = narwhalify(data)
+    except TypeError as exc:
         # Should never reach this state as tested by check_data_type
         msg = f"Unrecognized data type: {type(data)}"
-        raise ValueError(msg)
+        raise ValueError(msg) from exc
+    data = sanitize_narwhals_dataframe(data)
+    return {"values": data.rows(named=True)}
 
 
 def check_data_type(data: DataType) -> None:
@@ -351,14 +363,14 @@ def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
-        if isinstance(data, pd.DataFrame):
-            data = sanitize_dataframe(data)
+        if _is_pandas_dataframe(data):
+            data = sanitize_pandas_dataframe(data)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
         data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return json.dumps(data)
-    elif isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
+    elif _is_pandas_dataframe(data):
+        data = sanitize_pandas_dataframe(data)
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
         if "values" not in data:
@@ -383,13 +395,18 @@ def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
             f"See https://github.com/vega/altair/issues/3441"
         )
         raise NotImplementedError(msg)
-    elif isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
+    elif _is_pandas_dataframe(data):
+        data = sanitize_pandas_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
         if "values" not in data:
             msg = "values expected in data dict, but not present"
             raise KeyError(msg)
+        try:
+            import pandas as pd
+        except ImportError as exc:
+            msg = "pandas is required to convert a dict to a CSV string"
+            raise ImportError(msg) from exc
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
     elif isinstance(data, DataFrameLike):
         # experimental interchange dataframe support
