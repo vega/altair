@@ -71,6 +71,48 @@ class deprecated(te.deprecated):
         return super().__call__(arg)
 
 
+# NOTE: Annotating the return type breaks `pyright` detecting [reportDeprecated]
+def deprecate(
+    *,
+    version: te.LiteralString,
+    alternative: te.LiteralString | None = None,
+    message: te.LiteralString | None = None,
+    category: type[AltairDeprecationWarning] | None = AltairDeprecationWarning,
+    stacklevel: int = 1,
+):
+    """Indicate that a class, function or overload is deprecated.
+
+    When this decorator is applied to an object, the type checker
+    will generate a diagnostic on usage of the deprecated object.
+
+    Parameters
+    ----------
+    version
+        ``altair`` version the deprecation first appeared.
+    alternative
+        Suggested replacement class/method/function.
+    message
+        Additional message appended to ``version``, ``alternative``.
+    category
+        If the *category* is ``None``, no warning is emitted at runtime.
+    stacklevel
+        The *stacklevel* determines where the
+        warning is emitted. If it is ``1`` (the default), the warning
+        is emitted at the direct caller of the deprecated object; if it
+        is higher, it is emitted further up the stack.
+        Static type checker behavior is not affected by the *category*
+        and *stacklevel* arguments.
+    """
+    output = f"Deprecated in `altair={version}`."
+    if alternative:
+        output = f"{output} Use {alternative} instead."
+    return te.deprecated(
+        f"{output}\n\n{message}" if message else output,
+        category=category,
+        stacklevel=stacklevel,
+    )
+
+
 def msg(
     *,
     version: te.LiteralString,

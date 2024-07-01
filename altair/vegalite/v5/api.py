@@ -799,7 +799,7 @@ def selection_multi(**kwargs):
     return _selection(type="point", **kwargs)
 
 
-@utils.deprecation.deprecated("", version="5.0.0", alternative="selection_point")
+@utils.deprecation.deprecate(version="5.0.0", alternative="selection_point")
 def selection_single(**kwargs):
     """'selection_single' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
