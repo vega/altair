@@ -232,6 +232,12 @@ class _EncodingMixin:
         return copy
 '''
 
+# These types should support annotations in generated code,
+# but are not derived from the schema itself.
+EXTRA_ALIASES: Final = """
+Map: TypeAlias = Mapping[str, Any]
+"""
+
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -813,7 +819,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"Tracer cache collected {TypeAliasTracer.n_entries!r} entries."
     )
     print(msg)
-    TypeAliasTracer.write_module(fp_typing, header=HEADER)
+    TypeAliasTracer.write_module(fp_typing, header=HEADER, extra_aliases=EXTRA_ALIASES)
     # Write the pre-generated modules
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
@@ -841,7 +847,7 @@ def _create_encode_signature(
         # the dictionary representation of an encoding channel class. See
         # discussions in https://github.com/vega/altair/pull/3208
         # for more background.
-        union_types = ["str", field_class_name, "dict"]
+        union_types = ["str", field_class_name, "Map"]
         docstring_union_types = ["str", rst_syntax_for_class(field_class_name), "Dict"]
         if info.supports_arrays:
             # We could be more specific about what types are accepted in the list

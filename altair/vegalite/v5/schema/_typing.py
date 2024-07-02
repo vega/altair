@@ -4,9 +4,11 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal, Mapping
 
 from typing_extensions import TypeAlias
+
+Map: TypeAlias = Mapping[str, Any]
 
 AggregateOp_T: TypeAlias = Literal[
     "argmax",
