@@ -372,8 +372,8 @@ def test_when_then_when_then_otherwise() -> None:
         .encode(
             x="a:O",
             y="b:Q",
-            fillOpacity=alt.when(select).then(1).otherwise(0.3),  # type: ignore
-            strokeWidth=actual_stroke,  # type: ignore
+            fillOpacity=alt.when(select).then(1).otherwise(0.3),
+            strokeWidth=actual_stroke,
         )
         .configure_scale(bandPaddingInner=0.2)
         .add_params(select, highlight)
