@@ -198,19 +198,19 @@ def sample(
         else:
             # Maybe this should raise an error or return something useful?
             return None
-    elif isinstance(data, DataFrameLike):
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        if not n:
-            if frac is None:
-                msg = "frac cannot be None if n is None with this data input type"
-                raise ValueError(msg)
-            n = int(frac * len(pa_table))
-        indices = random.sample(range(len(pa_table)), n)
-        return pa_table.take(indices)
-    else:
+    try:
+        data = narwhalify(data)
+    except TypeError:
         # Maybe this should raise an error or return something useful? Currently,
         # if data is of type SupportsGeoInterface it lands here
         return None
+    if not n:
+        if frac is None:
+            msg = "frac cannot be None if n is None with this data input type"
+            raise ValueError(msg)
+        n = int(frac * len(data))
+    indices = random.sample(range(len(data)), n)
+    return nw.to_native(data[indices])
 
 
 _FormatType = Literal["csv", "json"]

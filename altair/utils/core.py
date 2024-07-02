@@ -655,14 +655,13 @@ def infer_vegalite_type_for_narwhals(
     column: nw.Series,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list]:
     dtype = column.dtype
-    if dtype == nw.Categorical:
-        # todo: handle ordered vs non-ordered case
+    if nw.is_ordered_categorical(column):
         return "ordinal", column.cat.get_categories().to_list()
-    if dtype in (nw.String, nw.Categorical, nw.Boolean):  # noqa: PLR6201
+    if dtype in {nw.String, nw.Categorical, nw.Boolean}:
         return "nominal"
     elif dtype.is_numeric():
         return "quantitative"
-    elif dtype in (nw.Datetime, nw.Date):  # noqa: PLR6201
+    elif dtype in {nw.Datetime, nw.Date}:
         return "temporal"
     else:
         msg = f"Unexpected DtypeKind: {dtype}"
