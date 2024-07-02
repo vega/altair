@@ -520,6 +520,7 @@ def parse_shorthand(
 
     Examples
     --------
+    >>> import pandas as pd
     >>> data = pd.DataFrame({'foo': ['A', 'B', 'A', 'B'],
     ...                      'bar': [1, 2, 3, 4]})
 
