@@ -34207,65 +34207,65 @@ class _EncodingMixin:
     def encode(
         self,
         *args: Any,
-        angle: Optional[str | Angle | dict | AngleDatum | AngleValue] = Undefined,
-        color: Optional[str | Color | dict | ColorDatum | ColorValue] = Undefined,
-        column: Optional[str | Column | dict] = Undefined,
-        description: Optional[str | Description | dict | DescriptionValue] = Undefined,
-        detail: Optional[str | Detail | dict | list] = Undefined,
-        facet: Optional[str | Facet | dict] = Undefined,
-        fill: Optional[str | Fill | dict | FillDatum | FillValue] = Undefined,
+        angle: Optional[str | Angle | Map | AngleDatum | AngleValue] = Undefined,
+        color: Optional[str | Color | Map | ColorDatum | ColorValue] = Undefined,
+        column: Optional[str | Column | Map] = Undefined,
+        description: Optional[str | Description | Map | DescriptionValue] = Undefined,
+        detail: Optional[str | Detail | Map | list] = Undefined,
+        facet: Optional[str | Facet | Map] = Undefined,
+        fill: Optional[str | Fill | Map | FillDatum | FillValue] = Undefined,
         fillOpacity: Optional[
-            str | FillOpacity | dict | FillOpacityDatum | FillOpacityValue
+            str | FillOpacity | Map | FillOpacityDatum | FillOpacityValue
         ] = Undefined,
-        href: Optional[str | Href | dict | HrefValue] = Undefined,
-        key: Optional[str | Key | dict] = Undefined,
-        latitude: Optional[str | Latitude | dict | LatitudeDatum] = Undefined,
+        href: Optional[str | Href | Map | HrefValue] = Undefined,
+        key: Optional[str | Key | Map] = Undefined,
+        latitude: Optional[str | Latitude | Map | LatitudeDatum] = Undefined,
         latitude2: Optional[
-            str | Latitude2 | dict | Latitude2Datum | Latitude2Value
+            str | Latitude2 | Map | Latitude2Datum | Latitude2Value
         ] = Undefined,
-        longitude: Optional[str | Longitude | dict | LongitudeDatum] = Undefined,
+        longitude: Optional[str | Longitude | Map | LongitudeDatum] = Undefined,
         longitude2: Optional[
-            str | Longitude2 | dict | Longitude2Datum | Longitude2Value
+            str | Longitude2 | Map | Longitude2Datum | Longitude2Value
         ] = Undefined,
         opacity: Optional[
-            str | Opacity | dict | OpacityDatum | OpacityValue
+            str | Opacity | Map | OpacityDatum | OpacityValue
         ] = Undefined,
-        order: Optional[str | Order | dict | list | OrderValue] = Undefined,
-        radius: Optional[str | Radius | dict | RadiusDatum | RadiusValue] = Undefined,
+        order: Optional[str | Order | Map | list | OrderValue] = Undefined,
+        radius: Optional[str | Radius | Map | RadiusDatum | RadiusValue] = Undefined,
         radius2: Optional[
-            str | Radius2 | dict | Radius2Datum | Radius2Value
+            str | Radius2 | Map | Radius2Datum | Radius2Value
         ] = Undefined,
-        row: Optional[str | Row | dict] = Undefined,
-        shape: Optional[str | Shape | dict | ShapeDatum | ShapeValue] = Undefined,
-        size: Optional[str | Size | dict | SizeDatum | SizeValue] = Undefined,
-        stroke: Optional[str | Stroke | dict | StrokeDatum | StrokeValue] = Undefined,
+        row: Optional[str | Row | Map] = Undefined,
+        shape: Optional[str | Shape | Map | ShapeDatum | ShapeValue] = Undefined,
+        size: Optional[str | Size | Map | SizeDatum | SizeValue] = Undefined,
+        stroke: Optional[str | Stroke | Map | StrokeDatum | StrokeValue] = Undefined,
         strokeDash: Optional[
-            str | StrokeDash | dict | StrokeDashDatum | StrokeDashValue
+            str | StrokeDash | Map | StrokeDashDatum | StrokeDashValue
         ] = Undefined,
         strokeOpacity: Optional[
-            str | StrokeOpacity | dict | StrokeOpacityDatum | StrokeOpacityValue
+            str | StrokeOpacity | Map | StrokeOpacityDatum | StrokeOpacityValue
         ] = Undefined,
         strokeWidth: Optional[
-            str | StrokeWidth | dict | StrokeWidthDatum | StrokeWidthValue
+            str | StrokeWidth | Map | StrokeWidthDatum | StrokeWidthValue
         ] = Undefined,
-        text: Optional[str | Text | dict | TextDatum | TextValue] = Undefined,
-        theta: Optional[str | Theta | dict | ThetaDatum | ThetaValue] = Undefined,
-        theta2: Optional[str | Theta2 | dict | Theta2Datum | Theta2Value] = Undefined,
-        tooltip: Optional[str | Tooltip | dict | list | TooltipValue] = Undefined,
-        url: Optional[str | Url | dict | UrlValue] = Undefined,
-        x: Optional[str | X | dict | XDatum | XValue] = Undefined,
-        x2: Optional[str | X2 | dict | X2Datum | X2Value] = Undefined,
-        xError: Optional[str | XError | dict | XErrorValue] = Undefined,
-        xError2: Optional[str | XError2 | dict | XError2Value] = Undefined,
+        text: Optional[str | Text | Map | TextDatum | TextValue] = Undefined,
+        theta: Optional[str | Theta | Map | ThetaDatum | ThetaValue] = Undefined,
+        theta2: Optional[str | Theta2 | Map | Theta2Datum | Theta2Value] = Undefined,
+        tooltip: Optional[str | Tooltip | Map | list | TooltipValue] = Undefined,
+        url: Optional[str | Url | Map | UrlValue] = Undefined,
+        x: Optional[str | X | Map | XDatum | XValue] = Undefined,
+        x2: Optional[str | X2 | Map | X2Datum | X2Value] = Undefined,
+        xError: Optional[str | XError | Map | XErrorValue] = Undefined,
+        xError2: Optional[str | XError2 | Map | XError2Value] = Undefined,
         xOffset: Optional[
-            str | XOffset | dict | XOffsetDatum | XOffsetValue
+            str | XOffset | Map | XOffsetDatum | XOffsetValue
         ] = Undefined,
-        y: Optional[str | Y | dict | YDatum | YValue] = Undefined,
-        y2: Optional[str | Y2 | dict | Y2Datum | Y2Value] = Undefined,
-        yError: Optional[str | YError | dict | YErrorValue] = Undefined,
-        yError2: Optional[str | YError2 | dict | YError2Value] = Undefined,
+        y: Optional[str | Y | Map | YDatum | YValue] = Undefined,
+        y2: Optional[str | Y2 | Map | Y2Datum | Y2Value] = Undefined,
+        yError: Optional[str | YError | Map | YErrorValue] = Undefined,
+        yError2: Optional[str | YError2 | Map | YError2Value] = Undefined,
         yOffset: Optional[
-            str | YOffset | dict | YOffsetDatum | YOffsetValue
+            str | YOffset | Map | YOffsetDatum | YOffsetValue
         ] = Undefined,
     ) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)

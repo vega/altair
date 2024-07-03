@@ -71,7 +71,7 @@ class _TypeAliasTracer:
         self.aliases: list[tuple[str, str]] = []
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
-            "from typing import Literal",
+            "from typing import Literal, Mapping, Any",
             "from typing_extensions import TypeAlias",
         )
         self._cmd_check: list[str] = ["--fix"]
@@ -113,7 +113,11 @@ class _TypeAliasTracer:
             yield f"{name}: TypeAlias = {statement}"
 
     def write_module(
-        self, fp: Path, *extra_imports: str, header: LiteralString
+        self,
+        fp: Path,
+        *extra_imports: str,
+        header: LiteralString,
+        extra_aliases: LiteralString,
     ) -> None:
         """Write all collected `TypeAlias`'s to `fp`.
 
@@ -125,13 +129,15 @@ class _TypeAliasTracer:
             Follows `self._imports` block.
         header
             `tools.generate_schema_wrapper.HEADER`.
+        extra_aliases
+            `tools.generate_schema_wrapper.EXTRA_ALIASES`.
         """
         ruff_format = ["ruff", "format", fp]
         if self._cmd_format:
             ruff_format.extend(self._cmd_format)
         commands = (["ruff", "check", fp, *self._cmd_check], ruff_format)
-        imports = (header, "\n", *self._imports, *extra_imports, "\n\n")
-        it = chain(imports, self.generate_aliases())
+        static = (header, "\n", *self._imports, *extra_imports, "\n\n", extra_aliases)
+        it = chain(static, self.generate_aliases())
         fp.write_text("\n".join(it), encoding="utf-8")
         for cmd in commands:
             r = subprocess.run(cmd, check=True)
