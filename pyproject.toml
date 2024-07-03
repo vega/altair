@@ -319,6 +319,10 @@ unfixable= [
 [tool.ruff.lint.mccabe]
 max-complexity = 18
 
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+# https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
+"typing.Optional".msg = "Use `Union[T, None]` instead.\n`typing.Optional` is likely to be confused with `altair.Optional`, which have similar but different semantic meaning.\nSee https://github.com/vega/altair/pull/3449"
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
