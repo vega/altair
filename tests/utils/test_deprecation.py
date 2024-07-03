@@ -1,7 +1,6 @@
 import pytest
 
-from altair.utils import AltairDeprecationWarning
-from altair.utils.deprecation import deprecated
+from altair.utils.deprecation import AltairDeprecationWarning, deprecated
 
 
 def test_deprecated_class():
@@ -9,18 +8,19 @@ def test_deprecated_class():
         def __init__(self, *args) -> None:
             self.args = args
 
-    OldChart = deprecated("", version="", alternative="LayerChart")(Dummy)
-    with pytest.warns(AltairDeprecationWarning, match=r"alt\.Dummy.+alt\.LayerChart"):
+    OldChart = deprecated(version="2.0.0", alternative="LayerChart")(Dummy)
+
+    with pytest.warns(AltairDeprecationWarning, match=r"altair=2\.0\.0.+LayerChart"):
         OldChart()
 
 
 def test_deprecation_decorator():
-    @deprecated("", version="999", alternative="12345")
+    @deprecated(version="999", alternative="func_12345")
     def func(x):
         return x + 1
 
     with pytest.warns(
-        AltairDeprecationWarning, match=r"alt\.func.+altair=999.+12345 instead"
+        AltairDeprecationWarning, match=r"altair=999.+func_12345 instead"
     ):
         y = func(1)
     assert y == 2

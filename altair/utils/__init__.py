@@ -11,7 +11,7 @@ from .core import (
 )
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
-from .deprecation import AltairDeprecationWarning
+from .deprecation import AltairDeprecationWarning, deprecated
 from .schemapi import Undefined, Optional
 
 
@@ -21,6 +21,7 @@ __all__ = (
     "PluginRegistry",
     "SchemaBase",
     "Undefined",
+    "deprecated",
     "display_traceback",
     "infer_encoding_types",
     "infer_vegalite_type",
