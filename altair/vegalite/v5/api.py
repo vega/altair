@@ -23,8 +23,8 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from ...utils.data import DataType, is_data_type as _is_data_type
-from ...utils.deprecation import AltairDeprecationWarning
+from altair.utils.data import DataType, is_data_type as _is_data_type
+from altair.utils.deprecation import AltairDeprecationWarning  # noqa: F401
 
 if TYPE_CHECKING:
     from ...utils.core import DataFrameLike
@@ -443,41 +443,24 @@ def param(
     parameter: Parameter
         The parameter object that can be used in chart creation.
     """
+    warn_msg = "The value of `empty` should be True or False."
+    empty_remap = {"none": False, "all": True}
     parameter = Parameter(name)
 
     if empty is not Undefined:
-        parameter.empty = empty
-        if parameter.empty == "none":
-            warnings.warn(
-                """The value of 'empty' should be True or False.""",
-                utils.AltairDeprecationWarning,
-                stacklevel=1,
-            )
-            parameter.empty = False
-        elif parameter.empty == "all":
-            warnings.warn(
-                """The value of 'empty' should be True or False.""",
-                utils.AltairDeprecationWarning,
-                stacklevel=1,
-            )
-            parameter.empty = True
-        elif (parameter.empty is False) or (parameter.empty is True):
-            pass
+        if isinstance(empty, bool) and not isinstance(empty, str):
+            parameter.empty = empty
+        elif empty in empty_remap:
+            utils.deprecated_warn(warn_msg, version="5.0.0")
+            parameter.empty = empty_remap[empty]  # type: ignore[index]
         else:
-            msg = "The value of 'empty' should be True or False."
-            raise ValueError(msg)
+            raise ValueError(warn_msg)
 
-    if "init" in kwds:
-        warnings.warn(
-            """Use 'value' instead of 'init'.""",
-            utils.AltairDeprecationWarning,
-            stacklevel=1,
-        )
+    if _init := kwds.pop("init", None):
+        utils.deprecated_warn("Use `value` instead of `init`.", version="5.0.0")
+        # If both 'value' and 'init' are set, we ignore 'init'.
         if value is Undefined:
-            kwds["value"] = kwds.pop("init")
-        else:
-            # If both 'value' and 'init' are set, we ignore 'init'.
-            kwds.pop("init")
+            kwds["value"] = _init
 
     # ignore[arg-type] comment is needed because we can also pass _expr_core.Expression
     if "select" not in kwds:
@@ -518,11 +501,10 @@ def _selection(
         select = core.PointSelectionConfig(type=type, **kwds)
     elif type in {"single", "multi"}:
         select = core.PointSelectionConfig(type="point", **kwds)
-        warnings.warn(
-            """The types 'single' and 'multi' are now
-        combined and should be specified using "selection_point()".""",
-            utils.AltairDeprecationWarning,
-            stacklevel=1,
+        utils.deprecated_warn(
+            "The types `single` and `multi` are now combined.",
+            version="5.0.0",
+            alternative="selection_point()",
         )
     else:
         msg = """'type' must be 'point' or 'interval'"""
@@ -1260,12 +1242,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             additional kwargs passed to spec_to_mimebundle.
         """
         if webdriver is not None:
-            warnings.warn(
-                "The webdriver argument is deprecated as it's not relevant for"
-                + " the new vl-convert engine which replaced altair_saver."
-                + " The argument will be removed in a future release.",
-                AltairDeprecationWarning,
-                stacklevel=1,
+            utils.deprecated_warn(
+                "The webdriver argument is not relevant for the new vl-convert engine which replaced altair_saver. "
+                "The argument will be removed in a future release.",
+                version="5.0.0",
             )
 
         from ...utils.save import save
