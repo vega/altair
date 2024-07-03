@@ -253,10 +253,9 @@ def test_chart_operations():
 
 
 def test_when() -> None:
-    from altair.vegalite.v5 import api as _alt
-
     select = alt.selection_point(name="select", on="click")
-    condition = _alt._predicate_to_condition(select, empty=False)
+    condition = alt.condition(select, alt.value(1), "two", empty=False).get("condition")
+    condition.pop("value")
     when = alt.when(select, empty=False)
     when_constraint = alt.when(Origin="Europe")
     when_constraints = alt.when(
@@ -390,8 +389,6 @@ def test_when_labels_position_based_on_condition() -> None:
     import pandas as pd
     from altair.utils.schemapi import SchemaValidationError
 
-    from altair.vegalite.v5 import api as _alt
-
     rand = np.random.RandomState(42)
     df = pd.DataFrame({"xval": range(100), "yval": rand.randn(100).cumsum()})
 
@@ -409,7 +406,11 @@ def test_when_labels_position_based_on_condition() -> None:
         .then(alt.value("red"))
         .otherwise("black", str_as_lit=True)
     )
-    param_color_py_when = alt.param(expr=_alt._condition_to_expr_str(when))
+    cond = when["condition"][0]
+    otherwise = when["value"]
+    param_color_py_when = alt.param(
+        expr=alt.expr.if_(cond["test"], cond["value"], otherwise)
+    )
     assert param_color_py_expr.expr == param_color_py_when.expr
 
     chart = (
@@ -434,7 +435,6 @@ def test_when_expressions_inside_parameters() -> None:
 
     Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
     """
-    from altair.vegalite.v5 import api as _alt
     import pandas as pd
 
     source = pd.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
@@ -445,8 +445,10 @@ def test_when_expressions_inside_parameters() -> None:
         .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
     )
     when_then_otherwise = alt.when(alt.datum.b >= 0).then(10).otherwise(-20)
+    cond = when_then_otherwise["condition"][0]
+    otherwise = when_then_otherwise["value"]
     expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
-    actual = _alt._condition_to_expr_ref(when_then_otherwise)
+    actual = alt.expr(alt.expr.if_(cond["test"], cond["value"], otherwise))
     assert expected == actual
 
     text_conditioned = bar.mark_text(align="left", baseline="middle", dx=actual).encode(
@@ -455,45 +457,6 @@ def test_when_expressions_inside_parameters() -> None:
 
     chart = bar + text_conditioned
     chart.to_dict()
-
-
-def test_when_convert_expr() -> None:
-    from altair.vegalite.v5 import api as _alt
-
-    when = alt.when(Color="Green").then(5).otherwise(10)
-    converted = _alt._condition_to_expr_ref(when)
-
-    assert isinstance(converted, alt.ExprRef)
-
-    with pytest.raises(TypeError, match="int"):
-        _alt._condition_to_expr_ref(9)  # type: ignore
-
-    with pytest.raises(KeyError, match="Missing `value`"):
-        _alt._condition_to_expr_ref(alt.when(Color="Green").then(5).to_dict())
-
-    with pytest.raises(KeyError, match="Missing `condition`"):
-        _alt._condition_to_expr_ref({"value": 10})
-
-    with pytest.raises(TypeError, match="'str'"):
-        _alt._condition_to_expr_ref({"value": 10, "condition": "words"})  # type: ignore
-
-    with pytest.raises(KeyError, match="Missing `test`"):
-        _alt._condition_to_expr_ref(
-            alt.when(alt.selection_point("name")).then(33).otherwise(11)
-        )
-
-    long = (
-        alt.when(Color="red")
-        .then(1)
-        .when(Color="blue")
-        .then(2)
-        .when(Color="green")
-        .then(3)
-        .otherwise(0)
-    )
-
-    with pytest.raises(ValueError, match="3"):
-        _alt._condition_to_expr_ref(long)
 
 
 def test_selection_to_dict():
