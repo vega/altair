@@ -254,7 +254,7 @@ def test_chart_operations():
 
 def test_when() -> None:
     select = alt.selection_point(name="select", on="click")
-    condition = alt.condition(select, alt.value(1), "two", empty=False).get("condition")
+    condition = alt.condition(select, alt.value(1), "two", empty=False)["condition"]
     condition.pop("value")
     when = alt.when(select, empty=False)
     when_constraint = alt.when(Origin="Europe")
