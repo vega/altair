@@ -19,6 +19,18 @@ if TYPE_CHECKING:
 class AltairDeprecationWarning(DeprecationWarning): ...
 
 
+def _format_message(
+    version: LiteralString,
+    alternative: LiteralString | None,
+    message: LiteralString | None,
+    /,
+) -> LiteralString:
+    output = f"Deprecated in `altair={version}`."
+    if alternative:
+        output = f"{output} Use {alternative} instead."
+    return f"{output}\n{message}" if message else output
+
+
 # NOTE: Annotating the return type breaks `pyright` detecting [reportDeprecated]
 # NOTE: `LiteralString` requirement is introduced by stubs
 def deprecated(
@@ -51,12 +63,10 @@ def deprecated(
         is higher, it is emitted further up the stack.
         Static type checker behavior is not affected by the *category*
         and *stacklevel* arguments.
+
+    References
+    ----------
+    [PEP 702](https://peps.python.org/pep-0702/)
     """
-    output = f"Deprecated in `altair={version}`."
-    if alternative:
-        output = f"{output} Use {alternative} instead."
-    return _deprecated(
-        f"{output}\n\n{message}" if message else output,
-        category=category,
-        stacklevel=stacklevel,
-    )
+    msg = _format_message(version, alternative, message)
+    return _deprecated(msg, category=category, stacklevel=stacklevel)
