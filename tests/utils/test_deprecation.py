@@ -1,6 +1,10 @@
 import pytest
-
-from altair.utils.deprecation import AltairDeprecationWarning, deprecated
+import re
+from altair.utils.deprecation import (
+    AltairDeprecationWarning,
+    deprecated,
+    deprecated_warn,
+)
 
 
 def test_deprecated_class():
@@ -24,3 +28,11 @@ def test_deprecation_decorator():
     ):
         y = func(1)
     assert y == 2
+
+
+def test_deprecation_warn():
+    with pytest.warns(
+        AltairDeprecationWarning,
+        match=re.compile(r"altair=3321.+this code path is a noop", flags=re.DOTALL),
+    ):
+        deprecated_warn("this code path is a noop", version="3321", stacklevel=1)
