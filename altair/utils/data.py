@@ -14,7 +14,6 @@ from typing import (
     TypeVar,
     Union,
     Dict,
-    Optional,
     overload,
     runtime_checkable,
 )
@@ -54,7 +53,7 @@ VegaLiteDataDict: TypeAlias = Dict[
     str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
 ]
 ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
-SampleReturnType = Optional[Union[pd.DataFrame, Dict[str, Sequence], "pa.lib.Table"]]
+SampleReturnType = Union[pd.DataFrame, Dict[str, Sequence], "pa.lib.Table", None]
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
