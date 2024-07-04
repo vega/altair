@@ -82,6 +82,26 @@ This also runs the [`ruff`](https://ruff.rs/) linter and formatter as well as [`
 Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
 
+#### Failures on specific python version(s)
+By default, `hatch test` will run the test suite against the currently active python version. Two useful variants for debugging failures that only appear *after* you've submitted your PR:
+
+```bash
+# Test all environments in the matrix
+hatch test --all
+# The Python versions to test
+hatch test --python 3.8
+```
+
+See [hatch test](https://hatch.pypa.io/latest/cli/reference/#hatch-test) docs for other options.
+
+#### Changes to `__all__`
+If `test_completeness_of__all__` fails, you may need to run:
+
+```bash
+hatch run update-init-file
+```
+However, this test usually indicates *unintentional* addition(s) to the top-level `alt.` namespace that will need resolving first.
+
 ### Creating a Pull Request
 
 When you are happy with your changes, you can commit them to your branch by running
