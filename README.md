@@ -117,8 +117,8 @@ You can find the instructions on how to install the package for development in [
 
 To run the tests and linters, use
 
-```
-hatch run test
+```bash
+hatch test
 ```
 
 For information on how to contribute your developments back to the Vega-Altair repository, see
