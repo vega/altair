@@ -87,6 +87,17 @@ def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
     namespace
         A module dict, like `altair.__dict__`
     """
+    from altair.vegalite.v5.schema import _typing
+
+    # NOTE: Exclude any `TypeAlias` that were reused in a runtime definition.
+    # Required for imports from `_typing`, outside of a `TYPE_CHECKING` block.
+    _TYPING_CONSTRUCTS.update(
+        (
+            v
+            for k, v in _typing.__dict__.items()
+            if (not k.startswith("__")) and _is_hashable(v)
+        )
+    )
     it = (
         name
         for name, attr in namespace.items()
