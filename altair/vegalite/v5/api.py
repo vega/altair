@@ -38,6 +38,7 @@ from ...utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from ...utils.data import DataType, is_data_type as _is_data_type
+from .schema._typing import Map
 
 if sys.version_info >= (3, 13):
     from typing import TypedDict
@@ -433,7 +434,7 @@ Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `t
 _PredicateType = Union[
     Parameter,
     core.Expr,
-    t.Dict[str, Any],
+    Map,
     _TestPredicateType,
     _expr_core.OperatorMixin,
 ]
@@ -444,8 +445,8 @@ _ComposablePredicateType = Union[
 ]
 """Permitted types for `AND` reduced predicates."""
 
-_DictOrStr = Union[t.Dict[str, Any], str]
-_DictOrSchema = Union[core.SchemaBase, t.Dict[str, Any]]
+_DictOrStr = Union[Map, str]
+_DictOrSchema = Union[core.SchemaBase, Map]
 
 _StatementType = Union[core.SchemaBase, _DictOrStr]
 """Permitted types for `if_true`/`if_false`.
@@ -473,7 +474,7 @@ Prior to parsing any `_StatementType`.
 _SelectionType = Union[core.SchemaBase, t.Dict[str, Union[_ConditionType, Any]]]
 """Returned type of `alt.condition`."""
 
-_FieldEqualType = Union[_LiteralValue, t.Dict[str, Any], Parameter, core.SchemaBase]
+_FieldEqualType = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
@@ -706,7 +707,7 @@ def _parse_otherwise(
         conditions.update(**kwargs)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
     else:
-        if not isinstance(statement, dict):
+        if not isinstance(statement, t.Mapping):
             statement = _parse_literal(statement, str_as_lit=lit)
         selection = conditions
         selection.update(**statement, **kwargs)  # type: ignore[call-arg]
@@ -1445,7 +1446,7 @@ def condition(
 def condition(
     predicate: _PredicateType,
     if_true: _DictOrStr,
-    if_false: dict[str, Any],
+    if_false: Map,
     **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
 # TODO: update the docstring
