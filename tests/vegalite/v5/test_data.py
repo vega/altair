@@ -6,7 +6,7 @@ import pytest
 from altair.vegalite.v5 import data as alt
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_data():
     return pd.DataFrame({"x": range(10), "y": range(10)})
 

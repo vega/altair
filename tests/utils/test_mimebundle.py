@@ -15,7 +15,7 @@ except ImportError:
     vf = None
 
 
-@pytest.fixture()
+@pytest.fixture
 def vegalite_spec():
     return {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -41,7 +41,7 @@ def vegalite_spec():
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def vega_spec():
     return {
         "$schema": "https://vega.github.io/schema/vega/v5.json",
