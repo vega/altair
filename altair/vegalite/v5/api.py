@@ -732,13 +732,25 @@ def _parse_when(
 
 
 def _parse_literal(val: Any, *, str_as_lit: bool) -> dict[str, Any]:
-    if isinstance(val, str) and not str_as_lit:
-        return utils.parse_shorthand(val)
+    if isinstance(val, str):
+        return _str_as(val, "value" if str_as_lit else "field")
     elif _is_one_or_seq_literal_value(val):
         return {"value": val}
     else:
         msg = f"Expected one or more literal values, but got: {type(val).__name__!r}"
         raise TypeError(msg)
+
+
+def _str_as(val: str, to: Literal["datum", "field", "value"], /):
+    if to == "value":
+        return value(val)
+    elif to == "field":
+        return utils.parse_shorthand(val)
+    elif to == "datum":
+        return _ConditionClosed(test=_expr_core.GetAttrExpression(to, val))
+    else:
+        msg = f"Unsupported str_as={to!r}"
+        raise NotImplementedError(msg)
 
 
 def _parse_then(
