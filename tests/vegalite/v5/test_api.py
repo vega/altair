@@ -1,5 +1,7 @@
 """Unit tests for altair API"""
 
+from __future__ import annotations
+
 import io
 import json
 import operator
@@ -288,7 +290,7 @@ def test_when_then() -> None:
     when_then = when.then(alt.value(5))
 
     assert isinstance(when_then, alt.Then)
-    condition = when_then._conditions["condition"]
+    condition = when_then.condition
     assert isinstance(condition, list)
     assert condition[-1].get("value") == 5
 
