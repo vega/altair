@@ -51,15 +51,6 @@ class DataFrameLike(Protocol):
     ) -> DfiDataFrame: ...
 
 
-@runtime_checkable
-class _ThenLike(Protocol):
-    # Helper for extracting the intermediate representation,
-    # whilst still allowing further clauses to be added.
-    def otherwise(self, *args: Any, **kwargs: Any) -> Any: ...
-    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]: ...
-    def when(self, *args: Any, **kwargs: Any) -> Any: ...
-
-
 TYPECODE_MAP = {
     "ordinal": "O",
     "nominal": "N",
@@ -834,10 +825,6 @@ class _ChannelCache:
             obj = {"shorthand": obj}
         elif isinstance(obj, (list, tuple)):
             return [self._wrap_in_channel(el, encoding) for el in obj]
-        elif isinstance(obj, _ThenLike):
-            # NOTE: Temporary solution while `when-then-otherwise` is not
-            # related to any other `altair` classes.
-            obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
             tp = channel["value" if "value" in obj else "field"]
             try:
