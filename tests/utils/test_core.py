@@ -249,7 +249,7 @@ def test_update_nested():
     assert output == output2
 
 
-@pytest.fixture()
+@pytest.fixture
 def channels():
     channels = types.ModuleType("channels")
     exec(FAKE_CHANNELS_MODULE, channels.__dict__)
