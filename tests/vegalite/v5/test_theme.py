@@ -4,7 +4,7 @@ import altair.vegalite.v5 as alt
 from altair.vegalite.v5.theme import VEGA_THEMES
 
 
-@pytest.fixture()
+@pytest.fixture
 def chart():
     return alt.Chart("data.csv").mark_bar().encode(x="x:Q")
 

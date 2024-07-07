@@ -19,7 +19,7 @@ except ImportError:
     anywidget = None  # type: ignore
 
 
-@pytest.fixture()
+@pytest.fixture
 def chart():
     return alt.Chart("data.csv").mark_point()
 
