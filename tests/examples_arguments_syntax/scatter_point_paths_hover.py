@@ -3,7 +3,7 @@ Scatter plot with point paths on hover with search box
 ======================================================
 This example combines cross-sectional analysis (comparing countries at a single point in time) 
 with longitudinal analysis (tracking changes in individual countries over time), using
-an interactive visualization technique inspired by [this Vega example](https://vega.github.io/vega/examples/global-development/)
+an interactive visualization technique inspired by [this Vega example](https://vega.github.io/vega/examples/global-development/).
 
 Key features:
 1. Point Paths. On hover, shows data trajectories using a trail mark that
@@ -35,10 +35,10 @@ search_box = alt.param(
 
 # Base chart
 base = alt.Chart(source).encode(
-    alt.X('fertility:Q').scale(zero=False).title('Babies per woman (total fertility rate)'),
-    alt.Y('life_expect:Q').scale(zero=False).title('Life expectancy'),
-    alt.Color('region:N').scale(scheme='dark2').legend(orient='bottom-left', titleFontSize=14, labelFontSize=12).title('Region'),
-    alt.Detail('country:N')
+    x=alt.X('fertility:Q', scale=alt.Scale(zero=False), title='Babies per woman (total fertility rate)'),
+    y=alt.Y('life_expect:Q', scale=alt.Scale(zero=False), title='Life expectancy'),
+    color=alt.Color('region:N', title='Region', legend=alt.Legend(orient='bottom-left', titleFontSize=14, labelFontSize=12), scale=alt.Scale(scheme='dark2')),
+    detail='country:N'
 ).transform_calculate(
     region="""{
         '0': 'South Asia',
@@ -72,8 +72,15 @@ visible_points = base.mark_circle(size=100).encode(
 hover_line = alt.layer(
     # Line layer
     base.mark_trail().encode(
-        alt.Order('year:Q').sort('ascending'),
-        alt.Size('year:Q').scale(domain=[1955, 2005], range=[1, 12]).legend(None),
+        order=alt.Order(
+            'year:Q',
+            sort='ascending'
+        ),
+        size=alt.Size(
+            'year:Q',
+            scale=alt.Scale(domain=[1955, 2005], range=[1, 12]),
+            legend=None
+        ),
         opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
         color=alt.value('#222222')
     ),
