@@ -131,6 +131,8 @@ _OneOrSeqLiteralValue = Union[_LiteralValue, Sequence[_LiteralValue]]
 For restricting inputs passed to `alt.value`.
 """
 
+_StrAsType = Literal["shorthand", "value"]
+
 
 # ------------------------------------------------------------------------
 # Data Utilities
@@ -636,13 +638,13 @@ def _is_extra(*objs: Any, kwargs: Map) -> Iterator[bool]:
 
 
 def _is_condition_extra(
-    obj: Any, *objs: Any, kwargs: Map, lit: bool
+    obj: Any, *objs: Any, kwargs: Map, str_as: _StrAsType
 ) -> TypeIs[_Condition]:
     # NOTE: Short circuits on the first conflict.
-    # 1 - originated from parse_shorthand
+    # 1 - Originated from parse_shorthand
     # 2 - Used a wrapper or `dict` directly, including `extra_keys`
     if isinstance(obj, str):
-        return not lit
+        return str_as == "shorthand"
     else:
         return any(_is_extra(obj, *objs, kwargs=kwargs))
 
@@ -731,9 +733,9 @@ def _parse_when(
     return _predicate_to_condition(composed, empty=empty)
 
 
-def _parse_literal(val: Any, *, str_as_lit: bool) -> dict[str, Any]:
+def _parse_literal(val: Any, str_as: _StrAsType, /) -> dict[str, Any]:
     if isinstance(val, str):
-        return _str_as(val, "value" if str_as_lit else "field")
+        return _str_as(val, str_as)
     elif _is_one_or_seq_literal_value(val):
         return {"value": val}
     else:
@@ -741,28 +743,23 @@ def _parse_literal(val: Any, *, str_as_lit: bool) -> dict[str, Any]:
         raise TypeError(msg)
 
 
-def _str_as(val: str, to: Literal["datum", "field", "value"], /):
+def _str_as(val: str, to: _StrAsType, /):
     if to == "value":
         return value(val)
-    elif to == "field":
+    elif to == "shorthand":
         return utils.parse_shorthand(val)
-    elif to == "datum":
-        return _ConditionClosed(test=_expr_core.GetAttrExpression(to, val))
     else:
         msg = f"Unsupported str_as={to!r}"
         raise NotImplementedError(msg)
 
 
 def _parse_then(
-    statement: _StatementOrLiteralType,
-    kwargs: dict[str, Any],
-    *,
-    lit: bool,
+    statement: _StatementOrLiteralType, kwargs: dict[str, Any], str_as: _StrAsType
 ) -> dict[str, Any]:
     if isinstance(statement, core.SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
-        statement = _parse_literal(statement, str_as_lit=lit)
+        statement = _parse_literal(statement, str_as)
     statement.update(kwargs)
     return statement
 
@@ -771,8 +768,7 @@ def _parse_otherwise(
     statement: _StatementOrLiteralType,
     conditions: _Conditional[Any],
     kwargs: dict[str, Any],
-    *,
-    lit: bool,
+    str_as: _StrAsType,
 ) -> SchemaBase | _Conditional[Any]:
     selection: SchemaBase | _Conditional[Any]
     if isinstance(statement, core.SchemaBase):
@@ -781,7 +777,7 @@ def _parse_otherwise(
         selection.condition = conditions["condition"]
     else:
         if not isinstance(statement, t.Mapping):
-            statement = _parse_literal(statement, str_as_lit=lit)
+            statement = _parse_literal(statement, str_as)
         selection = conditions
         selection.update(**statement, **kwargs)  # type: ignore[call-arg]
     return selection
@@ -795,11 +791,10 @@ class _BaseWhen(Protocol):
         self,
         statement: _StatementOrLiteralType,
         kwargs: dict[str, Any],
-        *,
-        lit: bool,
+        str_as: _StrAsType,
     ) -> _ConditionClosed | _Condition:
         condition: Any = _deepcopy(self._condition)
-        then = _parse_then(statement, kwargs, lit=lit)
+        then = _parse_then(statement, kwargs, str_as)
         condition.update(then)
         return condition
 
@@ -821,12 +816,12 @@ class When(_BaseWhen):
 
     @overload
     def then(
-        self, statement: str, *, str_as_lit: Literal[False] = ..., **kwargs: Any
-    ) -> Then[_Condition]: ...
+        self, statement: str, *, str_as: Literal["value"] = ..., **kwargs: Any
+    ) -> Then[_Conditions]: ...
     @overload
     def then(
-        self, statement: str, *, str_as_lit: Literal[True], **kwargs: Any
-    ) -> Then[_Conditions]: ...
+        self, statement: str, *, str_as: Literal["shorthand"], **kwargs: Any
+    ) -> Then[_Condition]: ...
     @overload
     def then(
         self,
@@ -841,7 +836,7 @@ class When(_BaseWhen):
         self,
         statement: _StatementOrLiteralType,
         *,
-        str_as_lit: bool = False,
+        str_as: _StrAsType = "value",
         **kwargs: Any,
     ) -> Then[Any]:
         """Attach a statement to this predicate.
@@ -850,8 +845,11 @@ class When(_BaseWhen):
         ----------
         statement
             A spec or value to use when the preceding :func:`.when()` clause is true.
-        str_as_lit
-            Wrap ``str`` in :func:`.value()` instead of encoding as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        str_as
+            Wrap strings in :func:`.value()` or encode as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+
+            .. note::
+                ``str_as="shorthand"`` is the behavior used in :func:`.condition()`.
         **kwargs
             Additional keyword args are added to the resulting ``dict``.
 
@@ -859,8 +857,8 @@ class When(_BaseWhen):
         -------
         :class:`Then`
         """
-        condition = self._when_then(statement, kwargs, lit=str_as_lit)
-        if _is_condition_extra(condition, statement, kwargs=kwargs, lit=str_as_lit):
+        condition = self._when_then(statement, kwargs, str_as)
+        if _is_condition_extra(condition, statement, kwargs=kwargs, str_as=str_as):
             return Then(_Conditional(condition=condition))
         else:
             return Then(_Conditional(condition=[condition]))
@@ -889,7 +887,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
 
     @overload
     def otherwise(
-        self, statement: _TSchemaBase, *, str_as_lit: bool = ..., **kwargs: Any
+        self, statement: _TSchemaBase, *, str_as: _StrAsType = ..., **kwargs: Any
     ) -> _TSchemaBase: ...
     @overload
     def otherwise(
@@ -902,14 +900,14 @@ class Then(core.SchemaBase, t.Generic[_C]):
         self,
         statement: Map | _OneOrSeqLiteralValue,
         *,
-        str_as_lit: bool = ...,
+        str_as: _StrAsType = ...,
         **kwargs: Any,
     ) -> _Conditional[Any]: ...
     def otherwise(
         self,
         statement: _StatementOrLiteralType,
         *,
-        str_as_lit: bool = False,
+        str_as: _StrAsType = "value",
         **kwargs: Any,
     ) -> SchemaBase | _Conditional[Any]:
         """Finalize the condition with a default value.
@@ -921,13 +919,16 @@ class Then(core.SchemaBase, t.Generic[_C]):
 
             .. note::
                 Roughly equivalent to an ``else`` clause.
-        str_as_lit
-            Wrap ``str`` in :func:`.value()` instead of encoding as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        str_as
+            Wrap strings in :func:`.value()` or encode as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+
+            .. note::
+                ``str_as="shorthand"`` is the behavior used in :func:`.condition()`.
         **kwargs
             Additional keyword args are added to the resulting ``dict``.
         """
         conditions: _Conditional[Any]
-        is_extra = functools.partial(_is_condition_extra, kwargs=kwargs, lit=str_as_lit)
+        is_extra = functools.partial(_is_condition_extra, kwargs=kwargs, str_as=str_as)
         if is_extra(self.condition, statement):
             current = self.condition
             if isinstance(current, list) and len(current) == 1:
@@ -942,7 +943,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
                     msg = (
                         f"Only one field may be used within a condition.\n"
                         f"Shorthand {statement!r} would conflict with {cond!r}\n\n"
-                        f"Pass `str_as_lit=True` if {statement!r} is not shorthand."
+                        f"Pass `str_as='value'` if {statement!r} is not shorthand."
                     )
                     raise TypeError(msg)
             else:
@@ -954,7 +955,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
                 raise TypeError(msg)
         else:
             conditions = self.to_dict()
-        return _parse_otherwise(statement, conditions, kwargs, lit=str_as_lit)
+        return _parse_otherwise(statement, conditions, kwargs, str_as)
 
     def when(
         self,
@@ -1040,7 +1041,7 @@ class ChainedWhen(_BaseWhen):
         self,
         statement: _StatementOrLiteralType,
         *,
-        str_as_lit: bool = False,
+        str_as: _StrAsType = "value",
         **kwargs: Any,
     ) -> Then[_Conditions]:
         """Attach a statement to this predicate.
@@ -1049,15 +1050,19 @@ class ChainedWhen(_BaseWhen):
         ----------
         statement
             A spec or value to use when the preceding :meth:`Then.when()` clause is true.
-        str_as_lit
-            Wrap ``str`` in :func:`.value()` instead of encoding as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        str_as
+            Wrap strings in :func:`.value()` or encode as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+
+            .. note::
+                ``str_as="shorthand"`` is the behavior used in :func:`.condition()`.
         **kwargs
             Additional keyword args are added to the resulting ``dict``.
+
         Returns
         -------
         :class:`Then`
         """
-        condition = self._when_then(statement, kwargs, lit=str_as_lit)
+        condition = self._when_then(statement, kwargs, str_as)
         conditions = self._conditions.copy()
         conditions["condition"].append(condition)
         return Then(conditions)

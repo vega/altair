@@ -498,11 +498,7 @@ def test_when_labels_position_based_on_condition() -> None:
     param_color_py_expr = alt.param(
         expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
-    when = (
-        alt.when(param_width_lt_200)
-        .then(alt.value("red"))
-        .otherwise("black", str_as_lit=True)
-    )
+    when = alt.when(param_width_lt_200).then(alt.value("red")).otherwise("black")
     cond = when["condition"][0]
     otherwise = when["value"]
     param_color_py_when = alt.param(
@@ -563,7 +559,7 @@ def test_when_stress():
     when = alt.when(brush)
     reveal_msg = re.compile(r"Only one field.+Shorthand 'max\(\)'", flags=re.DOTALL)
     with pytest.raises(TypeError, match=reveal_msg):
-        when.then("count()").otherwise("max()")
+        when.then("count()", str_as="shorthand").otherwise("max()", str_as="shorthand")
 
     chain_mixed_msg = re.compile(
         r"Chained.+mixed.+conflict.+\{'field': 'field_1', 'type': 'quantitative'\}.+otherwise",
@@ -575,7 +571,7 @@ def test_when_stress():
         )
 
     with pytest.raises(TypeError, match=chain_mixed_msg):
-        when.then("field_1:Q").when(Genre="pop")
+        when.then("field_1:Q", str_as="shorthand").when(Genre="pop")
 
     chain_otherwise_msg = re.compile(
         r"Chained.+mixed.+field.+AggregatedFieldDef.+'this_field_here'",
@@ -584,7 +580,7 @@ def test_when_stress():
     with pytest.raises(TypeError, match=chain_otherwise_msg):
         when.then(5).when(
             alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
-        ).then("min(foo):Q").otherwise(
+        ).then("min(foo):Q", str_as="shorthand").otherwise(
             alt.AggregatedFieldDef(
                 "argmax", field="field_9", **{"as": "this_field_here"}
             )
@@ -630,7 +626,11 @@ def test_when_condition_parity(
         .to_dict()
     )
 
-    input_when = alt.when(when, empty=empty).then(then).otherwise(otherwise)
+    input_when = (
+        alt.when(when, empty=empty)
+        .then(then, str_as="shorthand")
+        .otherwise(otherwise, str_as="shorthand")
+    )
     chart_when = (
         alt.Chart(cars)
         .mark_rect()
