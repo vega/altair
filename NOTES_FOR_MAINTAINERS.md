@@ -10,7 +10,7 @@ All the files within these directories are created automatically by running
 the following script from the root of the repository:
 
 ```bash
-$ hatch run python tools/generate_schema_wrapper.py
+hatch run generate-schema-wrapper
 ```
 
 This script does a couple things:
@@ -36,12 +36,14 @@ changing the ``SCHEMA_VERSION`` definition within
 This will update all of the automatically-generated files in the ``schema``
 directory for each version, but please note that it will *not* update other
 pieces (for example, the core of the Altair API, including methods and
-doc strings within ``altair/vegalite/v5/api.py``.
+doc strings within ``altair/vegalite/v5/api.py``).
 These additional methods have fairly good test coverage, so running the test
 suite should identify any inconsistencies:
+
+```bash
+hatch test
 ```
-hatch run test
-```
+
 Generally, minor version updates (e.g. Vega-Lite 2.3->2.4) have been relatively
 painless, maybe requiring the addition of a few chart methods or modification
 of some docstrings.

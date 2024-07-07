@@ -64,7 +64,7 @@ def _make_chart_type(chart_type):
         raise ValueError(msg)
 
 
-@pytest.fixture()
+@pytest.fixture
 def basic_chart():
     data = pd.DataFrame(
         {
