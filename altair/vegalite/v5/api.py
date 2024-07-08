@@ -518,7 +518,7 @@ def _get_predicate_expr(p: Parameter) -> Optional[str | SchemaBase]:
 
 
 def _predicate_to_condition(
-    predicate: _PredicateType, *, empty: bool | UndefinedType = Undefined
+    predicate: _PredicateType, *, empty: Optional[bool] = Undefined
 ) -> _ConditionType:
     condition: _ConditionType
     if isinstance(predicate, Parameter):
