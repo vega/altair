@@ -449,10 +449,7 @@ _ComposablePredicateType: TypeAlias = Union[
 ]
 """Permitted types for `AND` reduced predicates."""
 
-_DictOrStr: TypeAlias = Union[Map, str]
-_DictOrSchema: TypeAlias = Union[core.SchemaBase, Map]
-
-_StatementType: TypeAlias = Union[core.SchemaBase, _DictOrStr]
+_StatementType: TypeAlias = Union[core.SchemaBase, Map, str]
 """Permitted types for `if_true`/`if_false`.
 
 In python terms:
@@ -474,11 +471,6 @@ _ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
 
 Prior to parsing any `_StatementType`.
 """
-
-_SelectionType: TypeAlias = Union[
-    core.SchemaBase, t.Dict[str, Union[_ConditionType, Any]]
-]
-"""Returned type of `alt.condition`."""
 
 _FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
 """Permitted types for equality checks on field values:
@@ -556,8 +548,8 @@ def _condition_to_selection(
     if_true: _StatementType,
     if_false: _StatementType,
     **kwargs: Any,
-) -> _SelectionType:
-    selection: _SelectionType
+) -> SchemaBase | dict[str, _ConditionType | Any]:
+    selection: SchemaBase | dict[str, _ConditionType | Any]
     if isinstance(if_true, core.SchemaBase):
         if_true = if_true.to_dict()
     elif isinstance(if_true, str):
@@ -1604,12 +1596,12 @@ def condition(
 ) -> Never: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: _DictOrSchema, if_false: _DictOrStr, **kwargs
+    predicate: _PredicateType, if_true: Map | SchemaBase, if_false: Map | str, **kwargs
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
     predicate: _PredicateType,
-    if_true: _DictOrStr,
+    if_true: Map | str,
     if_false: Map,
     **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
@@ -1619,7 +1611,7 @@ def condition(
     if_true: _StatementType,
     if_false: _StatementType,
     **kwargs,
-) -> _SelectionType:
+) -> SchemaBase | dict[str, _ConditionType | Any]:
     """A conditional attribute or encoding
 
     Parameters
