@@ -110,7 +110,7 @@ country_labels = alt.Chart(source).mark_text(
     color=alt.value('black'),
     opacity=alt.condition(hover, alt.value(1), alt.value(0))
 ).transform_window(
-    rank='rank(life_expect)', # 
+    rank='rank(life_expect)',
     sort=[alt.SortField('life_expect', order='descending')], 
     groupby=['country'] # places label atop highest point on y-axis on hover
 ).transform_filter(
