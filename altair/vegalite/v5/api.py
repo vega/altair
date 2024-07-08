@@ -650,7 +650,7 @@ def _is_condition_extra(
 
 
 def _parse_when_constraints(
-    constraints: dict[str, Any], /
+    constraints: dict[str, _FieldEqualType], /
 ) -> Iterator[BinaryExpression]:
     """Wrap kwargs with `alt.datum`.
 
@@ -683,7 +683,7 @@ def _validate_composables(
 
 def _parse_when_compose(
     predicates: tuple[Any, ...],
-    constraints: dict[str, Any],
+    constraints: dict[str, _FieldEqualType],
     /,
 ) -> BinaryExpression:
     """Compose an `AND` reduction predicate.
@@ -713,7 +713,7 @@ def _parse_when(
     predicate: Optional[_PredicateType],
     *more_predicates: _ComposablePredicateType,
     empty: Optional[bool],
-    **constraints: Any,
+    **constraints: _FieldEqualType,
 ) -> _ConditionType:
     composed: _PredicateType
     if _is_undefined(predicate):
