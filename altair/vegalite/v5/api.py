@@ -613,8 +613,10 @@ class _Conditional(TypedDict, t.Generic[_C], total=False):
     value: Any
 
 
-class _Value(TypedDict, total=False):
+class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
     value: Required[Any]
+    __extra_items__: Any
 
 
 def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
@@ -731,22 +733,18 @@ def _parse_when(
 
 def _parse_literal(val: Any, str_as: _StrAsType, /) -> dict[str, Any]:
     if isinstance(val, str):
-        return _str_as(val, str_as)
+        if str_as in {"value", "shorthand"}:
+            r = value(val) if str_as == "value" else utils.parse_shorthand(val)
+        else:
+            msg = f"Expected one of ['shorthand', 'value'], but got: {str_as!r}"
+            raise TypeError(msg)
     elif _is_one_or_seq_literal_value(val):
-        return {"value": val}
+        r = value(val)
     else:
         msg = f"Expected one or more literal values, but got: {type(val).__name__!r}"
         raise TypeError(msg)
-
-
-def _str_as(val: str, to: _StrAsType, /):
-    if to == "value":
-        return value(val)
-    elif to == "shorthand":
-        return utils.parse_shorthand(val)
-    else:
-        msg = f"Expected one of ['shorthand', 'value'], but got: {to!r}"
-        raise TypeError(msg)
+    # FIXME: Once `mypy` supports https://peps.python.org/pep-0728/
+    return cast(t.Dict[str, Any], r)
 
 
 def _parse_then(
