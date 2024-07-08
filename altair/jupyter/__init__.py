@@ -7,7 +7,7 @@ except ImportError:
     # when anywidget is not installed
     class JupyterChart:
         def __init__(self, *args, **kwargs):
-            raise ImportError(
+            msg = (
                 "The Altair JupyterChart requires the anywidget \n"
                 "Python package which may be installed using pip with\n"
                 "    pip install anywidget\n"
@@ -15,6 +15,7 @@ except ImportError:
                 "    conda install -c conda-forge anywidget\n"
                 "Afterwards, you will need to restart your Python kernel."
             )
+            raise ImportError(msg)
 
 else:
     from .jupyter_chart import JupyterChart  # noqa: F401

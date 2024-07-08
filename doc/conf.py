@@ -19,7 +19,7 @@ from datetime import datetime
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath(".."))  # noqa: PTH100
 
 # -- General configuration ------------------------------------------------
 
@@ -70,7 +70,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Vega-Altair"
-copyright = "2016-{}, Vega-Altair Developers".format(datetime.now().year)
+copyright = f"2016-{datetime.now().year}, Vega-Altair Developers"
 author = "Vega-Altair Developers"
 
 # The version info for the project you're documenting, acts as replacement for

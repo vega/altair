@@ -56,7 +56,11 @@ With this branch checked-out, make the desired changes to the package.
 A large part of Altair's code base is automatically generated.
 After you have made your manual changes,
 make sure to run the following to see if there are any changes
-to the automatically generated files: `python tools/generate_schema_wrapper.py`.
+to the automatically generated files: 
+
+```bash
+hatch run generate-schema-wrapper
+```
 
 For information on how to update the Vega-Lite version that Altair uses,
 please read [the maintainers' notes](NOTES_FOR_MAINTAINERS.md).
@@ -67,8 +71,8 @@ Before suggesting your contributing your changing to the main Altair repository,
 it is recommended that you run the Altair test suite,
 which includes a number of tests to validate the correctness of your code:
 
-```cmd
-hatch run test
+```bash
+hatch test
 ```
 
 
@@ -77,6 +81,26 @@ This also runs the [`ruff`](https://ruff.rs/) linter and formatter as well as [`
 
 Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
+
+#### Failures on specific python version(s)
+By default, `hatch test` will run the test suite against the currently active python version. Two useful variants for debugging failures that only appear *after* you've submitted your PR:
+
+```bash
+# Test all environments in the matrix
+hatch test --all
+# The Python versions to test
+hatch test --python 3.8
+```
+
+See [hatch test](https://hatch.pypa.io/latest/cli/reference/#hatch-test) docs for other options.
+
+#### Changes to `__all__`
+If `test_completeness_of__all__` fails, you may need to run:
+
+```bash
+hatch run update-init-file
+```
+However, this test usually indicates *unintentional* addition(s) to the top-level `alt.` namespace that will need resolving first.
 
 ### Creating a Pull Request
 
@@ -187,7 +211,7 @@ The specific commands for each step depend on your operating system.
 Make sure you execute the following commands from the root dir of altair and have [`hatch`](https://hatch.pypa.io/) installed in your local environment.
 
 - For MacOS and Linux, run the following commands in your terminal:
-```cmd
+```bash
 hatch run doc:clean-all
 hatch run doc:build-html
 hatch run doc:serve

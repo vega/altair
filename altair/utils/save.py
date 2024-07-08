@@ -1,41 +1,46 @@
+from __future__ import annotations
 import json
 import pathlib
 import warnings
-from typing import IO, Union, Optional, Literal
+from typing import IO, Any, Literal, TYPE_CHECKING
 
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
 from altair.utils._vegafusion_data import using_vegafusion
 from altair.utils.deprecation import AltairDeprecationWarning
 
+if TYPE_CHECKING:
+    from pathlib import Path
+
 
 def write_file_or_filename(
-    fp: Union[str, pathlib.Path, IO],
-    content: Union[str, bytes],
+    fp: str | Path | IO,
+    content: str | bytes,
     mode: str = "w",
-    encoding: Optional[str] = None,
+    encoding: str | None = None,
 ) -> None:
     """Write content to fp, whether fp is a string, a pathlib Path or a
     file-like object"""
     if isinstance(fp, (str, pathlib.Path)):
-        with open(file=fp, mode=mode, encoding=encoding) as f:
+        with pathlib.Path(fp).open(mode=mode, encoding=encoding) as f:
             f.write(content)
     else:
         fp.write(content)
 
 
 def set_inspect_format_argument(
-    format: Optional[str], fp: Union[str, pathlib.Path, IO], inline: bool
+    format: str | None, fp: str | Path | IO, inline: bool
 ) -> str:
     """Inspect the format argument in the save function"""
     if format is None:
         if isinstance(fp, (str, pathlib.Path)):
             format = pathlib.Path(fp).suffix.lstrip(".")
         else:
-            raise ValueError(
+            msg = (
                 "must specify file format: "
                 "['png', 'svg', 'pdf', 'html', 'json', 'vega']"
             )
+            raise ValueError(msg)
 
     if format != "html" and inline:
         warnings.warn("inline argument ignored for non HTML formats.", stacklevel=1)
@@ -44,10 +49,10 @@ def set_inspect_format_argument(
 
 
 def set_inspect_mode_argument(
-    mode: Optional[Literal["vega-lite"]],
-    embed_options: dict,
-    spec: dict,
-    vegalite_version: Optional[str],
+    mode: Literal["vega-lite"] | None,
+    embed_options: dict[str, Any],
+    spec: dict[str, Any],
+    vegalite_version: str | None,
 ) -> Literal["vega-lite"]:
     """Inspect the mode argument in the save function"""
     if mode is None:
@@ -59,27 +64,29 @@ def set_inspect_mode_argument(
             mode = "vega-lite"
 
     if mode != "vega-lite":
-        raise ValueError("mode must be 'vega-lite', " "not '{}'".format(mode))
+        msg = "mode must be 'vega-lite', " f"not '{mode}'"
+        raise ValueError(msg)
 
     if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version")
+        msg = "must specify vega-lite version"
+        raise ValueError(msg)
 
     return mode
 
 
 def save(
     chart,
-    fp: Union[str, pathlib.Path, IO],
-    vega_version: Optional[str],
-    vegaembed_version: Optional[str],
-    format: Optional[Literal["json", "html", "png", "svg", "pdf"]] = None,
-    mode: Optional[Literal["vega-lite"]] = None,
-    vegalite_version: Optional[str] = None,
-    embed_options: Optional[dict] = None,
-    json_kwds: Optional[dict] = None,
-    webdriver: Optional[Literal["chrome", "firefox"]] = None,
+    fp: str | Path | IO,
+    vega_version: str | None,
+    vegaembed_version: str | None,
+    format: Literal["json", "html", "png", "svg", "pdf"] | None = None,
+    mode: Literal["vega-lite"] | None = None,
+    vegalite_version: str | None = None,
+    embed_options: dict | None = None,
+    json_kwds: dict | None = None,
+    webdriver: Literal["chrome", "firefox"] | None = None,
     scale_factor: float = 1,
-    engine: Optional[Literal["vl-convert"]] = None,
+    engine: Literal["vl-convert"] | None = None,
     inline: bool = False,
     **kwargs,
 ) -> None:
@@ -141,7 +148,7 @@ def save(
     encoding = kwargs.get("encoding", "utf-8")
     format = set_inspect_format_argument(format, fp, inline)  # type: ignore[assignment]
 
-    def perform_save():
+    def perform_save() -> None:
         spec = chart.to_dict(context={"pre_transform": False})
 
         inner_mode = set_inspect_mode_argument(
@@ -154,7 +161,7 @@ def save(
         elif format == "html":
             if inline:
                 kwargs["template"] = "inline"
-            mimebundle = spec_to_mimebundle(
+            mb_html = spec_to_mimebundle(
                 spec=spec,
                 format=format,
                 mode=inner_mode,
@@ -166,10 +173,10 @@ def save(
                 **kwargs,
             )
             write_file_or_filename(
-                fp, mimebundle["text/html"], mode="w", encoding=encoding
+                fp, mb_html["text/html"], mode="w", encoding=encoding
             )
-        elif format in ["png", "svg", "pdf", "vega"]:
-            mimebundle = spec_to_mimebundle(
+        elif format == "png":
+            mb_png = spec_to_mimebundle(
                 spec=spec,
                 format=format,
                 mode=inner_mode,
@@ -181,16 +188,29 @@ def save(
                 engine=engine,
                 **kwargs,
             )
-            if format == "png":
-                write_file_or_filename(fp, mimebundle[0]["image/png"], mode="wb")
-            elif format == "pdf":
-                write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
+            write_file_or_filename(fp, mb_png[0]["image/png"], mode="wb")
+        elif format in {"svg", "pdf", "vega"}:
+            mb_any = spec_to_mimebundle(
+                spec=spec,
+                format=format,
+                mode=inner_mode,
+                vega_version=vega_version,
+                vegalite_version=vegalite_version,
+                vegaembed_version=vegaembed_version,
+                embed_options=embed_options,
+                scale_factor=scale_factor,
+                engine=engine,
+                **kwargs,
+            )
+            if format == "pdf":
+                write_file_or_filename(fp, mb_any["application/pdf"], mode="wb")
             else:
                 write_file_or_filename(
-                    fp, mimebundle["image/svg+xml"], mode="w", encoding=encoding
+                    fp, mb_any["image/svg+xml"], mode="w", encoding=encoding
                 )
         else:
-            raise ValueError("Unsupported format: '{}'".format(format))
+            msg = f"Unsupported format: '{format}'"
+            raise ValueError(msg)
 
     if using_vegafusion():
         # When the vegafusion data transformer is enabled, transforms will be

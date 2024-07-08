@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 import json
-from typing import Optional, Dict
+from typing import Any, Literal
 
 import jinja2
 
 from altair.utils._importers import import_vl_convert, vl_version_for_vl_convert
+
+TemplateName = Literal["standard", "universal", "inline"]
+RenderMode = Literal["vega", "vega-lite"]
 
 HTML_TEMPLATE = jinja2.Template(
     """
@@ -200,7 +205,7 @@ INLINE_HTML_TEMPLATE = jinja2.Template(
 )
 
 
-TEMPLATES: Dict[str, jinja2.Template] = {
+TEMPLATES: dict[TemplateName, jinja2.Template] = {
     "standard": HTML_TEMPLATE,
     "universal": HTML_TEMPLATE_UNIVERSAL,
     "inline": INLINE_HTML_TEMPLATE,
@@ -208,18 +213,18 @@ TEMPLATES: Dict[str, jinja2.Template] = {
 
 
 def spec_to_html(
-    spec: dict,
-    mode: str,
-    vega_version: Optional[str],
-    vegaembed_version: Optional[str],
-    vegalite_version: Optional[str] = None,
+    spec: dict[str, Any],
+    mode: RenderMode,
+    vega_version: str | None,
+    vegaembed_version: str | None,
+    vegalite_version: str | None = None,
     base_url: str = "https://cdn.jsdelivr.net/npm",
     output_div: str = "vis",
-    embed_options: Optional[dict] = None,
-    json_kwds: Optional[dict] = None,
+    embed_options: dict[str, Any] | None = None,
+    json_kwds: dict[str, Any] | None = None,
     fullhtml: bool = True,
     requirejs: bool = False,
-    template: str = "standard",
+    template: jinja2.Template | TemplateName = "standard",
 ) -> str:
     """Embed a Vega/Vega-Lite spec into an HTML page
 
@@ -266,17 +271,21 @@ def spec_to_html(
 
     mode = embed_options.setdefault("mode", mode)
 
-    if mode not in ["vega", "vega-lite"]:
-        raise ValueError("mode must be either 'vega' or 'vega-lite'")
+    if mode not in {"vega", "vega-lite"}:
+        msg = "mode must be either 'vega' or 'vega-lite'"
+        raise ValueError(msg)
 
     if vega_version is None:
-        raise ValueError("must specify vega_version")
+        msg = "must specify vega_version"
+        raise ValueError(msg)
 
     if vegaembed_version is None:
-        raise ValueError("must specify vegaembed_version")
+        msg = "must specify vegaembed_version"
+        raise ValueError(msg)
 
     if mode == "vega-lite" and vegalite_version is None:
-        raise ValueError("must specify vega-lite version for mode='vega-lite'")
+        msg = "must specify vega-lite version for mode='vega-lite'"
+        raise ValueError(msg)
 
     render_kwargs = {}
     if template == "inline":
@@ -284,9 +293,10 @@ def spec_to_html(
         vl_version = vl_version_for_vl_convert()
         render_kwargs["vegaembed_script"] = vlc.javascript_bundle(vl_version=vl_version)
 
-    jinja_template = TEMPLATES.get(template, template)
+    jinja_template = TEMPLATES.get(template, template)  # type: ignore[arg-type]
     if not hasattr(jinja_template, "render"):
-        raise ValueError("Invalid template: {0}".format(jinja_template))
+        msg = f"Invalid template: {jinja_template}"
+        raise ValueError(msg)
 
     return jinja_template.render(
         spec=json.dumps(spec, **json_kwds),

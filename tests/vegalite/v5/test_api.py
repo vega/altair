@@ -14,7 +14,7 @@ import pandas as pd
 import altair.vegalite.v5 as alt
 
 try:
-    import vl_convert as vlc  # noqa: F401
+    import vl_convert as vlc
 except ImportError:
     vlc = None
 
@@ -48,7 +48,7 @@ def _make_chart_type(chart_type):
         )
     )
 
-    if chart_type in ["layer", "hconcat", "vconcat", "concat"]:
+    if chart_type in {"layer", "hconcat", "vconcat", "concat"}:
         func = getattr(alt, chart_type)
         return func(base.mark_square(), base.mark_circle())
     elif chart_type == "facet":
@@ -60,7 +60,8 @@ def _make_chart_type(chart_type):
     elif chart_type == "chart":
         return base
     else:
-        raise ValueError("chart_type='{}' is not recognized".format(chart_type))
+        msg = f"chart_type='{chart_type}' is not recognized"
+        raise ValueError(msg)
 
 
 @pytest.fixture
@@ -112,6 +113,7 @@ def test_chart_data_types():
     assert dct["data"] == {"name": "Foo"}
 
 
+@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_infer_types():
     data = pd.DataFrame(
         {
@@ -189,7 +191,7 @@ def test_chart_infer_types():
 
 
 @pytest.mark.parametrize(
-    "args, kwargs",
+    ("args", "kwargs"),
     [
         getargs(detail=["value:Q", "name:N"], tooltip=["value:Q", "name:N"]),
         getargs(detail=["value", "name"], tooltip=["value", "name"]),
@@ -217,6 +219,7 @@ def test_multiple_encodings(args, kwargs):
     assert dct["encoding"]["tooltip"] == encoding_dct
 
 
+@pytest.mark.filterwarnings("ignore:'Y' is deprecated.*:FutureWarning")
 def test_chart_operations():
     data = pd.DataFrame(
         {
@@ -278,7 +281,7 @@ def test_selection_expression():
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
     assert isinstance(selection["value"], alt.expr.Expression)
-    assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
+    assert selection["value"].to_dict() == f"{selection.name}['value']"
 
     magic_attr = "__magic__"
     with pytest.raises(AttributeError):
@@ -288,25 +291,24 @@ def test_selection_expression():
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf", "bogus"])
 @pytest.mark.parametrize("engine", ["vl-convert"])
 def test_save(format, engine, basic_chart):
-    if format in ["pdf", "png"]:
+    if format in {"pdf", "png"}:
         out = io.BytesIO()
         mode = "rb"
     else:
         out = io.StringIO()
         mode = "r"
 
-    if format in ["svg", "png", "pdf", "bogus"]:
-        if engine == "vl-convert":
-            if format == "bogus":
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert f"Unsupported format: '{format}'" in str(err.value)
-                return
-            elif vlc is None:
-                with pytest.raises(ValueError) as err:
-                    basic_chart.save(out, format=format, engine=engine)
-                assert "vl-convert-python" in str(err.value)
-                return
+    if format in {"svg", "png", "pdf", "bogus"} and engine == "vl-convert":
+        if format == "bogus":
+            with pytest.raises(ValueError) as err:  # noqa: PT011
+                basic_chart.save(out, format=format, engine=engine)
+            assert f"Unsupported format: '{format}'" in str(err.value)
+            return
+        elif vlc is None:
+            with pytest.raises(ValueError) as err:  # noqa: PT011
+                basic_chart.save(out, format=format, engine=engine)
+            assert "vl-convert-python" in str(err.value)
+            return
 
     basic_chart.save(out, format=format, engine=engine)
     out.seek(0)
@@ -330,10 +332,10 @@ def test_save(format, engine, basic_chart):
     for fp in [filename, pathlib.Path(filename)]:
         try:
             basic_chart.save(fp, format=format, engine=engine)
-            with open(fp, mode) as f:
+            with pathlib.Path(fp).open(mode) as f:
                 assert f.read()[:1000] == content[:1000]
         finally:
-            os.remove(fp)
+            pathlib.Path(fp).unlink()
 
 
 @pytest.mark.parametrize("inline", [False, True])
@@ -480,9 +482,9 @@ def test_selection():
     assert isinstance(single & multi, alt.SelectionPredicateComposition)
     assert isinstance(single | multi, alt.SelectionPredicateComposition)
     assert isinstance(~single, alt.SelectionPredicateComposition)
-    assert "and" in (single & multi).to_dict().keys()
-    assert "or" in (single | multi).to_dict().keys()
-    assert "not" in (~single).to_dict().keys()
+    assert "and" in (single & multi).to_dict()
+    assert "or" in (single | multi).to_dict()
+    assert "not" in (~single).to_dict()
 
     # test that default names increment (regression for #1454)
     sel1 = alt.selection_point()
@@ -605,9 +607,10 @@ def test_transforms():
 
     # kwargs don't maintain order in Python < 3.6, so window list can
     # be reversed
-    assert chart.transform == [
-        alt.WindowTransform(frame=[None, 0], window=window)
-    ] or chart.transform == [alt.WindowTransform(frame=[None, 0], window=window[::-1])]
+    assert chart.transform in (
+        [alt.WindowTransform(frame=[None, 0], window=window)],
+        [alt.WindowTransform(frame=[None, 0], window=window[::-1])],
+    )
 
 
 def test_filter_transform_selection_predicates():
@@ -829,7 +832,7 @@ def test_consolidate_InlineData():
     with alt.data_transformers.enable(consolidate_datasets=True):
         dct = chart.to_dict()
     assert dct["data"]["format"] == data.format
-    assert list(dct["datasets"].values())[0] == data.values
+    assert next(iter(dct["datasets"].values())) == data.values
 
     data = alt.InlineData(values=[], name="runtime_data")
     chart = alt.Chart(data).mark_point()
@@ -952,34 +955,34 @@ def test_layer_errors():
 
     simple_chart = alt.Chart("data.txt").mark_point()
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         toplevel_chart + simple_chart
     assert str(err.value).startswith(
         'Objects with "config" attribute cannot be used within LayerChart.'
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         alt.hconcat(simple_chart) + simple_chart
     assert (
         str(err.value)
         == "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         repeat_chart + simple_chart
     assert (
         str(err.value)
         == "Repeat charts cannot be layered. Instead, layer the charts before repeating."
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         facet_chart1 + simple_chart
     assert (
         str(err.value)
         == "Faceted charts cannot be layered. Instead, layer the charts before faceting."
     )
 
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(ValueError) as err:  # noqa: PT011
         alt.layer(simple_chart) + facet_chart2
     assert (
         str(err.value)

@@ -1,37 +1,63 @@
+from __future__ import annotations
 import json
-import os
 import random
 import hashlib
-import warnings
-from typing import Union, MutableMapping, Optional, Dict, Sequence, TYPE_CHECKING, List
+from typing import (
+    Any,
+    List,
+    MutableMapping,
+    Sequence,
+    TYPE_CHECKING,
+    Protocol,
+    TypedDict,
+    Literal,
+    TypeVar,
+    Union,
+    Dict,
+    overload,
+    runtime_checkable,
+)
+from typing_extensions import TypeAlias
+from pathlib import Path
+from functools import partial
+import sys
 
 import pandas as pd
-from toolz import curried
-from typing import TypeVar
 
 from ._importers import import_pyarrow_interchange
 from .core import sanitize_dataframe, sanitize_arrow_table, DataFrameLike
 from .core import sanitize_geo_interface
-from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
-
-from typing import Protocol, TypedDict, Literal
-
+if sys.version_info >= (3, 13):
+    from typing import TypeIs
+else:
+    from typing_extensions import TypeIs
 
 if TYPE_CHECKING:
-    import pyarrow.lib
+    import pyarrow as pa
 
 
+@runtime_checkable
 class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-DataType = Union[dict, pd.DataFrame, SupportsGeoInterface, DataFrameLike]
+DataType: TypeAlias = Union[
+    Dict[Any, Any], pd.DataFrame, SupportsGeoInterface, DataFrameLike
+]
+
 TDataType = TypeVar("TDataType", bound=DataType)
 
-VegaLiteDataDict = Dict[str, Union[str, dict, List[dict]]]
-ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
+VegaLiteDataDict: TypeAlias = Dict[
+    str, Union[str, Dict[Any, Any], List[Dict[Any, Any]]]
+]
+ToValuesReturnType: TypeAlias = Dict[str, Union[Dict[Any, Any], List[Dict[Any, Any]]]]
+SampleReturnType = Union[pd.DataFrame, Dict[str, Sequence], "pa.lib.Table", None]
+
+
+def is_data_type(obj: Any) -> TypeIs[DataType]:
+    return isinstance(obj, (dict, pd.DataFrame, DataFrameLike, SupportsGeoInterface))
 
 
 # ==============================================================================
@@ -46,8 +72,13 @@ ToValuesReturnType = Dict[str, Union[dict, List[dict]]]
 # form.
 # ==============================================================================
 class DataTransformerType(Protocol):
-    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict:
-        pass
+    @overload
+    def __call__(self, data: None = None, **kwargs) -> DataTransformerType: ...
+    @overload
+    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict: ...
+    def __call__(
+        self, data: DataType | None = None, **kwargs
+    ) -> DataTransformerType | VegaLiteDataDict: ...
 
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
@@ -66,19 +97,24 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
 
-    pass
 
-
-@curried.curry
-def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
+@overload
+def limit_rows(data: None = ..., max_rows: int | None = ...) -> partial: ...
+@overload
+def limit_rows(data: DataType, max_rows: int | None = ...) -> DataType: ...
+def limit_rows(
+    data: DataType | None = None, max_rows: int | None = 5000
+) -> partial | DataType:
     """Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
     """
+    if data is None:
+        return partial(limit_rows, max_rows=max_rows)
     check_data_type(data)
 
     def raise_max_rows_error():
-        raise MaxRowsError(
+        msg = (
             "The number of rows in your dataset is greater "
             f"than the maximum allowed ({max_rows}).\n\n"
             "Try enabling the VegaFusion data transformer which "
@@ -90,8 +126,9 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
             "for additional information\n"
             "on how to plot large datasets."
         )
+        raise MaxRowsError(msg)
 
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         if data.__geo_interface__["type"] == "FeatureCollection":
             values = data.__geo_interface__["features"]
         else:
@@ -102,9 +139,7 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
         if "values" in data:
             values = data["values"]
         else:
-            # mypy gets confused as it doesn't see Dict[Any, Any]
-            # as equivalent to TDataType
-            return data  # type: ignore[return-value]
+            return data
     elif isinstance(data, DataFrameLike):
         pa_table = arrow_table_from_dfi_dataframe(data)
         if max_rows is not None and pa_table.num_rows > max_rows:
@@ -119,11 +154,22 @@ def limit_rows(data: TDataType, max_rows: Optional[int] = 5000) -> TDataType:
     return data
 
 
-@curried.curry
+@overload
 def sample(
-    data: DataType, n: Optional[int] = None, frac: Optional[float] = None
-) -> Optional[Union[pd.DataFrame, Dict[str, Sequence], "pyarrow.lib.Table"]]:
+    data: None = ..., n: int | None = ..., frac: float | None = ...
+) -> partial: ...
+@overload
+def sample(
+    data: DataType, n: int | None = ..., frac: float | None = ...
+) -> SampleReturnType: ...
+def sample(
+    data: DataType | None = None,
+    n: int | None = None,
+    frac: float | None = None,
+) -> partial | SampleReturnType:
     """Reduce the size of the data model by sampling without replacement."""
+    if data is None:
+        return partial(sample, n=n, frac=frac)
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
         return data.sample(n=n, frac=frac)
@@ -132,9 +178,8 @@ def sample(
             values = data["values"]
             if not n:
                 if frac is None:
-                    raise ValueError(
-                        "frac cannot be None if n is None and data is a dictionary"
-                    )
+                    msg = "frac cannot be None if n is None and data is a dictionary"
+                    raise ValueError(msg)
                 n = int(frac * len(values))
             values = random.sample(values, n)
             return {"values": values}
@@ -145,9 +190,8 @@ def sample(
         pa_table = arrow_table_from_dfi_dataframe(data)
         if not n:
             if frac is None:
-                raise ValueError(
-                    "frac cannot be None if n is None with this data input type"
-                )
+                msg = "frac cannot be None if n is None with this data input type"
+                raise ValueError(msg)
             n = int(frac * len(pa_table))
         indices = random.sample(range(len(pa_table)), n)
         return pa_table.take(indices)
@@ -157,65 +201,115 @@ def sample(
         return None
 
 
-class _JsonFormatDict(TypedDict):
-    type: Literal["json"]
+_FormatType = Literal["csv", "json"]
 
 
-class _CsvFormatDict(TypedDict):
-    type: Literal["csv"]
+class _FormatDict(TypedDict):
+    type: _FormatType
 
 
-class _ToJsonReturnUrlDict(TypedDict):
+class _ToFormatReturnUrlDict(TypedDict):
     url: str
-    format: _JsonFormatDict
+    format: _FormatDict
 
 
-class _ToCsvReturnUrlDict(TypedDict):
-    url: str
-    format: _CsvFormatDict
+@overload
+def to_json(
+    data: None = ...,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
+) -> partial: ...
 
 
-@curried.curry
+@overload
 def to_json(
     data: DataType,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
+) -> _ToFormatReturnUrlDict: ...
+
+
+def to_json(
+    data: DataType | None = None,
     prefix: str = "altair-data",
     extension: str = "json",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> _ToJsonReturnUrlDict:
+) -> partial | _ToFormatReturnUrlDict:
     """
     Write the data model to a .json file and return a url based data model.
     """
-    data_json = _data_to_json_string(data)
-    data_hash = _compute_data_hash(data_json)
-    filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    with open(filename, "w") as f:
-        f.write(data_json)
-    return {"url": os.path.join(urlpath, filename), "format": {"type": "json"}}
+    kwds = _to_text_kwds(prefix, extension, filename, urlpath)
+    if data is None:
+        return partial(to_json, **kwds)
+    else:
+        data_str = _data_to_json_string(data)
+        return _to_text(data_str, **kwds, format=_FormatDict(type="json"))
 
 
-@curried.curry
+@overload
 def to_csv(
-    data: Union[dict, pd.DataFrame, DataFrameLike],
+    data: None = ...,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
+) -> partial: ...
+
+
+@overload
+def to_csv(
+    data: dict | pd.DataFrame | DataFrameLike,
+    prefix: str = ...,
+    extension: str = ...,
+    filename: str = ...,
+    urlpath: str = ...,
+) -> _ToFormatReturnUrlDict: ...
+
+
+def to_csv(
+    data: dict | pd.DataFrame | DataFrameLike | None = None,
     prefix: str = "altair-data",
     extension: str = "csv",
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
-) -> _ToCsvReturnUrlDict:
+) -> partial | _ToFormatReturnUrlDict:
     """Write the data model to a .csv file and return a url based data model."""
-    data_csv = _data_to_csv_string(data)
-    data_hash = _compute_data_hash(data_csv)
+    kwds = _to_text_kwds(prefix, extension, filename, urlpath)
+    if data is None:
+        return partial(to_csv, **kwds)
+    else:
+        data_str = _data_to_csv_string(data)
+        return _to_text(data_str, **kwds, format=_FormatDict(type="csv"))
+
+
+def _to_text(
+    data: str,
+    prefix: str,
+    extension: str,
+    filename: str,
+    urlpath: str,
+    format: _FormatDict,
+) -> _ToFormatReturnUrlDict:
+    data_hash = _compute_data_hash(data)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
-    with open(filename, "w") as f:
-        f.write(data_csv)
-    return {"url": os.path.join(urlpath, filename), "format": {"type": "csv"}}
+    Path(filename).write_text(data, encoding="utf-8")
+    url = str(Path(urlpath, filename))
+    return _ToFormatReturnUrlDict({"url": url, "format": format})
 
 
-@curried.curry
+def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -> dict[str, str]:  # fmt: skip
+    return {"prefix": prefix, "extension": extension, "filename": filename, "urlpath": urlpath}  # fmt: skip
+
+
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
         # Maybe the type could be further clarified here that it is
@@ -227,25 +321,22 @@ def to_values(data: DataType) -> ToValuesReturnType:
         return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
         if "values" not in data:
-            raise KeyError("values expected in data dict, but not present.")
+            msg = "values expected in data dict, but not present."
+            raise KeyError(msg)
         return data
     elif isinstance(data, DataFrameLike):
         pa_table = sanitize_arrow_table(arrow_table_from_dfi_dataframe(data))
         return {"values": pa_table.to_pylist()}
     else:
         # Should never reach this state as tested by check_data_type
-        raise ValueError("Unrecognized data type: {}".format(type(data)))
+        msg = f"Unrecognized data type: {type(data)}"
+        raise ValueError(msg)
 
 
 def check_data_type(data: DataType) -> None:
-    if not isinstance(data, (dict, pd.DataFrame, DataFrameLike)) and not any(
-        hasattr(data, attr) for attr in ["__geo_interface__"]
-    ):
-        raise TypeError(
-            "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
-                type(data)
-            )
-        )
+    if not is_data_type(data):
+        msg = f"Expected dict, DataFrame or a __geo_interface__ attribute, got: {type(data)}"
+        raise TypeError(msg)
 
 
 # ==============================================================================
@@ -258,7 +349,7 @@ def _compute_data_hash(data_str: str) -> str:
 def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
-    if hasattr(data, "__geo_interface__"):
+    if isinstance(data, SupportsGeoInterface):
         if isinstance(data, pd.DataFrame):
             data = sanitize_dataframe(data)
         # Maybe the type could be further clarified here that it is
@@ -270,31 +361,34 @@ def _data_to_json_string(data: DataType) -> str:
         return data.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
         if "values" not in data:
-            raise KeyError("values expected in data dict, but not present.")
+            msg = "values expected in data dict, but not present."
+            raise KeyError(msg)
         return json.dumps(data["values"], sort_keys=True)
     elif isinstance(data, DataFrameLike):
         pa_table = arrow_table_from_dfi_dataframe(data)
         return json.dumps(pa_table.to_pylist())
     else:
-        raise NotImplementedError(
-            "to_json only works with data expressed as " "a DataFrame or as a dict"
-        )
+        msg = "to_json only works with data expressed as " "a DataFrame or as a dict"
+        raise NotImplementedError(msg)
 
 
-def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
+def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
     """return a CSV string representation of the input data"""
     check_data_type(data)
-    if hasattr(data, "__geo_interface__"):
-        raise NotImplementedError(
-            "to_csv does not work with data that "
-            "contains the __geo_interface__ attribute"
+    if isinstance(data, SupportsGeoInterface):
+        msg = (
+            f"to_csv does not yet work with data that "
+            f"is of type {type(SupportsGeoInterface).__name__!r}.\n"
+            f"See https://github.com/vega/altair/issues/3441"
         )
+        raise NotImplementedError(msg)
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
         if "values" not in data:
-            raise KeyError("values expected in data dict, but not present")
+            msg = "values expected in data dict, but not present"
+            raise KeyError(msg)
         return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
     elif isinstance(data, DataFrameLike):
         # experimental interchange dataframe support
@@ -306,41 +400,11 @@ def _data_to_csv_string(data: Union[dict, pd.DataFrame, DataFrameLike]) -> str:
         pa_csv.write_csv(pa_table, csv_buffer)
         return csv_buffer.getvalue().to_pybytes().decode()
     else:
-        raise NotImplementedError(
-            "to_csv only works with data expressed as " "a DataFrame or as a dict"
-        )
+        msg = "to_csv only works with data expressed as " "a DataFrame or as a dict"
+        raise NotImplementedError(msg)
 
 
-def pipe(data, *funcs):
-    """
-    Pipe a value through a sequence of functions
-
-    Deprecated: use toolz.curried.pipe() instead.
-    """
-    warnings.warn(
-        "alt.pipe() is deprecated, and will be removed in a future release. "
-        "Use toolz.curried.pipe() instead.",
-        AltairDeprecationWarning,
-        stacklevel=1,
-    )
-    return curried.pipe(data, *funcs)
-
-
-def curry(*args, **kwargs):
-    """Curry a callable function
-
-    Deprecated: use toolz.curried.curry() instead.
-    """
-    warnings.warn(
-        "alt.curry() is deprecated, and will be removed in a future release. "
-        "Use toolz.curried.curry() instead.",
-        AltairDeprecationWarning,
-        stacklevel=1,
-    )
-    return curried.curry(*args, **kwargs)
-
-
-def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> "pyarrow.lib.Table":
+def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> pa.Table:
     """Convert a DataFrame Interchange Protocol compatible object to an Arrow Table"""
     import pyarrow as pa
 

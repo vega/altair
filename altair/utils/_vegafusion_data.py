@@ -1,23 +1,30 @@
-from toolz import curried
+from __future__ import annotations
 import uuid
 from weakref import WeakValueDictionary
-
 from typing import (
+    Any,
     Union,
-    Dict,
-    Set,
     MutableMapping,
     TypedDict,
     Final,
     TYPE_CHECKING,
+    overload,
+    Callable,
 )
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike
-from altair.utils.data import DataType, ToValuesReturnType, MaxRowsError
+from altair.utils.data import (
+    DataType,
+    ToValuesReturnType,
+    MaxRowsError,
+    SupportsGeoInterface,
+)
 from altair.vegalite.data import default_data_transformer
 
+
 if TYPE_CHECKING:
+    import pandas as pd
     from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
@@ -36,25 +43,45 @@ class _ToVegaFusionReturnUrlDict(TypedDict):
     url: str
 
 
-@curried.curry
+_VegaFusionReturnType = Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]
+
+
+@overload
 def vegafusion_data_transformer(
-    data: DataType, max_rows: int = 100000
-) -> Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]:
+    data: None = ..., max_rows: int = ...
+) -> Callable[..., Any]: ...
+
+
+@overload
+def vegafusion_data_transformer(
+    data: DataFrameLike, max_rows: int = ...
+) -> ToValuesReturnType: ...
+
+
+@overload
+def vegafusion_data_transformer(
+    data: dict | pd.DataFrame | SupportsGeoInterface, max_rows: int = ...
+) -> _VegaFusionReturnType: ...
+
+
+def vegafusion_data_transformer(
+    data: DataType | None = None, max_rows: int = 100000
+) -> Callable[..., Any] | _VegaFusionReturnType:
     """VegaFusion Data Transformer"""
-    if hasattr(data, "__geo_interface__"):
-        # Use default transformer for geo interface objects
-        # # (e.g. a geopandas GeoDataFrame)
-        return default_data_transformer(data)
-    elif isinstance(data, DataFrameLike):
+    if data is None:
+        return vegafusion_data_transformer
+    elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
         extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}
     else:
-        # Use default transformer if we don't recognize data type
+        # Use default transformer for geo interface objects
+        # # (e.g. a geopandas GeoDataFrame)
+        # Or if we don't recognize data type
         return default_data_transformer(data)
 
 
-def get_inline_table_names(vega_spec: dict) -> Set[str]:
+def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
     """Get a set of the inline datasets names in the provided Vega spec
 
     Inline datasets are encoded as URLs that start with the table://
@@ -104,7 +131,7 @@ def get_inline_table_names(vega_spec: dict) -> Set[str]:
     return table_names
 
 
-def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
+def get_inline_tables(vega_spec: dict[str, Any]) -> dict[str, DataFrameLike]:
     """Get the inline tables referenced by a Vega specification
 
     Note: This function should only be called on a Vega spec that corresponds
@@ -122,20 +149,16 @@ def get_inline_tables(vega_spec: dict) -> Dict[str, DataFrameLike]:
     dict from str to dataframe
         dict from inline dataset name to dataframe object
     """
-    table_names = get_inline_table_names(vega_spec)
-    tables = {}
-    for table_name in table_names:
-        try:
-            tables[table_name] = extracted_inline_tables.pop(table_name)
-        except KeyError:
-            # named dataset that was provided by the user
-            pass
-    return tables
+    inline_names = get_inline_table_names(vega_spec)
+    # exclude named dataset that was provided by the user,
+    # or dataframes that have been deleted.
+    table_names = inline_names.intersection(extracted_inline_tables)
+    return {k: extracted_inline_tables.pop(k) for k in table_names}
 
 
 def compile_to_vegafusion_chart_state(
-    vegalite_spec: dict, local_tz: str
-) -> "ChartState":
+    vegalite_spec: dict[str, Any], local_tz: str
+) -> ChartState:
     """Compile a Vega-Lite spec to a VegaFusion ChartState
 
     Note: This function should only be called on a Vega-Lite spec
@@ -164,7 +187,8 @@ def compile_to_vegafusion_chart_state(
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()
     if compiler is None:
-        raise ValueError("No active vega-lite compiler plugin found")
+        msg = "No active vega-lite compiler plugin found"
+        raise ValueError(msg)
 
     vega_spec = compiler(vegalite_spec)
 
@@ -187,7 +211,7 @@ def compile_to_vegafusion_chart_state(
     return chart_state
 
 
-def compile_with_vegafusion(vegalite_spec: dict) -> dict:
+def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict:
     """Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion
 
     Note: This function should only be called on a Vega-Lite spec
@@ -214,7 +238,8 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
     # Compile Vega-Lite spec to Vega
     compiler = vegalite_compilers.get()
     if compiler is None:
-        raise ValueError("No active vega-lite compiler plugin found")
+        msg = "No active vega-lite compiler plugin found"
+        raise ValueError(msg)
 
     vega_spec = compiler(vegalite_spec)
 
@@ -239,13 +264,14 @@ def compile_with_vegafusion(vegalite_spec: dict) -> dict:
 def handle_row_limit_exceeded(row_limit: int, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
-            raise MaxRowsError(
+            msg = (
                 "The number of dataset rows after filtering and aggregation exceeds\n"
                 f"the current limit of {row_limit}. Try adding an aggregation to reduce\n"
                 "the size of the dataset that must be loaded into the browser. Or, disable\n"
                 "the limit by calling alt.data_transformers.disable_max_rows(). Note that\n"
                 "disabling this limit may cause the browser to freeze or crash."
             )
+            raise MaxRowsError(msg)
 
 
 def using_vegafusion() -> bool:

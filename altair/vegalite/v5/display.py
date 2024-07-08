@@ -1,5 +1,6 @@
-import os
-from typing import Dict
+from __future__ import annotations
+from pathlib import Path
+from typing import Final, TYPE_CHECKING
 
 from ...utils.mimebundle import spec_to_mimebundle
 from ..display import (
@@ -8,12 +9,13 @@ from ..display import (
     json_renderer_base,
     RendererRegistry,
     HTMLRenderer,
-    DefaultRendererReturnType,
 )
 
 from .schema import SCHEMA_VERSION
 
-from typing import Final
+if TYPE_CHECKING:
+    from ..display import DefaultRendererReturnType
+
 
 VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
 VEGA_VERSION: Final = "5"
@@ -47,7 +49,7 @@ https://altair-viz.github.io/user_guide/display_frontends.html#troubleshooting
 
 renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
-here = os.path.dirname(os.path.realpath(__file__))
+here = str(Path(__file__).parent)
 
 
 def mimetype_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
@@ -58,7 +60,7 @@ def json_renderer(spec: dict, **metadata) -> DefaultRendererReturnType:
     return json_renderer_base(spec, DEFAULT_DISPLAY, **metadata)
 
 
-def png_renderer(spec: dict, **metadata) -> Dict[str, bytes]:
+def png_renderer(spec: dict, **metadata) -> dict[str, bytes]:
     # To get proper return value type, would need to write complex
     # overload signatures for spec_to_mimebundle based on `format`
     return spec_to_mimebundle(  # type: ignore[return-value]
@@ -72,10 +74,10 @@ def png_renderer(spec: dict, **metadata) -> Dict[str, bytes]:
     )
 
 
-def svg_renderer(spec: dict, **metadata) -> Dict[str, str]:
+def svg_renderer(spec: dict, **metadata) -> dict[str, str]:
     # To get proper return value type, would need to write complex
     # overload signatures for spec_to_mimebundle based on `format`
-    return spec_to_mimebundle(  # type: ignore[return-value]
+    return spec_to_mimebundle(
         spec,
         format="svg",
         mode="vega-lite",
@@ -108,7 +110,7 @@ def jupyter_renderer(spec: dict, **metadata):
 
 def browser_renderer(
     spec: dict, offline=False, using=None, port=0, **metadata
-) -> Dict[str, str]:
+) -> dict[str, str]:
     from altair.utils._show import open_html_in_browser
 
     if offline:
