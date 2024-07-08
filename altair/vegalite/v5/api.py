@@ -116,22 +116,22 @@ if TYPE_CHECKING:
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
 
-_LiteralNumeric = Union[bool, float, int]
+_LiteralNumeric: TypeAlias = Union[bool, float, int]
 """Non-string primitive python value types.
 
 Special-cases `str`, for use in `parse_shorthand`.
 """
 
-_LiteralValue = Union[str, _LiteralNumeric]
+_LiteralValue: TypeAlias = Union[str, _LiteralNumeric]
 """Primitive python value types."""
 
-_OneOrSeqLiteralValue = Union[_LiteralValue, Sequence[_LiteralValue]]
+_OneOrSeqLiteralValue: TypeAlias = Union[_LiteralValue, Sequence[_LiteralValue]]
 """Primitive python value types, or a `Sequence` of such.
 
 For restricting inputs passed to `alt.value`.
 """
 
-_StrAsType = Literal["shorthand", "value"]
+_StrAsType: TypeAlias = Literal["shorthand", "value"]
 
 
 # ------------------------------------------------------------------------
@@ -427,13 +427,15 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 
 # -------------------------------------------------------------------------
 # Tools for working with conditions
-_TestPredicateType = Union[str, _expr_core.Expression, core.PredicateComposition]
+_TestPredicateType: TypeAlias = Union[
+    str, _expr_core.Expression, core.PredicateComposition
+]
 """TODO
 
 Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `test` predicate: ...
 """
 
-_PredicateType = Union[
+_PredicateType: TypeAlias = Union[
     Parameter,
     core.Expr,
     Map,
@@ -442,15 +444,15 @@ _PredicateType = Union[
 ]
 """Permitted types for `predicate`."""
 
-_ComposablePredicateType = Union[
+_ComposablePredicateType: TypeAlias = Union[
     _expr_core.OperatorMixin, SelectionPredicateComposition
 ]
 """Permitted types for `AND` reduced predicates."""
 
-_DictOrStr = Union[Map, str]
-_DictOrSchema = Union[core.SchemaBase, Map]
+_DictOrStr: TypeAlias = Union[Map, str]
+_DictOrSchema: TypeAlias = Union[core.SchemaBase, Map]
 
-_StatementType = Union[core.SchemaBase, _DictOrStr]
+_StatementType: TypeAlias = Union[core.SchemaBase, _DictOrStr]
 """Permitted types for `if_true`/`if_false`.
 
 In python terms:
@@ -464,19 +466,21 @@ else:
 ```
 """
 
-_StatementOrLiteralType = Union[_StatementType, _OneOrSeqLiteralValue]
+_StatementOrLiteralType: TypeAlias = Union[_StatementType, _OneOrSeqLiteralValue]
 """Extended types when allowing input to be wrapped in `alt.value`."""
 
-_ConditionType = t.Dict[str, Union[_TestPredicateType, Any]]
+_ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
 """Intermediate type representing a converted `_PredicateType`.
 
 Prior to parsing any `_StatementType`.
 """
 
-_SelectionType = Union[core.SchemaBase, t.Dict[str, Union[_ConditionType, Any]]]
+_SelectionType: TypeAlias = Union[
+    core.SchemaBase, t.Dict[str, Union[_ConditionType, Any]]
+]
 """Returned type of `alt.condition`."""
 
-_FieldEqualType = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
+_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
 """Permitted types for equality checks on field values:
 
 - `datum.field == ...`
