@@ -749,8 +749,8 @@ def _str_as(val: str, to: _StrAsType, /):
     elif to == "shorthand":
         return utils.parse_shorthand(val)
     else:
-        msg = f"Unsupported str_as={to!r}"
-        raise NotImplementedError(msg)
+        msg = f"Expected one of ['shorthand', 'value'], but got: {to!r}"
+        raise TypeError(msg)
 
 
 def _parse_then(
