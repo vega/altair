@@ -452,7 +452,7 @@ def test_when_then_when_then_otherwise() -> None:
     with pytest.raises(TypeError, match="set"):
         when_then_when_then.otherwise({"five", "six"})  # type: ignore
 
-    actual_stroke = when_then_when_then.otherwise(alt.value(0))
+    actual_stroke = when_then_when_then.otherwise(0)
     expected_stroke = {
         "condition": [
             {"param": "select", "empty": False, "value": 2},
@@ -498,7 +498,7 @@ def test_when_labels_position_based_on_condition() -> None:
     param_color_py_expr = alt.param(
         expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
-    when = alt.when(param_width_lt_200).then(alt.value("red")).otherwise("black")
+    when = alt.when(param_width_lt_200).then("red").otherwise("black")
     cond = when["condition"][0]
     otherwise = when["value"]
     param_color_py_when = alt.param(
