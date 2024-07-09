@@ -139,7 +139,7 @@ def test_expression_function_nostring():
     # expr() can only work with str otherwise
     # should raise a SchemaValidationError
     with pytest.raises(ValidationError):
-        expr(2 * 2)
+        expr(2 * 2)  # pyright: ignore
 
     with pytest.raises(ValidationError):
-        expr(["foo", "bah"])
+        expr(["foo", "bah"])  # pyright: ignore
