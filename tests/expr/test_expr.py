@@ -6,6 +6,9 @@ from altair import expr
 from altair import datum
 from altair import ExprRef
 from jsonschema.exceptions import ValidationError
+from altair.expr.funcs import NAME_MAP
+from altair.expr.funcs import FUNCTION_LISTING
+from altair.expr.consts import CONST_LISTING
 
 
 def test_unary_operations():
