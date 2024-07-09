@@ -62,22 +62,25 @@ def test_abs():
     assert repr(z) == "abs(datum.xxx)"
 
 
-def test_expr_funcs():
+@pytest.mark.parametrize(
+    ("veganame", "methodname"),
+    {nm: (NAME_MAP.get(nm, nm)) for nm in FUNCTION_LISTING}.items(),
+)
+def test_expr_funcs(veganame: str, methodname: str):
     """test all functions defined in expr.funcs"""
-    name_map = {val: key for key, val in expr.funcs.NAME_MAP.items()}
-    for funcname in expr.funcs.__all__:
-        func = getattr(expr, funcname)
-        z = func(datum.xxx)
-        assert repr(z) == f"{name_map.get(funcname, funcname)}(datum.xxx)"
+    func = getattr(expr, methodname)
+    z = func(datum.xxx)
+    assert repr(z) == f"{veganame}(datum.xxx)"
 
 
-def test_expr_consts():
+@pytest.mark.parametrize("constname", CONST_LISTING)
+def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts"""
-    name_map = {val: key for key, val in expr.consts.NAME_MAP.items()}
-    for constname in expr.consts.__all__:
-        const = getattr(expr, constname)
-        z = const * datum.xxx
-        assert repr(z) == f"({name_map.get(constname, constname)} * datum.xxx)"
+
+    const = getattr(expr, constname)
+    z = const * datum.xxx
+    assert repr(z) == f"({constname} * datum.xxx)"
+
 
 
 def test_json_reprs():
