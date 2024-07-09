@@ -1,5 +1,5 @@
 import operator
-
+import sys
 import pytest
 
 from altair import expr
@@ -85,7 +85,13 @@ def test_expr_consts(constname: str):
 @pytest.mark.parametrize("constname", CONST_LISTING)
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
-    with pytest.raises(AttributeError, match=f"property {constname!r}.+has no setter"):
+    if sys.version_info >= (3, 11):
+        pattern = f"property {constname!r}.+has no setter"
+    elif sys.version_info >= (3, 10):
+        pattern = f"can't set attribute {constname!r}"
+    else:
+        pattern = "can't set attribute"
+    with pytest.raises(AttributeError, match=pattern):
         setattr(expr, constname, 2)
 
 
