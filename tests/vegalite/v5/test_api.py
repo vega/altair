@@ -275,12 +275,14 @@ def test_selection_to_dict():
 
 
 def test_selection_expression():
+    from altair.expr.core import Expression
+
     selection = alt.selection_point(fields=["value"])
 
     assert isinstance(selection.value, alt.SelectionExpression)
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
-    assert isinstance(selection["value"], alt.expr.Expression)
+    assert isinstance(selection["value"], Expression)
     assert selection["value"].to_dict() == f"{selection.name}['value']"
 
     magic_attr = "__magic__"
