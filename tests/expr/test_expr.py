@@ -82,6 +82,12 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
+@pytest.mark.parametrize("constname", CONST_LISTING)
+def test_expr_consts_immutable(constname: str):
+    """Ensure e.g `alt.expr.PI = 2` is prevented."""
+    with pytest.raises(AttributeError, match=f"property {constname!r}.+has no setter"):
+        setattr(expr, constname, 2)
+
 
 def test_json_reprs():
     """Test JSON representations of special values"""
