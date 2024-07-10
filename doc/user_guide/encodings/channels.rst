@@ -41,7 +41,7 @@ Channel        Altair Class            Description                     Example
 angle          :class:`Angle`          The angle of the mark           :ref:`gallery_wind_vector_map`
 color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
 fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
-fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
+fillOpacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
 opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
 radius         :class:`Radius`         The radius or the mark          :ref:`gallery_radial_chart`
 shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
