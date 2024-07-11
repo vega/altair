@@ -469,12 +469,11 @@ def sanitize_narwhals_dataframe(
 
 
 def narwhalify(data: DataType) -> nw.DataFrame[Any]:
-    """Wrap `data` in `narwhals.DataFrame` (if possible).
+    """Wrap `data` in `narwhals.DataFrame`.
 
     If `data` is not supported by Narwhals, but it is convertible
     to a PyArrow table, then first convert to a PyArrow Table,
     and then wrap in `narwhals.DataFrame`.
-    If it can't even be converted to a PyArrow Table, return as-is.
     """
     # Using `strict=False` will return `data` as-is if the object cannot be converted.
     data = nw.from_native(data, eager_only=True, strict=False)
