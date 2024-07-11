@@ -12,7 +12,7 @@ from typing import (
     Callable,
 )
 
-import narwhals as nw
+import narwhals.stable.v1 as nw
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.data import (
