@@ -23,6 +23,8 @@ try:
 except ImportError:
     vlc = None
 
+ibis.set_backend("polars")
+
 
 def getargs(*args, **kwargs):
     return args, kwargs
