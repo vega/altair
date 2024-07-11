@@ -85,6 +85,13 @@ if TYPE_CHECKING:
         InlineDataset,
     )
     from altair.expr.core import Expression, GetAttrExpression
+    from .schema._typing import (
+        ImputeMethod_T,
+        SelectionType_T,
+        SelectionResolution_T,
+        SingleDefUnitChannel_T,
+        StackOffset_T,
+    )
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 
@@ -486,9 +493,7 @@ def param(
     return parameter
 
 
-def _selection(
-    type: Optional[Literal["interval", "point"]] = Undefined, **kwds
-) -> Parameter:
+def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
 
     select_kwds = {"name", "bind", "value", "empty", "init", "views"}
@@ -518,9 +523,7 @@ def _selection(
     alternative="'selection_point()' or 'selection_interval()'",
     message="These functions also include more helpful docstrings.",
 )
-def selection(
-    type: Optional[Literal["interval", "point"]] = Undefined, **kwds
-) -> Parameter:
+def selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
     """
     Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
 
@@ -549,10 +552,10 @@ def selection_interval(
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
-    encodings: Optional[list[str]] = Undefined,
+    encodings: Optional[list[SingleDefUnitChannel_T]] = Undefined,
     on: Optional[str] = Undefined,
     clear: Optional[str | bool] = Undefined,
-    resolve: Optional[Literal["global", "union", "intersect"]] = Undefined,
+    resolve: Optional[SelectionResolution_T] = Undefined,
     mark: Optional[Mark] = Undefined,
     translate: Optional[str | bool] = Undefined,
     zoom: Optional[str | bool] = Undefined,
@@ -661,11 +664,11 @@ def selection_point(
     bind: Optional[Binding | str] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[Expr] = Undefined,
-    encodings: Optional[list[str]] = Undefined,
+    encodings: Optional[list[SingleDefUnitChannel_T]] = Undefined,
     fields: Optional[list[str]] = Undefined,
     on: Optional[str] = Undefined,
     clear: Optional[str | bool] = Undefined,
-    resolve: Optional[Literal["global", "union", "intersect"]] = Undefined,
+    resolve: Optional[SelectionResolution_T] = Undefined,
     toggle: Optional[str | bool] = Undefined,
     nearest: Optional[bool] = Undefined,
     **kwds,
@@ -1826,9 +1829,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         frame: Optional[list[int | None]] = Undefined,
         groupby: Optional[list[str | FieldName]] = Undefined,
         keyvals: Optional[list[Any] | ImputeSequence] = Undefined,
-        method: Optional[
-            Literal["value", "mean", "median", "max", "min"] | ImputeMethod
-        ] = Undefined,
+        method: Optional[ImputeMethod_T | ImputeMethod] = Undefined,
         value=Undefined,
     ) -> Self:
         """
@@ -2351,7 +2352,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         as_: str | FieldName | list[str],
         stack: str | FieldName,
         groupby: list[str | FieldName],
-        offset: Optional[Literal["zero", "center", "normalize"]] = Undefined,
+        offset: Optional[StackOffset_T] = Undefined,
         sort: Optional[list[SortField]] = Undefined,
     ) -> Self:
         """
@@ -3032,7 +3033,7 @@ class Chart(
             copy of self, with interactive axes added
 
         """
-        encodings = []
+        encodings: list[SingleDefUnitChannel_T] = []
         if bind_x:
             encodings.append("x")
         if bind_y:
@@ -3320,7 +3321,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             copy of self, with interactive axes added
 
         """
-        encodings = []
+        encodings: list[SingleDefUnitChannel_T] = []
         if bind_x:
             encodings.append("x")
         if bind_y:
@@ -3415,7 +3416,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             copy of self, with interactive axes added
 
         """
-        encodings = []
+        encodings: list[SingleDefUnitChannel_T] = []
         if bind_x:
             encodings.append("x")
         if bind_y:
@@ -3512,7 +3513,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             copy of self, with interactive axes added
 
         """
-        encodings = []
+        encodings: list[SingleDefUnitChannel_T] = []
         if bind_x:
             encodings.append("x")
         if bind_y:
