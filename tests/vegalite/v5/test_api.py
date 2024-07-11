@@ -9,9 +9,11 @@ import operator
 import os
 import pathlib
 import tempfile
-import narwhals.stable.v1 as nw
+from importlib.metadata import version as importlib_version
+from packaging.version import Version
 
 import jsonschema
+import narwhals.stable.v1 as nw
 import pytest
 import pandas as pd
 import polars as pl
@@ -24,6 +26,8 @@ except ImportError:
     vlc = None
 
 ibis.set_backend("polars")
+
+PANDAS_VERSION = Version(importlib_version("pandas"))
 
 
 def getargs(*args, **kwargs):
@@ -1090,7 +1094,7 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
 
 
 @pytest.mark.skipif(
-    int(pd.__version__.split(".")[0]) < 2,
+    Version("1.5") > PANDAS_VERSION,
     reason="A warning is thrown on old pandas versions",
 )
 def test_ibis_with_date_32():
