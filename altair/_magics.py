@@ -10,6 +10,7 @@ import warnings
 import IPython
 from IPython.core import magic_arguments
 from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
+import narwhals.stable.v1 as nw
 
 from altair.vegalite import v5 as vegalite_v5
 
@@ -41,7 +42,7 @@ def _prepare_data(data, data_transformers):
         return data
     elif _is_pandas_dataframe(data):
         if func := data_transformers.get():
-            data = func(data)
+            data = func(nw.from_native(data, eager_only=True))
         return data
     elif isinstance(data, str):
         return {"url": data}

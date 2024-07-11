@@ -4,6 +4,7 @@ from typing import Any, Callable
 import pytest
 import pandas as pd
 import polars as pl
+import narwhals.stable.v1 as nw
 from altair.utils.data import (
     limit_rows,
     MaxRowsError,
@@ -34,7 +35,7 @@ def _create_data_with_values(N):
 
 def test_limit_rows():
     """Test the limit_rows data transformer."""
-    data = _create_dataframe(10)
+    data = nw.from_native(_create_dataframe(10))
     result = limit_rows(data, max_rows=20)
     assert data is result
     with pytest.raises(MaxRowsError):

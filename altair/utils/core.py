@@ -475,6 +475,9 @@ def narwhalify(data: DataType) -> nw.DataFrame[Any]:
     to a PyArrow table, then first convert to a PyArrow Table,
     and then wrap in `narwhals.DataFrame`.
     """
+    if isinstance(data, nw.DataFrame):
+        # Early return if already a Narwhals DataFrame
+        return data
     # Using `strict=False` will return `data` as-is if the object cannot be converted.
     data = nw.from_native(data, eager_only=True, strict=False)
     if isinstance(data, nw.DataFrame):
@@ -632,11 +635,13 @@ def parse_shorthand(
 
     # if data is specified and type is not, infer type from data
     if "type" not in attrs and is_data_type(data):
-        data_nw = narwhalify(data)
         unescaped_field = attrs["field"].replace("\\", "")
+        data_nw = narwhalify(data)
         if unescaped_field in data_nw.columns:
             column = data_nw[unescaped_field]
-            if column.dtype in {nw.Object, nw.Unknown} and _is_pandas_dataframe(data):
+            if column.dtype in {nw.Object, nw.Unknown} and _is_pandas_dataframe(
+                nw.to_native(data_nw)
+            ):
                 attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
             else:
                 attrs["type"] = infer_vegalite_type_for_narwhals(column)

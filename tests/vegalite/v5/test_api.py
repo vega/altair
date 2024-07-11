@@ -9,6 +9,7 @@ import operator
 import os
 import pathlib
 import tempfile
+import narwhals.stable.v1 as nw
 
 import jsonschema
 import pytest
@@ -741,7 +742,7 @@ def test_selection_property():
 
 
 def test_LookupData():
-    df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+    df = nw.from_native(pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]}))
     lookup = alt.LookupData(data=df, key="x")
 
     dct = lookup.to_dict()
@@ -1090,6 +1091,7 @@ def test_ibis_with_date_32():
     df = pl.DataFrame(
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
     )
+    ibis.set_backend("polars")
     tbl = ibis.memtable(df)
     result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
     assert next(iter(result["datasets"].values())) == [

@@ -144,21 +144,14 @@ def limit_rows(
             values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
-    elif _is_pandas_dataframe(data):
-        values = data
     elif isinstance(data, dict):
         if "values" in data:
             values = data["values"]
         else:
             return data
     else:
-        data_nw = narwhalify(data)
-        if max_rows is not None and len(data_nw) > max_rows:
-            raise_max_rows_error()
-        # `narwhalify` may call `arrow_table_from_dfi_dataframe`,
-        # which can be expensive. Therefore, we return the `narwhals.DataFrame`
-        # here instead of the original input.
-        return data_nw
+        data = narwhalify(data)
+        values = data
 
     if max_rows is not None and len(values) > max_rows:
         raise_max_rows_error()
@@ -380,9 +373,8 @@ def _data_to_json_string(data: DataType) -> str:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return json.dumps(data["values"], sort_keys=True)
-    elif isinstance(data, DataFrameLike):
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        return json.dumps(pa_table.to_pylist())
+    elif isinstance(data, nw.DataFrame):
+        return json.dumps(data.rows(named=True))
     else:
         msg = "to_json only works with data expressed as " "a DataFrame or as a dict"
         raise NotImplementedError(msg)
