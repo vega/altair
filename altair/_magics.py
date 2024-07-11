@@ -10,7 +10,6 @@ import warnings
 import IPython
 from IPython.core import magic_arguments
 from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
-import narwhals.stable.v1 as nw
 
 from altair.vegalite import v5 as vegalite_v5
 

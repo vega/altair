@@ -1087,7 +1087,10 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "numpy" not in sys.modules
 
 
-@pytest.mark.skipif(int(pd.__version__.split('.')[0]) < 2, reason="A warning is thrown on old pandas versions")
+@pytest.mark.skipif(
+    int(pd.__version__.split(".")[0]) < 2,
+    reason="A warning is thrown on old pandas versions",
+)
 def test_ibis_with_date_32():
     df = pl.DataFrame(
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
