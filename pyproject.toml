@@ -342,7 +342,6 @@ warn_unused_ignores = true
 [[tool.mypy.overrides]]
 module = [
     "vega_datasets.*",
-    "toolz.*",
     "pyarrow.*",
     "yaml.*",
     "vl_convert.*",
