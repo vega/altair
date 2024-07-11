@@ -13,6 +13,7 @@ import typing
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
 from altair.utils import Optional
+from altair.utils.data import narwhalify as _narwhalify
 from .data import data_transformers
 from ... import utils
 from ...expr import core as _expr_core
@@ -1015,11 +1016,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # TopLevelMixin instance does not necessarily have copy defined but due to how
         # Altair is set up this should hold. Too complex to type hint right now
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
-        original_data = getattr(copy, "data", Undefined)
-        copy.data = _prepare_data(original_data, context)
 
-        if original_data is not Undefined:
-            context["data"] = original_data
+        data = getattr(copy, "data", Undefined)
+        try:
+            data = _narwhalify(data)  # type: ignore[arg-type]
+        except TypeError:
+            # Non-narwhalifiable type still supported by Altair, such as dict.
+            pass
+        copy.data = _prepare_data(data, context)
+
+        if data is not Undefined:
+            context["data"] = data
 
         # remaining to_dict calls are not at top level
         context["top_level"] = False

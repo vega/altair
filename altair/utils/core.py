@@ -468,12 +468,13 @@ def sanitize_narwhals_dataframe(
     return data.select(columns)
 
 
-def narwhalify(data: DataType) -> nw.DataFrame:
-    """Wrap `data` in `narwhals.DataFrame`.
+def narwhalify(data: DataType) -> nw.DataFrame[Any]:
+    """Wrap `data` in `narwhals.DataFrame` (if possible).
 
     If `data` is not supported by Narwhals, but it is convertible
     to a PyArrow table, then first convert to a PyArrow Table,
     and then wrap in `narwhals.DataFrame`.
+    If it can't even be converted to a PyArrow Table, return as-is.
     """
     # Using `strict=False` will return `data` as-is if the object cannot be converted.
     data = nw.from_native(data, eager_only=True, strict=False)
@@ -634,7 +635,7 @@ def parse_shorthand(
     if "type" not in attrs and is_data_type(data):
         data_nw = narwhalify(data)
         unescaped_field = attrs["field"].replace("\\", "")
-        if isinstance(data_nw, nw.DataFrame) and unescaped_field in data_nw.columns:
+        if unescaped_field in data_nw.columns:
             column = data_nw[unescaped_field]
             if column.dtype in {nw.Object, nw.Unknown} and _is_pandas_dataframe(data):
                 attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))

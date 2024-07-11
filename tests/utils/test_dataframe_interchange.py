@@ -3,6 +3,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 import sys
+import narwhals.stable.v1 as nw
 
 try:
     import pyarrow as pa
@@ -36,8 +37,9 @@ def test_arrow_timestamp_conversion():
         "value": [102, 129, 139],
     }
     pa_table = pa.table(data)
+    nw_frame = nw.from_native(pa_table)
 
-    values = to_values(pa_table)
+    values = to_values(nw_frame)
     expected_values = {
         "values": [
             {"date": "2004-08-01T00:00:00.000000", "value": 102},
@@ -54,8 +56,9 @@ def test_duration_raises():
     df = pd.DataFrame(td).reset_index()
     df.columns = ["id", "timedelta"]
     pa_table = pa.table(df)
+    nw_frame = nw.from_native(pa_table)
     with pytest.raises(ValueError) as e:  # noqa: PT011
-        to_values(pa_table)
+        to_values(nw_frame)
 
     # Check that exception mentions the duration[ns] type,
     # which is what the pandas timedelta is converted into

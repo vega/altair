@@ -1,6 +1,8 @@
 """Unit tests for altair API"""
 
+from datetime import date
 import io
+import ibis
 import sys
 import json
 import operator
@@ -1082,3 +1084,16 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "pandas" not in sys.modules
     assert "pyarrow" not in sys.modules
     assert "numpy" not in sys.modules
+
+
+def test_ibis_with_date_32():
+    df = pl.DataFrame(
+        {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
+    )
+    tbl = ibis.memtable(df)
+    result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
+    assert next(iter(result["datasets"].values())) == [
+        {"a": 1, "b": "2020-01-01T00:00:00.000000"},
+        {"a": 2, "b": "2020-01-02T00:00:00.000000"},
+        {"a": 3, "b": "2020-01-03T00:00:00.000000"},
+    ]

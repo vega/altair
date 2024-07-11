@@ -202,9 +202,8 @@ def sample(
         else:
             # Maybe this should raise an error or return something useful?
             return None
-    try:
-        data = narwhalify(data)
-    except TypeError:
+    data = narwhalify(data)
+    if not isinstance(data, nw.DataFrame):
         # Maybe this should raise an error or return something useful? Currently,
         # if data is of type SupportsGeoInterface it lands here
         return None
@@ -325,29 +324,29 @@ def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    if isinstance(data, SupportsGeoInterface):
-        if _is_pandas_dataframe(data):
-            data = sanitize_pandas_dataframe(data)
+    data_native = nw.to_native(data, strict=False)
+    if isinstance(data_native, SupportsGeoInterface):
+        if _is_pandas_dataframe(data_native):
+            data_native = sanitize_pandas_dataframe(data_native)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
-        data_sanitized = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
+        data_sanitized = sanitize_geo_interface(data_native.__geo_interface__)
         return {"values": data_sanitized}
-    elif _is_pandas_dataframe(data):
-        data = sanitize_pandas_dataframe(data)
-        return {"values": data.to_dict(orient="records")}
-    elif isinstance(data, dict):
-        if "values" not in data:
+    elif _is_pandas_dataframe(data_native):
+        data_native = sanitize_pandas_dataframe(data_native)
+        return {"values": data_native.to_dict(orient="records")}
+    elif isinstance(data_native, dict):
+        if "values" not in data_native:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
-        return data
-    try:
-        data = narwhalify(data)
-    except TypeError as exc:
+        return data_native
+    elif isinstance(data, nw.DataFrame):
+        data = sanitize_narwhals_dataframe(data)
+        return {"values": data.rows(named=True)}
+    else:
         # Should never reach this state as tested by check_data_type
         msg = f"Unrecognized data type: {type(data)}"
-        raise ValueError(msg) from exc
-    data = sanitize_narwhals_dataframe(data)
-    return {"values": data.rows(named=True)}
+        raise ValueError(msg)
 
 
 def check_data_type(data: DataType) -> None:
@@ -435,7 +434,7 @@ def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> pa.Table:
     # has more control over the conversion, and may have broader compatibility.
     # This is the case for Polars, which supports Date32 columns in direct conversion
     # while pyarrow does not yet support this type in from_dataframe
-    for convert_method_name in ("arrow", "to_arrow", "to_arrow_table"):
+    for convert_method_name in ("arrow", "to_arrow", "to_arrow_table", "to_pyarrow"):
         convert_method = getattr(dfi_df, convert_method_name, None)
         if callable(convert_method):
             result = convert_method()
