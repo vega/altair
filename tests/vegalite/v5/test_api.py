@@ -1087,11 +1087,11 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
     assert "numpy" not in sys.modules
 
 
+@pytest.mark.skipif(not pd.__version__.startswith('2'), reason="A warning is thrown on old pandas versions")
 def test_ibis_with_date_32():
     df = pl.DataFrame(
         {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
     )
-    ibis.set_backend("polars")
     tbl = ibis.memtable(df)
     result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
     assert next(iter(result["datasets"].values())) == [
