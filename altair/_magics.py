@@ -42,7 +42,7 @@ def _prepare_data(data, data_transformers):
         return data
     elif _is_pandas_dataframe(data):
         if func := data_transformers.get():
-            data = func(nw.from_native(data, eager_only=True))
+            data = func(data)
         return data
     elif isinstance(data, str):
         return {"url": data}
