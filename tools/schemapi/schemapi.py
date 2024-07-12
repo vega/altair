@@ -407,20 +407,6 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
     return dict(errors_by_validator)
 
 
-def _safe_validator_value_iter(errors: ValidationErrorList, /) -> Iterator[str]:
-    for err in errors:
-        if isinstance(err.validator_value, Iterable):
-            yield ",".join(err.validator_value)
-        else:
-            msg = (
-                "It is assumed that values (and therefore `validator_value`) of an enum are always arrays.\n"
-                "Therefore, this error should be unreachable.\n"
-                "see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values\n\n"
-                f"{type(err.validator_value).__name__!r} is not `Iterable`."
-            )
-            raise TypeError(msg)
-
-
 def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList:
     """Deduplicate enum errors by removing the errors where the allowed values
     are a subset of another error. For example, if `enum` contains two errors
@@ -429,7 +415,10 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
     `enum` list only contains the error with ["A", "B", "C"].
     """
     if len(errors) > 1:
-        value_strings = list(_safe_validator_value_iter(errors))
+        # Values (and therefore `validator_value`) of an enum are always arrays,
+        # see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
+        # which is why we can use join below
+        value_strings = [",".join(err.validator_value) for err in errors]  # type: ignore
         longest_enums: ValidationErrorList = []
         for value_str, err in zip(value_strings, errors):
             if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
