@@ -278,15 +278,6 @@ core.FacetedEncoding._class_is_valid_at_instantiation = False
 TOPLEVEL_ONLY_KEYS = {"background", "config", "autosize", "padding", "$schema"}
 
 
-def _get_channels_mapping() -> dict[type[SchemaBase], str]:
-    mapping: dict[type[SchemaBase], str] = {}
-    for attr in dir(channels):
-        cls = getattr(channels, attr)
-        if isinstance(cls, type) and issubclass(cls, core.SchemaBase):
-            mapping[cls] = attr.replace("Value", "").lower()
-    return mapping
-
-
 # -------------------------------------------------------------------------
 # Tools for working with parameters
 class Parameter(_expr_core.OperatorMixin):
