@@ -83,7 +83,8 @@ Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
 
 #### Failures on specific python version(s)
-By default, `hatch test` will run the test suite against the currently active python version. Two useful variants for debugging failures that only appear *after* you've submitted your PR:
+By default, `hatch test` will run the test suite against the currently active python version.
+Two useful variants for debugging failures that only appear *after* you've submitted your PR:
 
 ```bash
 # Test against all python version(s) in the matrix
