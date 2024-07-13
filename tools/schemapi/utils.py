@@ -68,7 +68,7 @@ class _TypeAliasTracer:
         self.fmt: str = fmt
         self._literals: dict[str, str] = {}
         self._literals_invert: dict[str, str] = {}
-        self.aliases: list[tuple[str, str]] = []
+        self._aliases: dict[str, str] = {}
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
             "from typing import Literal, Mapping, Any",
@@ -77,7 +77,7 @@ class _TypeAliasTracer:
         self._cmd_check: list[str] = ["--fix"]
         self._cmd_format: Sequence[str] = ruff_format or ()
         for c in ruff_check:
-            self._cmd_check.extend(("--select", c))
+            self._cmd_check.extend(("--extend-select", c))
 
     def _update_literals(self, name: str, tp: str, /) -> None:
         """Produces an inverted index, to reuse a `Literal` when `SchemaInfo.title` is empty."""
@@ -101,23 +101,47 @@ class _TypeAliasTracer:
                 tp = alias
         elif (alias := self._literals_invert.get(tp)) and replace:
             tp = alias
+        elif replace and info.is_union_enum():
+            # Handles one very specific edge case `WindowFieldDef`
+            # - Has an anonymous enum union
+            # - One of the members is declared afterwards
+            # - SchemaBase needs to be first, as the union wont be internally sorted
+            it = (
+                self.add_literal(el, spell_literal(el.enum), replace=True)
+                for el in info.anyOf
+            )
+            tp = f"Union[SchemaBase, {', '.join(it)}]"
         return tp
 
-    def generate_aliases(self) -> Iterator[str]:
-        """Represents a line per `TypeAlias` declaration.
+    def update_aliases(self, *name_statement: tuple[str, str]) -> None:
+        """Adds `(name, statement)` pairs to the definitions.
 
-        Additionally, stores in `self.aliases` an alphabetically sorted list of tuples.
+        These types should support annotations in generated code, but
+        are not required to be derived from the schema itself.
+
+        Each tuple will appear in the generated module as::
+
+            name: TypeAlias = statement
+
+        All aliases will be written in runtime-scope, therefore
+        externally dependent types should be declared as regular imports.
         """
-        self.aliases = sorted(self._literals.items(), key=itemgetter(0))
-        for name, statement in self.aliases:
+        self._aliases.update(name_statement)
+
+    def generate_aliases(self) -> Iterator[str]:
+        """Represents a line per `TypeAlias` declaration."""
+        for name, statement in self._aliases.items():
             yield f"{name}: TypeAlias = {statement}"
 
+    def is_cached(self, tp: str, /) -> bool:
+        """Applies to both docstring and type hints.
+
+        Currently used as a sort key, to place literals/aliases last.
+        """
+        return tp in self._literals_invert or tp in self._literals
+
     def write_module(
-        self,
-        fp: Path,
-        *extra_imports: str,
-        header: LiteralString,
-        extra_aliases: LiteralString,
+        self, fp: Path, *extra_imports: str, header: LiteralString
     ) -> None:
         """Write all collected `TypeAlias`'s to `fp`.
 
@@ -129,15 +153,18 @@ class _TypeAliasTracer:
             Follows `self._imports` block.
         header
             `tools.generate_schema_wrapper.HEADER`.
-        extra_aliases
-            `tools.generate_schema_wrapper.EXTRA_ALIASES`.
         """
         ruff_format = ["ruff", "format", fp]
         if self._cmd_format:
             ruff_format.extend(self._cmd_format)
         commands = (["ruff", "check", fp, *self._cmd_check], ruff_format)
-        static = (header, "\n", *self._imports, *extra_imports, "\n\n", extra_aliases)
-        it = chain(static, self.generate_aliases())
+        static = (header, "\n", *self._imports, *extra_imports, "\n\n")
+        self.update_aliases(*sorted(self._literals.items(), key=itemgetter(0)))
+        it = chain(
+            static,
+            [f"__all__ = {list(self._aliases)}", "\n\n"],
+            self.generate_aliases(),
+        )
         fp.write_text("\n".join(it), encoding="utf-8")
         for cmd in commands:
             r = subprocess.run(cmd, check=True)
@@ -149,7 +176,7 @@ class _TypeAliasTracer:
         return len(self._literals)
 
 
-TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
+TypeAliasTracer: _TypeAliasTracer = _TypeAliasTracer("{}_T", "I001", "I002")
 """An instance of `_TypeAliasTracer`.
 
 Collects a cache of unique `Literal` types used globally.
@@ -373,10 +400,13 @@ class SchemaInfo:
         if self.is_empty():
             type_representations.append("Any")
         elif self.is_enum():
-            s = ", ".join(f"{s!r}" for s in self.enum)
-            tp_str = f"Literal[{s}]"
+            tp_str = spell_literal(self.enum)
             if for_type_hints:
                 tp_str = TypeAliasTracer.add_literal(self, tp_str, replace=True)
+            type_representations.append(tp_str)
+        elif for_type_hints and self.is_union_enum():
+            it = chain.from_iterable(el.enum for el in self.anyOf)
+            tp_str = TypeAliasTracer.add_literal(self, spell_literal(it), replace=True)
             type_representations.append(tp_str)
         elif self.is_anyOf():
             type_representations.extend(
@@ -441,16 +471,10 @@ class SchemaInfo:
         # returned from sort. Hence, we sort as well by type name as a tie-breaker,
         # see https://docs.python.org/3.10/howto/sorting.html#sort-stability-and-complex-sorts
         # for more infos.
-        type_representations = sorted(
-            # Using lower as we don't want to prefer uppercase such as "None" over
-            # "str"
-            set(flatten(type_representations)),
-            key=lambda x: x.lower(),
-        )  # Secondary sort
-        type_representations = sorted(
-            type_representations,
-            key=len,
-        )  # Primary sort
+        # Using lower as we don't want to prefer uppercase such as "None" over
+        it = sorted(set(flatten(type_representations)), key=str.lower)  # Tertiary sort
+        it = sorted(it, key=len)  # Secondary sort
+        type_representations = sorted(it, key=TypeAliasTracer.is_cached)  # Primary sort
         if additional_type_hints:
             type_representations.extend(additional_type_hints)
 
@@ -601,6 +625,22 @@ class SchemaInfo:
     def is_array(self) -> bool:
         return self.type == "array"
 
+    def is_union(self) -> bool:
+        """
+        Candidate for ``Union`` type alias.
+
+        Not a real class.
+        """
+        return self.is_anyOf() and self.type is None
+
+    def is_union_enum(self) -> bool:
+        """
+        Candidate for reducing to a single ``Literal`` alias.
+
+        E.g. `BinnedTimeUnit`
+        """
+        return self.is_union() and all(el.is_enum() for el in self.anyOf)
+
 
 def indent_docstring(
     lines: list[str], indent_level: int, width: int = 100, lstrip=True
@@ -707,6 +747,11 @@ def flatten(container: Iterable) -> Iterable:
             yield from flatten(i)
         else:
             yield i
+
+
+def spell_literal(it: Iterable[str], /) -> str:
+    s = ", ".join(f"{s!r}" for s in it)
+    return f"Literal[{s}]"
 
 
 def ruff_format_str(code: str | list[str]) -> str:
