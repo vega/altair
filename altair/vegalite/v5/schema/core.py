@@ -936,17 +936,17 @@ class AreaConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
             dict | float | Parameter | SchemaBase
@@ -960,7 +960,7 @@ class AreaConfig(AnyMarkConfig):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -968,7 +968,7 @@ class AreaConfig(AnyMarkConfig):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1000,9 +1000,9 @@ class AreaConfig(AnyMarkConfig):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -1305,7 +1305,7 @@ class Axis(VegaLiteSchema):
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom'], :class:`ConditionalAxisLabelBaseline`
+    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, Literal['top', 'middle', 'bottom']
         Vertical text baseline of axis tick labels, overriding the default setting for the
         current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
@@ -1570,9 +1570,9 @@ class Axis(VegaLiteSchema):
         bandPosition: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         domain: Optional[bool] = Undefined,
-        domainCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        domainCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         domainDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
@@ -1583,22 +1583,22 @@ class Axis(VegaLiteSchema):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         grid: Optional[bool] = Undefined,
-        gridCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        gridCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         gridDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
         gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -1626,9 +1626,9 @@ class Axis(VegaLiteSchema):
         tickBand: Optional[
             dict | Parameter | SchemaBase | Literal["center", "extent"]
         ] = Undefined,
-        tickCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        tickCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         tickCount: Optional[
             dict | float | Parameter | SchemaBase | TimeInterval_T
@@ -1644,16 +1644,16 @@ class Axis(VegaLiteSchema):
         tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -1883,7 +1883,7 @@ class AxisConfig(VegaLiteSchema):
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, Literal['top', 'middle', 'bottom'], :class:`ConditionalAxisLabelBaseline`
+    labelBaseline : str, dict, :class:`ExprRef`, :class:`Baseline`, :class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`, Literal['top', 'middle', 'bottom']
         Vertical text baseline of axis tick labels, overriding the default setting for the
         current axis orientation. One of ``"alphabetic"`` (default), ``"top"``,
         ``"middle"``, ``"bottom"``, ``"line-top"``, or ``"line-bottom"``. The ``"line-top"``
@@ -2149,9 +2149,9 @@ class AxisConfig(VegaLiteSchema):
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         disable: Optional[bool] = Undefined,
         domain: Optional[bool] = Undefined,
-        domainCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        domainCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         domainColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         domainDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
@@ -2162,22 +2162,22 @@ class AxisConfig(VegaLiteSchema):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         grid: Optional[bool] = Undefined,
-        gridCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        gridCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         gridColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         gridDash: Optional[dict | Parameter | SchemaBase | Sequence[float]] = Undefined,
         gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFlush: Optional[bool | float] = Undefined,
@@ -2205,9 +2205,9 @@ class AxisConfig(VegaLiteSchema):
         tickBand: Optional[
             dict | Parameter | SchemaBase | Literal["center", "extent"]
         ] = Undefined,
-        tickCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        tickCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         tickColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         tickCount: Optional[
             dict | float | Parameter | SchemaBase | TimeInterval_T
@@ -2223,16 +2223,16 @@ class AxisConfig(VegaLiteSchema):
         tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -2488,7 +2488,7 @@ class BarConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -2770,18 +2770,18 @@ class BarConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -2797,7 +2797,7 @@ class BarConfig(AnyMarkConfig):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -2806,7 +2806,7 @@ class BarConfig(AnyMarkConfig):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2837,9 +2837,9 @@ class BarConfig(AnyMarkConfig):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -3030,13 +3030,13 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
 
     def __init__(
         self,
-        align: Optional[Align_T | SchemaBase] = Undefined,
+        align: Optional[SchemaBase | Align_T] = Undefined,
         anchor: Optional[dict | Parameter | SchemaBase | TitleAnchor_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[str | Baseline_T | SchemaBase] = Undefined,
+        baseline: Optional[str | SchemaBase | Baseline_T] = Undefined,
         color: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -3050,7 +3050,7 @@ class BaseTitleNoValueRefs(VegaLiteSchema):
         offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         orient: Optional[dict | Parameter | SchemaBase | TitleOrient_T] = Undefined,
         subtitleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         subtitleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         subtitleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -3522,10 +3522,10 @@ class BrushConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        cursor: Optional[Cursor_T | SchemaBase] = Undefined,
-        fill: Optional[str | ColorName_T | SchemaBase] = Undefined,
+        cursor: Optional[SchemaBase | Cursor_T] = Undefined,
+        fill: Optional[str | SchemaBase | ColorName_T] = Undefined,
         fillOpacity: Optional[float] = Undefined,
-        stroke: Optional[str | ColorName_T | SchemaBase] = Undefined,
+        stroke: Optional[str | SchemaBase | ColorName_T] = Undefined,
         strokeDash: Optional[Sequence[float]] = Undefined,
         strokeDashOffset: Optional[float] = Undefined,
         strokeOpacity: Optional[float] = Undefined,
@@ -3693,7 +3693,7 @@ class BoxPlotDef(CompositeMarkDef):
         type: Optional[str | SchemaBase] = Undefined,
         box: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[str | float] = Undefined,
         invalid: Optional[Literal["filter", None]] = Undefined,
         median: Optional[bool | dict | SchemaBase] = Undefined,
@@ -4262,44 +4262,7 @@ class ConditionalParameterStringFieldDef(ConditionalStringFieldDef):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4523,44 +4486,7 @@ class ConditionalPredicateStringFieldDef(ConditionalStringFieldDef):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -5359,7 +5285,7 @@ class Config(VegaLiteSchema):
         axisYQuantitative: Optional[dict | SchemaBase] = Undefined,
         axisYTemporal: Optional[dict | SchemaBase] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bar: Optional[dict | SchemaBase] = Undefined,
         boxplot: Optional[dict | SchemaBase] = Undefined,
@@ -6155,7 +6081,7 @@ class ErrorBandDef(CompositeMarkDef):
         band: Optional[bool | dict | SchemaBase] = Undefined,
         borders: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
         interpolate: Optional[SchemaBase | Interpolate_T] = Undefined,
         opacity: Optional[float] = Undefined,
@@ -6295,7 +6221,7 @@ class ErrorBarDef(CompositeMarkDef):
         self,
         type: Optional[str | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
@@ -6619,53 +6545,16 @@ class FacetEncodingFieldDef(VegaLiteSchema):
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[dict | SchemaBase]
+            | SortOrder_T
         ] = Undefined,
         spacing: Optional[dict | float | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6886,52 +6775,15 @@ class FacetFieldDef(VegaLiteSchema):
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[dict | SchemaBase]
+            | SortOrder_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -7562,44 +7414,7 @@ class FieldDefWithoutScale(VegaLiteSchema):
         bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -7838,44 +7653,7 @@ class FieldOrDatumDefWithConditionStringFieldDefstring(VegaLiteSchema):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -8070,7 +7848,7 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
 
     def __init__(
         self,
-        mark: Optional[str | dict | Mark_T | SchemaBase] = Undefined,
+        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
@@ -8239,7 +8017,7 @@ class GradientStop(VegaLiteSchema):
 
     def __init__(
         self,
-        color: Optional[str | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | SchemaBase | ColorName_T] = Undefined,
         offset: Optional[float] = Undefined,
         **kwds,
     ):
@@ -8496,14 +8274,14 @@ class Header(VegaLiteSchema):
         self,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -8514,19 +8292,19 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
-        orient: Optional[Orient_T | SchemaBase] = Undefined,
+        orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -8536,7 +8314,7 @@ class Header(VegaLiteSchema):
         ] = Undefined,
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ):
@@ -8726,14 +8504,14 @@ class HeaderConfig(VegaLiteSchema):
         self,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -8744,19 +8522,19 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
-        orient: Optional[Orient_T | SchemaBase] = Undefined,
+        orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[None] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -8766,7 +8544,7 @@ class HeaderConfig(VegaLiteSchema):
         ] = Undefined,
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ):
@@ -9465,44 +9243,7 @@ class LatLongFieldDef(LatLongDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[str] = Undefined,
@@ -9865,26 +9606,26 @@ class Legend(VegaLiteSchema):
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         gradientStrokeWidth: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         labelExpr: Optional[str] = Undefined,
         labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -9906,21 +9647,21 @@ class Legend(VegaLiteSchema):
         padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
         symbolDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -9929,15 +9670,15 @@ class Legend(VegaLiteSchema):
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -9948,7 +9689,7 @@ class Legend(VegaLiteSchema):
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -10335,7 +10076,7 @@ class LegendConfig(VegaLiteSchema):
         direction: Optional[SchemaBase | Orientation_T] = Undefined,
         disable: Optional[bool] = Undefined,
         fillColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         gradientDirection: Optional[
             dict | Parameter | SchemaBase | Orientation_T
@@ -10349,7 +10090,7 @@ class LegendConfig(VegaLiteSchema):
         gradientLength: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gradientOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gradientStrokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         gradientStrokeWidth: Optional[
             dict | float | Parameter | SchemaBase
@@ -10358,12 +10099,12 @@ class LegendConfig(VegaLiteSchema):
         gradientVerticalMaxLength: Optional[float] = Undefined,
         gradientVerticalMinLength: Optional[float] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         labelFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         labelFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -10385,17 +10126,17 @@ class LegendConfig(VegaLiteSchema):
         padding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         rowPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         strokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
         strokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolBaseFillColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolBaseStrokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
@@ -10405,14 +10146,14 @@ class LegendConfig(VegaLiteSchema):
             dict | Parameter | SchemaBase | Orientation_T
         ] = Undefined,
         symbolFillColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolStrokeColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         symbolStrokeWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         symbolType: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -10420,15 +10161,15 @@ class LegendConfig(VegaLiteSchema):
             dict | float | Parameter | SchemaBase | TimeInterval_T
         ] = Undefined,
         title: Optional[None] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         titleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         titleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -10439,7 +10180,7 @@ class LegendConfig(VegaLiteSchema):
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         unselectedOpacity: Optional[float] = Undefined,
         zindex: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -10702,7 +10443,7 @@ class LineConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -10994,17 +10735,17 @@ class LineConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
             dict | float | Parameter | SchemaBase
@@ -11018,7 +10759,7 @@ class LineConfig(AnyMarkConfig):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -11026,7 +10767,7 @@ class LineConfig(AnyMarkConfig):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -11057,9 +10798,9 @@ class LineConfig(AnyMarkConfig):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -11414,7 +11155,7 @@ class MarkConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -11691,17 +11432,17 @@ class MarkConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
             dict | float | Parameter | SchemaBase
@@ -11715,7 +11456,7 @@ class MarkConfig(AnyMarkConfig):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -11723,7 +11464,7 @@ class MarkConfig(AnyMarkConfig):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -11753,9 +11494,9 @@ class MarkConfig(AnyMarkConfig):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -11970,7 +11711,7 @@ class MarkDef(AnyMark):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -12318,8 +12059,8 @@ class MarkDef(AnyMark):
 
     def __init__(
         self,
-        type: Optional[Mark_T | SchemaBase] = Undefined,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Mark_T] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -12327,12 +12068,12 @@ class MarkDef(AnyMark):
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -12348,7 +12089,7 @@ class MarkDef(AnyMark):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -12356,7 +12097,7 @@ class MarkDef(AnyMark):
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -12390,9 +12131,9 @@ class MarkDef(AnyMark):
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -12654,7 +12395,7 @@ class FieldOrDatumDefWithConditionDatumDefGradientstringnull(
             str | bool | dict | None | float | Parameter | SchemaBase
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -12754,7 +12495,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -12912,54 +12653,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull(
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13348,7 +13050,7 @@ class FieldOrDatumDefWithConditionDatumDefnumberArray(
             str | bool | dict | None | float | Parameter | SchemaBase
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -13448,7 +13150,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13606,54 +13308,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray(
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13807,7 +13470,7 @@ class FieldOrDatumDefWithConditionDatumDefnumber(MarkPropDefnumber, NumericMarkP
             str | bool | dict | None | float | Parameter | SchemaBase
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -13907,7 +13570,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -14065,54 +13728,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefnumber(
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14311,46 +13935,9 @@ class OrderFieldDef(VegaLiteSchema):
         bandPosition: Optional[float] = Undefined,
         bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
-        sort: Optional[SortOrder_T | SchemaBase] = Undefined,
+        sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14382,7 +13969,7 @@ class OrderOnlyDef(VegaLiteSchema):
 
     _schema = {"$ref": "#/definitions/OrderOnlyDef"}
 
-    def __init__(self, sort: Optional[SortOrder_T | SchemaBase] = Undefined, **kwds):
+    def __init__(self, sort: Optional[SchemaBase | SortOrder_T] = Undefined, **kwds):
         super().__init__(sort=sort, **kwds)
 
 
@@ -14527,7 +14114,7 @@ class OverlayMarkDef(VegaLiteSchema):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -14834,18 +14421,18 @@ class OverlayMarkDef(VegaLiteSchema):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
             dict | float | Parameter | SchemaBase
@@ -14859,7 +14446,7 @@ class OverlayMarkDef(VegaLiteSchema):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -14867,7 +14454,7 @@ class OverlayMarkDef(VegaLiteSchema):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -14899,9 +14486,9 @@ class OverlayMarkDef(VegaLiteSchema):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -15516,7 +15103,7 @@ class DatumDef(LatLongDef, Position2Def):
             str | bool | dict | None | float | Parameter | SchemaBase
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -15682,7 +15269,7 @@ class PositionDatumDefBase(PolarDef):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -15882,7 +15469,7 @@ class PositionDatumDef(PositionDef):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -15984,7 +15571,7 @@ class PositionFieldDef(PositionDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -16169,55 +15756,16 @@ class PositionFieldDef(PositionDef):
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -16310,7 +15858,7 @@ class PositionFieldDefBase(PolarDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -16493,55 +16041,16 @@ class PositionFieldDefBase(PolarDef):
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -16674,44 +16183,7 @@ class FieldEqualPredicate(Predicate):
         equal: Optional[str | bool | dict | float | Parameter | SchemaBase] = Undefined,
         field: Optional[str | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -16739,44 +16211,7 @@ class FieldGTEPredicate(Predicate):
         field: Optional[str | SchemaBase] = Undefined,
         gte: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -16804,44 +16239,7 @@ class FieldGTPredicate(Predicate):
         field: Optional[str | SchemaBase] = Undefined,
         gt: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -16869,44 +16267,7 @@ class FieldLTEPredicate(Predicate):
         field: Optional[str | SchemaBase] = Undefined,
         lte: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -16934,44 +16295,7 @@ class FieldLTPredicate(Predicate):
         field: Optional[str | SchemaBase] = Undefined,
         lt: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -17005,44 +16329,7 @@ class FieldOneOfPredicate(Predicate):
             | Sequence[dict | SchemaBase]
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -17076,44 +16363,7 @@ class FieldRangePredicate(Predicate):
             | Sequence[dict | None | float | Parameter | SchemaBase]
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -17143,44 +16393,7 @@ class FieldValidPredicate(Predicate):
         field: Optional[str | SchemaBase] = Undefined,
         valid: Optional[bool] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -17687,38 +16900,38 @@ class RangeConfig(VegaLiteSchema):
         self,
         category: Optional[
             dict
-            | RangeEnum_T
             | SchemaBase
-            | Sequence[str | ColorName_T | SchemaBase]
+            | Sequence[str | SchemaBase | ColorName_T]
             | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         diverging: Optional[
             dict
-            | RangeEnum_T
             | SchemaBase
-            | Sequence[str | ColorName_T | SchemaBase]
+            | Sequence[str | SchemaBase | ColorName_T]
             | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         heatmap: Optional[
             dict
-            | RangeEnum_T
             | SchemaBase
-            | Sequence[str | ColorName_T | SchemaBase]
+            | Sequence[str | SchemaBase | ColorName_T]
             | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         ordinal: Optional[
             dict
-            | RangeEnum_T
             | SchemaBase
-            | Sequence[str | ColorName_T | SchemaBase]
+            | Sequence[str | SchemaBase | ColorName_T]
             | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         ramp: Optional[
             dict
-            | RangeEnum_T
             | SchemaBase
-            | Sequence[str | ColorName_T | SchemaBase]
+            | Sequence[str | SchemaBase | ColorName_T]
             | Sequence[str | bool | None | float | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         symbol: Optional[Sequence[str | SchemaBase]] = Undefined,
         **kwds,
@@ -17868,7 +17081,7 @@ class RectConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -18150,18 +17363,18 @@ class RectConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         ariaRoleDescription: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -18176,7 +17389,7 @@ class RectConfig(AnyMarkConfig):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -18185,7 +17398,7 @@ class RectConfig(AnyMarkConfig):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -18216,9 +17429,9 @@ class RectConfig(AnyMarkConfig):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -18716,53 +17929,16 @@ class RowColumnEncodingFieldDef(VegaLiteSchema):
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[dict | SchemaBase]
+            | SortOrder_T
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19080,26 +18256,18 @@ class Scale(VegaLiteSchema):
         paddingOuter: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         range: Optional[
             dict
-            | RangeEnum_T
             | SchemaBase
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Cyclical_T
-            | Parameter
-            | Diverging_T
-            | SchemaBase
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
-        type: Optional[ScaleType_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         **kwds,
     ):
@@ -19511,7 +18679,7 @@ class ScaleDatumDef(OffsetDef):
         ] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -19593,7 +18761,7 @@ class ScaleFieldDef(OffsetDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -19745,54 +18913,15 @@ class ScaleFieldDef(OffsetDef):
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19966,14 +19095,7 @@ class SchemeParams(VegaLiteSchema):
 
     def __init__(
         self,
-        name: Optional[
-            Cyclical_T
-            | Diverging_T
-            | SchemaBase
-            | Categorical_T
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
-        ] = Undefined,
+        name: Optional[SchemaBase | ColorScheme_T] = Undefined,
         count: Optional[float] = Undefined,
         extent: Optional[Sequence[float]] = Undefined,
         **kwds,
@@ -20080,44 +19202,7 @@ class SecondaryFieldDef(Position2Def):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -20569,7 +19654,7 @@ class FieldOrDatumDefWithConditionDatumDefstringnull(
             str | bool | dict | None | float | Parameter | SchemaBase
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -20669,7 +19754,7 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -20827,54 +19912,15 @@ class FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull(
         sort: Optional[
             dict
             | None
-            | SortOrder_T
             | SchemaBase
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -21147,7 +20193,7 @@ class EncodingSortField(Sort):
         self,
         field: Optional[str | dict | SchemaBase] = Undefined,
         op: Optional[SchemaBase | NonArgAggregateOp_T] = Undefined,
-        order: Optional[None | SortOrder_T | SchemaBase] = Undefined,
+        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
     ):
         super().__init__(field=field, op=op, order=order, **kwds)
@@ -21200,7 +20246,7 @@ class SortByEncoding(Sort):
     def __init__(
         self,
         encoding: Optional[SchemaBase | SortByChannel_T] = Undefined,
-        order: Optional[None | SortOrder_T | SchemaBase] = Undefined,
+        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
     ):
         super().__init__(encoding=encoding, order=order, **kwds)
@@ -21225,7 +20271,7 @@ class SortField(VegaLiteSchema):
     def __init__(
         self,
         field: Optional[str | SchemaBase] = Undefined,
-        order: Optional[None | SortOrder_T | SchemaBase] = Undefined,
+        order: Optional[None | SchemaBase | SortOrder_T] = Undefined,
         **kwds,
     ):
         super().__init__(field=field, order=order, **kwds)
@@ -21633,7 +20679,7 @@ class FacetedUnitSpec(Spec, NonNormalizedSpec):
 
     def __init__(
         self,
-        mark: Optional[str | dict | Mark_T | SchemaBase] = Undefined,
+        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | dict | SchemaBase] = Undefined,
@@ -22249,7 +21295,7 @@ class DerivedStream(Stream):
         debounce: Optional[float] = Undefined,
         filter: Optional[str | SchemaBase | Sequence[str | SchemaBase]] = Undefined,
         markname: Optional[str] = Undefined,
-        marktype: Optional[MarkType_T | SchemaBase] = Undefined,
+        marktype: Optional[SchemaBase | MarkType_T] = Undefined,
         throttle: Optional[float] = Undefined,
         **kwds,
     ):
@@ -22309,7 +21355,7 @@ class MergedStream(Stream):
         debounce: Optional[float] = Undefined,
         filter: Optional[str | SchemaBase | Sequence[str | SchemaBase]] = Undefined,
         markname: Optional[str] = Undefined,
-        marktype: Optional[MarkType_T | SchemaBase] = Undefined,
+        marktype: Optional[SchemaBase | MarkType_T] = Undefined,
         throttle: Optional[float] = Undefined,
         **kwds,
     ):
@@ -22525,44 +21571,7 @@ class StringFieldDef(VegaLiteSchema):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -22794,44 +21803,7 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -23190,7 +22162,7 @@ class FieldOrDatumDefWithConditionStringDatumDefText(TextDef):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -23419,44 +22391,7 @@ class FieldOrDatumDefWithConditionStringFieldDefText(TextDef):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -23581,7 +22516,7 @@ class TickConfig(AnyMarkConfig):
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA>`__ (SVG output
         only). If specified, this property determines the `"aria-label" attribute
         <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute>`__.
-    dir : dict, :class:`ExprRef`, Literal['ltr', 'rtl'], :class:`TextDirection`
+    dir : dict, :class:`ExprRef`, :class:`TextDirection`, Literal['ltr', 'rtl']
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
         the limit parameter.
@@ -23862,7 +22797,7 @@ class TickConfig(AnyMarkConfig):
 
     def __init__(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -23870,10 +22805,10 @@ class TickConfig(AnyMarkConfig):
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
             dict | float | Parameter | SchemaBase
@@ -23887,7 +22822,7 @@ class TickConfig(AnyMarkConfig):
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -23895,7 +22830,7 @@ class TickConfig(AnyMarkConfig):
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         endAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -23925,9 +22860,9 @@ class TickConfig(AnyMarkConfig):
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         startAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -24198,13 +23133,7 @@ class TimeUnitParams(VegaLiteSchema):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ):
@@ -24235,13 +23164,7 @@ class TimeUnitTransformParams(VegaLiteSchema):
         self,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ):
@@ -24342,13 +23265,13 @@ class TitleConfig(VegaLiteSchema):
 
     def __init__(
         self,
-        align: Optional[Align_T | SchemaBase] = Undefined,
+        align: Optional[SchemaBase | Align_T] = Undefined,
         anchor: Optional[dict | Parameter | SchemaBase | TitleAnchor_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[str | Baseline_T | SchemaBase] = Undefined,
+        baseline: Optional[str | SchemaBase | Baseline_T] = Undefined,
         color: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -24362,7 +23285,7 @@ class TitleConfig(VegaLiteSchema):
         offset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         orient: Optional[dict | Parameter | SchemaBase | TitleOrient_T] = Undefined,
         subtitleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         subtitleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         subtitleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -24529,13 +23452,13 @@ class TitleParams(VegaLiteSchema):
     def __init__(
         self,
         text: Optional[str | dict | Parameter | SchemaBase | Sequence[str]] = Undefined,
-        align: Optional[Align_T | SchemaBase] = Undefined,
+        align: Optional[SchemaBase | Align_T] = Undefined,
         anchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        baseline: Optional[str | Baseline_T | SchemaBase] = Undefined,
+        baseline: Optional[str | SchemaBase | Baseline_T] = Undefined,
         color: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         dx: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -24551,7 +23474,7 @@ class TitleParams(VegaLiteSchema):
         style: Optional[str | Sequence[str]] = Undefined,
         subtitle: Optional[str | SchemaBase | Sequence[str]] = Undefined,
         subtitleColor: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         subtitleFont: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         subtitleFontSize: Optional[dict | float | Parameter | SchemaBase] = Undefined,
@@ -24635,7 +23558,7 @@ class TopLevelSelectionParameter(TopLevelParameter):
         JavaScript identifiers: they should contain only alphanumeric characters (or "$", or
         "_") and may not start with a digit. Reserved keywords that may not be used as
         parameter names are "datum", "event", "item", and "parent".
-    select : dict, :class:`SelectionType`, Literal['point', 'interval'], :class:`PointSelectionConfig`, :class:`IntervalSelectionConfig`
+    select : dict, :class:`SelectionType`, :class:`PointSelectionConfig`, :class:`IntervalSelectionConfig`, Literal['point', 'interval']
         Determines the default event processing and data query for the selection. Vega-Lite
         currently supports two selection types:
 
@@ -24831,7 +23754,7 @@ class TopLevelConcatSpec(TopLevelSpec):
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | dict | SchemaBase] = Undefined,
@@ -25011,7 +23934,7 @@ class TopLevelFacetSpec(TopLevelSpec):
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | dict | SchemaBase] = Undefined,
@@ -25140,7 +24063,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
         hconcat: Optional[Sequence[dict | SchemaBase]] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
@@ -25300,7 +24223,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         layer: Optional[Sequence[dict | SchemaBase]] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         config: Optional[dict | SchemaBase] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
@@ -25515,11 +24438,11 @@ class TopLevelUnitSpec(TopLevelSpec):
     def __init__(
         self,
         data: Optional[dict | None | SchemaBase] = Undefined,
-        mark: Optional[str | dict | Mark_T | SchemaBase] = Undefined,
+        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | dict | SchemaBase] = Undefined,
@@ -25655,7 +24578,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
         vconcat: Optional[Sequence[dict | SchemaBase]] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
         background: Optional[
-            str | dict | Parameter | ColorName_T | SchemaBase
+            str | dict | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool] = Undefined,
@@ -26410,12 +25333,7 @@ class TimeUnitTransform(Transform):
         self,
         field: Optional[str | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
+            dict | SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         **kwds,
     ):
@@ -26606,44 +25524,7 @@ class TypedFieldDef(VegaLiteSchema):
         bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -26708,7 +25589,7 @@ class UnitSpec(VegaLiteSchema):
 
     def __init__(
         self,
-        mark: Optional[str | dict | Mark_T | SchemaBase] = Undefined,
+        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
@@ -26814,7 +25695,7 @@ class UnitSpecWithFrame(VegaLiteSchema):
 
     def __init__(
         self,
-        mark: Optional[str | dict | Mark_T | SchemaBase] = Undefined,
+        mark: Optional[str | dict | SchemaBase | Mark_T] = Undefined,
         data: Optional[dict | None | SchemaBase] = Undefined,
         description: Optional[str] = Undefined,
         encoding: Optional[dict | SchemaBase] = Undefined,
@@ -27378,16 +26259,16 @@ class ViewBackground(VegaLiteSchema):
     def __init__(
         self,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cursor: Optional[Cursor_T | SchemaBase] = Undefined,
+        cursor: Optional[SchemaBase | Cursor_T] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         opacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -27505,19 +26386,19 @@ class ViewConfig(VegaLiteSchema):
         continuousHeight: Optional[float] = Undefined,
         continuousWidth: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        cursor: Optional[Cursor_T | SchemaBase] = Undefined,
+        cursor: Optional[SchemaBase | Cursor_T] = Undefined,
         discreteHeight: Optional[dict | float] = Undefined,
         discreteWidth: Optional[dict | float] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         opacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         step: Optional[float] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
