@@ -67,7 +67,7 @@ please read [the maintainers' notes](NOTES_FOR_MAINTAINERS.md).
 
 ### Testing your Changes
 
-Before suggesting your contributing your changing to the main Altair repository,
+Before submitting your changes to the main Altair repository,
 it is recommended that you run the Altair test suite,
 which includes a number of tests to validate the correctness of your code:
 
