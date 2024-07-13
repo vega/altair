@@ -67,7 +67,7 @@ please read [the maintainers' notes](NOTES_FOR_MAINTAINERS.md).
 
 ### Testing your Changes
 
-Before suggesting your contributing your changing to the main Altair repository,
+Before submitting your changes to the main Altair repository,
 it is recommended that you run the Altair test suite,
 which includes a number of tests to validate the correctness of your code:
 
@@ -83,12 +83,13 @@ Study the output of any failed tests and try to fix the issues
 before proceeding to the next section.
 
 #### Failures on specific python version(s)
-By default, `hatch test` will run the test suite against the currently active python version. Two useful variants for debugging failures that only appear *after* you've submitted your PR:
+By default, `hatch test` will run the test suite against the currently active python version.
+Two useful variants for debugging failures that only appear *after* you've submitted your PR:
 
 ```bash
-# Test all environments in the matrix
+# Test against all python version(s) in the matrix
 hatch test --all
-# The Python versions to test
+# Test against a specific python version
 hatch test --python 3.8
 ```
 
