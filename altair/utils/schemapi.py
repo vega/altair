@@ -420,7 +420,7 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
         # Values (and therefore `validator_value`) of an enum are always arrays,
         # see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
         # which is why we can use join below
-        value_strings = [",".join(err.validator_value) for err in errors]
+        value_strings = [",".join(err.validator_value) for err in errors]  # type: ignore
         longest_enums: ValidationErrorList = []
         for value_str, err in zip(value_strings, errors):
             if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
