@@ -33,7 +33,7 @@ class MarkMethodMixin:
 
     def mark_arc(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -41,12 +41,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -62,7 +62,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -70,7 +70,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -104,9 +104,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -240,7 +240,7 @@ class MarkMethodMixin:
 
     def mark_area(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -248,12 +248,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -269,7 +269,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -277,7 +277,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -311,9 +311,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -447,7 +447,7 @@ class MarkMethodMixin:
 
     def mark_bar(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -455,12 +455,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -476,7 +476,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -484,7 +484,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -518,9 +518,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -654,7 +654,7 @@ class MarkMethodMixin:
 
     def mark_image(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -662,12 +662,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -683,7 +683,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -691,7 +691,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -725,9 +725,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -861,7 +861,7 @@ class MarkMethodMixin:
 
     def mark_line(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -869,12 +869,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -890,7 +890,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -898,7 +898,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -932,9 +932,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -1068,7 +1068,7 @@ class MarkMethodMixin:
 
     def mark_point(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1076,12 +1076,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -1097,7 +1097,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -1105,7 +1105,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1139,9 +1139,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -1275,7 +1275,7 @@ class MarkMethodMixin:
 
     def mark_rect(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1283,12 +1283,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -1304,7 +1304,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -1312,7 +1312,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1346,9 +1346,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -1482,7 +1482,7 @@ class MarkMethodMixin:
 
     def mark_rule(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1490,12 +1490,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -1511,7 +1511,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -1519,7 +1519,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1553,9 +1553,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -1689,7 +1689,7 @@ class MarkMethodMixin:
 
     def mark_text(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1697,12 +1697,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -1718,7 +1718,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -1726,7 +1726,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1760,9 +1760,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -1896,7 +1896,7 @@ class MarkMethodMixin:
 
     def mark_tick(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1904,12 +1904,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -1925,7 +1925,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -1933,7 +1933,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -1967,9 +1967,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -2103,7 +2103,7 @@ class MarkMethodMixin:
 
     def mark_trail(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2111,12 +2111,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -2132,7 +2132,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -2140,7 +2140,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2174,9 +2174,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -2310,7 +2310,7 @@ class MarkMethodMixin:
 
     def mark_circle(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2318,12 +2318,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -2339,7 +2339,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -2347,7 +2347,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2381,9 +2381,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -2517,7 +2517,7 @@ class MarkMethodMixin:
 
     def mark_square(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2525,12 +2525,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -2546,7 +2546,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -2554,7 +2554,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2588,9 +2588,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -2724,7 +2724,7 @@ class MarkMethodMixin:
 
     def mark_geoshape(
         self,
-        align: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        align: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         angle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         aria: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         ariaRole: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2732,12 +2732,12 @@ class MarkMethodMixin:
         aspect: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         bandSize: Optional[float] = Undefined,
         baseline: Optional[
-            str | dict | Baseline_T | Parameter | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         binSpacing: Optional[float] = Undefined,
-        blend: Optional[dict | Blend_T | Parameter | SchemaBase] = Undefined,
+        blend: Optional[dict | Parameter | SchemaBase | Blend_T] = Undefined,
         clip: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         cornerRadiusBottomLeft: Optional[
@@ -2753,7 +2753,7 @@ class MarkMethodMixin:
         cornerRadiusTopRight: Optional[
             dict | float | Parameter | SchemaBase
         ] = Undefined,
-        cursor: Optional[dict | Cursor_T | Parameter | SchemaBase] = Undefined,
+        cursor: Optional[dict | Parameter | SchemaBase | Cursor_T] = Undefined,
         description: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         dir: Optional[dict | Parameter | SchemaBase | TextDirection_T] = Undefined,
         discreteBandSize: Optional[dict | float | SchemaBase] = Undefined,
@@ -2761,7 +2761,7 @@ class MarkMethodMixin:
         dy: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ellipsis: Optional[str | dict | Parameter | SchemaBase] = Undefined,
         fill: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
         fillOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         filled: Optional[bool] = Undefined,
@@ -2795,9 +2795,9 @@ class MarkMethodMixin:
         size: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         smooth: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         stroke: Optional[
-            str | dict | None | Parameter | ColorName_T | SchemaBase
+            str | dict | None | Parameter | SchemaBase | ColorName_T
         ] = Undefined,
-        strokeCap: Optional[dict | Parameter | StrokeCap_T | SchemaBase] = Undefined,
+        strokeCap: Optional[dict | Parameter | SchemaBase | StrokeCap_T] = Undefined,
         strokeDash: Optional[
             dict | Parameter | SchemaBase | Sequence[float]
         ] = Undefined,
@@ -2933,7 +2933,7 @@ class MarkMethodMixin:
         self,
         box: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[str | float] = Undefined,
         invalid: Optional[Literal["filter", None]] = Undefined,
         median: Optional[bool | dict | SchemaBase] = Undefined,
@@ -2971,7 +2971,7 @@ class MarkMethodMixin:
     def mark_errorbar(
         self,
         clip: Optional[bool] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,
@@ -3006,7 +3006,7 @@ class MarkMethodMixin:
         band: Optional[bool | dict | SchemaBase] = Undefined,
         borders: Optional[bool | dict | SchemaBase] = Undefined,
         clip: Optional[bool] = Undefined,
-        color: Optional[str | dict | Parameter | ColorName_T | SchemaBase] = Undefined,
+        color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[SchemaBase | ErrorBarExtent_T] = Undefined,
         interpolate: Optional[SchemaBase | Interpolate_T] = Undefined,
         opacity: Optional[float] = Undefined,
