@@ -86,9 +86,9 @@ before proceeding to the next section.
 By default, `hatch test` will run the test suite against the currently active python version. Two useful variants for debugging failures that only appear *after* you've submitted your PR:
 
 ```bash
-# Test all environments in the matrix
+# Test against all python version(s) in the matrix
 hatch test --all
-# The Python versions to test
+# Test against a specific python version
 hatch test --python 3.8
 ```
 
