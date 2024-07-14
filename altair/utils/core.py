@@ -43,11 +43,12 @@ if TYPE_CHECKING:
     import typing as t
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
-    from narwhals.typing import IntoExpr, IntoDataFrameT, IntoDataFrame
+    from narwhals.typing import IntoExpr, IntoDataFrame
     import pandas as pd
 
 V = TypeVar("V")
 P = ParamSpec("P")
+TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 
 
 @runtime_checkable
@@ -438,8 +439,8 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def sanitize_narwhals_dataframe(
-    data: nw.DataFrame[IntoDataFrameT],
-) -> nw.DataFrame[IntoDataFrameT]:
+    data: nw.DataFrame[TIntoDataFrame],
+) -> nw.DataFrame[TIntoDataFrame]:
     """Sanitize narwhals.DataFrame for JSON serialization"""
     schema = data.schema
     columns: list[IntoExpr] = []

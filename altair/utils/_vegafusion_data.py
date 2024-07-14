@@ -71,6 +71,7 @@ def vegafusion_data_transformer(
     """VegaFusion Data Transformer"""
     # Vegafusion does not support Narwhals, so if `data` is a Narwhals
     # object, we make sure to extract the native object and let Vegafusion handle it.
+    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
     data = nw.to_native(data, strict=False)
     if data is None:
         return vegafusion_data_transformer

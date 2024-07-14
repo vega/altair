@@ -313,6 +313,7 @@ def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
+    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
     data_native = nw.to_native(data, strict=False)
     if isinstance(data_native, SupportsGeoInterface):
         if _is_pandas_dataframe(data_native):
@@ -354,6 +355,7 @@ def _compute_data_hash(data_str: str) -> str:
 def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
+    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
     data_native = nw.to_native(data, strict=False)
     if isinstance(data_native, SupportsGeoInterface):
         if _is_pandas_dataframe(data_native):

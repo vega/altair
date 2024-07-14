@@ -1011,7 +1011,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         try:
             data: Any = _to_eager_narwhals_dataframe(original_data)  # type: ignore[arg-type]
         except TypeError:
-            # Non-narwhalifiable type support by Altair, such as dict
+            # Non-narwhalifiable type supported by Altair, such as dict
             data = original_data
         copy.data = _prepare_data(data, context)
 
