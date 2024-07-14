@@ -194,7 +194,7 @@ def sample(
         else:
             # Maybe this should raise an error or return something useful?
             return None
-    data = narwhalify(data)
+    data = nw.from_native(data, eager_only=True)
     if not n:
         if frac is None:
             msg = "frac cannot be None if n is None with this data input type"
@@ -312,6 +312,7 @@ def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
+    breakpoint()
     data_native = nw.to_native(data, strict=False)
     if isinstance(data_native, SupportsGeoInterface):
         if _is_pandas_dataframe(data_native):
@@ -328,10 +329,11 @@ def to_values(data: DataType) -> ToValuesReturnType:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data_native
-    from altair.utils.core import to_eager_narwhals_dataframe
-    data = to_eager_narwhals_dataframe(data)
-    data = sanitize_narwhals_dataframe(data)
-    return {"values": data.rows(named=True)}
+    elif isinstance(data_native, nw.DataFrame):
+        data = sanitize_narwhals_dataframe(data)
+        return {"values": data.rows(named=True)}
+    else:
+        raise TypeError("Unreachable")
 
 
 def check_data_type(data: DataType) -> None:
