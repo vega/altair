@@ -28,7 +28,8 @@ from operator import itemgetter
 
 import jsonschema
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe
+from narwhals.dependencies import is_pandas_dataframe
+from narwhals.typing import IntoDataFrame
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -43,7 +44,7 @@ if TYPE_CHECKING:
     import typing as t
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
-    from narwhals.typing import IntoExpr, IntoDataFrame
+    from narwhals.typing import IntoExpr
     import pandas as pd
 
 V = TypeVar("V")
@@ -638,7 +639,7 @@ def parse_shorthand(
             if schema[unescaped_field] in {
                 nw.Object,
                 nw.Unknown,
-            } and _is_pandas_dataframe(nw.to_native(data_nw)):
+            } and is_pandas_dataframe(nw.to_native(data_nw)):
                 attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))
             else:
                 attrs["type"] = infer_vegalite_type_for_narwhals(column)
