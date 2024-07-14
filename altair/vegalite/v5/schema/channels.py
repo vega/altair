@@ -225,7 +225,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -490,9 +490,9 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -540,12 +540,12 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -559,7 +559,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -610,23 +610,15 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -873,13 +865,7 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Angle: ...
@@ -914,53 +900,14 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -1146,7 +1093,7 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -1192,54 +1139,15 @@ class AngleValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -1257,7 +1165,7 @@ class AngleValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
 
@@ -1276,53 +1184,14 @@ class AngleValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -1341,7 +1210,7 @@ class AngleValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> AngleValue: ...
 
@@ -1467,7 +1336,7 @@ class Color(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -1732,9 +1601,9 @@ class Color(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -1782,12 +1651,12 @@ class Color(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -1801,7 +1670,7 @@ class Color(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -1852,23 +1721,15 @@ class Color(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -2115,13 +1976,7 @@ class Color(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Color: ...
@@ -2156,53 +2011,14 @@ class Color(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -2390,7 +2206,7 @@ class ColorDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -2437,54 +2253,15 @@ class ColorValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -2502,7 +2279,7 @@ class ColorValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -2521,53 +2298,14 @@ class ColorValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -2586,7 +2324,7 @@ class ColorValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ColorValue: ...
 
@@ -2924,11 +2662,11 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         self,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -2942,16 +2680,16 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
-        orient: Optional[Orient_T | SchemaBase] = Undefined,
+        orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -2964,7 +2702,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Column: ...
@@ -3164,13 +2902,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Column: ...
@@ -3203,52 +2935,15 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[dict | SchemaBase]
+            | SortOrder_T
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3745,13 +3440,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Description: ...
@@ -3783,44 +3472,7 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3873,54 +3525,15 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -3938,7 +3551,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -3957,53 +3570,14 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4022,7 +3596,7 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> DescriptionValue: ...
 
@@ -4461,13 +4035,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Detail: ...
@@ -4494,44 +4062,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -4911,11 +4442,11 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         self,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -4929,16 +4460,16 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ] = Undefined,
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
-        orient: Optional[Orient_T | SchemaBase] = Undefined,
+        orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -4951,7 +4482,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         ] = Undefined,
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Facet: ...
@@ -5159,13 +4690,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Facet: ...
@@ -5200,52 +4725,15 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[dict | SchemaBase]
+            | SortOrder_T
         ] = Undefined,
         spacing: Optional[dict | float | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -5360,7 +4848,7 @@ class Fill(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -5625,9 +5113,9 @@ class Fill(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -5675,12 +5163,12 @@ class Fill(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -5694,7 +5182,7 @@ class Fill(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -5745,23 +5233,15 @@ class Fill(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -6008,13 +5488,7 @@ class Fill(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Fill: ...
@@ -6049,53 +5523,14 @@ class Fill(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6283,7 +5718,7 @@ class FillDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -6330,54 +5765,15 @@ class FillValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6395,7 +5791,7 @@ class FillValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -6414,53 +5810,14 @@ class FillValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -6479,7 +5836,7 @@ class FillValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillValue: ...
 
@@ -6604,7 +5961,7 @@ class FillOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -6869,9 +6226,9 @@ class FillOpacity(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -6919,12 +6276,12 @@ class FillOpacity(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -6938,7 +6295,7 @@ class FillOpacity(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -6989,23 +6346,15 @@ class FillOpacity(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -7252,13 +6601,7 @@ class FillOpacity(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> FillOpacity: ...
@@ -7293,53 +6636,14 @@ class FillOpacity(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -7527,7 +6831,7 @@ class FillOpacityDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -7573,54 +6877,15 @@ class FillOpacityValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -7638,7 +6903,7 @@ class FillOpacityValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
 
@@ -7657,53 +6922,14 @@ class FillOpacityValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -7722,7 +6948,7 @@ class FillOpacityValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> FillOpacityValue: ...
 
@@ -8232,13 +7458,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Href: ...
@@ -8270,44 +7490,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -8360,54 +7543,15 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -8425,7 +7569,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -8444,53 +7588,14 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -8509,7 +7614,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> HrefValue: ...
 
@@ -8948,13 +8053,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Key: ...
@@ -8981,44 +8080,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         bin: Optional[str | bool | dict | None | SchemaBase] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -9416,13 +8478,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Latitude: ...
@@ -9447,44 +8503,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[str] = Undefined,
@@ -9634,7 +8653,7 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -9954,13 +8973,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Latitude2: ...
@@ -9982,44 +8995,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -10167,7 +9143,7 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -10576,13 +9552,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Longitude: ...
@@ -10607,44 +9577,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[str] = Undefined,
@@ -10794,7 +9727,7 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -11114,13 +10047,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Longitude2: ...
@@ -11142,44 +10069,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -11327,7 +10217,7 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -11445,7 +10335,7 @@ class Opacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -11710,9 +10600,9 @@ class Opacity(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -11760,12 +10650,12 @@ class Opacity(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -11779,7 +10669,7 @@ class Opacity(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -11830,23 +10720,15 @@ class Opacity(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -12093,13 +10975,7 @@ class Opacity(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Opacity: ...
@@ -12134,53 +11010,14 @@ class Opacity(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -12366,7 +11203,7 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -12412,54 +11249,15 @@ class OpacityValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -12477,7 +11275,7 @@ class OpacityValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
 
@@ -12496,53 +11294,14 @@ class OpacityValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -12561,7 +11320,7 @@ class OpacityValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> OpacityValue: ...
 
@@ -13004,13 +11763,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Order: ...
@@ -13038,44 +11791,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         field: Optional[str | dict | SchemaBase] = Undefined,
         sort: Optional[SchemaBase | SortOrder_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -13221,7 +11937,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -13505,23 +12221,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -13777,13 +12485,7 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Radius: ...
@@ -13814,54 +12516,15 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -14069,23 +12732,15 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -14129,7 +12784,7 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -14477,13 +13132,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Radius2: ...
@@ -14505,44 +13154,7 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -14690,7 +13302,7 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -15021,11 +13633,11 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         self,
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         labelAngle: Optional[float] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -15039,16 +13651,16 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         labelLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        labelOrient: Optional[SchemaBase | Orient_T] = Undefined,
         labelPadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labels: Optional[bool] = Undefined,
-        orient: Optional[Orient_T | SchemaBase] = Undefined,
+        orient: Optional[SchemaBase | Orient_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[SchemaBase | TitleAnchor_T] = Undefined,
         titleAngle: Optional[float] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | Parameter | SchemaBase | ColorName_T
@@ -15061,7 +13673,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         ] = Undefined,
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[Orient_T | SchemaBase] = Undefined,
+        titleOrient: Optional[SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Row: ...
@@ -15261,13 +13873,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Row: ...
@@ -15300,52 +13906,15 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
             | Sequence[dict | SchemaBase]
+            | SortOrder_T
         ] = Undefined,
         spacing: Optional[float] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -15458,7 +14027,7 @@ class Shape(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -15723,9 +14292,9 @@ class Shape(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -15773,12 +14342,12 @@ class Shape(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -15792,7 +14361,7 @@ class Shape(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -15843,23 +14412,15 @@ class Shape(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -16106,13 +14667,7 @@ class Shape(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Shape: ...
@@ -16145,53 +14700,14 @@ class Shape(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -16379,7 +14895,7 @@ class ShapeDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -16426,54 +14942,15 @@ class ShapeValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -16491,7 +14968,7 @@ class ShapeValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -16510,53 +14987,14 @@ class ShapeValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | TypeForShape_T] = Undefined,
@@ -16575,7 +15013,7 @@ class ShapeValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> ShapeValue: ...
 
@@ -16698,7 +15136,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -16963,9 +15401,9 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -17013,12 +15451,12 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -17032,7 +15470,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -17083,23 +15521,15 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -17346,13 +15776,7 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Size: ...
@@ -17387,53 +15811,14 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -17619,7 +16004,7 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -17665,54 +16050,15 @@ class SizeValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -17730,7 +16076,7 @@ class SizeValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
 
@@ -17749,53 +16095,14 @@ class SizeValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -17814,7 +16121,7 @@ class SizeValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> SizeValue: ...
 
@@ -17940,7 +16247,7 @@ class Stroke(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -18205,9 +16512,9 @@ class Stroke(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -18255,12 +16562,12 @@ class Stroke(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -18274,7 +16581,7 @@ class Stroke(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -18325,23 +16632,15 @@ class Stroke(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -18588,13 +16887,7 @@ class Stroke(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Stroke: ...
@@ -18629,53 +16922,14 @@ class Stroke(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -18863,7 +17117,7 @@ class StrokeDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -18910,54 +17164,15 @@ class StrokeValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -18975,7 +17190,7 @@ class StrokeValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -18994,53 +17209,14 @@ class StrokeValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -19059,7 +17235,7 @@ class StrokeValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeValue: ...
 
@@ -19184,7 +17360,7 @@ class StrokeDash(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -19449,9 +17625,9 @@ class StrokeDash(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -19499,12 +17675,12 @@ class StrokeDash(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -19518,7 +17694,7 @@ class StrokeDash(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -19569,23 +17745,15 @@ class StrokeDash(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -19832,13 +18000,7 @@ class StrokeDash(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> StrokeDash: ...
@@ -19873,53 +18035,14 @@ class StrokeDash(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -20107,7 +18230,7 @@ class StrokeDashDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -20153,54 +18276,15 @@ class StrokeDashValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -20218,7 +18302,7 @@ class StrokeDashValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
 
@@ -20237,53 +18321,14 @@ class StrokeDashValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -20302,7 +18347,7 @@ class StrokeDashValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeDashValue: ...
 
@@ -20427,7 +18472,7 @@ class StrokeOpacity(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -20692,9 +18737,9 @@ class StrokeOpacity(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -20742,12 +18787,12 @@ class StrokeOpacity(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -20761,7 +18806,7 @@ class StrokeOpacity(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -20812,23 +18857,15 @@ class StrokeOpacity(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -21075,13 +19112,7 @@ class StrokeOpacity(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> StrokeOpacity: ...
@@ -21116,53 +19147,14 @@ class StrokeOpacity(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -21350,7 +19342,7 @@ class StrokeOpacityDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -21396,54 +19388,15 @@ class StrokeOpacityValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -21461,7 +19414,7 @@ class StrokeOpacityValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
 
@@ -21480,53 +19433,14 @@ class StrokeOpacityValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -21545,7 +19459,7 @@ class StrokeOpacityValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeOpacityValue: ...
 
@@ -21670,7 +19584,7 @@ class StrokeWidth(
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -21935,9 +19849,9 @@ class StrokeWidth(
         ] = Undefined,
         gradientThickness: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridAlign: Optional[dict | Parameter | SchemaBase | LayoutAlign_T] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -21985,12 +19899,12 @@ class StrokeWidth(
         ] = Undefined,
         tickMinStep: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -22004,7 +19918,7 @@ class StrokeWidth(
         titleLimit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleLineHeight: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        titleOrient: Optional[dict | Orient_T | Parameter | SchemaBase] = Undefined,
+        titleOrient: Optional[dict | Parameter | SchemaBase | Orient_T] = Undefined,
         titlePadding: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         type: Optional[Literal["symbol", "gradient"]] = Undefined,
         values: Optional[
@@ -22055,23 +19969,15 @@ class StrokeWidth(
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -22318,13 +20224,7 @@ class StrokeWidth(
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> StrokeWidth: ...
@@ -22359,53 +20259,14 @@ class StrokeWidth(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -22593,7 +20454,7 @@ class StrokeWidthDatum(
             dict | SchemaBase | Sequence[dict | SchemaBase]
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -22639,54 +20500,15 @@ class StrokeWidthValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -22704,7 +20526,7 @@ class StrokeWidthValue(
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
 
@@ -22723,53 +20545,14 @@ class StrokeWidthValue(
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -22788,7 +20571,7 @@ class StrokeWidthValue(
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> StrokeWidthValue: ...
 
@@ -23302,13 +21085,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Text: ...
@@ -23340,44 +21117,7 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -23611,7 +21351,7 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -23655,44 +21395,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         formatType: Optional[str] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -23711,44 +21414,7 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
         formatType: Optional[str] = Undefined,
         param: Optional[str | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -23862,7 +21528,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -24146,23 +21812,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -24418,13 +22076,7 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Theta: ...
@@ -24455,54 +22107,15 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -24710,23 +22323,15 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -24770,7 +22375,7 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -25118,13 +22723,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Theta2: ...
@@ -25146,44 +22745,7 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -25331,7 +22893,7 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -25834,13 +23396,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Tooltip: ...
@@ -25872,44 +23428,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -25962,54 +23481,15 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -26027,7 +23507,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -26046,53 +23526,14 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -26111,7 +23552,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> TooltipValue: ...
 
@@ -26621,13 +24062,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Url: ...
@@ -26659,44 +24094,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         format: Optional[str | dict | SchemaBase] = Undefined,
         formatType: Optional[str] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -26749,54 +24147,15 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -26814,7 +24173,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         test: Optional[str | dict | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -26833,53 +24192,14 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -26898,7 +24218,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
         param: Optional[str | SchemaBase] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ) -> UrlValue: ...
 
@@ -27022,7 +24342,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -27264,10 +24584,10 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -27317,13 +24637,13 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -27440,23 +24760,15 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -27712,13 +25024,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> X: ...
@@ -27751,54 +25057,15 @@ class X(FieldChannelMixin, core.PositionFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -28018,10 +25285,10 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -28071,13 +25338,13 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -28159,23 +25426,15 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -28219,7 +25478,7 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -28569,13 +25828,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> X2: ...
@@ -28597,44 +25850,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -28782,7 +25998,7 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -29124,13 +26340,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> XError: ...
@@ -29152,44 +26362,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -29540,13 +26713,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> XError2: ...
@@ -29568,44 +26735,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -29714,7 +26844,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -29964,23 +27094,15 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -30227,13 +27349,7 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> XOffset: ...
@@ -30264,53 +27380,14 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -30486,23 +27563,15 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -30534,7 +27603,7 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         bandPosition: Optional[float] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -30656,7 +27725,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -30898,10 +27967,10 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -30951,13 +28020,13 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -31074,23 +28143,15 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -31346,13 +28407,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Y: ...
@@ -31385,54 +28440,15 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -31652,10 +28668,10 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         gridDashOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridOpacity: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         gridWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
-        labelAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        labelAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         labelAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         labelBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         labelBound: Optional[bool | dict | float | Parameter | SchemaBase] = Undefined,
         labelColor: Optional[
@@ -31705,13 +28721,13 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         tickWidth: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         ticks: Optional[bool] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        titleAlign: Optional[dict | Align_T | Parameter | SchemaBase] = Undefined,
+        titleAlign: Optional[dict | Parameter | SchemaBase | Align_T] = Undefined,
         titleAnchor: Optional[
             dict | Parameter | SchemaBase | TitleAnchor_T
         ] = Undefined,
         titleAngle: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         titleBaseline: Optional[
-            str | dict | Parameter | Baseline_T | SchemaBase
+            str | dict | Parameter | SchemaBase | Baseline_T
         ] = Undefined,
         titleColor: Optional[
             str | dict | None | Parameter | SchemaBase | ColorName_T
@@ -31793,23 +28809,15 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -31853,7 +28861,7 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
         scale: Optional[dict | None | SchemaBase] = Undefined,
         stack: Optional[bool | None | SchemaBase | StackOffset_T] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -32203,13 +29211,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> Y2: ...
@@ -32231,44 +29233,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -32416,7 +29381,7 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
         datum,
         bandPosition: Optional[float] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(
@@ -32758,13 +29723,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> YError: ...
@@ -32786,44 +29745,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -33174,13 +30096,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> YError2: ...
@@ -33202,44 +30118,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         bin: Optional[None] = Undefined,
         field: Optional[str | dict | SchemaBase] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         **kwds,
@@ -33348,7 +30227,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
         **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
         documentation.
-    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text']
+    sort : dict, None, :class:`Sort`, Sequence[str], Sequence[bool], Sequence[float], :class:`SortArray`, :class:`SortOrder`, :class:`AllSortString`, :class:`SortByChannel`, :class:`SortByEncoding`, :class:`EncodingSortField`, :class:`SortByChannelDesc`, Sequence[dict, :class:`DateTime`], Literal['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'], Literal['ascending', 'descending'], Literal['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text']
         Sort order for the encoded field.
 
         For continuous fields (quantitative or temporal), ``sort`` can be either
@@ -33598,23 +30477,15 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -33861,13 +30732,7 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
         binned: Optional[bool] = Undefined,
         maxbins: Optional[float] = Undefined,
         step: Optional[float] = Undefined,
-        unit: Optional[
-            SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-        ] = Undefined,
+        unit: Optional[SchemaBase | MultiTimeUnit_T | SingleTimeUnit_T] = Undefined,
         utc: Optional[bool] = Undefined,
         **kwds,
     ) -> YOffset: ...
@@ -33898,53 +30763,14 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
             dict
             | None
             | SchemaBase
-            | SortOrder_T
             | Sequence[str]
             | Sequence[bool]
             | Sequence[float]
-            | SortByChannel_T
-            | SortByChannelDesc_T
             | Sequence[dict | SchemaBase]
+            | AllSortString_T
         ] = Undefined,
         timeUnit: Optional[
-            dict
-            | SchemaBase
-            | UtcMultiTimeUnit_T
-            | UtcSingleTimeUnit_T
-            | LocalMultiTimeUnit_T
-            | LocalSingleTimeUnit_T
-            | Literal[
-                "binnedyear",
-                "binnedyearquarter",
-                "binnedyearquartermonth",
-                "binnedyearmonth",
-                "binnedyearmonthdate",
-                "binnedyearmonthdatehours",
-                "binnedyearmonthdatehoursminutes",
-                "binnedyearmonthdatehoursminutesseconds",
-                "binnedyearweek",
-                "binnedyearweekday",
-                "binnedyearweekdayhours",
-                "binnedyearweekdayhoursminutes",
-                "binnedyearweekdayhoursminutesseconds",
-                "binnedyeardayofyear",
-            ]
-            | Literal[
-                "binnedutcyear",
-                "binnedutcyearquarter",
-                "binnedutcyearquartermonth",
-                "binnedutcyearmonth",
-                "binnedutcyearmonthdate",
-                "binnedutcyearmonthdatehours",
-                "binnedutcyearmonthdatehoursminutes",
-                "binnedutcyearmonthdatehoursminutesseconds",
-                "binnedutcyearweek",
-                "binnedutcyearweekday",
-                "binnedutcyearweekdayhours",
-                "binnedutcyearweekdayhoursminutes",
-                "binnedutcyearweekdayhoursminutesseconds",
-                "binnedutcyeardayofyear",
-            ]
+            dict | SchemaBase | MultiTimeUnit_T | BinnedTimeUnit_T | SingleTimeUnit_T
         ] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
         type: Optional[SchemaBase | StandardType_T] = Undefined,
@@ -34120,23 +30946,15 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         range: Optional[
             dict
             | SchemaBase
-            | RangeEnum_T
             | Sequence[str | dict | float | Parameter | SchemaBase | Sequence[float]]
+            | RangeEnum_T
         ] = Undefined,
         rangeMax: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         rangeMin: Optional[str | dict | float | Parameter | SchemaBase] = Undefined,
         reverse: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         round: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
         scheme: Optional[
-            dict
-            | Parameter
-            | Cyclical_T
-            | SchemaBase
-            | Diverging_T
-            | Categorical_T
-            | Sequence[str]
-            | SequentialMultiHue_T
-            | SequentialSingleHue_T
+            dict | Parameter | SchemaBase | Sequence[str] | ColorScheme_T
         ] = Undefined,
         type: Optional[SchemaBase | ScaleType_T] = Undefined,
         zero: Optional[bool | dict | Parameter | SchemaBase] = Undefined,
@@ -34168,7 +30986,7 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
         bandPosition: Optional[float] = Undefined,
         scale: Optional[dict | None | SchemaBase] = Undefined,
         title: Optional[str | None | SchemaBase | Sequence[str]] = Undefined,
-        type: Optional[Type_T | SchemaBase] = Undefined,
+        type: Optional[SchemaBase | Type_T] = Undefined,
         **kwds,
     ):
         super().__init__(

@@ -417,7 +417,7 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
         # Values (and therefore `validator_value`) of an enum are always arrays,
         # see https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
         # which is why we can use join below
-        value_strings = [",".join(err.validator_value) for err in errors]
+        value_strings = [",".join(err.validator_value) for err in errors]  # type: ignore
         longest_enums: ValidationErrorList = []
         for value_str, err in zip(value_strings, errors):
             if not _contained_at_start_of_one_of_other_values(value_str, value_strings):
@@ -920,18 +920,14 @@ class SchemaBase:
         self._kwds[item] = val
 
     def __repr__(self) -> str:
-        if self._kwds:
-            it = (
-                f"{key}: {val!r}"
-                for key, val in sorted(self._kwds.items())
-                if val is not Undefined
-            )
-            args = "\n" + ",\n".join(it)
-            return "{}({{{}\n}})".format(
-                self.__class__.__name__, args.replace("\n", "\n  ")
-            )
+        name = type(self).__name__
+        if kwds := self._kwds:
+            it = (f"{k}: {v!r}" for k, v in sorted(kwds.items()) if v is not Undefined)
+            args = ",\n".join(it).replace("\n", "\n  ")
+            LB, RB = "{", "}"
+            return f"{name}({LB}\n  {args}\n{RB})"
         else:
-            return f"{self.__class__.__name__}({self._args[0]!r})"
+            return f"{name}({self._args[0]!r})"
 
     def __eq__(self, other: Any) -> bool:
         return (
