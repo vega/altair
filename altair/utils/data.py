@@ -312,7 +312,6 @@ def _to_text_kwds(prefix: str, extension: str, filename: str, urlpath: str, /) -
 def to_values(data: DataType) -> ToValuesReturnType:
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    breakpoint()
     data_native = nw.to_native(data, strict=False)
     if isinstance(data_native, SupportsGeoInterface):
         if _is_pandas_dataframe(data_native):
