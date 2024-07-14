@@ -44,7 +44,7 @@ if TYPE_CHECKING:
     from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
     from altair.utils.data import DataType
-    from narwhals.typing import IntoExpr, IntoDataFrameT
+    from narwhals.typing import IntoExpr, IntoDataFrameT, IntoDataFrame
     import pandas as pd
 
 V = TypeVar("V")
@@ -468,7 +468,7 @@ def sanitize_narwhals_dataframe(
     return data.select(columns)
 
 
-def to_eager_narwhals_dataframe(data: DataType) -> nw.DataFrame[Any]:
+def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
     """Wrap `data` in `narwhals.DataFrame`.
 
     If `data` is not supported by Narwhals, but it is convertible
@@ -480,8 +480,8 @@ def to_eager_narwhals_dataframe(data: DataType) -> nw.DataFrame[Any]:
         # If Narwhals' support for `data`'s class is only metadata-level, then we
         # use the interchange protocol to convert to a PyArrow Table.
         from altair.utils.data import arrow_table_from_dfi_dataframe
-        pa_table = arrow_table_from_dfi_dataframe(data)
-        data_nw = nw.from_native(pa_table, eager_only=True)
+        pa_table = arrow_table_from_dfi_dataframe(data)  # type: ignore[arg-type]
+        data_nw = nw.from_native(pa_table, eager_or_interchange_only=True)
     elif isinstance(data_nw, nw.LazyFrame):
         msg = (
             "Lazy objects which do not implement the dataframe interchange protocol "
@@ -638,11 +638,11 @@ def parse_shorthand(
     # if data is specified and type is not, infer type from data
     if "type" not in attrs and is_data_type(data):
         unescaped_field = attrs["field"].replace("\\", "")
-        data_nw = nw.from_native(data)
+        data_nw = nw.from_native(data, eager_or_interchange_only=True)
         schema = data_nw.schema
         if unescaped_field in schema:
             column = data_nw[unescaped_field]
-            if column.dtype in {nw.Object, nw.Unknown} and _is_pandas_dataframe(
+            if schema[unescaped_field] in {nw.Object, nw.Unknown} and _is_pandas_dataframe(
                 nw.to_native(data_nw)
             ):
                 attrs["type"] = infer_vegalite_type_for_pandas(nw.to_native(column))

@@ -1009,7 +1009,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         copy = self.copy(deep=False)  # type: ignore[attr-defined]
         original_data = getattr(copy, "data", Undefined)
         try:
-            data = to_eager_narwhals_dataframe(original_data)
+            data: Any = to_eager_narwhals_dataframe(original_data)  # type: ignore[arg-type]
         except TypeError:
             # Non-narwhalifiable type support by Altair, such as dict
             data = original_data

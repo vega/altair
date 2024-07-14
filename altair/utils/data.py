@@ -195,7 +195,7 @@ def sample(
         else:
             # Maybe this should raise an error or return something useful?
             return None
-    data = nw.from_native(data, eager_only=True)
+    data = nw.from_native(data, eager_or_interchange_only=True)
     if not n:
         if frac is None:
             msg = "frac cannot be None if n is None with this data input type"
@@ -358,9 +358,7 @@ def _data_to_json_string(data: DataType) -> str:
     if isinstance(data_native, SupportsGeoInterface):
         if _is_pandas_dataframe(data_native):
             data_native = sanitize_pandas_dataframe(data_native)
-        # Maybe the type could be further clarified here that it is
-        # SupportGeoInterface and then the ignore statement is not needed?
-        data_native = sanitize_geo_interface(data_native.__geo_interface__)  # type: ignore[arg-type]
+        data_native = sanitize_geo_interface(data_native.__geo_interface__)
         return json.dumps(data_native)
     elif _is_pandas_dataframe(data_native):
         data = sanitize_pandas_dataframe(data_native)
@@ -369,7 +367,7 @@ def _data_to_json_string(data: DataType) -> str:
         if "values" not in data_native:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
-        return json.dumps(data["values"], sort_keys=True)
+        return json.dumps(data_native["values"], sort_keys=True)
     elif isinstance(data, nw.DataFrame):
         return json.dumps(data.rows(named=True))
     else:

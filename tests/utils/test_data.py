@@ -35,7 +35,7 @@ def _create_data_with_values(N):
 
 def test_limit_rows():
     """Test the limit_rows data transformer."""
-    data = nw.from_native(_create_dataframe(10), eager_only=True)
+    data = nw.from_native(_create_dataframe(10), eager_or_interchange_only=True)
     result = limit_rows(data, max_rows=20)
     assert data is result
     with pytest.raises(MaxRowsError):
