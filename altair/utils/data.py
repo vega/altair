@@ -31,6 +31,7 @@ from .core import (
     sanitize_pandas_dataframe,
     DataFrameLike,
     sanitize_narwhals_dataframe,
+    to_eager_narwhals_dataframe,
 )
 from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
@@ -149,7 +150,6 @@ def limit_rows(
         else:
             return data
     else:
-        from altair.utils.core import to_eager_narwhals_dataframe
         data = to_eager_narwhals_dataframe(data)
         values = data
 
@@ -355,18 +355,18 @@ def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
     data_native = nw.to_native(data, strict=False)
-    if isinstance(data, SupportsGeoInterface):
-        if _is_pandas_dataframe(data):
-            data = sanitize_pandas_dataframe(data)
+    if isinstance(data_native, SupportsGeoInterface):
+        if _is_pandas_dataframe(data_native):
+            data_native = sanitize_pandas_dataframe(data_native)
         # Maybe the type could be further clarified here that it is
         # SupportGeoInterface and then the ignore statement is not needed?
-        data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
-        return json.dumps(data)
+        data_native = sanitize_geo_interface(data_native.__geo_interface__)  # type: ignore[arg-type]
+        return json.dumps(data_native)
     elif _is_pandas_dataframe(data_native):
         data = sanitize_pandas_dataframe(data_native)
         return data_native.to_json(orient="records", double_precision=15)
-    elif isinstance(data, dict):
-        if "values" not in data:
+    elif isinstance(data_native, dict):
+        if "values" not in data_native:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return json.dumps(data["values"], sort_keys=True)

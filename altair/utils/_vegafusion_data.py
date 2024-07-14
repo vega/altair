@@ -70,6 +70,9 @@ def vegafusion_data_transformer(
     data: DataType | None = None, max_rows: int = 100000
 ) -> Callable[..., Any] | _VegaFusionReturnType:
     """VegaFusion Data Transformer"""
+    # Vegafusion does not support Narwhals, so if `data` is a Narwhals
+    # object, we make sure to extract the native object and let Vegafusion handle it.
+    data = nw.to_native(data, strict=False)
     if data is None:
         return vegafusion_data_transformer
     elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
