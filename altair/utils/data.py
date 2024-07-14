@@ -195,7 +195,7 @@ def sample(
         else:
             # Maybe this should raise an error or return something useful?
             return None
-    data = nw.from_native(data, eager_or_interchange_only=True)
+    data = nw.from_native(data, eager_only=True)
     if not n:
         if frac is None:
             msg = "frac cannot be None if n is None with this data input type"

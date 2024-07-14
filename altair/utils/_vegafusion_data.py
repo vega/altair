@@ -26,7 +26,6 @@ from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
     from narwhals.typing import IntoDataFrame
-    from altair.utils.core import DataFrameLike
     from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
