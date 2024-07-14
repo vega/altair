@@ -150,7 +150,8 @@ def limit_rows(
             return data
     else:
         from altair.utils.core import to_eager_narwhals_dataframe
-        values = to_eager_narwhals_dataframe(data)
+        data = to_eager_narwhals_dataframe(data)
+        values = data
 
     if max_rows is not None and len(values) > max_rows:
         raise_max_rows_error()
@@ -328,11 +329,13 @@ def to_values(data: DataType) -> ToValuesReturnType:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data_native
-    elif isinstance(data_native, nw.DataFrame):
+    elif isinstance(data, nw.DataFrame):
         data = sanitize_narwhals_dataframe(data)
         return {"values": data.rows(named=True)}
     else:
-        raise TypeError("Unreachable")
+        # Should never reach this state as tested by check_data_type
+        msg = f"Unrecognized data type: {type(data)}"
+        raise ValueError(msg)
 
 
 def check_data_type(data: DataType) -> None:
@@ -351,6 +354,7 @@ def _compute_data_hash(data_str: str) -> str:
 def _data_to_json_string(data: DataType) -> str:
     """Return a JSON string representation of the input data"""
     check_data_type(data)
+    data_native = nw.to_native(data, strict=False)
     if isinstance(data, SupportsGeoInterface):
         if _is_pandas_dataframe(data):
             data = sanitize_pandas_dataframe(data)
@@ -358,9 +362,9 @@ def _data_to_json_string(data: DataType) -> str:
         # SupportGeoInterface and then the ignore statement is not needed?
         data = sanitize_geo_interface(data.__geo_interface__)  # type: ignore[arg-type]
         return json.dumps(data)
-    elif _is_pandas_dataframe(data):
-        data = sanitize_pandas_dataframe(data)
-        return data.to_json(orient="records", double_precision=15)
+    elif _is_pandas_dataframe(data_native):
+        data = sanitize_pandas_dataframe(data_native)
+        return data_native.to_json(orient="records", double_precision=15)
     elif isinstance(data, dict):
         if "values" not in data:
             msg = "values expected in data dict, but not present."

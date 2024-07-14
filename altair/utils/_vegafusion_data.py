@@ -21,6 +21,7 @@ from altair.utils.data import (
     MaxRowsError,
     SupportsGeoInterface,
 )
+from altair.utils.core import DataFrameLike
 from altair.vegalite.data import default_data_transformer
 
 if TYPE_CHECKING:
@@ -71,10 +72,9 @@ def vegafusion_data_transformer(
     """VegaFusion Data Transformer"""
     if data is None:
         return vegafusion_data_transformer
-    elif isinstance(data, nw.DataFrame) and not isinstance(data, SupportsGeoInterface):
+    elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):
         table_name = f"table_{uuid.uuid4()}".replace("-", "_")
-        # vegafusion doesn't support Narwhals, so we extract the native object.
-        extracted_inline_tables[table_name] = nw.to_native(data)
+        extracted_inline_tables[table_name] = data
         return {"url": VEGAFUSION_PREFIX + table_name}
     else:
         # Use default transformer for geo interface objects
