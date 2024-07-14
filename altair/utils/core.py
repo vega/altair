@@ -468,27 +468,29 @@ def sanitize_narwhals_dataframe(
     return data.select(columns)
 
 
-def narwhalify(data: DataType) -> nw.DataFrame[Any]:
+def to_eager_narwhals_dataframe(data: DataType) -> nw.DataFrame[Any]:
     """Wrap `data` in `narwhals.DataFrame`.
 
     If `data` is not supported by Narwhals, but it is convertible
     to a PyArrow table, then first convert to a PyArrow Table,
     and then wrap in `narwhals.DataFrame`.
     """
-    if isinstance(data, nw.DataFrame):
-        # Early return if already a Narwhals DataFrame
-        return data
-    # Using `strict=False` will return `data` as-is if the object cannot be converted.
-    data = nw.from_native(data, eager_only=True, strict=False)
-    if isinstance(data, nw.DataFrame):
-        return data
-    if isinstance(data, DataFrameLike):
+    data_nw = nw.from_native(data)
+    if nw.get_level(data_nw) == 'metadata':
+        # If Narwhals' support for `data`'s class is only metadata-level, then we
+        # use the interchange protocol to convert to a PyArrow Table.
         from altair.utils.data import arrow_table_from_dfi_dataframe
-
         pa_table = arrow_table_from_dfi_dataframe(data)
-        return nw.from_native(pa_table, eager_only=True)
-    msg = f"Unsupported data type: {type(data)}"
-    raise TypeError(msg)
+        data_nw = nw.from_native(pa_table, eager_only=True)
+    elif isinstance(data_nw, nw.LazyFrame):
+        msg = (
+            "Lazy objects which do not implement the dataframe interchange protocol "
+            "are not supported. Please collect your lazy object into an eager one "
+            "first."
+        )
+        raise NotImplementedError(msg)
+
+    return data_nw
 
 
 def parse_shorthand(
@@ -636,8 +638,9 @@ def parse_shorthand(
     # if data is specified and type is not, infer type from data
     if "type" not in attrs and is_data_type(data):
         unescaped_field = attrs["field"].replace("\\", "")
-        data_nw = narwhalify(data)
-        if unescaped_field in data_nw.columns:
+        data_nw = nw.from_native(data)
+        schema = data_nw.schema
+        if unescaped_field in schema:
             column = data_nw[unescaped_field]
             if column.dtype in {nw.Object, nw.Unknown} and _is_pandas_dataframe(
                 nw.to_native(data_nw)

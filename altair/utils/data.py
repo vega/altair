@@ -31,7 +31,6 @@ from .core import (
     sanitize_pandas_dataframe,
     DataFrameLike,
     sanitize_narwhals_dataframe,
-    narwhalify,
 )
 from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
@@ -150,8 +149,8 @@ def limit_rows(
         else:
             return data
     else:
-        data = narwhalify(data)
-        values = data
+        from altair.utils.core import to_eager_narwhals_dataframe
+        values = to_eager_narwhals_dataframe(data)
 
     if max_rows is not None and len(values) > max_rows:
         raise_max_rows_error()
@@ -196,10 +195,6 @@ def sample(
             # Maybe this should raise an error or return something useful?
             return None
     data = narwhalify(data)
-    if not isinstance(data, nw.DataFrame):
-        # Maybe this should raise an error or return something useful? Currently,
-        # if data is of type SupportsGeoInterface it lands here
-        return None
     if not n:
         if frac is None:
             msg = "frac cannot be None if n is None with this data input type"
@@ -333,13 +328,10 @@ def to_values(data: DataType) -> ToValuesReturnType:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data_native
-    elif isinstance(data, nw.DataFrame):
-        data = sanitize_narwhals_dataframe(data)
-        return {"values": data.rows(named=True)}
-    else:
-        # Should never reach this state as tested by check_data_type
-        msg = f"Unrecognized data type: {type(data)}"
-        raise ValueError(msg)
+    from altair.utils.core import to_eager_narwhals_dataframe
+    data = to_eager_narwhals_dataframe(data)
+    data = sanitize_narwhals_dataframe(data)
+    return {"values": data.rows(named=True)}
 
 
 def check_data_type(data: DataType) -> None:
