@@ -1069,10 +1069,7 @@ class SchemaBase:
 
     @classmethod
     def from_dict(
-        cls: type[TSchemaBase],
-        dct: dict[str, Any],
-        validate: bool = True,
-        _wrapper_classes: Iterable[type[SchemaBase]] | None = None,
+        cls: type[TSchemaBase], dct: dict[str, Any], validate: bool = True, **kwds: Any
     ) -> TSchemaBase:
         """Construct class from a dictionary representation
 
@@ -1099,9 +1096,9 @@ class SchemaBase:
         """
         if validate:
             cls.validate(dct)
-        if _wrapper_classes is None:
-            _wrapper_classes = cls._default_wrapper_classes()
-        converter = _FromDict(_wrapper_classes)
+        converter = _FromDict(
+            kwds.pop("_wrapper_classes", cls._default_wrapper_classes())
+        )
         return converter.from_dict(dct, cls)
 
     @classmethod
