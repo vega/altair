@@ -24,7 +24,6 @@ from ...utils._vegafusion_data import (
     compile_with_vegafusion as _compile_with_vegafusion,
 )
 from altair.utils.data import DataType, is_data_type as _is_data_type
-from altair.utils.deprecation import AltairDeprecationWarning  # noqa: F401
 from altair.utils.core import (
     to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
 )
