@@ -1,15 +1,22 @@
 """Unit tests for altair API"""
 
+from datetime import date
 import io
+import ibis
+import sys
 import json
 import operator
 import os
 import pathlib
 import tempfile
+from importlib.metadata import version as importlib_version
+from packaging.version import Version
 
 import jsonschema
+import narwhals.stable.v1 as nw
 import pytest
 import pandas as pd
+import polars as pl
 
 import altair.vegalite.v5 as alt
 
@@ -17,6 +24,10 @@ try:
     import vl_convert as vlc
 except ImportError:
     vlc = None
+
+ibis.set_backend("polars")
+
+PANDAS_VERSION = Version(importlib_version("pandas"))
 
 
 def getargs(*args, **kwargs):
@@ -737,7 +748,7 @@ def test_selection_property():
 
 
 def test_LookupData():
-    df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+    df = nw.from_native(pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]}))
     lookup = alt.LookupData(data=df, key="x")
 
     dct = lookup.to_dict()
@@ -1065,3 +1076,38 @@ def test_validate_dataset():
     jsn = chart.to_json()
 
     assert jsn
+
+
+def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delitem(sys.modules, "pandas")
+    monkeypatch.delitem(sys.modules, "numpy")
+    monkeypatch.delitem(sys.modules, "pyarrow", raising=False)
+
+    df = pl.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+    _ = alt.Chart(df).mark_line().encode(x="a", y="b").to_json()
+    # Check pandas and PyArrow weren't imported anywhere along the way,
+    # confirming that the plot above would work without pandas no PyArrow
+    # installed.
+    assert "pandas" not in sys.modules
+    assert "pyarrow" not in sys.modules
+    assert "numpy" not in sys.modules
+
+
+@pytest.mark.skipif(
+    Version("1.5") > PANDAS_VERSION,
+    reason="A warning is thrown on old pandas versions",
+)
+@pytest.mark.xfail(
+    sys.platform == "win32", reason="Timezone database is not installed on Windows"
+)
+def test_ibis_with_date_32():
+    df = pl.DataFrame(
+        {"a": [1, 2, 3], "b": [date(2020, 1, 1), date(2020, 1, 2), date(2020, 1, 3)]}
+    )
+    tbl = ibis.memtable(df)
+    result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
+    assert next(iter(result["datasets"].values())) == [
+        {"a": 1, "b": "2020-01-01T00:00:00"},
+        {"a": 2, "b": "2020-01-02T00:00:00"},
+        {"a": 3, "b": "2020-01-03T00:00:00"},
+    ]
