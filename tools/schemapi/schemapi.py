@@ -5,9 +5,11 @@ import copy
 import inspect
 import json
 import textwrap
+from math import ceil
 from collections import defaultdict
 from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
+import sys
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -27,8 +29,6 @@ from functools import partial
 import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
-import numpy as np
-import pandas as pd
 from packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
@@ -37,8 +37,6 @@ from packaging.version import Version
 from altair import vegalite
 
 if TYPE_CHECKING:
-    import sys
-
     from referencing import Registry
 
     from altair import ChartType
@@ -53,7 +51,6 @@ if TYPE_CHECKING:
         from typing import Self, Never
     else:
         from typing_extensions import Self, Never
-
 
 ValidationErrorList: TypeAlias = List[jsonschema.exceptions.ValidationError]
 GroupedValidationErrors: TypeAlias = Dict[str, ValidationErrorList]
@@ -475,20 +472,34 @@ def _subclasses(cls: type[Any]) -> Iterator[type[Any]]:
             yield cls
 
 
-def _todict(obj: Any, context: dict[str, Any] | None) -> Any:
+def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:
     """Convert an object to a dict representation."""
+    if np_opt is not None:
+        np = np_opt
+        if isinstance(obj, np.ndarray):
+            return [_todict(v, context, np_opt, pd_opt) for v in obj]
+        elif isinstance(obj, np.number):
+            return float(obj)
+        elif isinstance(obj, np.datetime64):
+            result = str(obj)
+            if "T" not in result:
+                # See https://github.com/vega/altair/issues/1027 for why this is necessary.
+                result += "T00:00:00"
+            return result
     if isinstance(obj, SchemaBase):
         return obj.to_dict(validate=False, context=context)
-    elif isinstance(obj, (list, tuple, np.ndarray)):
-        return [_todict(v, context) for v in obj]
+    elif isinstance(obj, (list, tuple)):
+        return [_todict(v, context, np_opt, pd_opt) for v in obj]
     elif isinstance(obj, dict):
-        return {k: _todict(v, context) for k, v in obj.items() if v is not Undefined}
+        return {
+            k: _todict(v, context, np_opt, pd_opt)
+            for k, v in obj.items()
+            if v is not Undefined
+        }
     elif hasattr(obj, "to_dict"):
         return obj.to_dict()
-    elif isinstance(obj, np.number):
-        return float(obj)
-    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
-        return pd.Timestamp(obj).isoformat()
+    elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
+        return pd_opt.Timestamp(obj).isoformat()
     else:
         return obj
 
@@ -634,7 +645,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         max_column_width = 80
         # Output a square table if not too big (since it is easier to read)
         num_param_names = len(param_names)
-        square_columns = int(np.ceil(num_param_names**0.5))
+        square_columns = int(ceil(num_param_names**0.5))
         columns = min(max_column_width // max_name_length, square_columns)
 
         # Compute roughly equal column heights to evenly divide the param names
@@ -963,9 +974,17 @@ class SchemaBase:
             context = {}
         if ignore is None:
             ignore = []
+        # The following return the package only if it has already been
+        # imported - otherwise they return None. This is useful for
+        # isinstance checks - for example, if pandas has not been imported,
+        # then an object is definitely not a `pandas.Timestamp`.
+        pd_opt = sys.modules.get("pandas")
+        np_opt = sys.modules.get("numpy")
 
         if self._args and not self._kwds:
-            result = _todict(self._args[0], context=context)
+            result = _todict(
+                self._args[0], context=context, np_opt=np_opt, pd_opt=pd_opt
+            )
         elif not self._args:
             kwds = self._kwds.copy()
             # parsed_shorthand is added by FieldChannelMixin.
@@ -993,10 +1012,7 @@ class SchemaBase:
             }
             if "mark" in kwds and isinstance(kwds["mark"], str):
                 kwds["mark"] = {"type": kwds["mark"]}
-            result = _todict(
-                kwds,
-                context=context,
-            )
+            result = _todict(kwds, context=context, np_opt=np_opt, pd_opt=pd_opt)
         else:
             msg = (
                 f"{self.__class__} instance has both a value and properties : "
@@ -1164,7 +1180,13 @@ class SchemaBase:
         Validate a property against property schema in the context of the
         rootschema
         """
-        value = _todict(value, context={})
+        # The following return the package only if it has already been
+        # imported - otherwise they return None. This is useful for
+        # isinstance checks - for example, if pandas has not been imported,
+        # then an object is definitely not a `pandas.Timestamp`.
+        pd_opt = sys.modules.get("pandas")
+        np_opt = sys.modules.get("numpy")
+        value = _todict(value, context={}, np_opt=np_opt, pd_opt=pd_opt)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
         return validate_jsonschema(
             value, props.get(name, {}), rootschema=cls._rootschema or cls._schema

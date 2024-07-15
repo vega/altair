@@ -12,19 +12,20 @@ from typing import (
     Callable,
 )
 
+import narwhals.stable.v1 as nw
+
 from altair.utils._importers import import_vegafusion
-from altair.utils.core import DataFrameLike
 from altair.utils.data import (
     DataType,
     ToValuesReturnType,
     MaxRowsError,
     SupportsGeoInterface,
 )
+from altair.utils.core import DataFrameLike
 from altair.vegalite.data import default_data_transformer
 
-
 if TYPE_CHECKING:
-    import pandas as pd
+    from narwhals.typing import IntoDataFrame
     from vegafusion.runtime import ChartState  # type: ignore
 
 # Temporary storage for dataframes that have been extracted
@@ -60,7 +61,7 @@ def vegafusion_data_transformer(
 
 @overload
 def vegafusion_data_transformer(
-    data: dict | pd.DataFrame | SupportsGeoInterface, max_rows: int = ...
+    data: dict | IntoDataFrame | SupportsGeoInterface, max_rows: int = ...
 ) -> _VegaFusionReturnType: ...
 
 
@@ -68,6 +69,10 @@ def vegafusion_data_transformer(
     data: DataType | None = None, max_rows: int = 100000
 ) -> Callable[..., Any] | _VegaFusionReturnType:
     """VegaFusion Data Transformer"""
+    # Vegafusion does not support Narwhals, so if `data` is a Narwhals
+    # object, we make sure to extract the native object and let Vegafusion handle it.
+    # `strict=False` passes `data` through as-is if it is not a Narwhals object.
+    data = nw.to_native(data, strict=False)
     if data is None:
         return vegafusion_data_transformer
     elif isinstance(data, DataFrameLike) and not isinstance(data, SupportsGeoInterface):

@@ -24,6 +24,7 @@ from ...utils._vegafusion_data import (
 )
 from ...utils.data import DataType, is_data_type as _is_data_type
 from ...utils.deprecation import AltairDeprecationWarning
+from ...utils.core import to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe
 
 
 if TYPE_CHECKING:
@@ -1021,10 +1022,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         copy = _top_schema_base(self).copy(deep=False)
         original_data = getattr(copy, "data", Undefined)
-        copy.data = _prepare_data(original_data, context)
+        try:
+            data: Any = _to_eager_narwhals_dataframe(original_data)  # type: ignore[arg-type]
+        except TypeError:
+            # Non-narwhalifiable type supported by Altair, such as dict
+            data = original_data
+        copy.data = _prepare_data(data, context)
 
         if original_data is not Undefined:
-            context["data"] = original_data
+            context["data"] = data
 
         # remaining to_dict calls are not at top level
         context["top_level"] = False
