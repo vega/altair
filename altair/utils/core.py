@@ -28,7 +28,7 @@ from operator import itemgetter
 
 import jsonschema
 import narwhals.stable.v1 as nw
-from narwhals.dependencies import is_pandas_dataframe
+from narwhals.dependencies import is_pandas_dataframe, get_polars
 from narwhals.typing import IntoDataFrame
 
 from altair.utils.schemapi import SchemaBase, Undefined
@@ -448,12 +448,14 @@ def sanitize_narwhals_dataframe(
     # See https://github.com/vega/altair/issues/1027 for why this is necessary.
     local_iso_fmt_string = "%Y-%m-%dT%H:%M:%S"
     for name, dtype in schema.items():
-        if dtype == nw.Date:
+        if dtype == nw.Date and nw.get_native_namespace(data) is get_polars():
             # Polars doesn't allow formatting `Date` with time directives.
             # The date -> datetime cast is extremely fast compared with `to_string`
             columns.append(
                 nw.col(name).cast(nw.Datetime).dt.to_string(local_iso_fmt_string)
             )
+        elif dtype == nw.Date:
+            columns.append(nw.col(name).dt.to_string(local_iso_fmt_string))
         elif dtype == nw.Datetime:
             columns.append(nw.col(name).dt.to_string(f"{local_iso_fmt_string}%.f"))
         elif dtype == nw.Duration:

@@ -1107,7 +1107,7 @@ def test_ibis_with_date_32():
     tbl = ibis.memtable(df)
     result = alt.Chart(tbl).mark_line().encode(x="a", y="b").to_dict()
     assert next(iter(result["datasets"].values())) == [
-        {"a": 1, "b": "2020-01-01T00:00:00.000000"},
-        {"a": 2, "b": "2020-01-02T00:00:00.000000"},
-        {"a": 3, "b": "2020-01-03T00:00:00.000000"},
+        {"a": 1, "b": "2020-01-01T00:00:00"},
+        {"a": 2, "b": "2020-01-02T00:00:00"},
+        {"a": 3, "b": "2020-01-03T00:00:00"},
     ]
