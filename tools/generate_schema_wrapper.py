@@ -232,12 +232,6 @@ class _EncodingMixin:
         return copy
 '''
 
-# These types should support annotations in generated code,
-# but are not derived from the schema itself.
-EXTRA_ALIASES: Final = """
-Map: TypeAlias = Mapping[str, Any]
-"""
-
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -819,7 +813,8 @@ def vegalite_main(skip_download: bool = False) -> None:
         f"Tracer cache collected {TypeAliasTracer.n_entries!r} entries."
     )
     print(msg)
-    TypeAliasTracer.write_module(fp_typing, header=HEADER, extra_aliases=EXTRA_ALIASES)
+    TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
+    TypeAliasTracer.write_module(fp_typing, header=HEADER)
     # Write the pre-generated modules
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")

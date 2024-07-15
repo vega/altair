@@ -191,8 +191,7 @@ exclude = [
     "__pycache__",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
-    "tests/test_transformed_data.py",    
-    "altair/vegalite/v?/schema",
+    "tests/test_transformed_data.py",
 ]
 
 [tool.ruff.lint]
@@ -218,7 +217,9 @@ extend-safe-fixes=[
     # trailing-whitespace
     "W291",
     # blank line contains whitespace
-    "W293"
+    "W293",
+    # unsorted-dunder-all
+    "RUF022",
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
@@ -344,7 +345,6 @@ warn_unused_ignores = true
 [[tool.mypy.overrides]]
 module = [
     "vega_datasets.*",
-    "toolz.*",
     "pyarrow.*",
     "yaml.*",
     "vl_convert.*",
