@@ -513,15 +513,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -3383,15 +3383,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -4613,15 +4613,15 @@
           "description": "The extent of the whiskers. Available options include:\n- `\"min-max\"`: min and max are the lower and upper whiskers respectively.\n- A number representing multiple of the interquartile range. This number will be multiplied by the IQR to determine whisker boundary, which spans from the smallest data to the largest data within the range _[Q1 - k * IQR, Q3 + k * IQR]_ where _Q1_ and _Q3_ are the first and third quartiles while _IQR_ is the interquartile range (_Q3-Q1_).\n\n__Default value:__ `1.5`."
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "median": {
           "anyOf": [
@@ -8144,6 +8144,14 @@
         "minsteps": {
           "description": "The minimum number of samples to take along the extent domain for plotting the density.\n\n__Default value:__ `25`",
           "type": "number"
+        },
+        "resolve": {
+          "description": "Indicates how parameters for multiple densities should be resolved. If `\"independent\"`, each density may have its own domain extent and dynamic number of curve sample steps. If `\"shared\"`, the KDE transform will ensure that all densities are defined over a shared domain and curve steps, enabling stacking.\n\n__Default value:__ `\"shared\"`",
+          "enum": [
+            "independent",
+            "shared"
+          ],
+          "type": "string"
         },
         "steps": {
           "description": "The exact number of samples to take along the extent domain for plotting the density. If specified, overrides both minsteps and maxsteps to set an exact number of uniform samples. Potentially useful in conjunction with a fixed extent to ensure consistent sample points for stacked densities.",
@@ -15051,15 +15059,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -16206,15 +16214,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -17050,15 +17058,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -17631,6 +17639,16 @@
         "type"
       ],
       "type": "object"
+    },
+    "MarkInvalidDataMode": {
+      "enum": [
+        "filter",
+        "break-paths-filter-domains",
+        "break-paths-show-domains",
+        "break-paths-show-path-domains",
+        "show"
+      ],
+      "type": "string"
     },
     "MarkPropDef<(Gradient|string|null)>": {
       "anyOf": [
@@ -18588,15 +18606,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -20884,15 +20902,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -21943,19 +21961,13 @@
               "$ref": "#/definitions/ColorScheme"
             },
             {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
               "$ref": "#/definitions/SchemeParams"
             },
             {
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "A string indicating a color [scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme) name (e.g., `\"category10\"` or `\"blues\"`) or a [scheme parameter object](https://vega.github.io/vega-lite/docs/scale.html#scheme-params).\n\nDiscrete color schemes may be used with [discrete](https://vega.github.io/vega-lite/docs/scale.html#discrete) or [discretizing](https://vega.github.io/vega-lite/docs/scale.html#discretizing) scales. Continuous color schemes are intended for use with color scales.\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
+          "description": "A string indicating a color [scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme) name (e.g., `\"category10\"` or `\"blues\"`) or a [scheme parameter object](https://vega.github.io/vega-lite/docs/scale.html#scheme-params).\n\nDiscrete color schemes may be used with [discrete](https://vega.github.io/vega-lite/docs/scale.html#discrete) or [discretizing](https://vega.github.io/vega-lite/docs/scale.html#discretizing) scales. Continuous color schemes are intended for use with color scales.\n\nTo set a custom scheme, instead set the list of values [as the scale range](https://vega.github.io/vega-lite/docs/scale.html#2-setting-the-range-property-to-an-array-of-valid-css-color-strings).\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
         },
         "type": {
           "$ref": "#/definitions/ScaleType",
@@ -22100,13 +22112,17 @@
           "description": "Default padding for continuous x/y scales.\n\n__Default:__ The bar width for continuous x-scale of a vertical bar and continuous y-scale of a horizontal bar.; `0` otherwise.",
           "minimum": 0
         },
+        "invalid": {
+          "$ref": "#/definitions/ScaleInvalidDataConfig",
+          "description": "An object that defines scale outputs per channel for invalid values (nulls and NaNs on a continuous scale).\n- The keys in this object are the scale channels.\n- The values is either `\"zero-or-min\"` (use zero if the scale includes zero or min value otherwise) or a value definition `{value: ...}`.\n\n_Example:_ Setting this `config.scale.invalid` property to `{color: {value: '#aaa'}}` will make the visualization color all invalid values with '#aaa'.\n\nSee [https://vega.github.io/vega-lite/docs/invalid-data.html](Invalid Data Docs) for more details."
+        },
         "maxBandSize": {
           "description": "The default max value for mapping quantitative fields to bar's size/bandSize.\n\nIf undefined (default), we will use the axis's size (width or height) - 1.",
           "minimum": 0,
           "type": "number"
         },
         "maxFontSize": {
-          "description": "The default max value for mapping quantitative fields to text's size/fontSize.\n\n__Default value:__ `40`",
+          "description": "The default max value for mapping quantitative fields to text's size/fontSize scale.\n\n__Default value:__ `40`",
           "minimum": 0,
           "type": "number"
         },
@@ -22127,12 +22143,12 @@
           "type": "number"
         },
         "minBandSize": {
-          "description": "The default min value for mapping quantitative fields to bar and tick's size/bandSize scale with zero=false.\n\n__Default value:__ `2`",
+          "description": "The default min value for mapping quantitative fields to bar and tick's size/bandSize scale.\n\n__Default value:__ `2`",
           "minimum": 0,
           "type": "number"
         },
         "minFontSize": {
-          "description": "The default min value for mapping quantitative fields to tick's size/fontSize scale with zero=false\n\n__Default value:__ `8`",
+          "description": "The default min value for mapping quantitative fields to text's size/fontSize scale.\n\n__Default value:__ `8`",
           "minimum": 0,
           "type": "number"
         },
@@ -22143,12 +22159,12 @@
           "type": "number"
         },
         "minSize": {
-          "description": "Default minimum value for point size scale with zero=false.\n\n__Default value:__ `9`",
+          "description": "Default minimum value for point size scale.\n\n__Default value:__ `9`",
           "minimum": 0,
           "type": "number"
         },
         "minStrokeWidth": {
-          "description": "Default minimum strokeWidth for the scale of strokeWidth for rule and line marks and of size for trail marks with zero=false.\n\n__Default value:__ `1`",
+          "description": "Default minimum strokeWidth for the scale of strokeWidth for rule and line marks and of size for trail marks.\n\n__Default value:__ `1`",
           "minimum": 0,
           "type": "number"
         },
@@ -22407,6 +22423,486 @@
       "required": [
         "type"
       ],
+      "type": "object"
+    },
+    "ScaleInvalidDataConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "angle": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"angle\">"
+        },
+        "color": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"color\">"
+        },
+        "fill": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"fill\">"
+        },
+        "fillOpacity": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"fillOpacity\">"
+        },
+        "opacity": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"opacity\">"
+        },
+        "radius": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"radius\">"
+        },
+        "shape": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"shape\">"
+        },
+        "size": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"size\">"
+        },
+        "stroke": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"stroke\">"
+        },
+        "strokeDash": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"strokeDash\">"
+        },
+        "strokeOpacity": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"strokeOpacity\">"
+        },
+        "strokeWidth": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"strokeWidth\">"
+        },
+        "theta": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"theta\">"
+        },
+        "x": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"x\">"
+        },
+        "xOffset": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"xOffset\">"
+        },
+        "y": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"y\">"
+        },
+        "yOffset": {
+          "$ref": "#/definitions/ScaleInvalidDataShowAs<\"yOffset\">"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAs<\"angle\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"angle\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"color\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"color\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"fill\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"fill\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"fillOpacity\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"fillOpacity\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"opacity\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"opacity\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"radius\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"radius\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"shape\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"shape\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"size\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"size\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"stroke\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"stroke\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"strokeDash\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"strokeDash\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"strokeOpacity\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"strokeOpacity\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"strokeWidth\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"strokeWidth\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"theta\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"theta\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"x\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"x\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"xOffset\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"xOffset\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"y\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"y\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAs<\"yOffset\">": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ScaleInvalidDataShowAsValue<\"yOffset\">"
+        },
+        {
+          "const": "zero-or-min",
+          "type": "string"
+        }
+      ]
+    },
+    "ScaleInvalidDataShowAsValue<\"angle\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The rotation angle of the text, in degrees.",
+          "maximum": 360,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"color\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Color"
+            },
+            {
+              "$ref": "#/definitions/Gradient"
+            }
+          ],
+          "description": "Default color.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__\n- This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).\n- The `fill` and `stroke` properties have higher precedence than `color` and will override `color`."
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"fill\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Color"
+            },
+            {
+              "$ref": "#/definitions/Gradient"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Default fill color. This property has higher precedence than `config.color`. Set to `null` to remove fill.\n\n__Default value:__ (None)"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"fillOpacity\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The fill opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"opacity\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"radius\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.\n\n__Default value:__ `min(plot_width, plot_height)/2`",
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"shape\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SymbolShape"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Shape of the point marks. Supported values include:\n- plotting shapes: `\"circle\"`, `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`, `\"triangle-down\"`, `\"triangle-right\"`, or `\"triangle-left\"`.\n- the line symbol `\"stroke\"`\n- centered directional shapes `\"arrow\"`, `\"wedge\"`, or `\"triangle\"`\n- a custom [SVG path string](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) (For correct sizing, custom shape paths should be defined within a square bounding box with coordinates ranging from -1 to 1 along both the x and y dimensions.)\n\n__Default value:__ `\"circle\"`"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"size\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "Default size for marks.\n- For `point`/`circle`/`square`, this represents the pixel area of the marks. Note that this value sets the area of the symbol; the side lengths will increase with the square root of this value.\n- For `bar`, this represents the band size of the bar, in pixels.\n- For `text`, this represents the font size, in pixels.\n\n__Default value:__\n- `30` for point, circle, square marks; width/height's `step`\n- `2` for bar marks with discrete dimensions;\n- `5` for bar marks with continuous dimensions;\n- `11` for text marks.",
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"stroke\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Color"
+            },
+            {
+              "$ref": "#/definitions/Gradient"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Default stroke color. This property has higher precedence than `config.color`. Set to `null` to remove stroke.\n\n__Default value:__ (None)"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"strokeDash\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"strokeOpacity\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The stroke opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"strokeWidth\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The stroke width, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"theta\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "maximum": 360,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"x\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "width",
+              "type": "string"
+            }
+          ],
+          "description": "X coordinates of the marks, or width of horizontal `\"bar\"` and `\"area\"` without specified `x2` or `width`.\n\nThe `value` of this channel can be a number or a string `\"width\"` for the width of the plot."
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"xOffset\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "Offset for x-position.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"y\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "height",
+              "type": "string"
+            }
+          ],
+          "description": "Y coordinates of the marks, or height of vertical `\"bar\"` and `\"area\"` without specified `y2` or `height`.\n\nThe `value` of this channel can be a number or a string `\"height\"` for the height of the plot."
+        }
+      },
+      "type": "object"
+    },
+    "ScaleInvalidDataShowAsValue<\"yOffset\">": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "Offset for y-position.",
+          "type": "number"
+        }
+      },
       "type": "object"
     },
     "ScaleResolveMap": {
@@ -28109,15 +28605,15 @@
           ]
         },
         "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkInvalidDataMode"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "type": [
-            "string",
-            "null"
-          ]
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -30823,7 +31319,7 @@
         "utcmonthdatehoursminutes",
         "utcmonthdatehoursminutesseconds",
         "utcweekday",
-        "utcweeksdayhours",
+        "utcweekdayhours",
         "utcweekdayhoursminutes",
         "utcweekdayhoursminutesseconds",
         "utcdayhours",
