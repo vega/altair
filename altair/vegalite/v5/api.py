@@ -465,12 +465,12 @@ def param(
     empty_remap = {"none": False, "all": True}
     parameter = Parameter(name)
 
-    if empty is not Undefined:
+    if not _is_undefined(empty):
         if isinstance(empty, bool) and not isinstance(empty, str):
             parameter.empty = empty
         elif empty in empty_remap:
             utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[empty]  # type: ignore[index]
+            parameter.empty = empty_remap[typing.cast(str, empty)]
         else:
             raise ValueError(warn_msg)
 
