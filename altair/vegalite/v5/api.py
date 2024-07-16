@@ -1013,14 +1013,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         copy = _top_schema_base(self).copy(deep=False)
         original_data = getattr(copy, "data", Undefined)
-        try:
-            data: Any = _to_eager_narwhals_dataframe(original_data)  # type: ignore[arg-type]
-        except TypeError:
-            # Non-narwhalifiable type supported by Altair, such as dict
-            data = original_data
-        copy.data = _prepare_data(data, context)
-
-        if original_data is not Undefined:
+        if not _is_undefined(original_data):
+            try:
+                data = _to_eager_narwhals_dataframe(original_data)
+            except TypeError:
+                # Non-narwhalifiable type supported by Altair, such as dict
+                data = original_data
+            copy.data = _prepare_data(data, context)
             context["data"] = data
 
         # remaining to_dict calls are not at top level
