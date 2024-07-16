@@ -7,7 +7,7 @@ from typing import IO, Any, Literal, TYPE_CHECKING
 from .mimebundle import spec_to_mimebundle
 from ..vegalite.v5.data import data_transformers
 from altair.utils._vegafusion_data import using_vegafusion
-from altair.utils.deprecation import AltairDeprecationWarning
+from altair.utils.deprecation import deprecated_warn
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -135,12 +135,10 @@ def save(
         additional kwargs passed to spec_to_mimebundle.
     """
     if webdriver is not None:
-        warnings.warn(
-            "The webdriver argument is deprecated as it's not relevant for"
-            + " the new vl-convert engine which replaced altair_saver."
-            + " The argument will be removed in a future release.",
-            AltairDeprecationWarning,
-            stacklevel=1,
+        deprecated_warn(
+            "The webdriver argument is not relevant for the new vl-convert engine which replaced altair_saver. "
+            "The argument will be removed in a future release.",
+            version="5.0.0",
         )
 
     if json_kwds is None:
