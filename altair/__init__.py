@@ -619,7 +619,7 @@ def __dir__():
 
 from altair.vegalite import *
 from altair.jupyter import JupyterChart
-from altair.utils import AltairDeprecationWarning
+from altair.utils import AltairDeprecationWarning, parse_shorthand
 
 
 def load_ipython_extension(ipython):
