@@ -1,24 +1,38 @@
 import pytest
-
-import altair as alt
-from altair.utils import AltairDeprecationWarning
-from altair.utils.deprecation import _deprecate, deprecated
+import re
+from altair.utils.deprecation import (
+    AltairDeprecationWarning,
+    deprecated,
+    deprecated_warn,
+)
 
 
 def test_deprecated_class():
-    OldChart = _deprecate(alt.Chart, "OldChart")
-    with pytest.warns(AltairDeprecationWarning) as record:
+    class Dummy:
+        def __init__(self, *args) -> None:
+            self.args = args
+
+    OldChart = deprecated(version="2.0.0", alternative="LayerChart")(Dummy)
+
+    with pytest.warns(AltairDeprecationWarning, match=r"altair=2\.0\.0.+LayerChart"):
         OldChart()
-    assert "alt.OldChart" in record[0].message.args[0]
-    assert "alt.Chart" in record[0].message.args[0]
 
 
 def test_deprecation_decorator():
-    @deprecated(message="func is deprecated")
+    @deprecated(version="999", alternative="func_12345")
     def func(x):
         return x + 1
 
-    with pytest.warns(AltairDeprecationWarning) as record:
+    with pytest.warns(
+        AltairDeprecationWarning, match=r"altair=999.+func_12345 instead"
+    ):
         y = func(1)
     assert y == 2
-    assert record[0].message.args[0] == "func is deprecated"
+
+
+def test_deprecation_warn():
+    with pytest.warns(
+        AltairDeprecationWarning,
+        match=re.compile(r"altair=3321.+this code path is a noop", flags=re.DOTALL),
+    ):
+        deprecated_warn("this code path is a noop", version="3321", stacklevel=1)
