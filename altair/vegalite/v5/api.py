@@ -10,9 +10,9 @@ from typing import Union, cast, Any, Iterable, Literal, IO, TYPE_CHECKING
 from typing_extensions import TypeAlias
 import typing
 
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL
+from .schema import core, channels, mixins, SCHEMA_URL
 
-from altair.utils import Optional
+from altair.utils import Optional, Undefined
 from .data import data_transformers
 from ... import utils
 from ...expr import core as _expr_core
