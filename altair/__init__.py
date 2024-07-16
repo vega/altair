@@ -614,7 +614,7 @@ def __dir__():
 
 from altair.vegalite import *
 from altair.jupyter import JupyterChart
-from altair.utils import AltairDeprecationWarning, parse_shorthand
+from altair.utils import AltairDeprecationWarning, parse_shorthand, Optional, Undefined
 
 
 def load_ipython_extension(ipython):
