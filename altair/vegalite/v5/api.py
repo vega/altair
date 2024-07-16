@@ -136,7 +136,7 @@ def _consolidate_data(data: Any, context: Any) -> Any:
     kwds = {}
 
     if isinstance(data, core.InlineData):
-        if data.name is Undefined and data.values is not Undefined:
+        if _is_undefined(data.name) and not _is_undefined(data.values):
             if isinstance(data.values, core.InlineDataset):
                 values = data.to_dict()["values"]
             else:
@@ -147,7 +147,7 @@ def _consolidate_data(data: Any, context: Any) -> Any:
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
-    if values is not Undefined:
+    if not _is_undefined(values):
         name = _dataset_name(values)
         data = core.NamedData(name=name, **kwds)
         context.setdefault("datasets", {})[name] = values
@@ -370,11 +370,12 @@ class SelectionExpression(_expr_core.OperatorMixin):
 
 
 def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
-    if isinstance(parameter.param, (core.UndefinedType, core.VariableParameter)):
+    param = parameter.param
+    if _is_undefined(param) or isinstance(param, core.VariableParameter):
         return False
     for prop in ["fields", "encodings"]:
         try:
-            if field_name in getattr(parameter.param.select, prop):
+            if field_name in getattr(param.select, prop):
                 return True
         except (AttributeError, TypeError):
             pass
