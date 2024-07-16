@@ -132,7 +132,6 @@ __all__ = [
     "DataType",
     "Datasets",
     "DateTime",
-    "DatumChannelMixin",
     "DatumDef",
     "Day",
     "DensityTransform",
@@ -174,7 +173,6 @@ __all__ = [
     "FeatureCollection",
     "FeatureGeometryGeoJsonProperties",
     "Field",
-    "FieldChannelMixin",
     "FieldDefWithoutScale",
     "FieldEqualPredicate",
     "FieldGTEPredicate",
@@ -506,7 +504,6 @@ __all__ = [
     "VEGAEMBED_VERSION",
     "VEGALITE_VERSION",
     "VEGA_VERSION",
-    "ValueChannelMixin",
     "ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull",
     "ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull",
     "ValueDefWithConditionMarkPropFieldOrDatumDefnumber",
@@ -586,7 +583,6 @@ __all__ = [
     "load_ipython_extension",
     "load_schema",
     "mixins",
-    "overload",
     "param",
     "parse_shorthand",
     "renderers",
@@ -609,7 +605,6 @@ __all__ = [
     "vconcat",
     "vegalite",
     "vegalite_compilers",
-    "with_property_setters",
 ]
 
 
