@@ -1,4 +1,4 @@
-# ruff: noqa
+# ruff: noqa: F401, F403
 from .schema import *
 from .api import *
 
