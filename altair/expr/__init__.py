@@ -14,6 +14,8 @@ else:
 
 
 class _ConstExpressionType(type):
+    """Metaclass providing read-only class properties for :class:`expr`."""
+
     @property
     def NaN(cls) -> ConstExpression:
         """Not a number (same as JavaScript literal NaN)."""
