@@ -89,12 +89,23 @@ class expr(_ExprRef, metaclass=_ConstExpressionType):
     Examples
     --------
     >>> import altair as alt
+
     >>> bind_range = alt.binding_range(min=100, max=300, name="Slider value:  ")
-    >>> param_width = alt.param(bind=bind_range)
+    >>> param_width = alt.param(bind=bind_range, name="param_width")
     >>> param_color = alt.param(
-    ...     expr=alt.expr.if_(param_width < 200, "red", "black")
+    ...     expr=alt.expr.if_(param_width < 200, "red", "black"),
+    ...     name="param_color",
     ... )
     >>> y = alt.Y("yval").axis(titleColor=param_color)
+
+    >>> y
+    Y({
+      axis: {'titleColor': Parameter('param_color', VariableParameter({
+        expr: if((param_width < 200),'red','black'),
+        name: 'param_color'
+      }))},
+      shorthand: 'yval'
+    })
     """
 
     @override
