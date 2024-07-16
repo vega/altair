@@ -85,6 +85,7 @@ if TYPE_CHECKING:
         TopLevelSelectionParameter,
         SelectionParameter,
         InlineDataset,
+        UndefinedType,
     )
     from altair.expr.core import Expression, GetAttrExpression
     from .schema._typing import (
@@ -393,6 +394,20 @@ _ConditionType = typing.Dict[str, Union[_TestPredicateType, Any]]
 _DictOrStr = Union[typing.Dict[str, Any], str]
 _DictOrSchema = Union[core.SchemaBase, typing.Dict[str, Any]]
 _StatementType = Union[core.SchemaBase, _DictOrStr]
+
+
+def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
+    """Type-safe singleton check for ``UndefinedType``.
+
+    Notes
+    -----
+    - Using `obj is Undefined` does not narrow from ``UndefinedType`` in a union.
+        - Due to the assumption that other ``UndefinedType``'s could exist.
+    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an ``Enum``.
+        - Otherwise, requires an explicit guard to inform the type checker.
+    """
+    return obj is Undefined
+
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
