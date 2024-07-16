@@ -98,6 +98,7 @@ if TYPE_CHECKING:
         AggregateOp_T,
         MultiTimeUnit_T,
         SingleTimeUnit_T,
+        Map,
     )
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
@@ -2987,17 +2988,14 @@ class Chart(
             if validate=True and the dict does not conform to the schema
         """
         context = context or {}
+        kwds: Map = {"validate": validate, "format": format, "ignore": ignore, "context": context}  # fmt: skip
         if self.data is Undefined and "data" not in context:
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
             copy.data = core.InlineData(values=[{}])
-            return super(Chart, copy).to_dict(
-                validate=validate, format=format, ignore=ignore, context=context
-            )
-        return super().to_dict(
-            validate=validate, format=format, ignore=ignore, context=context
-        )
+            return super(Chart, copy).to_dict(**kwds)
+        return super().to_dict(**kwds)
 
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
