@@ -1,94 +1,113 @@
 from __future__ import annotations
 
 import sys
-from typing import Callable, TypeVar, TYPE_CHECKING
 import warnings
-import functools
+from typing import TYPE_CHECKING
 
-if sys.version_info >= (3, 10):
-    from typing import ParamSpec
+if sys.version_info >= (3, 13):
+    from warnings import deprecated as _deprecated
 else:
-    from typing_extensions import ParamSpec
+    from typing_extensions import deprecated as _deprecated
+
 
 if TYPE_CHECKING:
-    from functools import _Wrapped
-
-T = TypeVar("T")
-P = ParamSpec("P")
-R = TypeVar("R")
-
-
-class AltairDeprecationWarning(UserWarning):
-    pass
-
-
-def deprecated(
-    message: str | None = None,
-) -> Callable[..., type[T] | _Wrapped[P, R, P, R]]:
-    """Decorator to deprecate a function or class.
-
-    Parameters
-    ----------
-    message : string (optional)
-        The deprecation message
-    """
-
-    def wrapper(obj: type[T] | Callable[P, R]) -> type[T] | _Wrapped[P, R, P, R]:
-        return _deprecate(obj, message=message)
-
-    return wrapper
-
-
-def _deprecate(
-    obj: type[T] | Callable[P, R], name: str | None = None, message: str | None = None
-) -> type[T] | _Wrapped[P, R, P, R]:
-    """Return a version of a class or function that raises a deprecation warning.
-
-    Parameters
-    ----------
-    obj : class or function
-        The object to create a deprecated version of.
-    name : string (optional)
-        The name of the deprecated object
-    message : string (optional)
-        The deprecation message
-
-    Returns
-    -------
-    deprecated_obj :
-        The deprecated version of obj
-
-    Examples
-    --------
-    >>> class Foo: pass
-    >>> OldFoo = _deprecate(Foo, "OldFoo")
-    >>> f = OldFoo()  # doctest: +SKIP
-    AltairDeprecationWarning: alt.OldFoo is deprecated. Use alt.Foo instead.
-    """
-    if message is None:
-        message = f"alt.{name} is deprecated. Use alt.{obj.__name__} instead." ""
-    if isinstance(obj, type):
-        if name is None:
-            msg = f"Requires name, but got: {name=}"
-            raise TypeError(msg)
-        else:
-            return type(
-                name,
-                (obj,),
-                {
-                    "__doc__": obj.__doc__,
-                    "__init__": _deprecate(obj.__init__, "__init__", message),
-                },
-            )
-    elif callable(obj):
-
-        @functools.wraps(obj)
-        def new_obj(*args: P.args, **kwargs: P.kwargs) -> R:
-            warnings.warn(message, AltairDeprecationWarning, stacklevel=1)
-            return obj(*args, **kwargs)
-
-        new_obj._deprecated = True  # type: ignore[attr-defined]
-        return new_obj
+    if sys.version_info >= (3, 11):
+        from typing import LiteralString
     else:
-        msg = f"Cannot deprecate object of type {type(obj)}"
-        raise ValueError(msg)
+        from typing_extensions import LiteralString
+
+
+class AltairDeprecationWarning(DeprecationWarning): ...
+
+
+def _format_message(
+    version: LiteralString,
+    alternative: LiteralString | None,
+    message: LiteralString | None,
+    /,
+) -> LiteralString:
+    output = f"Deprecated in `altair={version}`."
+    if alternative:
+        output = f"{output} Use {alternative} instead."
+    return f"{output}\n{message}" if message else output
+
+
+# NOTE: Annotating the return type breaks `pyright` detecting [reportDeprecated]
+# NOTE: `LiteralString` requirement is introduced by stubs
+def deprecated(
+    *,
+    version: LiteralString,
+    alternative: LiteralString | None = None,
+    message: LiteralString | None = None,
+    category: type[AltairDeprecationWarning] | None = AltairDeprecationWarning,
+    stacklevel: int = 1,
+):  # te.deprecated
+    """Indicate that a class, function or overload is deprecated.
+
+    When this decorator is applied to an object, the type checker
+    will generate a diagnostic on usage of the deprecated object.
+
+    Parameters
+    ----------
+    version
+        ``altair`` version the deprecation first appeared.
+    alternative
+        Suggested replacement class/method/function.
+    message
+        Additional message appended to ``version``, ``alternative``.
+    category
+        If the *category* is ``None``, no warning is emitted at runtime.
+    stacklevel
+        The *stacklevel* determines where the
+        warning is emitted. If it is ``1`` (the default), the warning
+        is emitted at the direct caller of the deprecated object; if it
+        is higher, it is emitted further up the stack.
+        Static type checker behavior is not affected by the *category*
+        and *stacklevel* arguments.
+
+    References
+    ----------
+    [PEP 702](https://peps.python.org/pep-0702/)
+    """
+    msg = _format_message(version, alternative, message)
+    return _deprecated(msg, category=category, stacklevel=stacklevel)
+
+
+def deprecated_warn(
+    message: LiteralString,
+    *,
+    version: LiteralString,
+    alternative: LiteralString | None = None,
+    category: type[AltairDeprecationWarning] = AltairDeprecationWarning,
+    stacklevel: int = 2,
+) -> None:
+    """Indicate that the current code path is deprecated.
+
+    This should be used for non-trivial cases *only*. ``@deprecated`` should
+    always be preferred as it is recognized by static type checkers.
+
+    Parameters
+    ----------
+    message
+        Explanation of the deprecated behaviour.
+
+        .. note::
+            Unlike ``@deprecated``, this is *not* optional.
+
+    version
+        ``altair`` version the deprecation first appeared.
+    alternative
+        Suggested replacement argument/method/function.
+    category
+        The runtime warning type emitted.
+    stacklevel
+        How far up the call stack to make this warning appear.
+        A value of ``2`` attributes the warning to the caller
+        of the code calling ``deprecated_warn()``.
+
+    References
+    ----------
+    [warnings.warn](https://docs.python.org/3/library/warnings.html#warnings.warn)
+    """
+    msg = _format_message(version, alternative, message)
+    warnings.warn(msg, category=category, stacklevel=stacklevel)

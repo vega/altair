@@ -617,11 +617,12 @@ def __dir__():
     return __all__
 
 
-from .vegalite import *
-from .jupyter import JupyterChart
+from altair.vegalite import *
+from altair.jupyter import JupyterChart
+from altair.utils import AltairDeprecationWarning
 
 
 def load_ipython_extension(ipython):
-    from ._magics import vegalite
+    from altair._magics import vegalite
 
     ipython.register_magic_function(vegalite, "cell")

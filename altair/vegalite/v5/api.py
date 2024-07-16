@@ -22,9 +22,10 @@ from ...utils._vegafusion_data import (
     using_vegafusion as _using_vegafusion,
     compile_with_vegafusion as _compile_with_vegafusion,
 )
-from ...utils.data import DataType, is_data_type as _is_data_type
-from ...utils.deprecation import AltairDeprecationWarning
-from ...utils.core import to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe
+from altair.utils.data import DataType, is_data_type as _is_data_type
+from altair.utils.core import (
+    to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
+)
 
 
 if TYPE_CHECKING:
@@ -265,9 +266,7 @@ class Parameter(_expr_core.OperatorMixin):
         self.param = param
         self.param_type = param_type
 
-    @utils.deprecation.deprecated(
-        message="'ref' is deprecated. No need to call '.ref()' anymore."
-    )
+    @utils.deprecated(version="5.0.0", alternative="to_dict")
     def ref(self) -> dict:
         "'ref' is deprecated. No need to call '.ref()' anymore."
         return self.to_dict()
@@ -447,41 +446,24 @@ def param(
     parameter: Parameter
         The parameter object that can be used in chart creation.
     """
+    warn_msg = "The value of `empty` should be True or False."
+    empty_remap = {"none": False, "all": True}
     parameter = Parameter(name)
 
     if empty is not Undefined:
-        parameter.empty = empty
-        if parameter.empty == "none":
-            warnings.warn(
-                """The value of 'empty' should be True or False.""",
-                utils.AltairDeprecationWarning,
-                stacklevel=1,
-            )
-            parameter.empty = False
-        elif parameter.empty == "all":
-            warnings.warn(
-                """The value of 'empty' should be True or False.""",
-                utils.AltairDeprecationWarning,
-                stacklevel=1,
-            )
-            parameter.empty = True
-        elif (parameter.empty is False) or (parameter.empty is True):
-            pass
+        if isinstance(empty, bool) and not isinstance(empty, str):
+            parameter.empty = empty
+        elif empty in empty_remap:
+            utils.deprecated_warn(warn_msg, version="5.0.0")
+            parameter.empty = empty_remap[empty]  # type: ignore[index]
         else:
-            msg = "The value of 'empty' should be True or False."
-            raise ValueError(msg)
+            raise ValueError(warn_msg)
 
-    if "init" in kwds:
-        warnings.warn(
-            """Use 'value' instead of 'init'.""",
-            utils.AltairDeprecationWarning,
-            stacklevel=1,
-        )
+    if _init := kwds.pop("init", None):
+        utils.deprecated_warn("Use `value` instead of `init`.", version="5.0.0")
+        # If both 'value' and 'init' are set, we ignore 'init'.
         if value is Undefined:
-            kwds["value"] = kwds.pop("init")
-        else:
-            # If both 'value' and 'init' are set, we ignore 'init'.
-            kwds.pop("init")
+            kwds["value"] = _init
 
     # ignore[arg-type] comment is needed because we can also pass _expr_core.Expression
     if "select" not in kwds:
@@ -520,11 +502,10 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter
         select = core.PointSelectionConfig(type=type, **kwds)
     elif type in {"single", "multi"}:
         select = core.PointSelectionConfig(type="point", **kwds)
-        warnings.warn(
-            """The types 'single' and 'multi' are now
-        combined and should be specified using "selection_point()".""",
-            utils.AltairDeprecationWarning,
-            stacklevel=1,
+        utils.deprecated_warn(
+            "The types `single` and `multi` are now combined.",
+            version="5.0.0",
+            alternative="selection_point()",
         )
     else:
         msg = """'type' must be 'point' or 'interval'"""
@@ -533,9 +514,10 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter
     return param(select=select, **param_kwds)
 
 
-@utils.deprecation.deprecated(
-    message="""'selection' is deprecated.
-   Use 'selection_point()' or 'selection_interval()' instead; these functions also include more helpful docstrings."""
+@utils.deprecated(
+    version="5.0.0",
+    alternative="'selection_point()' or 'selection_interval()'",
+    message="These functions also include more helpful docstrings.",
 )
 def selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
     """
@@ -788,19 +770,13 @@ def selection_point(
     )
 
 
-@utils.deprecation.deprecated(
-    message="'selection_multi' is deprecated.  Use 'selection_point'"
-)
-@utils.use_signature(core.PointSelectionConfig)
+@utils.deprecated(version="5.0.0", alternative="selection_point")
 def selection_multi(**kwargs):
     """'selection_multi' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
 
 
-@utils.deprecation.deprecated(
-    message="'selection_single' is deprecated.  Use 'selection_point'"
-)
-@utils.use_signature(core.PointSelectionConfig)
+@utils.deprecated(version="5.0.0", alternative="selection_point")
 def selection_single(**kwargs):
     """'selection_single' is deprecated.  Use 'selection_point'"""
     return _selection(type="point", **kwargs)
@@ -1284,12 +1260,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             additional kwargs passed to spec_to_mimebundle.
         """
         if webdriver is not None:
-            warnings.warn(
-                "The webdriver argument is deprecated as it's not relevant for"
-                + " the new vl-convert engine which replaced altair_saver."
-                + " The argument will be removed in a future release.",
-                AltairDeprecationWarning,
-                stacklevel=1,
+            utils.deprecated_warn(
+                "The webdriver argument is not relevant for the new vl-convert engine which replaced altair_saver. "
+                "The argument will be removed in a future release.",
+                version="5.0.0",
             )
 
         from ...utils.save import save
@@ -2665,7 +2639,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             display(self)
 
-    @utils.deprecation.deprecated(message="'serve' is deprecated. Use 'show' instead.")
+    @utils.deprecated(version="4.1.0", alternative="show")
     def serve(
         self,
         ip="127.0.0.1",
@@ -3046,9 +3020,7 @@ class Chart(
             copy.params.append(s.param)
         return copy
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *params) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
@@ -3259,9 +3231,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.add_params(*params)
         return copy.copy()
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *selections) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
@@ -3374,9 +3344,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy.concat = [chart.add_params(*params) for chart in copy.concat]
         return copy
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *selections) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
@@ -3471,9 +3439,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         copy.hconcat = [chart.add_params(*params) for chart in copy.hconcat]
         return copy
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *selections) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
@@ -3570,9 +3536,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy.vconcat = [chart.add_params(*params) for chart in copy.vconcat]
         return copy
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *selections) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
@@ -3689,9 +3653,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         copy.layer[0] = copy.layer[0].add_params(*params)
         return copy.copy()
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *selections) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
@@ -3777,9 +3739,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy.spec = copy.spec.add_params(*params)
         return copy.copy()
 
-    @utils.deprecation.deprecated(
-        message="'add_selection' is deprecated. Use 'add_params' instead."
-    )
+    @utils.deprecated(version="5.0.0", alternative="add_params")
     def add_selection(self, *selections) -> Self:
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
