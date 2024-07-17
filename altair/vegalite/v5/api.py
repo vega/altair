@@ -2740,22 +2740,22 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs):
-        return _top_schema_base(self)._set_resolve(
-            axis=core.AxisResolveMap(*args, **kwargs)
-        )
+    def resolve_axis(self, *args, **kwargs) -> Self:
+        check = _top_schema_base(self)
+        r = check._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
+        return typing.cast("Self", r)
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs):
-        return _top_schema_base(self)._set_resolve(
-            legend=core.LegendResolveMap(*args, **kwargs)
-        )
+    def resolve_legend(self, *args, **kwargs) -> Self:
+        check = _top_schema_base(self)
+        r = check._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
+        return typing.cast("Self", r)
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs):
-        return _top_schema_base(self)._set_resolve(
-            scale=core.ScaleResolveMap(*args, **kwargs)
-        )
+    def resolve_scale(self, *args, **kwargs) -> Self:
+        check = _top_schema_base(self)
+        r = check._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
+        return typing.cast("Self", r)
 
 
 class _EncodingMixin(channels._EncodingMixin):
