@@ -93,6 +93,7 @@ if TYPE_CHECKING:
         SelectionResolution_T,
         SingleDefUnitChannel_T,
         StackOffset_T,
+        ResolveMode_T,
     )
 
 __all__ = [
@@ -1810,6 +1811,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         maxsteps: Optional[int] = Undefined,
         minsteps: Optional[int] = Undefined,
         steps: Optional[int] = Undefined,
+        resolve: Optional[ResolveMode_T] = Undefined,
     ) -> Self:
         """Add a :class:`DensityTransform` to the spec.
 
@@ -1850,6 +1852,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             density. If specified, overrides both minsteps and maxsteps to set an exact number
             of uniform samples. Potentially useful in conjunction with a fixed extent to ensure
             consistent sample points for stacked densities.
+        resolve : Literal['independent', 'shared']
+            Indicates how parameters for multiple densities should be resolved. If
+            ``"independent"``, each density may have its own domain extent and dynamic number of
+            curve sample steps. If ``"shared"``, the KDE transform will ensure that all
+            densities are defined over a shared domain and curve steps, enabling stacking.
+
+            **Default value:** ``"shared"``
         """
         return self._add_transform(
             core.DensityTransform(
@@ -1862,6 +1871,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 maxsteps=maxsteps,
                 minsteps=minsteps,
                 steps=steps,
+                resolve=resolve,
                 **{"as": as_},
             )
         )

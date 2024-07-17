@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Literal, Sequence
+from typing import TYPE_CHECKING, Sequence
 
 from altair.utils import use_signature
 from altair.utils.schemapi import Undefined
@@ -84,7 +84,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -291,7 +291,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -498,7 +498,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -705,7 +705,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -912,7 +912,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1119,7 +1119,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1326,7 +1326,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1533,7 +1533,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1740,7 +1740,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -1947,7 +1947,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2154,7 +2154,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2361,7 +2361,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2568,7 +2568,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2775,7 +2775,7 @@ class MarkMethodMixin:
         interpolate: Optional[
             dict | Parameter | SchemaBase | Interpolate_T
         ] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         limit: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         line: Optional[bool | dict | SchemaBase] = Undefined,
         lineBreak: Optional[str | dict | Parameter | SchemaBase] = Undefined,
@@ -2935,7 +2935,7 @@ class MarkMethodMixin:
         clip: Optional[bool] = Undefined,
         color: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         extent: Optional[str | float] = Undefined,
-        invalid: Optional[Literal["filter", None]] = Undefined,
+        invalid: Optional[None | SchemaBase | MarkInvalidDataMode_T] = Undefined,
         median: Optional[bool | dict | SchemaBase] = Undefined,
         opacity: Optional[float] = Undefined,
         orient: Optional[SchemaBase | Orientation_T] = Undefined,

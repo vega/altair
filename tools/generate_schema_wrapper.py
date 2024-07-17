@@ -26,7 +26,7 @@ from tools.schemapi.utils import (
 )
 
 
-SCHEMA_VERSION: Final = "v5.17.0"
+SCHEMA_VERSION: Final = "v5.19.0"
 
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))", re.MULTILINE)
 reSpecial = re.compile(r"[*_]{2,3}|`", re.MULTILINE)

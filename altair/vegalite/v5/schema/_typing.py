@@ -27,6 +27,7 @@ __all__ = [
     "LayoutAlign_T",
     "LegendOrient_T",
     "Map",
+    "MarkInvalidDataMode_T",
     "MarkType_T",
     "Mark_T",
     "MultiTimeUnit_T",
@@ -723,6 +724,13 @@ LegendOrient_T: TypeAlias = Literal[
     "bottom-left",
     "bottom-right",
 ]
+MarkInvalidDataMode_T: TypeAlias = Literal[
+    "filter",
+    "break-paths-filter-domains",
+    "break-paths-show-domains",
+    "break-paths-show-path-domains",
+    "show",
+]
 MarkType_T: TypeAlias = Literal[
     "arc",
     "area",
@@ -802,7 +810,7 @@ MultiTimeUnit_T: TypeAlias = Literal[
     "utcmonthdatehoursminutes",
     "utcmonthdatehoursminutesseconds",
     "utcweekday",
-    "utcweeksdayhours",
+    "utcweekdayhours",
     "utcweekdayhoursminutes",
     "utcweekdayhoursminutesseconds",
     "utcdayhours",
