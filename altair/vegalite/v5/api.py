@@ -3067,7 +3067,17 @@ class Chart(
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
 
-def _check_if_valid_subspec(spec: Any, classname: str) -> None:
+def _check_if_valid_subspec(
+    spec: Optional[SchemaBase | dict],
+    classname: Literal[
+        "ConcatChart",
+        "FacetChart",
+        "HConcatChart",
+        "LayerChart",
+        "RepeatChart",
+        "VConcatChart",
+    ],
+) -> None:
     """Check if the spec is a valid sub-spec.
 
     If it is not, then raise a ValueError
