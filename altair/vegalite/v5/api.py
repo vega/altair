@@ -432,10 +432,7 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 _TestPredicateType: TypeAlias = Union[
     str, _expr_core.Expression, core.PredicateComposition
 ]
-"""TODO
-
-Item [(2)](https://vega.github.io/vega-lite/docs/condition.html) Specifying a `test` predicate: ...
-"""
+"""https://vega.github.io/vega-lite/docs/predicate.html"""
 
 _PredicateType: TypeAlias = Union[
     Parameter,
