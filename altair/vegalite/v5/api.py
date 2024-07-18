@@ -1052,26 +1052,6 @@ def when(
         when_verbose = alt.when(verbose_composition)
         when_concise = alt.when(Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01")
     """
-    # TODO
-    # ----
-    # - Previously a note in the docstring
-    # - but probably a better fit in user guide
-    #
-    # Similar to `alt.condition` but:
-    # Allows specifiying a predicate, without a default
-    # ```py
-    # condition = (predicate, if_true)
-    # ```
-    # Allows multiple precise predicates, optionally ending with a default:
-    # ```py
-    # conditions = [
-    #     (predicate_1, if_true_1),
-    #     (predicate_2, if_true_2),
-    #     (predicate_3, if_true_3),
-    #     ...,
-    #     if_false,
-    # ]
-    # ```
     condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
     return When(condition)
 
