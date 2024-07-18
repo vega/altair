@@ -636,16 +636,11 @@ def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
             continue
 
 
-def _is_condition_extra(
-    obj: Any, *objs: Any, kwds: Map, str_as: _StrAsType
-) -> TypeIs[_Condition]:
+def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
     # NOTE: Short circuits on the first conflict.
     # 1 - Originated from parse_shorthand
     # 2 - Used a wrapper or `dict` directly, including `extra_keys`
-    if isinstance(obj, str):
-        return str_as == "shorthand"
-    else:
-        return any(_is_extra(obj, *objs, kwds=kwds))
+    return isinstance(obj, str) or any(_is_extra(obj, *objs, kwds=kwds))
 
 
 def _parse_when_constraints(
@@ -732,38 +727,28 @@ def _parse_when(
     return _predicate_to_condition(composed, empty=empty)
 
 
-def _parse_literal(val: Any, str_as: _StrAsType, /) -> dict[str, Any]:
+def _parse_literal(val: Any, /) -> dict[str, Any]:
     if isinstance(val, str):
-        if str_as in {"value", "shorthand"}:
-            r = value(val) if str_as == "value" else utils.parse_shorthand(val)
-        else:
-            msg = f"Expected one of ['shorthand', 'value'], but got: {str_as!r}"
-            raise TypeError(msg)
-    elif _is_one_or_seq_literal_value(val):
-        r = value(val)
+        return utils.parse_shorthand(val)
     else:
-        msg = f"Expected one or more literal values, but got: {type(val).__name__!r}"
+        msg = (
+            f"Expected a shorthand `str`, but got: {type(val).__name__!r}\n\n"
+            f"From `statement={val!r}`."
+        )
         raise TypeError(msg)
-    # FIXME: Once `mypy` supports https://peps.python.org/pep-0728/
-    return cast(t.Dict[str, Any], r)
 
 
-def _parse_then(
-    statement: _StatementOrLiteralType, kwds: dict[str, Any], str_as: _StrAsType
-) -> dict[str, Any]:
+def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
     if isinstance(statement, core.SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
-        statement = _parse_literal(statement, str_as)
+        statement = _parse_literal(statement)
     statement.update(kwds)
     return statement
 
 
 def _parse_otherwise(
-    statement: _StatementOrLiteralType,
-    conditions: _Conditional[Any],
-    kwds: dict[str, Any],
-    str_as: _StrAsType,
+    statement: _StatementType, conditions: _Conditional[Any], kwds: dict[str, Any], /
 ) -> SchemaBase | _Conditional[Any]:
     selection: SchemaBase | _Conditional[Any]
     if isinstance(statement, core.SchemaBase):
@@ -772,7 +757,7 @@ def _parse_otherwise(
         selection.condition = conditions["condition"]
     else:
         if not isinstance(statement, t.Mapping):
-            statement = _parse_literal(statement, str_as)
+            statement = _parse_literal(statement)
         selection = conditions
         selection.update(**statement, **kwds)  # type: ignore[call-arg]
     return selection
@@ -783,13 +768,10 @@ class _BaseWhen(Protocol):
     _condition: _ConditionType
 
     def _when_then(
-        self,
-        statement: _StatementOrLiteralType,
-        kwds: dict[str, Any],
-        str_as: _StrAsType,
+        self, statement: _StatementType, kwds: dict[str, Any], /
     ) -> _ConditionClosed | _Condition:
         condition: Any = _deepcopy(self._condition)
-        then = _parse_then(statement, kwds, str_as)
+        then = _parse_then(statement, kwds)
         condition.update(then)
         return condition
 
@@ -810,30 +792,14 @@ class When(_BaseWhen):
         self._condition = condition
 
     @overload
-    def then(
-        self, statement: str, *, str_as: Literal["value"] = ..., **kwds: Any
-    ) -> Then[_Conditions]: ...
+    def then(self, statement: str, /, **kwds: Any) -> Then[_Condition]: ...
+    @overload
+    def then(self, statement: _Value, /, **kwds: Any) -> Then[_Conditions]: ...
     @overload
     def then(
-        self, statement: str, *, str_as: Literal["shorthand"], **kwds: Any
-    ) -> Then[_Condition]: ...
-    @overload
-    def then(
-        self,
-        statement: _Value | _LiteralNumeric | Sequence[_LiteralNumeric],
-        **kwds: Any,
-    ) -> Then[_Conditions]: ...
-    @overload
-    def then(
-        self, statement: dict[str, Any] | SchemaBase, **kwds: Any
+        self, statement: dict[str, Any] | SchemaBase, /, **kwds: Any
     ) -> Then[Any]: ...
-    def then(
-        self,
-        statement: _StatementOrLiteralType,
-        *,
-        str_as: _StrAsType = "value",
-        **kwds: Any,
-    ) -> Then[Any]:
+    def then(self, statement: _StatementType, /, **kwds: Any) -> Then[Any]:
         """Attach a statement to this predicate.
 
         Parameters
@@ -852,8 +818,8 @@ class When(_BaseWhen):
         -------
         :class:`Then`
         """
-        condition = self._when_then(statement, kwds, str_as)
-        if _is_condition_extra(condition, statement, kwds=kwds, str_as=str_as):
+        condition = self._when_then(statement, kwds)
+        if _is_condition_extra(condition, statement, kwds=kwds):
             return Then(_Conditional(condition=condition))
         else:
             return Then(_Conditional(condition=[condition]))
@@ -881,29 +847,19 @@ class Then(core.SchemaBase, t.Generic[_C]):
         self.condition: _C
 
     @overload
-    def otherwise(
-        self, statement: _TSchemaBase, *, str_as: _StrAsType = ..., **kwds: Any
-    ) -> _TSchemaBase: ...
+    def otherwise(self, statement: _TSchemaBase, /, **kwds: Any) -> _TSchemaBase: ...
+    @overload
+    def otherwise(self, statement: str, /, **kwds: Any) -> _Conditional[_Condition]: ...
     @overload
     def otherwise(
-        self,
-        statement: _Value | _LiteralNumeric | Sequence[_LiteralNumeric],
-        **kwds: Any,
+        self, statement: _Value, /, **kwds: Any
     ) -> _Conditional[_Conditions]: ...
     @overload
     def otherwise(
-        self,
-        statement: Map | _OneOrSeqLiteralValue,
-        *,
-        str_as: _StrAsType = ...,
-        **kwds: Any,
+        self, statement: dict[str, Any], /, **kwds: Any
     ) -> _Conditional[Any]: ...
     def otherwise(
-        self,
-        statement: _StatementOrLiteralType,
-        *,
-        str_as: _StrAsType = "value",
-        **kwds: Any,
+        self, statement: _StatementType, /, **kwds: Any
     ) -> SchemaBase | _Conditional[Any]:
         """Finalize the condition with a default value.
 
@@ -923,7 +879,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             Additional keyword args are added to the resulting ``dict``.
         """
         conditions: _Conditional[Any]
-        is_extra = functools.partial(_is_condition_extra, kwds=kwds, str_as=str_as)
+        is_extra = functools.partial(_is_condition_extra, kwds=kwds)
         if is_extra(self.condition, statement):
             current = self.condition
             if isinstance(current, list) and len(current) == 1:
@@ -938,7 +894,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
                     msg = (
                         f"Only one field may be used within a condition.\n"
                         f"Shorthand {statement!r} would conflict with {cond!r}\n\n"
-                        f"Pass `str_as='value'` if {statement!r} is not shorthand."
+                        f"Use `alt.value({statement!r})` if this is not a shorthand string."
                     )
                     raise TypeError(msg)
             else:
@@ -950,7 +906,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
                 raise TypeError(msg)
         else:
             conditions = self.to_dict()
-        return _parse_otherwise(statement, conditions, kwds, str_as)
+        return _parse_otherwise(statement, conditions, kwds)
 
     def when(
         self,
@@ -1032,13 +988,7 @@ class ChainedWhen(_BaseWhen):
         self._condition = condition
         self._conditions = conditions
 
-    def then(
-        self,
-        statement: _StatementOrLiteralType,
-        *,
-        str_as: _StrAsType = "value",
-        **kwds: Any,
-    ) -> Then[_Conditions]:
+    def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
         """Attach a statement to this predicate.
 
         Parameters
@@ -1057,7 +1007,7 @@ class ChainedWhen(_BaseWhen):
         -------
         :class:`Then`
         """
-        condition = self._when_then(statement, kwds, str_as)
+        condition = self._when_then(statement, kwds)
         conditions = self._conditions.copy()
         conditions["condition"].append(condition)
         return Then(conditions)
