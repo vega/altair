@@ -482,6 +482,45 @@ def test_when_then_when_then_otherwise() -> None:
     chart.to_dict()
 
 
+def test_when_multi_channel_param(cars):
+    """Adapted from [2236376458](https://github.com/vega/altair/pull/3427#issuecomment-2236376458)"""
+    brush = alt.selection_interval()
+    hover = alt.selection_point(on="pointerover", nearest=True, empty=False)
+
+    chart_1 = (
+        alt.Chart(cars)
+        .mark_rect()
+        .encode(
+            x="Cylinders:N",
+            y="Origin:N",
+            color=alt.when(brush).then("count()").otherwise(alt.value("grey")),
+            opacity=alt.when(brush).then(alt.value(1)).otherwise(alt.value(0.6)),
+        )
+        .add_params(brush)
+    )
+    chart_1.to_dict()
+
+    color = alt.when(hover).then(alt.value("coral")).otherwise(alt.value("lightgray"))
+
+    chart_2 = (
+        alt.Chart(cars, title="Selection obscured by other points")
+        .mark_circle(opacity=1)
+        .encode(
+            x="Horsepower:Q",
+            y="Miles_per_Gallon:Q",
+            color=color,
+            size=alt.when(hover).then(alt.value(300)).otherwise(alt.value(30)),
+        )
+        .add_params(hover)
+    )
+
+    chart_3 = chart_2 | chart_2.encode(
+        order=alt.when(hover).then(alt.value(1)).otherwise(alt.value(0))
+    ).properties(title="Selection brought to front")
+
+    chart_3.to_dict()
+
+
 def test_when_labels_position_based_on_condition() -> None:
     """Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
 
