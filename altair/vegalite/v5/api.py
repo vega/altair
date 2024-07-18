@@ -524,8 +524,11 @@ def _predicate_to_condition(
     elif isinstance(predicate, _expr_core.OperatorMixin):
         condition = {"test": predicate._to_expr()}
     else:
-        msg = f"condition predicate of type {type(predicate).__name__!r}"
-        raise NotImplementedError(msg)
+        msg = (
+            f"Expected a predicate, but got: {type(predicate).__name__!r}\n\n"
+            f"From `predicate={predicate!r}`."
+        )
+        raise TypeError(msg)
     return condition
 
 
