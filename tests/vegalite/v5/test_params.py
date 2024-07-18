@@ -117,15 +117,13 @@ def test_parameter_naming():
 
 
 def test_selection_expression():
-    from altair.expr.core import Expression
-
     data = pd.DataFrame([{"a": "A", "b": 28}])
 
     sel = alt.selection_point(fields=["b"])
     se = sel.b | 300
 
     assert isinstance(se, alt.SelectionExpression)
-    assert isinstance(se.expr, Expression)
+    assert isinstance(se.expr, alt.expr.core.Expression)
 
     c = (
         alt.Chart(data)

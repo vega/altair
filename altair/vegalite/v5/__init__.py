@@ -2,7 +2,8 @@
 from .schema import *
 from .api import *
 
-from altair.expr.core import datum
+from ...expr import datum, expr
+
 from .display import VegaLite, renderers
 from .compiler import vegalite_compilers
 
