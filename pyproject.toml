@@ -118,7 +118,6 @@ generate-schema-wrapper = [
 ]
 test = [
     "ruff check .",
-    "ruff format .",
     "ruff format --diff --check .",
     "mypy altair tests",
     "python -m pytest --pyargs --numprocesses=logical --doctest-modules tests altair",
@@ -311,7 +310,6 @@ ignore = [
     # suppressible-exception
     # https://github.com/vega/altair/pull/3431#discussion_r1629808660
     "SIM105",
-    "PT001",
 ]
 
 # https://docs.astral.sh/ruff/settings/#lint_unfixable

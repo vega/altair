@@ -91,7 +91,7 @@ def basic_chart():
     return alt.Chart(data).mark_bar().encode(x="a", y="b")
 
 
-@pytest.fixture()
+@pytest.fixture
 def cars():
     return pd.DataFrame(
         {
