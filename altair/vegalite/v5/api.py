@@ -485,10 +485,6 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
 
-def _is_composable_type(obj: Any) -> TypeIs[_ComposablePredicateType]:
-    return isinstance(obj, (_expr_core.OperatorMixin, SelectionPredicateComposition))
-
-
 def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
     """Type-safe singleton check for `UndefinedType`.
 
@@ -651,7 +647,7 @@ def _validate_composables(
     predicates: Iterable[Any], /
 ) -> Iterator[_ComposablePredicateType]:
     for p in predicates:
-        if _is_composable_type(p):
+        if isinstance(p, (_expr_core.OperatorMixin, SelectionPredicateComposition)):
             yield p
         else:
             msg = (
