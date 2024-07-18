@@ -181,7 +181,7 @@ TIMEUNITS = [
     "utcmonthdatehoursminutes",
     "utcmonthdatehoursminutesseconds",
     "utcweekday",
-    "utcweeksdayhours",
+    "utcweekdayhours",
     "utcweekdayhoursminutes",
     "utcweekdayhoursminutesseconds",
     "utcdayhours",

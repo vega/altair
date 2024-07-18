@@ -404,6 +404,7 @@ Low-Level Schema Wrappers
    Mark
    MarkConfig
    MarkDef
+   MarkInvalidDataMode
    MarkPropDefGradientstringnull
    MarkPropDefnumber
    MarkPropDefnumberArray
@@ -484,6 +485,41 @@ Low-Level Schema Wrappers
    ScaleFieldDef
    ScaleInterpolateEnum
    ScaleInterpolateParams
+   ScaleInvalidDataConfig
+   ScaleInvalidDataShowAsValueangle
+   ScaleInvalidDataShowAsValuecolor
+   ScaleInvalidDataShowAsValuefill
+   ScaleInvalidDataShowAsValuefillOpacity
+   ScaleInvalidDataShowAsValueopacity
+   ScaleInvalidDataShowAsValueradius
+   ScaleInvalidDataShowAsValueshape
+   ScaleInvalidDataShowAsValuesize
+   ScaleInvalidDataShowAsValuestroke
+   ScaleInvalidDataShowAsValuestrokeDash
+   ScaleInvalidDataShowAsValuestrokeOpacity
+   ScaleInvalidDataShowAsValuestrokeWidth
+   ScaleInvalidDataShowAsValuetheta
+   ScaleInvalidDataShowAsValuex
+   ScaleInvalidDataShowAsValuexOffset
+   ScaleInvalidDataShowAsValuey
+   ScaleInvalidDataShowAsValueyOffset
+   ScaleInvalidDataShowAsangle
+   ScaleInvalidDataShowAscolor
+   ScaleInvalidDataShowAsfill
+   ScaleInvalidDataShowAsfillOpacity
+   ScaleInvalidDataShowAsopacity
+   ScaleInvalidDataShowAsradius
+   ScaleInvalidDataShowAsshape
+   ScaleInvalidDataShowAssize
+   ScaleInvalidDataShowAsstroke
+   ScaleInvalidDataShowAsstrokeDash
+   ScaleInvalidDataShowAsstrokeOpacity
+   ScaleInvalidDataShowAsstrokeWidth
+   ScaleInvalidDataShowAstheta
+   ScaleInvalidDataShowAsx
+   ScaleInvalidDataShowAsxOffset
+   ScaleInvalidDataShowAsy
+   ScaleInvalidDataShowAsyOffset
    ScaleResolveMap
    ScaleType
    SchemaBase
