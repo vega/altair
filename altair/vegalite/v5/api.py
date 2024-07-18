@@ -786,11 +786,9 @@ class When(_BaseWhen):
         ----------
         statement
             A spec or value to use when the preceding :func:`.when()` clause is true.
-        str_as
-            Wrap strings in :func:`.value()` or encode as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
 
             .. note::
-                ``str_as="shorthand"`` is the behavior used in :func:`.condition()`.
+                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
@@ -850,11 +848,9 @@ class Then(core.SchemaBase, t.Generic[_C]):
 
             .. note::
                 Roughly equivalent to an ``else`` clause.
-        str_as
-            Wrap strings in :func:`.value()` or encode as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
 
             .. note::
-                ``str_as="shorthand"`` is the behavior used in :func:`.condition()`.
+                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
         """
@@ -975,11 +971,9 @@ class ChainedWhen(_BaseWhen):
         ----------
         statement
             A spec or value to use when the preceding :meth:`Then.when()` clause is true.
-        str_as
-            Wrap strings in :func:`.value()` or encode as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
 
             .. note::
-                ``str_as="shorthand"`` is the behavior used in :func:`.condition()`.
+                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
 
