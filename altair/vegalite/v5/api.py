@@ -47,7 +47,10 @@ if sys.version_info >= (3, 13):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
-
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
     from ...utils.core import DataFrameLike
@@ -127,23 +130,9 @@ if TYPE_CHECKING:
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
-
-_LiteralNumeric: TypeAlias = Union[bool, float, int]
-"""Non-string primitive python value types.
-
-Special-cases `str`, for use in `parse_shorthand`.
-"""
-
-_LiteralValue: TypeAlias = Union[str, _LiteralNumeric]
-"""Primitive python value types."""
-
-_OneOrSeqLiteralValue: TypeAlias = Union[_LiteralValue, Sequence[_LiteralValue]]
-"""Primitive python value types, or a `Sequence` of such.
-
-For restricting inputs passed to `alt.value`.
-"""
-
-_StrAsType: TypeAlias = Literal["shorthand", "value"]
+_T = TypeVar("_T")
+_OneOrSeq = TypeAliasType("_OneOrSeq", Union[_T, Sequence[_T]], type_params=(_T,))
+"""One of ``_T`` specified type(s), or a `Sequence` of such."""
 
 
 # ------------------------------------------------------------------------
@@ -464,14 +453,15 @@ else:
 ```
 """
 
-_StatementOrLiteralType: TypeAlias = Union[_StatementType, _OneOrSeqLiteralValue]
-"""Extended types when allowing input to be wrapped in `alt.value`."""
 
 _ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
 """Intermediate type representing a converted `_PredicateType`.
 
 Prior to parsing any `_StatementType`.
 """
+
+_LiteralValue: TypeAlias = Union[str, bool, float, int]
+"""Primitive python value types."""
 
 _FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
 """Permitted types for equality checks on field values:
@@ -488,16 +478,6 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
 
 def _is_composable_type(obj: Any) -> TypeIs[_ComposablePredicateType]:
     return isinstance(obj, (_expr_core.OperatorMixin, SelectionPredicateComposition))
-
-
-def _is_literal_value(obj: Any) -> TypeIs[_LiteralValue]:
-    return isinstance(obj, (str, bool, float, int))
-
-
-def _is_one_or_seq_literal_value(obj: Any) -> TypeIs[_OneOrSeqLiteralValue]:
-    return _is_literal_value(obj) or (
-        isinstance(obj, Sequence) and all(_is_literal_value(el) for el in obj)
-    )
 
 
 def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
@@ -597,7 +577,7 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
     param: Parameter | str
     test: _TestPredicateType
     value: Any
-    __extra_items__: _StatementOrLiteralType
+    __extra_items__: _StatementType | _OneOrSeq[_LiteralValue]
 
 
 _Condition: TypeAlias = _ConditionExtra
