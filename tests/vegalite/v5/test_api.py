@@ -401,7 +401,7 @@ def test_when_then() -> None:
     assert isinstance(condition, list)
     assert condition[-1].get("value") == 5
 
-    with pytest.raises(TypeError, match=r"literal.+Path"):
+    with pytest.raises(TypeError, match=r"Path"):
         when.then(pathlib.Path("some"))  # type: ignore
 
     with pytest.raises(TypeError, match="float"):
@@ -412,22 +412,19 @@ def test_when_then_only(basic_chart) -> None:
     """`Then` is an acceptable encode argument."""
 
     select = alt.selection_point(name="select", on="click")
-    when = alt.when(select)
-    when_then = when.then(alt.value(5))
 
-    assert when_then.to_dict() == when.then(5).to_dict()
-    basic_chart.encode(fillOpacity=when_then).to_dict()
+    basic_chart.encode(fillOpacity=alt.when(select).then(alt.value(5))).to_dict()
 
 
 def test_when_then_otherwise() -> None:
     select = alt.selection_point(name="select", on="click")
     when_then = alt.when(select).then(alt.value(2, empty=False))
     when_then_otherwise = when_then.otherwise(alt.value(0))
-    short = alt.when(select).then(2, empty=False).otherwise(0)
-    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
-    when_then.otherwise([1, 2, 3])
 
-    assert when_then_otherwise == short
+    expected = alt.condition(select, alt.value(2, empty=False), alt.value(0))
+    with pytest.raises(TypeError, match="list"):
+        when_then.otherwise([1, 2, 3])  # type: ignore
+
     # Needed to modify to a list of conditions,
     # which isn't possible in `condition`
     single_condition = expected.pop("condition")
@@ -464,7 +461,6 @@ def test_when_then_when_then_otherwise() -> None:
     with pytest.raises(TypeError, match="set"):
         when_then_when_then.otherwise({"five", "six"})  # type: ignore
 
-    actual_stroke = when_then_when_then.otherwise(0)
     expected_stroke = {
         "condition": [
             {"param": "select", "empty": False, "value": 2},
@@ -472,17 +468,14 @@ def test_when_then_when_then_otherwise() -> None:
         ],
         "value": 0,
     }
+    actual_stroke = when_then_when_then.otherwise(alt.value(0))
+    fill_opacity = alt.when(select).then(alt.value(1)).otherwise(alt.value(0.3))
 
     assert expected_stroke == actual_stroke
     chart = (
         alt.Chart(data)
         .mark_bar(fill="#4C78A8", stroke="black", cursor="pointer")
-        .encode(
-            x="a:O",
-            y="b:Q",
-            fillOpacity=alt.when(select).then(1).otherwise(0.3),
-            strokeWidth=actual_stroke,
-        )
+        .encode(x="a:O", y="b:Q", fillOpacity=fill_opacity, strokeWidth=actual_stroke)
         .configure_scale(bandPaddingInner=0.2)
         .add_params(select, highlight)
     )
@@ -510,7 +503,14 @@ def test_when_labels_position_based_on_condition() -> None:
     param_color_py_expr = alt.param(
         expr=alt.expr.if_(param_width_lt_200, "red", "black")
     )
-    when = alt.when(param_width_lt_200).then("red").otherwise("black")
+    when = (
+        alt.when(param_width_lt_200)
+        .then(alt.value("red"))
+        .otherwise(alt.value("black"))
+    )
+
+    # NOTE: If the `@overload` signatures change,
+    # `mypy` will flag structural errors here
     cond = when["condition"][0]
     otherwise = when["value"]
     param_color_py_when = alt.param(
@@ -540,16 +540,18 @@ def test_when_expressions_inside_parameters() -> None:
 
     Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
     """
-    import pandas as pd
+    import polars as pl
 
-    source = pd.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
+    source = pl.DataFrame({"a": ["A", "B", "C"], "b": [28, -5, 10]})
 
     bar = (
         alt.Chart(source)
         .mark_bar()
         .encode(y="a:N", x=alt.X("b:Q").scale(domain=[-10, 35]))
     )
-    when_then_otherwise = alt.when(alt.datum.b >= 0).then(10).otherwise(-20)
+    when_then_otherwise = (
+        alt.when(alt.datum.b >= 0).then(alt.value(10)).otherwise(alt.value(-20))
+    )
     cond = when_then_otherwise["condition"][0]
     otherwise = when_then_otherwise["value"]
     expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
@@ -564,14 +566,15 @@ def test_when_expressions_inside_parameters() -> None:
     chart.to_dict()
 
 
-def test_when_stress():
+def test_when_multiple_fields():
     # Triggering structural errors
+    # https://vega.github.io/vega-lite/docs/condition.html#field
     brush = alt.selection_interval()
     select_x = alt.selection_interval(encodings=["x"])
     when = alt.when(brush)
     reveal_msg = re.compile(r"Only one field.+Shorthand 'max\(\)'", flags=re.DOTALL)
     with pytest.raises(TypeError, match=reveal_msg):
-        when.then("count()", str_as="shorthand").otherwise("max()", str_as="shorthand")
+        when.then("count()").otherwise("max()")
 
     chain_mixed_msg = re.compile(
         r"Chained.+mixed.+conflict.+\{'field': 'field_1', 'type': 'quantitative'\}.+otherwise",
@@ -583,16 +586,16 @@ def test_when_stress():
         )
 
     with pytest.raises(TypeError, match=chain_mixed_msg):
-        when.then("field_1:Q", str_as="shorthand").when(Genre="pop")
+        when.then("field_1:Q").when(Genre="pop")
 
     chain_otherwise_msg = re.compile(
         r"Chained.+mixed.+field.+AggregatedFieldDef.+'this_field_here'",
         flags=re.DOTALL,
     )
     with pytest.raises(TypeError, match=chain_otherwise_msg):
-        when.then(5).when(
+        when.then(alt.value(5)).when(
             alt.selection_point(fields=["b"]) | brush, empty=False, b=63812
-        ).then("min(foo):Q", str_as="shorthand").otherwise(
+        ).then("min(foo):Q").otherwise(
             alt.AggregatedFieldDef(
                 "argmax", field="field_9", **{"as": "this_field_here"}
             )
@@ -638,11 +641,7 @@ def test_when_condition_parity(
         .to_dict()
     )
 
-    input_when = (
-        alt.when(when, empty=empty)
-        .then(then, str_as="shorthand")
-        .otherwise(otherwise, str_as="shorthand")
-    )
+    input_when = alt.when(when, empty=empty).then(then).otherwise(otherwise)
     chart_when = (
         alt.Chart(cars)
         .mark_rect()
