@@ -666,7 +666,7 @@ def _parse_when_compose(
     constraints: dict[str, _FieldEqualType],
     /,
 ) -> BinaryExpression:
-    """Compose an `AND` reduction predicate.
+    """Compose an `&` reduction predicate.
 
     Parameters
     ----------
