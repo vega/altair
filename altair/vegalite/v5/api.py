@@ -1009,7 +1009,7 @@ def when(
         A selection or test predicate. ``str`` input will be treated as a test operand.
 
         .. note::
-            accepts the same range of inputs as in :func:`.condition()`.
+            Accepts the same range of inputs as in :func:`.condition()`.
     *more_predicates
         Additional predicates, restricted to types supporting ``&``.
     empty
