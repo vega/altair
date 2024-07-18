@@ -205,6 +205,10 @@ SHORTHAND_UNITS = {
     "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
 }
 
+SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
+    frozenset(("field", "aggregate", "type", "timeUnit"))
+)
+
 
 def infer_vegalite_type_for_pandas(
     data: object,

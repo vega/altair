@@ -613,17 +613,15 @@ class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
 
 
 def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
-    # Helper for producing a useful error message
-    short = {"field", "aggregate", "type", "timeUnit"}
-    return {k: v for k, v in obj.items() if k in short}
+    # Helper for producing error message on multiple field collision.
+    return {k: v for k, v in obj.items() if k in utils.SHORTHAND_KEYS}
 
 
 def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
-    extra_keys = {"field", "aggregate", "type", "timeUnit"}
     for el in objs:
         if isinstance(el, (core.SchemaBase, t.Mapping)):
             item = el.to_dict(validate=False) if isinstance(el, core.SchemaBase) else el
-            yield not (item.keys() - kwds.keys()).isdisjoint(extra_keys)
+            yield not (item.keys() - kwds.keys()).isdisjoint(utils.SHORTHAND_KEYS)
         else:
             continue
 
