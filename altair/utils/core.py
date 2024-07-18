@@ -12,17 +12,7 @@ import re
 import sys
 import traceback
 import warnings
-from typing import (
-    Callable,
-    TypeVar,
-    Any,
-    Iterator,
-    cast,
-    Literal,
-    Protocol,
-    TYPE_CHECKING,
-    runtime_checkable,
-)
+from typing import Callable, TypeVar, Any, Iterator, cast, Literal, TYPE_CHECKING
 from itertools import groupby
 from operator import itemgetter
 
@@ -33,6 +23,10 @@ from narwhals.typing import IntoDataFrame
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
+if sys.version_info >= (3, 12):
+    from typing import runtime_checkable, Protocol
+else:
+    from typing_extensions import runtime_checkable, Protocol
 if sys.version_info >= (3, 10):
     from typing import ParamSpec
 else:
@@ -198,6 +192,22 @@ TIMEUNITS = [
     "utcminutesseconds",
     "utcsecondsmilliseconds",
 ]
+
+VALID_TYPECODES = list(itertools.chain(iter(TYPECODE_MAP), iter(INV_TYPECODE_MAP)))
+
+SHORTHAND_UNITS = {
+    "field": "(?P<field>.*)",
+    "type": "(?P<type>{})".format("|".join(VALID_TYPECODES)),
+    "agg_count": "(?P<aggregate>count)",
+    "op_count": "(?P<op>count)",
+    "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
+    "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+    "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+}
+
+SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
+    frozenset(("field", "aggregate", "type", "timeUnit"))
+)
 
 
 def infer_vegalite_type_for_pandas(
@@ -577,18 +587,6 @@ def parse_shorthand(
     if not shorthand:
         return {}
 
-    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
-
-    units = {
-        "field": "(?P<field>.*)",
-        "type": "(?P<type>{})".format("|".join(valid_typecodes)),
-        "agg_count": "(?P<aggregate>count)",
-        "op_count": "(?P<op>count)",
-        "aggregate": "(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        "window_op": "(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
-    }
-
     patterns = []
 
     if parse_aggregates:
@@ -606,7 +604,8 @@ def parse_shorthand(
         patterns = list(itertools.chain(*((p + ":{type}", p) for p in patterns)))
 
     regexps = (
-        re.compile(r"\A" + p.format(**units) + r"\Z", re.DOTALL) for p in patterns
+        re.compile(r"\A" + p.format(**SHORTHAND_UNITS) + r"\Z", re.DOTALL)
+        for p in patterns
     )
 
     # find matches depending on valid fields passed

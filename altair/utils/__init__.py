@@ -8,6 +8,7 @@ from .core import (
     update_nested,
     display_traceback,
     SchemaBase,
+    SHORTHAND_KEYS,
 )
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
@@ -16,6 +17,7 @@ from .schemapi import Undefined, Optional
 
 
 __all__ = (
+    "SHORTHAND_KEYS",
     "AltairDeprecationWarning",
     "Optional",
     "PluginRegistry",
