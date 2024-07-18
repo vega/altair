@@ -437,7 +437,7 @@ _PredicateType: TypeAlias = Union[
 _ComposablePredicateType: TypeAlias = Union[
     _expr_core.OperatorMixin, SelectionPredicateComposition
 ]
-"""Permitted types for `AND` reduced predicates."""
+"""Permitted types for `&` reduced predicates."""
 
 _StatementType: TypeAlias = Union[core.SchemaBase, Map, str]
 """Permitted types for `if_true`/`if_false`.
