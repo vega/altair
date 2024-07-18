@@ -132,7 +132,19 @@ ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generat
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
 _T = TypeVar("_T")
 _OneOrSeq = TypeAliasType("_OneOrSeq", Union[_T, Sequence[_T]], type_params=(_T,))
-"""One of ``_T`` specified type(s), or a `Sequence` of such."""
+"""One of ``_T`` specified type(s), or a `Sequence` of such.
+
+Examples
+--------
+The parameters ``short``, ``long`` accept the same range of types::
+
+    # ruff: noqa: UP006, UP007
+
+    def func(
+        short: _OneOrSeq[str | bool | float],
+        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+    ): ...
+"""
 
 
 # ------------------------------------------------------------------------
