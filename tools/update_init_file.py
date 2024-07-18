@@ -36,6 +36,7 @@ _TYPING_CONSTRUCTS = {
     t.TypedDict,
     te.Self,
     te.deprecated,
+    te.TypeAliasType,
 }
 
 
