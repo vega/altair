@@ -94,10 +94,7 @@ def test_expr_funcs(veganame: str, methodname: str):
     assert repr(z) == f"{veganame}(datum.xxx)"
 
 
-@pytest.mark.parametrize(
-    "constname",
-    _get_property_names(_ConstExpressionType),
-)
+@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
 def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts"""
 
@@ -106,10 +103,7 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
-@pytest.mark.parametrize(
-    "constname",
-    _get_property_names(_ConstExpressionType),
-)
+@pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     if sys.version_info >= (3, 11):
