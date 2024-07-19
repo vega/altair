@@ -1527,8 +1527,9 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
 
 
 @pytest.mark.skipif(
-    sys.version_info < (3, 10),
-    reason="ibis requires 'python>=3.10'",
+    sys.version_info < (3, 9),
+    reason="The maximum `ibis` version installable on Python 3.8 is `ibis==5.1.0`,"
+    " which doesn't support the dataframe interchange protocol.",
 )
 @pytest.mark.skipif(
     Version("1.5") > PANDAS_VERSION,
