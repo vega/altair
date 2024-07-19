@@ -1527,6 +1527,10 @@ def test_polars_with_pandas_nor_pyarrow(monkeypatch: pytest.MonkeyPatch):
 
 
 @pytest.mark.skipif(
+    sys.version_info < (3, 10),
+    reason="ibis requires 'python>=3.10'",
+)
+@pytest.mark.skipif(
     Version("1.5") > PANDAS_VERSION,
     reason="A warning is thrown on old pandas versions",
 )
