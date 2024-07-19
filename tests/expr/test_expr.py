@@ -1,14 +1,38 @@
+from __future__ import annotations
+
 import operator
 import sys
-import pytest
+from inspect import classify_class_attrs, getmembers
+from typing import Any, Iterator
 
-from altair import expr
-from altair import datum
-from altair import ExprRef
+import pytest
 from jsonschema.exceptions import ValidationError
-from altair.expr.funcs import NAME_MAP
-from altair.expr.funcs import FUNCTION_LISTING
-from altair.expr.consts import CONST_LISTING
+
+from altair import ExprRef, datum, expr
+from altair.expr import _ConstExpressionType
+
+# This maps vega expression function names to the Python name
+VEGA_REMAP = {"if_": "if"}
+
+
+def _is_property(obj: Any, /) -> bool:
+    return isinstance(obj, property)
+
+
+def _get_classmethod_names(tp: type[Any], /) -> Iterator[str]:
+    for m in classify_class_attrs(tp):
+        if m.kind == "class method" and m.defining_class is tp:
+            yield m.name
+
+
+def _remap_classmethod_names(tp: type[Any], /) -> Iterator[tuple[str, str]]:
+    for name in _get_classmethod_names(tp):
+        yield VEGA_REMAP.get(name, name), name
+
+
+def _get_property_names(tp: type[Any], /) -> Iterator[str]:
+    for nm, _ in getmembers(tp, _is_property):
+        yield nm
 
 
 def test_unary_operations():
@@ -62,10 +86,7 @@ def test_abs():
     assert repr(z) == "abs(datum.xxx)"
 
 
-@pytest.mark.parametrize(
-    ("veganame", "methodname"),
-    {nm: (NAME_MAP.get(nm, nm)) for nm in FUNCTION_LISTING}.items(),
-)
+@pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
 def test_expr_funcs(veganame: str, methodname: str):
     """test all functions defined in expr.funcs"""
     func = getattr(expr, methodname)
@@ -73,7 +94,10 @@ def test_expr_funcs(veganame: str, methodname: str):
     assert repr(z) == f"{veganame}(datum.xxx)"
 
 
-@pytest.mark.parametrize("constname", CONST_LISTING)
+@pytest.mark.parametrize(
+    "constname",
+    _get_property_names(_ConstExpressionType),
+)
 def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts"""
 
@@ -82,7 +106,10 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
-@pytest.mark.parametrize("constname", CONST_LISTING)
+@pytest.mark.parametrize(
+    "constname",
+    _get_property_names(_ConstExpressionType),
+)
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     if sys.version_info >= (3, 11):
