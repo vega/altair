@@ -66,7 +66,7 @@ all = [
 ]
 dev = [
     "hatch",
-    "ruff>=0.5.1",
+    "ruff>=0.5.3",
     "ibis-framework",
     "ipython",
     "pandas>=0.25.3",
@@ -310,14 +310,6 @@ ignore = [
     # suppressible-exception
     # https://github.com/vega/altair/pull/3431#discussion_r1629808660
     "SIM105",
-]
-
-# https://docs.astral.sh/ruff/settings/#lint_unfixable
-unfixable= [
-    # unspecified-encoding
-    # The autofix is unsafe and doesn't reliably produce `utf-8`.
-    # However, it still needs to be flagged as error until `python>=3.10`.
-    "PLW1514"
 ]
 
 [tool.ruff.lint.mccabe]

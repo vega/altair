@@ -1,14 +1,27 @@
 from __future__ import annotations
 
+import sys
 import warnings
 import hashlib
 import io
 import json
 import jsonschema
 import itertools
-from typing import Union, Any, Iterable, Literal, IO, TYPE_CHECKING
+from typing import (
+    Any,
+    overload,
+    Literal,
+    Union,
+    TYPE_CHECKING,
+    TypeVar,
+    Sequence,
+    Protocol,
+)
 from typing_extensions import TypeAlias
-import typing
+import typing as t
+import functools
+import operator
+from copy import deepcopy as _deepcopy
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
 from altair.utils import Optional
@@ -26,22 +39,31 @@ from altair.utils.data import DataType, is_data_type as _is_data_type
 from altair.utils.core import (
     to_eager_narwhals_dataframe as _to_eager_narwhals_dataframe,
 )
+from .schema._typing import Map
 
+if sys.version_info >= (3, 13):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+if sys.version_info >= (3, 12):
+    from typing import TypeAliasType
+else:
+    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
-    import sys
     from ...utils.core import DataFrameLike
-
     from pathlib import Path
+    from typing import Iterable, IO, Iterator
 
     if sys.version_info >= (3, 13):
-        from typing import TypeIs
+        from typing import TypeIs, Required
     else:
-        from typing_extensions import TypeIs
+        from typing_extensions import TypeIs, Required
     if sys.version_info >= (3, 11):
-        from typing import Self
+        from typing import Self, Never
     else:
-        from typing_extensions import Self
+        from typing_extensions import Self, Never
+
     from .schema.channels import Facet, Row, Column
     from .schema.core import (
         SchemaBase,
@@ -87,7 +109,12 @@ if TYPE_CHECKING:
         InlineDataset,
         UndefinedType,
     )
-    from altair.expr.core import Expression, GetAttrExpression
+    from altair.expr.core import (
+        BinaryExpression,
+        Expression,
+        GetAttrExpression,
+        GetItemExpression,
+    )
     from .schema._typing import (
         ImputeMethod_T,
         SelectionType_T,
@@ -99,10 +126,26 @@ if TYPE_CHECKING:
         AggregateOp_T,
         MultiTimeUnit_T,
         SingleTimeUnit_T,
-        Map,
     )
 
+
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
+_TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
+_T = TypeVar("_T")
+_OneOrSeq = TypeAliasType("_OneOrSeq", Union[_T, Sequence[_T]], type_params=(_T,))
+"""One of ``_T`` specified type(s), or a `Sequence` of such.
+
+Examples
+--------
+The parameters ``short``, ``long`` accept the same range of types::
+
+    # ruff: noqa: UP006, UP007
+
+    def func(
+        short: _OneOrSeq[str | bool | float],
+        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+    ): ...
+"""
 
 
 # ------------------------------------------------------------------------
@@ -327,7 +370,7 @@ class Parameter(_expr_core.OperatorMixin):
 
     # TODO: Are there any special cases to consider for __getitem__?
     # This was copied from v4.
-    def __getitem__(self, field_name: str) -> _expr_core.GetItemExpression:
+    def __getitem__(self, field_name: str) -> GetItemExpression:
         return _expr_core.GetItemExpression(self.name, field_name)
 
 
@@ -385,40 +428,635 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     return False
 
 
-_TestPredicateType = Union[str, _expr_core.Expression, core.PredicateComposition]
-_PredicateType = Union[
+# -------------------------------------------------------------------------
+# Tools for working with conditions
+_TestPredicateType: TypeAlias = Union[
+    str, _expr_core.Expression, core.PredicateComposition
+]
+"""https://vega.github.io/vega-lite/docs/predicate.html"""
+
+_PredicateType: TypeAlias = Union[
     Parameter,
     core.Expr,
-    typing.Dict[str, Any],
+    Map,
     _TestPredicateType,
     _expr_core.OperatorMixin,
 ]
-_ConditionType = typing.Dict[str, Union[_TestPredicateType, Any]]
-_DictOrStr = Union[typing.Dict[str, Any], str]
-_DictOrSchema = Union[core.SchemaBase, typing.Dict[str, Any]]
-_StatementType = Union[core.SchemaBase, _DictOrStr]
+"""Permitted types for `predicate`."""
+
+_ComposablePredicateType: TypeAlias = Union[
+    _expr_core.OperatorMixin, SelectionPredicateComposition
+]
+"""Permitted types for `&` reduced predicates."""
+
+_StatementType: TypeAlias = Union[core.SchemaBase, Map, str]
+"""Permitted types for `if_true`/`if_false`.
+
+In python terms:
+```py
+if _PredicateType:
+    return _StatementType
+elif _PredicateType:
+    return _StatementType
+else:
+    return _StatementType
+```
+"""
+
+_ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
+"""Intermediate type representing a converted `_PredicateType`.
+
+Prior to parsing any `_StatementType`.
+"""
+
+_LiteralValue: TypeAlias = Union[str, bool, float, int]
+"""Primitive python value types."""
+
+_FieldEqualType: TypeAlias = Union[_LiteralValue, Map, Parameter, core.SchemaBase]
+"""Permitted types for equality checks on field values:
+
+- `datum.field == ...`
+- `FieldEqualPredicate(equal=...)`
+- `when(**constraints=...)`
+"""
+
+
+def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
+    return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
 
 def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
-    """Type-safe singleton check for ``UndefinedType``.
+    """Type-safe singleton check for `UndefinedType`.
 
     Notes
     -----
-    - Using `obj is Undefined` does not narrow from ``UndefinedType`` in a union.
-        - Due to the assumption that other ``UndefinedType``'s could exist.
-    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an ``Enum``.
+    - Using `obj is Undefined` does not narrow from `UndefinedType` in a union.
+        - Due to the assumption that other `UndefinedType`'s could exist.
+    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an `Enum`.
         - Otherwise, requires an explicit guard to inform the type checker.
     """
     return obj is Undefined
+
+
+def _get_predicate_expr(p: Parameter) -> Optional[str | SchemaBase]:
+    # https://vega.github.io/vega-lite/docs/predicate.html
+    return getattr(p.param, "expr", Undefined)
+
+
+def _predicate_to_condition(
+    predicate: _PredicateType, *, empty: Optional[bool] = Undefined
+) -> _ConditionType:
+    condition: _ConditionType
+    if isinstance(predicate, Parameter):
+        predicate_expr = _get_predicate_expr(predicate)
+        if predicate.param_type == "selection" or _is_undefined(predicate_expr):
+            condition = {"param": predicate.name}
+            if isinstance(empty, bool):
+                condition["empty"] = empty
+            elif isinstance(predicate.empty, bool):
+                condition["empty"] = predicate.empty
+        else:
+            condition = {"test": predicate_expr}
+    elif _is_test_predicate(predicate):
+        condition = {"test": predicate}
+    elif isinstance(predicate, dict):
+        condition = predicate
+    elif isinstance(predicate, _expr_core.OperatorMixin):
+        condition = {"test": predicate._to_expr()}
+    else:
+        msg = (
+            f"Expected a predicate, but got: {type(predicate).__name__!r}\n\n"
+            f"From `predicate={predicate!r}`."
+        )
+        raise TypeError(msg)
+    return condition
+
+
+def _condition_to_selection(
+    condition: _ConditionType,
+    if_true: _StatementType,
+    if_false: _StatementType,
+    **kwargs: Any,
+) -> SchemaBase | dict[str, _ConditionType | Any]:
+    selection: SchemaBase | dict[str, _ConditionType | Any]
+    if isinstance(if_true, core.SchemaBase):
+        if_true = if_true.to_dict()
+    elif isinstance(if_true, str):
+        if isinstance(if_false, str):
+            msg = (
+                "A field cannot be used for both the `if_true` and `if_false` "
+                "values of a condition. "
+                "One of them has to specify a `value` or `datum` definition."
+            )
+            raise ValueError(msg)
+        else:
+            if_true = utils.parse_shorthand(if_true)
+            if_true.update(kwargs)
+    condition.update(if_true)
+    if isinstance(if_false, core.SchemaBase):
+        # For the selection, the channel definitions all allow selections
+        # already. So use this SchemaBase wrapper if possible.
+        selection = if_false.copy()
+        selection.condition = condition
+    elif isinstance(if_false, (str, dict)):
+        if isinstance(if_false, str):
+            if_false = utils.parse_shorthand(if_false)
+            if_false.update(kwargs)
+        selection = dict(condition=condition, **if_false)
+    else:
+        raise TypeError(if_false)
+    return selection
+
+
+class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
+    # Parameter {"param", "value", "empty"}
+    # Predicate {"test", "value"}
+    empty: Optional[bool]
+    param: Parameter | str
+    test: _TestPredicateType
+    value: Any
+
+
+class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
+    # Likely a Field predicate
+    empty: Optional[bool]
+    param: Parameter | str
+    test: _TestPredicateType
+    value: Any
+    __extra_items__: _StatementType | _OneOrSeq[_LiteralValue]
+
+
+_Condition: TypeAlias = _ConditionExtra
+"""A singular, non-chainable condition produced by ``.when()``."""
+
+_Conditions: TypeAlias = t.List[_ConditionClosed]
+"""Chainable conditions produced by ``.when()`` and ``Then.when()``."""
+
+_C = TypeVar("_C", _Conditions, _Condition)
+
+
+class _Conditional(TypedDict, t.Generic[_C], total=False):
+    condition: Required[_C]
+    value: Any
+
+
+class _Value(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+    # https://peps.python.org/pep-0728/
+    value: Required[Any]
+    __extra_items__: Any
+
+
+def _reveal_parsed_shorthand(obj: Map, /) -> dict[str, Any]:
+    # Helper for producing error message on multiple field collision.
+    return {k: v for k, v in obj.items() if k in utils.SHORTHAND_KEYS}
+
+
+def _is_extra(*objs: Any, kwds: Map) -> Iterator[bool]:
+    for el in objs:
+        if isinstance(el, (core.SchemaBase, t.Mapping)):
+            item = el.to_dict(validate=False) if isinstance(el, core.SchemaBase) else el
+            yield not (item.keys() - kwds.keys()).isdisjoint(utils.SHORTHAND_KEYS)
+        else:
+            continue
+
+
+def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
+    # NOTE: Short circuits on the first conflict.
+    # 1 - Originated from parse_shorthand
+    # 2 - Used a wrapper or `dict` directly, including `extra_keys`
+    return isinstance(obj, str) or any(_is_extra(obj, *objs, kwds=kwds))
+
+
+def _parse_when_constraints(
+    constraints: dict[str, _FieldEqualType], /
+) -> Iterator[BinaryExpression]:
+    """Wrap kwargs with `alt.datum`.
+
+    ```py
+    # before
+    alt.when(alt.datum.Origin == "Europe")
+
+    # after
+    alt.when(Origin = "Europe")
+    ```
+    """
+    for name, value in constraints.items():
+        yield _expr_core.GetAttrExpression("datum", name) == value
+
+
+def _validate_composables(
+    predicates: Iterable[Any], /
+) -> Iterator[_ComposablePredicateType]:
+    for p in predicates:
+        if isinstance(p, (_expr_core.OperatorMixin, SelectionPredicateComposition)):
+            yield p
+        else:
+            msg = (
+                f"Predicate composition is not permitted for "
+                f"{type(p).__name__!r}.\n"
+                f"Try wrapping {p!r} in a `Parameter` first."
+            )
+            raise TypeError(msg)
+
+
+def _parse_when_compose(
+    predicates: tuple[Any, ...],
+    constraints: dict[str, _FieldEqualType],
+    /,
+) -> BinaryExpression:
+    """Compose an `&` reduction predicate.
+
+    Parameters
+    ----------
+    predicates
+        Collected positional arguments.
+    constraints
+        Collected keyword arguments.
+
+    Raises
+    ------
+    TypeError
+        On the first non ``_ComposablePredicateType`` of `predicates`
+    """
+    iters = []
+    if predicates:
+        iters.append(_validate_composables(predicates))
+    if constraints:
+        iters.append(_parse_when_constraints(constraints))
+    r = functools.reduce(operator.and_, itertools.chain.from_iterable(iters))
+    return t.cast(_expr_core.BinaryExpression, r)
+
+
+def _parse_when(
+    predicate: Optional[_PredicateType],
+    *more_predicates: _ComposablePredicateType,
+    empty: Optional[bool],
+    **constraints: _FieldEqualType,
+) -> _ConditionType:
+    composed: _PredicateType
+    if _is_undefined(predicate):
+        if more_predicates or constraints:
+            composed = _parse_when_compose(more_predicates, constraints)
+        else:
+            msg = (
+                f"At least one predicate or constraint must be provided, "
+                f"but got: {predicate=}"
+            )
+            raise TypeError(msg)
+    elif more_predicates or constraints:
+        predicates = predicate, *more_predicates
+        composed = _parse_when_compose(predicates, constraints)
+    else:
+        composed = predicate
+    return _predicate_to_condition(composed, empty=empty)
+
+
+def _parse_literal(val: Any, /) -> dict[str, Any]:
+    if isinstance(val, str):
+        return utils.parse_shorthand(val)
+    else:
+        msg = (
+            f"Expected a shorthand `str`, but got: {type(val).__name__!r}\n\n"
+            f"From `statement={val!r}`."
+        )
+        raise TypeError(msg)
+
+
+def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
+    if isinstance(statement, core.SchemaBase):
+        statement = statement.to_dict()
+    elif not isinstance(statement, dict):
+        statement = _parse_literal(statement)
+    statement.update(kwds)
+    return statement
+
+
+def _parse_otherwise(
+    statement: _StatementType, conditions: _Conditional[Any], kwds: dict[str, Any], /
+) -> SchemaBase | _Conditional[Any]:
+    selection: SchemaBase | _Conditional[Any]
+    if isinstance(statement, core.SchemaBase):
+        selection = statement.copy()
+        conditions.update(**kwds)  # type: ignore[call-arg]
+        selection.condition = conditions["condition"]
+    else:
+        if not isinstance(statement, t.Mapping):
+            statement = _parse_literal(statement)
+        selection = conditions
+        selection.update(**statement, **kwds)  # type: ignore[call-arg]
+    return selection
+
+
+class _BaseWhen(Protocol):
+    # NOTE: Temporary solution to non-SchemaBase copy
+    _condition: _ConditionType
+
+    def _when_then(
+        self, statement: _StatementType, kwds: dict[str, Any], /
+    ) -> _ConditionClosed | _Condition:
+        condition: Any = _deepcopy(self._condition)
+        then = _parse_then(statement, kwds)
+        condition.update(then)
+        return condition
+
+
+class When(_BaseWhen):
+    """Utility class for ``when-then-otherwise`` conditions.
+
+    Represents the state after calling :func:`.when()`.
+
+    This partial state requires calling :meth:`When.then()` to finish the condition.
+
+    References
+    ----------
+    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    """
+
+    def __init__(self, condition: _ConditionType, /) -> None:
+        self._condition = condition
+
+    @overload
+    def then(self, statement: str, /, **kwds: Any) -> Then[_Condition]: ...
+    @overload
+    def then(self, statement: _Value, /, **kwds: Any) -> Then[_Conditions]: ...
+    @overload
+    def then(
+        self, statement: dict[str, Any] | SchemaBase, /, **kwds: Any
+    ) -> Then[Any]: ...
+    def then(self, statement: _StatementType, /, **kwds: Any) -> Then[Any]:
+        """Attach a statement to this predicate.
+
+        Parameters
+        ----------
+        statement
+            A spec or value to use when the preceding :func:`.when()` clause is true.
+
+            .. note::
+                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        **kwds
+            Additional keyword args are added to the resulting ``dict``.
+
+        Returns
+        -------
+        :class:`Then`
+        """
+        condition = self._when_then(statement, kwds)
+        if _is_condition_extra(condition, statement, kwds=kwds):
+            return Then(_Conditional(condition=condition))
+        else:
+            return Then(_Conditional(condition=[condition]))
+
+
+class Then(core.SchemaBase, t.Generic[_C]):
+    """Utility class for ``when-then-otherwise`` conditions.
+
+    Represents the state after calling :func:`.when().then()`.
+
+    This state is a valid condition on its own.
+
+    It can be further specified, via multiple chained `when-then` calls,
+    or finalized with :meth:`Then.otherwise()`.
+
+    References
+    ----------
+    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    """
+
+    _schema = {"type": "object"}
+
+    def __init__(self, conditions: _Conditional[_C], /) -> None:
+        super().__init__(**conditions)
+        self.condition: _C
+
+    @overload
+    def otherwise(self, statement: _TSchemaBase, /, **kwds: Any) -> _TSchemaBase: ...
+    @overload
+    def otherwise(self, statement: str, /, **kwds: Any) -> _Conditional[_Condition]: ...
+    @overload
+    def otherwise(
+        self, statement: _Value, /, **kwds: Any
+    ) -> _Conditional[_Conditions]: ...
+    @overload
+    def otherwise(
+        self, statement: dict[str, Any], /, **kwds: Any
+    ) -> _Conditional[Any]: ...
+    def otherwise(
+        self, statement: _StatementType, /, **kwds: Any
+    ) -> SchemaBase | _Conditional[Any]:
+        """Finalize the condition with a default value.
+
+        Parameters
+        ----------
+        statement
+            A spec or value to use when no predicates were met.
+
+            .. note::
+                Roughly equivalent to an ``else`` clause.
+
+            .. note::
+                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        **kwds
+            Additional keyword args are added to the resulting ``dict``.
+        """
+        conditions: _Conditional[Any]
+        is_extra = functools.partial(_is_condition_extra, kwds=kwds)
+        if is_extra(self.condition, statement):
+            current = self.condition
+            if isinstance(current, list) and len(current) == 1:
+                # This case is guaranteed to have come from `When` and not `ChainedWhen`
+                # The `list` isn't needed if we complete the condition here
+                conditions = _Conditional(condition=current[0])
+            elif isinstance(current, dict):
+                if not is_extra(statement):
+                    conditions = self.to_dict()
+                else:
+                    cond = _reveal_parsed_shorthand(current)
+                    msg = (
+                        f"Only one field may be used within a condition.\n"
+                        f"Shorthand {statement!r} would conflict with {cond!r}\n\n"
+                        f"Use `alt.value({statement!r})` if this is not a shorthand string."
+                    )
+                    raise TypeError(msg)
+            else:
+                # Generic message to cover less trivial cases
+                msg = (
+                    f"Chained conditions cannot be mixed with field conditions.\n"
+                    f"{self!r}\n\n{statement!r}"
+                )
+                raise TypeError(msg)
+        else:
+            conditions = self.to_dict()
+        return _parse_otherwise(statement, conditions, kwds)
+
+    def when(
+        self,
+        predicate: Optional[_PredicateType] = Undefined,
+        *more_predicates: _ComposablePredicateType,
+        empty: Optional[bool] = Undefined,
+        **constraints: _FieldEqualType,
+    ) -> ChainedWhen:
+        """Attach another predicate to the condition.
+
+        The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
+
+        Parameters
+        ----------
+        predicate
+            A selection or test predicate. ``str`` input will be treated as a test operand.
+
+            .. note::
+                accepts the same range of inputs as in :func:`.condition()`.
+        *more_predicates
+            Additional predicates, restricted to types supporting ``&``.
+        empty
+            For selection parameters, the predicate of empty selections returns ``True`` by default.
+            Override this behavior, with ``empty=False``.
+        **constraints
+            Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+            Shortcut for ``alt.datum.field_name == value``, see examples for usage.
+
+        Returns
+        -------
+        :class:`ChainedWhen`
+            A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
+        """
+        condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
+        conditions = self.to_dict()
+        current = conditions["condition"]
+        if isinstance(current, list):
+            conditions = t.cast(_Conditional[_Conditions], conditions)
+            return ChainedWhen(condition, conditions)
+        elif isinstance(current, dict):
+            cond = _reveal_parsed_shorthand(current)
+            msg = (
+                f"Chained conditions cannot be mixed with field conditions.\n"
+                f"Additional conditions would conflict with {cond!r}\n\n"
+                f"Must finalize by calling `.otherwise()`."
+            )
+            raise TypeError(msg)
+        else:
+            msg = (
+                f"The internal structure has been modified.\n"
+                f"{type(current).__name__!r} found, but only `dict | list` are valid."
+            )
+            raise NotImplementedError(msg)
+
+    def to_dict(self, *args, **kwds) -> _Conditional[_C]:  # type: ignore[override]
+        m = super().to_dict(*args, **kwds)
+        return _Conditional(condition=m["condition"])
+
+
+class ChainedWhen(_BaseWhen):
+    """
+    Utility class for ``when-then-otherwise`` conditions.
+
+    Represents the state after calling :func:`.when().then().when()`.
+
+    This partial state requires calling :meth:`ChainedWhen.then()` to finish the condition.
+
+    References
+    ----------
+    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    """
+
+    def __init__(
+        self,
+        condition: _ConditionType,
+        conditions: _Conditional[_Conditions],
+        /,
+    ) -> None:
+        self._condition = condition
+        self._conditions = conditions
+
+    def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
+        """Attach a statement to this predicate.
+
+        Parameters
+        ----------
+        statement
+            A spec or value to use when the preceding :meth:`Then.when()` clause is true.
+
+            .. note::
+                ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
+        **kwds
+            Additional keyword args are added to the resulting ``dict``.
+
+        Returns
+        -------
+        :class:`Then`
+        """
+        condition = self._when_then(statement, kwds)
+        conditions = self._conditions.copy()
+        conditions["condition"].append(condition)
+        return Then(conditions)
+
+
+def when(
+    predicate: Optional[_PredicateType] = Undefined,
+    *more_predicates: _ComposablePredicateType,
+    empty: Optional[bool] = Undefined,
+    **constraints: _FieldEqualType,
+) -> When:
+    """Start a ``when-then-otherwise`` condition.
+
+    The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
+
+    Parameters
+    ----------
+    predicate
+        A selection or test predicate. ``str`` input will be treated as a test operand.
+
+        .. note::
+            Accepts the same range of inputs as in :func:`.condition()`.
+    *more_predicates
+        Additional predicates, restricted to types supporting ``&``.
+    empty
+        For selection parameters, the predicate of empty selections returns ``True`` by default.
+        Override this behavior, with ``empty=False``.
+    **constraints
+        Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
+        Shortcut for ``alt.datum.field_name == value``, see examples for usage.
+
+    Returns
+    -------
+    :class:`When`
+        A partial state which requires calling :meth:`When.then()` to finish the condition.
+
+    Notes
+    -----
+    - Directly inspired by the ``when-then-otherwise`` syntax used in ``polars.when``.
+
+    References
+    ----------
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
+
+    Examples
+    --------
+    Using keyword-argument ``constraints`` can simplify compositions like::
+
+        import altair as alt
+        verbose_composition = (
+            (alt.datum.Name == "Name_1")
+            & (alt.datum.Color == "Green")
+            & (alt.datum.Age == 25)
+            & (alt.datum.StartDate == "2000-10-01")
+        )
+        when_verbose = alt.when(verbose_composition)
+        when_concise = alt.when(Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01")
+    """
+    condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
+    return When(condition)
 
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
 
-def value(value, **kwargs) -> dict:
+def value(value, **kwargs) -> _Value:
     """Specify a value for use in an encoding"""
-    return dict(value=value, **kwargs)
+    return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
 
 
 def param(
@@ -473,7 +1111,7 @@ def param(
             parameter.empty = empty
         elif empty in empty_remap:
             utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[typing.cast(str, empty)]
+            parameter.empty = empty_remap[t.cast(str, empty)]
         else:
             raise ValueError(warn_msg)
 
@@ -830,26 +1468,23 @@ def binding_range(**kwargs):
     return core.BindRange(input="range", **kwargs)
 
 
-_TSchemaBase = typing.TypeVar("_TSchemaBase", bound=core.SchemaBase)
-
-
-@typing.overload
+@overload
 def condition(
     predicate: _PredicateType, if_true: _StatementType, if_false: _TSchemaBase, **kwargs
 ) -> _TSchemaBase: ...
-@typing.overload
+@overload
 def condition(
     predicate: _PredicateType, if_true: str, if_false: str, **kwargs
-) -> typing.NoReturn: ...
-@typing.overload
+) -> Never: ...
+@overload
 def condition(
-    predicate: _PredicateType, if_true: _DictOrSchema, if_false: _DictOrStr, **kwargs
+    predicate: _PredicateType, if_true: Map | SchemaBase, if_false: Map | str, **kwargs
 ) -> dict[str, _ConditionType | Any]: ...
-@typing.overload
+@overload
 def condition(
     predicate: _PredicateType,
-    if_true: _DictOrStr,
-    if_false: dict[str, Any],
+    if_true: Map | str,
+    if_false: Map,
     **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
 # TODO: update the docstring
@@ -858,7 +1493,7 @@ def condition(
     if_true: _StatementType,
     if_false: _StatementType,
     **kwargs,
-) -> dict[str, Any] | SchemaBase:
+) -> SchemaBase | dict[str, _ConditionType | Any]:
     """A conditional attribute or encoding
 
     Parameters
@@ -878,56 +1513,9 @@ def condition(
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-
-    test_predicates = (str, _expr_core.Expression, core.PredicateComposition)
-
-    condition: dict[str, Optional[bool | str | Expression | PredicateComposition]]
-    if isinstance(predicate, Parameter):
-        if (
-            predicate.param_type == "selection"
-            or getattr(predicate.param, "expr", Undefined) is Undefined
-        ):
-            condition = {"param": predicate.name}
-            if "empty" in kwargs:
-                condition["empty"] = kwargs.pop("empty")
-            elif isinstance(predicate.empty, bool):
-                condition["empty"] = predicate.empty
-        else:
-            condition = {"test": getattr(predicate.param, "expr", Undefined)}
-    elif isinstance(predicate, test_predicates):
-        condition = {"test": predicate}
-    elif isinstance(predicate, dict):
-        condition = predicate
-    else:
-        msg = f"condition predicate of type {type(predicate)}" ""
-        raise NotImplementedError(msg)
-
-    if isinstance(if_true, core.SchemaBase):
-        # convert to dict for now; the from_dict call below will wrap this
-        # dict in the appropriate schema
-        if_true = if_true.to_dict()
-    elif isinstance(if_true, str):
-        if isinstance(if_false, str):
-            msg = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."
-            raise ValueError(msg)
-        else:
-            if_true = utils.parse_shorthand(if_true)
-            if_true.update(kwargs)
-    condition.update(if_true)
-
-    selection: dict | SchemaBase
-    if isinstance(if_false, core.SchemaBase):
-        # For the selection, the channel definitions all allow selections
-        # already. So use this SchemaBase wrapper if possible.
-        selection = if_false.copy()
-        selection.condition = condition
-    elif isinstance(if_false, str):
-        selection = {"condition": condition, "shorthand": if_false}
-        selection.update(kwargs)
-    else:
-        selection = dict(condition=condition, **if_false)
-
-    return selection
+    empty = kwargs.pop("empty", Undefined)
+    condition = _predicate_to_condition(predicate, empty=empty)
+    return _condition_to_selection(condition, if_true, if_false, **kwargs)
 
 
 # --------------------------------------------------------------------
@@ -1413,7 +2001,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 if key != "data":
                     _top_schema_base(self).validate_property(key, val)
                 setattr(copy, key, val)
-        return typing.cast("Self", copy)
+        return t.cast("Self", copy)
 
     def project(
         self,
@@ -1573,7 +2161,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if copy.transform is Undefined:
             copy.transform = []
         copy.transform.extend(transforms)
-        return typing.cast("Self", copy)
+        return t.cast("Self", copy)
 
     def transform_aggregate(
         self,
@@ -2753,19 +3341,19 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def resolve_axis(self, *args, **kwargs) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
-        return typing.cast("Self", r)
+        return t.cast("Self", r)
 
     @utils.use_signature(core.LegendResolveMap)
     def resolve_legend(self, *args, **kwargs) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
-        return typing.cast("Self", r)
+        return t.cast("Self", r)
 
     @utils.use_signature(core.ScaleResolveMap)
     def resolve_scale(self, *args, **kwargs) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
-        return typing.cast("Self", r)
+        return t.cast("Self", r)
 
 
 class _EncodingMixin(channels._EncodingMixin):
@@ -2956,7 +3544,7 @@ class Chart(
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return typing.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
+        return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,
