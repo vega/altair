@@ -3514,7 +3514,7 @@ class Chart(
 
     @classmethod
     def from_dict(
-        cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True, **kwds: Any
+        cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
     ) -> _TSchemaBase:
         """Construct class from a dictionary representation
 
