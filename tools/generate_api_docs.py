@@ -64,6 +64,16 @@ Low-Level Schema Wrappers
    :nosignatures:
 
    {lowlevel_wrappers}
+
+API Utility Classes
+-------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/api-cls/
+   :nosignatures:
+
+   {api_classes}
 """
 
 
@@ -95,13 +105,19 @@ def encoding_wrappers() -> list[str]:
 
 
 def api_functions() -> list[str]:
-    # Exclude typing.cast
+    # Exclude `typing` functions/SpecialForm(s)
     altair_api_functions = [
         obj_name
         for obj_name in iter_objects(alt.api, restrict_to_type=types.FunctionType)  # type: ignore[attr-defined]
-        if obj_name != "cast"
+        if obj_name not in {"cast", "overload", "NamedTuple", "TypedDict"}
     ]
     return sorted(altair_api_functions)
+
+
+def api_classes() -> list[str]:
+    # classes defined in `api` and returned by `API Functions`,
+    # but not covered in other groups
+    return ["When", "Then", "ChainedWhen"]
 
 
 def lowlevel_wrappers() -> list[str]:
@@ -124,6 +140,7 @@ def write_api_file() -> None:
             api_functions=sep.join(api_functions()),
             encoding_wrappers=sep.join(encoding_wrappers()),
             lowlevel_wrappers=sep.join(lowlevel_wrappers()),
+            api_classes=sep.join(api_classes()),
         ),
         encoding="utf-8",
     )
