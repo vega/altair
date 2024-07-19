@@ -166,6 +166,7 @@ API Functions
    topo_feature
    value
    vconcat
+   when
 
 Low-Level Schema Wrappers
 -------------------------
@@ -637,3 +638,7 @@ API Utility Classes
    :nosignatures:
 
    expr
+   When
+   Then
+   ChainedWhen
+

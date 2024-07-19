@@ -1,7 +1,6 @@
 # ruff: noqa
 __version__ = "5.4.0dev"
 
-
 # The content of __all__ is automatically written by
 # tools/update_init_file.py. Do not modify directly.
 __all__ = [
@@ -48,6 +47,7 @@ __all__ = [
     "BrushConfig",
     "CalculateTransform",
     "Categorical",
+    "ChainedWhen",
     "Chart",
     "ChartDataType",
     "ChartType",
@@ -482,6 +482,7 @@ __all__ = [
     "TextDef",
     "TextDirection",
     "TextValue",
+    "Then",
     "Theta",
     "Theta2",
     "Theta2Datum",
@@ -559,6 +560,7 @@ __all__ = [
     "VegaLiteSchema",
     "ViewBackground",
     "ViewConfig",
+    "When",
     "WindowEventType",
     "WindowFieldDef",
     "WindowOnlyOp",
@@ -616,7 +618,6 @@ __all__ = [
     "load_ipython_extension",
     "load_schema",
     "mixins",
-    "overload",
     "param",
     "parse_shorthand",
     "renderers",
@@ -639,6 +640,7 @@ __all__ = [
     "vconcat",
     "vegalite",
     "vegalite_compilers",
+    "when",
     "with_property_setters",
 ]
 
@@ -648,6 +650,7 @@ def __dir__():
 
 
 from altair.vegalite import *
+from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
 from altair.utils import AltairDeprecationWarning
