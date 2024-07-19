@@ -27,10 +27,8 @@ select = alt.selection_point(name="select", on="click")
 highlight = alt.selection_point(name="highlight", on="pointerover", empty=False)
 
 stroke_width = (
-    alt.when(select)
-    .then(alt.value(2, empty=False))
-    .when(highlight)
-    .then(alt.value(1))
+    alt.when(select).then(alt.value(2, empty=False))
+    .when(highlight).then(alt.value(1))
     .otherwise(alt.value(0))
 )
 
