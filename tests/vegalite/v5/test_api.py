@@ -593,13 +593,15 @@ def test_when_expressions_inside_parameters() -> None:
     )
     cond = when_then_otherwise["condition"][0]
     otherwise = when_then_otherwise["value"]
-    expected = alt.expr(alt.expr.if_(alt.datum.b >= 0, 10, -20))
-    actual = alt.expr(alt.expr.if_(cond["test"], cond["value"], otherwise))
+    expected = alt.expr.if_(alt.datum.b >= 0, 10, -20)
+    actual = alt.expr.if_(cond["test"], cond["value"], otherwise)
     assert expected == actual
 
-    text_conditioned = bar.mark_text(align="left", baseline="middle", dx=actual).encode(
-        text="b"
-    )
+    text_conditioned = bar.mark_text(
+        align="left",
+        baseline="middle",
+        dx=alt.expr(actual),  # type: ignore[arg-type]
+    ).encode(text="b")
 
     chart = bar + text_conditioned
     chart.to_dict()
@@ -719,12 +721,14 @@ def test_selection_to_dict():
 
 
 def test_selection_expression():
+    from altair.expr.core import Expression
+
     selection = alt.selection_point(fields=["value"])
 
     assert isinstance(selection.value, alt.SelectionExpression)
     assert selection.value.to_dict() == {"expr": f"{selection.name}.value"}
 
-    assert isinstance(selection["value"], alt.expr.Expression)
+    assert isinstance(selection["value"], Expression)
     assert selection["value"].to_dict() == f"{selection.name}['value']"
 
     magic_attr = "__magic__"

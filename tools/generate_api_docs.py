@@ -115,9 +115,8 @@ def api_functions() -> list[str]:
 
 
 def api_classes() -> list[str]:
-    # classes defined in `api` and returned by `API Functions`,
-    # but not covered in other groups
-    return ["When", "Then", "ChainedWhen"]
+    # Part of the Public API, but are not inherited from `vega-lite`.
+    return ["expr", "When", "Then", "ChainedWhen"]
 
 
 def lowlevel_wrappers() -> list[str]:
