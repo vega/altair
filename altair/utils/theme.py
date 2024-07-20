@@ -6,5 +6,5 @@ from typing import Callable
 ThemeType = Callable[..., dict]
 
 
-class ThemeRegistry(PluginRegistry[ThemeType]):
+class ThemeRegistry(PluginRegistry[ThemeType, dict]):
     pass

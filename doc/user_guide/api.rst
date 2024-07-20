@@ -637,6 +637,7 @@ API Utility Classes
    :toctree: generated/api-cls/
    :nosignatures:
 
+   expr
    When
    Then
    ChainedWhen

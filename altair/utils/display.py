@@ -31,7 +31,7 @@ DefaultRendererReturnType: TypeAlias = Tuple[
 ]
 
 
-class RendererRegistry(PluginRegistry[RendererType]):
+class RendererRegistry(PluginRegistry[RendererType, MimeBundleType]):
     entrypoint_err_messages = {
         "notebook": textwrap.dedent(
             """

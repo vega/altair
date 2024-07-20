@@ -7,5 +7,5 @@ from altair.utils import PluginRegistry
 VegaLiteCompilerType = Callable[[dict], dict]
 
 
-class VegaLiteCompilerRegistry(PluginRegistry[VegaLiteCompilerType]):
+class VegaLiteCompilerRegistry(PluginRegistry[VegaLiteCompilerType, dict]):
     pass
