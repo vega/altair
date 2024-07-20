@@ -334,6 +334,7 @@ addopts = ["--numprocesses=logical"]
 
 [tool.mypy]
 warn_unused_ignores = true
+pretty = true
 
 [[tool.mypy.overrides]]
 module = [
