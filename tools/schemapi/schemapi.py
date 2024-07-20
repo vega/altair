@@ -1085,10 +1085,7 @@ class SchemaBase:
 
     @classmethod
     def from_dict(
-        cls: type[TSchemaBase],
-        dct: dict[str, Any],
-        validate: bool = True,
-        _wrapper_classes: Iterable[type[SchemaBase]] | None = None,
+        cls: type[TSchemaBase], dct: dict[str, Any], validate: bool = True
     ) -> TSchemaBase:
         """Construct class from a dictionary representation
 
@@ -1098,10 +1095,6 @@ class SchemaBase:
             The dict from which to construct the class
         validate : boolean
             If True (default), then validate the input against the schema.
-        _wrapper_classes : iterable (optional)
-            The set of SchemaBase classes to use when constructing wrappers
-            of the dict inputs. If not specified, the result of
-            cls._default_wrapper_classes will be used.
 
         Returns
         -------
@@ -1115,9 +1108,7 @@ class SchemaBase:
         """
         if validate:
             cls.validate(dct)
-        if _wrapper_classes is None:
-            _wrapper_classes = cls._default_wrapper_classes()
-        converter = _FromDict(_wrapper_classes)
+        converter = _FromDict(cls._default_wrapper_classes())
         return converter.from_dict(dct, cls)
 
     @classmethod

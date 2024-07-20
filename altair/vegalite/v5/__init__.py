@@ -2,7 +2,7 @@
 from .schema import *
 from .api import *
 
-from ...expr import datum, expr
+from altair.expr.core import datum
 
 from .display import (
     VegaLite,

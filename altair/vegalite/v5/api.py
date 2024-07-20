@@ -9,7 +9,6 @@ import jsonschema
 import itertools
 from typing import (
     Any,
-    cast,
     overload,
     Literal,
     Union,
@@ -101,7 +100,6 @@ if TYPE_CHECKING:
         AnyMark,
         Step,
         RepeatRef,
-        NonNormalizedSpec,
         UrlData,
         SequenceGenerator,
         GraticuleGenerator,
@@ -125,6 +123,10 @@ if TYPE_CHECKING:
         SingleDefUnitChannel_T,
         StackOffset_T,
         ResolveMode_T,
+        ProjectionType_T,
+        AggregateOp_T,
+        MultiTimeUnit_T,
+        SingleTimeUnit_T,
     )
 
 __all__ = [
@@ -220,16 +222,16 @@ def _dataset_name(values: dict | list | InlineDataset) -> str:
     return "data-" + hsh
 
 
-def _consolidate_data(data, context):
+def _consolidate_data(data: Any, context: Any) -> Any:
     """If data is specified inline, then move it to context['datasets']
 
     This function will modify context in-place, and return a new version of data
     """
-    values = Undefined
+    values: Any = Undefined
     kwds = {}
 
     if isinstance(data, core.InlineData):
-        if data.name is Undefined and data.values is not Undefined:
+        if _is_undefined(data.name) and not _is_undefined(data.values):
             if isinstance(data.values, core.InlineDataset):
                 values = data.to_dict()["values"]
             else:
@@ -240,7 +242,7 @@ def _consolidate_data(data, context):
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
-    if values is not Undefined:
+    if not _is_undefined(values):
         name = _dataset_name(values)
         data = core.NamedData(name=name, **kwds)
         context.setdefault("datasets", {})[name] = values
@@ -369,11 +371,8 @@ class Parameter(_expr_core.OperatorMixin):
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
-            return {
-                "param": (
-                    self.name.to_dict() if hasattr(self.name, "to_dict") else self.name
-                )
-            }
+            nm: Any = self.name
+            return {"param": nm.to_dict() if hasattr(nm, "to_dict") else nm}
         else:
             msg = f"Unrecognized parameter type: {self.param_type}"
             raise ValueError(msg)
@@ -466,9 +465,12 @@ class SelectionExpression(_expr_core.OperatorMixin):
 
 
 def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
+    param = parameter.param
+    if _is_undefined(param) or isinstance(param, core.VariableParameter):
+        return False
     for prop in ["fields", "encodings"]:
         try:
-            if field_name in getattr(parameter.param.select, prop):  # type: ignore[union-attr]
+            if field_name in getattr(param.select, prop):
                 return True
         except (AttributeError, TypeError):
             pass
@@ -510,7 +512,6 @@ else:
     return _StatementType
 ```
 """
-
 
 _ConditionType: TypeAlias = t.Dict[str, Union[_TestPredicateType, Any]]
 """Intermediate type representing a converted `_PredicateType`.
@@ -735,7 +736,7 @@ def _parse_when_compose(
     if constraints:
         iters.append(_parse_when_constraints(constraints))
     r = functools.reduce(operator.and_, itertools.chain.from_iterable(iters))
-    return cast(_expr_core.BinaryExpression, r)
+    return t.cast(_expr_core.BinaryExpression, r)
 
 
 def _parse_when(
@@ -1155,12 +1156,12 @@ def param(
     empty_remap = {"none": False, "all": True}
     parameter = Parameter(name)
 
-    if empty is not Undefined:
+    if not _is_undefined(empty):
         if isinstance(empty, bool) and not isinstance(empty, str):
             parameter.empty = empty
         elif empty in empty_remap:
             utils.deprecated_warn(warn_msg, version="5.0.0")
-            parameter.empty = empty_remap[empty]  # type: ignore[index]
+            parameter.empty = empty_remap[t.cast(str, empty)]
         else:
             raise ValueError(warn_msg)
 
@@ -1571,10 +1572,23 @@ def condition(
 # Top-level objects
 
 
+def _top_schema_base(obj: Any, /):  # -> <subclass of SchemaBase and TopLevelMixin>
+    """Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
+
+    Use for instance methods.
+    """
+    if isinstance(obj, core.SchemaBase) and isinstance(obj, TopLevelMixin):
+        return obj
+    else:
+        msg = f"{type(obj).__name__!r} does not derive from {type(core.SchemaBase).__name__!r}"
+        raise TypeError(msg)
+
+
 class TopLevelMixin(mixins.ConfigMethodMixin):
     """Mixin for top-level chart objects such as Chart, LayeredChart, etc."""
 
     _class_is_valid_at_instantiation: bool = False
+    data: Any
 
     def to_dict(
         self,
@@ -1638,18 +1652,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context.setdefault("datasets", {})
         is_top_level = context.get("top_level", True)
 
-        # TopLevelMixin instance does not necessarily have copy defined but due to how
-        # Altair is set up this should hold. Too complex to type hint right now
-        copy = self.copy(deep=False)  # type: ignore[attr-defined]
+        copy = _top_schema_base(self).copy(deep=False)
         original_data = getattr(copy, "data", Undefined)
-        try:
-            data: Any = _to_eager_narwhals_dataframe(original_data)  # type: ignore[arg-type]
-        except TypeError:
-            # Non-narwhalifiable type supported by Altair, such as dict
-            data = original_data
-        copy.data = _prepare_data(data, context)
-
-        if original_data is not Undefined:
+        if not _is_undefined(original_data):
+            try:
+                data = _to_eager_narwhals_dataframe(original_data)
+            except TypeError:
+                # Non-narwhalifiable type supported by Altair, such as dict
+                data = original_data
+            copy.data = _prepare_data(data, context)
             context["data"] = data
 
         # remaining to_dict calls are not at top level
@@ -1658,7 +1669,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # TopLevelMixin instance does not necessarily have to_dict defined
         # but due to how Altair is set up this should hold.
         # Too complex to type hint right now
-        vegalite_spec = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
+        vegalite_spec: Any = super(TopLevelMixin, copy).to_dict(  # type: ignore[misc]
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
 
@@ -1669,11 +1680,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 vegalite_spec["$schema"] = SCHEMA_URL
 
             # apply theme from theme registry
-            the_theme = themes.get()
-            # Use assert to tell type checkers that it is not None. Holds true
-            # as there is always a default theme set when importing Altair
-            assert the_theme is not None
-            vegalite_spec = utils.update_nested(the_theme(), vegalite_spec, copy=True)
+            if theme := themes.get():
+                vegalite_spec = utils.update_nested(theme(), vegalite_spec, copy=True)
+            else:
+                msg = (
+                    f"Expected a theme to be set but got {None!r}.\n"
+                    f"Call `themes.enable('default')` to reset the `ThemeRegistry`."
+                )
+                raise TypeError(msg)
 
             # update datasets
             if context["datasets"]:
@@ -1909,7 +1923,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         from ...utils.save import save
 
-        kwds = dict(
+        kwds: dict[str, Any] = dict(
             chart=self,
             fp=fp,
             format=format,
@@ -1953,11 +1967,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # Too difficult to type check this
         return vconcat(self, other)
 
-    def __or__(self, other) -> HConcatChart:
+    def __or__(self, other) -> HConcatChart | ConcatChart:
         if not isinstance(other, TopLevelMixin):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
-        return hconcat(self, other)
+        elif isinstance(self, ConcatChart):
+            return concat(self, other)
+        else:
+            return hconcat(self, other)
 
     def repeat(
         self,
@@ -2023,8 +2040,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Argument names and types are the same as class initialization.
         """
-        # ignore type as copy comes from another class for subclasses of TopLevelMixin
-        copy = self.copy(deep=False)  # type: ignore[attr-defined]
+        copy = _top_schema_base(self).copy(deep=False)
         for key, val in kwargs.items():
             if key == "selection" and isinstance(val, Parameter):
                 # TODO: Can this be removed
@@ -2033,15 +2049,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             else:
                 # Don't validate data, because it hasn't been processed.
                 if key != "data":
-                    # ignore type as validate_property comes from SchemaBase,
-                    # not from TopLevelMixin
-                    self.validate_property(key, val)  # type: ignore[attr-defined]
+                    _top_schema_base(self).validate_property(key, val)
                 setattr(copy, key, val)
-        return copy
+        return t.cast("Self", copy)
 
     def project(
         self,
-        type: Optional[str | ProjectionType | ExprRef | Parameter] = Undefined,
+        type: Optional[
+            ProjectionType_T | ProjectionType | ExprRef | Parameter
+        ] = Undefined,
         center: Optional[list[float] | Vector2number | ExprRef | Parameter] = Undefined,
         clipAngle: Optional[float | ExprRef | Parameter] = Undefined,
         clipExtent: Optional[
@@ -2184,20 +2200,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             spacing=spacing,
             tilt=tilt,
             translate=translate,
-            # Ignore as we type here `type` as a str but in core.Projection
-            # it's a Literal with all options
-            type=type,  # type: ignore[arg-type]
+            type=type,
             **kwds,
         )
         return self.properties(projection=projection)
 
     def _add_transform(self, *transforms: Transform) -> Self:
         """Copy the chart and add specified transforms to chart.transform"""
-        copy = self.copy(deep=["transform"])  # type: ignore[attr-defined]
+        copy = _top_schema_base(self).copy(deep=["transform"])
         if copy.transform is Undefined:
             copy.transform = []
         copy.transform.extend(transforms)
-        return copy
+        return t.cast("Self", copy)
 
     def transform_aggregate(
         self,
@@ -2393,21 +2407,20 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.CalculateTransform : underlying transform object
         """
+        calc_as: Optional[str | FieldName | Expr | Expression]
         if as_ is Undefined:
-            # Ignoring assignment error as passing 'as' as a keyword argument is
-            # an edge case and it's not worth changing the type annotation
-            # in this function to account for it as it could be confusing to
-            # users.
-            as_ = kwargs.pop("as", Undefined)  # type: ignore[assignment]
+            calc_as = kwargs.pop("as", Undefined)
         elif "as" in kwargs:
             msg = "transform_calculate: both 'as_' and 'as' passed as arguments."
             raise ValueError(msg)
-        if as_ is not Undefined or calculate is not Undefined:
-            dct = {"as": as_, "calculate": calculate}
-            self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
-        for as_, calculate in kwargs.items():
-            dct = {"as": as_, "calculate": calculate}
-            self = self._add_transform(core.CalculateTransform(**dct))  # type: ignore[arg-type]
+        else:
+            calc_as = as_
+        if calc_as is not Undefined or calculate is not Undefined:
+            dct: dict[str, Any] = {"as": calc_as, "calculate": calculate}
+            self = self._add_transform(core.CalculateTransform(**dct))
+        for a, calculate in kwargs.items():
+            dct = {"as": a, "calculate": calculate}
+            self = self._add_transform(core.CalculateTransform(**dct))
         return self
 
     def transform_density(
@@ -2665,13 +2678,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             returns chart to allow for chaining
         """
         if isinstance(filter, Parameter):
-            new_filter: dict[str, bool | str] = {"param": filter.name}
+            new_filter: dict[str, Any] = {"param": filter.name}
             if "empty" in kwargs:
                 new_filter["empty"] = kwargs.pop("empty")
             elif isinstance(filter.empty, bool):
                 new_filter["empty"] = filter.empty
-            filter = new_filter  # type: ignore[assignment]
-        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))  # type: ignore[arg-type]
+            filter = new_filter
+        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_flatten(
         self,
@@ -2833,7 +2846,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         value: str | FieldName,
         groupby: Optional[list[str | FieldName]] = Undefined,
         limit: Optional[int] = Undefined,
-        op: Optional[str | AggregateOp] = Undefined,
+        op: Optional[AggregateOp_T | AggregateOp] = Undefined,
     ) -> Self:
         """Add a :class:`PivotTransform` to the chart.
 
@@ -2853,7 +2866,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The default ( ``0`` ) applies no limit. The pivoted ``pivot`` names are sorted in
             ascending order prior to enforcing the limit.
             **Default value:** ``0``
-        op : string
+        op : Literal['argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
             The aggregation operation to apply to grouped ``value`` field values.
             **Default value:** ``sum``
 
@@ -2869,13 +2882,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(
             core.PivotTransform(
-                # Ignore as we type here `op` as a str but in core.PivotTransform
-                # it's a Literal with all options
-                pivot=pivot,
-                value=value,
-                groupby=groupby,
-                limit=limit,
-                op=op,  # type: ignore[arg-type]
+                pivot=pivot, value=value, groupby=groupby, limit=limit, op=op
             )
         )
 
@@ -3058,7 +3065,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         as_: Optional[str | FieldName] = Undefined,
         field: Optional[str | FieldName] = Undefined,
-        timeUnit: Optional[str | TimeUnit] = Undefined,
+        timeUnit: Optional[MultiTimeUnit_T | SingleTimeUnit_T | TimeUnit] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -3120,8 +3127,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             msg = "transform_timeunit: both 'as_' and 'as' passed as arguments."
             raise ValueError(msg)
         if as_ is not Undefined:
-            dct = {"as": as_, "timeUnit": timeUnit, "field": field}
-            self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
+            dct: dict[str, Any] = {"as": as_, "timeUnit": timeUnit, "field": field}
+            self = self._add_transform(core.TimeUnitTransform(**dct))
         for as_, shorthand in kwargs.items():
             dct = utils.parse_shorthand(
                 shorthand,
@@ -3134,7 +3141,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if "timeUnit" not in dct:
                 msg = f"'{shorthand}' must include a valid timeUnit"
                 raise ValueError(msg)
-            self = self._add_transform(core.TimeUnitTransform(**dct))  # type: ignore[arg-type]
+            self = self._add_transform(core.TimeUnitTransform(**dct))
         return self
 
     def transform_window(
@@ -3213,11 +3220,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         })
 
         """
+        w = window if isinstance(window, list) else []
         if kwargs:
-            if window is Undefined:
-                window = []
             for as_, shorthand in kwargs.items():
-                kwds = {"as": as_}
+                kwds: dict[str, Any] = {"as": as_}
                 kwds.update(
                     utils.parse_shorthand(
                         shorthand,
@@ -3227,13 +3233,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                assert isinstance(window, list)
-                # Ignore as core.WindowFieldDef has a Literal type hint with all options
-                window.append(core.WindowFieldDef(**kwds))  # type: ignore[arg-type]
+                w.append(core.WindowFieldDef(**kwds))
 
         return self._add_transform(
             core.WindowTransform(
-                window=window,
+                window=w or Undefined,
                 frame=frame,
                 groupby=groupby,
                 ignorePeers=ignorePeers,
@@ -3253,7 +3257,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             utils.display_traceback(in_ipython=True)
             return {}
         else:
-            return renderers.get()(dct)
+            if renderer := renderers.get():
+                return renderer(dct)
 
     def display(
         self,
@@ -3375,7 +3380,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if not hasattr(self, "resolve"):
             msg = f"{self.__class__} object has no attribute " "'resolve'"
             raise ValueError(msg)
-        copy = self.copy(deep=["resolve"])
+        copy = _top_schema_base(self).copy(deep=["resolve"])
         if copy.resolve is Undefined:
             copy.resolve = core.Resolve()
         for key, val in kwargs.items():
@@ -3384,18 +3389,26 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     @utils.use_signature(core.AxisResolveMap)
     def resolve_axis(self, *args, **kwargs) -> Self:
-        return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
+        check = _top_schema_base(self)
+        r = check._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
+        return t.cast("Self", r)
 
     @utils.use_signature(core.LegendResolveMap)
     def resolve_legend(self, *args, **kwargs) -> Self:
-        return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
+        check = _top_schema_base(self)
+        r = check._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
+        return t.cast("Self", r)
 
     @utils.use_signature(core.ScaleResolveMap)
     def resolve_scale(self, *args, **kwargs) -> Self:
-        return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
+        check = _top_schema_base(self)
+        r = check._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
+        return t.cast("Self", r)
 
 
 class _EncodingMixin(channels._EncodingMixin):
+    data: Any
+
     def facet(
         self,
         facet: Optional[str | Facet] = Undefined,
@@ -3439,9 +3452,10 @@ class _EncodingMixin(channels._EncodingMixin):
         if facet_specified and rowcol_specified:
             msg = "facet argument cannot be combined with row/column argument."
             raise ValueError(msg)
+        self = _top_schema_base(self)
 
         if data is Undefined:
-            if self.data is Undefined:  # type: ignore[has-type]
+            if self.data is Undefined:
                 msg = (
                     "Facet charts require data to be specified at the top level. "
                     "If you are trying to facet layered or concatenated charts, "
@@ -3449,17 +3463,16 @@ class _EncodingMixin(channels._EncodingMixin):
                     "or specify the data inside the facet method instead."
                 )
                 raise ValueError(msg)
-            # ignore type as copy comes from another class
-            self = self.copy(deep=False)  # type: ignore[attr-defined]
-            data, self.data = self.data, Undefined  # type: ignore[has-type]
+            self = _top_schema_base(self).copy(deep=False)
+            data, self.data = self.data, Undefined
 
         if facet_specified:
-            if isinstance(facet, str):
-                facet = channels.Facet(facet)
+            f = channels.Facet(facet) if isinstance(facet, str) else facet
         else:
-            facet = FacetMapping(row=row, column=column)
+            r: Any = row
+            f = FacetMapping(row=r, column=column)
 
-        return FacetChart(spec=self, facet=facet, data=data, columns=columns, **kwargs)
+        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)
 
 
 class Chart(
@@ -3550,7 +3563,9 @@ class Chart(
         return f"view_{cls._counter}"
 
     @classmethod
-    def from_dict(cls, dct: dict, validate: bool = True) -> SchemaBase:  # type: ignore[override]  # Not the same signature as SchemaBase.from_dict. Would ideally be aligned in the future
+    def from_dict(
+        cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
+    ) -> _TSchemaBase:
         """Construct class from a dictionary representation
 
         Parameters
@@ -3570,19 +3585,16 @@ class Chart(
         jsonschema.ValidationError :
             if validate=True and dct does not conform to the schema
         """
-        for class_ in TopLevelMixin.__subclasses__():
-            if class_ is Chart:
-                class_ = cast(Any, super())
+        _tp: Any
+        for tp in TopLevelMixin.__subclasses__():
+            _tp = super() if tp is Chart else tp
             try:
-                # TopLevelMixin classes don't necessarily have from_dict defined
-                # but all classes which are used here have due to how Altair is
-                # designed. Too complex to type check right now.
-                return class_.from_dict(dct, validate=validate)  # type: ignore[attr-defined]
+                return _tp.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return core.Root.from_dict(dct, validate)
+        return t.cast(_TSchemaBase, core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,
@@ -3624,17 +3636,14 @@ class Chart(
             if validate=True and the dict does not conform to the schema
         """
         context = context or {}
+        kwds: Map = {"validate": validate, "format": format, "ignore": ignore, "context": context}  # fmt: skip
         if self.data is Undefined and "data" not in context:
             # No data specified here or in parent: inject empty data
             # for easier specification of datum encodings.
             copy = self.copy(deep=False)
-            copy.data = core.InlineData(values=[{}])  # type: ignore[assignment]
-            return super(Chart, copy).to_dict(
-                validate=validate, format=format, ignore=ignore, context=context
-            )
-        return super().to_dict(
-            validate=validate, format=format, ignore=ignore, context=context
-        )
+            copy.data = core.InlineData(values=[{}])
+            return super(Chart, copy).to_dict(**kwds)
+        return super().to_dict(**kwds)
 
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
@@ -3706,7 +3715,17 @@ class Chart(
         return self.add_params(selection_interval(bind="scales", encodings=encodings))
 
 
-def _check_if_valid_subspec(spec: dict | SchemaBase, classname: str) -> None:
+def _check_if_valid_subspec(
+    spec: Optional[SchemaBase | dict],
+    classname: Literal[
+        "ConcatChart",
+        "FacetChart",
+        "HConcatChart",
+        "LayerChart",
+        "RepeatChart",
+        "VConcatChart",
+    ],
+) -> None:
     """Check if the spec is a valid sub-spec.
 
     If it is not, then raise a ValueError
@@ -3737,11 +3756,16 @@ def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
         else:
             return spec.get(attr, Undefined)
 
+    def _get_any(spec: dict | SchemaBase, *attrs: str) -> bool:
+        return any(_get(spec, attr) is not Undefined for attr in attrs)
+
+    base_msg = "charts cannot be layered. Instead, layer the charts before"
+
     encoding = _get(spec, "encoding")
     if encoding is not Undefined:
         for channel in ["row", "column", "facet"]:
             if _get(encoding, channel) is not Undefined:
-                msg = "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+                msg = f"Faceted {base_msg} faceting."
                 raise ValueError(msg)
     if isinstance(spec, (Chart, LayerChart)):
         return
@@ -3749,23 +3773,15 @@ def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
     if not isinstance(spec, (core.SchemaBase, dict)):
         msg = "Only chart objects can be layered."
         raise ValueError(msg)
-    if _get(spec, "facet") is not Undefined:
-        msg = "Faceted charts cannot be layered. Instead, layer the charts before faceting."
-        raise ValueError(msg)
     if isinstance(spec, FacetChart) or _get(spec, "facet") is not Undefined:
-        msg = "Faceted charts cannot be layered. Instead, layer the charts before faceting."
+        msg = f"Faceted {base_msg} faceting."
         raise ValueError(msg)
     if isinstance(spec, RepeatChart) or _get(spec, "repeat") is not Undefined:
-        msg = "Repeat charts cannot be layered. Instead, layer the charts before repeating."
+        msg = f"Repeat {base_msg} repeating."
         raise ValueError(msg)
-    if isinstance(spec, ConcatChart) or _get(spec, "concat") is not Undefined:
-        msg = "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-        raise ValueError(msg)
-    if isinstance(spec, HConcatChart) or _get(spec, "hconcat") is not Undefined:
-        msg = "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
-        raise ValueError(msg)
-    if isinstance(spec, VConcatChart) or _get(spec, "vconcat") is not Undefined:
-        msg = "Concatenated charts cannot be layered. Instead, layer the charts before concatenating."
+    _concat = ConcatChart, HConcatChart, VConcatChart
+    if isinstance(spec, _concat) or _get_any(spec, "concat", "hconcat", "vconcat"):
+        msg = f"Concatenated {base_msg} concatenating."
         raise ValueError(msg)
 
 
@@ -3927,16 +3943,14 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
-    # Too difficult to fix override error
-    def __ior__(self, other: core.NonNormalizedSpec) -> Self:  # type: ignore[override]
+    def __ior__(self, other) -> Self:
         _check_if_valid_subspec(other, "ConcatChart")
         self.concat.append(other)
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
         return self
 
-    # Too difficult to fix override error
-    def __or__(self, other: NonNormalizedSpec) -> Self:  # type: ignore[override]
+    def __or__(self, other) -> Self:
         copy = self.copy(deep=["concat"])
         copy |= other
         return copy
@@ -4009,7 +4023,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
 def concat(*charts, **kwargs) -> ConcatChart:
     """Concatenate charts horizontally"""
-    return ConcatChart(concat=charts, **kwargs)
+    return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
@@ -4024,14 +4038,14 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
-    def __ior__(self, other: NonNormalizedSpec) -> Self:
+    def __ior__(self, other) -> Self:
         _check_if_valid_subspec(other, "HConcatChart")
         self.hconcat.append(other)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
         return self
 
-    def __or__(self, other: NonNormalizedSpec) -> Self:
+    def __or__(self, other) -> Self:
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
@@ -4104,7 +4118,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
 def hconcat(*charts, **kwargs) -> HConcatChart:
     """Concatenate charts horizontally"""
-    return HConcatChart(hconcat=charts, **kwargs)
+    return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
@@ -4119,14 +4133,14 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
-    def __iand__(self, other: NonNormalizedSpec) -> Self:
+    def __iand__(self, other) -> Self:
         _check_if_valid_subspec(other, "VConcatChart")
         self.vconcat.append(other)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
         return self
 
-    def __and__(self, other: NonNormalizedSpec) -> Self:
+    def __and__(self, other) -> Self:
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
@@ -4201,7 +4215,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
 def vconcat(*charts, **kwargs) -> VConcatChart:
     """Concatenate charts vertically"""
-    return VConcatChart(vconcat=charts, **kwargs)
+    return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
 
 
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
@@ -4318,7 +4332,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
 def layer(*charts, **kwargs) -> LayerChart:
     """layer multiple charts"""
-    return LayerChart(layer=charts, **kwargs)
+    return LayerChart(layer=charts, **kwargs)  # pyright: ignore
 
 
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
@@ -4465,7 +4479,7 @@ def _needs_name(subchart):
 
 
 # Convert SelectionParameters to TopLevelSelectionParameters with a views property.
-def _prepare_to_lift(param):
+def _prepare_to_lift(param: Any) -> Any:
     param = param.copy()
 
     if isinstance(param, core.VariableParameter):
