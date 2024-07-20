@@ -210,9 +210,8 @@ class FunctionExpression(Expression):
 
 
 class ConstExpression(Expression):
-    def __init__(self, name, doc) -> None:
-        self.__doc__ = f"""{name}: {doc}"""
-        super().__init__(name=name, doc=doc)
+    def __init__(self, name) -> None:
+        super().__init__(name=name)
 
     def __repr__(self) -> str:
         return str(self.name)

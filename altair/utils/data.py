@@ -16,8 +16,9 @@ from typing import (
     Dict,
     overload,
     runtime_checkable,
+    Callable,
 )
-from typing_extensions import TypeAlias
+from typing_extensions import TypeAlias, ParamSpec, Concatenate
 from pathlib import Path
 from functools import partial
 import sys
@@ -82,17 +83,14 @@ def is_data_type(obj: Any) -> TypeIs[DataType]:
 # VegaLite spec, after the Data model has been put into a schema compliant
 # form.
 # ==============================================================================
-class DataTransformerType(Protocol):
-    @overload
-    def __call__(self, data: None = None, **kwargs) -> DataTransformerType: ...
-    @overload
-    def __call__(self, data: DataType, **kwargs) -> VegaLiteDataDict: ...
-    def __call__(
-        self, data: DataType | None = None, **kwargs
-    ) -> DataTransformerType | VegaLiteDataDict: ...
+
+P = ParamSpec("P")
+# NOTE: `Any` required due to the complexity of existing signatures imported in `altair.vegalite.v5.data.py`
+R = TypeVar("R", VegaLiteDataDict, Any)
+DataTransformerType = Callable[Concatenate[DataType, P], R]
 
 
-class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
+class DataTransformerRegistry(PluginRegistry[DataTransformerType, R]):
     _global_settings = {"consolidate_datasets": True}
 
     @property
