@@ -1527,6 +1527,10 @@ def condition(
     empty
         For selection parameters, the predicate of empty selections returns ``True`` by default.
         Override this behavior, with ``empty=False``.
+
+        .. note::
+            When ``predicate`` is a ``Parameter`` that is used more than once,
+            ``alt.condition(..., empty=...)`` provides granular control for each :func:`.condition()`.
     **kwargs:
         additional keyword args are added to the resulting dict
 
