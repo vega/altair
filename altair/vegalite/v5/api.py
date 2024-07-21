@@ -913,6 +913,10 @@ class Then(core.SchemaBase, t.Generic[_C]):
         empty
             For selection parameters, the predicate of empty selections returns ``True`` by default.
             Override this behavior, with ``empty=False``.
+
+            .. note::
+                When ``predicate`` is a ``Parameter`` that is used more than once,
+                ``alt.when().then().when(..., empty=...)`` provides granular control for each occurrence.
         **constraints
             Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
             Shortcut for ``alt.datum.field_name == value``, see examples for usage.
@@ -1015,6 +1019,10 @@ def when(
     empty
         For selection parameters, the predicate of empty selections returns ``True`` by default.
         Override this behavior, with ``empty=False``.
+
+        .. note::
+            When ``predicate`` is a ``Parameter`` that is used more than once,
+            ``alt.when(..., empty=...)`` provides granular control for each occurrence.
     **constraints
         Specify `Field Equal Predicate <https://vega.github.io/vega-lite/docs/predicate.html#equal-predicate>`__'s.
         Shortcut for ``alt.datum.field_name == value``, see examples for usage.
