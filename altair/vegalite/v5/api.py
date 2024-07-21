@@ -1497,12 +1497,7 @@ def condition(
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
-    predicate: _PredicateType,
-    if_true: str,
-    if_false: str,
-    *,
-    empty: Optional[bool] = ...,
-    **kwargs,
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
 ) -> Never: ...
 # TODO: update the docstring
 def condition(
