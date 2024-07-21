@@ -1470,28 +1470,42 @@ def binding_range(**kwargs):
 
 @overload
 def condition(
-    predicate: _PredicateType, if_true: _StatementType, if_false: _TSchemaBase, **kwargs
+    predicate: _PredicateType,
+    if_true: _StatementType,
+    if_false: _TSchemaBase,
+    *,
+    empty: Optional[bool] = ...,
+    **kwargs,
 ) -> _TSchemaBase: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
-) -> Never: ...
-@overload
-def condition(
-    predicate: _PredicateType, if_true: Map | SchemaBase, if_false: Map | str, **kwargs
+    predicate: _PredicateType,
+    if_true: Map | SchemaBase,
+    if_false: Map | str,
+    *,
+    empty: Optional[bool] = ...,
+    **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
     predicate: _PredicateType,
     if_true: Map | str,
     if_false: Map,
+    *,
+    empty: Optional[bool] = ...,
     **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
+@overload
+def condition(
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+) -> Never: ...
 # TODO: update the docstring
 def condition(
     predicate: _PredicateType,
     if_true: _StatementType,
     if_false: _StatementType,
+    *,
+    empty: Optional[bool] = Undefined,
     **kwargs,
 ) -> SchemaBase | dict[str, _ConditionType | Any]:
     """A conditional attribute or encoding
@@ -1505,6 +1519,13 @@ def condition(
         the spec or object to use if the selection predicate is true
     if_false:
         the spec or object to use if the selection predicate is false
+    empty
+        For selection parameters, the predicate of empty selections returns ``True`` by default.
+        Override this behavior, with ``empty=False``.
+
+        .. note::
+            When ``predicate`` is a ``Parameter`` that is used more than once,
+            ``alt.condition(..., empty=...)`` provides granular control for each :func:`.condition()`.
     **kwargs:
         additional keyword args are added to the resulting dict
 
@@ -1513,7 +1534,6 @@ def condition(
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    empty = kwargs.pop("empty", Undefined)
     condition = _predicate_to_condition(predicate, empty=empty)
     return _condition_to_selection(condition, if_true, if_false, **kwargs)
 
