@@ -907,7 +907,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             A selection or test predicate. ``str`` input will be treated as a test operand.
 
             .. note::
-                accepts the same range of inputs as in :func:`.condition()`.
+                Accepts the same range of inputs as in :func:`.condition()`.
         *more_predicates
             Additional predicates, restricted to types supporting ``&``.
         empty
@@ -925,6 +925,25 @@ class Then(core.SchemaBase, t.Generic[_C]):
         -------
         :class:`ChainedWhen`
             A partial state which requires calling :meth:`ChainedWhen.then()` to finish the condition.
+
+
+        Examples
+        --------
+        Chain calls to express precise queries::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.cars()
+            color = (
+                alt.when(alt.datum.Miles_per_Gallon >= 30, Origin="Europe")
+                .then(alt.value("crimson"))
+                .when(alt.datum.Horsepower > 150)
+                .then(alt.value("goldenrod"))
+                .otherwise(alt.value("grey"))
+            )
+
+            alt.Chart(source).mark_point().encode(x="Horsepower", y="Miles_per_Gallon", color=color)
         """
         condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
         conditions = self.to_dict()
