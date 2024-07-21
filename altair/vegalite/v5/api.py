@@ -1470,21 +1470,38 @@ def binding_range(**kwargs):
 
 @overload
 def condition(
-    predicate: _PredicateType, if_true: _StatementType, if_false: _TSchemaBase, **kwargs
+    predicate: _PredicateType,
+    if_true: _StatementType,
+    if_false: _TSchemaBase,
+    *,
+    empty: Optional[bool] = ...,
+    **kwargs,
 ) -> _TSchemaBase: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+    predicate: _PredicateType,
+    if_true: str,
+    if_false: str,
+    *,
+    empty: Optional[bool] = ...,
+    **kwargs,
 ) -> Never: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: Map | SchemaBase, if_false: Map | str, **kwargs
+    predicate: _PredicateType,
+    if_true: Map | SchemaBase,
+    if_false: Map | str,
+    *,
+    empty: Optional[bool] = ...,
+    **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
     predicate: _PredicateType,
     if_true: Map | str,
     if_false: Map,
+    *,
+    empty: Optional[bool] = ...,
     **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
 # TODO: update the docstring
