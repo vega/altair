@@ -130,12 +130,14 @@ if TYPE_CHECKING:
     )
 
 __all__ = [
+    "TOPLEVEL_ONLY_KEYS",
     "Bin",
     "ChainedWhen",
     "Chart",
     "ChartDataType",
     "ChartType",
     "ConcatChart",
+    "DataType",
     "FacetChart",
     "FacetMapping",
     "HConcatChart",
@@ -164,6 +166,7 @@ __all__ = [
     "hconcat",
     "is_chart_type",
     "layer",
+    "mixins",
     "param",
     "repeat",
     "selection",
