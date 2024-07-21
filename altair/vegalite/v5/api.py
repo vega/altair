@@ -1492,6 +1492,8 @@ def condition(
     predicate: _PredicateType,
     if_true: _StatementType,
     if_false: _StatementType,
+    *,
+    empty: Optional[bool] = Undefined,
     **kwargs,
 ) -> SchemaBase | dict[str, _ConditionType | Any]:
     """A conditional attribute or encoding
@@ -1513,7 +1515,6 @@ def condition(
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    empty = kwargs.pop("empty", Undefined)
     condition = _predicate_to_condition(predicate, empty=empty)
     return _condition_to_selection(condition, if_true, if_false, **kwargs)
 
