@@ -630,7 +630,16 @@ def generate_vegalite_channel_wrappers(
 
         channel_infos[prop] = channel_info
 
-    all_ = list(chain.from_iterable(info.all_names for info in channel_infos.values()))
+    # NOTE: See https://github.com/vega/altair/pull/3482#issuecomment-2241577342
+    COMPAT_EXPORTS = (
+        "DatumChannelMixin",
+        "FieldChannelMixin",
+        "ValueChannelMixin",
+        "with_property_setters",
+    )
+
+    it = chain.from_iterable(info.all_names for info in channel_infos.values())
+    all_ = list(chain(it, COMPAT_EXPORTS))
 
     imports = imports or [
         "from __future__ import annotations\n",
