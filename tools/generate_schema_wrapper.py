@@ -566,7 +566,6 @@ class ChannelInfo:
 def generate_vegalite_channel_wrappers(
     schemafile: Path, version: str, imports: list[str] | None = None
 ) -> str:
-    # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
 
     encoding_def = "FacetedEncoding"
