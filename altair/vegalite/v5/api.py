@@ -14,7 +14,6 @@ from typing import (
     Union,
     TYPE_CHECKING,
     TypeVar,
-    Sequence,
     Protocol,
 )
 from typing_extensions import TypeAlias
@@ -45,10 +44,6 @@ if sys.version_info >= (3, 13):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
-if sys.version_info >= (3, 12):
-    from typing import TypeAliasType
-else:
-    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
     from ...utils.core import DataFrameLike
@@ -125,26 +120,12 @@ if TYPE_CHECKING:
         AggregateOp_T,
         MultiTimeUnit_T,
         SingleTimeUnit_T,
+        OneOrSeq,
     )
 
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
-_T = TypeVar("_T")
-_OneOrSeq = TypeAliasType("_OneOrSeq", Union[_T, Sequence[_T]], type_params=(_T,))
-"""One of ``_T`` specified type(s), or a `Sequence` of such.
-
-Examples
---------
-The parameters ``short``, ``long`` accept the same range of types::
-
-    # ruff: noqa: UP006, UP007
-
-    def func(
-        short: _OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
-    ): ...
-"""
 
 
 # ------------------------------------------------------------------------
@@ -571,7 +552,7 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
     param: Parameter | str
     test: _TestPredicateType
     value: Any
-    __extra_items__: _StatementType | _OneOrSeq[_LiteralValue]
+    __extra_items__: _StatementType | OneOrSeq[_LiteralValue]
 
 
 _Condition: TypeAlias = _ConditionExtra
