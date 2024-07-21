@@ -1524,6 +1524,9 @@ def condition(
         the spec or object to use if the selection predicate is true
     if_false:
         the spec or object to use if the selection predicate is false
+    empty
+        For selection parameters, the predicate of empty selections returns ``True`` by default.
+        Override this behavior, with ``empty=False``.
     **kwargs:
         additional keyword args are added to the resulting dict
 
