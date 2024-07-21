@@ -1480,15 +1480,6 @@ def condition(
 @overload
 def condition(
     predicate: _PredicateType,
-    if_true: str,
-    if_false: str,
-    *,
-    empty: Optional[bool] = ...,
-    **kwargs,
-) -> Never: ...
-@overload
-def condition(
-    predicate: _PredicateType,
     if_true: Map | SchemaBase,
     if_false: Map | str,
     *,
@@ -1504,6 +1495,15 @@ def condition(
     empty: Optional[bool] = ...,
     **kwargs,
 ) -> dict[str, _ConditionType | Any]: ...
+@overload
+def condition(
+    predicate: _PredicateType,
+    if_true: str,
+    if_false: str,
+    *,
+    empty: Optional[bool] = ...,
+    **kwargs,
+) -> Never: ...
 # TODO: update the docstring
 def condition(
     predicate: _PredicateType,
