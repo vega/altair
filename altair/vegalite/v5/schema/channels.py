@@ -41,10 +41,12 @@ __all__ = [
     "ColorDatum",
     "ColorValue",
     "Column",
+    "DatumChannelMixin",
     "Description",
     "DescriptionValue",
     "Detail",
     "Facet",
+    "FieldChannelMixin",
     "Fill",
     "FillDatum",
     "FillOpacity",
@@ -107,6 +109,7 @@ __all__ = [
     "TooltipValue",
     "Url",
     "UrlValue",
+    "ValueChannelMixin",
     "X",
     "X2Datum",
     "X2Value",
@@ -131,6 +134,7 @@ __all__ = [
     "YOffsetDatum",
     "YOffsetValue",
     "YValue",
+    "with_property_setters",
 ]
 
 
