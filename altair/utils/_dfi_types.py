@@ -55,7 +55,8 @@ class Column(Protocol):
                         Data Interface format.
         Endianness : current only native endianness (``=``) is supported
 
-        Notes:
+        Notes
+        -----
             - Kind specifiers are aligned with DLPack where possible (hence the
               jump to 20, leave enough room for future extension)
             - Masks must be specified as boolean with either bit width 1 (for bit
@@ -134,14 +135,10 @@ class DataFrame(Protocol):
         """
 
     def column_names(self) -> Iterable[str]:
-        """
-        Return an iterator yielding the column names.
-        """
+        """Return an iterator yielding the column names."""
 
     def get_column_by_name(self, name: str) -> Column:
-        """
-        Return the column whose name is the indicated name.
-        """
+        """Return the column whose name is the indicated name."""
 
     def get_chunks(self, n_chunks: int | None = None) -> Iterable[DataFrame]:
         """

@@ -1,6 +1,4 @@
-"""
-Magic functions for rendering vega-lite specifications
-"""
+"""Magic functions for rendering vega-lite specifications."""
 
 __all__ = ["vegalite"]
 
@@ -36,7 +34,7 @@ TRANSFORMERS = {
 
 
 def _prepare_data(data, data_transformers):
-    """Convert input data to data for use within schema"""
+    """Convert input data to data for use within schema."""
     if data is None or isinstance(data, dict):
         return data
     elif _is_pandas_dataframe(data):
@@ -74,7 +72,8 @@ def _get_variable(name):
 @magic_arguments.argument("-v", "--version", dest="version", default="v5")
 @magic_arguments.argument("-j", "--json", dest="json", action="store_true")
 def vegalite(line, cell):
-    """Cell magic for displaying vega-lite visualizations in CoLab.
+    """
+    Cell magic for displaying vega-lite visualizations in CoLab.
 
     %%vegalite [dataframe] [--json] [--version='v5']
 

@@ -1,6 +1,4 @@
-"""
-Utility routines
-"""
+"""Utility routines."""
 
 from __future__ import annotations
 
@@ -215,7 +213,7 @@ def infer_vegalite_type_for_pandas(
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
     From an array-like input, infer the correct vega typecode
-    ('ordinal', 'nominal', 'quantitative', or 'temporal')
+    ('ordinal', 'nominal', 'quantitative', or 'temporal').
 
     Parameters
     ----------
@@ -260,9 +258,8 @@ def infer_vegalite_type_for_pandas(
 def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     """
     Merge properties with geometry
-    * Overwrites 'type' and 'geometry' entries if existing
+    * Overwrites 'type' and 'geometry' entries if existing.
     """
-
     geom = {k: feat[k] for k in ("type", "geometry")}
     try:
         feat["properties"].update(geom)
@@ -276,14 +273,14 @@ def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
 
 
 def sanitize_geo_interface(geo: t.MutableMapping[Any, Any]) -> dict[str, Any]:
-    """Santize a geo_interface to prepare it for serialization.
+    """
+    Santize a geo_interface to prepare it for serialization.
 
     * Make a copy
     * Convert type array or _Array to list
     * Convert tuples to lists (using json.loads/dumps)
     * Merge properties with geometry
     """
-
     geo = deepcopy(geo)
 
     # convert type _Array or array to list
@@ -319,7 +316,8 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
 
 
 def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """Sanitize a DataFrame to prepare it for serialization.
+    """
+    Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
     * Convert RangeIndex columns to strings
@@ -452,7 +450,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 def sanitize_narwhals_dataframe(
     data: nw.DataFrame[TIntoDataFrame],
 ) -> nw.DataFrame[TIntoDataFrame]:
-    """Sanitize narwhals.DataFrame for JSON serialization"""
+    """Sanitize narwhals.DataFrame for JSON serialization."""
     schema = data.schema
     columns: list[IntoExpr] = []
     # See https://github.com/vega/altair/issues/1027 for why this is necessary.
@@ -482,7 +480,8 @@ def sanitize_narwhals_dataframe(
 
 
 def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
-    """Wrap `data` in `narwhals.DataFrame`.
+    """
+    Wrap `data` in `narwhals.DataFrame`.
 
     If `data` is not supported by Narwhals, but it is convertible
     to a PyArrow table, then first convert to a PyArrow Table,
@@ -507,7 +506,8 @@ def parse_shorthand(
     parse_timeunits: bool = True,
     parse_types: bool = True,
 ) -> dict[str, Any]:
-    """General tool to parse shorthand values
+    """
+    General tool to parse shorthand values.
 
     These are of the form:
 
@@ -688,7 +688,7 @@ def infer_vegalite_type_for_narwhals(
 
 
 def use_signature(obj: Callable[P, Any]):  # -> Callable[..., Callable[P, V]]:
-    """Apply call signature and documentation of `obj` to the decorated method"""
+    """Apply call signature and documentation of `obj` to the decorated method."""
 
     def decorate(func: Callable[..., V]) -> Callable[P, V]:
         # call-signature of func is exposed via __wrapped__.
@@ -722,7 +722,8 @@ def update_nested(
     update: t.Mapping[Any, Any],
     copy: bool = False,
 ) -> t.MutableMapping[Any, Any]:
-    """Update nested dictionaries
+    """
+    Update nested dictionaries.
 
     Parameters
     ----------
@@ -881,7 +882,8 @@ def _invert_group_channels(
     """Grouped inverted index for `_ChannelCache.channel_to_name`."""
 
     def _reduce(it: Iterator[tuple[type[Any], str]]) -> Any:
-        """Returns a 1-2 item dict, per channel.
+        """
+        Returns a 1-2 item dict, per channel.
 
         Never includes `datum`, as it is never utilized in `wrap_in_channel`.
         """
@@ -904,7 +906,8 @@ def _invert_group_channels(
 def infer_encoding_types(
     args: tuple[Any, ...], kwargs: dict[str, Any], channels: ModuleType | None = None
 ):
-    """Infer typed keyword arguments for args and kwargs
+    """
+    Infer typed keyword arguments for args and kwargs.
 
     Parameters
     ----------

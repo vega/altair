@@ -13,7 +13,7 @@ from tools.schemapi.utils import fix_docstring_issues, SchemaInfo
 
 
 def type_description(schema: dict[str, Any]) -> str:
-    """Return a concise type description for the given schema"""
+    """Return a concise type description for the given schema."""
     if not schema or not isinstance(schema, dict) or schema.keys() == {"description"}:
         return "any"
     elif "$ref" in schema:
@@ -44,7 +44,7 @@ def type_description(schema: dict[str, Any]) -> str:
 def prepare_table_header(
     titles: Sequence[str], widths: Sequence[float]
 ) -> tuple[nodes.table, nodes.tbody]:
-    """Build docutil empty table"""
+    """Build docutil empty table."""
     ncols = len(titles)
     assert len(widths) == ncols
 
@@ -67,8 +67,7 @@ reCode = re.compile(r"`([^`]+)`")
 
 
 def add_class_def(node: nodes.paragraph, classDef: str) -> nodes.paragraph:
-    """Add reference on classDef to node"""
-
+    """Add reference on classDef to node."""
     ref = addnodes.pending_xref(
         reftarget=classDef,
         reftype="class",
@@ -86,7 +85,7 @@ def add_class_def(node: nodes.paragraph, classDef: str) -> nodes.paragraph:
 
 
 def add_text(node: nodes.paragraph, text: str) -> nodes.paragraph:
-    """Add text with inline code to node"""
+    """Add text with inline code to node."""
     is_text = True
     for part in reCode.split(text):
         if part:
@@ -103,8 +102,7 @@ def add_text(node: nodes.paragraph, text: str) -> nodes.paragraph:
 def build_row(
     item: tuple[str, dict[str, Any]], rootschema: dict[str, Any] | None
 ) -> nodes.row:
-    """Return nodes.row with property description"""
-
+    """Return nodes.row with property description."""
     prop, propschema, _ = item
     row = nodes.row()
 
@@ -150,7 +148,7 @@ def build_row(
 def build_schema_table(
     items: Iterator[tuple[str, dict[str, Any]]], rootschema: dict[str, Any] | None
 ) -> nodes.table:
-    """Return schema table of items (iterator of prop, schema.item, required)"""
+    """Return schema table of items (iterator of prop, schema.item, required)."""
     table, tbody = prepare_table_header(
         ["Property", "Type", "Description"], [10, 20, 50]
     )
@@ -163,7 +161,7 @@ def build_schema_table(
 def select_items_from_schema(
     schema: dict[str, Any], props: list[str] | None = None
 ) -> Iterator[tuple[Any, Any, bool] | tuple[str, Any, bool]]:
-    """Return iterator  (prop, schema.item, required) on prop, return all in None"""
+    """Return iterator  (prop, schema.item, required) on prop, return all in None."""
     properties = schema.get("properties", {})
     required = schema.get("required", [])
     if not props:

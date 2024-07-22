@@ -71,7 +71,8 @@ def transformed_data(
 
 
 def transformed_data(chart, row_limit=None, exclude=None):
-    """Evaluate a Chart's transforms
+    """
+    Evaluate a Chart's transforms.
 
     Evaluate the data transforms associated with a Chart and return the
     transformed data as one or more DataFrames
@@ -157,7 +158,8 @@ def name_views(
     i: int = 0,
     exclude: Iterable[str] | None = None,
 ) -> list[str]:
-    """Name unnamed chart views
+    """
+    Name unnamed chart views.
 
     Name unnamed charts views so that we can look them up later in
     the compiled Vega spec.
@@ -217,7 +219,8 @@ def name_views(
 def get_group_mark_for_scope(
     vega_spec: dict[str, Any], scope: Scope
 ) -> dict[str, Any] | None:
-    """Get the group mark at a particular scope
+    """
+    Get the group mark at a particular scope.
 
     Parameters
     ----------
@@ -270,7 +273,8 @@ def get_group_mark_for_scope(
 
 
 def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]:
-    """Get the names of the datasets that are defined at a given scope
+    """
+    Get the names of the datasets that are defined at a given scope.
 
     Parameters
     ----------
@@ -341,7 +345,8 @@ def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]
 def get_definition_scope_for_data_reference(
     vega_spec: dict[str, Any], data_name: str, usage_scope: Scope
 ) -> Scope | None:
-    """Return the scope that a dataset is defined at, for a given usage scope
+    """
+    Return the scope that a dataset is defined at, for a given usage scope.
 
     Parameters
     ----------
@@ -405,7 +410,8 @@ def get_definition_scope_for_data_reference(
 
 
 def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
-    """Create mapping from facet definitions to source datasets
+    """
+    Create mapping from facet definitions to source datasets.
 
     Parameters
     ----------
@@ -473,7 +479,8 @@ def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
 def get_from_facet_mapping(
     scoped_dataset: tuple[str, Scope], facet_mapping: FacetMapping
 ) -> tuple[str, Scope]:
-    """Apply facet mapping to a scoped dataset
+    """
+    Apply facet mapping to a scoped dataset.
 
     Parameters
     ----------
@@ -505,7 +512,8 @@ def get_datasets_for_view_names(
     facet_mapping: FacetMapping,
     scope: Scope = (),
 ) -> dict[str, tuple[str, Scope]]:
-    """Get the Vega datasets that correspond to the provided Altair view names
+    """
+    Get the Vega datasets that correspond to the provided Altair view names.
 
     Parameters
     ----------

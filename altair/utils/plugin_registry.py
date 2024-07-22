@@ -19,7 +19,8 @@ IsPlugin = Callable[[object], TypeIs[Plugin[Any]]]
 
 
 def _is_type(tp: type[T], /) -> Callable[[object], TypeIs[type[T]]]:
-    """Converts a type to guard function.
+    """
+    Converts a type to guard function.
 
     Added for compatibility with original `PluginRegistry` default.
     """
@@ -40,7 +41,8 @@ class NoSuchEntryPoint(Exception):
 
 
 class PluginEnabler:
-    """Context manager for enabling plugins
+    """
+    Context manager for enabling plugins.
 
     This object lets you use enable() as a context manager to
     temporarily enable a given plugin::
@@ -68,7 +70,8 @@ class PluginEnabler:
 
 
 class PluginRegistry(Generic[PluginT, R]):
-    """A registry for plugins.
+    """
+    A registry for plugins.
 
     This is a plugin registry that allows plugins to be loaded/registered
     in two ways:
@@ -95,10 +98,11 @@ class PluginRegistry(Generic[PluginT, R]):
     def __init__(
         self, entry_point_group: str = "", plugin_type: IsPlugin = callable
     ) -> None:
-        """Create a PluginRegistry for a named entry point group.
+        """
+        Create a PluginRegistry for a named entry point group.
 
         Parameters
-        ==========
+        ----------
         entry_point_group: str
             The name of the entry point group.
         plugin_type
@@ -106,7 +110,7 @@ class PluginRegistry(Generic[PluginT, R]):
             type checking loaded plugins.
 
         References
-        ==========
+        ----------
         https://typing.readthedocs.io/en/latest/spec/narrowing.html
         """
         self.entry_point_group: str = entry_point_group
@@ -130,20 +134,21 @@ class PluginRegistry(Generic[PluginT, R]):
         self._global_settings: dict[str, Any] = self.__class__._global_settings.copy()
 
     def register(self, name: str, value: PluginT | None) -> PluginT | None:
-        """Register a plugin by name and value.
+        """
+        Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be
         used to manage entry point managed plugins, which are auto-loaded.
 
         Parameters
-        ==========
+        ----------
         name: str
             The name of the plugin.
         value: PluginType or None
             The actual plugin object to register or None to unregister that plugin.
 
         Returns
-        =======
+        -------
         plugin: PluginType or None
             The plugin that was registered or unregistered.
         """
@@ -165,7 +170,7 @@ class PluginRegistry(Generic[PluginT, R]):
         return sorted(set(exts))
 
     def _get_state(self) -> dict[str, Any]:
-        """Return a dictionary representing the current state of the registry"""
+        """Return a dictionary representing the current state of the registry."""
         return {
             "_active": self._active,
             "_active_name": self._active_name,
@@ -175,7 +180,7 @@ class PluginRegistry(Generic[PluginT, R]):
         }
 
     def _set_state(self, state: dict[str, Any]) -> None:
-        """Reset the state of the registry"""
+        """Reset the state of the registry."""
         assert set(state.keys()) == {
             "_active",
             "_active_name",
@@ -208,7 +213,8 @@ class PluginRegistry(Generic[PluginT, R]):
         self._options = options
 
     def enable(self, name: str | None = None, **options) -> PluginEnabler:
-        """Enable a plugin by name.
+        """
+        Enable a plugin by name.
 
         This can be either called directly, or used as a context manager.
 
@@ -232,12 +238,12 @@ class PluginRegistry(Generic[PluginT, R]):
 
     @property
     def active(self) -> str:
-        """Return the name of the currently active plugin"""
+        """Return the name of the currently active plugin."""
         return self._active_name
 
     @property
     def options(self) -> dict[str, Any]:
-        """Return the current options dictionary"""
+        """Return the current options dictionary."""
         return self._options
 
     def get(self) -> partial[R] | Plugin[R] | None:

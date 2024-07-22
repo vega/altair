@@ -130,7 +130,8 @@ def validate_jsonschema(
     *,
     raise_error=True,
 ):
-    """Validates the passed in spec against the schema in the context of the
+    """
+    Validates the passed in spec against the schema in the context of the
     rootschema. If any errors are found, they are deduplicated and prioritized
     and only the most relevant errors are kept. Errors are then either raised
     or returned, depending on the value of `raise_error`.
@@ -164,7 +165,8 @@ def _get_errors_from_spec(
     schema: dict[str, Any],
     rootschema: dict[str, Any] | None = None,
 ) -> ValidationErrorList:
-    """Uses the relevant jsonschema validator to validate the passed in spec
+    """
+    Uses the relevant jsonschema validator to validate the passed in spec
     against the schema using the rootschema to resolve references.
     The schema and rootschema themselves are not validated but instead considered
     as valid.
@@ -211,8 +213,10 @@ def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
 
 
 def _use_referencing_library() -> bool:
-    """In version 4.18.0, the jsonschema package deprecated RefResolver in
-    favor of the referencing library."""
+    """
+    In version 4.18.0, the jsonschema package deprecated RefResolver in
+    favor of the referencing library.
+    """
     return Version(jsonschema_version_str) >= Version("4.18")
 
 
@@ -223,7 +227,8 @@ def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
     schema = copy.deepcopy(schema)
 
     def _prepare_refs(d: dict[str, Any]) -> dict[str, Any]:
-        """Add _VEGA_LITE_ROOT_URI in front of all $ref values.
+        """
+        Add _VEGA_LITE_ROOT_URI in front of all $ref values.
 
         This function recursively iterates through the whole dictionary.
 
@@ -276,10 +281,11 @@ def _get_referencing_registry(
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
-    """Drop in replacement for the .json_path property of the jsonschema
+    """
+    Drop in replacement for the .json_path property of the jsonschema
     ValidationError class, which is not available as property for
     ValidationError with jsonschema<4.0.1.
-    More info, see https://github.com/vega/altair/issues/3038
+    More info, see https://github.com/vega/altair/issues/3038.
     """
     path = "$"
     for elem in err.absolute_path:
@@ -293,7 +299,8 @@ def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
 def _group_errors_by_json_path(
     errors: ValidationErrorList,
 ) -> GroupedValidationErrors:
-    """Groups errors by the `json_path` attribute of the jsonschema ValidationError
+    """
+    Groups errors by the `json_path` attribute of the jsonschema ValidationError
     class. This attribute contains the path to the offending element within
     a chart specification and can therefore be considered as an identifier of an
     'issue' in the chart that needs to be fixed.
@@ -308,7 +315,8 @@ def _group_errors_by_json_path(
 def _get_leaves_of_error_tree(
     errors: ValidationErrorList,
 ) -> ValidationErrorList:
-    """For each error in `errors`, it traverses down the "error tree" that is generated
+    """
+    For each error in `errors`, it traverses down the "error tree" that is generated
     by the jsonschema library to find and return all "leaf" errors. These are errors
     which have no further errors that caused it and so they are the most specific errors
     with the most specific error messages.
@@ -328,7 +336,8 @@ def _get_leaves_of_error_tree(
 def _subset_to_most_specific_json_paths(
     errors_by_json_path: GroupedValidationErrors,
 ) -> GroupedValidationErrors:
-    """Removes key (json path), value (errors) pairs where the json path is fully
+    """
+    Removes key (json path), value (errors) pairs where the json path is fully
     contained in another json path. For example if `errors_by_json_path` has two
     keys, `$.encoding.X` and `$.encoding.X.tooltip`, then the first one will be removed
     and only the second one is returned. This is done under the assumption that
@@ -352,7 +361,8 @@ def _contained_at_start_of_one_of_other_values(x: str, values: Sequence[str]) ->
 def _deduplicate_errors(
     grouped_errors: GroupedValidationErrors,
 ) -> GroupedValidationErrors:
-    """Some errors have very similar error messages or are just in general not helpful
+    """
+    Some errors have very similar error messages or are just in general not helpful
     for a user. This function removes as many of these cases as possible and
     can be extended over time to handle new cases that come up.
     """
@@ -391,7 +401,8 @@ def _is_required_value_error(err: jsonschema.exceptions.ValidationError) -> bool
 
 
 def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidationErrors:
-    """Groups the errors by the json schema "validator" that casued the error. For
+    """
+    Groups the errors by the json schema "validator" that casued the error. For
     example if the error is that a value is not one of an enumeration in the json schema
     then the "validator" is `"enum"`, if the error is due to an unknown property that
     was set although no additional properties are allowed then "validator" is
@@ -407,7 +418,8 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
 
 
 def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList:
-    """Deduplicate enum errors by removing the errors where the allowed values
+    """
+    Deduplicate enum errors by removing the errors where the allowed values
     are a subset of another error. For example, if `enum` contains two errors
     and one has `validator_value` (i.e. accepted values) ["A", "B"] and the
     other one ["A", "B", "C"] then the first one is removed and the final
@@ -429,7 +441,8 @@ def _deduplicate_enum_errors(errors: ValidationErrorList) -> ValidationErrorList
 def _deduplicate_additional_properties_errors(
     errors: ValidationErrorList,
 ) -> ValidationErrorList:
-    """If there are multiple additional property errors it usually means that
+    """
+    If there are multiple additional property errors it usually means that
     the offending element was validated against multiple schemas and
     its parent is a common anyOf validator.
     The error messages produced from these cases are usually
@@ -438,7 +451,7 @@ def _deduplicate_additional_properties_errors(
     `alt.X("variety", unknown=2)`:
     - "Additional properties are not allowed ('unknown' was unexpected)"
     - "Additional properties are not allowed ('field', 'unknown' were unexpected)"
-    - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)"
+    - "Additional properties are not allowed ('field', 'type', 'unknown' were unexpected)".
     """
     if len(errors) > 1:
         # Test if all parent errors are the same anyOf error and only do
@@ -457,7 +470,8 @@ def _deduplicate_additional_properties_errors(
 
 
 def _deduplicate_by_message(errors: ValidationErrorList) -> ValidationErrorList:
-    """Deduplicate errors by message. This keeps the original order in case
+    """
+    Deduplicate errors by message. This keeps the original order in case
     it was chosen intentionally.
     """
     return list({e.message: e for e in errors}.values())
@@ -509,7 +523,8 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
 def _resolve_references(
     schema: dict[str, Any], rootschema: dict[str, Any] | None = None
 ) -> dict[str, Any]:
-    """Resolve schema references until there is no $ref anymore
+    """
+    Resolve schema references until there is no $ref anymore
     in the top-level of the dictionary.
     """
     if _use_referencing_library():
@@ -531,7 +546,7 @@ def _resolve_references(
 
 
 class SchemaValidationError(jsonschema.ValidationError):
-    """A wrapper for jsonschema.ValidationError with friendlier traceback"""
+    """A wrapper for jsonschema.ValidationError with friendlier traceback."""
 
     def __init__(self, obj: SchemaBase, err: jsonschema.ValidationError) -> None:
         super().__init__(**err._contents())
@@ -611,7 +626,8 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
     ) -> type[SchemaBase]:
-        """Try to get the lowest class possible in the chart hierarchy so
+        """
+        Try to get the lowest class possible in the chart hierarchy so
         it can be displayed in the error message. This should lead to more informative
         error messages pointing the user closer to the source of the issue.
         """
@@ -631,7 +647,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
     @staticmethod
     def _format_params_as_table(param_dict_keys: Iterable[str]) -> str:
-        """Format param names into a table so that they are easier to read"""
+        """Format param names into a table so that they are easier to read."""
         param_names: tuple[str, ...]
         name_lengths: tuple[int, ...]
         param_names, name_lengths = zip(
@@ -741,7 +757,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
 
 
 class UndefinedType:
-    """A singleton object for marking undefined parameters"""
+    """A singleton object for marking undefined parameters."""
 
     __instance = None
 
@@ -788,7 +804,8 @@ This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/
 
 
 def is_undefined(obj: Any) -> TypeIs[UndefinedType]:
-    """Type-safe singleton check for `UndefinedType`.
+    """
+    Type-safe singleton check for `UndefinedType`.
 
     Notes
     -----
@@ -801,7 +818,8 @@ def is_undefined(obj: Any) -> TypeIs[UndefinedType]:
 
 
 class SchemaBase:
-    """Base class for schema wrappers.
+    """
+    Base class for schema wrappers.
 
     Each derived class should set the _schema class attribute (and optionally
     the _rootschema class attribute) which is used for validation.
@@ -839,7 +857,8 @@ class SchemaBase:
     def copy(
         self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
     ) -> Self:
-        """Return a copy of the object
+        """
+        Return a copy of the object.
 
         Parameters
         ----------
@@ -956,7 +975,8 @@ class SchemaBase:
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Return a dictionary representation of the object
+        """
+        Return a dictionary representation of the object.
 
         Parameters
         ----------
@@ -1056,7 +1076,8 @@ class SchemaBase:
         context: dict[str, Any] | None = None,
         **kwargs,
     ) -> str:
-        """Emit the JSON representation for this object as a string.
+        """
+        Emit the JSON representation for this object as a string.
 
         Parameters
         ----------
@@ -1095,14 +1116,15 @@ class SchemaBase:
 
     @classmethod
     def _default_wrapper_classes(cls) -> Iterator[type[SchemaBase]]:
-        """Return the set of classes used within cls.from_dict()"""
+        """Return the set of classes used within cls.from_dict()."""
         return _subclasses(SchemaBase)
 
     @classmethod
     def from_dict(
         cls: type[TSchemaBase], dct: dict[str, Any], validate: bool = True
     ) -> TSchemaBase:
-        """Construct class from a dictionary representation
+        """
+        Construct class from a dictionary representation.
 
         Parameters
         ----------
@@ -1135,7 +1157,8 @@ class SchemaBase:
         # Type hints for this method would get rather complicated
         # if we want to provide a more specific return type
     ) -> ChartType:
-        """Instantiate the object from a valid JSON string
+        """
+        Instantiate the object from a valid JSON string.
 
         Parameters
         ----------
@@ -1187,7 +1210,7 @@ class SchemaBase:
     ) -> None:
         """
         Validate a property against property schema in the context of the
-        rootschema
+        rootschema.
         """
         # The following return the package only if it has already been
         # imported - otherwise they return None. This is useful for
@@ -1221,7 +1244,8 @@ def _passthrough(*args: Any, **kwds: Any) -> Any | dict[str, Any]:
 
 
 class _FromDict:
-    """Class used to construct SchemaBase class hierarchies from a dict
+    """
+    Class used to construct SchemaBase class hierarchies from a dict.
 
     The primary purpose of using this class is to be able to build a hash table
     that maps schemas to their wrapper classes. The candidate classes are
@@ -1327,7 +1351,7 @@ class _FromDict:
         rootschema: dict[str, Any] | None = None,
         default_class: Any = _passthrough,
     ) -> TSchemaBase:
-        """Construct an object from a dict representation"""
+        """Construct an object from a dict representation."""
         target_tp: type[TSchemaBase]
         current_schema: dict[str, Any]
         if isinstance(dct, SchemaBase):
@@ -1426,9 +1450,7 @@ class _PropertySetter:
 
 
 def with_property_setters(cls: type[TSchemaBase]) -> type[TSchemaBase]:
-    """
-    Decorator to add property setters to a Schema class.
-    """
+    """Decorator to add property setters to a Schema class."""
     schema = cls.resolve_references()
     for prop, propschema in schema.get("properties", {}).items():
         setattr(cls, prop, _PropertySetter(prop, propschema))

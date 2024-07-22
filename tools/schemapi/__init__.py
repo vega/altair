@@ -1,6 +1,4 @@
-"""
-schemapi: tools for generating Python APIs from JSON schemas
-"""
+"""schemapi: tools for generating Python APIs from JSON schemas."""
 
 from tools.schemapi.schemapi import SchemaBase, Undefined
 from tools.schemapi.utils import SchemaInfo

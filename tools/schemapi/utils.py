@@ -1,4 +1,4 @@
-"""Utilities for working with schemas"""
+"""Utilities for working with schemas."""
 
 from __future__ import annotations
 from itertools import chain
@@ -29,7 +29,8 @@ jsonschema_to_python_types = {
 
 
 class _TypeAliasTracer:
-    """Recording all `enum` -> `Literal` translations.
+    """
+    Recording all `enum` -> `Literal` translations.
 
     Rewrites as `TypeAlias` to be reused anywhere, and not clog up method definitions.
 
@@ -87,7 +88,8 @@ class _TypeAliasTracer:
     def add_literal(
         self, info: SchemaInfo, tp: str, /, *, replace: bool = False
     ) -> str:
-        """`replace=True` returns the eventual alias name.
+        """
+        `replace=True` returns the eventual alias name.
 
         - Doing so will mean that the `_typing` module must be written first, before the source of `info`.
         - Otherwise, `ruff` will raise an error during `check`/`format`, as the import will be invalid.
@@ -114,7 +116,8 @@ class _TypeAliasTracer:
         return tp
 
     def update_aliases(self, *name_statement: tuple[str, str]) -> None:
-        """Adds `(name, statement)` pairs to the definitions.
+        """
+        Adds `(name, statement)` pairs to the definitions.
 
         These types should support annotations in generated code, but
         are not required to be derived from the schema itself.
@@ -134,7 +137,8 @@ class _TypeAliasTracer:
             yield f"{name}: TypeAlias = {statement}"
 
     def is_cached(self, tp: str, /) -> bool:
-        """Applies to both docstring and type hints.
+        """
+        Applies to both docstring and type hints.
 
         Currently used as a sort key, to place literals/aliases last.
         """
@@ -143,7 +147,8 @@ class _TypeAliasTracer:
     def write_module(
         self, fp: Path, *extra_all: str, header: LiteralString, extra: LiteralString
     ) -> None:
-        """Write all collected `TypeAlias`'s to `fp`.
+        """
+        Write all collected `TypeAlias`'s to `fp`.
 
         Parameters
         ----------
@@ -197,7 +202,8 @@ def get_valid_identifier(
     allow_unicode: bool = False,
     url_decode: bool = True,
 ) -> str:
-    """Given a string property, generate a valid Python identifier
+    """
+    Given a string property, generate a valid Python identifier.
 
     Parameters
     ----------
@@ -254,7 +260,8 @@ def get_valid_identifier(
 
 
 def is_valid_identifier(var: str, allow_unicode: bool = False):
-    """Return true if var contains a valid Python identifier
+    """
+    Return true if var contains a valid Python identifier.
 
     Parameters
     ----------
@@ -269,7 +276,7 @@ def is_valid_identifier(var: str, allow_unicode: bool = False):
 
 
 class SchemaProperties:
-    """A wrapper for properties within a schema"""
+    """A wrapper for properties within a schema."""
 
     def __init__(
         self,
@@ -313,7 +320,7 @@ class SchemaProperties:
 
 
 class SchemaInfo:
-    """A wrapper for inspecting a JSON schema"""
+    """A wrapper for inspecting a JSON schema."""
 
     def __init__(
         self, schema: dict[str, Any], rootschema: dict[str, Any] | None = None
@@ -648,7 +655,7 @@ class SchemaInfo:
 def indent_docstring(
     lines: list[str], indent_level: int, width: int = 100, lstrip=True
 ) -> str:
-    """Indent a docstring for use in generated code"""
+    """Indent a docstring for use in generated code."""
     final_lines = []
 
     for i, line in enumerate(lines):
@@ -741,7 +748,8 @@ def rst_syntax_for_class(class_name: str) -> str:
 
 
 def flatten(container: Iterable) -> Iterable:
-    """Flatten arbitrarily flattened list
+    """
+    Flatten arbitrarily flattened list.
 
     From https://stackoverflow.com/a/10824420
     """
@@ -772,14 +780,14 @@ def ruff_format_str(code: str | list[str]) -> str:
 
 
 def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
-    """Format an existing file.
+    """
+    Format an existing file.
 
     Running on `win32` after writing lines will ensure "lf" is used before:
     ```bash
     ruff format --diff --check .
     ```
     """
-
     cmd = ["ruff", "format", fp]
     if extra_args:
         cmd.extend(extra_args)
@@ -790,7 +798,8 @@ def ruff_format_py(fp: Path, /, *extra_args: str) -> None:
 def ruff_write_lint_format_str(
     fp: Path, code: str | Iterable[str], /, *, encoding: str = "utf-8"
 ) -> None:
-    """Combined steps of writing, `ruff check`, `ruff format`.
+    """
+    Combined steps of writing, `ruff check`, `ruff format`.
 
     Notes
     -----

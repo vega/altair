@@ -157,7 +157,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 def save_example_pngs(
     examples: list[dict[str, Any]], image_dir: Path, make_thumbnails: bool = True
 ) -> None:
-    """Save example pngs and (optionally) thumbnails"""
+    """Save example pngs and (optionally) thumbnails."""
     encoding = "utf-8"
 
     # store hashes so that we know whether images need to be generated
@@ -210,8 +210,7 @@ def save_example_pngs(
 
 
 def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
-    """Iterate through Altair examples and extract code"""
-
+    """Iterate through Altair examples and extract code."""
     examples = sorted(iter_examples_arguments_syntax(), key=itemgetter("name"))
     method_examples = {x["name"]: x for x in iter_examples_methods_syntax()}
 

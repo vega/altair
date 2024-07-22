@@ -4,7 +4,7 @@ from ..utils import SchemaBase
 
 
 class DatumType:
-    """An object to assist in building Vega-Lite Expressions"""
+    """An object to assist in building Vega-Lite Expressions."""
 
     def __repr__(self) -> str:
         return "datum"
@@ -18,7 +18,7 @@ class DatumType:
         return GetItemExpression("datum", attr)
 
     def __call__(self, datum, **kwargs) -> dict[str, Any]:
-        """Specify a datum for use in an encoding"""
+        """Specify a datum for use in an encoding."""
         return dict(datum=datum, **kwargs)
 
 
@@ -26,7 +26,7 @@ datum = DatumType()
 
 
 def _js_repr(val) -> str:
-    """Return a javascript-safe string representation of val"""
+    """Return a javascript-safe string representation of val."""
     if val is True:
         return "true"
     elif val is False:
@@ -163,7 +163,8 @@ class OperatorMixin:
 
 
 class Expression(OperatorMixin, SchemaBase):
-    """Expression
+    """
+    Expression.
 
     Base object for enabling build-up of Javascript expressions using
     a Python syntax. Calling ``repr(obj)`` will return a Javascript

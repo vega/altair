@@ -9,7 +9,7 @@ import altair.vegalite.v5 as alt
 def check_render_options(**options):
     """
     Context manager that will assert that alt.renderers.options are equivalent
-    to the given options in the IPython.display.display call
+    to the given options in the IPython.display.display call.
     """
     import IPython.display
 

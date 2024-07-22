@@ -41,7 +41,8 @@ _TYPING_CONSTRUCTS = {
 
 
 def update__all__variable() -> None:
-    """Updates the __all__ variable to all relevant attributes of top-level Altair.
+    """
+    Updates the __all__ variable to all relevant attributes of top-level Altair.
     This is for example useful to hide deprecated attributes from code completion in
     Jupyter.
     """
@@ -79,7 +80,8 @@ def update__all__variable() -> None:
 
 
 def relevant_attributes(namespace: dict[str, t.Any], /) -> list[str]:
-    """Figure out which attributes in `__all__` are relevant.
+    """
+    Figure out which attributes in `__all__` are relevant.
 
     Returns an alphabetically sorted list, to insert into `__all__`.
 
