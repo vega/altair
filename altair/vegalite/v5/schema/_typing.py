@@ -4,9 +4,9 @@
 
 from __future__ import annotations
 
-from typing import Any, Literal, Mapping
+from typing import Any, Literal, Mapping, Sequence, TypeVar, Union
 
-from typing_extensions import TypeAlias
+from typing_extensions import TypeAlias, TypeAliasType
 
 __all__ = [
     "AggregateOp_T",
@@ -32,6 +32,7 @@ __all__ = [
     "Mark_T",
     "MultiTimeUnit_T",
     "NonArgAggregateOp_T",
+    "OneOrSeq",
     "Orient_T",
     "Orientation_T",
     "ProjectionType_T",
@@ -59,6 +60,22 @@ __all__ = [
     "WindowOnlyOp_T",
 ]
 
+
+T = TypeVar("T")
+OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+"""One of ``T`` specified type(s), or a `Sequence` of such.
+
+Examples
+--------
+The parameters ``short``, ``long`` accept the same range of types::
+
+    # ruff: noqa: UP006, UP007
+
+    def func(
+        short: OneOrSeq[str | bool | float],
+        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+    ): ...
+"""
 
 Map: TypeAlias = Mapping[str, Any]
 AggregateOp_T: TypeAlias = Literal[

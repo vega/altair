@@ -71,8 +71,8 @@ class _TypeAliasTracer:
         self._aliases: dict[str, str] = {}
         self._imports: Sequence[str] = (
             "from __future__ import annotations\n",
-            "from typing import Literal, Mapping, Any",
-            "from typing_extensions import TypeAlias",
+            "from typing import Any, Literal, Mapping, TypeVar, Sequence, Union",
+            "from typing_extensions import TypeAlias, TypeAliasType",
         )
         self._cmd_check: list[str] = ["--fix"]
         self._cmd_format: Sequence[str] = ruff_format or ()
@@ -141,7 +141,7 @@ class _TypeAliasTracer:
         return tp in self._literals_invert or tp in self._literals
 
     def write_module(
-        self, fp: Path, *extra_imports: str, header: LiteralString
+        self, fp: Path, *extra_all: str, header: LiteralString, extra: LiteralString
     ) -> None:
         """Write all collected `TypeAlias`'s to `fp`.
 
@@ -149,20 +149,23 @@ class _TypeAliasTracer:
         ----------
         fp
             Path to new module.
-        *extra_imports
-            Follows `self._imports` block.
+        *extra_all
+            Any manually spelled types to be exported.
         header
             `tools.generate_schema_wrapper.HEADER`.
+        extra
+            `tools.generate_schema_wrapper.TYPING_EXTRA`.
         """
         ruff_format = ["ruff", "format", fp]
         if self._cmd_format:
             ruff_format.extend(self._cmd_format)
         commands = (["ruff", "check", fp, *self._cmd_check], ruff_format)
-        static = (header, "\n", *self._imports, *extra_imports, "\n\n")
+        static = (header, "\n", *self._imports, "\n\n")
         self.update_aliases(*sorted(self._literals.items(), key=itemgetter(0)))
+        all_ = [*iter(self._aliases), *extra_all]
         it = chain(
             static,
-            [f"__all__ = {list(self._aliases)}", "\n\n"],
+            [f"__all__ = {all_}", "\n\n", extra],
             self.generate_aliases(),
         )
         fp.write_text("\n".join(it), encoding="utf-8")

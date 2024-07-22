@@ -14,7 +14,6 @@ from typing import (
     Union,
     TYPE_CHECKING,
     TypeVar,
-    Sequence,
     Protocol,
 )
 from typing_extensions import TypeAlias
@@ -45,10 +44,6 @@ if sys.version_info >= (3, 13):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
-if sys.version_info >= (3, 12):
-    from typing import TypeAliasType
-else:
-    from typing_extensions import TypeAliasType
 
 if TYPE_CHECKING:
     from ...utils.core import DataFrameLike
@@ -107,7 +102,6 @@ if TYPE_CHECKING:
         TopLevelSelectionParameter,
         SelectionParameter,
         InlineDataset,
-        UndefinedType,
     )
     from altair.expr.core import (
         BinaryExpression,
@@ -126,26 +120,12 @@ if TYPE_CHECKING:
         AggregateOp_T,
         MultiTimeUnit_T,
         SingleTimeUnit_T,
+        OneOrSeq,
     )
 
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
-_T = TypeVar("_T")
-_OneOrSeq = TypeAliasType("_OneOrSeq", Union[_T, Sequence[_T]], type_params=(_T,))
-"""One of ``_T`` specified type(s), or a `Sequence` of such.
-
-Examples
---------
-The parameters ``short``, ``long`` accept the same range of types::
-
-    # ruff: noqa: UP006, UP007
-
-    def func(
-        short: _OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
-    ): ...
-"""
 
 
 # ------------------------------------------------------------------------
@@ -181,7 +161,7 @@ def _consolidate_data(data: Any, context: Any) -> Any:
     kwds = {}
 
     if isinstance(data, core.InlineData):
-        if _is_undefined(data.name) and not _is_undefined(data.values):
+        if utils.is_undefined(data.name) and not utils.is_undefined(data.values):
             if isinstance(data.values, core.InlineDataset):
                 values = data.to_dict()["values"]
             else:
@@ -192,7 +172,7 @@ def _consolidate_data(data: Any, context: Any) -> Any:
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
-    if not _is_undefined(values):
+    if not utils.is_undefined(values):
         name = _dataset_name(values)
         data = core.NamedData(name=name, **kwds)
         context.setdefault("datasets", {})[name] = values
@@ -416,7 +396,7 @@ class SelectionExpression(_expr_core.OperatorMixin):
 
 def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     param = parameter.param
-    if _is_undefined(param) or isinstance(param, core.VariableParameter):
+    if utils.is_undefined(param) or isinstance(param, core.VariableParameter):
         return False
     for prop in ["fields", "encodings"]:
         try:
@@ -485,19 +465,6 @@ def _is_test_predicate(obj: Any) -> TypeIs[_TestPredicateType]:
     return isinstance(obj, (str, _expr_core.Expression, core.PredicateComposition))
 
 
-def _is_undefined(obj: Any) -> TypeIs[UndefinedType]:
-    """Type-safe singleton check for `UndefinedType`.
-
-    Notes
-    -----
-    - Using `obj is Undefined` does not narrow from `UndefinedType` in a union.
-        - Due to the assumption that other `UndefinedType`'s could exist.
-    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an `Enum`.
-        - Otherwise, requires an explicit guard to inform the type checker.
-    """
-    return obj is Undefined
-
-
 def _get_predicate_expr(p: Parameter) -> Optional[str | SchemaBase]:
     # https://vega.github.io/vega-lite/docs/predicate.html
     return getattr(p.param, "expr", Undefined)
@@ -509,7 +476,7 @@ def _predicate_to_condition(
     condition: _ConditionType
     if isinstance(predicate, Parameter):
         predicate_expr = _get_predicate_expr(predicate)
-        if predicate.param_type == "selection" or _is_undefined(predicate_expr):
+        if predicate.param_type == "selection" or utils.is_undefined(predicate_expr):
             condition = {"param": predicate.name}
             if isinstance(empty, bool):
                 condition["empty"] = empty
@@ -585,7 +552,7 @@ class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore[call
     param: Parameter | str
     test: _TestPredicateType
     value: Any
-    __extra_items__: _StatementType | _OneOrSeq[_LiteralValue]
+    __extra_items__: _StatementType | OneOrSeq[_LiteralValue]
 
 
 _Condition: TypeAlias = _ConditionExtra
@@ -696,7 +663,7 @@ def _parse_when(
     **constraints: _FieldEqualType,
 ) -> _ConditionType:
     composed: _PredicateType
-    if _is_undefined(predicate):
+    if utils.is_undefined(predicate):
         if more_predicates or constraints:
             composed = _parse_when_compose(more_predicates, constraints)
         else:
@@ -1106,7 +1073,7 @@ def param(
     empty_remap = {"none": False, "all": True}
     parameter = Parameter(name)
 
-    if not _is_undefined(empty):
+    if not utils.is_undefined(empty):
         if isinstance(empty, bool) and not isinstance(empty, str):
             parameter.empty = empty
         elif empty in empty_remap:
@@ -1624,7 +1591,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         copy = _top_schema_base(self).copy(deep=False)
         original_data = getattr(copy, "data", Undefined)
-        if not _is_undefined(original_data):
+        if not utils.is_undefined(original_data):
             try:
                 data = _to_eager_narwhals_dataframe(original_data)
             except TypeError:
