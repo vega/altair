@@ -1,10 +1,16 @@
-# ruff: noqa
+# ruff: noqa: F401, F403
 from .schema import *
 from .api import *
 
 from altair.expr.core import datum
 
-from .display import VegaLite, renderers
+from .display import (
+    VegaLite,
+    renderers,
+    VEGALITE_VERSION,
+    VEGAEMBED_VERSION,
+    VEGA_VERSION,
+)
 from .compiler import vegalite_compilers
 
 from .data import (
@@ -17,3 +23,4 @@ from .data import (
     default_data_transformer,
     data_transformers,
 )
+from .theme import themes

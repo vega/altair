@@ -23,6 +23,7 @@ import pandas as pd
 import polars as pl
 
 import altair as alt
+from altair.utils.schemapi import Undefined
 
 try:
     import vl_convert as vlc
@@ -1351,14 +1352,14 @@ def test_subcharts_with_same_data(method, data):
     text = point.mark_text()
 
     chart1 = func(point, line, text)
-    assert chart1.data is not alt.Undefined
-    assert all(c.data is alt.Undefined for c in getattr(chart1, method))
+    assert chart1.data is not Undefined
+    assert all(c.data is Undefined for c in getattr(chart1, method))
 
     if method != "concat":
         op = OP_DICT[method]
         chart2 = op(op(point, line), text)
-        assert chart2.data is not alt.Undefined
-        assert all(c.data is alt.Undefined for c in getattr(chart2, method))
+        assert chart2.data is not Undefined
+        assert all(c.data is Undefined for c in getattr(chart2, method))
 
 
 @pytest.mark.parametrize("method", ["layer", "hconcat", "vconcat", "concat"])
@@ -1373,20 +1374,20 @@ def test_subcharts_different_data(method, data):
     nodata = alt.Chart().mark_point().encode(x="x:Q", y="y:Q")
 
     chart1 = func(point, otherdata)
-    assert chart1.data is alt.Undefined
+    assert chart1.data is Undefined
     assert getattr(chart1, method)[0].data is data
 
     chart2 = func(point, nodata)
-    assert chart2.data is alt.Undefined
+    assert chart2.data is Undefined
     assert getattr(chart2, method)[0].data is data
 
 
 def test_layer_facet(basic_chart):
     chart = (basic_chart + basic_chart).facet(row="row:Q")
-    assert chart.data is not alt.Undefined
-    assert chart.spec.data is alt.Undefined
+    assert chart.data is not Undefined
+    assert chart.spec.data is Undefined
     for layer in chart.spec.layer:
-        assert layer.data is alt.Undefined
+        assert layer.data is Undefined
 
     dct = chart.to_dict()
     assert "data" in dct
