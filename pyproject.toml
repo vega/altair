@@ -368,6 +368,7 @@ line-ending = "lf"
 # Enable once `D` are applied to non-generated code
 # https://docs.astral.sh/ruff/formatter/#docstring-formatting
 docstring-code-format = true
+docstring-code-line-length = 88
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.

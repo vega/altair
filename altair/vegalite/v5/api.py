@@ -1024,9 +1024,7 @@ def when(
             & (alt.datum.StartDate == "2000-10-01")
         )
         when_verbose = alt.when(verbose_composition)
-        when_concise = alt.when(
-            Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01"
-        )
+        when_concise = alt.when(Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01")
     """
     condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
     return When(condition)
@@ -2231,11 +2229,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         so you can create the above transform like this:
 
         >>> chart2 = alt.Chart().transform_aggregate(
-        ...     [
-        ...         alt.AggregatedFieldDef(
-        ...             field="Acceleration", op="mean", **{"as": "mean_acc"}
-        ...         )
-        ...     ],
+        ...     [alt.AggregatedFieldDef(field="Acceleration", op="mean", **{"as": "mean_acc"})],
         ...     groupby=["Origin"],
         ... )
         >>> chart2.transform == chart1.transform
