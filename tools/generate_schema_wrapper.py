@@ -892,7 +892,7 @@ def _create_encode_signature(
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
-        docstring_parameters, indent_level=4, width=100, lstrip=False
+        docstring_parameters, indent_level=8, width=100, lstrip=False
     )
     return ENCODE_METHOD.format(
         encode_method_args=", ".join(signature_args), docstring=docstring
