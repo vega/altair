@@ -21,9 +21,10 @@ import typing as t
 import functools
 import operator
 from copy import deepcopy as _deepcopy
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
-from altair.utils import Optional
+from .schema import core, channels, mixins, SCHEMA_URL
+
+from altair.utils import Optional, Undefined
 from .data import data_transformers
 from ... import utils
 from ...expr import core as _expr_core
@@ -123,6 +124,58 @@ if TYPE_CHECKING:
         OneOrSeq,
     )
 
+__all__ = [
+    "TOPLEVEL_ONLY_KEYS",
+    "Bin",
+    "ChainedWhen",
+    "Chart",
+    "ChartDataType",
+    "ChartType",
+    "ConcatChart",
+    "DataType",
+    "FacetChart",
+    "FacetMapping",
+    "HConcatChart",
+    "Impute",
+    "LayerChart",
+    "LookupData",
+    "Parameter",
+    "ParameterExpression",
+    "RepeatChart",
+    "SelectionExpression",
+    "SelectionPredicateComposition",
+    "Then",
+    "Title",
+    "TopLevelMixin",
+    "VConcatChart",
+    "When",
+    "binding",
+    "binding_checkbox",
+    "binding_radio",
+    "binding_range",
+    "binding_select",
+    "check_fields_and_encodings",
+    "concat",
+    "condition",
+    "graticule",
+    "hconcat",
+    "is_chart_type",
+    "layer",
+    "mixins",
+    "param",
+    "repeat",
+    "selection",
+    "selection_interval",
+    "selection_multi",
+    "selection_point",
+    "selection_single",
+    "sequence",
+    "sphere",
+    "topo_feature",
+    "value",
+    "vconcat",
+    "when",
+]
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
