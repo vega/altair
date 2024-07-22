@@ -545,43 +545,61 @@ def parse_shorthand(
     Examples
     --------
     >>> import pandas as pd
-    >>> data = pd.DataFrame({'foo': ['A', 'B', 'A', 'B'],
-    ...                      'bar': [1, 2, 3, 4]})
+    >>> data = pd.DataFrame({"foo": ["A", "B", "A", "B"], "bar": [1, 2, 3, 4]})
 
-    >>> parse_shorthand('name') == {'field': 'name'}
+    >>> parse_shorthand("name") == {"field": "name"}
     True
 
-    >>> parse_shorthand('name:Q') == {'field': 'name', 'type': 'quantitative'}
+    >>> parse_shorthand("name:Q") == {"field": "name", "type": "quantitative"}
     True
 
-    >>> parse_shorthand('average(col)') == {'aggregate': 'average', 'field': 'col'}
+    >>> parse_shorthand("average(col)") == {"aggregate": "average", "field": "col"}
     True
 
-    >>> parse_shorthand('foo:O') == {'field': 'foo', 'type': 'ordinal'}
+    >>> parse_shorthand("foo:O") == {"field": "foo", "type": "ordinal"}
     True
 
-    >>> parse_shorthand('min(foo):Q') == {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
+    >>> parse_shorthand("min(foo):Q") == {
+    ...     "aggregate": "min",
+    ...     "field": "foo",
+    ...     "type": "quantitative",
+    ... }
     True
 
-    >>> parse_shorthand('month(col)') == {'field': 'col', 'timeUnit': 'month', 'type': 'temporal'}
+    >>> parse_shorthand("month(col)") == {
+    ...     "field": "col",
+    ...     "timeUnit": "month",
+    ...     "type": "temporal",
+    ... }
     True
 
-    >>> parse_shorthand('year(col):O') == {'field': 'col', 'timeUnit': 'year', 'type': 'ordinal'}
+    >>> parse_shorthand("year(col):O") == {
+    ...     "field": "col",
+    ...     "timeUnit": "year",
+    ...     "type": "ordinal",
+    ... }
     True
 
-    >>> parse_shorthand('foo', data) == {'field': 'foo', 'type': 'nominal'}
+    >>> parse_shorthand("foo", data) == {"field": "foo", "type": "nominal"}
     True
 
-    >>> parse_shorthand('bar', data) == {'field': 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand("bar", data) == {"field": "bar", "type": "quantitative"}
     True
 
-    >>> parse_shorthand('bar:O', data) == {'field': 'bar', 'type': 'ordinal'}
+    >>> parse_shorthand("bar:O", data) == {"field": "bar", "type": "ordinal"}
     True
 
-    >>> parse_shorthand('sum(bar)', data) == {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand("sum(bar)", data) == {
+    ...     "aggregate": "sum",
+    ...     "field": "bar",
+    ...     "type": "quantitative",
+    ... }
     True
 
-    >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
+    >>> parse_shorthand("count()", data) == {
+    ...     "aggregate": "count",
+    ...     "type": "quantitative",
+    ... }
     True
     """
     from altair.utils.data import is_data_type
@@ -743,8 +761,8 @@ def update_nested(
 
     Examples
     --------
-    >>> original = {'x': {'b': 2, 'c': 4}}
-    >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
+    >>> original = {"x": {"b": 2, "c": 4}}
+    >>> update = {"x": {"b": 5, "d": 6}, "y": 40}
     >>> update_nested(original, update)  # doctest: +SKIP
     {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     >>> original  # doctest: +SKIP

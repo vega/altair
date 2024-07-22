@@ -47,7 +47,7 @@ class PluginEnabler:
     This object lets you use enable() as a context manager to
     temporarily enable a given plugin::
 
-        with plugins.enable('name'):
+        with plugins.enable("name"):
             do_something()  # 'name' plugin temporarily enabled
         # plugins back to original state
     """
@@ -83,7 +83,7 @@ class PluginRegistry(Generic[PluginT, R]):
     When you create an instance of this class, provide the name of the
     entry point group to use::
 
-        reg = PluginRegister('my_entrypoint_group')
+        reg = PluginRegister("my_entrypoint_group")
 
     """
 

@@ -367,7 +367,7 @@ skip-magic-trailing-comma = false
 line-ending = "lf"
 # Enable once `D` are applied to non-generated code
 # https://docs.astral.sh/ruff/formatter/#docstring-formatting
-# docstring-code-format = true
+docstring-code-format = true
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.

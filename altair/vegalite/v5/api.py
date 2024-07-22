@@ -610,7 +610,7 @@ def _parse_when_constraints(
     alt.when(alt.datum.Origin == "Europe")
 
     # after
-    alt.when(Origin = "Europe")
+    alt.when(Origin="Europe")
     ```
     """
     for name, value in constraints.items():
@@ -1016,6 +1016,7 @@ def when(
     Using keyword-argument ``constraints`` can simplify compositions like::
 
         import altair as alt
+
         verbose_composition = (
             (alt.datum.Name == "Name_1")
             & (alt.datum.Color == "Green")
@@ -1023,7 +1024,9 @@ def when(
             & (alt.datum.StartDate == "2000-10-01")
         )
         when_verbose = alt.when(verbose_composition)
-        when_concise = alt.when(Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01")
+        when_concise = alt.when(
+            Name="Name_1", Color="Green", Age=25, StartDate="2000-10-01"
+        )
     """
     condition = _parse_when(predicate, *more_predicates, empty=empty, **constraints)
     return When(condition)
@@ -2208,8 +2211,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         >>> import altair as alt
         >>> chart1 = alt.Chart().transform_aggregate(
-        ...     mean_acc='mean(Acceleration)',
-        ...     groupby=['Origin']
+        ...     mean_acc="mean(Acceleration)", groupby=["Origin"]
         ... )
         >>> print(chart1.transform[0].to_json())  # doctest: +NORMALIZE_WHITESPACE
         {
@@ -2229,9 +2231,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         so you can create the above transform like this:
 
         >>> chart2 = alt.Chart().transform_aggregate(
-        ...     [alt.AggregatedFieldDef(field='Acceleration', op='mean',
-        ...                             **{'as': 'mean_acc'})],
-        ...     groupby=['Origin']
+        ...     [
+        ...         alt.AggregatedFieldDef(
+        ...             field="Acceleration", op="mean", **{"as": "mean_acc"}
+        ...         )
+        ...     ],
+        ...     groupby=["Origin"],
         ... )
         >>> chart2.transform == chart1.transform
         True
@@ -2292,8 +2297,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
           field: 'x'
         })
 
-        >>> chart = alt.Chart().transform_bin("x_binned", "x",
-        ...                                   bin=alt.Bin(maxbins=10))
+        >>> chart = alt.Chart().transform_bin("x_binned", "x", bin=alt.Bin(maxbins=10))
         >>> chart.transform[0]
         BinTransform({
           as: 'x_binned',
@@ -2346,7 +2350,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> import altair as alt
         >>> from altair import datum, expr
 
-        >>> chart = alt.Chart().transform_calculate(y = 2 * expr.sin(datum.x))
+        >>> chart = alt.Chart().transform_calculate(y=2 * expr.sin(datum.x))
         >>> chart.transform[0]
         CalculateTransform({
           as: 'y',
@@ -2355,7 +2359,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         It's also possible to pass the ``CalculateTransform`` arguments directly:
 
-        >>> kwds = {'as_': 'y', 'calculate': '2 * sin(datum.x)'}
+        >>> kwds = {"as_": "y", "calculate": "2 * sin(datum.x)"}
         >>> chart = alt.Chart().transform_calculate(**kwds)
         >>> chart.transform[0]
         CalculateTransform({
@@ -2561,7 +2565,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Examples
         --------
         >>> import altair as alt
-        >>> chart = alt.Chart().transform_joinaggregate(x='sum(y)')
+        >>> chart = alt.Chart().transform_joinaggregate(x="sum(y)")
         >>> chart.transform[0]
         JoinAggregateTransform({
           joinaggregate: [JoinAggregateFieldDef({
@@ -3064,7 +3068,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> import altair as alt
         >>> from altair import datum, expr
 
-        >>> chart = alt.Chart().transform_timeunit(month='month(date)')
+        >>> chart = alt.Chart().transform_timeunit(month="month(date)")
         >>> chart.transform[0]
         TimeUnitTransform({
           as: 'month',
@@ -3076,7 +3080,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         this is most useful in cases where the desired field name is not a
         valid python identifier:
 
-        >>> kwds = {'as': 'month', 'timeUnit': 'month', 'field': 'The Month'}
+        >>> kwds = {"as": "month", "timeUnit": "month", "field": "The Month"}
         >>> chart = alt.Chart().transform_timeunit(**kwds)
         >>> chart.transform[0]
         TimeUnitTransform({
@@ -3175,13 +3179,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> import altair as alt
         >>> import numpy as np
         >>> import pandas as pd
-        >>> data = pd.DataFrame({'x': np.arange(100),
-        ...                      'y': np.random.randn(100)})
-        >>> chart = alt.Chart(data).mark_line().encode(
-        ...     x='x:Q',
-        ...     y='ycuml:Q'
-        ... ).transform_window(
-        ...     ycuml='sum(y)'
+        >>> data = pd.DataFrame({"x": np.arange(100), "y": np.random.randn(100)})
+        >>> chart = (
+        ...     alt.Chart(data)
+        ...     .mark_line()
+        ...     .encode(x="x:Q", y="ycuml:Q")
+        ...     .transform_window(ycuml="sum(y)")
         ... )
         >>> chart.transform[0]
         WindowTransform({

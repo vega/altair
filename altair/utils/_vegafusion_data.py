@@ -108,14 +108,8 @@ def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
     --------
     >>> spec = {
     ...     "data": [
-    ...         {
-    ...             "name": "foo",
-    ...             "url": "https://path/to/file.csv"
-    ...         },
-    ...         {
-    ...             "name": "bar",
-    ...             "url": "vegafusion+dataset://inline_dataset_123"
-    ...         }
+    ...         {"name": "foo", "url": "https://path/to/file.csv"},
+    ...         {"name": "bar", "url": "vegafusion+dataset://inline_dataset_123"},
     ...     ]
     ... }
     >>> get_inline_table_names(spec)

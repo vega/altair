@@ -218,16 +218,16 @@ def get_valid_identifier(
 
     Examples
     --------
-    >>> get_valid_identifier('my-var')
+    >>> get_valid_identifier("my-var")
     'myvar'
 
-    >>> get_valid_identifier('if')
+    >>> get_valid_identifier("if")
     'if_'
 
-    >>> get_valid_identifier('$schema', '_')
+    >>> get_valid_identifier("$schema", "_")
     '_schema'
 
-    >>> get_valid_identifier('$*#$')
+    >>> get_valid_identifier("$*#$")
     '_'
 
     >>> get_valid_identifier("Name%3Cstring%3E")

@@ -241,13 +241,8 @@ def get_group_mark_for_scope(
     --------
     >>> spec = {
     ...     "marks": [
-    ...         {
-    ...             "type": "group",
-    ...             "marks": [{"type": "symbol"}]
-    ...         },
-    ...         {
-    ...             "type": "group",
-    ...             "marks": [{"type": "rect"}]}
+    ...         {"type": "group", "marks": [{"type": "symbol"}]},
+    ...         {"type": "group", "marks": [{"type": "rect"}]},
     ...     ]
     ... }
     >>> get_group_mark_for_scope(spec, (1,))
@@ -293,16 +288,12 @@ def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]
     Examples
     --------
     >>> spec = {
-    ...     "data": [
-    ...         {"name": "data1"}
-    ...     ],
+    ...     "data": [{"name": "data1"}],
     ...     "marks": [
     ...         {
     ...             "type": "group",
-    ...             "data": [
-    ...                 {"name": "data2"}
-    ...             ],
-    ...             "marks": [{"type": "symbol"}]
+    ...             "data": [{"name": "data2"}],
+    ...             "marks": [{"type": "symbol"}],
     ...         },
     ...         {
     ...             "type": "group",
@@ -310,9 +301,9 @@ def get_datasets_for_scope(vega_spec: dict[str, Any], scope: Scope) -> list[str]
     ...                 {"name": "data3"},
     ...                 {"name": "data4"},
     ...             ],
-    ...             "marks": [{"type": "rect"}]
-    ...         }
-    ...     ]
+    ...             "marks": [{"type": "rect"}],
+    ...         },
+    ...     ],
     ... }
 
     >>> get_datasets_for_scope(spec, ())
@@ -366,26 +357,24 @@ def get_definition_scope_for_data_reference(
     Examples
     --------
     >>> spec = {
-    ...     "data": [
-    ...         {"name": "data1"}
-    ...     ],
+    ...     "data": [{"name": "data1"}],
     ...     "marks": [
     ...         {
     ...             "type": "group",
-    ...             "data": [
-    ...                 {"name": "data2"}
-    ...             ],
-    ...             "marks": [{
-    ...                 "type": "symbol",
-    ...                 "encode": {
-    ...                     "update": {
-    ...                         "x": {"field": "x", "data": "data1"},
-    ...                         "y": {"field": "y", "data": "data2"},
-    ...                     }
+    ...             "data": [{"name": "data2"}],
+    ...             "marks": [
+    ...                 {
+    ...                     "type": "symbol",
+    ...                     "encode": {
+    ...                         "update": {
+    ...                             "x": {"field": "x", "data": "data1"},
+    ...                             "y": {"field": "y", "data": "data2"},
+    ...                         }
+    ...                     },
     ...                 }
-    ...             }]
+    ...             ],
     ...         }
-    ...     ]
+    ...     ],
     ... }
 
     data1 is referenced at scope [0] and defined at scope []
@@ -428,9 +417,7 @@ def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
     Examples
     --------
     >>> spec = {
-    ...     "data": [
-    ...         {"name": "data1"}
-    ...     ],
+    ...     "data": [{"name": "data1"}],
     ...     "marks": [
     ...         {
     ...             "type": "group",
@@ -438,11 +425,11 @@ def get_facet_mapping(group: dict[str, Any], scope: Scope = ()) -> FacetMapping:
     ...                 "facet": {
     ...                     "name": "facet1",
     ...                     "data": "data1",
-    ...                     "groupby": ["colA"]
+    ...                     "groupby": ["colA"],
     ...                 }
-    ...             }
+    ...             },
     ...         }
-    ...     ]
+    ...     ],
     ... }
     >>> get_facet_mapping(spec)
     {('facet1', (0,)): ('data1', ())}
@@ -497,7 +484,10 @@ def get_from_facet_mapping(
     Examples
     --------
     Facet mapping as produced by get_facet_mapping
-    >>> facet_mapping = {("facet1", (0,)): ("data1", ()), ("facet2", (0, 1)): ("facet1", (0,))}
+    >>> facet_mapping = {
+    ...     ("facet1", (0,)): ("data1", ()),
+    ...     ("facet2", (0, 1)): ("facet1", (0,)),
+    ... }
     >>> get_from_facet_mapping(("facet2", (0, 1)), facet_mapping)
     ('data1', ())
     """
