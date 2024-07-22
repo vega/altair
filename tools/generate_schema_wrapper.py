@@ -233,6 +233,26 @@ class _EncodingMixin:
         return copy
 '''
 
+# NOTE: Not yet reasonable to generalize `TypeAliasType`, `TypeVar`
+# Revisit if this starts to become more common
+TYPING_EXTRA: Final = '''
+T = TypeVar("T")
+OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+"""One of ``T`` specified type(s), or a `Sequence` of such.
+
+Examples
+--------
+The parameters ``short``, ``long`` accept the same range of types::
+
+    # ruff: noqa: UP006, UP007
+
+    def func(
+        short: OneOrSeq[str | bool | float],
+        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+    ): ...
+"""
+'''
+
 
 class SchemaGenerator(codegen.SchemaGenerator):
     schema_class_template = textwrap.dedent(
@@ -839,7 +859,9 @@ def vegalite_main(skip_download: bool = False) -> None:
     )
     print(msg)
     TypeAliasTracer.update_aliases(("Map", "Mapping[str, Any]"))
-    TypeAliasTracer.write_module(fp_typing, header=HEADER)
+    TypeAliasTracer.write_module(
+        fp_typing, "OneOrSeq", header=HEADER, extra=TYPING_EXTRA
+    )
     # Write the pre-generated modules
     for fp, contents in files.items():
         print(f"Writing\n {schemafile!s}\n  ->{fp!s}")
