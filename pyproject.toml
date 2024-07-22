@@ -359,10 +359,6 @@ mccabe={ max-complexity=18 }
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
 "typing.Optional".msg = "Use `Union[T, None]` instead.\n`typing.Optional` is likely to be confused with `altair.Optional`, which have a similar but different semantic meaning.\nSee https://github.com/vega/altair/pull/3449"
 
-# [tool.ruff.lint.per-file-ignores]
-# Ignore `D` rules everywhere *except* for auto-generated code.
-# "!altair/vegalite/v5/schema/*.py" = ["D","D213"]
-
 
 [tool.ruff.format]
 quote-style = "double"
