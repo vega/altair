@@ -88,7 +88,8 @@ def test_type_error():
 
 def test_dataframe_to_json():
     """
-    Test to_json
+    Test to_json.
+
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
@@ -107,7 +108,8 @@ def test_dataframe_to_json():
 
 def test_dict_to_json():
     """
-    Test to_json
+    Test to_json.
+
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
@@ -126,7 +128,8 @@ def test_dict_to_json():
 
 def test_dataframe_to_csv():
     """
-    Test to_csv with dataframe input
+    Test to_csv with dataframe input.
+
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """
@@ -145,7 +148,8 @@ def test_dataframe_to_csv():
 
 def test_dict_to_csv():
     """
-    Test to_csv with dict input
+    Test to_csv with dict input.
+
     - make certain the filename is deterministic
     - make certain the file contents match the data.
     """

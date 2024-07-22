@@ -19,10 +19,7 @@ def write_file_or_filename(
     mode: str = "w",
     encoding: str | None = None,
 ) -> None:
-    """
-    Write content to fp, whether fp is a string, a pathlib Path or a
-    file-like object.
-    """
+    """Write content to fp, whether fp is a string, a pathlib Path or a file-like object."""
     if isinstance(fp, (str, pathlib.Path)):
         with pathlib.Path(fp).open(mode=mode, encoding=encoding) as f:
             f.write(content)

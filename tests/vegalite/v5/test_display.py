@@ -7,10 +7,7 @@ import altair.vegalite.v5 as alt
 
 @contextmanager
 def check_render_options(**options):
-    """
-    Context manager that will assert that alt.renderers.options are equivalent
-    to the given options in the IPython.display.display call.
-    """
+    """Asserts that alt.renderers.options are equivalent to the given options in the IPython.display.display call."""
     import IPython.display
 
     def check_options(obj):

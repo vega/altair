@@ -212,7 +212,8 @@ def infer_vegalite_type_for_pandas(
     data: object,
 ) -> InferredVegaLiteType | tuple[InferredVegaLiteType, list[Any]]:
     """
-    From an array-like input, infer the correct vega typecode
+    From an array-like input, infer the correct vega typecode.
+
     ('ordinal', 'nominal', 'quantitative', or 'temporal').
 
     Parameters
@@ -257,7 +258,8 @@ def infer_vegalite_type_for_pandas(
 
 def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
     """
-    Merge properties with geometry
+    Merge properties with geometry.
+
     * Overwrites 'type' and 'geometry' entries if existing.
     """
     geom = {k: feat[k] for k in ("type", "geometry")}

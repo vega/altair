@@ -84,7 +84,8 @@ class Column(Protocol):
     @property
     def describe_categorical(self) -> Any:
         """
-        If the dtype is categorical, there are two options:
+        If the dtype is categorical, there are two options.
+
         - There are only values in the data buffer.
         - There is a separate non-categorical Column encoding categorical values.
 
@@ -105,8 +106,7 @@ class Column(Protocol):
 
 class DataFrame(Protocol):
     """
-    A data frame class, with only the methods required by the interchange
-    protocol defined.
+    A data frame class, with only the methods required by the interchange protocol defined.
 
     A "data frame" represents an ordered collection of named columns.
     A column's "name" must be a unique string.

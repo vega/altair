@@ -1047,8 +1047,8 @@ def param(
     **kwds,
 ) -> Parameter:
     """
-    Create a named parameter.
-    See https://altair-viz.github.io/user_guide/interactions.html for examples.
+    Create a named parameter, see https://altair-viz.github.io/user_guide/interactions.html for examples.
+
     Although both variable parameters and selection parameters can be created using
     this 'param' function, to create a selection parameter, it is recommended to use
     either 'selection_point' or 'selection_interval' instead.
@@ -1777,7 +1777,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def to_url(self, *, fullscreen: bool = False) -> str:
         """
-        Convert a chart to a URL that opens the chart specification in the Vega chart editor
+        Convert a chart to a URL that opens the chart specification in the Vega chart editor.
+
         The chart specification (including any inline data) is encoded in the URL.
 
         This method requires that the vl-convert-python package is installed.
@@ -4728,8 +4729,9 @@ ChartType = Union[
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:
     """
-    Return `True` if the object is an Altair chart. This can be a basic chart
-    but also a repeat, concat, or facet chart.
+    Return `True` if the object is an Altair chart.
+
+    This can be a basic chart but also a repeat, concat, or facet chart.
     """
     return isinstance(
         obj,
