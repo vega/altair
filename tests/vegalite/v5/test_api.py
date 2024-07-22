@@ -1,4 +1,4 @@
-"""Unit tests for altair API"""
+"""Unit tests for altair API."""
 
 from __future__ import annotations
 
@@ -411,7 +411,6 @@ def test_when_then() -> None:
 
 def test_when_then_only(basic_chart) -> None:
     """`Then` is an acceptable encode argument."""
-
     select = alt.selection_point(name="select", on="click")
 
     basic_chart.encode(fillOpacity=alt.when(select).then(alt.value(5))).to_dict()
@@ -436,7 +435,6 @@ def test_when_then_otherwise() -> None:
 
 def test_when_then_when_then_otherwise() -> None:
     """Test for [#3301](https://github.com/vega/altair/issues/3301)."""
-
     data = {
         "values": [
             {"a": "A", "b": 28},
@@ -484,7 +482,7 @@ def test_when_then_when_then_otherwise() -> None:
 
 
 def test_when_multi_channel_param(cars):
-    """Adapted from [2236376458](https://github.com/vega/altair/pull/3427#issuecomment-2236376458)"""
+    """Adapted from [2236376458](https://github.com/vega/altair/pull/3427#issuecomment-2236376458)."""
     brush = alt.selection_interval()
     hover = alt.selection_point(on="pointerover", nearest=True, empty=False)
 
@@ -523,7 +521,8 @@ def test_when_multi_channel_param(cars):
 
 
 def test_when_labels_position_based_on_condition() -> None:
-    """Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+    """
+    Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
 
     Original [labels-position-based-on-condition](https://altair-viz.github.io/user_guide/marks/text.html#labels-position-based-on-condition)
     """
@@ -576,7 +575,8 @@ def test_when_labels_position_based_on_condition() -> None:
 
 
 def test_when_expressions_inside_parameters() -> None:
-    """Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+    """
+    Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
 
     Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
     """

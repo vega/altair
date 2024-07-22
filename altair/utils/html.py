@@ -226,7 +226,8 @@ def spec_to_html(
     requirejs: bool = False,
     template: jinja2.Template | TemplateName = "standard",
 ) -> str:
-    """Embed a Vega/Vega-Lite spec into an HTML page
+    """
+    Embed a Vega/Vega-Lite spec into an HTML page.
 
     Parameters
     ----------

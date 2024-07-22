@@ -248,11 +248,11 @@ class DatumChannelMixin:
 
 @with_property_setters
 class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
-    """Angle schema wrapper
+    r"""
+    Angle schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -1037,11 +1037,11 @@ class Angle(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDef
 
 @with_property_setters
 class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
-    """AngleDatum schema wrapper
+    """
+    AngleDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -1215,11 +1215,11 @@ class AngleDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnum
 class AngleValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
-    """AngleValue schema wrapper
+    """
+    AngleValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Sequence[dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, float, :class:`ExprRef`
@@ -1357,11 +1357,11 @@ class Color(
     FieldChannelMixin,
     core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull,
 ):
-    """Color schema wrapper
+    r"""
+    Color schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -2148,11 +2148,11 @@ class Color(
 class ColorDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull
 ):
-    """ColorDatum schema wrapper
+    """
+    ColorDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -2327,11 +2327,11 @@ class ColorValue(
     ValueChannelMixin,
     core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull,
 ):
-    """ColorValue schema wrapper
+    """
+    ColorValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
@@ -2466,11 +2466,11 @@ class ColorValue(
 
 @with_property_setters
 class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
-    """Column schema wrapper
+    r"""
+    Column schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -3072,11 +3072,11 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
 
 @with_property_setters
 class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
-    """Description schema wrapper
+    r"""
+    Description schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -3599,11 +3599,11 @@ class Description(FieldChannelMixin, core.StringFieldDefWithCondition):
 
 @with_property_setters
 class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
-    """DescriptionValue schema wrapper
+    """
+    DescriptionValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`
@@ -3738,12 +3738,13 @@ class DescriptionValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
 @with_property_setters
 class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
-    """Detail schema wrapper
+    r"""
+    Detail schema wrapper.
+
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -4186,11 +4187,11 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
 
 @with_property_setters
 class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
-    """Facet schema wrapper
+    r"""
+    Facet schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -4867,11 +4868,11 @@ class Fill(
     FieldChannelMixin,
     core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull,
 ):
-    """Fill schema wrapper
+    r"""
+    Fill schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -5658,11 +5659,11 @@ class Fill(
 class FillDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull
 ):
-    """FillDatum schema wrapper
+    """
+    FillDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -5837,11 +5838,11 @@ class FillValue(
     ValueChannelMixin,
     core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull,
 ):
-    """FillValue schema wrapper
+    """
+    FillValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
@@ -5978,11 +5979,11 @@ class FillValue(
 class FillOpacity(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
-    """FillOpacity schema wrapper
+    r"""
+    FillOpacity schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -6769,11 +6770,11 @@ class FillOpacity(
 class FillOpacityDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber
 ):
-    """FillOpacityDatum schema wrapper
+    """
+    FillOpacityDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -6947,11 +6948,11 @@ class FillOpacityDatum(
 class FillOpacityValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
-    """FillOpacityValue schema wrapper
+    """
+    FillOpacityValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Sequence[dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, float, :class:`ExprRef`
@@ -7086,11 +7087,11 @@ class FillOpacityValue(
 
 @with_property_setters
 class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
-    """Href schema wrapper
+    r"""
+    Href schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -7613,11 +7614,11 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
 @with_property_setters
 class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
-    """HrefValue schema wrapper
+    """
+    HrefValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`
@@ -7752,12 +7753,13 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
 @with_property_setters
 class Key(FieldChannelMixin, core.FieldDefWithoutScale):
-    """Key schema wrapper
+    r"""
+    Key schema wrapper.
+
     Definition object for a data field, its type and transformation of an encoding channel.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -8200,11 +8202,11 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
 
 @with_property_setters
 class Latitude(FieldChannelMixin, core.LatLongFieldDef):
-    """Latitude schema wrapper
+    r"""
+    Latitude schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -8623,11 +8625,11 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
 
 @with_property_setters
 class LatitudeDatum(DatumChannelMixin, core.DatumDef):
-    """LatitudeDatum schema wrapper
+    """
+    LatitudeDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -8762,13 +8764,14 @@ class LatitudeDatum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Latitude2 schema wrapper
+    r"""
+    Latitude2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -9113,11 +9116,11 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class Latitude2Datum(DatumChannelMixin, core.DatumDef):
-    """Latitude2Datum schema wrapper
+    """
+    Latitude2Datum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -9252,13 +9255,14 @@ class Latitude2Datum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
-    """Latitude2Value schema wrapper
+    """
+    Latitude2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -9274,11 +9278,11 @@ class Latitude2Value(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
-    """Longitude schema wrapper
+    r"""
+    Longitude schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -9697,11 +9701,11 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
 
 @with_property_setters
 class LongitudeDatum(DatumChannelMixin, core.DatumDef):
-    """LongitudeDatum schema wrapper
+    """
+    LongitudeDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -9836,13 +9840,14 @@ class LongitudeDatum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Longitude2 schema wrapper
+    r"""
+    Longitude2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -10187,11 +10192,11 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class Longitude2Datum(DatumChannelMixin, core.DatumDef):
-    """Longitude2Datum schema wrapper
+    """
+    Longitude2Datum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -10326,13 +10331,14 @@ class Longitude2Datum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
-    """Longitude2Value schema wrapper
+    """
+    Longitude2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -10350,11 +10356,11 @@ class Longitude2Value(ValueChannelMixin, core.PositionValueDef):
 class Opacity(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
-    """Opacity schema wrapper
+    r"""
+    Opacity schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -11139,11 +11145,11 @@ class Opacity(
 
 @with_property_setters
 class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
-    """OpacityDatum schema wrapper
+    """
+    OpacityDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -11317,11 +11323,11 @@ class OpacityDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefn
 class OpacityValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
-    """OpacityValue schema wrapper
+    """
+    OpacityValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Sequence[dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, float, :class:`ExprRef`
@@ -11456,11 +11462,11 @@ class OpacityValue(
 
 @with_property_setters
 class Order(FieldChannelMixin, core.OrderFieldDef):
-    """Order schema wrapper
+    r"""
+    Order schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -11910,11 +11916,11 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
 @with_property_setters
 class OrderValue(ValueChannelMixin, core.OrderValueDef):
-    """OrderValue schema wrapper
+    """
+    OrderValue schema wrapper.
 
     Parameters
     ----------
-
     value : dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -11966,11 +11972,11 @@ class OrderValue(ValueChannelMixin, core.OrderValueDef):
 
 @with_property_setters
 class Radius(FieldChannelMixin, core.PositionFieldDefBase):
-    """Radius schema wrapper
+    r"""
+    Radius schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -12643,11 +12649,11 @@ class Radius(FieldChannelMixin, core.PositionFieldDefBase):
 
 @with_property_setters
 class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
-    """RadiusDatum schema wrapper
+    """
+    RadiusDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -12893,13 +12899,14 @@ class RadiusDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
 @with_property_setters
 class RadiusValue(ValueChannelMixin, core.PositionValueDef):
-    """RadiusValue schema wrapper
+    """
+    RadiusValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -12915,13 +12922,14 @@ class RadiusValue(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Radius2 schema wrapper
+    r"""
+    Radius2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -13266,11 +13274,11 @@ class Radius2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class Radius2Datum(DatumChannelMixin, core.DatumDef):
-    """Radius2Datum schema wrapper
+    """
+    Radius2Datum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -13405,13 +13413,14 @@ class Radius2Datum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Radius2Value(ValueChannelMixin, core.PositionValueDef):
-    """Radius2Value schema wrapper
+    """
+    Radius2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -13427,11 +13436,11 @@ class Radius2Value(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
-    """Row schema wrapper
+    r"""
+    Row schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -14036,11 +14045,11 @@ class Shape(
     FieldChannelMixin,
     core.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull,
 ):
-    """Shape schema wrapper
+    r"""
+    Shape schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -14825,11 +14834,11 @@ class Shape(
 class ShapeDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefstringnull
 ):
-    """ShapeDatum schema wrapper
+    """
+    ShapeDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -15004,11 +15013,11 @@ class ShapeValue(
     ValueChannelMixin,
     core.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull,
 ):
-    """ShapeValue schema wrapper
+    """
+    ShapeValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, :class:`ConditionalMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalParameterMarkPropFieldOrDatumDefTypeForShape`, :class:`ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`
@@ -15143,11 +15152,11 @@ class ShapeValue(
 
 @with_property_setters
 class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber):
-    """Size schema wrapper
+    r"""
+    Size schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -15932,11 +15941,11 @@ class Size(FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefn
 
 @with_property_setters
 class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber):
-    """SizeDatum schema wrapper
+    """
+    SizeDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -16110,11 +16119,11 @@ class SizeDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumb
 class SizeValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
-    """SizeValue schema wrapper
+    """
+    SizeValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Sequence[dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, float, :class:`ExprRef`
@@ -16252,11 +16261,11 @@ class Stroke(
     FieldChannelMixin,
     core.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull,
 ):
-    """Stroke schema wrapper
+    r"""
+    Stroke schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -17043,11 +17052,11 @@ class Stroke(
 class StrokeDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefGradientstringnull
 ):
-    """StrokeDatum schema wrapper
+    """
+    StrokeDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -17222,11 +17231,11 @@ class StrokeValue(
     ValueChannelMixin,
     core.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull,
 ):
-    """StrokeValue schema wrapper
+    """
+    StrokeValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefGradientstringnullExprRef`, :class:`ConditionalParameterValueDefGradientstringnullExprRef`, :class:`ConditionalPredicateValueDefGradientstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`, :class:`Gradient`, :class:`LinearGradient`, :class:`RadialGradient`
@@ -17363,11 +17372,11 @@ class StrokeValue(
 class StrokeDash(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray
 ):
-    """StrokeDash schema wrapper
+    r"""
+    StrokeDash schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -18154,11 +18163,11 @@ class StrokeDash(
 class StrokeDashDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumberArray
 ):
-    """StrokeDashDatum schema wrapper
+    """
+    StrokeDashDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -18332,11 +18341,11 @@ class StrokeDashDatum(
 class StrokeDashValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray
 ):
-    """StrokeDashValue schema wrapper
+    """
+    StrokeDashValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefnumberArrayExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberArrayExprRef`, :class:`ConditionalPredicateValueDefnumberArrayExprRef`, Sequence[dict, :class:`ConditionalValueDefnumberArrayExprRef`, :class:`ConditionalParameterValueDefnumberArrayExprRef`, :class:`ConditionalPredicateValueDefnumberArrayExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, Sequence[float], :class:`ExprRef`
@@ -18473,11 +18482,11 @@ class StrokeDashValue(
 class StrokeOpacity(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
-    """StrokeOpacity schema wrapper
+    r"""
+    StrokeOpacity schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -19264,11 +19273,11 @@ class StrokeOpacity(
 class StrokeOpacityDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber
 ):
-    """StrokeOpacityDatum schema wrapper
+    """
+    StrokeOpacityDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -19442,11 +19451,11 @@ class StrokeOpacityDatum(
 class StrokeOpacityValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
-    """StrokeOpacityValue schema wrapper
+    """
+    StrokeOpacityValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Sequence[dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, float, :class:`ExprRef`
@@ -19583,11 +19592,11 @@ class StrokeOpacityValue(
 class StrokeWidth(
     FieldChannelMixin, core.FieldOrDatumDefWithConditionMarkPropFieldDefnumber
 ):
-    """StrokeWidth schema wrapper
+    r"""
+    StrokeWidth schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -20374,11 +20383,11 @@ class StrokeWidth(
 class StrokeWidthDatum(
     DatumChannelMixin, core.FieldOrDatumDefWithConditionDatumDefnumber
 ):
-    """StrokeWidthDatum schema wrapper
+    """
+    StrokeWidthDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -20552,11 +20561,11 @@ class StrokeWidthDatum(
 class StrokeWidthValue(
     ValueChannelMixin, core.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
 ):
-    """StrokeWidthValue schema wrapper
+    """
+    StrokeWidthValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, Sequence[dict, :class:`ConditionalValueDefnumberExprRef`, :class:`ConditionalParameterValueDefnumberExprRef`, :class:`ConditionalPredicateValueDefnumberExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : dict, float, :class:`ExprRef`
@@ -20691,11 +20700,11 @@ class StrokeWidthValue(
 
 @with_property_setters
 class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefText):
-    """Text schema wrapper
+    r"""
+    Text schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -21222,11 +21231,11 @@ class Text(FieldChannelMixin, core.FieldOrDatumDefWithConditionStringFieldDefTex
 
 @with_property_setters
 class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumDefText):
-    """TextDatum schema wrapper
+    """
+    TextDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -21449,11 +21458,11 @@ class TextDatum(DatumChannelMixin, core.FieldOrDatumDefWithConditionStringDatumD
 
 @with_property_setters
 class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText):
-    """TextValue schema wrapper
+    """
+    TextValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefTextExprRef`, :class:`ConditionalParameterStringFieldDef`, :class:`ConditionalPredicateStringFieldDef`, :class:`ConditionalParameterValueDefTextExprRef`, :class:`ConditionalPredicateValueDefTextExprRef`, Sequence[dict, :class:`ConditionalValueDefTextExprRef`, :class:`ConditionalParameterValueDefTextExprRef`, :class:`ConditionalPredicateValueDefTextExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, :class:`Text`, Sequence[str], :class:`ExprRef`
@@ -21541,11 +21550,11 @@ class TextValue(ValueChannelMixin, core.ValueDefWithConditionStringFieldDefText)
 
 @with_property_setters
 class Theta(FieldChannelMixin, core.PositionFieldDefBase):
-    """Theta schema wrapper
+    r"""
+    Theta schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -22218,11 +22227,11 @@ class Theta(FieldChannelMixin, core.PositionFieldDefBase):
 
 @with_property_setters
 class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
-    """ThetaDatum schema wrapper
+    """
+    ThetaDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -22468,13 +22477,14 @@ class ThetaDatum(DatumChannelMixin, core.PositionDatumDefBase):
 
 @with_property_setters
 class ThetaValue(ValueChannelMixin, core.PositionValueDef):
-    """ThetaValue schema wrapper
+    """
+    ThetaValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -22490,13 +22500,14 @@ class ThetaValue(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Theta2 schema wrapper
+    r"""
+    Theta2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -22841,11 +22852,11 @@ class Theta2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class Theta2Datum(DatumChannelMixin, core.DatumDef):
-    """Theta2Datum schema wrapper
+    """
+    Theta2Datum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -22980,13 +22991,14 @@ class Theta2Datum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Theta2Value(ValueChannelMixin, core.PositionValueDef):
-    """Theta2Value schema wrapper
+    """
+    Theta2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -23002,11 +23014,11 @@ class Theta2Value(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
-    """Tooltip schema wrapper
+    r"""
+    Tooltip schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -23529,11 +23541,11 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
 @with_property_setters
 class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
-    """TooltipValue schema wrapper
+    """
+    TooltipValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`
@@ -23668,11 +23680,11 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
 @with_property_setters
 class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
-    """Url schema wrapper
+    r"""
+    Url schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -24195,11 +24207,11 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
 @with_property_setters
 class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
-    """UrlValue schema wrapper
+    """
+    UrlValue schema wrapper.
 
     Parameters
     ----------
-
     condition : dict, :class:`ConditionalMarkPropFieldOrDatumDef`, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterMarkPropFieldOrDatumDef`, :class:`ConditionalPredicateMarkPropFieldOrDatumDef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`, Sequence[dict, :class:`ConditionalValueDefstringnullExprRef`, :class:`ConditionalParameterValueDefstringnullExprRef`, :class:`ConditionalPredicateValueDefstringnullExprRef`]
         A field definition or one or more value definition(s) with a parameter predicate.
     value : str, dict, None, :class:`ExprRef`
@@ -24334,11 +24346,11 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
 
 @with_property_setters
 class X(FieldChannelMixin, core.PositionFieldDef):
-    """X schema wrapper
+    r"""
+    X schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -25166,11 +25178,11 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
 @with_property_setters
 class XDatum(DatumChannelMixin, core.PositionDatumDef):
-    """XDatum schema wrapper
+    """
+    XDatum schema wrapper.
 
     Parameters
     ----------
-
     axis : dict, None, :class:`Axis`
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
@@ -25569,13 +25581,14 @@ class XDatum(DatumChannelMixin, core.PositionDatumDef):
 
 @with_property_setters
 class XValue(ValueChannelMixin, core.PositionValueDef):
-    """XValue schema wrapper
+    """
+    XValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -25591,13 +25604,14 @@ class XValue(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class X2(FieldChannelMixin, core.SecondaryFieldDef):
-    """X2 schema wrapper
+    r"""
+    X2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -25942,11 +25956,11 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class X2Datum(DatumChannelMixin, core.DatumDef):
-    """X2Datum schema wrapper
+    """
+    X2Datum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -26081,13 +26095,14 @@ class X2Datum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class X2Value(ValueChannelMixin, core.PositionValueDef):
-    """X2Value schema wrapper
+    """
+    X2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -26103,13 +26118,14 @@ class X2Value(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class XError(FieldChannelMixin, core.SecondaryFieldDef):
-    """XError schema wrapper
+    r"""
+    XError schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -26454,13 +26470,14 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
-    """XErrorValue schema wrapper
+    """
+    XErrorValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -26476,13 +26493,14 @@ class XErrorValue(ValueChannelMixin, core.ValueDefnumber):
 
 @with_property_setters
 class XError2(FieldChannelMixin, core.SecondaryFieldDef):
-    """XError2 schema wrapper
+    r"""
+    XError2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -26827,13 +26845,14 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class XError2Value(ValueChannelMixin, core.ValueDefnumber):
-    """XError2Value schema wrapper
+    """
+    XError2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -26849,11 +26868,11 @@ class XError2Value(ValueChannelMixin, core.ValueDefnumber):
 
 @with_property_setters
 class XOffset(FieldChannelMixin, core.ScaleFieldDef):
-    """XOffset schema wrapper
+    r"""
+    XOffset schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -27481,11 +27500,11 @@ class XOffset(FieldChannelMixin, core.ScaleFieldDef):
 
 @with_property_setters
 class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
-    """XOffsetDatum schema wrapper
+    """
+    XOffsetDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -27687,13 +27706,14 @@ class XOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
 @with_property_setters
 class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
-    """XOffsetValue schema wrapper
+    """
+    XOffsetValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -27709,11 +27729,11 @@ class XOffsetValue(ValueChannelMixin, core.ValueDefnumber):
 
 @with_property_setters
 class Y(FieldChannelMixin, core.PositionFieldDef):
-    """Y schema wrapper
+    r"""
+    Y schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -28541,11 +28561,11 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
 @with_property_setters
 class YDatum(DatumChannelMixin, core.PositionDatumDef):
-    """YDatum schema wrapper
+    """
+    YDatum schema wrapper.
 
     Parameters
     ----------
-
     axis : dict, None, :class:`Axis`
         An object defining properties of axis's gridlines, ticks and labels. If ``null``,
         the axis for the encoding channel will be removed.
@@ -28944,13 +28964,14 @@ class YDatum(DatumChannelMixin, core.PositionDatumDef):
 
 @with_property_setters
 class YValue(ValueChannelMixin, core.PositionValueDef):
-    """YValue schema wrapper
+    """
+    YValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -28966,13 +28987,14 @@ class YValue(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class Y2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Y2 schema wrapper
+    r"""
+    Y2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -29317,11 +29339,11 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class Y2Datum(DatumChannelMixin, core.DatumDef):
-    """Y2Datum schema wrapper
+    """
+    Y2Datum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -29456,13 +29478,14 @@ class Y2Datum(DatumChannelMixin, core.DatumDef):
 
 @with_property_setters
 class Y2Value(ValueChannelMixin, core.PositionValueDef):
-    """Y2Value schema wrapper
+    """
+    Y2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : str, dict, float, :class:`ExprRef`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -29478,13 +29501,14 @@ class Y2Value(ValueChannelMixin, core.PositionValueDef):
 
 @with_property_setters
 class YError(FieldChannelMixin, core.SecondaryFieldDef):
-    """YError schema wrapper
+    r"""
+    YError schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -29829,13 +29853,14 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
-    """YErrorValue schema wrapper
+    """
+    YErrorValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -29851,13 +29876,14 @@ class YErrorValue(ValueChannelMixin, core.ValueDefnumber):
 
 @with_property_setters
 class YError2(FieldChannelMixin, core.SecondaryFieldDef):
-    """YError2 schema wrapper
+    r"""
+    YError2 schema wrapper.
+
     A field definition of a secondary channel that shares a scale with another primary channel.
     For example, ``x2``, ``xError`` and ``xError2`` share the same scale with ``x``.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -30202,13 +30228,14 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
 
 @with_property_setters
 class YError2Value(ValueChannelMixin, core.ValueDefnumber):
-    """YError2Value schema wrapper
+    """
+    YError2Value schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -30224,11 +30251,11 @@ class YError2Value(ValueChannelMixin, core.ValueDefnumber):
 
 @with_property_setters
 class YOffset(FieldChannelMixin, core.ScaleFieldDef):
-    """YOffset schema wrapper
+    r"""
+    YOffset schema wrapper.
 
     Parameters
     ----------
-
     shorthand : str, dict, Sequence[str], :class:`RepeatRef`
         shorthand for field, aggregate, and type
     aggregate : dict, :class:`Aggregate`, :class:`ArgmaxDef`, :class:`ArgminDef`, :class:`NonArgAggregateOp`, Literal['average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 'missing', 'product', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 'variance', 'variancep', 'exponential', 'exponentialb']
@@ -30856,11 +30883,11 @@ class YOffset(FieldChannelMixin, core.ScaleFieldDef):
 
 @with_property_setters
 class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
-    """YOffsetDatum schema wrapper
+    """
+    YOffsetDatum schema wrapper.
 
     Parameters
     ----------
-
     bandPosition : float
         Relative position on a band of a stacked, binned, time unit, or band scale. For
         example, the marks will be positioned at the beginning of the band if set to ``0``,
@@ -31062,13 +31089,14 @@ class YOffsetDatum(DatumChannelMixin, core.ScaleDatumDef):
 
 @with_property_setters
 class YOffsetValue(ValueChannelMixin, core.ValueDefnumber):
-    """YOffsetValue schema wrapper
+    """
+    YOffsetValue schema wrapper.
+
     Definition object for a constant value (primitive value or gradient definition) of an
     encoding channel.
 
     Parameters
     ----------
-
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
@@ -31147,44 +31175,48 @@ class _EncodingMixin:
             str | YOffset | Map | YOffsetDatum | YOffsetValue
         ] = Undefined,
     ) -> Self:
-        """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
+        """
+        Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`).
 
         Parameters
         ----------
         angle : str, :class:`Angle`, Dict, :class:`AngleDatum`, :class:`AngleValue`
             Rotation angle of point and text marks.
         color : str, :class:`Color`, Dict, :class:`ColorDatum`, :class:`ColorValue`
-            Color of the marks - either fill or stroke color based on  the ``filled`` property
-            of mark definition. By default, ``color`` represents fill color for ``"area"``,
-            ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
-            stroke color for ``"line"`` and ``"point"``.
+            Color of the marks - either fill or stroke color based on  the ``filled``
+            property of mark definition. By default, ``color`` represents fill color for
+            ``"area"``, ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``,
+            and ``"square"`` / stroke color for ``"line"`` and ``"point"``.
 
             **Default value:** If undefined, the default color depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``color``
-            property.
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            ``color`` property.
 
-            *Note:* 1) For fine-grained control over both fill and stroke colors of the marks,
-            please use the ``fill`` and ``stroke`` channels. The ``fill`` or ``stroke``
-            encodings have higher precedence than ``color``, thus may override the ``color``
-            encoding if conflicting encodings are specified. 2) See the scale documentation for
-            more information about customizing `color scheme
-            <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
+            *Note:* 1) For fine-grained control over both fill and stroke colors of the
+            marks, please use the ``fill`` and ``stroke`` channels. The ``fill`` or
+            ``stroke`` encodings have higher precedence than ``color``, thus may
+            override the ``color`` encoding if conflicting encodings are specified. 2)
+            See the scale documentation for more information about customizing `color
+            scheme <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
         column : str, :class:`Column`, Dict
             A field definition for the horizontal facet of trellis plots.
         description : str, :class:`Description`, Dict, :class:`DescriptionValue`
-            A text description of this mark for ARIA accessibility (SVG output only). For SVG
-            output the ``"aria-label"`` attribute will be set to this description.
+            A text description of this mark for ARIA accessibility (SVG output only).
+            For SVG output the ``"aria-label"`` attribute will be set to this
+            description.
         detail : str, :class:`Detail`, Dict, List
-            Additional levels of detail for grouping data in aggregate views and in line, trail,
-            and area marks without mapping data to a specific visual channel.
+            Additional levels of detail for grouping data in aggregate views and in
+            line, trail, and area marks without mapping data to a specific visual
+            channel.
         facet : str, :class:`Facet`, Dict
             A field definition for the (flexible) facet of trellis plots.
 
             If either ``row`` or ``column`` is specified, this channel will be ignored.
         fill : str, :class:`Fill`, Dict, :class:`FillDatum`, :class:`FillValue`
-            Fill color of the marks. **Default value:** If undefined, the default color depends
-            on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__
-            's ``color`` property.
+            Fill color of the marks. **Default value:** If undefined, the default color
+            depends on `mark config
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            ``color`` property.
 
             *Note:* The ``fill`` encoding has higher precedence than ``color``, thus may
             override the ``color`` encoding if conflicting encodings are specified.
@@ -31197,41 +31229,42 @@ class _EncodingMixin:
         href : str, :class:`Href`, Dict, :class:`HrefValue`
             A URL to load upon mouse click.
         key : str, :class:`Key`, Dict
-            A data field to use as a unique key for data binding. When a visualization's data is
-            updated, the key value will be used to match data elements to existing mark
-            instances. Use a key channel to enable object constancy for transitions over dynamic
-            data.
+            A data field to use as a unique key for data binding. When a visualization's
+            data is updated, the key value will be used to match data elements to
+            existing mark instances. Use a key channel to enable object constancy for
+            transitions over dynamic data.
         latitude : str, :class:`Latitude`, Dict, :class:`LatitudeDatum`
             Latitude position of geographically projected marks.
         latitude2 : str, :class:`Latitude2`, Dict, :class:`Latitude2Datum`, :class:`Latitude2Value`
-            Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
-            ``"rect"``, and  ``"rule"``.
+            Latitude-2 position for geographically projected ranged ``"area"``,
+            ``"bar"``, ``"rect"``, and  ``"rule"``.
         longitude : str, :class:`Longitude`, Dict, :class:`LongitudeDatum`
             Longitude position of geographically projected marks.
         longitude2 : str, :class:`Longitude2`, Dict, :class:`Longitude2Datum`, :class:`Longitude2Value`
-            Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
-            ``"rect"``, and  ``"rule"``.
+            Longitude-2 position for geographically projected ranged ``"area"``,
+            ``"bar"``, ``"rect"``, and  ``"rule"``.
         opacity : str, :class:`Opacity`, Dict, :class:`OpacityDatum`, :class:`OpacityValue`
             Opacity of the marks.
 
             **Default value:** If undefined, the default opacity depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``opacity``
-            property.
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            ``opacity`` property.
         order : str, :class:`Order`, Dict, List, :class:`OrderValue`
             Order of the marks.
 
 
             * For stacked marks, this ``order`` channel encodes `stack order
               <https://vega.github.io/vega-lite/docs/stack.html#order>`__.
-            * For line and trail marks, this ``order`` channel encodes order of data points in
-              the lines. This can be useful for creating `a connected scatterplot
-              <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`__. Setting
-              ``order`` to ``{"value": null}`` makes the line marks use the original order in
-              the data sources.
+            * For line and trail marks, this ``order`` channel encodes order of data
+              points in the lines. This can be useful for creating `a connected
+              scatterplot
+              <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`__.
+              Setting ``order`` to ``{"value": null}`` makes the line marks use the
+              original order in the data sources.
             * Otherwise, this ``order`` channel encodes layer order of the marks.
 
-            **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
-            creating additional aggregation grouping.
+            **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to
+            avoid creating additional aggregation grouping.
         radius : str, :class:`Radius`, Dict, :class:`RadiusDatum`, :class:`RadiusValue`
             The outer radius in pixels of arc marks.
         radius2 : str, :class:`Radius2`, Dict, :class:`Radius2Datum`, :class:`Radius2Value`
@@ -31243,39 +31276,40 @@ class _EncodingMixin:
 
 
             #.
-            For ``point`` marks the supported values include:   - plotting shapes: ``"circle"``,
-            ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``, ``"triangle-down"``,
-            ``"triangle-right"``, or ``"triangle-left"``.   - the line symbol ``"stroke"``   -
-            centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``   - a custom
-            `SVG path string
-            <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
-            sizing, custom shape paths should be defined within a square bounding box with
-            coordinates ranging from -1 to 1 along both the x and y dimensions.)
+            For ``point`` marks the supported values include:   - plotting shapes:
+            ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
+            ``"triangle-down"``, ``"triangle-right"``, or ``"triangle-left"``.   - the
+            line symbol ``"stroke"``   - centered directional shapes ``"arrow"``,
+            ``"wedge"``, or ``"triangle"``   - a custom `SVG path string
+            <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For
+            correct sizing, custom shape paths should be defined within a square
+            bounding box with coordinates ranging from -1 to 1 along both the x and y
+            dimensions.)
 
             #.
             For ``geoshape`` marks it should be a field definition of the geojson data
 
             **Default value:** If undefined, the default shape depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's ``shape``
-            property. ( ``"circle"`` if unset.)
+            <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's
+            ``shape`` property. ( ``"circle"`` if unset.)
         size : str, :class:`Size`, Dict, :class:`SizeDatum`, :class:`SizeValue`
             Size of the mark.
 
 
-            * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or pixel area
-              of the mark.
+            * For ``"point"``, ``"square"`` and ``"circle"``, - the symbol size, or
+              pixel area of the mark.
             * For ``"bar"`` and ``"tick"`` - the bar and tick's size.
             * For ``"text"`` - the text's font size.
-            * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use ``"trail"``
-              instead of line with varying size)
+            * Size is unsupported for ``"line"``, ``"area"``, and ``"rect"``. (Use
+              ``"trail"`` instead of line with varying size)
         stroke : str, :class:`Stroke`, Dict, :class:`StrokeDatum`, :class:`StrokeValue`
-            Stroke color of the marks. **Default value:** If undefined, the default color
-            depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's ``color``
-            property.
+            Stroke color of the marks. **Default value:** If undefined, the default
+            color depends on `mark config
+            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            ``color`` property.
 
-            *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus may
-            override the ``color`` encoding if conflicting encodings are specified.
+            *Note:* The ``stroke`` encoding has higher precedence than ``color``, thus
+            may override the ``color`` encoding if conflicting encodings are specified.
         strokeDash : str, :class:`StrokeDash`, Dict, :class:`StrokeDashDatum`, :class:`StrokeDashValue`
             Stroke dash of the marks.
 
@@ -31289,23 +31323,23 @@ class _EncodingMixin:
         strokeWidth : str, :class:`StrokeWidth`, Dict, :class:`StrokeWidthDatum`, :class:`StrokeWidthValue`
             Stroke width of the marks.
 
-            **Default value:** If undefined, the default stroke width depends on `mark config
-            <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
+            **Default value:** If undefined, the default stroke width depends on `mark
+            config <https://vega.github.io/vega-lite/docs/config.html#mark-config>`__ 's
             ``strokeWidth`` property.
         text : str, :class:`Text`, Dict, :class:`TextDatum`, :class:`TextValue`
             Text of the ``text`` mark.
         theta : str, :class:`Theta`, Dict, :class:`ThetaDatum`, :class:`ThetaValue`
-            For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-            start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
-            clockwise.)
+            For arc marks, the arc length in radians if theta2 is not specified,
+            otherwise the start arc angle. (A value of 0 indicates up or “north”,
+            increasing values proceed clockwise.)
 
             For text marks, polar coordinate angle in radians.
         theta2 : str, :class:`Theta2`, Dict, :class:`Theta2Datum`, :class:`Theta2Value`
             The end angle of arc marks in radians. A value of 0 indicates up or “north”,
             increasing values proceed clockwise.
         tooltip : str, :class:`Tooltip`, Dict, List, :class:`TooltipValue`
-            The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
-            `the tooltip property in the mark definition
+            The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding
+            overrides `the tooltip property in the mark definition
             <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
 
             See the `tooltip <https://vega.github.io/vega-lite/docs/tooltip.html>`__
@@ -31313,39 +31347,43 @@ class _EncodingMixin:
         url : str, :class:`Url`, Dict, :class:`UrlValue`
             The URL of an image mark.
         x : str, :class:`X`, Dict, :class:`XDatum`, :class:`XValue`
-            X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-            specified ``x2`` or ``width``.
+            X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"``
+            without specified ``x2`` or ``width``.
 
-            The ``value`` of this channel can be a number or a string ``"width"`` for the width
-            of the plot.
+            The ``value`` of this channel can be a number or a string ``"width"`` for
+            the width of the plot.
         x2 : str, :class:`X2`, Dict, :class:`X2Datum`, :class:`X2Value`
-            X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+            X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and
+            ``"rule"``.
 
-            The ``value`` of this channel can be a number or a string ``"width"`` for the width
-            of the plot.
+            The ``value`` of this channel can be a number or a string ``"width"`` for
+            the width of the plot.
         xError : str, :class:`XError`, Dict, :class:`XErrorValue`
-            Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
-        xError2 : str, :class:`XError2`, Dict, :class:`XError2Value`
-            Secondary error value of x coordinates for error specified ``"errorbar"`` and
+            Error value of x coordinates for error specified ``"errorbar"`` and
             ``"errorband"``.
+        xError2 : str, :class:`XError2`, Dict, :class:`XError2Value`
+            Secondary error value of x coordinates for error specified ``"errorbar"``
+            and ``"errorband"``.
         xOffset : str, :class:`XOffset`, Dict, :class:`XOffsetDatum`, :class:`XOffsetValue`
             Offset of x-position of the marks
         y : str, :class:`Y`, Dict, :class:`YDatum`, :class:`YValue`
-            Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-            specified ``y2`` or ``height``.
+            Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"``
+            without specified ``y2`` or ``height``.
 
-            The ``value`` of this channel can be a number or a string ``"height"`` for the
-            height of the plot.
+            The ``value`` of this channel can be a number or a string ``"height"`` for
+            the height of the plot.
         y2 : str, :class:`Y2`, Dict, :class:`Y2Datum`, :class:`Y2Value`
-            Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+            Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and
+            ``"rule"``.
 
-            The ``value`` of this channel can be a number or a string ``"height"`` for the
-            height of the plot.
+            The ``value`` of this channel can be a number or a string ``"height"`` for
+            the height of the plot.
         yError : str, :class:`YError`, Dict, :class:`YErrorValue`
-            Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
-        yError2 : str, :class:`YError2`, Dict, :class:`YError2Value`
-            Secondary error value of y coordinates for error specified ``"errorbar"`` and
+            Error value of y coordinates for error specified ``"errorbar"`` and
             ``"errorband"``.
+        yError2 : str, :class:`YError2`, Dict, :class:`YError2Value`
+            Secondary error value of y coordinates for error specified ``"errorbar"``
+            and ``"errorband"``.
         yOffset : str, :class:`YOffset`, Dict, :class:`YOffsetDatum`, :class:`YOffsetValue`
             Offset of y-position of the marks
         """

@@ -42,7 +42,8 @@ def deprecated(
     category: type[AltairDeprecationWarning] | None = AltairDeprecationWarning,
     stacklevel: int = 1,
 ):  # te.deprecated
-    """Indicate that a class, function or overload is deprecated.
+    """
+    Indicate that a class, function or overload is deprecated.
 
     When this decorator is applied to an object, the type checker
     will generate a diagnostic on usage of the deprecated object.
@@ -81,7 +82,8 @@ def deprecated_warn(
     category: type[AltairDeprecationWarning] = AltairDeprecationWarning,
     stacklevel: int = 2,
 ) -> None:
-    """Indicate that the current code path is deprecated.
+    """
+    Indicate that the current code path is deprecated.
 
     This should be used for non-trivial cases *only*. ``@deprecated`` should
     always be preferred as it is recognized by static type checkers.

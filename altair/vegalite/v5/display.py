@@ -89,7 +89,7 @@ def svg_renderer(spec: dict, **metadata) -> dict[str, str]:
 
 
 def jupyter_renderer(spec: dict, **metadata):
-    """Render chart using the JupyterChart Jupyter Widget"""
+    """Render chart using the JupyterChart Jupyter Widget."""
     from altair import Chart, JupyterChart
 
     # Configure offline mode
@@ -165,12 +165,13 @@ class VegaLite(Displayable):
 
 
 def vegalite(spec: dict, validate: bool = True) -> None:
-    """Render and optionally validate a VegaLite 5 spec.
+    """
+    Render and optionally validate a VegaLite 5 spec.
 
     This will use the currently enabled renderer to render the spec.
 
     Parameters
-    ==========
+    ----------
     spec: dict
         A fully compliant VegaLite 5 spec, with the data portion fully processed.
     validate: bool

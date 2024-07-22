@@ -56,7 +56,8 @@ class RendererRegistry(PluginRegistry[RendererType, MimeBundleType]):
         time_format_locale: str | dict | None = None,
         **kwargs,
     ) -> PluginEnabler:
-        """Set options for embeddings of Vega & Vega-Lite charts.
+        """
+        Set options for embeddings of Vega & Vega-Lite charts.
 
         Options are fully documented at https://github.com/vega/vega-embed.
         Similar to the `enable()` method, this can be used as either
@@ -118,7 +119,8 @@ class RendererRegistry(PluginRegistry[RendererType, MimeBundleType]):
 
 
 class Displayable:
-    """A base display class for VegaLite v1/v2.
+    """
+    A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
 
@@ -165,7 +167,8 @@ class Displayable:
 def default_renderer_base(
     spec: dict[str, Any], mime_type: str, str_repr: str, **options
 ) -> DefaultRendererReturnType:
-    """A default renderer for Vega or VegaLite that works for modern frontends.
+    """
+    A default renderer for Vega or VegaLite that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
     how to render the custom VegaLite MIME type listed above.
@@ -195,7 +198,8 @@ def default_renderer_base(
 def json_renderer_base(
     spec: dict[str, Any], str_repr: str, **options
 ) -> DefaultRendererReturnType:
-    """A renderer that returns a MIME type of application/json.
+    """
+    A renderer that returns a MIME type of application/json.
 
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
@@ -205,7 +209,7 @@ def json_renderer_base(
 
 
 class HTMLRenderer:
-    """Object to render charts as HTML, with a unique output div each time"""
+    """Object to render charts as HTML, with a unique output div each time."""
 
     def __init__(self, output_div: str = "altair-viz-{}", **kwargs) -> None:
         self._output_div = output_div

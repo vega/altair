@@ -1,4 +1,4 @@
-"""Tests for variable parameters and selection parameters"""
+"""Tests for variable parameters and selection parameters."""
 
 import pandas as pd
 

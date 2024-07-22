@@ -68,7 +68,7 @@ def vegafusion_data_transformer(
 def vegafusion_data_transformer(
     data: DataType | None = None, max_rows: int = 100000
 ) -> Callable[..., Any] | _VegaFusionReturnType:
-    """VegaFusion Data Transformer"""
+    """VegaFusion Data Transformer."""
     # Vegafusion does not support Narwhals, so if `data` is a Narwhals
     # object, we make sure to extract the native object and let Vegafusion handle it.
     # `strict=False` passes `data` through as-is if it is not a Narwhals object.
@@ -87,7 +87,8 @@ def vegafusion_data_transformer(
 
 
 def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
-    """Get a set of the inline datasets names in the provided Vega spec
+    """
+    Get a set of the inline datasets names in the provided Vega spec.
 
     Inline datasets are encoded as URLs that start with the table://
     prefix.
@@ -107,14 +108,8 @@ def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
     --------
     >>> spec = {
     ...     "data": [
-    ...         {
-    ...             "name": "foo",
-    ...             "url": "https://path/to/file.csv"
-    ...         },
-    ...         {
-    ...             "name": "bar",
-    ...             "url": "vegafusion+dataset://inline_dataset_123"
-    ...         }
+    ...         {"name": "foo", "url": "https://path/to/file.csv"},
+    ...         {"name": "bar", "url": "vegafusion+dataset://inline_dataset_123"},
     ...     ]
     ... }
     >>> get_inline_table_names(spec)
@@ -137,7 +132,8 @@ def get_inline_table_names(vega_spec: dict[str, Any]) -> set[str]:
 
 
 def get_inline_tables(vega_spec: dict[str, Any]) -> dict[str, DataFrameLike]:
-    """Get the inline tables referenced by a Vega specification
+    """
+    Get the inline tables referenced by a Vega specification.
 
     Note: This function should only be called on a Vega spec that corresponds
     to a chart that was processed by the vegafusion_data_transformer.
@@ -164,7 +160,8 @@ def get_inline_tables(vega_spec: dict[str, Any]) -> dict[str, DataFrameLike]:
 def compile_to_vegafusion_chart_state(
     vegalite_spec: dict[str, Any], local_tz: str
 ) -> ChartState:
-    """Compile a Vega-Lite spec to a VegaFusion ChartState
+    """
+    Compile a Vega-Lite spec to a VegaFusion ChartState.
 
     Note: This function should only be called on a Vega-Lite spec
     that was generated with the "vegafusion" data transformer enabled.
@@ -217,7 +214,8 @@ def compile_to_vegafusion_chart_state(
 
 
 def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict:
-    """Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion
+    """
+    Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion.
 
     Note: This function should only be called on a Vega-Lite spec
     that was generated with the "vegafusion" data transformer enabled.
@@ -280,7 +278,7 @@ def handle_row_limit_exceeded(row_limit: int, warnings: list):
 
 
 def using_vegafusion() -> bool:
-    """Check whether the vegafusion data transformer is enabled"""
+    """Check whether the vegafusion data transformer is enabled."""
     # Local import to avoid circular ImportError
     from altair import data_transformers
 

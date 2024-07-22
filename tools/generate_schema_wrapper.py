@@ -1,4 +1,4 @@
-"""Generate a schema wrapper from a schema"""
+"""Generate a schema wrapper from a schema."""
 
 from __future__ import annotations
 import argparse
@@ -404,9 +404,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
 
 
 def copy_schemapi_util() -> None:
-    """
-    Copy the schemapi utility into altair/utils/ and its test file to tests/utils/
-    """
+    """Copy the schemapi utility into altair/utils/ and its test file to tests/utils/."""
     # copy the schemapi utility file
     source_fp = Path(__file__).parent / "schemapi" / "schemapi.py"
     destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
@@ -453,7 +451,8 @@ def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict[str, 
 
 
 def toposort(graph: dict[str, list[str]]) -> list[str]:
-    """Topological sort of a directed acyclic graph.
+    """
+    Topological sort of a directed acyclic graph.
 
     Parameters
     ----------
@@ -916,7 +915,7 @@ def _create_encode_signature(
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
-        docstring_parameters, indent_level=4, width=100, lstrip=False
+        docstring_parameters, indent_level=8, width=100, lstrip=False
     )
     return ENCODE_METHOD.format(
         encode_method_args=", ".join(signature_args), docstring=docstring

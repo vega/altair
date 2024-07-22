@@ -1,4 +1,4 @@
-"""Tests of functionality that should work in all vegalite versions"""
+"""Tests of functionality that should work in all vegalite versions."""
 
 import pytest
 

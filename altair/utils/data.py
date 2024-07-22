@@ -114,7 +114,8 @@ def limit_rows(data: DataType, max_rows: int | None = ...) -> DataType: ...
 def limit_rows(
     data: DataType | None = None, max_rows: int | None = 5000
 ) -> partial | DataType:
-    """Raise MaxRowsError if the data model has more than max_rows.
+    """
+    Raise MaxRowsError if the data model has more than max_rows.
 
     If max_rows is None, then do not perform any check.
     """
@@ -242,9 +243,7 @@ def to_json(
     filename: str = "{prefix}-{hash}.{extension}",
     urlpath: str = "",
 ) -> partial | _ToFormatReturnUrlDict:
-    """
-    Write the data model to a .json file and return a url based data model.
-    """
+    """Write the data model to a .json file and return a url based data model."""
     kwds = _to_text_kwds(prefix, extension, filename, urlpath)
     if data is None:
         return partial(to_json, **kwds)
@@ -351,7 +350,7 @@ def _compute_data_hash(data_str: str) -> str:
 
 
 def _data_to_json_string(data: DataType) -> str:
-    """Return a JSON string representation of the input data"""
+    """Return a JSON string representation of the input data."""
     check_data_type(data)
     # `strict=False` passes `data` through as-is if it is not a Narwhals object.
     data_native = nw.to_native(data, strict=False)
@@ -376,7 +375,7 @@ def _data_to_json_string(data: DataType) -> str:
 
 
 def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
-    """return a CSV string representation of the input data"""
+    """Return a CSV string representation of the input data."""
     check_data_type(data)
     if isinstance(data, SupportsGeoInterface):
         msg = (
@@ -413,7 +412,7 @@ def _data_to_csv_string(data: dict | pd.DataFrame | DataFrameLike) -> str:
 
 
 def arrow_table_from_dfi_dataframe(dfi_df: DataFrameLike) -> pa.Table:
-    """Convert a DataFrame Interchange Protocol compatible object to an Arrow Table"""
+    """Convert a DataFrame Interchange Protocol compatible object to an Arrow Table."""
     import pyarrow as pa
 
     # First check if the dataframe object has a method to convert to arrow.
