@@ -13,7 +13,7 @@ from .core import (
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
 from .deprecation import AltairDeprecationWarning, deprecated, deprecated_warn
-from .schemapi import Undefined, Optional
+from .schemapi import Undefined, Optional, is_undefined
 
 
 __all__ = (
@@ -28,6 +28,7 @@ __all__ = (
     "display_traceback",
     "infer_encoding_types",
     "infer_vegalite_type_for_pandas",
+    "is_undefined",
     "parse_shorthand",
     "sanitize_narwhals_dataframe",
     "sanitize_pandas_dataframe",

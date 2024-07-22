@@ -787,6 +787,19 @@ This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/
 """
 
 
+def is_undefined(obj: Any) -> TypeIs[UndefinedType]:
+    """Type-safe singleton check for `UndefinedType`.
+
+    Notes
+    -----
+    - Using `obj is Undefined` does not narrow from `UndefinedType` in a union.
+        - Due to the assumption that other `UndefinedType`'s could exist.
+    - Current [typing spec advises](https://typing.readthedocs.io/en/latest/spec/concepts.html#support-for-singleton-types-in-unions) using an `Enum`.
+        - Otherwise, requires an explicit guard to inform the type checker.
+    """
+    return obj is Undefined
+
+
 class SchemaBase:
     """Base class for schema wrappers.
 
