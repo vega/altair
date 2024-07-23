@@ -828,6 +828,22 @@ class When(_BaseWhen):
         Returns
         -------
         :class:`Then`
+
+        Examples
+        --------
+        Simple conditions may be expressed without defining a default::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.movies()
+            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+
+            alt.Chart(source).mark_point(invalid=None).encode(
+                x="IMDB_Rating:Q",
+                y="Rotten_Tomatoes_Rating:Q",
+                color=alt.when(predicate).then(alt.value("grey")),
+            )
         """
         condition = self._when_then(statement, kwds)
         if _is_condition_extra(condition, statement, kwds=kwds):
