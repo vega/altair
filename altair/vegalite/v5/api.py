@@ -888,6 +888,24 @@ class Then(core.SchemaBase, t.Generic[_C]):
                 ``str`` will be encoded as `shorthand<https://altair-viz.github.io/user_guide/encodings/index.html#encoding-shorthands>`__.
         **kwds
             Additional keyword args are added to the resulting ``dict``.
+
+
+        Examples
+        --------
+        Points outside of ``brush`` will not appear highlighted::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.cars()
+            brush = alt.selection_interval()
+            color = alt.when(brush).then("Origin:N").otherwise(alt.value("grey"))
+
+            alt.Chart(source).mark_point().encode(
+                x="Horsepower:Q",
+                y="Miles_per_Gallon:Q",
+                color=color,
+            ).add_params(brush)
         """
         conditions: _Conditional[Any]
         is_extra = functools.partial(_is_condition_extra, kwds=kwds)
