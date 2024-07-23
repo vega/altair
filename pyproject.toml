@@ -365,7 +365,6 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "lf"
-# Enable once `D` are applied to non-generated code
 # https://docs.astral.sh/ruff/formatter/#docstring-formatting
 docstring-code-format = true
 docstring-code-line-length = 88
