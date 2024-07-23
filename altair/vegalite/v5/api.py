@@ -914,7 +914,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             if isinstance(current, list) and len(current) == 1:
                 # This case is guaranteed to have come from `When` and not `ChainedWhen`
                 # The `list` isn't needed if we complete the condition here
-                conditions = _Conditional(condition=current[0])
+                conditions = _Conditional(condition=current[0])  # pyright: ignore[reportArgumentType]
             elif isinstance(current, dict):
                 if not is_extra(statement):
                     conditions = self.to_dict()
