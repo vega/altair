@@ -69,7 +69,8 @@ def spec_to_mimebundle(
     engine: Literal["vl-convert"] | None = None,
     **kwargs,
 ) -> dict[str, Any] | tuple[dict[str, Any], dict[str, Any]]:
-    """Convert a vega-lite specification to a mimebundle
+    """
+    Convert a vega-lite specification to a mimebundle.
 
     The mimebundle type is controlled by the ``format`` argument, which can be
     one of the following ['html', 'json', 'png', 'svg', 'pdf', 'vega', 'vega-lite']
@@ -174,7 +175,8 @@ def _spec_to_mimebundle_with_engine(
     time_format_locale: str | dict | None = None,
     **kwargs,
 ) -> Any:
-    """Helper for Vega-Lite to mimebundle conversions that require an engine
+    """
+    Helper for Vega-Lite to mimebundle conversions that require an engine.
 
     Parameters
     ----------
@@ -287,7 +289,8 @@ def _validate_normalize_engine(
     engine: Literal["vl-convert"] | None,
     format: Literal["png", "svg", "pdf", "vega"],
 ) -> str:
-    """Helper to validate and normalize the user-provided engine
+    """
+    Helper to validate and normalize the user-provided engine.
 
     engine : {None, 'vl-convert'}
         the user-provided engine string
@@ -326,7 +329,8 @@ def _validate_normalize_engine(
 
 
 def _pngxy(data):
-    """read the (width, height) from a PNG header
+    """
+    read the (width, height) from a PNG header.
 
     Taken from IPython.display
     """
@@ -336,7 +340,8 @@ def _pngxy(data):
 
 
 def preprocess_embed_options(embed_options: dict) -> dict:
-    """Preprocess embed options to a form compatible with Vega Embed
+    """
+    Preprocess embed options to a form compatible with Vega Embed.
 
     Parameters
     ----------

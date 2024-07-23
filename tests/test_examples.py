@@ -1,4 +1,5 @@
-"""This module dominates the testing time.
+"""
+Note that this module dominates the testing time.
 
 TODO
 ----
@@ -69,7 +70,8 @@ distributed_examples: Iterable[tuple[Any, str]] = tuple(_distributed_examples())
 
 
 def id_func(val) -> str:
-    """Ensures the generated test-id name uses only `filename` and not `source`.
+    """
+    Ensures the generated test-id name uses only `filename` and not `source`.
 
     Without this, the name is repr(source code)-filename
     """
@@ -105,8 +107,10 @@ def test_render_examples_to_chart(source, filename) -> None:
 )
 @pytest.mark.parametrize(("source", "filename"), distributed_examples, ids=id_func)
 def test_from_and_to_json_roundtrip(source, filename) -> None:
-    """Tests if the to_json and from_json (and by extension to_dict and from_dict)
-    work for all examples in the Example Gallery.
+    """
+    Tests if the to_json and from_json work for all examples in the Example Gallery.
+
+    (and by extension to_dict and from_dict)
     """
     chart = eval_block(source)
     if chart is None:

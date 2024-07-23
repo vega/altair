@@ -1,7 +1,4 @@
-"""
-This script fills the contents of doc/user_guide/api.rst
-based on the updated Altair schema.
-"""
+"""Fills the contents of doc/user_guide/api.rst based on the updated Altair schema."""
 
 from __future__ import annotations
 from pathlib import Path

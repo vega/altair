@@ -222,6 +222,14 @@ extend-safe-fixes=[
     "W293",
     # unsorted-dunder-all
     "RUF022",
+    # pydocstyle #
+    # ---------- #
+    # fits-on-one-line
+    "D200",
+    # escape-sequence-in-docstring
+    "D301",
+    # ends-in-period
+    "D400"
 ]
 
 # https://docs.astral.sh/ruff/preview/#using-rules-that-are-in-preview
@@ -292,6 +300,11 @@ select = [
     "PLW1510",
     # nested-min-max
     "PLW3301",
+    # pydocstyle #
+    # ---------- #
+    "D",
+    # multi-line-summary-second-line
+    "D213",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -310,20 +323,52 @@ ignore = [
     # suppressible-exception
     # https://github.com/vega/altair/pull/3431#discussion_r1629808660
     "SIM105",
+    # pydocstyle/ https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules #
+    # ------------------------------------------------------------------------- #
+    # undocumented-public-module
+    "D100",
+    # undocumented-public-class
+    "D101",
+    # undocumented-public-method  
+    "D102",
+    # undocumented-public-function  
+    "D103",
+    # undocumented-public-package   
+    "D104",
+    # undocumented-magic-method 
+    "D105",
+    # undocumented-public-init  
+    "D107",
+    # indent-with-spaces
+    "D206",
+    # multi-line-summary-first-line ((D213) is the opposite of this)
+    "D212",
+    # Imperative mood   
+    "D401",
+    # Blank line after last section 
+    "D413",
+    # doc-line-too-long
+    "W505",
 ]
+# https://docs.astral.sh/ruff/settings/#lintpydocstyle
+pydocstyle={ convention="numpy" }
+mccabe={ max-complexity=18 }
 
-[tool.ruff.lint.mccabe]
-max-complexity = 18
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://docs.astral.sh/ruff/settings/#lint_flake8-tidy-imports_banned-api
 "typing.Optional".msg = "Use `Union[T, None]` instead.\n`typing.Optional` is likely to be confused with `altair.Optional`, which have a similar but different semantic meaning.\nSee https://github.com/vega/altair/pull/3449"
+
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "lf"
+# Enable once `D` are applied to non-generated code
+# https://docs.astral.sh/ruff/formatter/#docstring-formatting
+docstring-code-format = true
+docstring-code-line-length = 88
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.

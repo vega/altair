@@ -15,7 +15,7 @@ from altair.utils.data import to_values
 
 def windows_has_tzdata():
     """
-    From PyArrow: python/pyarrow/tests/util.py
+    From PyArrow: python/pyarrow/tests/util.py.
 
     This is the default location where tz.cpp will look for (until we make
     this configurable at run-time)
@@ -31,7 +31,7 @@ def windows_has_tzdata():
 )
 @pytest.mark.skipif(pa is None, reason="pyarrow not installed")
 def test_arrow_timestamp_conversion():
-    """Test that arrow timestamp values are converted to ISO-8601 strings"""
+    """Test that arrow timestamp values are converted to ISO-8601 strings."""
     data = {
         "date": [datetime(2004, 8, 1), datetime(2004, 9, 1), None],
         "value": [102, 129, 139],

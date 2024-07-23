@@ -1,4 +1,4 @@
-"""Generate a schema wrapper from a schema"""
+"""Generate a schema wrapper from a schema."""
 
 from __future__ import annotations
 import argparse
@@ -9,7 +9,8 @@ import re
 import sys
 import textwrap
 from dataclasses import dataclass
-from typing import Final, Iterable, Literal
+from typing import Final, Iterable, Literal, Iterator
+from itertools import chain
 from urllib import request
 import m2r
 
@@ -403,9 +404,7 @@ def _add_shorthand_property_to_field_encodings(schema: dict) -> dict:
 
 
 def copy_schemapi_util() -> None:
-    """
-    Copy the schemapi utility into altair/utils/ and its test file to tests/utils/
-    """
+    """Copy the schemapi utility into altair/utils/ and its test file to tests/utils/."""
     # copy the schemapi utility file
     source_fp = Path(__file__).parent / "schemapi" / "schemapi.py"
     destination_fp = Path(__file__).parent / ".." / "altair" / "utils" / "schemapi.py"
@@ -452,7 +451,8 @@ def get_field_datum_value_defs(propschema: SchemaInfo, root: dict) -> dict[str, 
 
 
 def toposort(graph: dict[str, list[str]]) -> list[str]:
-    """Topological sort of a directed acyclic graph.
+    """
+    Topological sort of a directed acyclic graph.
 
     Parameters
     ----------
@@ -572,40 +572,28 @@ class ChannelInfo:
     datum_class_name: str | None = None
     value_class_name: str | None = None
 
+    @property
+    def all_names(self) -> Iterator[str]:
+        if self.field_class_name:
+            yield self.field_class_name
+        if self.datum_class_name:
+            yield self.datum_class_name
+        if self.value_class_name:
+            yield self.value_class_name
+
 
 def generate_vegalite_channel_wrappers(
     schemafile: Path, version: str, imports: list[str] | None = None
 ) -> str:
-    # TODO: generate __all__ for top of file
     schema = load_schema_with_shorthand_properties(schemafile)
-
-    imports = imports or [
-        "from __future__ import annotations\n",
-        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
-        "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
-        "from altair.utils.schemapi import Undefined, with_property_setters",
-        "from altair.utils import infer_encoding_types as _infer_encoding_types",
-        "from altair.utils import parse_shorthand",
-        "from . import core",
-    ]
-    contents = [
-        HEADER,
-        CHANNEL_MYPY_IGNORE_STATEMENTS,
-        *imports,
-        _type_checking_only_imports(
-            "from altair import Parameter, SchemaBase",
-            "from altair.utils.schemapi import Optional",
-            "from ._typing import * # noqa: F403",
-            "from typing_extensions import Self",
-        ),
-        CHANNEL_MIXINS,
-    ]
 
     encoding_def = "FacetedEncoding"
 
     encoding = SchemaInfo(schema["definitions"][encoding_def], rootschema=schema)
 
     channel_infos: dict[str, ChannelInfo] = {}
+
+    class_defs = []
 
     for prop, propschema in encoding.properties.items():
         def_dict = get_field_datum_value_defs(propschema, schema)
@@ -657,9 +645,44 @@ def generate_vegalite_channel_wrappers(
                 haspropsetters=True,
                 altair_classes_prefix="core",
             )
-            contents.append(gen.schema_class())
+            class_defs.append(gen.schema_class())
 
         channel_infos[prop] = channel_info
+
+    # NOTE: See https://github.com/vega/altair/pull/3482#issuecomment-2241577342
+    COMPAT_EXPORTS = (
+        "DatumChannelMixin",
+        "FieldChannelMixin",
+        "ValueChannelMixin",
+        "with_property_setters",
+    )
+
+    it = chain.from_iterable(info.all_names for info in channel_infos.values())
+    all_ = list(chain(it, COMPAT_EXPORTS))
+
+    imports = imports or [
+        "from __future__ import annotations\n",
+        "from typing import Any, overload, Sequence, List, Literal, Union, TYPE_CHECKING",
+        "from narwhals.dependencies import is_pandas_dataframe as _is_pandas_dataframe",
+        "from altair.utils.schemapi import Undefined, with_property_setters",
+        "from altair.utils import infer_encoding_types as _infer_encoding_types",
+        "from altair.utils import parse_shorthand",
+        "from . import core",
+    ]
+    contents = [
+        HEADER,
+        CHANNEL_MYPY_IGNORE_STATEMENTS,
+        *imports,
+        _type_checking_only_imports(
+            "from altair import Parameter, SchemaBase",
+            "from altair.utils.schemapi import Optional",
+            "from ._typing import * # noqa: F403",
+            "from typing_extensions import Self",
+        ),
+        "\n" f"__all__ = {sorted(all_)}\n",
+        CHANNEL_MIXINS,
+        *class_defs,
+    ]
 
     # Generate the type signature for the encode method
     encode_signature = _create_encode_signature(channel_infos)
@@ -892,7 +915,7 @@ def _create_encode_signature(
     if len(docstring_parameters) > 1:
         docstring_parameters += [""]
     docstring = indent_docstring(
-        docstring_parameters, indent_level=4, width=100, lstrip=False
+        docstring_parameters, indent_level=8, width=100, lstrip=False
     )
     return ENCODE_METHOD.format(
         encode_method_args=", ".join(signature_args), docstring=docstring

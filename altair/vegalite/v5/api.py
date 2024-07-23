@@ -21,9 +21,10 @@ import typing as t
 import functools
 import operator
 from copy import deepcopy as _deepcopy
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
-from altair.utils import Optional
+from .schema import core, channels, mixins, SCHEMA_URL
+
+from altair.utils import Optional, Undefined
 from .data import data_transformers
 from ... import utils
 from ...expr import core as _expr_core
@@ -123,6 +124,58 @@ if TYPE_CHECKING:
         OneOrSeq,
     )
 
+__all__ = [
+    "TOPLEVEL_ONLY_KEYS",
+    "Bin",
+    "ChainedWhen",
+    "Chart",
+    "ChartDataType",
+    "ChartType",
+    "ConcatChart",
+    "DataType",
+    "FacetChart",
+    "FacetMapping",
+    "HConcatChart",
+    "Impute",
+    "LayerChart",
+    "LookupData",
+    "Parameter",
+    "ParameterExpression",
+    "RepeatChart",
+    "SelectionExpression",
+    "SelectionPredicateComposition",
+    "Then",
+    "Title",
+    "TopLevelMixin",
+    "VConcatChart",
+    "When",
+    "binding",
+    "binding_checkbox",
+    "binding_radio",
+    "binding_range",
+    "binding_select",
+    "check_fields_and_encodings",
+    "concat",
+    "condition",
+    "graticule",
+    "hconcat",
+    "is_chart_type",
+    "layer",
+    "mixins",
+    "param",
+    "repeat",
+    "selection",
+    "selection_interval",
+    "selection_multi",
+    "selection_point",
+    "selection_single",
+    "sequence",
+    "sphere",
+    "topo_feature",
+    "value",
+    "vconcat",
+    "when",
+]
 
 ChartDataType: TypeAlias = Optional[Union[DataType, core.Data, str, core.Generator]]
 _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
@@ -131,7 +184,8 @@ _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
 # ------------------------------------------------------------------------
 # Data Utilities
 def _dataset_name(values: dict | list | InlineDataset) -> str:
-    """Generate a unique hash of the data
+    """
+    Generate a unique hash of the data.
 
     Parameters
     ----------
@@ -153,7 +207,8 @@ def _dataset_name(values: dict | list | InlineDataset) -> str:
 
 
 def _consolidate_data(data: Any, context: Any) -> Any:
-    """If data is specified inline, then move it to context['datasets']
+    """
+    If data is specified inline, then move it to context['datasets'].
 
     This function will modify context in-place, and return a new version of data
     """
@@ -181,7 +236,8 @@ def _consolidate_data(data: Any, context: Any) -> Any:
 
 
 def _prepare_data(data, context=None):
-    """Convert input data to data for use within schema
+    """
+    Convert input data to data for use within schema.
 
     Parameters
     ----------
@@ -267,7 +323,7 @@ TOPLEVEL_ONLY_KEYS = {"background", "config", "autosize", "padding", "$schema"}
 # -------------------------------------------------------------------------
 # Tools for working with parameters
 class Parameter(_expr_core.OperatorMixin):
-    """A Parameter object"""
+    """A Parameter object."""
 
     _counter: int = 0
 
@@ -294,7 +350,7 @@ class Parameter(_expr_core.OperatorMixin):
 
     @utils.deprecated(version="5.0.0", alternative="to_dict")
     def ref(self) -> dict:
-        "'ref' is deprecated. No need to call '.ref()' anymore."
+        """'ref' is deprecated. No need to call '.ref()' anymore."""
         return self.to_dict()
 
     def to_dict(self) -> dict[str, str | dict]:
@@ -599,14 +655,15 @@ def _is_condition_extra(obj: Any, *objs: Any, kwds: Map) -> TypeIs[_Condition]:
 def _parse_when_constraints(
     constraints: dict[str, _FieldEqualType], /
 ) -> Iterator[BinaryExpression]:
-    """Wrap kwargs with `alt.datum`.
+    """
+    Wrap kwargs with `alt.datum`.
 
     ```py
     # before
     alt.when(alt.datum.Origin == "Europe")
 
     # after
-    alt.when(Origin = "Europe")
+    alt.when(Origin="Europe")
     ```
     """
     for name, value in constraints.items():
@@ -633,7 +690,8 @@ def _parse_when_compose(
     constraints: dict[str, _FieldEqualType],
     /,
 ) -> BinaryExpression:
-    """Compose an `&` reduction predicate.
+    """
+    Compose an `&` reduction predicate.
 
     Parameters
     ----------
@@ -730,7 +788,8 @@ class _BaseWhen(Protocol):
 
 
 class When(_BaseWhen):
-    """Utility class for ``when-then-otherwise`` conditions.
+    """
+    Utility class for ``when-then-otherwise`` conditions.
 
     Represents the state after calling :func:`.when()`.
 
@@ -753,7 +812,8 @@ class When(_BaseWhen):
         self, statement: dict[str, Any] | SchemaBase, /, **kwds: Any
     ) -> Then[Any]: ...
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[Any]:
-        """Attach a statement to this predicate.
+        """
+        Attach a statement to this predicate.
 
         Parameters
         ----------
@@ -777,7 +837,8 @@ class When(_BaseWhen):
 
 
 class Then(core.SchemaBase, t.Generic[_C]):
-    """Utility class for ``when-then-otherwise`` conditions.
+    """
+    Utility class for ``when-then-otherwise`` conditions.
 
     Represents the state after calling :func:`.when().then()`.
 
@@ -812,7 +873,8 @@ class Then(core.SchemaBase, t.Generic[_C]):
     def otherwise(
         self, statement: _StatementType, /, **kwds: Any
     ) -> SchemaBase | _Conditional[Any]:
-        """Finalize the condition with a default value.
+        """
+        Finalize the condition with a default value.
 
         Parameters
         ----------
@@ -864,7 +926,8 @@ class Then(core.SchemaBase, t.Generic[_C]):
         empty: Optional[bool] = Undefined,
         **constraints: _FieldEqualType,
     ) -> ChainedWhen:
-        """Attach another predicate to the condition.
+        """
+        Attach another predicate to the condition.
 
         The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
@@ -938,7 +1001,8 @@ class ChainedWhen(_BaseWhen):
         self._conditions = conditions
 
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
-        """Attach a statement to this predicate.
+        """
+        Attach a statement to this predicate.
 
         Parameters
         ----------
@@ -966,7 +1030,8 @@ def when(
     empty: Optional[bool] = Undefined,
     **constraints: _FieldEqualType,
 ) -> When:
-    """Start a ``when-then-otherwise`` condition.
+    """
+    Start a ``when-then-otherwise`` condition.
 
     The resulting predicate is an ``&`` reduction over ``predicate`` and optional ``*``, ``**``, arguments.
 
@@ -1004,6 +1069,7 @@ def when(
     Using keyword-argument ``constraints`` can simplify compositions like::
 
         import altair as alt
+
         verbose_composition = (
             (alt.datum.Name == "Name_1")
             & (alt.datum.Color == "Green")
@@ -1022,7 +1088,7 @@ def when(
 
 
 def value(value, **kwargs) -> _Value:
-    """Specify a value for use in an encoding"""
+    """Specify a value for use in an encoding."""
     return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
 
 
@@ -1034,8 +1100,9 @@ def param(
     expr: Optional[str | Expr | Expression] = Undefined,
     **kwds,
 ) -> Parameter:
-    """Create a named parameter.
-    See https://altair-viz.github.io/user_guide/interactions.html for examples.
+    """
+    Create a named parameter, see https://altair-viz.github.io/user_guide/interactions.html for examples.
+
     Although both variable parameters and selection parameters can be created using
     this 'param' function, to create a selection parameter, it is recommended to use
     either 'selection_point' or 'selection_interval' instead.
@@ -1161,7 +1228,6 @@ def selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
     **kwds :
         additional keywords to control the selection.
     """
-
     return _selection(type=type, **kwds)
 
 
@@ -1180,7 +1246,8 @@ def selection_interval(
     zoom: Optional[str | bool] = Undefined,
     **kwds,
 ) -> Parameter:
-    """Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.)
+    """
+    Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.).
 
     Parameters
     ----------
@@ -1292,7 +1359,8 @@ def selection_point(
     nearest: Optional[bool] = Undefined,
     **kwds,
 ) -> Parameter:
-    """Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
+    """
+    Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
 
     Parameters
     ----------
@@ -1395,43 +1463,43 @@ def selection_point(
 
 @utils.deprecated(version="5.0.0", alternative="selection_point")
 def selection_multi(**kwargs):
-    """'selection_multi' is deprecated.  Use 'selection_point'"""
+    """'selection_multi' is deprecated.  Use 'selection_point'."""
     return _selection(type="point", **kwargs)
 
 
 @utils.deprecated(version="5.0.0", alternative="selection_point")
 def selection_single(**kwargs):
-    """'selection_single' is deprecated.  Use 'selection_point'"""
+    """'selection_single' is deprecated.  Use 'selection_point'."""
     return _selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.Binding)
 def binding(input, **kwargs):
-    """A generic binding"""
+    """A generic binding."""
     return core.Binding(input=input, **kwargs)
 
 
 @utils.use_signature(core.BindCheckbox)
 def binding_checkbox(**kwargs):
-    """A checkbox binding"""
+    """A checkbox binding."""
     return core.BindCheckbox(input="checkbox", **kwargs)
 
 
 @utils.use_signature(core.BindRadioSelect)
 def binding_radio(**kwargs):
-    """A radio button binding"""
+    """A radio button binding."""
     return core.BindRadioSelect(input="radio", **kwargs)
 
 
 @utils.use_signature(core.BindRadioSelect)
 def binding_select(**kwargs):
-    """A select binding"""
+    """A select binding."""
     return core.BindRadioSelect(input="select", **kwargs)
 
 
 @utils.use_signature(core.BindRange)
 def binding_range(**kwargs):
-    """A range binding"""
+    """A range binding."""
     return core.BindRange(input="range", **kwargs)
 
 
@@ -1475,7 +1543,8 @@ def condition(
     empty: Optional[bool] = Undefined,
     **kwargs,
 ) -> SchemaBase | dict[str, _ConditionType | Any]:
-    """A conditional attribute or encoding
+    """
+    A conditional attribute or encoding.
 
     Parameters
     ----------
@@ -1510,7 +1579,8 @@ def condition(
 
 
 def _top_schema_base(obj: Any, /):  # -> <subclass of SchemaBase and TopLevelMixin>
-    """Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
+    """
+    Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
     Use for instance methods.
     """
@@ -1535,7 +1605,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict:
-        """Convert the chart to a dictionary suitable for JSON export
+        """
+        Convert the chart to a dictionary suitable for JSON export.
 
         Parameters
         ----------
@@ -1566,7 +1637,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         SchemaValidationError
             if validate=True and the dict does not conform to the schema
         """
-
         # Validate format
         if format not in {"vega-lite", "vega"}:
             msg = f'The format argument must be either "vega-lite" or "vega". Received {format!r}'
@@ -1663,7 +1733,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context: dict[str, Any] | None = None,
         **kwargs,
     ) -> str:
-        """Convert a chart to a JSON string
+        """
+        Convert a chart to a JSON string.
 
         Parameters
         ----------
@@ -1707,7 +1778,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         inline: bool = False,
         **kwargs,
     ) -> str:
-        """Embed a Vega/Vega-Lite spec into an HTML page
+        """
+        Embed a Vega/Vega-Lite spec into an HTML page.
 
         Parameters
         ----------
@@ -1734,6 +1806,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The vl-convert-python package is required if True.
         **kwargs :
             additional kwargs passed to spec_to_html.
+
         Returns
         -------
         output : string
@@ -1757,7 +1830,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def to_url(self, *, fullscreen: bool = False) -> str:
-        """Convert a chart to a URL that opens the chart specification in the Vega chart editor
+        """
+        Convert a chart to a URL that opens the chart specification in the Vega chart editor.
+
         The chart specification (including any inline data) is encoded in the URL.
 
         This method requires that the vl-convert-python package is installed.
@@ -1776,7 +1851,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             return vlc.vegalite_to_url(self.to_dict(), fullscreen=fullscreen)
 
     def open_editor(self, *, fullscreen: bool = False) -> None:
-        """Opens the chart specification in the Vega chart editor using the default browser.
+        """
+        Opens the chart specification in the Vega chart editor using the default browser.
 
         Parameters
         ----------
@@ -1804,7 +1880,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         inline=False,
         **kwargs,
     ) -> None:
-        """Save a chart to file in a variety of formats
+        """
+        Save a chart to file in a variety of formats.
 
         Supported formats are json, html, png, svg, pdf; the last three require
         the vl-convert-python package to be installed.
@@ -1922,7 +1999,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         columns: Optional[int] = Undefined,
         **kwargs,
     ) -> RepeatChart:
-        """Return a RepeatChart built from the chart
+        """
+        Return a RepeatChart built from the chart.
 
         Fields within the chart can be set to correspond to the row or
         column using `alt.repeat('row')` and `alt.repeat('column')`.
@@ -1973,7 +2051,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return RepeatChart(spec=self, repeat=repeat_arg, columns=columns, **kwargs)
 
     def properties(self, **kwargs) -> Self:
-        """Set top-level properties of the Chart.
+        """
+        Set top-level properties of the Chart.
 
         Argument names and types are the same as class initialization.
         """
@@ -2021,7 +2100,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ] = Undefined,
         **kwds,
     ) -> Self:
-        """Add a geographic projection to the chart.
+        """
+        Add a geographic projection to the chart.
 
         This is generally used either with ``mark_geoshape`` or with the
         ``latitude``/``longitude`` encodings.
@@ -2143,7 +2223,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self.properties(projection=projection)
 
     def _add_transform(self, *transforms: Transform) -> Self:
-        """Copy the chart and add specified transforms to chart.transform"""
+        """Copy the chart and add specified transforms to chart.transform."""
         copy = _top_schema_base(self).copy(deep=["transform"])
         if copy.transform is Undefined:
             copy.transform = []
@@ -2182,8 +2262,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         >>> import altair as alt
         >>> chart1 = alt.Chart().transform_aggregate(
-        ...     mean_acc='mean(Acceleration)',
-        ...     groupby=['Origin']
+        ...     mean_acc="mean(Acceleration)", groupby=["Origin"]
         ... )
         >>> print(chart1.transform[0].to_json())  # doctest: +NORMALIZE_WHITESPACE
         {
@@ -2203,9 +2282,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         so you can create the above transform like this:
 
         >>> chart2 = alt.Chart().transform_aggregate(
-        ...     [alt.AggregatedFieldDef(field='Acceleration', op='mean',
-        ...                             **{'as': 'mean_acc'})],
-        ...     groupby=['Origin']
+        ...     [alt.AggregatedFieldDef(field="Acceleration", op="mean", **{"as": "mean_acc"})],
+        ...     groupby=["Origin"],
         ... )
         >>> chart2.transform == chart1.transform
         True
@@ -2266,8 +2344,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
           field: 'x'
         })
 
-        >>> chart = alt.Chart().transform_bin("x_binned", "x",
-        ...                                   bin=alt.Bin(maxbins=10))
+        >>> chart = alt.Chart().transform_bin("x_binned", "x", bin=alt.Bin(maxbins=10))
         >>> chart.transform[0]
         BinTransform({
           as: 'x_binned',
@@ -2320,7 +2397,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> import altair as alt
         >>> from altair import datum, expr
 
-        >>> chart = alt.Chart().transform_calculate(y = 2 * expr.sin(datum.x))
+        >>> chart = alt.Chart().transform_calculate(y=2 * expr.sin(datum.x))
         >>> chart.transform[0]
         CalculateTransform({
           as: 'y',
@@ -2329,7 +2406,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         It's also possible to pass the ``CalculateTransform`` arguments directly:
 
-        >>> kwds = {'as_': 'y', 'calculate': '2 * sin(datum.x)'}
+        >>> kwds = {"as_": "y", "calculate": "2 * sin(datum.x)"}
         >>> chart = alt.Chart().transform_calculate(**kwds)
         >>> chart.transform[0]
         CalculateTransform({
@@ -2374,7 +2451,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         steps: Optional[int] = Undefined,
         resolve: Optional[ResolveMode_T] = Undefined,
     ) -> Self:
-        """Add a :class:`DensityTransform` to the spec.
+        """
+        Add a :class:`DensityTransform` to the spec.
 
         Parameters
         ----------
@@ -2534,7 +2612,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Examples
         --------
         >>> import altair as alt
-        >>> chart = alt.Chart().transform_joinaggregate(x='sum(y)')
+        >>> chart = alt.Chart().transform_joinaggregate(x="sum(y)")
         >>> chart.transform[0]
         JoinAggregateTransform({
           joinaggregate: [JoinAggregateFieldDef({
@@ -2566,7 +2644,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_extent(
         self, extent: str | FieldName, param: str | ParameterName
     ) -> Self:
-        """Add a :class:`ExtentTransform` to the spec.
+        """
+        Add a :class:`ExtentTransform` to the spec.
 
         Parameters
         ----------
@@ -2628,7 +2707,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         flatten: list[str | FieldName],
         as_: Optional[list[str | FieldName]] = Undefined,
     ) -> Self:
-        """Add a :class:`FlattenTransform` to the schema.
+        """
+        Add a :class:`FlattenTransform` to the schema.
 
         Parameters
         ----------
@@ -2660,7 +2740,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fold: list[str | FieldName],
         as_: Optional[list[str | FieldName]] = Undefined,
     ) -> Self:
-        """Add a :class:`FoldTransform` to the spec.
+        """
+        Add a :class:`FoldTransform` to the spec.
 
         Parameters
         ----------
@@ -2690,7 +2771,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         bandwidth: Optional[float] = Undefined,
         groupby: Optional[list[str | FieldName]] = Undefined,
     ) -> Self:
-        """Add a :class:`LoessTransform` to the spec.
+        """
+        Add a :class:`LoessTransform` to the spec.
 
         Parameters
         ----------
@@ -2732,7 +2814,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         default: Optional[str] = Undefined,
         **kwargs,
     ) -> Self:
-        """Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart
+        """
+        Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart.
 
         Parameters
         ----------
@@ -2785,7 +2868,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         limit: Optional[int] = Undefined,
         op: Optional[AggregateOp_T | AggregateOp] = Undefined,
     ) -> Self:
-        """Add a :class:`PivotTransform` to the chart.
+        """
+        Add a :class:`PivotTransform` to the chart.
 
         Parameters
         ----------
@@ -2831,7 +2915,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         probs: Optional[list[float]] = Undefined,
         step: Optional[float] = Undefined,
     ) -> Self:
-        """Add a :class:`QuantileTransform` to the chart
+        """
+        Add a :class:`QuantileTransform` to the chart.
 
         Parameters
         ----------
@@ -2882,7 +2967,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         order: Optional[int] = Undefined,
         params: Optional[bool] = Undefined,
     ) -> Self:
-        """Add a :class:`RegressionTransform` to the chart.
+        """
+        Add a :class:`RegressionTransform` to the chart.
 
         Parameters
         ----------
@@ -3029,7 +3115,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> import altair as alt
         >>> from altair import datum, expr
 
-        >>> chart = alt.Chart().transform_timeunit(month='month(date)')
+        >>> chart = alt.Chart().transform_timeunit(month="month(date)")
         >>> chart.transform[0]
         TimeUnitTransform({
           as: 'month',
@@ -3041,7 +3127,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         this is most useful in cases where the desired field name is not a
         valid python identifier:
 
-        >>> kwds = {'as': 'month', 'timeUnit': 'month', 'field': 'The Month'}
+        >>> kwds = {"as": "month", "timeUnit": "month", "field": "The Month"}
         >>> chart = alt.Chart().transform_timeunit(**kwds)
         >>> chart.transform[0]
         TimeUnitTransform({
@@ -3090,7 +3176,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         sort: Optional[list[SortField | dict[str, str]]] = Undefined,
         **kwargs: str,
     ) -> Self:
-        """Add a :class:`WindowTransform` to the schema
+        """
+        Add a :class:`WindowTransform` to the schema.
 
         Parameters
         ----------
@@ -3139,13 +3226,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> import altair as alt
         >>> import numpy as np
         >>> import pandas as pd
-        >>> data = pd.DataFrame({'x': np.arange(100),
-        ...                      'y': np.random.randn(100)})
-        >>> chart = alt.Chart(data).mark_line().encode(
-        ...     x='x:Q',
-        ...     y='ycuml:Q'
-        ... ).transform_window(
-        ...     ycuml='sum(y)'
+        >>> data = pd.DataFrame({"x": np.arange(100), "y": np.random.randn(100)})
+        >>> chart = (
+        ...     alt.Chart(data)
+        ...     .mark_line()
+        ...     .encode(x="x:Q", y="ycuml:Q")
+        ...     .transform_window(ycuml="sum(y)")
         ... )
         >>> chart.transform[0]
         WindowTransform({
@@ -3204,7 +3290,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         actions: Optional[bool | dict] = Undefined,
         **kwargs,
     ) -> None:
-        """Display chart in Jupyter notebook or JupyterLab
+        """
+        Display chart in Jupyter notebook or JupyterLab.
 
         Parameters are passed as options to vega-embed within supported frontends.
         See https://github.com/vega/vega-embed#options for details.
@@ -3300,7 +3387,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
 
     def show(self) -> None:
-        """Display the chart using the active renderer"""
+        """Display the chart using the active renderer."""
         if renderers.active == "browser":
             # Opens browser window as side-effect.
             # We use a special case here so that IPython is not required
@@ -3313,7 +3400,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
-        """Copy the chart and update the resolve property with kwargs"""
+        """Copy the chart and update the resolve property with kwargs."""
         if not hasattr(self, "resolve"):
             msg = f"{self.__class__} object has no attribute " "'resolve'"
             raise ValueError(msg)
@@ -3355,7 +3442,8 @@ class _EncodingMixin(channels._EncodingMixin):
         columns: Optional[int] = Undefined,
         **kwargs,
     ) -> FacetChart:
-        """Create a facet chart from the current chart.
+        """
+        Create a facet chart from the current chart.
 
         Faceted charts require data to be specified at the top level; if data
         is not specified, the data from the current chart will be used at the
@@ -3415,7 +3503,8 @@ class _EncodingMixin(channels._EncodingMixin):
 class Chart(
     TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin, core.TopLevelUnitSpec
 ):
-    """Create a basic Altair/Vega-Lite chart.
+    """
+    Create a basic Altair/Vega-Lite chart.
 
     Although it is possible to set all Chart properties as constructor attributes,
     it is more idiomatic to use methods such as ``mark_point()``, ``encode()``,
@@ -3503,7 +3592,8 @@ class Chart(
     def from_dict(
         cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
     ) -> _TSchemaBase:
-        """Construct class from a dictionary representation
+        """
+        Construct class from a dictionary representation.
 
         Parameters
         ----------
@@ -3541,7 +3631,8 @@ class Chart(
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
     ) -> dict:
-        """Convert the chart to a dictionary suitable for JSON export
+        """
+        Convert the chart to a dictionary suitable for JSON export.
 
         Parameters
         ----------
@@ -3585,7 +3676,8 @@ class Chart(
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
     ) -> DataFrameLike | None:
-        """Evaluate a Chart's transforms
+        """
+        Evaluate a Chart's transforms.
 
         Evaluate the data transforms associated with a Chart and return the
         transformed data a DataFrame
@@ -3626,7 +3718,8 @@ class Chart(
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -3663,7 +3756,8 @@ def _check_if_valid_subspec(
         "VConcatChart",
     ],
 ) -> None:
-    """Check if the spec is a valid sub-spec.
+    """
+    Check if the spec is a valid sub-spec.
 
     If it is not, then raise a ValueError
     """
@@ -3723,7 +3817,7 @@ def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
 
 
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
-    """A chart repeated across rows and columns with small changes"""
+    """A chart repeated across rows and columns with small changes."""
 
     # Because TopLevelRepeatSpec is defined as a union as of Vega-Lite schema 4.9,
     # we set the arguments explicitly here.
@@ -3786,7 +3880,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
     ) -> DataFrameLike | None:
-        """Evaluate a RepeatChart's transforms
+        """
+        Evaluate a RepeatChart's transforms.
 
         Evaluate the data transforms associated with a RepeatChart and return the
         transformed data a DataFrame
@@ -3809,7 +3904,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -3848,7 +3944,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
 def repeat(
     repeater: Literal["row", "column", "repeat", "layer"] = "repeat",
 ) -> RepeatRef:
-    """Tie a channel to the row or column within a repeated chart
+    """
+    Tie a channel to the row or column within a repeated chart.
 
     The output of this should be passed to the ``field`` attribute of
     a channel.
@@ -3869,7 +3966,7 @@ def repeat(
 
 
 class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
-    """A chart with horizontally-concatenated facets"""
+    """A chart with horizontally-concatenated facets."""
 
     @utils.use_signature(core.TopLevelConcatSpec)
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
@@ -3895,7 +3992,8 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
     ) -> list[DataFrameLike]:
-        """Evaluate a ConcatChart's transforms
+        """
+        Evaluate a ConcatChart's transforms.
 
         Evaluate the data transforms associated with a ConcatChart and return the
         transformed data for each subplot as a list of DataFrames
@@ -3919,7 +4017,8 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -3959,12 +4058,12 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
 
 
 def concat(*charts, **kwargs) -> ConcatChart:
-    """Concatenate charts horizontally"""
+    """Concatenate charts horizontally."""
     return ConcatChart(concat=charts, **kwargs)  # pyright: ignore
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
-    """A chart with horizontally-concatenated facets"""
+    """A chart with horizontally-concatenated facets."""
 
     @utils.use_signature(core.TopLevelHConcatSpec)
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
@@ -3990,7 +4089,8 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
     ) -> list[DataFrameLike]:
-        """Evaluate a HConcatChart's transforms
+        """
+        Evaluate a HConcatChart's transforms.
 
         Evaluate the data transforms associated with a HConcatChart and return the
         transformed data for each subplot as a list of DataFrames
@@ -4014,7 +4114,8 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -4054,12 +4155,12 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
 
 def hconcat(*charts, **kwargs) -> HConcatChart:
-    """Concatenate charts horizontally"""
+    """Concatenate charts horizontally."""
     return HConcatChart(hconcat=charts, **kwargs)  # pyright: ignore
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
-    """A chart with vertically-concatenated facets"""
+    """A chart with vertically-concatenated facets."""
 
     @utils.use_signature(core.TopLevelVConcatSpec)
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
@@ -4087,7 +4188,8 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         row_limit: int | None = None,
         exclude: Iterable[str] | None = None,
     ) -> list[DataFrameLike]:
-        """Evaluate a VConcatChart's transforms
+        """
+        Evaluate a VConcatChart's transforms.
 
         Evaluate the data transforms associated with a VConcatChart and return the
         transformed data for each subplot as a list of DataFrames
@@ -4111,7 +4213,8 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -4151,12 +4254,12 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
 
 def vconcat(*charts, **kwargs) -> VConcatChart:
-    """Concatenate charts vertically"""
+    """Concatenate charts vertically."""
     return VConcatChart(vconcat=charts, **kwargs)  # pyright: ignore
 
 
 class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
-    """A Chart with layers within a single panel"""
+    """A Chart with layers within a single panel."""
 
     @utils.use_signature(core.TopLevelLayerSpec)
     def __init__(self, data=Undefined, layer=(), **kwargs):
@@ -4183,7 +4286,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         row_limit: int | None = None,
         exclude: Iterable[str] | None = None,
     ) -> list[DataFrameLike]:
-        """Evaluate a LayerChart's transforms
+        """
+        Evaluate a LayerChart's transforms.
 
         Evaluate the data transforms associated with a LayerChart and return the
         transformed data for each layer as a list of DataFrames
@@ -4226,7 +4330,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -4268,12 +4373,12 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
 
 def layer(*charts, **kwargs) -> LayerChart:
-    """layer multiple charts"""
+    """Layer multiple charts."""
     return LayerChart(layer=charts, **kwargs)  # pyright: ignore
 
 
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
-    """A Chart with layers within a single panel"""
+    """A Chart with layers within a single panel."""
 
     @utils.use_signature(core.TopLevelFacetSpec)
     def __init__(
@@ -4293,7 +4398,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     def transformed_data(
         self, row_limit: int | None = None, exclude: Iterable[str] | None = None
     ) -> DataFrameLike | None:
-        """Evaluate a FacetChart's transforms
+        """
+        Evaluate a FacetChart's transforms.
 
         Evaluate the data transforms associated with a FacetChart and return the
         transformed data a DataFrame
@@ -4317,7 +4423,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     def interactive(
         self, name: str | None = None, bind_x: bool = True, bind_y: bool = True
     ) -> Self:
-        """Make chart axes scales interactive
+        """
+        Make chart axes scales interactive.
 
         Parameters
         ----------
@@ -4354,7 +4461,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
 
 def topo_feature(url: str, feature: str, **kwargs) -> UrlData:
-    """A convenience function for extracting features from a topojson url
+    """
+    A convenience function for extracting features from a topojson url.
 
     Parameters
     ----------
@@ -4670,8 +4778,10 @@ ChartType = Union[
 
 
 def is_chart_type(obj: Any) -> TypeIs[ChartType]:
-    """Return `True` if the object is an Altair chart. This can be a basic chart
-    but also a repeat, concat, or facet chart.
+    """
+    Return `True` if the object is an Altair chart.
+
+    This can be a basic chart but also a repeat, concat, or facet chart.
     """
     return isinstance(
         obj,

@@ -68,7 +68,7 @@ def generate_handler(html, files=None):
 
 
 def find_open_port(ip, port, n=50):
-    """Find an open port near the specified port"""
+    """Find an open port near the specified port."""
     ports = itertools.chain(
         (port + i for i in range(n)), (port + random.randint(-2 * n, 2 * n))
     )
@@ -93,7 +93,8 @@ def serve(
     open_browser=True,
     http_server=None,
 ) -> None:
-    """Start a server serving the given HTML, and (optionally) open a browser
+    """
+    Start a server serving the given HTML, and (optionally) open a browser.
 
     Parameters
     ----------

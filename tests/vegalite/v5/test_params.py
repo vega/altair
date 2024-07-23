@@ -1,4 +1,4 @@
-"""Tests for variable parameters and selection parameters"""
+"""Tests for variable parameters and selection parameters."""
 
 import pandas as pd
 
@@ -8,6 +8,7 @@ import pytest
 import re
 
 import altair.vegalite.v5 as alt
+from altair.utils.deprecation import AltairDeprecationWarning
 
 
 def test_variable_param():
@@ -82,9 +83,9 @@ def test_selection_deprecation():
         alt.selection_interval()
 
         # this v4 syntax is deprecated
-        with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+        with pytest.warns(AltairDeprecationWarning):
             alt.selection_single()
-        with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+        with pytest.warns(AltairDeprecationWarning):
             alt.selection_multi()
 
         # new syntax
@@ -95,7 +96,7 @@ def test_selection_deprecation():
         # this v4 syntax is deprecated
         brush = alt.selection_interval()
         c = alt.Chart().mark_point()
-        with pytest.warns(alt.utils.deprecation.AltairDeprecationWarning):
+        with pytest.warns(AltairDeprecationWarning):
             c.add_selection(brush)
 
 

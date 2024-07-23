@@ -17,9 +17,7 @@ _here = pathlib.Path(__file__).parent
 
 
 class Params(traitlets.HasTraits):
-    """
-    Traitlet class storing a JupyterChart's params
-    """
+    """Traitlet class storing a JupyterChart's params."""
 
     def __init__(self, trait_values):
         super().__init__()
@@ -47,9 +45,7 @@ class Params(traitlets.HasTraits):
 
 
 class Selections(traitlets.HasTraits):
-    """
-    Traitlet class storing a JupyterChart's selections
-    """
+    """Traitlet class storing a JupyterChart's selections."""
 
     def __init__(self, trait_values):
         super().__init__()
@@ -78,10 +74,7 @@ class Selections(traitlets.HasTraits):
         return f"Selections({self.trait_values()})"
 
     def _make_read_only(self, change):
-        """
-        Work around to make traits read-only, but still allow us to change
-        them internally
-        """
+        """Work around to make traits read-only, but still allow us to change them internally."""
         if change["name"] in self.traits() and change["old"] != change["new"]:
             self._set_value(change["name"], change["old"])
         msg = (
@@ -137,7 +130,7 @@ class JupyterChart(anywidget.AnyWidget):
     @classmethod
     def enable_offline(cls, offline: bool = True):
         """
-        Configure JupyterChart's offline behavior
+        Configure JupyterChart's offline behavior.
 
         Parameters
         ----------
@@ -192,8 +185,7 @@ class JupyterChart(anywidget.AnyWidget):
         **kwargs: Any,
     ):
         """
-        Jupyter Widget for displaying and updating Altair Charts, and
-        retrieving selection and parameter values
+        Jupyter Widget for displaying and updating Altair Charts, and retrieving selection and parameter values.
 
         Parameters
         ----------
@@ -225,10 +217,7 @@ class JupyterChart(anywidget.AnyWidget):
 
     @traitlets.observe("chart")
     def _on_change_chart(self, change):
-        """
-        Internal callback function that updates the JupyterChart's internal
-        state when the wrapped Chart instance changes
-        """
+        """Updates the JupyterChart's internal state when the wrapped Chart instance changes."""
         new_chart = change.new
         selection_watches = []
         selection_types = {}
@@ -360,11 +349,7 @@ class JupyterChart(anywidget.AnyWidget):
 
     @traitlets.observe("_vl_selections")
     def _on_change_selections(self, change):
-        """
-        Internal callback function that updates the JupyterChart's public
-        selections traitlet in response to changes that the JavaScript logic
-        makes to the internal _selections traitlet.
-        """
+        """Updates the JupyterChart's public selections traitlet in response to changes that the JavaScript logic makes to the internal _selections traitlet."""
         for selection_name, selection_dict in change.new.items():
             value = selection_dict["value"]
             store = selection_dict["store"]
@@ -390,7 +375,7 @@ class JupyterChart(anywidget.AnyWidget):
 
 def collect_transform_params(chart: TopLevelSpec) -> set[str]:
     """
-    Collect the names of params that are defined by transforms
+    Collect the names of params that are defined by transforms.
 
     Parameters
     ----------

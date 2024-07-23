@@ -9,9 +9,7 @@ vegalite_compilers = VegaLiteCompilerRegistry(entry_point_group=ENTRY_POINT_GROU
 
 
 def vl_convert_compiler(vegalite_spec: dict) -> dict:
-    """
-    Vega-Lite to Vega compiler that uses vl-convert
-    """
+    """Vega-Lite to Vega compiler that uses vl-convert."""
     from . import SCHEMA_VERSION
 
     vlc = import_vl_convert()

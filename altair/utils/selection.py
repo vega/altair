@@ -11,9 +11,7 @@ Store = NewType("Store", List[Dict[str, Any]])
 @dataclass(frozen=True, eq=True)
 class IndexSelection:
     """
-    An IndexSelection represents the state of an Altair
-    point selection (as constructed by alt.selection_point())
-    when neither the fields nor encodings arguments are specified.
+    Represents the state of an alt.selection_point() when neither the fields nor encodings arguments are specified.
 
     The value field is a list of zero-based indices into the
     selected dataset.
@@ -56,9 +54,7 @@ class IndexSelection:
 @dataclass(frozen=True, eq=True)
 class PointSelection:
     """
-    A PointSelection represents the state of an Altair
-    point selection (as constructed by alt.selection_point())
-    when the fields or encodings arguments are specified.
+    Represents the state of an alt.selection_point() when the fields or encodings arguments are specified.
 
     The value field is a list of dicts of the form:
         [{"dim1": 1, "dim2": "A"}, {"dim1": 2, "dim2": "BB"}]
@@ -97,8 +93,7 @@ class PointSelection:
 @dataclass(frozen=True, eq=True)
 class IntervalSelection:
     """
-    An IntervalSelection represents the state of an Altair
-    interval selection (as constructed by alt.selection_interval()).
+    Represents the state of an alt.selection_interval().
 
     The value field is a dict of the form:
         {"dim1": [0, 10], "dim2": ["A", "BB", "CCC"]}

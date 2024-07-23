@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 
 class MarkMethodMixin:
-    """A mixin class that defines mark methods"""
+    """A mixin class that defines mark methods."""
 
     def mark_arc(
         self,
@@ -141,7 +141,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'arc' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'arc' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -348,7 +348,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'area' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'area' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -555,7 +555,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'bar' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'bar' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -762,7 +762,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'image' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'image' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -969,7 +969,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'line' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'line' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -1176,7 +1176,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'point' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'point' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -1383,7 +1383,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'rect' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'rect' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -1590,7 +1590,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'rule' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'rule' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -1797,7 +1797,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'text' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'text' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -2004,7 +2004,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'tick' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'tick' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -2211,7 +2211,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'trail' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'trail' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -2418,7 +2418,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'circle' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'circle' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -2625,7 +2625,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'square' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'square' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -2832,7 +2832,7 @@ class MarkMethodMixin:
         yOffset: Optional[dict | float | Parameter | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)"""
+        """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)."""
         kwds = dict(
             align=align,
             angle=angle,
@@ -2945,7 +2945,7 @@ class MarkMethodMixin:
         ticks: Optional[bool | dict | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)"""
+        """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)."""
         kwds = dict(
             box=box,
             clip=clip,
@@ -2981,7 +2981,7 @@ class MarkMethodMixin:
         ticks: Optional[bool | dict | SchemaBase] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)"""
+        """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)."""
         kwds = dict(
             clip=clip,
             color=color,
@@ -3014,7 +3014,7 @@ class MarkMethodMixin:
         tension: Optional[float] = Undefined,
         **kwds,
     ) -> Self:
-        """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)"""
+        """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)."""
         kwds = dict(
             band=band,
             borders=borders,
@@ -3036,7 +3036,7 @@ class MarkMethodMixin:
 
 
 class ConfigMethodMixin:
-    """A mixin class that defines config methods"""
+    """A mixin class that defines config methods."""
 
     @use_signature(core.Config)
     def configure(self, *args, **kwargs) -> Self:
