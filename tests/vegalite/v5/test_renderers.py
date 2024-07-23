@@ -1,4 +1,4 @@
-"""Tests of various renderers"""
+"""Tests of various renderers."""
 
 import json
 
@@ -25,7 +25,7 @@ def chart():
 
 
 def test_html_renderer_embed_options(chart, renderer="html"):
-    """Test that embed_options in renderer metadata are correctly manifest in html"""
+    """Test that embed_options in renderer metadata are correctly manifest in html."""
     # Short of parsing the javascript, it's difficult to parse out the
     # actions. So we use string matching
 
@@ -61,7 +61,7 @@ def test_mimetype_renderer_embed_options(chart, renderer="mimetype"):
 
 
 def test_json_renderer_embed_options(chart, renderer="json"):
-    """Test that embed_options in renderer metadata are correctly manifest in html"""
+    """Test that embed_options in renderer metadata are correctly manifest in html."""
     mimetype = "application/json"
     spec = chart.to_dict()
     with alt.renderers.enable(renderer):
@@ -97,7 +97,7 @@ def test_renderer_with_none_embed_options(chart, renderer="mimetype"):
 
 @pytest.mark.filterwarnings("ignore:Deprecated in traitlets 4.1.*:DeprecationWarning")
 def test_jupyter_renderer_mimetype(chart, renderer="jupyter") -> None:
-    """Test that we get the expected widget mimetype when the jupyter renderer is enabled"""
+    """Test that we get the expected widget mimetype when the jupyter renderer is enabled."""
     if not anywidget:
         pytest.skip("anywidget not importable; skipping test")
 

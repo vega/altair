@@ -19,8 +19,7 @@ def write_file_or_filename(
     mode: str = "w",
     encoding: str | None = None,
 ) -> None:
-    """Write content to fp, whether fp is a string, a pathlib Path or a
-    file-like object"""
+    """Write content to fp, whether fp is a string, a pathlib Path or a file-like object."""
     if isinstance(fp, (str, pathlib.Path)):
         with pathlib.Path(fp).open(mode=mode, encoding=encoding) as f:
             f.write(content)
@@ -31,7 +30,7 @@ def write_file_or_filename(
 def set_inspect_format_argument(
     format: str | None, fp: str | Path | IO, inline: bool
 ) -> str:
-    """Inspect the format argument in the save function"""
+    """Inspect the format argument in the save function."""
     if format is None:
         if isinstance(fp, (str, pathlib.Path)):
             format = pathlib.Path(fp).suffix.lstrip(".")
@@ -54,7 +53,7 @@ def set_inspect_mode_argument(
     spec: dict[str, Any],
     vegalite_version: str | None,
 ) -> Literal["vega-lite"]:
-    """Inspect the mode argument in the save function"""
+    """Inspect the mode argument in the save function."""
     if mode is None:
         if "mode" in embed_options:
             mode = embed_options["mode"]
@@ -90,7 +89,8 @@ def save(
     inline: bool = False,
     **kwargs,
 ) -> None:
-    """Save a chart to file in a variety of formats
+    """
+    Save a chart to file in a variety of formats.
 
     Supported formats are [json, html, png, svg, pdf]
 

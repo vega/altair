@@ -3,7 +3,7 @@ import sys
 
 
 class _CatchDisplay:
-    """Class to temporarily catch sys.displayhook"""
+    """Class to temporarily catch sys.displayhook."""
 
     def __init__(self):
         self.output = None
@@ -24,7 +24,7 @@ class _CatchDisplay:
 
 def eval_block(code, namespace=None, filename="<string>"):
     """
-    Execute a multi-line block of code in the given namespace
+    Execute a multi-line block of code in the given namespace.
 
     If the final statement in the code is an expression, return
     the result of the expression.

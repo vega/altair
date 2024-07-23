@@ -1,4 +1,4 @@
-"""Unit tests for altair API"""
+"""Unit tests for altair API."""
 
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ import pandas as pd
 import polars as pl
 
 import altair as alt
+from altair.utils.schemapi import Undefined
 
 try:
     import vl_convert as vlc
@@ -410,7 +411,6 @@ def test_when_then() -> None:
 
 def test_when_then_only(basic_chart) -> None:
     """`Then` is an acceptable encode argument."""
-
     select = alt.selection_point(name="select", on="click")
 
     basic_chart.encode(fillOpacity=alt.when(select).then(alt.value(5))).to_dict()
@@ -435,7 +435,6 @@ def test_when_then_otherwise() -> None:
 
 def test_when_then_when_then_otherwise() -> None:
     """Test for [#3301](https://github.com/vega/altair/issues/3301)."""
-
     data = {
         "values": [
             {"a": "A", "b": 28},
@@ -483,7 +482,7 @@ def test_when_then_when_then_otherwise() -> None:
 
 
 def test_when_multi_channel_param(cars):
-    """Adapted from [2236376458](https://github.com/vega/altair/pull/3427#issuecomment-2236376458)"""
+    """Adapted from [2236376458](https://github.com/vega/altair/pull/3427#issuecomment-2236376458)."""
     brush = alt.selection_interval()
     hover = alt.selection_point(on="pointerover", nearest=True, empty=False)
 
@@ -522,7 +521,8 @@ def test_when_multi_channel_param(cars):
 
 
 def test_when_labels_position_based_on_condition() -> None:
-    """Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+    """
+    Test for [2144026368-1](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
 
     Original [labels-position-based-on-condition](https://altair-viz.github.io/user_guide/marks/text.html#labels-position-based-on-condition)
     """
@@ -575,7 +575,8 @@ def test_when_labels_position_based_on_condition() -> None:
 
 
 def test_when_expressions_inside_parameters() -> None:
-    """Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368)
+    """
+    Test for [2144026368-2](https://github.com/vega/altair/pull/3427#issuecomment-2144026368).
 
     Original [expressions-inside-parameters](https://altair-viz.github.io/user_guide/interactions.html#expressions-inside-parameters)
     """
@@ -1351,14 +1352,14 @@ def test_subcharts_with_same_data(method, data):
     text = point.mark_text()
 
     chart1 = func(point, line, text)
-    assert chart1.data is not alt.Undefined
-    assert all(c.data is alt.Undefined for c in getattr(chart1, method))
+    assert chart1.data is not Undefined
+    assert all(c.data is Undefined for c in getattr(chart1, method))
 
     if method != "concat":
         op = OP_DICT[method]
         chart2 = op(op(point, line), text)
-        assert chart2.data is not alt.Undefined
-        assert all(c.data is alt.Undefined for c in getattr(chart2, method))
+        assert chart2.data is not Undefined
+        assert all(c.data is Undefined for c in getattr(chart2, method))
 
 
 @pytest.mark.parametrize("method", ["layer", "hconcat", "vconcat", "concat"])
@@ -1373,20 +1374,20 @@ def test_subcharts_different_data(method, data):
     nodata = alt.Chart().mark_point().encode(x="x:Q", y="y:Q")
 
     chart1 = func(point, otherdata)
-    assert chart1.data is alt.Undefined
+    assert chart1.data is Undefined
     assert getattr(chart1, method)[0].data is data
 
     chart2 = func(point, nodata)
-    assert chart2.data is alt.Undefined
+    assert chart2.data is Undefined
     assert getattr(chart2, method)[0].data is data
 
 
 def test_layer_facet(basic_chart):
     chart = (basic_chart + basic_chart).facet(row="row:Q")
-    assert chart.data is not alt.Undefined
-    assert chart.spec.data is alt.Undefined
+    assert chart.data is not Undefined
+    assert chart.spec.data is Undefined
     for layer in chart.spec.layer:
-        assert layer.data is alt.Undefined
+        assert layer.data is Undefined
 
     dct = chart.to_dict()
     assert "data" in dct

@@ -88,7 +88,7 @@ def test_abs():
 
 @pytest.mark.parametrize(("veganame", "methodname"), _remap_classmethod_names(expr))
 def test_expr_funcs(veganame: str, methodname: str):
-    """test all functions defined in expr.funcs"""
+    """Test all functions defined in expr.funcs."""
     func = getattr(expr, methodname)
     z = func(datum.xxx)
     assert repr(z) == f"{veganame}(datum.xxx)"
@@ -96,8 +96,7 @@ def test_expr_funcs(veganame: str, methodname: str):
 
 @pytest.mark.parametrize("constname", _get_property_names(_ConstExpressionType))
 def test_expr_consts(constname: str):
-    """Test all constants defined in expr.consts"""
-
+    """Test all constants defined in expr.consts."""
     const = getattr(expr, constname)
     z = const * datum.xxx
     assert repr(z) == f"({constname} * datum.xxx)"
@@ -117,7 +116,7 @@ def test_expr_consts_immutable(constname: str):
 
 
 def test_json_reprs():
-    """Test JSON representations of special values"""
+    """Test JSON representations of special values."""
     assert repr(datum.xxx == None) == "(datum.xxx === null)"  # noqa: E711
     assert repr(datum.xxx == False) == "(datum.xxx === false)"  # noqa: E712
     assert repr(datum.xxx == True) == "(datum.xxx === true)"  # noqa: E712

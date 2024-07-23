@@ -14,7 +14,7 @@ def create_thumbnail(
     thumb_filename: Path,
     window_size: tuple[float, float] = (280, 160),
 ) -> None:
-    """Create a thumbnail whose shortest dimension matches the window"""
+    """Create a thumbnail whose shortest dimension matches the window."""
     from PIL import Image
 
     im = Image.open(image_filename)
@@ -37,7 +37,7 @@ def create_thumbnail(
 def create_generic_image(
     filename: Path, shape: tuple[float, float] = (200, 300), gradient: bool = True
 ) -> None:
-    """Create a generic image"""
+    """Create a generic image."""
     from PIL import Image
     import numpy as np
 
@@ -59,7 +59,8 @@ Example script with invalid Python syntax
 
 
 def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
-    """Parse source file into AST node
+    """
+    Parse source file into AST node.
 
     Parameters
     ----------
@@ -88,7 +89,8 @@ def _parse_source_file(filename: str) -> tuple[ast.Module | None, str]:
 
 
 def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
-    """Separate ``filename`` content between docstring and the rest
+    """
+    Separate ``filename`` content between docstring and the rest.
 
     Strongly inspired from ast.get_docstring.
 
@@ -190,14 +192,14 @@ def get_docstring_and_rest(filename: str) -> tuple[str, str | None, str, int]:
 def prev_this_next(
     it: list[dict[str, Any]], sentinel: None = None
 ) -> zip[tuple[dict[str, Any] | None, dict[str, Any], dict[str, Any] | None]]:
-    """Utility to return (prev, this, next) tuples from an iterator"""
+    """Utility to return (prev, this, next) tuples from an iterator."""
     i1, i2, i3 = itertools.tee(it, 3)
     next(i3, None)
     return zip(itertools.chain([sentinel], i1), i2, itertools.chain(i3, [sentinel]))
 
 
 def dict_hash(dct: dict[Any, Any]) -> Any:
-    """Return a hash of the contents of a dictionary"""
+    """Return a hash of the contents of a dictionary."""
     serialized = json.dumps(dct, sort_keys=True)
 
     try:

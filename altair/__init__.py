@@ -653,7 +653,7 @@ from altair.vegalite import *
 from altair.vegalite.v5.schema.core import Dict
 from altair.jupyter import JupyterChart
 from altair.expr import expr
-from altair.utils import AltairDeprecationWarning
+from altair.utils import AltairDeprecationWarning, parse_shorthand, Optional, Undefined
 
 
 def load_ipython_extension(ipython):

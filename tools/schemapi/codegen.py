@@ -1,4 +1,4 @@
-"""Code generation utilities"""
+"""Code generation utilities."""
 
 from __future__ import annotations
 import re
@@ -16,7 +16,7 @@ from .utils import (
 
 
 class CodeSnippet:
-    """Object whose repr() is a string of code"""
+    """Object whose repr() is a string of code."""
 
     def __init__(self, code: str):
         self.code = code
@@ -35,7 +35,7 @@ class ArgInfo:
 
 
 def get_args(info: SchemaInfo) -> ArgInfo:
-    """Return the list of args & kwds for building the __init__ function"""
+    """Return the list of args & kwds for building the __init__ function."""
     # TODO: - set additional properties correctly
     #       - handle patternProperties etc.
     required: set[str] = set()
@@ -83,7 +83,8 @@ def get_args(info: SchemaInfo) -> ArgInfo:
 
 
 class SchemaGenerator:
-    """Class that defines methods for generating code from schemas
+    """
+    Class that defines methods for generating code from schemas.
 
     Parameters
     ----------
@@ -159,7 +160,7 @@ class SchemaGenerator:
         return [child.refname for child in info.anyOf if child.is_reference()]
 
     def schema_class(self) -> str:
-        """Generate code for a schema class"""
+        """Generate code for a schema class."""
         rootschema: dict = (
             self.rootschema if self.rootschema is not None else self.schema
         )
@@ -197,18 +198,22 @@ class SchemaGenerator:
 
     def docstring(self, indent: int = 0) -> str:
         info = self.info
-        doc = [
-            f"{self.classname} schema wrapper",
-        ]
+        # https://numpydoc.readthedocs.io/en/latest/format.html#short-summary
+        doc = [f"{self.classname} schema wrapper"]
         if info.description:
-            doc += self._process_description(  # remove condition description
-                re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
-            ).splitlines()
-        # Remove lines which contain the "raw-html" directive which cannot be processed
-        # by Sphinx at this level of the docstring. It works for descriptions
-        # of attributes which is why we do not do the same below. The removed
-        # lines are anyway non-descriptive for a user.
-        doc = [line for line in doc if ":raw-html:" not in line]
+            # https://numpydoc.readthedocs.io/en/latest/format.html#extended-summary
+            # Remove condition from description
+            desc: str = re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
+            ext_summary: list[str] = self._process_description(desc).splitlines()
+            # Remove lines which contain the "raw-html" directive which cannot be processed
+            # by Sphinx at this level of the docstring. It works for descriptions
+            # of attributes which is why we do not do the same below. The removed
+            # lines are anyway non-descriptive for a user.
+            ext_summary = [line for line in ext_summary if ":raw-html:" not in line]
+            # Only add an extended summary if the above did not result in an empty list.
+            if ext_summary:
+                doc.append("")
+                doc.extend(ext_summary)
 
         if info.properties:
             arg_info = self.arg_info
@@ -233,7 +238,7 @@ class SchemaGenerator:
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent: int = 0) -> str:
-        """Return code suitable for the __init__ function of a Schema class"""
+        """Return code suitable for the __init__ function of a Schema class."""
         args, super_args = self.init_args()
 
         initfunc = self.init_template.format(
@@ -376,7 +381,7 @@ class SchemaGenerator:
         return list(flatten(signatures))
 
     def method_code(self, indent: int = 0) -> str | None:
-        """Return code to assist setter methods"""
+        """Return code to assist setter methods."""
         if not self.haspropsetters:
             return None
         args = self.init_kwds

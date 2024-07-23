@@ -1,6 +1,4 @@
-"""
-Test http server
-"""
+"""Test http server."""
 
 from altair.utils.server import serve, MockServer
 
