@@ -67,7 +67,7 @@ all = [
 dev = [
     "hatch",
     "ruff>=0.5.3",
-    "ibis-framework",
+    "ibis-framework[polars]",
     "ipython",
     "pandas>=0.25.3",
     "pytest",
