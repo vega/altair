@@ -8,7 +8,6 @@ import jsonschema
 import jsonschema.exceptions
 import pickle
 import warnings
-from typing import Any, Iterable
 from collections import deque
 from functools import partial
 
@@ -973,17 +972,17 @@ def test_to_dict_expand_mark_spec():
         np.array,
     ],
 )
-def test_to_dict_iterables(tp: type[Iterable[Any]], expected: Iterable[Any]) -> None:
+def test_to_dict_iterables(tp, expected) -> None:
     x_dict = alt.X("x:N", sort=tp(expected)).to_dict()
-    actual = x_dict["sort"]
+    actual = x_dict["sort"]  # type: ignore
     assert actual == expected
 
 
 @pytest.mark.parametrize(
     "tp", [range, np.arange, partial(pl.int_range, eager=True), pd.RangeIndex]
 )
-def test_to_dict_range(tp: Any) -> None:
+def test_to_dict_range(tp) -> None:
     expected = [0, 1, 2, 3, 4]
     x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
-    actual = x_dict["sort"]
+    actual = x_dict["sort"]  # type: ignore
     assert actual == expected
