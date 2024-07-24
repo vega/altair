@@ -1147,9 +1147,40 @@ def when(
 
     Examples
     --------
-    Using keyword-argument ``constraints`` can simplify compositions like::
+    Setting up a common chart::
 
         import altair as alt
+        from vega_datasets import data
+
+        source = data.cars()
+        brush = alt.selection_interval()
+        points = (
+            alt.Chart(source)
+            .mark_point()
+            .encode(x="Horsepower", y="Miles_per_Gallon")
+            .add_params(brush)
+        )
+        points
+
+    Basic ``if-then-else`` conditions translate directly to ``when-then-otherwise``::
+
+        points.encode(color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray"))
+
+    Omitting the ``.otherwise()`` clause will use the channel default instead::
+
+        points.encode(color=alt.when(brush).then("Origin"))
+
+    Predicates passed as positional arguments will be reduced with ``&``::
+
+        points.encode(
+            color=alt.when(
+                brush, (alt.datum.Miles_per_Gallon >= 30) | (alt.datum.Horsepower >= 130)
+            )
+            .then("Origin")
+            .otherwise(alt.value("lightgray"))
+        )
+
+    Using keyword-argument ``constraints`` can simplify compositions like::
 
         verbose_composition = (
             (alt.datum.Name == "Name_1")
