@@ -1,4 +1,5 @@
 # ruff: noqa: W291
+from __future__ import annotations
 import copy
 import io
 import inspect
@@ -7,11 +8,15 @@ import jsonschema
 import jsonschema.exceptions
 import pickle
 import warnings
+from typing import Any, Iterable
+from collections import deque
+from functools import partial
 
 import numpy as np
 import pandas as pd
 import pytest
 from vega_datasets import data
+import polars as pl
 
 import altair as alt
 from altair import load_schema
@@ -948,3 +953,37 @@ def test_to_dict_expand_mark_spec():
     chart = alt.Chart().mark_bar()
     assert chart.to_dict()["mark"] == {"type": "bar"}
     assert chart.mark == "bar"
+
+
+@pytest.mark.parametrize(
+    "expected",
+    [list("cdfabe"), [0, 3, 4, 5, 8]],
+)
+@pytest.mark.parametrize(
+    "tp",
+    [
+        tuple,
+        list,
+        deque,
+        pl.Series,
+        pd.Series,
+        pd.Index,
+        pd.Categorical,
+        pd.CategoricalIndex,
+        np.array,
+    ],
+)
+def test_to_dict_iterables(tp: type[Iterable[Any]], expected: Iterable[Any]) -> None:
+    x_dict = alt.X("x:N", sort=tp(expected)).to_dict()
+    actual = x_dict["sort"]
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    "tp", [range, np.arange, partial(pl.int_range, eager=True), pd.RangeIndex]
+)
+def test_to_dict_range(tp: Any) -> None:
+    expected = [0, 1, 2, 3, 4]
+    x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
+    actual = x_dict["sort"]
+    assert actual == expected
