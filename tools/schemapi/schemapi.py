@@ -517,7 +517,11 @@ def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) 
             for k, v in obj.items()
             if v is not Undefined
         }
-    elif hasattr(obj, "to_dict"):
+    elif (
+        hasattr(obj, "to_dict")
+        and (module_name := obj.__module__)
+        and module_name.startswith("altair")
+    ):
         return obj.to_dict()
     elif pd_opt is not None and isinstance(obj, pd_opt.Timestamp):
         return pd_opt.Timestamp(obj).isoformat()
