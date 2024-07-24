@@ -1074,6 +1074,26 @@ class ChainedWhen(_BaseWhen):
         Returns
         -------
         :class:`Then`
+
+        Examples
+        --------
+        Multiple conditions with an implicit default::
+
+            import altair as alt
+            from vega_datasets import data
+
+            source = data.movies()
+            predicate = (alt.datum.IMDB_Rating == None) | (alt.datum.Rotten_Tomatoes_Rating == None)
+            color = (
+                alt.when(predicate)
+                .then(alt.value("grey"))
+                .when(alt.datum.IMDB_Votes < 5000)
+                .then(alt.value("lightblue"))
+            )
+
+            alt.Chart(source).mark_point(invalid=None).encode(
+                x="IMDB_Rating:Q", y="Rotten_Tomatoes_Rating:Q", color=color
+            )
         """
         condition = self._when_then(statement, kwds)
         conditions = self._conditions.copy()
