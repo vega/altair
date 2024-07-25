@@ -9,9 +9,9 @@ To ensure future releases clearly communicate changes, Vega-Altair will be worki
 
 A Vega-Altair release number is composed of ``MAJOR.MINOR.PATCH``.
 
-* Backward incompatible API changes increment **MAJOR** version (`4.2.2` - `5.0.0`)
-* New backward compatible functionality increment **MINOR** version (`5.2.0` - `5.3.0`)
-* Backward compatible bug fixes increment **PATCH** version (`5.1.1` - `5.1.2`)
+* Backward incompatible API changes increment **MAJOR** version (``4.2.2`` - ``5.0.0``)
+* New backward compatible functionality increment **MINOR** version (``5.2.0`` - ``5.3.0``)
+* Backward compatible bug fixes increment **PATCH** version (``5.1.1`` - ``5.1.2``)
 
 **MAJOR** versions will *likely* continue to increase with a **MAJOR** increment to Vega-Lite_.
 
