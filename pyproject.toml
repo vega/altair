@@ -305,6 +305,8 @@ select = [
     "D",
     # multi-line-summary-second-line
     "D213",
+    # numpy-specific-rules
+    "NPY",
 ]
 ignore = [  
     # Whitespace before ':'
