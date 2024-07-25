@@ -827,9 +827,7 @@ the locale for your chart using the global ``alt.renderers.set_embed_options`` f
    :output: none
 
    import altair as alt
-   alt.renderers.set_embed_options(
-       format_locale=format_locale, time_format_locale=time_format_locale
-   )
+   alt.renderers.set_embed_options(format_locale=None, time_format_locale=None)
 
 Here ``format_locale`` and ``time_format_locale`` may either be D3 format dictionaries,
 or strings with the names of pre-defined locales. For example, here we use the
