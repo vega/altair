@@ -18,5 +18,19 @@ A Vega-Altair release number is composed of ``MAJOR.MINOR.PATCH``.
 
 **MAJOR** versions will *likely* continue to increase with a **MAJOR** increment to Vega-Lite_.
 
+Deprecation
+-----------
+Deprecation warnings may be introduced in **MAJOR** and **MINOR** versions, 
+but the removal of deprecated functionality will not occur until *at least* the next **MAJOR** version.
+
+Starting in version ``5.4.0``, all deprecation warnings *must* specify:
+
+* the version number they were introduced
+
+Where possible, deprecation warnings *may* specify:
+
+* an alternative function/method/parameter/class to use instead
+* an explanation for why this change had to be made
+
 .. _Vega-Lite: https://github.com/vega/vega-lite
 .. _SemVer: https://semver.org/
