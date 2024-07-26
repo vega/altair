@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from altair.vegalite.v5.schema._typing import AggregateOp_T
 
 
-def test_fail_shorthand() -> None:
+def test_agg_type_invalid() -> None:
     with pytest.raises(
         TypeError, match=re.compile(r"'bogus'.+Try.+'quantitative'", re.DOTALL)
     ):
@@ -69,7 +69,7 @@ def test_fail_shorthand() -> None:
         "exponentialb",
     ],
 )
-def test_passing_shorthand(
+def test_agg_methods(
     method_name: AggregateOp_T, col_name: str | None, enc_type: EncodeType
 ):
     actual = getattr(agg, method_name)(col_name, enc_type)
@@ -81,21 +81,22 @@ def test_passing_shorthand(
         assert actual["type"] == INV_TYPECODE_MAP.get(enc_type, enc_type)
 
 
-def test_fail_one_of() -> None:
+def test_field_one_of_covariant() -> None:
     with pytest.raises(TypeError, match=re.compile(r"Expected.+same type", re.DOTALL)):
-        field.one_of("field 1", 5, 6, 7, "nineteen", 8000.4)  # type: ignore[arg-type]
+        field.one_of("field 1", 5, 6, 7, "nineteen", 8000.4)
 
 
-def test_examples_field() -> None:
-    print(field("Origin"))
+def test_field_one_of_variadic():
+    args = "A", "B", "C", "D", "E"
+    assert field.one_of("field_1", *args) == field.one_of("field_1", args)
 
 
-def test_compose_field():
+def test_field_wrap():
     comp = field.eq("field 1", 10)
     assert isinstance(comp, alt.SelectionPredicateComposition)
 
 
-def test_compose_predicates():
+def test_field_compose():
     from vega_datasets import data
 
     cars_select = field.one_of("Origin", "Japan", "Europe") | field.range(
