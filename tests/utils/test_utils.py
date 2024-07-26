@@ -30,7 +30,8 @@ def test_infer_vegalite_type():
     _check(pd.date_range("2012", "2013"), "temporal")
     _check(pd.timedelta_range(365, periods=12), "temporal")
 
-    nulled = pd.Series(np.random.randint(10, size=10))
+    rng = np.random.default_rng()
+    nulled = pd.Series(rng.integers(10, size=10))
     nulled[0] = None
     _check(nulled, "quantitative")
     _check(["a", "b", "c"], "nominal")
