@@ -12,7 +12,7 @@ The rest are to define aliases only.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, Literal, Sequence, Union
+from typing import TYPE_CHECKING, Any, Dict, Literal, Mapping, Sequence, Union
 
 from typing_extensions import TypeAlias
 
@@ -91,6 +91,38 @@ def _parse_aggregate(
 
 def _wrap_composition(predicate: Predicate, /) -> SelectionPredicateComposition:
     return SelectionPredicateComposition(predicate.to_dict())
+
+
+def _one_of_flatten(
+    values: tuple[OneOfType, ...] | tuple[Sequence[OneOfType]] | tuple[Any, ...], /
+) -> Sequence[OneOfType]:
+    if (
+        len(values) == 1
+        and not isinstance(values[0], (str, bool, float, int, Mapping, SchemaBase))
+        and isinstance(values[0], Sequence)
+    ):
+        return values[0]
+    elif len(values) > 1:
+        return values
+    else:
+        msg = (
+            f"Expected `values` to be either a single `Sequence` "
+            f"or used variadically, but got: {values!r}."
+        )
+        raise TypeError(msg)
+
+
+def _one_of_variance(val_1: Any, *rest: OneOfType) -> Sequence[Any]:
+    # Required that all elements are the same type
+    tp = type(val_1)
+    if all(isinstance(v, tp) for v in rest):
+        return (val_1, *rest)
+    else:
+        msg = (
+            f"Expected all `values` to be of the same type, but got:\n"
+            f"{tuple(f'{type(v).__name__}' for v in (val_1, *rest))!r}"
+        )
+        raise TypeError(msg)
 
 
 class agg:
@@ -279,19 +311,16 @@ class field:
 
     @classmethod
     def one_of(
-        cls, field: str, /, *values: OneOfType, timeUnit: TimeUnitType = Undefined
+        cls,
+        field: str,
+        /,
+        *values: OneOfType | Sequence[OneOfType],
+        timeUnit: TimeUnitType = Undefined,
     ) -> SelectionPredicateComposition:
-        tp: type[Any] = type(values[0])
-        if all(isinstance(v, tp) for v in values):
-            vals: Sequence[Any] = values
-            p = FieldOneOfPredicate(field=field, oneOf=vals, timeUnit=timeUnit)
-            return _wrap_composition(p)
-        else:
-            msg = (
-                f"Expected all `values` to be of the same type, but got:\n"
-                f"{tuple(f"{type(v).__name__}" for v in values)!r}"
-            )
-            raise TypeError(msg)
+        seq = _one_of_flatten(values)
+        one_of = _one_of_variance(*seq)
+        p = FieldOneOfPredicate(field=field, oneOf=one_of, timeUnit=timeUnit)
+        return _wrap_composition(p)
 
     @classmethod
     def eq(
