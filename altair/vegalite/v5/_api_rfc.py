@@ -93,7 +93,8 @@ def _wrap_composition(predicate: Predicate, /) -> SelectionPredicateComposition:
 
 
 class agg:
-    """Utility class providing autocomplete for shorthand.
+    """
+    Utility class providing autocomplete for shorthand.
 
     Functional alternative to shorthand mini-language.
     """
@@ -255,7 +256,8 @@ class agg:
 
 
 class field:
-    """Utility class for field predicates and shorthand parsing.
+    """
+    Utility class for field predicates and shorthand parsing.
 
     Examples
     --------
