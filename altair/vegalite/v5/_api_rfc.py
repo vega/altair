@@ -54,6 +54,7 @@ RangeType: TypeAlias = Union[
     Sequence[Union[Dict[str, Any], None, float, Parameter, SchemaBase]],
 ]
 ValueType: TypeAlias = Union[str, bool, float, Dict[str, Any], Parameter, SchemaBase]
+OneOfType: TypeAlias = Union[str, bool, float, Dict[str, Any], SchemaBase]
 
 
 _ENCODINGS = frozenset(
@@ -278,11 +279,7 @@ class field:
 
     @classmethod
     def one_of(
-        cls,
-        field: str,
-        /,
-        *values: str | bool | float | dict[str, Any] | SchemaBase,
-        timeUnit: TimeUnitType = Undefined,
+        cls, field: str, /, *values: OneOfType, timeUnit: TimeUnitType = Undefined
     ) -> SelectionPredicateComposition:
         tp: type[Any] = type(values[0])
         if all(isinstance(v, tp) for v in values):
