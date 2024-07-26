@@ -803,6 +803,9 @@ class When(_BaseWhen):
     def __init__(self, condition: _ConditionType, /) -> None:
         self._condition = condition
 
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self._condition!r})"
+
     @overload
     def then(self, statement: str, /, **kwds: Any) -> Then[_Condition]: ...
     @overload
@@ -1056,6 +1059,13 @@ class ChainedWhen(_BaseWhen):
     ) -> None:
         self._condition = condition
         self._conditions = conditions
+
+    def __repr__(self) -> str:
+        return (
+            f"{type(self).__name__}(\n"
+            f"  {self._conditions!r},\n  {self._condition!r}\n"
+            ")"
+        )
 
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
         """
