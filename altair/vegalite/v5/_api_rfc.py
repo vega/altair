@@ -281,7 +281,7 @@ class field:
         cls,
         field: str,
         /,
-        *values: bool | float | dict[str, Any] | SchemaBase,
+        *values: str | bool | float | dict[str, Any] | SchemaBase,
         timeUnit: TimeUnitType = Undefined,
     ) -> SelectionPredicateComposition:
         tp: type[Any] = type(values[0])
