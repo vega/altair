@@ -797,7 +797,7 @@ class When(_BaseWhen):
 
     References
     ----------
-    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
     def __init__(self, condition: _ConditionType, /) -> None:
@@ -865,7 +865,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
 
     References
     ----------
-    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
     _schema = {"type": "object"}
@@ -1045,7 +1045,7 @@ class ChainedWhen(_BaseWhen):
 
     References
     ----------
-    `polars.expr.whenthen <https://github.com/pola-rs/polars/blob/b85c5e0502ca99c77742ee25ba177e6cd11cf100/py-polars/polars/expr/whenthen.py>`__
+    `polars.when <https://docs.pola.rs/py-polars/html/reference/expressions/api/polars.when.html>`__
     """
 
     def __init__(
