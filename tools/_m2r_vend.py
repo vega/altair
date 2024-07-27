@@ -30,11 +30,6 @@ if TYPE_CHECKING:
     from re import Match, Pattern, RegexFlag
 
 __version__ = "0.3.1"
-prolog = """\
-.. role:: raw-html-m2r(raw)
-   :format: html
-
-"""
 _flags: RegexFlag = re.DOTALL | re.MULTILINE
 
 
@@ -487,14 +482,10 @@ class M2R(mistune.Markdown):
         return self.renderer.rest_code_block()
 
     def post_process(self, text: str) -> str:
-        output = (
+        return (
             text.replace("\\ \n", "\n")
             .replace("\n\\ ", "\n")
             .replace(" \\ ", " ")
             .replace("\\  ", " ")
             .replace("\\ .", ".")
         )
-        if self.renderer._include_raw_html:
-            return prolog + output
-        else:
-            return output

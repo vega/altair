@@ -25,11 +25,6 @@ from tools.schemapi.utils import (
 )
 from tools._m2r_vend import M2R
 
-m2r_prolog = """\
-.. role:: raw-html-m2r(raw)
-   :format: html
-
-"""
 
 SCHEMA_VERSION: Final = "v5.19.0"
 
@@ -284,7 +279,6 @@ def process_description(description: str) -> str:
     )  # remove formatting from links
     # TODO: REPLACE m2r.convert()
     description = M2R()(description)
-    description = description.replace(m2r_prolog, "")
     description = description.replace(":raw-html-m2r:", ":raw-html:")
     description = description.replace(r"\ ,", ",")
     description = description.replace(r"\ ", " ")
