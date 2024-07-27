@@ -9,9 +9,15 @@ import textwrap
 import urllib
 from typing import Any, Final, Iterable, TYPE_CHECKING, Iterator, Sequence
 from operator import itemgetter
+from html import unescape
+
+import mistune
+from mistune.renderers.rst import RSTRenderer as _RSTRenderer
+
 from tools.schemapi.schemapi import _resolve_references as resolve_references
 
 if TYPE_CHECKING:
+    from mistune import BlockState
     from typing_extensions import LiteralString
     from pathlib import Path
 
@@ -650,6 +656,33 @@ class SchemaInfo:
         E.g. `BinnedTimeUnit`
         """
         return self.is_union() and all(el.is_enum() for el in self.anyOf)
+
+
+class RSTRenderer(_RSTRenderer):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def inline_html(self, token: dict[str, Any], state: BlockState) -> str:
+        html = token["raw"]
+        return rf"\ :raw-html:`{html}`\ "
+
+
+class RSTParse(mistune.Markdown):
+    def __init__(
+        self,
+        renderer: mistune.BaseRenderer,
+        block: mistune.BlockParser | None = None,
+        inline: mistune.InlineParser | None = None,
+        plugins=None,
+    ) -> None:
+        super().__init__(renderer, block, inline, plugins)
+
+    def __call__(self, s: str) -> str:
+        s = super().__call__(s)
+        return unescape(s).replace(r"\ ,", ",").replace(r"\ ", " ")
+
+
+rst_parse: RSTParse = RSTParse(RSTRenderer())
 
 
 def indent_docstring(
