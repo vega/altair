@@ -24,7 +24,6 @@ import mistune
 from urllib.parse import urlparse
 
 __version__ = "0.3.1"
-_is_sphinx = False
 prolog = """\
 .. role:: raw-html-m2r(raw)
    :format: html
@@ -209,8 +208,6 @@ class RestRenderer(mistune.Renderer):
             first_line = "\n.. math::\n\n"
         elif lang:
             first_line = f"\n.. code-block:: {lang}\n\n"
-        elif _is_sphinx:
-            first_line = "\n::\n\n"
         else:
             first_line = "\n.. code-block::\n\n"
         return first_line + self._indent_block(code) + "\n"
