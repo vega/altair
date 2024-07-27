@@ -823,12 +823,6 @@ The preferred format of numbers, dates, and currencies varies by language and lo
 Vega-Altair takes advantage of `D3's localization support`_ to make it easy to configure
 the locale for your chart using the global ``alt.renderers.set_embed_options`` function.
 
-.. altair-plot::
-   :output: none
-
-   import altair as alt
-   alt.renderers.set_embed_options(format_locale=None, time_format_locale=None)
-
 Here ``format_locale`` and ``time_format_locale`` may either be D3 format dictionaries,
 or strings with the names of pre-defined locales. For example, here we use the
 Italian locale (named ``it-IT``) for both currencies and dates:
