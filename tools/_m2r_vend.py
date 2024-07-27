@@ -15,13 +15,19 @@ Lib/site-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
 ```
 """
 
+from __future__ import annotations
+
 import os
 import os.path
 import re
-
-from docutils.utils import column_width
-import mistune
+from typing import TYPE_CHECKING, Any
 from urllib.parse import urlparse
+
+import mistune
+from docutils.utils import column_width
+
+if TYPE_CHECKING:
+    from re import Match, Pattern, RegexFlag
 
 __version__ = "0.3.1"
 prolog = """\
@@ -29,61 +35,68 @@ prolog = """\
    :format: html
 
 """
+_flags: RegexFlag = re.DOTALL | re.MULTILINE
 
 
 class RestBlockGrammar(mistune.BlockGrammar):
-    directive = re.compile(r"^( *\.\..*?)\n(?=\S)", re.DOTALL | re.MULTILINE)
-    oneline_directive = re.compile(r"^( *\.\..*?)$", re.DOTALL | re.MULTILINE)
-    rest_code_block = re.compile(r"^::\s*$", re.DOTALL | re.MULTILINE)
+    directive: Pattern[str] = re.compile(r"^( *\.\..*?)\n(?=\S)", _flags)
+    oneline_directive: Pattern[str] = re.compile(r"^( *\.\..*?)$", _flags)
+    rest_code_block: Pattern[str] = re.compile(r"^::\s*$", _flags)
 
 
 class RestBlockLexer(mistune.BlockLexer):
-    grammar_class = RestBlockGrammar
-    default_rules = [
+    grammar_class: type[RestBlockGrammar] = RestBlockGrammar
+    default_rules: list[str] = [
         "directive",
         "oneline_directive",
         "rest_code_block",
         *mistune.BlockLexer.default_rules,
     ]
 
-    def parse_directive(self, m):
+    def parse_directive(self, m: Match[str]) -> None:
         self.tokens.append({"type": "directive", "text": m.group(1)})
 
-    def parse_oneline_directive(self, m):
+    def parse_oneline_directive(self, m: Match[str]) -> None:
         # reuse directive output
         self.tokens.append({"type": "directive", "text": m.group(1)})
 
-    def parse_rest_code_block(self, m):
+    def parse_rest_code_block(self, m: Match[str]) -> None:
         self.tokens.append({"type": "rest_code_block"})
 
 
 class RestInlineGrammar(mistune.InlineGrammar):
-    image_link = re.compile(
+    image_link: Pattern[str] = re.compile(
         r"\[!\[(?P<alt>.*?)\]\((?P<url>.*?)\).*?\]\((?P<target>.*?)\)"
     )
-    rest_role = re.compile(r":.*?:`.*?`|`[^`]+`:.*?:")
-    rest_link = re.compile(r"`[^`]*?`_")
-    inline_math = re.compile(r"`\$(.*)?\$`")
-    eol_literal_marker = re.compile(r"(\s+)?::\s*$")
+    rest_role: Pattern[str] = re.compile(r":.*?:`.*?`|`[^`]+`:.*?:")
+    rest_link: Pattern[str] = re.compile(r"`[^`]*?`_")
+    inline_math: Pattern[str] = re.compile(r"`\$(.*)?\$`")
+    eol_literal_marker: Pattern[str] = re.compile(r"(\s+)?::\s*$")
     # add colon and space as special text
-    text = re.compile(r"^[\s\S]+?(?=[\\<!\[:_*`~ ]|https?://| {2,}\n|$)")
+    text: Pattern[str] = re.compile(r"^[\s\S]+?(?=[\\<!\[:_*`~ ]|https?://| {2,}\n|$)")
     # __word__ or **word**
-    double_emphasis = re.compile(r"^([_*]){2}(?P<text>[\s\S]+?)\1{2}(?!\1)")
+    double_emphasis: Pattern[str] = re.compile(
+        r"^([_*]){2}(?P<text>[\s\S]+?)\1{2}(?!\1)"
+    )
     # _word_ or *word*
-    emphasis = re.compile(
+    emphasis: Pattern[str] = re.compile(
         r"^\b_((?:__|[^_])+?)_\b" r"|" r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)"
     )
 
-    def no_underscore_emphasis(self):
+    def no_underscore_emphasis(self) -> None:
         # **word**
-        self.double_emphasis = re.compile(r"^\*{2}(?P<text>[\s\S]+?)\*{2}(?!\*)")
+        self.double_emphasis: Pattern[str] = re.compile(
+            r"^\*{2}(?P<text>[\s\S]+?)\*{2}(?!\*)"
+        )
         # *word*
-        self.emphasis = re.compile(r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)")
+        self.emphasis: Pattern[str] = re.compile(
+            r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)"
+        )
 
 
 class RestInlineLexer(mistune.InlineLexer):
-    grammar_class = RestInlineGrammar
-    default_rules = [
+    grammar_class: type[RestInlineGrammar] = RestInlineGrammar
+    default_rules: list[str] = [
         "image_link",
         "rest_role",
         "rest_link",
@@ -97,8 +110,9 @@ class RestInlineLexer(mistune.InlineLexer):
         disable_inline_math: bool = False,
         no_underscore_emphasis: bool = False,
         **kwargs,
-    ):
+    ) -> None:
         super().__init__(*args, **kwargs)
+        self.renderer: RestRenderer
         if no_underscore_emphasis:
             self.rules.no_underscore_emphasis()
         inline_maths = "inline_math" in self.default_rules
@@ -108,46 +122,46 @@ class RestInlineLexer(mistune.InlineLexer):
         elif not inline_maths:
             self.default_rules.insert(0, "inline_math")
 
-    def output_double_emphasis(self, m):
+    def output_double_emphasis(self, m: Match[str]) -> str:
         # may include code span
         text = self.output(m.group("text"))
         return self.renderer.double_emphasis(text)
 
-    def output_emphasis(self, m):
+    def output_emphasis(self, m: Match[str]) -> str:
         # may include code span
         text = self.output(m.group("text") or m.group(1))
         return self.renderer.emphasis(text)
 
-    def output_image_link(self, m):
+    def output_image_link(self, m: Match[str]) -> str:
         """Pass through rest role."""
         return self.renderer.image_link(
             m.group("url"), m.group("target"), m.group("alt")
         )
 
-    def output_rest_role(self, m):
+    def output_rest_role(self, m: Match[str]) -> str:
         """Pass through rest role."""
         return self.renderer.rest_role(m.group(0))
 
-    def output_rest_link(self, m):
+    def output_rest_link(self, m: Match[str]) -> str:
         """Pass through rest link."""
         return self.renderer.rest_link(m.group(0))
 
-    def output_inline_math(self, m):
+    def output_inline_math(self, m: Match[str]) -> str:
         """Pass through rest link."""
         return self.renderer.inline_math(m.group(1))
 
-    def output_eol_literal_marker(self, m):
+    def output_eol_literal_marker(self, m: Match[str]) -> str:
         """Pass through rest link."""
         marker = ":" if m.group(1) is None else ""
         return self.renderer.eol_literal_marker(marker)
 
 
 class RestRenderer(mistune.Renderer):
-    _include_raw_html = False
-    list_indent_re = re.compile(r"^(\s*(#\.|\*)\s)")
-    indent = " " * 3
-    list_marker = "{#__rest_list_mark__#}"
-    hmarks = {1: "=", 2: "-", 3: "^", 4: "~", 5: '"', 6: "#"}
+    _include_raw_html: bool = False
+    list_indent_re: Pattern[str] = re.compile(r"^(\s*(#\.|\*)\s)")
+    indent: str = " " * 3
+    list_marker: str = "{#__rest_list_mark__#}"
+    hmarks: dict[int, str] = {1: "=", 2: "-", 3: "^", 4: "~", 5: '"', 6: "#"}
 
     def __init__(
         self,
@@ -155,21 +169,21 @@ class RestRenderer(mistune.Renderer):
         anonymous_references: bool = False,
         parse_relative_links: bool = False,
         **kwargs,
-    ):
-        self.anonymous_references = anonymous_references
-        self.parse_relative_links = parse_relative_links
+    ) -> None:
+        self.anonymous_references: bool = anonymous_references
+        self.parse_relative_links: bool = parse_relative_links
         super().__init__(*args, **kwargs)
 
-    def _indent_block(self, block):
+    def _indent_block(self, block: str) -> str:
         return "\n".join(
             self.indent + line if line else "" for line in block.splitlines()
         )
 
-    def _raw_html(self, html):
+    def _raw_html(self, html: str) -> str:
         self._include_raw_html = True
         return rf"\ :raw-html-m2r:`{html}`\ "
 
-    def block_code(self, code, lang=None):
+    def block_code(self, code: str, lang: str | None = None) -> str:
         if lang == "math":
             first_line = "\n.. math::\n\n"
         elif lang:
@@ -178,11 +192,11 @@ class RestRenderer(mistune.Renderer):
             first_line = "\n.. code-block::\n\n"
         return first_line + self._indent_block(code) + "\n"
 
-    def block_quote(self, text):
+    def block_quote(self, text: str) -> str:
         # text includes some empty line
         return "\n..\n\n{}\n\n".format(self._indent_block(text.strip("\n")))
 
-    def block_html(self, html):
+    def block_html(self, html: str) -> str:
         """
         Rendering block level pure html content.
 
@@ -190,7 +204,7 @@ class RestRenderer(mistune.Renderer):
         """
         return "\n\n.. raw:: html\n\n" + self._indent_block(html) + "\n\n"
 
-    def header(self, text, level, raw=None):
+    def header(self, text: str, level: int, raw: Any = None) -> str:
         """
         Rendering header/heading tags like ``<h1>`` ``<h2>``.
 
@@ -200,11 +214,11 @@ class RestRenderer(mistune.Renderer):
         """
         return f"\n{text}\n{self.hmarks[level] * column_width(text)}\n"
 
-    def hrule(self):
+    def hrule(self) -> str:
         """Rendering method for ``<hr>`` tag."""
         return "\n----\n"
 
-    def list(self, body, ordered=True):
+    def list(self, body: str, ordered: bool = True) -> str:
         """
         Rendering list tags like ``<ul>`` and ``<ol>``.
 
@@ -218,15 +232,15 @@ class RestRenderer(mistune.Renderer):
                 lines[i] = " " * len(mark) + line
         return "\n{}\n".format("\n".join(lines)).replace(self.list_marker, mark)
 
-    def list_item(self, text):
+    def list_item(self, text: str) -> str:
         """Rendering list item snippet. Like ``<li>``."""
         return "\n" + self.list_marker + text
 
-    def paragraph(self, text):
+    def paragraph(self, text: str) -> str:
         """Rendering paragraph tags. Like ``<p>``."""
         return "\n" + text + "\n"
 
-    def table(self, header, body):
+    def table(self, header: str, body: str) -> str:
         """
         Rendering table element. Wrap header and body in it.
 
@@ -247,7 +261,7 @@ class RestRenderer(mistune.Renderer):
         table = table + self._indent_block(body) + "\n\n"
         return table
 
-    def table_row(self, content):
+    def table_row(self, content: str) -> str:
         """
         Rendering a table row. Like ``<tr>``.
 
@@ -262,7 +276,7 @@ class RestRenderer(mistune.Renderer):
                 clist.append("  " + c)
         return "\n".join(clist) + "\n"
 
-    def table_cell(self, content, **flags):
+    def table_cell(self, content: str, **flags) -> str:
         """
         Rendering a table cell. Like ``<th>`` ``<td>``.
 
@@ -272,7 +286,7 @@ class RestRenderer(mistune.Renderer):
         """
         return "- " + content + "\n"
 
-    def double_emphasis(self, text):
+    def double_emphasis(self, text: str) -> str:
         """
         Rendering **strong** text.
 
@@ -280,7 +294,7 @@ class RestRenderer(mistune.Renderer):
         """
         return rf"\ **{text}**\ "
 
-    def emphasis(self, text):
+    def emphasis(self, text: str) -> str:
         """
         Rendering *emphasis* text.
 
@@ -288,7 +302,7 @@ class RestRenderer(mistune.Renderer):
         """
         return rf"\ *{text}*\ "
 
-    def codespan(self, text):
+    def codespan(self, text: str) -> str:
         """
         Rendering inline `code` text.
 
@@ -304,13 +318,13 @@ class RestRenderer(mistune.Renderer):
                 "</code>".format(text.replace("`", "&#96;"))
             )
 
-    def linebreak(self):
+    def linebreak(self) -> str:
         """Rendering line break like ``<br>``."""
         if self.options.get("use_xhtml"):
             return self._raw_html("<br />") + "\n"
         return self._raw_html("<br>") + "\n"
 
-    def strikethrough(self, text):
+    def strikethrough(self, text: str) -> str:
         """
         Rendering ~~strikethrough~~ text.
 
@@ -318,7 +332,7 @@ class RestRenderer(mistune.Renderer):
         """
         return self._raw_html(f"<del>{text}</del>")
 
-    def text(self, text):
+    def text(self, text: str) -> str:
         """
         Rendering unformatted text.
 
@@ -326,7 +340,7 @@ class RestRenderer(mistune.Renderer):
         """
         return text
 
-    def autolink(self, link, is_email=False):
+    def autolink(self, link: str, is_email: bool = False) -> str:
         """
         Rendering a given link or email address.
 
@@ -335,7 +349,7 @@ class RestRenderer(mistune.Renderer):
         """
         return link
 
-    def link(self, link, title, text):
+    def link(self, link: str, title: str, text: str) -> str:
         """
         Rendering a given link with content and title.
 
@@ -368,7 +382,7 @@ class RestRenderer(mistune.Renderer):
                 doc_link = f"{os.path.splitext(url_info.path)[0]}{anchor}"  # noqa: PTH122
                 return rf"\ :{link_type}:`{text} <{doc_link}>`\ "
 
-    def image(self, src, title, text):
+    def image(self, src: str, title: str, text: str) -> str:
         """
         Rendering a image with title and text.
 
@@ -382,7 +396,7 @@ class RestRenderer(mistune.Renderer):
             ["", f".. image:: {src}", f"   :target: {src}", f"   :alt: {text}", ""]
         )
 
-    def inline_html(self, html):
+    def inline_html(self, html: str) -> str:
         """
         Rendering span level pure html content.
 
@@ -390,11 +404,11 @@ class RestRenderer(mistune.Renderer):
         """
         return self._raw_html(html)
 
-    def newline(self):
+    def newline(self) -> str:
         """Rendering newline element."""
         return ""
 
-    def footnote_ref(self, key, index):
+    def footnote_ref(self, key: str, index: Any) -> str:
         """
         Rendering the ref anchor of a footnote.
 
@@ -403,7 +417,7 @@ class RestRenderer(mistune.Renderer):
         """
         return rf"\ [#fn-{key}]_\ "
 
-    def footnote_item(self, key, text):
+    def footnote_item(self, key: str, text: str) -> str:
         """
         Rendering a footnote item.
 
@@ -412,7 +426,7 @@ class RestRenderer(mistune.Renderer):
         """
         return f".. [#fn-{key}] {text.strip()}\n"
 
-    def footnotes(self, text):
+    def footnotes(self, text: str) -> str:
         """
         Wrapper for all footnotes.
 
@@ -425,51 +439,54 @@ class RestRenderer(mistune.Renderer):
 
     """Below outputs are for rst."""
 
-    def image_link(self, url, target, alt):
+    def image_link(self, url: str, target: str, alt: str) -> str:
         return "\n".join(
             ["", f".. image:: {url}", f"   :target: {target}", f"   :alt: {alt}", ""]
         )
 
-    def rest_role(self, text):
+    def rest_role(self, text: str) -> str:
         return text
 
-    def rest_link(self, text):
+    def rest_link(self, text: str) -> str:
         return text
 
-    def inline_math(self, math):
+    def inline_math(self, math: str) -> str:
         """Extension of recommonmark."""
         return rf"\ :math:`{math}`\ "
 
-    def eol_literal_marker(self, marker):
+    def eol_literal_marker(self, marker: str) -> str:
         """Extension of recommonmark."""
         return marker
 
-    def directive(self, text):
+    def directive(self, text: str) -> str:
         return "\n" + text
 
-    def rest_code_block(self):
+    def rest_code_block(self) -> str:
         return "\n\n"
 
 
 class M2R(mistune.Markdown):
     def __init__(
-        self, renderer=None, inline=RestInlineLexer, block=RestBlockLexer, **kwargs
-    ):
-        if renderer is None:
-            renderer = RestRenderer(**kwargs)
-        super().__init__(renderer, inline=inline, block=block, **kwargs)
+        self,
+        renderer: RestRenderer | None = None,
+        inline: type[RestInlineLexer] = RestInlineLexer,
+        block: type[RestBlockLexer] = RestBlockLexer,
+        **kwargs,
+    ) -> None:
+        r: RestRenderer = renderer or RestRenderer(**kwargs)
+        super().__init__(r, inline=inline, block=block, **kwargs)
+        self.renderer: RestRenderer
 
-    def parse(self, text):
-        output = super().parse(text)
-        return self.post_process(output)
+    def parse(self, text: str) -> str:
+        return self.post_process(super().parse(text))
 
-    def output_directive(self):
+    def output_directive(self) -> str:
         return self.renderer.directive(self.token["text"])
 
-    def output_rest_code_block(self):
+    def output_rest_code_block(self) -> str:
         return self.renderer.rest_code_block()
 
-    def post_process(self, text):
+    def post_process(self, text: str) -> str:
         output = (
             text.replace("\\ \n", "\n")
             .replace("\n\\ ", "\n")
