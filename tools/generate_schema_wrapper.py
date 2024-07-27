@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from typing import Final, Iterable, Literal, Iterator
 from itertools import chain
 from urllib import request
+from html import unescape
 
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import codegen, CodeSnippet, SchemaInfo
@@ -277,12 +278,10 @@ def process_description(description: str) -> str:
             for i, d in enumerate(reLink.split(description))
         ]
     )  # remove formatting from links
-    # TODO: REPLACE m2r.convert()
-    description = M2R()(description)
+    description = M2R(description)
+    description = unescape(description)
     description = description.replace(r"\ ,", ",")
     description = description.replace(r"\ ", " ")
-    # turn explicit references into anonymous references
-    description = description.replace(">`_", ">`__")
     # Some entries in the Vega-Lite schema miss the second occurence of '__'
     description = description.replace("__Default value: ", "__Default value:__ ")
     # Fixing ambiguous unicode, RUF001 produces RUF002 in docs

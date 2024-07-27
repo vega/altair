@@ -24,6 +24,7 @@ from typing import TYPE_CHECKING, Any
 from urllib.parse import urlparse
 
 import mistune
+from mistune.renderers.rst import RSTRenderer
 from docutils.utils import column_width
 
 if TYPE_CHECKING:
@@ -401,3 +402,15 @@ class _M2R(mistune.Markdown):
             .replace("\\  ", " ")
             .replace("\\ .", ".")
         )
+
+
+class _RSTRenderer(RSTRenderer):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def inline_html(self, token: dict[str, Any], state: mistune.BlockState) -> str:
+        html = token["raw"]
+        return rf"\ :raw-html:`{html}`\ "
+
+
+M2R = mistune.Markdown(renderer=_RSTRenderer())
