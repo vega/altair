@@ -530,12 +530,3 @@ class M2R(mistune.Markdown):
             return prolog + output
         else:
             return output
-
-
-def main():
-    msg = "CLI usage is not supported"
-    raise NotImplementedError(msg)
-
-
-if __name__ == "__main__":
-    main()
