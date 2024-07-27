@@ -74,7 +74,6 @@ dev = [
     "pytest-cov",
     "pytest-xdist[psutil]~=3.5",
     "mistune",
-    "docutils",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
