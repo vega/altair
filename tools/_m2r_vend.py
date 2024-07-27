@@ -33,19 +33,19 @@ __version__ = "0.3.1"
 _flags: RegexFlag = re.DOTALL | re.MULTILINE
 
 
-class RestBlockGrammar(mistune.BlockGrammar):
+class RestBlockGrammar(mistune.BlockParser):
     directive: Pattern[str] = re.compile(r"^( *\.\..*?)\n(?=\S)", _flags)
     oneline_directive: Pattern[str] = re.compile(r"^( *\.\..*?)$", _flags)
     rest_code_block: Pattern[str] = re.compile(r"^::\s*$", _flags)
 
 
-class RestBlockLexer(mistune.BlockLexer):
+class RestBlockLexer(mistune.BlockParser):
     grammar_class: type[RestBlockGrammar] = RestBlockGrammar
-    default_rules: list[str] = [
+    DEFAULT_RULES: list[str] = [
         "directive",
         "oneline_directive",
         "rest_code_block",
-        *mistune.BlockLexer.default_rules,
+        *mistune.BlockParser.DEFAULT_RULES,
     ]
 
     def parse_directive(self, m: Match[str]) -> None:
@@ -59,7 +59,7 @@ class RestBlockLexer(mistune.BlockLexer):
         self.tokens.append({"type": "rest_code_block"})
 
 
-class RestInlineGrammar(mistune.InlineGrammar):
+class RestInlineGrammar(mistune.InlineParser):
     image_link: Pattern[str] = re.compile(
         r"\[!\[(?P<alt>.*?)\]\((?P<url>.*?)\).*?\]\((?P<target>.*?)\)"
     )
@@ -89,14 +89,14 @@ class RestInlineGrammar(mistune.InlineGrammar):
         )
 
 
-class RestInlineLexer(mistune.InlineLexer):
+class RestInlineLexer(mistune.InlineParser):
     grammar_class: type[RestInlineGrammar] = RestInlineGrammar
-    default_rules: list[str] = [
+    DEFAULT_RULES: list[str] = [
         "image_link",
         "rest_role",
         "rest_link",
         "eol_literal_marker",
-        *mistune.InlineLexer.default_rules,
+        *mistune.InlineParser.DEFAULT_RULES,
     ]
 
     def __init__(
@@ -111,12 +111,12 @@ class RestInlineLexer(mistune.InlineLexer):
         self.rules: RestInlineGrammar
         if no_underscore_emphasis:
             self.rules.no_underscore_emphasis()
-        inline_maths = "inline_math" in self.default_rules
+        inline_maths = "inline_math" in self.DEFAULT_RULES
         if disable_inline_math:
             if inline_maths:
-                self.default_rules.remove("inline_math")
+                self.DEFAULT_RULES.remove("inline_math")
         elif not inline_maths:
-            self.default_rules.insert(0, "inline_math")
+            self.DEFAULT_RULES.insert(0, "inline_math")
 
     def output_double_emphasis(self, m: Match[str]) -> str:
         # may include code span
@@ -152,7 +152,7 @@ class RestInlineLexer(mistune.InlineLexer):
         return self.renderer.eol_literal_marker(marker)
 
 
-class RestRenderer(mistune.Renderer):
+class RestRenderer(mistune.BaseRenderer):
     list_indent_re: Pattern[str] = re.compile(r"^(\s*(#\.|\*)\s)")
     indent: str = " " * 3
     list_marker: str = "{#__rest_list_mark__#}"
@@ -372,7 +372,7 @@ class RestRenderer(mistune.Renderer):
         return "\n\n"
 
 
-class M2R(mistune.Markdown):
+class _M2R(mistune.Markdown):
     def __init__(
         self,
         renderer: RestRenderer | None = None,
