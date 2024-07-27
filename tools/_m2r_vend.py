@@ -152,7 +152,6 @@ class RestInlineLexer(mistune.InlineLexer):
 
 
 class RestRenderer(mistune.Renderer):
-    _include_raw_html: bool = False
     list_indent_re: Pattern[str] = re.compile(r"^(\s*(#\.|\*)\s)")
     indent: str = " " * 3
     list_marker: str = "{#__rest_list_mark__#}"
@@ -175,8 +174,7 @@ class RestRenderer(mistune.Renderer):
         )
 
     def _raw_html(self, html: str) -> str:
-        self._include_raw_html = True
-        return rf"\ :raw-html-m2r:`{html}`\ "
+        return rf"\ :raw-html:`{html}`\ "
 
     def block_code(self, code: str, lang: str | None = None) -> str:
         if lang == "math":

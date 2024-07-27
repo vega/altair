@@ -279,7 +279,6 @@ def process_description(description: str) -> str:
     )  # remove formatting from links
     # TODO: REPLACE m2r.convert()
     description = M2R()(description)
-    description = description.replace(":raw-html-m2r:", ":raw-html:")
     description = description.replace(r"\ ,", ",")
     description = description.replace(r"\ ", " ")
     # turn explicit references into anonymous references
