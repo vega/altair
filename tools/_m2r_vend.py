@@ -32,18 +32,9 @@ prolog = """\
 
 
 class RestBlockGrammar(mistune.BlockGrammar):
-    directive = re.compile(
-        r"^( *\.\..*?)\n(?=\S)",
-        re.DOTALL | re.MULTILINE,
-    )
-    oneline_directive = re.compile(
-        r"^( *\.\..*?)$",
-        re.DOTALL | re.MULTILINE,
-    )
-    rest_code_block = re.compile(
-        r"^::\s*$",
-        re.DOTALL | re.MULTILINE,
-    )
+    directive = re.compile(r"^( *\.\..*?)\n(?=\S)", re.DOTALL | re.MULTILINE)
+    oneline_directive = re.compile(r"^( *\.\..*?)$", re.DOTALL | re.MULTILINE)
+    rest_code_block = re.compile(r"^::\s*$", re.DOTALL | re.MULTILINE)
 
 
 class RestBlockLexer(mistune.BlockLexer):
@@ -56,28 +47,14 @@ class RestBlockLexer(mistune.BlockLexer):
     ]
 
     def parse_directive(self, m):
-        self.tokens.append(
-            {
-                "type": "directive",
-                "text": m.group(1),
-            }
-        )
+        self.tokens.append({"type": "directive", "text": m.group(1)})
 
     def parse_oneline_directive(self, m):
         # reuse directive output
-        self.tokens.append(
-            {
-                "type": "directive",
-                "text": m.group(1),
-            }
-        )
+        self.tokens.append({"type": "directive", "text": m.group(1)})
 
     def parse_rest_code_block(self, m):
-        self.tokens.append(
-            {
-                "type": "rest_code_block",
-            }
-        )
+        self.tokens.append({"type": "rest_code_block"})
 
 
 class RestInlineGrammar(mistune.InlineGrammar):
@@ -94,18 +71,14 @@ class RestInlineGrammar(mistune.InlineGrammar):
     double_emphasis = re.compile(r"^([_*]){2}(?P<text>[\s\S]+?)\1{2}(?!\1)")
     # _word_ or *word*
     emphasis = re.compile(
-        r"^\b_((?:__|[^_])+?)_\b"  # _word_
-        r"|"
-        r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)"  # *word*
+        r"^\b_((?:__|[^_])+?)_\b" r"|" r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)"
     )
 
     def no_underscore_emphasis(self):
-        self.double_emphasis = re.compile(
-            r"^\*{2}(?P<text>[\s\S]+?)\*{2}(?!\*)"  # **word**
-        )
-        self.emphasis = re.compile(
-            r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)"  # *word*
-        )
+        # **word**
+        self.double_emphasis = re.compile(r"^\*{2}(?P<text>[\s\S]+?)\*{2}(?!\*)")
+        # *word*
+        self.emphasis = re.compile(r"^\*(?P<text>(?:\*\*|[^\*])+?)\*(?!\*)")
 
 
 class RestInlineLexer(mistune.InlineLexer):
@@ -174,14 +147,7 @@ class RestRenderer(mistune.Renderer):
     list_indent_re = re.compile(r"^(\s*(#\.|\*)\s)")
     indent = " " * 3
     list_marker = "{#__rest_list_mark__#}"
-    hmarks = {
-        1: "=",
-        2: "-",
-        3: "^",
-        4: "~",
-        5: '"',
-        6: "#",
-    }
+    hmarks = {1: "=", 2: "-", 3: "^", 4: "~", 5: '"', 6: "#"}
 
     def __init__(
         self,
@@ -413,13 +379,7 @@ class RestRenderer(mistune.Renderer):
         # rst does not support title option
         # and I couldn't find title attribute in HTML standard
         return "\n".join(
-            [
-                "",
-                f".. image:: {src}",
-                f"   :target: {src}",
-                f"   :alt: {text}",
-                "",
-            ]
+            ["", f".. image:: {src}", f"   :target: {src}", f"   :alt: {text}", ""]
         )
 
     def inline_html(self, html):
@@ -467,13 +427,7 @@ class RestRenderer(mistune.Renderer):
 
     def image_link(self, url, target, alt):
         return "\n".join(
-            [
-                "",
-                f".. image:: {url}",
-                f"   :target: {target}",
-                f"   :alt: {alt}",
-                "",
-            ]
+            ["", f".. image:: {url}", f"   :target: {target}", f"   :alt: {alt}", ""]
         )
 
     def rest_role(self, text):
