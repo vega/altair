@@ -58,7 +58,7 @@ all = [
     "vega_datasets>=0.9.0",
     "vl-convert-python>=1.5.0",
     "pandas>=0.25.3",
-    "numpy<2.0.0",
+    "numpy",
     "pyarrow>=11",
     "vegafusion[embed]>=1.6.6",
     "anywidget>=0.9.0",
@@ -73,7 +73,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "pytest-xdist[psutil]~=3.5",
-    "m2r",
+    "mistune",
     "mypy",
     "pandas-stubs",
     "types-jsonschema",
@@ -305,6 +305,8 @@ select = [
     "D",
     # multi-line-summary-second-line
     "D213",
+    # numpy-specific-rules
+    "NPY",
 ]
 ignore = [  
     # Whitespace before ':'
