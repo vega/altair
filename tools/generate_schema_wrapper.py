@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import Final, Iterable, Literal, Iterator
 from itertools import chain
 from urllib import request
-import m2r
+from m2r import M2R
 
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import codegen, CodeSnippet, SchemaInfo
@@ -283,7 +283,7 @@ def process_description(description: str) -> str:
         ]
     )  # remove formatting from links
     # TODO: REPLACE m2r.convert()
-    description = m2r.convert(description)
+    description = M2R()(description)
     description = description.replace(m2r_prolog, "")
     description = description.replace(":raw-html-m2r:", ":raw-html:")
     description = description.replace(r"\ ,", ",")
