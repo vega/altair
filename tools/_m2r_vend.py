@@ -191,21 +191,11 @@ class RestRenderer(mistune.Renderer):
         return f"\n..\n\n{self._indent_block(text.strip('\n'))}\n\n"
 
     def block_html(self, html: str) -> str:
-        """
-        Rendering block level pure html content.
-
-        :param html: text content of the html snippet.
-        """
+        """Rendering block level pure html content."""
         return "\n\n.. raw:: html\n\n" + self._indent_block(html) + "\n\n"
 
     def header(self, text: str, level: int, raw: Any = None) -> str:
-        """
-        Rendering header/heading tags like ``<h1>`` ``<h2>``.
-
-        :param text: rendered text content for the header.
-        :param level: a number for the header level, for example: 1.
-        :param raw: raw text content of the header.
-        """
+        """Rendering header/heading tags like ``<h1>`` ``<h2>``."""
         return f"\n{text}\n{self.hmarks[level] * column_width(text)}\n"
 
     def hrule(self) -> str:
@@ -213,12 +203,7 @@ class RestRenderer(mistune.Renderer):
         return "\n----\n"
 
     def list(self, body: str, ordered: bool = True) -> str:
-        """
-        Rendering list tags like ``<ul>`` and ``<ol>``.
-
-        :param body: body contents of the list.
-        :param ordered: whether this list is ordered or not.
-        """
+        """Rendering list tags like ``<ul>`` and ``<ol>``."""
         mark = "#. " if ordered else "* "
         lines = body.splitlines()
         for i, line in enumerate(lines):
@@ -235,12 +220,7 @@ class RestRenderer(mistune.Renderer):
         return f"\n{text}\n"
 
     def table(self, header: str, body: str) -> str:
-        """
-        Rendering table element. Wrap header and body in it.
-
-        :param header: header part of the table.
-        :param body: body part of the table.
-        """
+        """Rendering table element. Wrap header and body in it."""
         table = "\n.. list-table::\n"
         if header and not header.isspace():
             table = (
@@ -252,11 +232,7 @@ class RestRenderer(mistune.Renderer):
         return f"{table}{self._indent_block(body)}\n\n"
 
     def table_row(self, content: str) -> str:
-        """
-        Rendering a table row. Like ``<tr>``.
-
-        :param content: content of current table row.
-        """
+        """Rendering a table row. Like ``<tr>``."""
         contents = content.splitlines()
         if not contents:
             return ""
@@ -267,41 +243,22 @@ class RestRenderer(mistune.Renderer):
         return "\n".join(clist) + "\n"
 
     def table_cell(self, content: str, **flags) -> str:
-        """
-        Rendering a table cell. Like ``<th>`` ``<td>``.
-
-        :param content: content of current table cell.
-        :param header: whether this is header or not.
-        :param align: align of current table cell.
-        """
+        """Rendering a table cell. Like ``<th>`` ``<td>``."""
         return f"- {content}\n"
 
     def double_emphasis(self, text: str) -> str:
-        """
-        Rendering **strong** text.
-
-        :param text: text content for emphasis.
-        """
+        """Rendering **strong** text."""
         return rf"\ **{text}**\ "
 
     def emphasis(self, text: str) -> str:
-        """
-        Rendering *emphasis* text.
-
-        :param text: text content for emphasis.
-        """
+        """Rendering *emphasis* text."""
         return rf"\ *{text}*\ "
 
     def codespan(self, text: str) -> str:
-        """
-        Rendering inline `code` text.
-
-        :param text: text content for inline code.
-        """
+        """Rendering inline `code` text."""
         if "``" not in text:
             return rf"\ ``{text}``\ "
         else:
-            # actually, docutils split spaces in literal
             return self._raw_html(
                 '<code class="docutils literal">'
                 '<span class="pre">{}</span>'
@@ -314,28 +271,15 @@ class RestRenderer(mistune.Renderer):
         return f"{self._raw_html(html)}\n"
 
     def strikethrough(self, text: str) -> str:
-        """
-        Rendering ~~strikethrough~~ text.
-
-        :param text: text content for strikethrough.
-        """
+        """Rendering ~~strikethrough~~ text."""
         return self._raw_html(f"<del>{text}</del>")
 
     def text(self, text: str) -> str:
-        """
-        Rendering unformatted text.
-
-        :param text: text content.
-        """
+        """Rendering unformatted text."""
         return text
 
     def autolink(self, link: str, is_email: bool = False) -> str:
-        """
-        Rendering a given link or email address.
-
-        :param link: link content or email address.
-        :param is_email: whether this is an email or not.
-        """
+        """Rendering a given link or email address."""
         return link
 
     def link(self, link: str, title: str, text: str) -> str:
@@ -376,7 +320,6 @@ class RestRenderer(mistune.Renderer):
         Rendering a image with title and text.
 
         :param src: source link of the image.
-        :param title: title text of the image.
         :param text: alt text of the image.
         """
         # rst does not support title option
@@ -384,11 +327,7 @@ class RestRenderer(mistune.Renderer):
         return f"\n.. image:: {src}\n   :target: {src}\n   :alt: {text}\n"
 
     def inline_html(self, html: str) -> str:
-        """
-        Rendering span level pure html content.
-
-        :param html: text content of the html snippet.
-        """
+        """Rendering span level pure html content."""
         return self._raw_html(html)
 
     def newline(self) -> str:
@@ -396,21 +335,11 @@ class RestRenderer(mistune.Renderer):
         return ""
 
     def footnote_ref(self, key: str, index: Any) -> str:
-        """
-        Rendering the ref anchor of a footnote.
-
-        :param key: identity key for the footnote.
-        :param index: the index count of current footnote.
-        """
+        """Rendering the ref anchor of a footnote."""
         return rf"\ [#fn-{key}]_\ "
 
     def footnote_item(self, key: str, text: str) -> str:
-        """
-        Rendering a footnote item.
-
-        :param key: identity key for the footnote.
-        :param text: text content of the footnote.
-        """
+        """Rendering a footnote item."""
         return f".. [#fn-{key}] {text.strip()}\n"
 
     def footnotes(self, text: str) -> str:
