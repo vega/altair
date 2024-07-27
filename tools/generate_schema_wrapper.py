@@ -12,7 +12,6 @@ from dataclasses import dataclass
 from typing import Final, Iterable, Literal, Iterator
 from itertools import chain
 from urllib import request
-from m2r import M2R
 
 sys.path.insert(0, str(Path.cwd()))
 from tools.schemapi import codegen, CodeSnippet, SchemaInfo
@@ -24,6 +23,7 @@ from tools.schemapi.utils import (
     indent_docstring,
     ruff_write_lint_format_str,
 )
+from tools._m2r_vend import M2R
 
 m2r_prolog = """\
 .. role:: raw-html-m2r(raw)
