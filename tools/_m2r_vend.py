@@ -18,7 +18,6 @@ Lib/site-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
 import os
 import os.path
 import re
-from argparse import ArgumentParser, Namespace
 
 from docutils import statemachine, nodes, io, utils
 from docutils.parsers import rst
@@ -33,51 +32,6 @@ prolog = """\
    :format: html
 
 """
-
-# for command-line use
-parser = ArgumentParser()
-options = Namespace()
-parser.add_argument("input_file", nargs="*", help="files to convert to reST format")
-parser.add_argument(
-    "--overwrite",
-    action="store_true",
-    default=False,
-    help="overwrite output file without confirmaion",
-)
-parser.add_argument(
-    "--dry-run",
-    action="store_true",
-    default=False,
-    help="print conversion result and not save output file",
-)
-parser.add_argument(
-    "--no-underscore-emphasis",
-    action="store_true",
-    default=False,
-    help="do not use underscore (_) for emphasis",
-)
-parser.add_argument(
-    "--parse-relative-links",
-    action="store_true",
-    default=False,
-    help="parse relative links into ref or doc directives",
-)
-parser.add_argument(
-    "--anonymous-references",
-    action="store_true",
-    default=False,
-    help="use anonymous references in generated rst",
-)
-parser.add_argument(
-    "--disable-inline-math",
-    action="store_true",
-    default=False,
-    help="disable parsing inline math",
-)
-
-
-def parse_options():
-    parser.parse_known_args(namespace=options)
 
 
 class RestBlockGrammar(mistune.BlockGrammar):
@@ -165,16 +119,18 @@ class RestInlineLexer(mistune.InlineLexer):
         "eol_literal_marker",
     ] + mistune.InlineLexer.default_rules
 
-    def __init__(self, *args, **kwargs):
-        no_underscore_emphasis = kwargs.pop("no_underscore_emphasis", False)
-        disable_inline_math = kwargs.pop("disable_inline_math", False)
+    def __init__(
+        self,
+        *args,
+        disable_inline_math: bool = False,
+        no_underscore_emphasis: bool = False,
+        **kwargs,
+    ):
         super(RestInlineLexer, self).__init__(*args, **kwargs)
-        if not _is_sphinx:
-            parse_options()
-        if no_underscore_emphasis or getattr(options, "no_underscore_emphasis", False):
+        if no_underscore_emphasis:
             self.rules.no_underscore_emphasis()
         inline_maths = "inline_math" in self.default_rules
-        if disable_inline_math or getattr(options, "disable_inline_math", False):
+        if disable_inline_math:
             if inline_maths:
                 self.default_rules.remove("inline_math")
         elif not inline_maths:
@@ -228,16 +184,16 @@ class RestRenderer(mistune.Renderer):
         6: "#",
     }
 
-    def __init__(self, *args, **kwargs):
-        self.parse_relative_links = kwargs.pop("parse_relative_links", False)
-        self.anonymous_references = kwargs.pop("anonymous_references", False)
+    def __init__(
+        self,
+        *args,
+        anonymous_references: bool = False,
+        parse_relative_links: bool = False,
+        **kwargs,
+    ):
+        self.anonymous_references = anonymous_references
+        self.parse_relative_links = parse_relative_links
         super(RestRenderer, self).__init__(*args, **kwargs)
-        if not _is_sphinx:
-            parse_options()
-            if getattr(options, "parse_relative_links", False):
-                self.parse_relative_links = options.parse_relative_links
-            if getattr(options, "anonymous_references", False):
-                self.anonymous_references = options.anonymous_references
 
     def _indent_block(self, block):
         return "\n".join(
@@ -574,167 +530,9 @@ class M2R(mistune.Markdown):
             return output
 
 
-class M2RParser(rst.Parser, object):
-    # Explicitly tell supported formats to sphinx
-    supported = ("markdown", "md", "mkd")
-
-    def parse(self, inputstrings, document):
-        if isinstance(inputstrings, statemachine.StringList):
-            inputstring = "\n".join(inputstrings)
-        else:
-            inputstring = inputstrings
-        config = document.settings.env.config
-        converter = M2R(
-            no_underscore_emphasis=config.no_underscore_emphasis,
-            parse_relative_links=config.m2r_parse_relative_links,
-            anonymous_references=config.m2r_anonymous_references,
-            disable_inline_math=config.m2r_disable_inline_math,
-        )
-        super(M2RParser, self).parse(converter(inputstring), document)
-
-
-class MdInclude(rst.Directive):
-    """Directive class to include markdown in sphinx.
-
-    Load a file and convert it to rst and insert as a node. Currently
-    directive-specific options are not implemented.
-    """
-
-    required_arguments = 1
-    optional_arguments = 0
-    option_spec = {
-        "start-line": int,
-        "end-line": int,
-    }
-
-    def run(self):
-        """Most of this method is from ``docutils.parser.rst.Directive``.
-
-        docutils version: 0.12
-        """
-        if not self.state.document.settings.file_insertion_enabled:
-            raise self.warning('"%s" directive disabled.' % self.name)
-        source = self.state_machine.input_lines.source(
-            self.lineno - self.state_machine.input_offset - 1
-        )
-        source_dir = os.path.dirname(os.path.abspath(source))
-        path = rst.directives.path(self.arguments[0])
-        path = os.path.normpath(os.path.join(source_dir, path))
-        path = utils.relative_path(None, path)
-        path = nodes.reprunicode(path)
-
-        # get options (currently not use directive-specific options)
-        encoding = self.options.get(
-            "encoding", self.state.document.settings.input_encoding
-        )
-        e_handler = self.state.document.settings.input_encoding_error_handler
-        tab_width = self.options.get(
-            "tab-width", self.state.document.settings.tab_width
-        )
-
-        # open the including file
-        try:
-            self.state.document.settings.record_dependencies.add(path)
-            include_file = io.FileInput(
-                source_path=path, encoding=encoding, error_handler=e_handler
-            )
-        except UnicodeEncodeError:
-            raise self.severe(
-                'Problems with "%s" directive path:\n'
-                'Cannot encode input file path "%s" '
-                "(wrong locale?)." % (self.name, path)
-            )
-        except IOError as error:
-            raise self.severe(
-                'Problems with "%s" directive path:\n%s.'
-                % (self.name, io.error_string(error))
-            )
-
-        # read from the file
-        startline = self.options.get("start-line", None)
-        endline = self.options.get("end-line", None)
-        try:
-            if startline or (endline is not None):
-                lines = include_file.readlines()
-                rawtext = "".join(lines[startline:endline])
-            else:
-                rawtext = include_file.read()
-        except UnicodeError as error:
-            raise self.severe(
-                'Problem with "%s" directive:\n%s' % (self.name, io.error_string(error))
-            )
-
-        config = self.state.document.settings.env.config
-        converter = M2R(
-            no_underscore_emphasis=config.no_underscore_emphasis,
-            parse_relative_links=config.m2r_parse_relative_links,
-            anonymous_references=config.m2r_anonymous_references,
-            disable_inline_math=config.m2r_disable_inline_math,
-        )
-        include_lines = statemachine.string2lines(
-            converter(rawtext), tab_width, convert_whitespace=True
-        )
-        self.state_machine.insert_input(include_lines, path)
-        return []
-
-
-def setup(app):
-    """When used for sphinx extension."""
-    global _is_sphinx
-    _is_sphinx = True
-    app.add_config_value("no_underscore_emphasis", False, "env")
-    app.add_config_value("m2r_parse_relative_links", False, "env")
-    app.add_config_value("m2r_anonymous_references", False, "env")
-    app.add_config_value("m2r_disable_inline_math", False, "env")
-    if hasattr(app, "add_source_suffix"):
-        app.add_source_suffix(".md", "markdown")
-        app.add_source_parser(M2RParser)
-    else:
-        app.add_source_parser(".md", M2RParser)
-    app.add_directive("mdinclude", MdInclude)
-    metadata = dict(
-        version=__version__,
-        parallel_read_safe=True,
-        parallel_write_safe=True,
-    )
-    return metadata
-
-
-def convert(text, **kwargs):
-    return M2R(**kwargs)(text)
-
-
-def parse_from_file(file, encoding="utf-8", **kwargs):
-    if not os.path.exists(file):
-        raise OSError("No such file exists: {}".format(file))
-    with open(file, encoding=encoding) as f:
-        src = f.read()
-    output = convert(src, **kwargs)
-    return output
-
-
-def save_to_file(file, src, encoding="utf-8", **kwargs):
-    target = os.path.splitext(file)[0] + ".rst"
-    if not options.overwrite and os.path.exists(target):
-        confirm = input("{} already exists. overwrite it? [y/n]: ".format(target))
-        if confirm.upper() not in ("Y", "YES"):
-            print("skip {}".format(file))
-            return
-    with open(target, "w", encoding=encoding) as f:
-        f.write(src)
-
-
 def main():
-    parse_options()  # parse cli options
-    if not options.input_file:
-        parser.print_help()
-        parser.exit(0)
-    for file in options.input_file:
-        output = parse_from_file(file)
-        if options.dry_run:
-            print(output)
-        else:
-            save_to_file(file, output)
+    msg = "CLI usage is not supported"
+    raise NotImplementedError(msg)
 
 
 if __name__ == "__main__":
