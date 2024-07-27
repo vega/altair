@@ -108,6 +108,7 @@ class RestInlineLexer(mistune.InlineLexer):
     ) -> None:
         super().__init__(*args, **kwargs)
         self.renderer: RestRenderer
+        self.rules: RestInlineGrammar
         if no_underscore_emphasis:
             self.rules.no_underscore_emphasis()
         inline_maths = "inline_math" in self.default_rules
@@ -170,7 +171,7 @@ class RestRenderer(mistune.Renderer):
 
     def _indent_block(self, block: str) -> str:
         return "\n".join(
-            self.indent + line if line else "" for line in block.splitlines()
+            f"{self.indent}{line}" if line else "" for line in block.splitlines()
         )
 
     def _raw_html(self, html: str) -> str:
@@ -183,11 +184,11 @@ class RestRenderer(mistune.Renderer):
             first_line = f"\n.. code-block:: {lang}\n\n"
         else:
             first_line = "\n.. code-block::\n\n"
-        return first_line + self._indent_block(code) + "\n"
+        return f"{first_line}{self._indent_block(code)}\n"
 
     def block_quote(self, text: str) -> str:
         # text includes some empty line
-        return "\n..\n\n{}\n\n".format(self._indent_block(text.strip("\n")))
+        return f"\n..\n\n{self._indent_block(text.strip('\n'))}\n\n"
 
     def block_html(self, html: str) -> str:
         """
@@ -227,11 +228,11 @@ class RestRenderer(mistune.Renderer):
 
     def list_item(self, text: str) -> str:
         """Rendering list item snippet. Like ``<li>``."""
-        return "\n" + self.list_marker + text
+        return f"\n{self.list_marker}{text}"
 
     def paragraph(self, text: str) -> str:
         """Rendering paragraph tags. Like ``<p>``."""
-        return "\n" + text + "\n"
+        return f"\n{text}\n"
 
     def table(self, header: str, body: str) -> str:
         """
@@ -243,16 +244,12 @@ class RestRenderer(mistune.Renderer):
         table = "\n.. list-table::\n"
         if header and not header.isspace():
             table = (
-                table
-                + self.indent
-                + ":header-rows: 1\n\n"
-                + self._indent_block(header)
-                + "\n"
+                f"{table}{self.indent}:header-rows: 1\n\n"
+                f"{self._indent_block(header)}\n"
             )
         else:
-            table = table + "\n"
-        table = table + self._indent_block(body) + "\n\n"
-        return table
+            table = f"{table}\n"
+        return f"{table}{self._indent_block(body)}\n\n"
 
     def table_row(self, content: str) -> str:
         """
@@ -277,7 +274,7 @@ class RestRenderer(mistune.Renderer):
         :param header: whether this is header or not.
         :param align: align of current table cell.
         """
-        return "- " + content + "\n"
+        return f"- {content}\n"
 
     def double_emphasis(self, text: str) -> str:
         """
@@ -313,9 +310,8 @@ class RestRenderer(mistune.Renderer):
 
     def linebreak(self) -> str:
         """Rendering line break like ``<br>``."""
-        if self.options.get("use_xhtml"):
-            return self._raw_html("<br />") + "\n"
-        return self._raw_html("<br>") + "\n"
+        html = "<br />" if self.options.get("use_xhtml") else "<br>"
+        return f"{self._raw_html(html)}\n"
 
     def strikethrough(self, text: str) -> str:
         """
@@ -385,9 +381,7 @@ class RestRenderer(mistune.Renderer):
         """
         # rst does not support title option
         # and I couldn't find title attribute in HTML standard
-        return "\n".join(
-            ["", f".. image:: {src}", f"   :target: {src}", f"   :alt: {text}", ""]
-        )
+        return f"\n.. image:: {src}\n   :target: {src}\n   :alt: {text}\n"
 
     def inline_html(self, html: str) -> str:
         """
@@ -420,22 +414,13 @@ class RestRenderer(mistune.Renderer):
         return f".. [#fn-{key}] {text.strip()}\n"
 
     def footnotes(self, text: str) -> str:
-        """
-        Wrapper for all footnotes.
-
-        :param text: contents of all footnotes.
-        """
-        if text:
-            return "\n\n" + text
-        else:
-            return ""
+        """Wrapper for all footnotes."""
+        return f"\n\n{text}" if text else ""
 
     """Below outputs are for rst."""
 
     def image_link(self, url: str, target: str, alt: str) -> str:
-        return "\n".join(
-            ["", f".. image:: {url}", f"   :target: {target}", f"   :alt: {alt}", ""]
-        )
+        return f"\n.. image:: {url}\n   :target: {target}\n   :alt: {alt}\n"
 
     def rest_role(self, text: str) -> str:
         return text
@@ -452,7 +437,7 @@ class RestRenderer(mistune.Renderer):
         return marker
 
     def directive(self, text: str) -> str:
-        return "\n" + text
+        return f"\n{text}"
 
     def rest_code_block(self) -> str:
         return "\n\n"
