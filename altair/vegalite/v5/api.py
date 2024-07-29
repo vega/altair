@@ -4365,7 +4365,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         return transformed_data(self, row_limit=row_limit, exclude=exclude)
 
-    def __iadd__(self, other: LayerChart | Chart) -> Self:
+    def __iadd__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
         self.layer.append(other)
@@ -4373,7 +4373,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
-    def __add__(self, other: LayerChart | Chart) -> Self:
+    def __add__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
