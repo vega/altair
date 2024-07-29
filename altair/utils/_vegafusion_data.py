@@ -213,7 +213,7 @@ def compile_to_vegafusion_chart_state(
     return chart_state
 
 
-def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict:
+def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict[str, Any]:
     """
     Compile a Vega-Lite spec to Vega and pre-transform with VegaFusion.
 

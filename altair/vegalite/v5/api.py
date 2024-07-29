@@ -109,6 +109,7 @@ if TYPE_CHECKING:
         BindRadioSelect,
         BindRange,
     )
+    from altair.utils.display import MimeBundleType
     from altair.expr.core import (
         BinaryExpression,
         Expression,
@@ -189,7 +190,7 @@ _TSchemaBase = TypeVar("_TSchemaBase", bound=core.SchemaBase)
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _dataset_name(values: dict | list | InlineDataset) -> str:
+def _dataset_name(values: dict[str, Any] | list | InlineDataset) -> str:
     """
     Generate a unique hash of the data.
 
@@ -212,7 +213,9 @@ def _dataset_name(values: dict | list | InlineDataset) -> str:
     return "data-" + hsh
 
 
-def _consolidate_data(data: Any, context: Any) -> Any:
+def _consolidate_data(
+    data: ChartDataType | UrlData, context: dict[str, Any]
+) -> ChartDataType | NamedData | InlineData | UrlData:
     """
     If data is specified inline, then move it to context['datasets'].
 
@@ -241,7 +244,9 @@ def _consolidate_data(data: Any, context: Any) -> Any:
     return data
 
 
-def _prepare_data(data, context=None):
+def _prepare_data(
+    data: ChartDataType, context: dict[str, Any] | None = None
+) -> ChartDataType | NamedData | InlineData | UrlData | Any:
     """
     Convert input data to data for use within schema.
 
@@ -1610,7 +1615,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format: str = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Convert the chart to a dictionary suitable for JSON export.
 
@@ -3276,7 +3281,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, include=None, exclude=None):
+    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
