@@ -299,7 +299,7 @@ class LookupData(core.LookupData):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs) -> dict:
+    def to_dict(self, *args, **kwargs) -> dict[str, Any]:
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
         copy.data = _prepare_data(copy.data, kwargs.get("context"))
@@ -313,7 +313,7 @@ class FacetMapping(core.FacetMapping):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs) -> dict:
+    def to_dict(self, *args, **kwargs) -> dict[str, Any]:
         copy = self.copy(deep=False)
         context = kwargs.get("context", {})
         data = context.get("data", None)
@@ -364,11 +364,11 @@ class Parameter(_expr_core.OperatorMixin):
         self.param_type = param_type
 
     @utils.deprecated(version="5.0.0", alternative="to_dict")
-    def ref(self) -> dict:
+    def ref(self) -> dict[str, Any]:
         """'ref' is deprecated. No need to call '.ref()' anymore."""
         return self.to_dict()
 
-    def to_dict(self) -> dict[str, str | dict]:
+    def to_dict(self) -> dict[str, str | dict[str, Any]]:
         if self.param_type == "variable":
             return {"expr": self.name}
         elif self.param_type == "selection":
@@ -3649,7 +3649,7 @@ class Chart(
         format: str = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Convert the chart to a dictionary suitable for JSON export.
 
