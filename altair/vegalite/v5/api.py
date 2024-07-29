@@ -296,10 +296,10 @@ Title = core.TitleParams
 
 class LookupData(core.LookupData):
     @utils.use_signature(core.LookupData)
-    def __init__(self, *args, **kwargs: Any) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs: Any) -> dict[str, Any]:
+    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
         copy.data = _prepare_data(copy.data, kwargs.get("context"))
@@ -310,10 +310,10 @@ class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
 
     @utils.use_signature(core.FacetMapping)
-    def __init__(self, *args, **kwargs: Any) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs: Any) -> dict[str, Any]:
+    def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
         context = kwargs.get("context", {})
         data = context.get("data", None)
@@ -988,7 +988,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             )
             raise NotImplementedError(msg)
 
-    def to_dict(self, *args, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
+    def to_dict(self, *args: Any, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
         m = super().to_dict(*args, **kwds)
         return _Conditional(condition=m["condition"])
 
@@ -3289,7 +3289,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]  # noqa: ANN003
+    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]  # noqa: ANN002, ANN003
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
@@ -3431,19 +3431,19 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs: Any) -> Self:
+    def resolve_axis(self, *args: Any, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
         return t.cast("Self", r)
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs: Any) -> Self:
+    def resolve_legend(self, *args: Any, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
         return t.cast("Self", r)
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs: Any) -> Self:
+    def resolve_scale(self, *args: Any, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
         return t.cast("Self", r)
@@ -3730,7 +3730,7 @@ class Chart(
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *params) -> Self:
+    def add_selection(self, *params) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*params)
 
@@ -3960,7 +3960,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         return copy.copy()
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
@@ -4084,7 +4084,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
@@ -4188,7 +4188,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
@@ -4294,7 +4294,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
@@ -4420,7 +4420,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return copy.copy()
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 
@@ -4512,7 +4512,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return copy.copy()
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
-    def add_selection(self, *selections) -> Self:
+    def add_selection(self, *selections) -> Self:  # noqa: ANN002
         """'add_selection' is deprecated. Use 'add_params' instead."""
         return self.add_params(*selections)
 

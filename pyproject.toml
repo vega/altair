@@ -309,7 +309,8 @@ select = [
     "D213",
     # numpy-specific-rules
     "NPY",
-    "ANN"
+    # flake8-annotations
+    "ANN",
 ]
 ignore = [  
     # Whitespace before ':'
@@ -354,8 +355,8 @@ ignore = [
     "D413",
     # doc-line-too-long
     "W505",
-    "ANN002", # args
-    "ANN401" # Any
+    # Any as annotation
+    "ANN401" 
 ]
 # https://docs.astral.sh/ruff/settings/#lintpydocstyle
 pydocstyle={ convention="numpy" }
