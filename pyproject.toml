@@ -368,6 +368,7 @@ mccabe={ max-complexity=18 }
 "typing.Optional".msg = "Use `Union[T, None]` instead.\n`typing.Optional` is likely to be confused with `altair.Optional`, which have a similar but different semantic meaning.\nSee https://github.com/vega/altair/pull/3449"
 
 [tool.ruff.lint.per-file-ignores]
+# Only enforce type annotation rules on public api
 "!altair/vegalite/v5/api.py" = ["ANN"]
 
 
