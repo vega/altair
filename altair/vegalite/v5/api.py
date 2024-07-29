@@ -4000,7 +4000,6 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         columns: Optional[float] = Undefined,
         **kwargs,
     ) -> None:
-        # TODO: move common data to top level?
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
         super().__init__(data=data, concat=list(concat), columns=columns, **kwargs)  # type: ignore[arg-type]
@@ -4105,7 +4104,6 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         hconcat: Sequence[ConcatType] = (),
         **kwargs,
     ) -> None:
-        # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
         super().__init__(data=data, hconcat=list(hconcat), **kwargs)  # type: ignore[arg-type]
@@ -4210,7 +4208,6 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         vconcat: Sequence[ConcatType] = (),
         **kwargs,
     ) -> None:
-        # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
         super().__init__(data=data, vconcat=list(vconcat), **kwargs)  # type: ignore[arg-type]
@@ -4317,7 +4314,6 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         layer: Sequence[LayerType] = (),
         **kwargs,
     ) -> None:
-        # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
