@@ -3588,9 +3588,9 @@ class Chart(
         height: Optional[int | str | dict | Step] = Undefined,
         **kwargs,
     ) -> None:
-            # Data type hints won't match with what TopLevelUnitSpec expects
-            # as there is some data processing happening when converting to
-            # a VL spec
+        # Data type hints won't match with what TopLevelUnitSpec expects
+        # as there is some data processing happening when converting to
+        # a VL spec
         super().__init__(
             data=data,  # type: ignore[arg-type]
             encoding=encoding,
