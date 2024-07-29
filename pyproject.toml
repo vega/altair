@@ -355,7 +355,6 @@ ignore = [
     # doc-line-too-long
     "W505",
     "ANN002", # args
-    "ANN003", # kwargs
     "ANN401" # Any
 ]
 # https://docs.astral.sh/ruff/settings/#lintpydocstyle

@@ -296,10 +296,10 @@ Title = core.TitleParams
 
 class LookupData(core.LookupData):
     @utils.use_signature(core.LookupData)
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs) -> dict[str, Any]:
+    def to_dict(self, *args, **kwargs: Any) -> dict[str, Any]:
         """Convert the chart to a dictionary suitable for JSON export."""
         copy = self.copy(deep=False)
         copy.data = _prepare_data(copy.data, kwargs.get("context"))
@@ -310,10 +310,10 @@ class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
 
     @utils.use_signature(core.FacetMapping)
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def to_dict(self, *args, **kwargs) -> dict[str, Any]:
+    def to_dict(self, *args, **kwargs: Any) -> dict[str, Any]:
         copy = self.copy(deep=False)
         context = kwargs.get("context", {})
         data = context.get("data", None)
@@ -988,7 +988,7 @@ class Then(core.SchemaBase, t.Generic[_C]):
             )
             raise NotImplementedError(msg)
 
-    def to_dict(self, *args, **kwds) -> _Conditional[_C]:  # type: ignore[override]
+    def to_dict(self, *args, **kwds: Any) -> _Conditional[_C]:  # type: ignore[override]
         m = super().to_dict(*args, **kwds)
         return _Conditional(condition=m["condition"])
 
@@ -1748,7 +1748,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format: str = "vega-lite",
         ignore: list[str] | None = None,
         context: dict[str, Any] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> str:
         """
         Convert a chart to a JSON string.
@@ -1793,7 +1793,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fullhtml: bool = True,
         requirejs: bool = False,
         inline: bool = False,
-        **kwargs,
+        **kwargs: Any,
     ) -> str:
         """
         Embed a Vega/Vega-Lite spec into an HTML page.
@@ -1895,7 +1895,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         webdriver: str | None = None,
         engine: str | None = None,
         inline: bool = False,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         """
         Save a chart to file in a variety of formats.
@@ -2014,7 +2014,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         column: Optional[list[str]] = Undefined,
         layer: Optional[list[str]] = Undefined,
         columns: Optional[int] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> RepeatChart:
         """
         Return a RepeatChart built from the chart.
@@ -2069,7 +2069,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             spec=t.cast("ChartType", self), repeat=repeat_arg, columns=columns, **kwargs
         )
 
-    def properties(self, **kwargs) -> Self:
+    def properties(self, **kwargs: Any) -> Self:
         """
         Set top-level properties of the Chart.
 
@@ -2117,7 +2117,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         translate: Optional[
             list[float] | Vector2number | ExprRef | Parameter
         ] = Undefined,
-        **kwds,
+        **kwds: Any,
     ) -> Self:
         """
         Add a geographic projection to the chart.
@@ -2332,7 +2332,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
         field: Optional[str | FieldName] = Undefined,
         bin: Literal[True] | BinParams = True,
-        **kwargs,
+        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`BinTransform` to the schema.
@@ -2692,7 +2692,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         | Parameter
         | PredicateComposition
         | dict[str, Predicate | str | list | bool],
-        **kwargs,
+        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`FilterTransform` to the schema.
@@ -2831,7 +2831,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         from_: Optional[LookupData | LookupSelection] = Undefined,
         as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
         default: Optional[str] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> Self:
         """
         Add a :class:`DataLookupTransform` or :class:`SelectionLookupTransform` to the chart.
@@ -3289,7 +3289,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]
+    def _repr_mimebundle_(self, *args, **kwds) -> MimeBundleType | None:  # type:ignore[return]  # noqa: ANN003
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
@@ -3307,7 +3307,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         renderer: Optional[Literal["canvas", "svg"]] = Undefined,
         theme: Optional[str] = Undefined,
         actions: Optional[bool | dict] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         """
         Display chart in Jupyter notebook or JupyterLab.
@@ -3356,7 +3356,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         jupyter_warning=True,  # noqa: ANN001
         open_browser=True,  # noqa: ANN001
         http_server=None,  # noqa: ANN001
-        **kwargs,
+        **kwargs,  # noqa: ANN003
     ) -> None:
         """
         'serve' is deprecated. Use 'show' instead.
@@ -3418,7 +3418,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             display(self)
 
     @utils.use_signature(core.Resolve)
-    def _set_resolve(self, **kwargs):  # noqa: ANN202
+    def _set_resolve(self, **kwargs: Any):  # noqa: ANN202
         """Copy the chart and update the resolve property with kwargs."""
         if not hasattr(self, "resolve"):
             msg = f"{self.__class__} object has no attribute " "'resolve'"
@@ -3431,19 +3431,19 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs) -> Self:
+    def resolve_axis(self, *args, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
         return t.cast("Self", r)
 
     @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs) -> Self:
+    def resolve_legend(self, *args, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
         return t.cast("Self", r)
 
     @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs) -> Self:
+    def resolve_scale(self, *args, **kwargs: Any) -> Self:
         check = _top_schema_base(self)
         r = check._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
         return t.cast("Self", r)
@@ -3459,7 +3459,7 @@ class _EncodingMixin(channels._EncodingMixin):
         column: Optional[str | FacetFieldDef | Column] = Undefined,
         data: Optional[ChartDataType] = Undefined,
         columns: Optional[int] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> FacetChart:
         """
         Create a facet chart from the current chart.
@@ -3586,7 +3586,7 @@ class Chart(
         mark: Optional[str | AnyMark] = Undefined,
         width: Optional[int | str | dict | Step] = Undefined,
         height: Optional[int | str | dict | Step] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         # Data type hints won't match with what TopLevelUnitSpec expects
         # as there is some data processing happening when converting to
@@ -3862,7 +3862,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         title: Optional[str | dict | SchemaBase | Sequence[str]] = Undefined,
         transform: Optional[Sequence[dict | SchemaBase]] = Undefined,
         usermeta: Optional[dict | SchemaBase] = Undefined,
-        **kwds,
+        **kwds: Any,
     ) -> None:
         tp_name = type(self).__name__
         if utils.is_undefined(spec):
@@ -3998,7 +3998,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         data: Optional[ChartDataType] = Undefined,
         concat: Sequence[ConcatType] = (),
         columns: Optional[float] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         for spec in concat:
             _check_if_valid_subspec(spec, "ConcatChart")
@@ -4102,7 +4102,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self,
         data: Optional[ChartDataType] = Undefined,
         hconcat: Sequence[ConcatType] = (),
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         for spec in hconcat:
             _check_if_valid_subspec(spec, "HConcatChart")
@@ -4206,7 +4206,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self,
         data: Optional[ChartDataType] = Undefined,
         vconcat: Sequence[ConcatType] = (),
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         for spec in vconcat:
             _check_if_valid_subspec(spec, "VConcatChart")
@@ -4312,7 +4312,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         self,
         data: Optional[ChartDataType] = Undefined,
         layer: Sequence[LayerType] = (),
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         # TODO: check for conflicting interaction
         for spec in layer:
@@ -4440,7 +4440,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         spec: Optional[ChartType] = Undefined,
         facet: Optional[dict | SchemaBase] = Undefined,
         params: Optional[Sequence[_Parameter]] = Undefined,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         if utils.is_undefined(spec):
             msg = f"{type(self).__name__!r} requires a `spec`, but got: {spec!r}"
