@@ -103,6 +103,11 @@ if TYPE_CHECKING:
         TopLevelSelectionParameter,
         SelectionParameter,
         InlineDataset,
+        NamedData,
+        InlineData,
+        BindCheckbox,
+        BindRadioSelect,
+        BindRange,
     )
     from altair.expr.core import (
         BinaryExpression,
@@ -1087,7 +1092,7 @@ def when(
 # Top-Level Functions
 
 
-def value(value, **kwargs) -> _Value:
+def value(value: Any, **kwargs: Any) -> _Value:
     """Specify a value for use in an encoding."""
     return _Value(value=value, **kwargs)  # type: ignore[typeddict-item]
 
@@ -1098,7 +1103,7 @@ def param(
     bind: Optional[Binding] = Undefined,
     empty: Optional[bool] = Undefined,
     expr: Optional[str | Expr | Expression] = Undefined,
-    **kwds,
+    **kwds: Any,
 ) -> Parameter:
     """
     Create a named parameter, see https://altair-viz.github.io/user_guide/interactions.html for examples.
@@ -1179,7 +1184,7 @@ def param(
     return parameter
 
 
-def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
+def _selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Parameter:
     # We separate out the parameter keywords from the selection keywords
 
     select_kwds = {"name", "bind", "value", "empty", "init", "views"}
@@ -1209,7 +1214,7 @@ def _selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter
     alternative="'selection_point()' or 'selection_interval()'",
     message="These functions also include more helpful docstrings.",
 )
-def selection(type: Optional[SelectionType_T] = Undefined, **kwds) -> Parameter:
+def selection(type: Optional[SelectionType_T] = Undefined, **kwds: Any) -> Parameter:
     """
     Users are recommended to use either 'selection_point' or 'selection_interval' instead, depending on the type of parameter they want to create.
 
@@ -1244,7 +1249,7 @@ def selection_interval(
     mark: Optional[Mark] = Undefined,
     translate: Optional[str | bool] = Undefined,
     zoom: Optional[str | bool] = Undefined,
-    **kwds,
+    **kwds: Any,
 ) -> Parameter:
     """
     Create an interval selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Interval selection parameters are used to select a continuous range of data values on drag, whereas point selection parameters (`selection_point`) are used to select multiple discrete data values.).
@@ -1357,7 +1362,7 @@ def selection_point(
     resolve: Optional[SelectionResolution_T] = Undefined,
     toggle: Optional[str | bool] = Undefined,
     nearest: Optional[bool] = Undefined,
-    **kwds,
+    **kwds: Any,
 ) -> Parameter:
     """
     Create a point selection parameter. Selection parameters define data queries that are driven by direct manipulation from user input (e.g., mouse clicks or drags). Point selection parameters are used to select multiple discrete data values; the first value is selected on click and additional values toggled on shift-click. To select a continuous range of data values on drag interval selection parameters (`selection_interval`) can be used instead.
@@ -1462,43 +1467,43 @@ def selection_point(
 
 
 @utils.deprecated(version="5.0.0", alternative="selection_point")
-def selection_multi(**kwargs):
+def selection_multi(**kwargs: Any) -> Parameter:
     """'selection_multi' is deprecated.  Use 'selection_point'."""
     return _selection(type="point", **kwargs)
 
 
 @utils.deprecated(version="5.0.0", alternative="selection_point")
-def selection_single(**kwargs):
+def selection_single(**kwargs: Any) -> Parameter:
     """'selection_single' is deprecated.  Use 'selection_point'."""
     return _selection(type="point", **kwargs)
 
 
 @utils.use_signature(core.Binding)
-def binding(input, **kwargs):
+def binding(input: Any, **kwargs: Any) -> Binding:
     """A generic binding."""
     return core.Binding(input=input, **kwargs)
 
 
 @utils.use_signature(core.BindCheckbox)
-def binding_checkbox(**kwargs):
+def binding_checkbox(**kwargs: Any) -> BindCheckbox:
     """A checkbox binding."""
     return core.BindCheckbox(input="checkbox", **kwargs)
 
 
 @utils.use_signature(core.BindRadioSelect)
-def binding_radio(**kwargs):
+def binding_radio(**kwargs: Any) -> BindRadioSelect:
     """A radio button binding."""
     return core.BindRadioSelect(input="radio", **kwargs)
 
 
 @utils.use_signature(core.BindRadioSelect)
-def binding_select(**kwargs):
+def binding_select(**kwargs: Any) -> BindRadioSelect:
     """A select binding."""
     return core.BindRadioSelect(input="select", **kwargs)
 
 
 @utils.use_signature(core.BindRange)
-def binding_range(**kwargs):
+def binding_range(**kwargs: Any) -> BindRange:
     """A range binding."""
     return core.BindRange(input="range", **kwargs)
 
@@ -1510,7 +1515,7 @@ def condition(
     if_false: _TSchemaBase,
     *,
     empty: Optional[bool] = ...,
-    **kwargs,
+    **kwargs: Any,
 ) -> _TSchemaBase: ...
 @overload
 def condition(
@@ -1519,7 +1524,7 @@ def condition(
     if_false: Map | str,
     *,
     empty: Optional[bool] = ...,
-    **kwargs,
+    **kwargs: Any,
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
@@ -1528,11 +1533,11 @@ def condition(
     if_false: Map,
     *,
     empty: Optional[bool] = ...,
-    **kwargs,
+    **kwargs: Any,
 ) -> dict[str, _ConditionType | Any]: ...
 @overload
 def condition(
-    predicate: _PredicateType, if_true: str, if_false: str, **kwargs
+    predicate: _PredicateType, if_true: str, if_false: str, **kwargs: Any
 ) -> Never: ...
 # TODO: update the docstring
 def condition(
@@ -1541,7 +1546,7 @@ def condition(
     if_false: _StatementType,
     *,
     empty: Optional[bool] = Undefined,
-    **kwargs,
+    **kwargs: Any,
 ) -> SchemaBase | dict[str, _ConditionType | Any]:
     """
     A conditional attribute or encoding.
@@ -4460,7 +4465,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return self.add_params(*selections)
 
 
-def topo_feature(url: str, feature: str, **kwargs) -> UrlData:
+def topo_feature(url: str, feature: str, **kwargs: Any) -> UrlData:
     """
     A convenience function for extracting features from a topojson url.
 
@@ -4750,7 +4755,11 @@ def _remove_layer_props(chart, subcharts, layer_props):
 
 @utils.use_signature(core.SequenceParams)
 def sequence(
-    start, stop=None, step=Undefined, as_=Undefined, **kwds
+    start: Optional[float],
+    stop: Optional[float | None] = None,
+    step: Optional[float] = Undefined,
+    as_: Optional[str] = Undefined,
+    **kwds: Any,
 ) -> SequenceGenerator:
     """Sequence generator."""
     if stop is None:
@@ -4760,7 +4769,7 @@ def sequence(
 
 
 @utils.use_signature(core.GraticuleParams)
-def graticule(**kwds) -> GraticuleGenerator:
+def graticule(**kwds: Any) -> GraticuleGenerator:
     """Graticule generator."""
     # graticule: True indicates default parameters
     graticule: Any = core.GraticuleParams(**kwds) if kwds else True
