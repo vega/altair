@@ -68,7 +68,7 @@ dev = [
     "hatch",
     "ruff>=0.5.3",
     "ibis-framework[polars]",
-    "ipython",
+    "ipython[kernel]",
     "pandas>=0.25.3",
     "pytest",
     "pytest-cov",
