@@ -1174,7 +1174,7 @@ def when(
 
     Basic ``if-then-else`` conditions translate directly to ``when-then-otherwise``::
 
-        points.encode(color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray"))
+        points.encode(color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray")))
 
     Omitting the ``.otherwise()`` clause will use the channel default instead::
 
