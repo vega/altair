@@ -1979,27 +1979,27 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return f"alt.{self.__class__.__name__}(...)"
 
     # Layering and stacking
-    def __add__(self, other) -> LayerChart:
-        if not isinstance(other, TopLevelMixin):
+    def __add__(self, other: ChartType) -> LayerChart:
+        if not is_chart_type(other):
             msg = "Only Chart objects can be layered."
             raise ValueError(msg)
-        return layer(self, other)
+        return layer(t.cast("ChartType", self), other)
 
-    def __and__(self, other) -> VConcatChart:
-        if not isinstance(other, TopLevelMixin):
+    def __and__(self, other: ChartType) -> VConcatChart:
+        if not is_chart_type(other):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
         # Too difficult to type check this
-        return vconcat(self, other)
+        return vconcat(t.cast("ChartType", self), other)
 
-    def __or__(self, other) -> HConcatChart | ConcatChart:
-        if not isinstance(other, TopLevelMixin):
+    def __or__(self, other: ChartType) -> HConcatChart | ConcatChart:
+        if not is_chart_type(other):
             msg = "Only Chart objects can be concatenated."
             raise ValueError(msg)
         elif isinstance(self, ConcatChart):
             return concat(self, other)
         else:
-            return hconcat(self, other)
+            return hconcat(t.cast("ChartType", self), other)
 
     def repeat(
         self,
@@ -3988,14 +3988,14 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
 
-    def __ior__(self, other) -> Self:
+    def __ior__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "ConcatChart")
         self.concat.append(other)
         self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         self.params, self.concat = _combine_subchart_params(self.params, self.concat)
         return self
 
-    def __or__(self, other) -> Self:
+    def __or__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["concat"])
         copy |= other
         return copy
@@ -4085,14 +4085,14 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
 
-    def __ior__(self, other) -> Self:
+    def __ior__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "HConcatChart")
         self.hconcat.append(other)
         self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         self.params, self.hconcat = _combine_subchart_params(self.params, self.hconcat)
         return self
 
-    def __or__(self, other) -> Self:
+    def __or__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
@@ -4182,14 +4182,14 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
 
-    def __iand__(self, other) -> Self:
+    def __iand__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "VConcatChart")
         self.vconcat.append(other)
         self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         self.params, self.vconcat = _combine_subchart_params(self.params, self.vconcat)
         return self
 
-    def __and__(self, other) -> Self:
+    def __and__(self, other: ChartType) -> Self:
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
@@ -4787,7 +4787,7 @@ def sphere() -> SphereGenerator:
     return core.SphereGenerator(sphere=True)
 
 
-ChartType = Union[
+ChartType: TypeAlias = Union[
     Chart, RepeatChart, ConcatChart, HConcatChart, VConcatChart, FacetChart, LayerChart
 ]
 
