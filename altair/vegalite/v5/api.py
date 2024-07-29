@@ -292,7 +292,7 @@ Title = core.TitleParams
 
 class LookupData(core.LookupData):
     @utils.use_signature(core.LookupData)
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
     def to_dict(self, *args, **kwargs) -> dict:
@@ -306,7 +306,7 @@ class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
 
     @utils.use_signature(core.FacetMapping)
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
     def to_dict(self, *args, **kwargs) -> dict:
@@ -1888,7 +1888,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         json_kwds: dict | None = None,
         webdriver: str | None = None,
         engine: str | None = None,
-        inline=False,
+        inline: bool = False,
         **kwargs,
     ) -> None:
         """
@@ -2534,7 +2534,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         groupby: Optional[list[str | FieldName]] = Undefined,
         keyvals: Optional[list[Any] | ImputeSequence] = Undefined,
         method: Optional[ImputeMethod_T | ImputeMethod] = Undefined,
-        value=Undefined,
+        value: Optional[Any] = Undefined,
     ) -> Self:
         """
         Add an :class:`ImputeTransform` to the schema.
@@ -3349,7 +3349,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         open_browser=True,
         http_server=None,
         **kwargs,
-    ):
+    ) -> None:
         """
         'serve' is deprecated. Use 'show' instead.
 
@@ -3410,7 +3410,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             display(self)
 
     @utils.use_signature(core.Resolve)
-    def _set_resolve(self, **kwargs):
+    def _set_resolve(self, **kwargs):  # noqa: ANN202
         """Copy the chart and update the resolve property with kwargs."""
         if not hasattr(self, "resolve"):
             msg = f"{self.__class__} object has no attribute " "'resolve'"
