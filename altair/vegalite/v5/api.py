@@ -3762,7 +3762,7 @@ class Chart(
 
 
 def _check_if_valid_subspec(
-    spec: Optional[SchemaBase | dict],
+    spec: ConcatType | LayerType | dict[str, Any],
     classname: Literal[
         "ConcatChart",
         "FacetChart",
@@ -3794,16 +3794,16 @@ def _check_if_valid_subspec(
             raise ValueError(err.format(attr, classname))
 
 
-def _check_if_can_be_layered(spec: dict | SchemaBase) -> None:
+def _check_if_can_be_layered(spec: LayerType | dict[str, Any]) -> None:
     """Check if the spec can be layered."""
 
-    def _get(spec, attr):
+    def _get(spec: LayerType | dict[str, Any], attr: str) -> Any:
         if isinstance(spec, core.SchemaBase):
             return spec._get(attr)
         else:
             return spec.get(attr, Undefined)
 
-    def _get_any(spec: dict | SchemaBase, *attrs: str) -> bool:
+    def _get_any(spec: LayerType | dict[str, Any], *attrs: str) -> bool:
         return any(_get(spec, attr) is not Undefined for attr in attrs)
 
     base_msg = "charts cannot be layered. Instead, layer the charts before"
@@ -4539,8 +4539,10 @@ def topo_feature(url: str, feature: str, **kwargs: Any) -> UrlData:
     )
 
 
-def _combine_subchart_data(data, subcharts):
-    def remove_data(subchart):
+def _combine_subchart_data(
+    data: Optional[ChartDataType], subcharts: list[ChartType]
+) -> tuple[Optional[ChartDataType], list[ChartType]]:
+    def remove_data(subchart: _TSchemaBase) -> _TSchemaBase:
         if subchart.data is not Undefined:
             subchart = subchart.copy()
             subchart.data = Undefined
@@ -4568,12 +4570,14 @@ _Parameter: TypeAlias = Union[
     core.VariableParameter, core.TopLevelSelectionParameter, core.SelectionParameter
 ]
 
+
+def _viewless_dict(param: _Parameter) -> dict[str, Any]:
     d = param.to_dict()
     d.pop("views", None)
     return d
 
 
-def _needs_name(subchart):
+def _needs_name(subchart: ChartType) -> bool:
     # Only `Chart` objects need a name
     if (subchart.name is not Undefined) or (not isinstance(subchart, Chart)):
         return False
@@ -4583,7 +4587,7 @@ def _needs_name(subchart):
 
 
 # Convert SelectionParameters to TopLevelSelectionParameters with a views property.
-def _prepare_to_lift(param: Any) -> Any:
+def _prepare_to_lift(param: _Parameter) -> _Parameter:
     param = param.copy()
 
     if isinstance(param, core.VariableParameter):
@@ -4598,15 +4602,15 @@ def _prepare_to_lift(param: Any) -> Any:
     return param
 
 
-def _remove_duplicate_params(layer):
+def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     subcharts = [subchart.copy() for subchart in layer]
     found_params = []
 
     for subchart in subcharts:
-        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
+        if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
 
-        params = []
+        params: list[_Parameter] = []
 
         # Ensure the same selection parameter doesn't appear twice
         for param in subchart.params:
@@ -4629,12 +4633,14 @@ def _remove_duplicate_params(layer):
     return subcharts
 
 
-def _combine_subchart_params(params, subcharts):
-    if params is Undefined:
+def _combine_subchart_params(
+    params: Optional[Sequence[_Parameter]], subcharts: list[ChartType]
+) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
+    if utils.is_undefined(params):
         params = []
 
     # List of triples related to params, (param, dictionary minus views, views)
-    param_info = []
+    param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
     # Put parameters already found into `param_info` list.
     for param in params:
@@ -4650,7 +4656,7 @@ def _combine_subchart_params(params, subcharts):
     subcharts = [subchart.copy() for subchart in subcharts]
 
     for subchart in subcharts:
-        if (not hasattr(subchart, "params")) or (subchart.params is Undefined):
+        if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
 
         if _needs_name(subchart):
@@ -4689,7 +4695,7 @@ def _combine_subchart_params(params, subcharts):
         if len(v) > 0:
             p.views = v
 
-    subparams = [p for p, _, _ in param_info]
+    subparams: Any = [p for p, _, _ in param_info]
 
     if len(subparams) == 0:
         subparams = Undefined
@@ -4697,7 +4703,9 @@ def _combine_subchart_params(params, subcharts):
     return subparams, subcharts
 
 
-def _get_repeat_strings(repeat):
+def _get_repeat_strings(
+    repeat: list[str] | LayerRepeatMapping | RepeatMapping,
+) -> list[str]:
     if isinstance(repeat, list):
         return repeat
     elif isinstance(repeat, core.LayerRepeatMapping):
@@ -4709,7 +4717,7 @@ def _get_repeat_strings(repeat):
     return ["".join(s) for s in itertools.product(*rcstrings)]
 
 
-def _extend_view_name(v, r, spec):
+def _extend_view_name(v: str, r: str, spec: Chart | LayerChart) -> str:
     # prevent the same extension from happening more than once
     if isinstance(spec, Chart):
         if v.endswith("child__" + r):
@@ -4721,14 +4729,21 @@ def _extend_view_name(v, r, spec):
             return v
         else:
             return f"child__{r}_{v}"
+    else:
+        msg = f"Expected 'Chart | LayerChart', but got: {type(spec).__name__!r}"
+        raise TypeError(msg)
 
 
-def _repeat_names(params, repeat, spec):
-    if params is Undefined:
+def _repeat_names(
+    params: Optional[Sequence[_Parameter]],
+    repeat: list[str] | LayerRepeatMapping | RepeatMapping,
+    spec: Chart | LayerChart,
+) -> Optional[Sequence[_Parameter]]:
+    if utils.is_undefined(params):
         return params
 
     repeat = _get_repeat_strings(repeat)
-    params_named = []
+    params_named: list[_Parameter] = []
 
     for param in params:
         if not isinstance(param, core.TopLevelSelectionParameter):
@@ -4755,8 +4770,10 @@ def _repeat_names(params, repeat, spec):
     return params_named
 
 
-def _remove_layer_props(chart, subcharts, layer_props):
-    def remove_prop(subchart, prop):
+def _remove_layer_props(
+    chart: LayerChart, subcharts: list[ChartType], layer_props: Iterable[str]
+) -> tuple[dict[str, Any], list[ChartType]]:
+    def remove_prop(subchart: ChartType, prop: str) -> ChartType:
         # If subchart is a UnitSpec, then subchart["height"] raises a KeyError
         try:
             if subchart[prop] is not Undefined:
@@ -4766,7 +4783,7 @@ def _remove_layer_props(chart, subcharts, layer_props):
             pass
         return subchart
 
-    output_dict = {}
+    output_dict: dict[str, Any] = {}
 
     if not subcharts:
         # No subcharts = nothing to do.
